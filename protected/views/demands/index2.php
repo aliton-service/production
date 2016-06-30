@@ -8,10 +8,12 @@
             if (Display == 'none') {
                 $("#FilterContainer").css('display', 'block');
                 $("#GridContainer").css('width', '80%');
+                $("#DemandsGrid").jqxGrid('refresh');
             }
             else {
                 $("#FilterContainer").css('display', 'none');
                 $("#GridContainer").css('width', '100%');
+                $("#DemandsGrid").jqxGrid('refresh');
             }
 
         });
