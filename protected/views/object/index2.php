@@ -5,12 +5,14 @@
         var CurrentRowData;       
         
         var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, Sources.SourceListObjects, {
+            /*
             filter: function () {
                 $("#ObjectsGrid").jqxGrid('updatebounddata', 'filter');
             },
             sort: function () {
                 $("#ObjectsGrid").jqxGrid('updatebounddata', 'sort');
             }
+            */
         }));
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#ObjectsGrid').jqxGrid('getrowdata', row);
@@ -27,8 +29,8 @@
             $.extend(true, {}, GridDefaultSettings, GridsSettings['ObjectsGrid'], {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
-                showfilterrow: false,
-                virtualmode: true,
+                showfilterrow: true,
+                virtualmode: false,
                 width: '100%',
                 height: '400',
                 //source: DemDataAdapter,

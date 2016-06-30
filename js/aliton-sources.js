@@ -21,7 +21,7 @@ Sources.SourceListObjects =
         { name: 'Status' }
     ],
     id: 'id',
-    url: '/index.php?r=AjaxData/DataJQX&ModelName=ListObjects',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ListObjects',
     root: 'Rows',
     cache: false,
     pagenum: 0,

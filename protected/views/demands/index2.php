@@ -123,6 +123,7 @@
                 height: 400,
                 width: '100%',
                 showfilterrow: false,
+                autoshowfiltericon: true,
                 //source: DemandsAdapter,
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize:200,
