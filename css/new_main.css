@@ -1,0 +1,92 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    overflow-y: scroll;
+}
+
+.page {
+    background-color: #FF9;
+    height: 100%;
+    width: 100%;
+    *min-height: 500px;
+}
+
+.page_header {
+    width: 100%;
+    min-width: 1000px;
+    min-height: 28px;
+}
+
+.page_header .page_header_logo {
+    width: 100%;
+    min-width: 1000px;
+    height: 28px;
+    background: rgb(47,92,59);
+}
+
+.page_header .page_header_logo .toggler-navbar {
+    height: 100%;
+    background: #ccc;
+    cursor: pointer;
+    color: #000;
+    text-align: center;
+    width: 100px;
+    padding: 0 20px;
+    height: 100%;
+}
+
+.page .page_container {
+    width: 100%;
+    min-width: 1000px;
+    *min-height: 472px;
+}
+
+.page_container .nav {
+    float: left;
+    width: 220px;
+    border-right: 2px solid #ccc;
+    background: #eee;
+    overflow-x: hidden;
+    *min-height: 472px;
+}
+
+.mainmenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 2px;
+    min-height: 100%;
+}
+
+.mainmenu ul li {
+    border: 1px solid #ddd;
+    background: #5BC0DE;
+    position: relative;
+}
+
+.mainmenu ul li a {
+    padding: 7px 10px;
+    width: 100%;
+    display: block;
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav .mainmenu ul li ul {
+    display: none;
+    width: 100%;
+}
+
+.container_body {
+    overflow: auto;
+    background-color: #5BC0DE;
+    //min-height: 432px;
+    min-width: 1000px;
+    padding: 20px;
+}

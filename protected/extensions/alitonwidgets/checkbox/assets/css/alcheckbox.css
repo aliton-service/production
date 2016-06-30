@@ -1,0 +1,49 @@
+.alcheckbox {
+    //font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    color: #333333;
+    border-width: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.alcheckboxcell {
+    padding: 2px 0px 1px;
+    font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    color: #333333;
+}
+
+.alcheckboxcelledit {
+    width: 16px;
+    height: 16px;
+    margin: 0px;
+    cursor: default;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.alchb {
+    font-size: 0;
+}
+
+.alcheckboxinput {
+    padding: 1px 0 1px;
+    text-align: left;
+}
+
+.alcheckboxchecked {
+    
+    background-color: #2F5C3B;
+    background-position: -417px -217px;
+    background-image: url('/images/grid/sprites4.png');
+    background-repeat: no-repeat;
+}
+
+.alcheckboxunchecked {
+    
+    background-position: -391px -175px;
+    background-image: url('/images/grid/sprites4.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+

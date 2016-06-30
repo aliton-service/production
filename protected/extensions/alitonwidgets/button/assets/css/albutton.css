@@ -1,0 +1,72 @@
+.albutton {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-table;
+    border-spacing: 0;
+    border-collapse: separate;
+    vertical-align: middle;
+    color: #333333;
+    border: 1px solid #c0c0c0;
+    background-color: white;
+    padding: 1px;
+    //font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+        
+}
+
+.albutton:hover {
+    background-color: #2F5C3B;
+    border: 1px solid #2F5C3B;
+    color: white;
+}
+
+.alb {
+    padding: 2px 7px 3px;
+    border: 1px dotted transparent;
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 100%;
+    text-decoration: inherit;
+    border-spacing: 0;
+    border-collapse: separate;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.alb_h {
+    overflow: hidden;
+    padding: 0!important;
+    margin: 0!important;
+    border: 0!important;
+    height: 0!important;
+    width: 0!important;
+    font-size: 0!important;
+    opacity: 0!important;
+    line-height: 100%;
+    border-spacing: 0;
+    border-collapse: separate;
+    color: #333333;
+    border: 1px solid #c0c0c0;
+    background-color: white;
+    padding: 1px;
+    font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.albutton-span {
+    line-height: 100%;
+    padding: 2px 0;
+    text-decoration: inherit;
+    vertical-align: middle;
+    display: inline-block!important;
+}

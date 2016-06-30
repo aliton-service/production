@@ -1,0 +1,163 @@
+.alcalendar {
+    background-color: White;
+    color: #333333;
+    //font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    font-weight: normal;
+    cursor: default;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.alCalendarCurrentDay {
+    border: 1px solid #2F5C3B;
+}
+
+.alcalendar table {
+    border-width: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.alCalendarContentHolderPrevY {
+    color: #ff8800;
+    font-size: 1.5em;
+}
+
+.alCalendarContentHolderPrevYImg {
+    max-width: none;
+    display: block;
+    margin: auto;
+    background-position: -130px -33px;
+    width: 24px;
+    height: 24px;
+    background-image: url('/images/grid/sprites2.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.alCalendarContentHolderPrevM {
+    color: #ff8800;
+    font-size: 1.5em;
+}
+
+.alCalendarContentHolderPrevMImg {
+    max-width: none;
+    display: block;
+    margin: auto;
+    background-position: -155px -33px;
+    width: 24px;
+    height: 24px;
+    background-image: url('/images/grid/sprites2.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.alCalendarHeaderContentText {
+    text-align: center;
+}
+
+.alCalendarHeaderText {
+    padding: 0 8px;
+    white-space: nowrap!important;
+    color: #ff8800;
+    font-size: 1.5em;
+}
+
+.alCalendarContentHolderNextM {
+    color: #ff8800;
+    font-size: 1.5em;
+}
+
+.alCalendarContentHolderNextMImg {
+    max-width: none;
+    display: block;
+    margin: auto;
+    background-position: -173px -83px;
+    width: 24px;
+    height: 24px;
+    background-image: url('/images/grid/sprites2.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.alCalendarContentHolderNextY {
+    color: #ff8800;
+    font-size: 1.5em;
+}
+
+.alCalendarContentHolderNextYImg {
+    max-width: none;
+    display: block;
+    margin: auto;
+    background-position: 0px -133px;
+    width: 24px;
+    height: 24px;
+    background-image: url('/images/grid/sprites2.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.alCalendarBody {
+    min-width: 244px;
+    padding: 20px 0px 10px;
+}
+
+.alCalendarDayHeader {
+    padding: 2px 4px 5px;
+    font-size: 1.08em;
+    text-transform: uppercase;
+}
+
+.alCalendarDay {
+    padding: 4px 6px;
+    text-align: center;
+}
+
+.alCalendarDayWeekend {
+    color: #FF3300;
+}
+
+.alCalendarWeekNumber {
+    font-size: 0.75em;
+    text-align: right;
+    padding: 6px 8px 6px 4px;
+    color: #bfbfbf;
+}
+
+.alCalendarDaySelected {
+    color: White;
+    background-color: #ff8800;
+}
+
+.alcalendar .but {
+    width: 84px;
+    text-align: center;
+    padding: 4px 6px 5px;
+    border: 1px solid #ff8800;
+    cursor: pointer;
+    position: relative;
+}
+
+.alcalendar .but.alToday {
+    float: left;
+    margin-left: 15px;
+}
+.alcalendar .but.alClear {
+    float: right;
+    margin-right: 15px;
+}

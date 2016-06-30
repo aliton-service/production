@@ -1,0 +1,32 @@
+.almemo {
+    background-color: white;
+    border: 1px solid #c0c0c0;
+    border-collapse: separate!important;
+    text-align: left;
+    //font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+}
+
+.almemo td {
+    padding: 0px 0px 0px 3px;
+}
+
+.almemocontrol {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    box-shadow: none;
+    transition: none;
+    border-radius: 0px;
+    font: inherit;
+    line-height: normal;
+    outline: 0;
+    padding: 0px 1px 0px 0px;
+    width: 100%;
+    background-color: white;
+    color: #333333;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 0px!important;
+    background-position: 0 0;
+    box-sizing: content-box;   
+}

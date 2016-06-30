@@ -1,0 +1,43 @@
+.alcombobox {
+    background-color: white;
+    border: 1px solid #c0c0c0;
+    width: 170px;
+    font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    border-collapse: separate;
+    border-spacing: 0;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+.alcomboboxfocused {
+    border: 1px solid #2F5C3B;
+}
+
+.alcomboboxeditimg:hover {
+    background-position: -33px -172px;
+}   
+
+.alcomboboxeditimg {
+    max-width: none;
+    display: block;
+    margin: auto;
+    background-position: -22px -172px;
+    //background-position: -33px -172px;
+    width: 10px;
+    height: 14px;
+    background-image: url('/images/grid/sprites2.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    border-width: 0;
+    line-height: 100%;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+.alcomboboxeditbuttom {
+     padding: 0px 3px 0px 3px;
+}

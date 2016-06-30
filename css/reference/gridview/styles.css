@@ -1,0 +1,183 @@
+.grid-view-loading
+{
+	background:url(loading.gif) no-repeat;
+}
+
+.grid-view
+{
+	padding: 15px 0;
+}
+
+.grid-view table.items
+{
+	background: white;
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px #D0E3EF solid;
+}
+
+.grid-view table.items th, .grid-view table.items td
+{
+	font-size: 0.9em;
+	border: 1px white solid;
+	padding: 0.1em;
+}
+
+.grid-view table.items th
+{
+	color: white;
+	background: url("bg.gif") repeat-x scroll left top #2F5C3B;
+	text-align: center;
+}
+
+.grid-view table.items th a
+{
+	color: #EEE;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.grid-view table.items th a:hover
+{
+	color: #FFF;
+}
+
+.grid-view table.items th a.asc
+{
+	background:url(up.gif) right center no-repeat;
+	padding-right: 10px;
+}
+
+.grid-view table.items th a.desc
+{
+	background:url(down.gif) right center no-repeat;
+	padding-right: 10px;
+}
+
+.grid-view table.items tr.even
+{
+	background: #F8F8F8;
+}
+
+.grid-view table.items tr.odd
+{
+	background: rgba(150,200,150,0.6);
+}
+
+.grid-view table.items tr.selected
+{
+	background: #2F5C3B;
+	color:#fff;
+}
+
+.grid-view table.items tr:hover.selected
+{
+	background: #2F5C3B;
+}
+
+.grid-view table.items tbody tr:hover
+{
+	background: rgb(150,200,150);
+}
+
+
+.grid-view table.items tbody {
+	max-height: 500px;
+	overflow: auto;
+}
+
+.grid-view .link-column img
+{
+	border: 0;
+}
+
+.grid-view .button-column
+{
+	text-align: center;
+	width: 65px;
+}
+
+.grid-view .button-column img
+{
+	border: 0;
+}
+
+.grid-view .checkbox-column
+{
+	width: 15px;
+}
+
+.grid-view .summary
+{
+	margin: 0 0 5px 0;
+	text-align: right;
+}
+
+.grid-view .pager
+{
+	margin: 5px 0 0 0;
+	text-align: right;
+}
+
+.grid-view .empty
+{
+	font-style: italic;
+}
+
+.grid-view .filters input,
+.grid-view .filters select
+{
+	width: 100%;
+	border: 1px solid #ccc;
+}
+
+
+.list-view .items .view {
+	margin-bottom: 15px;
+	clear: both;
+	*display: table;
+}
+
+.list-view .items .view .table-cell {
+	float: left;
+}
+
+.portlet, .list-view, .grid-view  {
+	float: left;
+}
+.breadcrumbs {
+	clear: both;
+}
+
+.list-view, .grid-view {
+	margin-right: 20px; 
+}
+.pager {
+	clear: both;
+}
+
+.table-cell {
+	*padding: 3px;
+	*border-right: 1px solid black;
+	*width: 50px;
+
+	*overflow: hidden;
+	*display: table-cell;
+}
+
+table .view:nth-child(even) {
+	background-color: yellow;
+}
+.span-left {
+	float: left;
+}
+
+.grid-view {
+	*max-width: 1024px;
+	*overflow: auto;
+
+}
+
+.grid-view{
+    overflow: auto;
+}

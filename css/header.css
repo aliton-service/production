@@ -1,0 +1,215 @@
+#header{
+    width: 100%;
+    min-width: 1024px;
+}
+#logo{
+    position: relative;
+    border: 0px solid;
+    //background-color: blue;
+    background-image: url('/images/logos/002.jpg');
+    background-repeat: repeat-x;
+    height:  124px;
+}
+
+#logo_img{
+    position: relative;
+    border: 0px solid;
+    //background-color: red;
+    background-image: url('/images/logos/001.jpg');
+    background-repeat: no-repeat;
+    height:  124px;
+    width: 520px;
+    text-align: center;
+}
+/*
+#mainmenu{
+    position: relative;
+    border: 0px solid;
+    height: 25px;
+    padding: 0;
+    //background-color: #2F5C3B;
+    background-color: #D5D9DA;
+    z-index: 10;
+    width: 100%;
+    min-width: 1024px;
+}
+
+#mainmenu ul, /* сбрасываем поля и отступы у списков *//*
+#mainmenu ul ul {
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+#mainmenu ul {    
+    clear:left;
+    position: relative;
+    height:20px;
+    float:left;
+    text-align:center;
+    font:14px Arial, Helvetica, sans-serif;
+}
+
+#mainmenu ul li {
+    position:relative;
+    float:left;
+    height:25px;
+    padding-left: 5px;
+    padding-top: 5px;
+    margin:0;
+    background-color: #D5D9DA;
+    //background: linear-gradient(to bottom, #2F5C3B, #2FC83B);
+    //background-color: greenyellow;
+    min-width: 150px;
+}
+
+#mainmenu ul li:hover > ul{
+    opacity: 1;
+    visibility: visible;
+    margin: 0;
+}
+
+#mainmenu ul li:hover {
+    background-color: silver;
+}
+
+#mainmenu ul li ul {
+    opacity: 0;
+    visibility: hidden;
+    position:absolute;
+    left:0;
+    top:25px;
+    font-size:14px;
+    height:auto;
+    width:250px;
+    border: 0px solid;
+    
+}
+
+#mainmenu ul li ul li {
+    position:relative;
+    left:0;
+    float:none;
+    min-height: 20px;
+    height:auto;
+    margin:0;
+    text-align:left !important;
+    border: 0px solid;
+    background-color: coral;
+    padding-top: 5px;
+}
+
+#mainmenu ul li ul li ul {
+    top: 0;
+    left: 250px;
+    margin: 0 0 0 20px;
+    _margin: 0; /*IE6 only*//*
+    background-color: gold;
+}
+
+#mainmenu ul li a {
+    text-decoration: none;
+    color: #000;
+    *padding:13px 20px;
+    padding:13px 10px 0px 10px;
+}
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+#mainmenu{
+    position: relative;
+      
+    padding: 0;
+    background-color: #D5D9DA;
+    z-index: 10;
+    width: 100%;
+    min-width: 1024px;
+}
+
+#mainmenu ul, /* сбрасываем поля и отступы у списков */
+#mainmenu ul ul {
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+#mainmenu ul {    
+    
+}
+
+#mainmenu ul li {
+    position:relative;
+   
+    min-height:25px;
+    padding-left: 5px;
+    padding-top: 5px;
+    margin:0;
+    background-color: #D5D9DA;
+    min-width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#mainmenu ul li:hover > ul{
+    
+    display: block;
+    margin: 0;
+}
+
+#mainmenu ul li:hover {
+    background-color: silver;
+}
+
+#mainmenu ul li ul {
+    
+    display: none;
+    position:absolute;
+    left:0;
+    top:25px;
+    font-size:14px;
+    height:auto;
+    width:250px;
+    border: 0px solid;
+    
+
+}
+
+#mainmenu ul li ul li {
+    position:relative;
+    left:0;
+    float:none;
+    min-height: 20px;
+    height:auto;
+    margin:0;
+    text-align:left !important;
+    border: 0px solid;
+    background-color: coral;
+    padding-top: 5px;
+    min-width: 150px;
+    display: block;
+}
+
+#mainmenu ul li ul li ul {
+    top: 0;
+    left: 250px;
+    margin: 0 0 0 20px;
+    _margin: 0; /*IE6 only*/
+    background-color: gold;
+}
+
+#mainmenu ul li a {
+    text-decoration: none;
+    color: #000;
+    *padding:13px 20px;
+    padding:13px 10px 0px 10px;
+}

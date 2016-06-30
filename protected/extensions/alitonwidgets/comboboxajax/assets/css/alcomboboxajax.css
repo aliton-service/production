@@ -1,0 +1,98 @@
+.alcomboboxajax {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    cursor: default;
+    background-color: white;
+    border: 1px solid #c0c0c0;
+    width: 170px;
+    //font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.alComboboxAjaxFocused {
+    border: 1px solid #2F5C3B;
+}
+
+.alcomboboxajaxButtonFocused img {
+    
+    background-repeat: no-repeat;
+    background-image: url('/images/grid/sprites2.png');
+    background-position: -33px -172px;
+    width: 10px;
+    height: 14px;
+}
+
+.alComboboxAjaxButton:hover {
+    background-color: #2F5C3B;
+    color: white;
+}
+
+.alComboboxAjaxButton:hover > img {
+    background-position: -33px -172px;
+}
+
+.dxic {
+    padding: 1px 3px 2px 3px;
+    overflow: hidden;
+}
+
+.alcomboboxajaxFormInput {
+
+}
+
+.alcomboboxajaxInput {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    font: inherit;
+    line-height: normal;
+    outline: 0;
+    padding: 0px 1px 0px 0px;    
+    background-color: white;
+    width: 100%;
+    border: 0px!important;
+    background-position: 0 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.alComboboxAjaxButton {
+    padding: 0px 3px 0px 4px;
+    background-color: white;
+    vertical-align: middle;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+
+.alcomboboxajaxButtonImg {
+    max-width: none;
+    display: block;
+    margin: auto;
+    background-position: -22px -172px;
+    width: 10px;
+    height: 14px;
+    background-image: url('/images/grid/sprites2.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    border-width: 0;
+    line-height: 100%;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+}
+

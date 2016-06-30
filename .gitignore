@@ -1,0 +1,5 @@
+/personalization/
+/assets/
+/protected/runtime/
+*.log
+/nbproject/private/

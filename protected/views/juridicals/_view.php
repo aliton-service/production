@@ -1,0 +1,11 @@
+<?php
+/* @var $this JuridicalsController */
+/* @var $data Juridicals */
+?>
+
+<tr class="view">
+
+<td class='table-cell'><?php echo CHtml::encode($data->JuridicalPerson); ?></td><td class='table-cell'><?php echo CHtml::encode($data->Identification); ?></td><td class='table-cell'><?php echo CHtml::encode($data->jregion); ?></td><td class='table-cell'><?php echo CHtml::encode($data->jarea); ?></td><td class='table-cell'><?php echo CHtml::encode($data->jstreet); ?></td><td class='table-cell'><?php echo CHtml::encode($data->jhouse); ?></td>	<?php /*
+<td class='table-cell'><?php echo CHtml::encode($data->jcorp); ?></td><td class='table-cell'><?php echo CHtml::encode($data->fregion); ?></td><td class='table-cell'><?php echo CHtml::encode($data->farea); ?></td><td class='table-cell'><?php echo CHtml::encode($data->fstreet); ?></td><td class='table-cell'><?php echo CHtml::encode($data->fhouse); ?></td><td class='table-cell'><?php echo CHtml::encode($data->fcorp); ?></td><td class='table-cell'><?php echo CHtml::encode($data->inn); ?></td><td class='table-cell'><?php echo CHtml::encode($data->kpp); ?></td><td class='table-cell'><?php echo CHtml::encode($data->account); ?></td><td class='table-cell'><?php echo CHtml::encode($data->ogrn); ?></td><td class='table-cell'><?php echo CHtml::encode($data->okpo); ?></td><td class='table-cell'><?php echo CHtml::encode($data->telephone); ?></td><td class='table-cell'><?php echo CHtml::encode($data->post_index); ?></td><td class='table-cell'><?php echo CHtml::encode($data->empl_id); ?></td><td class='table-cell'><?php echo CHtml::encode($data->bank_id); ?></td><td class='table-cell'><?php echo CHtml::encode($data->Lock); ?></td><td class='table-cell'><?php echo CHtml::encode($data->EmplLock); ?></td><td class='table-cell'><?php echo CHtml::encode($data->DateLock); ?></td><td class='table-cell'><?php echo CHtml::encode($data->EmplChange); ?></td><td class='table-cell'><?php echo CHtml::encode($data->DateChange); ?></td><td class='table-cell'><?php echo CHtml::encode($data->DelDate); ?></td><td class='table-cell'><?php echo CHtml::encode($data->EmplDel); ?></td>	*/ ?>
+
+</tr>

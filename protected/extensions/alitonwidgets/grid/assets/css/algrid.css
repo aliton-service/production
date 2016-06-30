@@ -1,0 +1,186 @@
+.algrid {
+    border: 1px Solid #c0c0c0;
+    font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    background-color: White;
+    color: #333333;
+    cursor: default;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.algrid tbody tr td {
+    padding-left: 6;
+}
+
+.algrid div {
+    //margin: 10;
+}
+
+.algrid .header {
+    overflow: hidden;
+}
+
+.algrid .columns {
+    empty-cells: show;
+    overflow: hidden;
+    table-layout: fixed;
+    border-spacing: 0px;
+}
+
+.algrid .table {
+    table-layout: fixed;
+    border-spacing: 0px;
+}
+
+.algrid .columns > tbody > tr > td {
+    border-bottom: 1px Solid #c0c0c0;
+    border-right: 1px Solid #c0c0c0;
+    padding-left: 6;
+}
+
+.algrid .fullheader td {
+    cursor: pointer;
+    *border: 1px Solid #c0c0c0;
+    background-color: white;
+    *font-weight: normal;
+    *text-align: left;
+    border-collapse: collapse;
+    *padding-left: 6px;
+    overflow: hidden;
+}
+
+.column td {
+    border-right: 0px Solid white;
+    border-bottom: 0px Solid white;
+}
+
+.algrid .table td {
+    border-bottom: 1px Solid #c0c0c0;
+    border-right: 1px Solid #c0c0c0;
+    padding-left: 6px;
+    height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-spacing: 0px; 
+}
+
+.SelectedRow td {
+    background-color: #e0e0e0;
+    color: #333333;
+}
+
+.pager {
+    padding-top: 8px;
+    overflow: hidden;
+}
+
+.algrid .columns {
+    white-space: nowrap;
+}
+
+.pager table {
+    table-layout: fixed;
+    white-space: nowrap;
+}
+
+.pager table td {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.pager select {
+    font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+}
+
+.fullheader input {
+    font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+}
+
+.dxGridView_gvDragAndDropArrowDown_Metropolis {
+    background-position: -84px -173px;
+    width: 11px;
+    height: 9px;
+    background-image: url('/images/grid/sprites.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    border-width: 0;
+}
+
+.dxGridView_gvDragAndDropArrowDown_Metropolis img {
+     border: none;
+}
+
+
+.dxGridView_gvDragAndDropArrowUp_Metropolis {
+    background-position: -107px -142px;
+    width: 11px;
+    height: 9px;
+    background-image: url('/images/grid/sprites.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    border-width: 0;
+}
+
+.column {
+    border-width: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: normal;
+    text-align: left;
+    empty-cells: show;
+}
+
+.dxGridView_gvHeaderSortUp_Metropolis {
+    background-image: url('/images/grid/sprites.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: -110px 0px;
+    width: 7px;
+    height: 5px;
+}
+
+.dxGridView_gvHeaderSortDown_Metropolis {
+    background-image: url('/images/grid/sprites.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: -111px -17px;
+    width: 7px;
+    height: 5px;
+}
+
+.algrid .table .algridRowFocused {
+    //background: rgba(150,200,150,0.6);
+    background-color: #2F5C3B;
+    color: white;
+}
+
+.algrid .table tr:hover {
+    background-color: #e0e0e0;
+    color: #333333;
+}
+
+.alcomboboxedit {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    box-shadow: none;
+    transition: none;
+    border-radius: 0px;
+    font: inherit;
+    line-height: normal;
+    outline: 0;
+    padding: 0px 1px 0px 0px;
+    width: 100%;
+    background-color: white;
+    border: 0px!important;
+    background-position: 0 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+

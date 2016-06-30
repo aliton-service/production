@@ -1,0 +1,9 @@
+#AddressList{
+    background: red;
+    width: 300px;
+    
+}
+
+#AddressList input{
+    width:  100%;
+}

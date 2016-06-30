@@ -1,0 +1,35 @@
+.adropdownlist {
+    //border: 1px solid;
+    z-index: 10;
+    //float: left;
+}
+
+.adropdownlist div {
+    //border: 1px solid;
+}
+
+.adropdownlist #input {
+    //width: 400px;
+}
+
+#input input {
+    width: 100%;
+}
+
+#drop {
+    position: absolute;
+    visibility: hidden;
+    z-index: 10;
+    background-color: #ffffff;
+    overflow: auto;
+    border: 1px solid;
+    //background-color: #D5D9DA;
+}
+
+.adropdownlist:hover > #drop {
+    visibility: visible;
+}
+
+#drop table tr:hover {
+    background: #D5D9DA;
+} 

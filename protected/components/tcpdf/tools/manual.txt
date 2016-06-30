@@ -1,0 +1,4 @@
+кинуть сюда шрифт и в консоле ввести:
+php -q tcpdf_addfont.php -i <имя файла шрифта>;
+
+например: php -q tcpdf_addfont.php -i times.ttf

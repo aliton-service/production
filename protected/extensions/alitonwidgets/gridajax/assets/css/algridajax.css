@@ -1,0 +1,375 @@
+.algridajax {
+    border: 1px Solid #c0c0c0;
+    border-collapse: collapse;
+    //font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    background-color: White;
+    color: #333333;
+    cursor: default;
+    border-spacing: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.algridajax td {
+    //padding: 0;
+    margin: 0;
+    //padding-left: 0;
+}
+
+.alLightingLine:hover{
+    background-color: #e0e0e0;
+    color: #333333;
+}
+
+.algridajaxTableHeader {
+    width: 100%;
+    empty-cells: show;
+    table-layout: fixed;
+    overflow: hidden;
+    background-color: White;
+    border-width: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    
+}
+
+.algridajaxHeaderColumns {
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 4px 6px 5px;
+    border: 1px Solid #c0c0c0;
+    background-color: white;
+    overflow: hidden;
+    font-weight: normal;
+    text-align: left;
+    border-spacing: 0;
+    padding: 4px 6px 5px;
+}
+
+.alLoadingPanel {
+    border: 1px Solid #c0c0c0;
+    background-color: white;
+}
+
+.algridajaxBody {
+    border-spacing: 0;
+
+        
+}
+
+.algridajaxBodyTable {
+    table-layout: fixed;
+    empty-cells: show;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.algridajaxBody .algridajaxTD {
+    overflow: hidden;
+    border-bottom: 1px Solid #c0c0c0;
+    border-right: 1px Solid #c0c0c0;
+    border-top-width: 0;
+    border-left-width: 0;
+    padding: 3px 6px 4px;
+    white-space: nowrap;
+}
+
+.alPagerBottomPanel {
+    padding: 4px 0;
+    overflow: hidden;
+}
+
+.alPagerBottomPanelContent {
+    padding-top: 4px;
+    //font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    color: #333333;
+    float: left;
+    padding: 2px 8px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.alPagerBottomPanelSummary {
+    white-space: nowrap;
+    padding: 6px 16px;
+    margin-left: 0!important;
+    font-weight: normal;
+    display: block;
+    float: left;
+    line-height: 100%;
+}
+
+.alPagerPrevButton {
+    white-space: nowrap;
+    text-align: center;
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: normal;
+}
+
+.alPagerPrevImg {
+    background-image: url('/images/grid/sprites4.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: -350px -192px;
+    width: 24px;
+    height: 24px;
+    float: left;
+    cursor: pointer;
+}
+
+.alPagerNum {
+    color: #333333;
+    text-decoration: none;
+    padding: 3px 6px;
+    margin-top: 3px;
+    margin-left: 4px;
+    font-weight: normal;
+    cursor: pointer;
+    float: left;
+}
+
+.alPagerNextButton {
+    white-space: nowrap;
+    text-align: center;
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.alPagerNextImg {
+    background-image: url('/images/grid/sprites4.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: -100px -192px;
+    width: 24px;
+    height: 24px;
+    float: left;
+}
+
+.alPageSize {
+    padding: 1px 4px 0 16px;
+    white-space: nowrap;
+    margin-left: 4px;
+    font-weight: normal;
+    float: right!important;
+}
+
+.alPagerNumCurrent {
+    background-color: #2F5C3B;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.algridajaxSortUp {
+    background-image: url('/images/grid/sprites.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    vertical-align: middle;
+    display: inline-block!important;
+    border: 0;
+    background-position: -110px 0px;
+    width: 7px;
+    height: 5px;
+}
+
+.algridajaxSortDown {
+    background-image: url('/images/grid/sprites.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    vertical-align: middle;
+    display: inline-block!important;
+    border: 0;
+    background-position: -111px -17px;
+    width: 7px;
+    height: 5px;
+}
+
+.alajaxgridTextBox {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    cursor: default;
+    background-color: white;
+    border: 1px solid #c0c0c0;
+    font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    border-collapse: separate!important;
+    border-width: 0;
+    border-spacing: 0;
+}
+
+.alajaxgridConTextBox {
+    padding: 1px 3px 2px 3px;
+    overflow: hidden;
+    cursor: default;
+    background-color: white;
+    border: 1px solid #c0c0c0;
+    font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    border-collapse: separate!important;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.alajaxgridInputTextBox {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    font: inherit;
+    line-height: normal;
+    outline: 0;
+    padding: 0px 1px 0px 0px;
+    background-color: white;
+    border: 0px!important;
+    background-position: 0 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 100%;
+}
+
+.algridajaxHeaderFilterColumns {
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 4px 6px 5px;
+    border: 1px Solid #c0c0c0;
+    background-color: white;
+    overflow: hidden;
+    font-weight: normal;
+    text-align: left;
+    border-spacing: 0;
+    padding: 2px 2px 2px 2px;
+}
+
+.alajaxgridPageSizeList {
+    margin-left: 4px;
+    display: block;
+    float: left;
+    background-color: White;
+    border: 1px solid #c0c0c0;
+    padding: 0px;
+    margin: -2px 0px;
+    box-sizing: content-box;
+    white-space: nowrap;
+    font-weight: normal;
+    text-align: left;
+}
+
+.alajaxgridPageSizeList input{
+    border-width: 0px;
+    margin: 4px 1px 4px 3px;
+    height: auto;
+    color: black;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    font: inherit;
+    display: block;
+    float: left;
+    background-color: transparent;
+    border-width: 0px;
+    padding: 0px;
+    width: 25px;
+    white-space: nowrap;
+}
+
+.alajaxgridPageSizeButton {
+    padding: 10px 5px 9px;
+    background-color: White;
+    box-sizing: content-box;
+    font-size: 0;
+    display: block;
+    float: left;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: normal;
+    line-height: 100%;
+}
+
+.alajaxgridPageSizeButtonImg {
+    margin-top: 0px;
+    border: none;
+    text-decoration: none;
+    vertical-align: middle;
+    max-width: none;
+    display: block;
+    background-position: -439px -234px;
+    width: 7px;
+    height: 4px;
+    background-image: url('/images/grid/sprites4.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border-width: 0;
+    font-size: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+.alajaxgridPageSizeButtonFocused {
+    background-color: #2F5C3B;
+    background-position: -415px -234px;
+    width: 7px;
+    height: 4px;
+}
+
+.alajaxgridPageSizeItemSelected {
+    background-color: #e0e0e0;
+}
+
+.alajaxgridPageSizeButtonFocused img{
+    background-color: #2F5C3B;
+    background-position: -415px -234px;
+    width: 7px;
+    height: 4px;
+}
+
+.alajaxgridPageSizePopupLits {
+    scolor: #333333;
+    background-color: white;
+    border: 1px solid #c0c0c0;
+    padding: 1px;
+    position: relative;
+}
+
+.alajaxgridPageSizePopupUl {
+    list-style: none none outside;
+    margin: 0;
+    padding: 0;
+    background-repeat: repeat-y;
+    background-position: left top;
+}
+
+.alajaxgridPageSizeItem {
+    cursor: pointer;
+}
+
+.alajaxgridPageSizeItem:hover {
+    background-color: #2F5C3B;
+    color: white;
+}
+
+.alajaxgridPageSizeItemContent {
+    padding: 3px 18px 3px 3px;
+}
+
+.algridajaxRowFocused {
+    background-color: #2F5C3B;
+    color: White;
+}
