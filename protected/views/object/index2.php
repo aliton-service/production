@@ -193,7 +193,7 @@
     }
     
     .backlight_green {
-        color: #00FF00;
+        color: #2F5C3B;
     }
     
     .backlight_blue {

@@ -455,6 +455,8 @@ class DemandsController extends Controller
 		echo $q[0]['d'];
 	}
 	
+        
+        
         public function actionTomaster($id) {
             $model = new Demands();
             $model->getModelPk($id);
@@ -478,14 +480,18 @@ class DemandsController extends Controller
                     $Objects = new ListObjects();
                     $Objects->getModelPk($model->Object_id);
                     
+                    
                     $this->redirect(Yii::app()->createUrl('Demands/update', array(
                         'id'=> $model->Demand_id,
-                        'model'=>$model,
+                        'model' => $model,
                         'ObjectsGroup' => $ObjectsGroup,
                         'Objects' => $Objects,
-                        'ReadOnly'=>true,
-                        'ToMaster'=> true,
+                        'ReadOnly'=>'true',
+                        'ToMaster'=>'true',
                     )));
+                    
+                     
+                    
                 }
             }
             else {

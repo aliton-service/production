@@ -280,7 +280,7 @@ class Demands extends MainFormModel
 			'ExecOther' => 'Exec Other',
 			'WorkedOut' => 'WorkedOut',
 			'WorkedOutStatus' => 'WorkedOutStatus',
-			'DType_id' => '',
+			'DType_id' => 'Тип заявки',
                         'DSystem_id' => '',
                         'DEquip_id' => '',
                         'DMalfunction_id' => '',
