@@ -251,11 +251,12 @@
         
         $("#btnSMS").on('click', function(){
             var Message = (Demand.DemandType === 'Снят с обслуживания') ? Demand.DemandType + ';' : '';
-            Message += (Demand.Address !== '') ? Demand.Address + ';' : '';
-            Message += (Demand.Malfunction !== '') ? Demand.Malfunction + ';' : '';
-            Message += (Demand.DemandText !== '') ? Demand.DemandText + ';' : '';
-            Message += (Demand.Contacts !== '') ? Demand.Contacts + ';' : '';
-            Message += (Demand.DemandPrior !== '') ? Demand.DemandPrior + ';' : '';
+            Message += (Demand.Address !== null) ? Demand.Address + ';' : '';
+            Message += (Demand.EquipType !== null) ? Demand.EquipType + ';' : '';
+            Message += (Demand.Malfunction !== null) ? Demand.Malfunction + ';' : '';
+            Message += (Demand.DemandText !== null) ? Demand.DemandText + ';' : '';
+            Message += (Demand.Contacts !== null) ? Demand.Contacts + ';' : '';
+            Message += (Demand.DemandPrior !== null) ? Demand.DemandPrior + ';' : '';
             $('#SMSDialog').jqxWindow('open');
             $("#edTextSMS").val(Message);
             

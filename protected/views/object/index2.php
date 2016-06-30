@@ -171,11 +171,13 @@
             $("#rbDemAllObject").jqxRadioButton('val', false);
             $("#rbParams").jqxRadioButton('val', true);
             $("#cmbMasterFilter").jqxComboBox('clearSelection');
+            $("#cmbMasterFilter input").val('');
             $("#edNumber").jqxInput('val', null);
             $("#edDate").jqxDateTimeInput('val', null)
             $("#cmbDemandType").jqxComboBox('clearSelection');
+            $("#cmbDemandType input").val('');
             $("#cmbExecutor").jqxComboBox('clearSelection');
-            $("#cmbExecutor").jqxComboBox('val', null);
+            $("#cmbExecutor input").val('');
             
         });
         
