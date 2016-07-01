@@ -1,509 +1,597 @@
 <?php
 
 class RepairController extends Controller {
-	public $layout='//layouts/column2';
-	public $defaultAction  = 'index';
-	public $title = '';
-
-	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
-	}
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'History', 'ProfitabilityRepair', 'EquipPrice', 'ProcessInfo', 'CheckWarranty', 'GetServiceDept', 'DocumentsInfo', 'CheckRepeatRepair', 'MaterialsInfo', 'CartSRM', 'CartPRC', 'CartGeneral', 'Diagnostic', 'RepairPRC', 'RepairSRM', 'EquipInfo', 'EquipInfoSN'),
-				'roles'=>array('ViewRepair','CreateRepair','UpdateRepair'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'writeoff', 'RepairRepeat'),
-				'roles'=>array('CreateRepair','UpdateRepair'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('Accept','Agree', 'Ready', 'Exec','Noagree', 'UndoDiagnostic'),
-				'roles'=>array('UpdateRepair'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'roles'=>array('DeleteRepair'),
-			),
-			 array('deny',  // deny all users
-			 	'users'=>array('*'),
-			 ),
-		);
-	}
-
-	public function actionIndex($ajax=false){
-		$this->render('index');
-//		$model = new Repair;
-//
-//		if($ajax) {
-//
-//			isset($_GET['Repair']) ? $filter = $_GET['Repair'] : '';
-//			//var_dump($filter);
-//			$model->setFilter($filter);
-//		}
-//
-//		$DataRow = $model->Find(array());
-//		// var_dump($DataRow);
-//		$Data = $model->filter($DataRow);
-//		//var_dump($Data);
-//		$DataProvider=new CArrayDataProvider($Data, array(
-//			'keyField' => 'Repr_id',
-//
-//			'pagination' => array(
-//				'pageSize' => 15,
-//
-//			)));
-//
-//		$this->render('index', array(
-//			'model'=>$model,
-//			'data'=>$DataProvider,
-//		));
-	}
-
-	public function actionCreate() {
-		$model = new Repair;
-
-		if(isset($_POST['Repair']))
-		{
-			$model->attributes=$_POST['Repair'];
-			// $model->dldm_id = null;
-
-			$model->reg_empl_id = Yii::app()->user->Employee_id;
-
-			if($id = $model->insert())
-				$this->redirect(array('view','id'=>$id['repr_id']));
-		}
-
-		$this->render('create', array(
-				'model'=>$model,
-			)
-		);
-	}
-
-	public function actionUpdate($id, $ajax=false) {
-		$model = new Repair;
-		$model->getmodelPk($id);
-		if(isset($_POST['Repair']))
-		{
-			$model->attributes=$_POST['Repair'];
-			// $model->dldm_id = null;
-
-			//$model->reg_empl_id = Yii::app()->user->Employee_id;
-			$model->Repr_id = $id;
-
-//			$model->date = Yii::app()->dateFormatter->formatDateTime($model->date, 'short','short');
-			//die($model->date);
-			if($model->update()) {
-				if ($model->getNodeptEquipMaster($model->mstr_empl_id, $model->eqip_id)) {
-					$this->redirect(array('writeoff', 'master'=>$model->mstr_empl_id, 'equip'=>$model->eqip_id, 'repair'=>$model->Repr_id ));
-				}
-				$this->redirect(array('view', 'id' => $model->Repr_id));
-			}
-		}
-
-
-
-		if($ajax) {
-			$this->renderPartial('update', array(
-				'model' => $model
-			), false, true);
-		}
-		else {
-			$this->render('update', array(
-					'model' => $model,
-				)
-			);
-		}
-	}
-
-	public function actionView($id) {
-		$model = new Repair;
-		$model->getModelPk($id);
-
-		$this->render('view', array(
-			'model'=>$model,
-		));
-	}
-
-	public function actionWriteoff($master, $equip, $repair) {
-
-		$this->render('writeoff', array(
-
-		));
-	}
-
-	public function actionRepairPRC($id, $ajax=false) {
-
-		$model = new Repair;
-		$model->getmodelPk($id);
-		if( isset($_POST['Repair'])) {
-			$model->attributes=$_POST['Repair'];
-			$model->Repr_id = $id;
-			var_dump($model);
-			if($model->update())
-				$this->redirect(array('view','id'=>$model->Repr_id));
-		}
-
-		if($ajax) {
-			$this->renderPartial('repairPRC', array(
-				'model'=>$model
-			),false, true);
-		}
-		else {
-			$this->render('repairPRC', array(
-				'model' => $model,
-			));
-		}
-	}
-
-	public function actionRepairSRM($id, $ajax=false) {
-
-		$model = new Repair;
-		$model->getmodelPk($id);
-		if( isset($_POST['Repair'])) {
-			$model->attributes=$_POST['Repair'];
-			$model->Repr_id = $id;
-			if($model->update())
-				$this->redirect(array('view','id'=>$model->Repr_id));
-		}
-
-		if($ajax) {
-			$this->renderPartial('repairSRM', array(
-				'model'=>$model
-			),false,true);
-		}
-		else {
-			$this->render('repairSRM', array(
-				'model' => $model,
-			));
-		}
-	}
-
-	public function actionDiagnostic($id, $ajax=false) {
-
-		$model = new Repair;
-		$model->getmodelPk($id);
-		if( isset($_POST['Repair'])) {
-			$model->attributes=$_POST['Repair'];
-			$model->Repr_id = $id;
-			if($model->update())
-				$this->redirect(array('view','id'=>$model->Repr_id));
-		}
-
-		if($ajax) {
-			$this->renderPartial('diagnostic', array(
-				'model'=>$model
-			), false, true);
-		}
-		else {
-			$this->render('diagnostic', array(
-				'model' => $model,
-			));
-		}
-	}
-
-	public function actionEquipInfo($id) {
-		$model = new Repair;
-		$price = $model->getEquipPrice($id);
-		$count = $model->getCountEquip($id);
-
-		$this->renderPartial('equipInfo', array(
-			'price'=>$price,//$price[0]['price_low'],
-			'count'=>$count,
-		));
-	}
-
-	public function actionEquipInfoSN($sn) {
-		$model = new Repair;
-		$info = $model->getInfoEquipSN($sn);
-
-		$this->renderPartial('equipInfo', array(
-			'info'=>$info
-		));
-	}
-
-	public function actionProcessInfo($id) {
-		$model = new Repair;
-		header('Content-Type: application/json');
-		echo CJSON::encode($model->getProcessInfo($id));
-	}
-
-	public function actionMaterialsInfo($id) {
-		$model = new Repair;
-		header('Content-Type: application/json');
-		echo CJSON::encode($model->getMaterialsInfo($id));
-	}
-
-	public function actionDocumentsInfo($id) {
-		$model = new Repair;
-		header('Content-Type: application/json');
-		echo CJSON::encode($model->getDocumentsInfo($id));
-	}
-
-	public function actionAutocompleteAddr($term){
-		$sql = Yii::app()->db->createCommand("Select Addr as label, Addr as value From Repairs_v Where Addr LIKE '{$term}%' group by Addr ORDER by Addr");
-		header('Content-Type: application/json');
-		echo CJSON::encode($sql->queryAll());
-	}
-
-	public function actionInfoSN($sn) {
-		$sql = "SELECT dad.date_create, sup.*, wh.number "
-			."From SerialNumbers sn "
-			."Inner Join DocmAchsDetails dad On sn.dadt_id = dad.dadt_id "
-			."Inner Join ActionHistory ah On dad.achs_id = ah.achs_id "
-			."Inner Join WHDocuments wh On wh.achs_id = ah.achs_id "
-			."Left Join Suppliers sup On wh.splr_id = sup.Supplier_Id "
-			."Where sn.SN = :sn And wh.dctp_id = 1";
-
-		$query = Yii::app()->db->CreateCommand($sql);
-		$query->bindParam(':sn', $sn);
-		var_dump($query->queryAll());
-	}
-
-
-	/*
-	 * Actions change status
-	 */
-
-	public function actionAccept($id) {
-		$model = new Repair;
-		$model->getModelPk($id);
-//		$q=$_GET['Repair'];
-//		$model->so_id=$q['so_id'];
-//		var_dump($model->so_id);
-//		if(!$model->update())
-//		{
-//			//throw new CException('Операция завершилась неудачей');
-//		}
-//
-		$model->mstr_id = $model->mstr_empl_id;
-		$model->engnr_id = $model->egnr_empl_id;
-
-		$model->callProc('ACCEPT_Repairs');
-	}
-
-	public function actionAgree($id) {
-		$model = new Repair;
-		$model->getModelPk($id);
-
-		$model->callProc('AGREE_Repairs');
-		$this->redirect($_SERVER['HTTP_REFERER']);
-	}
-
-	public function actionNoagree($id) {
-		$model = new Repair;
-		$model->getModelPk($id);
-
-		$model->callProc('NOAGREE_Repairs');
-	}
-
-	public function actionReady($id) {
-		$model = new Repair;
-		$model->getModelPk($id);
-
-		$model->callProc('READY_Repairs');
-	}
-
-	public function actionExec($id) {
-		$model = new Repair;
-
-		if(!$model->isEstimate($id)) {
-
-		}
-
-		else {
-			$model->getModelPk($id);
-
-			$model->callProc('EXEC_Repairs');
-		}
-	}
-
-	public function actionUndoDiagnostic($id) {
-		$model = new Repair;
-		$model->getModelPk($id);
-
-		$model->callProc('UNDO_RepairToDiagnostik');
-		$this->redirect($_SERVER['HTTP_REFERER']);
-	}
-
-	/*
-	 * End actions
-	 */
-
-
-//	public function actionRepairRepeat($id, $objc_id) {
-//		$sql = "
-//			select count(r.repr_id) as count
-//			from repairs r
-//			where r.deldate is null
-//				and r.eqip_id = :id
-//				and r.objc_id = :objc_id
-//				and r.[return] = 1
-//				and dbo.truncdate(r.date_create) between dateadd(mm, -1, dbo.truncdate(getdate())) and  dbo.truncdate(getdate())
-//		";
-//
-//		$query = Yii::app()->db->CreateCommand($sql);
-//		$query->bindParam(':id', $id);
-//		$query->bindParam(':objc_id', $objc_id);
-//
-//		echo $query->queryScalar();
-//
-//	}
-
-
-	public function checkRepairWaranty($id, $objc_id) {
-		$sql = "
-			select count(r.repr_id) as count
-			from repairs r
-			inner join CostCalculations c
-			on r.id = c.repr_id
-			where r.deldate is null
-				and r.eqip_id = :id
-				and r.objc_id = :objc_id
-				and r.[return] = 1
-				and dbo.truncdate(r.date_create) between dateadd(mm, -1, dbo.truncdate(getdate())) and  dbo.truncdate(getdate())
-		";
-
-		$query = Yii::app()->db->CreateCommand($sql);
-		$query->bindParam(':id', $id);
-		$query->bindParam(':objc_id', $objc_id);
-
-		echo $query->queryScalar();
-
-	}
-
-	public function actionMaterials($id) {
-
-	}
-
-
-	public function actionCartGeneral($id) {
-		$model = new Repair();
-		$model->getModelPk($id);
-		$this->renderPartial('cart/general',array('model' => $model), false, true);
-	}
-
-
-	public function actionCartPRC($id) {
-		$model = new Repair();
-		$model->getModelPk($id);
-		$this->renderPartial('cart/PRC',array('model' => $model), false, true);
-	}
-
-
-	public function actionCartSRM($id) {
-		$model = new Repair();
-		$model->getModelPk($id);
-		$this->renderPartial('cart/SRM',array('model' => $model), false, true);
-	}
-
-
-	public function actionCheckRepeatRepair($sn, $objc_id) {
-		$model = new Repair();
-		$repeat = $model->checkRepeatRepair($sn, $objc_id);
-		die(json_encode(array('status'=>'ok', 'data'=>array('repeatRepair'=>$repeat))));
-	}
-
-	public function actionGetServiceDept($objgr) {
-		$model = new Repair();
-		$sd = $model->getServiceDept($objgr);
-		die(json_encode(array('status'=>'ok', 'data'=>array('sd'=>$sd))));
-	}
-
-	public function actionCheckWarranty($sn) {
-		$model = new Repair();
-		$warranty = $model->checkWarranty($sn);
-		die(json_encode(array('status'=>'ok', 'data'=>array('warranty'=>$warranty))));
-	}
-//
-//	public function actionCountEquip($equip_id) {
-//		$model = new Repair();
-//		$count = $model->getCountEquip($equip_id);
-//		die(json_encode(array('status'=>'ok', 'data'=>array('equip'=>$count))));
-//	}
-
-
-	public function actionEquipPrice($id) {
-		$model = new Repair();
-		die(json_encode(array('status'=>'ok','data'=>array('price'=>$model->getEquipPrice($id)))));
-	}
-
-
-	public function actionProfitabilityRepair($id) {
-		if(!isset($_GET['calcparam'])) {
-			die;
-		}
-
-		$model = new Repair();
-		$model->getModelPk($id);
-		$param = $_GET['calcparam'];
-		switch($param['type']) {
-			case $model::TYPE_REPAIR_SRM:
-				$profitability = ($param['srm']['price'] * $model::PRICE_MARKUP / $model->getEquipPrice($model->eqip_id))
-																							* 100  >= 49 ? false : true;
-
-				break;
-			case $model::TYPE_REPAIR_PRC_SIMPLE:
-				$profitability = ($model->getSumRepairDetails() / $model->getEquipPrice($model->eqip_id)) * 100 >= 49 ? false : true;
-				break;
-			case $model::TYPE_REPAIR_PRC_SALARY:
-				$profitability = (($model->getSumRepairDetails() + (Employees::getSalaryPerHour($model->egnr_empl_id) * $param['prc']['timeForRepair']))
-													/ $model->getEquipPrice($model->eqip_id)) * 100 >= 49 ? false : true;
-				break;
-			case $model::TYPE_REPAIR_PRC_RETURN:
-			case $model::TYPE_REPAIR_PRC_NOT_RETURN:
-				$profitability = (($model->getSumRepairDetails() + (Employees::getSalaryPerHour($model->egnr_empl_id) * $param['prc']['timeForRepair']))
-												/ $model->getEquipLastPrice($model->eqip_id)) * 100 >= 49 ? false : true;
-				break;
-			default:
-				break;
-		}
-
-		die();
-	}
-
-
-	public function actionPricePRC($id) {
-		$repairDetail = new RepairDetails();
-		$repair = new Repair();
-
-
-	}
-
-
-	public function actionHistory() {
-		if($this->isAjax()) {
-			$this->renderPartial('history');
-		} else {
-			$this->render('history');
-		}
-	}
-
-
-	/*
-	 * actions documents
-	 */
-
-	public function actionKp() {
-		$this->render('kp');
-	}
-
-	/*
-	 * end actions documents
-	 */
+	
+    public $layout='//layouts/column2';
+    public $defaultAction  = 'index';
+    public $title = '';
+
+    public function filters()
+    {
+        return array(
+                'accessControl', // perform access control for CRUD operations
+                'postOnly + delete', // we only allow deletion via POST request
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            
+            array('allow', 
+                    'actions'=>array('UndoAccept'),
+                    'roles'=>array('UndoAcceptRepairs'),
+            ),
+            array('allow', 
+                    'actions'=>array('Accept'),
+                    'roles'=>array('AcceptRepairs'),
+            ),
+            array('allow', 
+                    'actions'=>array(   'CreateActDefectations',
+                                        'CreateCostCalc',
+                                        'SendAgreeActDefectations',
+                                        'Exec', 'Profit', 'Monitoring',
+                                        'WorkStart', 'WorkEnd',
+                                        'GetProfit', 'GetInfo',
+                                        'CreateRepairSRM', 'Return', 'CreateRepairWarrantys',
+                                        'CreateRepairUtil', 'CreateWHDocType2',
+                                        'CreateBtnWHAct', 'CreateWHDocType7',
+                                        'GetDefectExecTime', 'CreateDocuments'),
+                    'users'=>array('*'),
+            ),
+            array('allow', 
+                    'actions'=>array('RepairEngineerInformation', 'GetDocuments'),
+                    'roles'=>array('ViewRepairEngineerInformation'),
+            ),
+            array('allow', 
+                    'actions'=>array('index', 'RepaisForEngineer'),
+                    'roles'=>array('ViewRepairs'),
+            ),
+            array('allow', 
+                    'actions'=>array('SetTask'),
+                    'roles'=>array('SetTask'),
+            ),
+            array('allow', 
+                    'actions'=>array('SortTask'),
+                    'roles'=>array('SortTask'),
+            ),
+            array('allow', 
+                    'actions'=>array('Create'),
+                    'roles'=>array('CreateRepairs'),
+            ),
+            
+            array('allow', 
+                    'actions'=>array('Update', 'Update2'),
+                    'roles'=>array('UpdateRepairs'),
+            ),
+            array('deny',  // deny all users
+                'users'=>array('*'),
+            ),
+        );
+    }
+
+    public function actionReturn() {
+        $this->renderPartial('return', null, null, true);
+    }
+    
+    public function actionIndex(){
+        $this->title = 'Форма для менеджера по ремонту';
+        $this->render('index');
+    }
+    
+    public function actionRepaisForEngineer(){
+        $this->title = 'Форма для иженера ПРЦ';
+        $this->render('repairs_for_engineer');
+    }
+    
+    public function actionSetTask() {
+        if (isset($_POST['RepairTasks'])) {
+            $model = new RepairTasks();
+            $model->attributes = $_POST['RepairTasks'];
+            
+            $model->insert();
+        }
+        
+    }
+    
+    public function actionSortTask() {
+        if (isset($_POST['RepairTasks'])) {
+            $model = new RepairTasks();
+            $model->attributes = $_POST['RepairTasks'];
+            
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'SORT_RepairTasks';
+            $StoredProc->ParametersRefresh();
+            $StoredProc->SetStoredProcParams($model);
+            $StoredProc->SetParamValue('@Step', $_POST['RepairTasks']['Step']);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['TaskSequence'];
+        }
+        
+    }
+    
+    public function actionCreate() {
+        $this->title = 'Создание новой заявки на ремонт';
+        $model = new Repairs();
+        
+        //$model->setScenario('Insert');
+
+        if(isset($_POST['Repairs'])) {
+            $model->attributes=$_POST['Repairs'];
+            $model->EmplCreate = Yii::app()->user->Employee_id;
+
+            if ($model->validate()) {
+                $Res = $model->insert();
+                $this->redirect(Yii::app()->createUrl('Repair/RepairEngineerInformation', array(
+                    'Repr_id' => $Res['Repr_id'],
+                )));
+            }    
+        }
+
+        $this->render('create',array(
+            'model'=>$model,
+        ));
+    }
+    
+    public function actionUpdate2($Repr_id) {
+        $this->title = 'Редактирование заявки на ремонт';
+        $model = new Repairs();
+        $model->getModelPk($Repr_id);
+        //$model->setScenario('Insert');
+
+        if(isset($_POST['Repairs'])) {
+            $model->attributes=$_POST['Repairs'];
+            
+            $model->EmplChange = Yii::app()->user->Employee_id;
+
+            if ($model->validate()) {
+                $model->update();
+                
+                $this->redirect(Yii::app()->createUrl('Repair/RepairEngineerInformation', array(
+                    'Repr_id' => $model->Repr_id,
+                )));
+            }    
+        }
+        
+            
+        $this->render('update2',array(
+            'model'=>$model,
+        ));
+    }
+    
+    public function actionUpdate($Repr_id) {
+        $this->title = 'Редактирование заявки на ремонт';
+        $model = new Repairs();
+        
+        //$model->setScenario('Insert');
+
+        if(isset($_POST['Repairs'])) {
+            $model->attributes=$_POST['Repairs'];
+            
+            $model->EmplChange = Yii::app()->user->Employee_id;
+
+            if ($model->validate()) {
+                $model->update();
+                
+                $this->redirect(Yii::app()->createUrl('Repair/RepairEngineerInformation', array(
+                    'Repr_id' => $model->Repr_id,
+                )));
+            }    
+        }
+        else {
+            $model->getModelPk($Repr_id);
+        }
+            
+        if ($model->Status_id < 2) 
+            $this->render('update',array(
+                'model'=>$model,
+            ));
+        
+        
+    }
+    
+    public function actionRepairEngineerInformation($Repr_id) {
+        $model = new Repairs();
+        $model->getModelPk($Repr_id);
+        
+        $this->title = 'Заяка на ремнот №' . $model->Number . ' от ' . DateTimeManager::YiiDateToAliton($model->Date);
+        
+        $Params = array(
+            'BtnAccept' => false,
+            'BtnUndoAccept' => false,
+            'BtnSendAgreeActDefectation' => false,
+            'BtnExec' => false,
+            'BtnProfit' => false,
+            'BtnMonitoring' => true,
+            'BtnWorkStart' => false,
+            'BtnWorkEnd' => false,
+        );
+        
+        if ($model->Status_id == 0 || $model->Status_id == 1)
+            $Params['BtnAccept'] = true;
+        if ($model->Status_id > 1)
+            $Params['BtnUndoAccept'] = true;
+        
+        /* Неремонтопригодно*/
+        if ($model->Status_id == 5) {
+            if ($model->RepairStage_id == 3)
+                $Params['BtnSendAgreeActDefectation'] = true;
+            if ($model->RepairStage_id == 6)
+                $Params['BtnExec'] = true;
+        }
+        
+        /* Ремонт в ПРЦ */
+        if ($model->Status_id == 3) {
+            if ($model->RepairStage_id == 8)
+                $Params['BtnProfit'] = true;
+            if ($model->RepairStage_id == 9)
+                $Params['BtnWorkStart'] = true;
+            if ($model->RepairStage_id == 10)
+                $Params['BtnWorkEnd'] = true;
+            if ($model->RepairStage_id == 12)
+                $Params['BtnExec'] = true;
+        }
+        
+        /* Ремонт в СРМ */
+        if ($model->Status_id == 4) {
+            if ($model->RepairStage_id == 16)
+                $Params['BtnProfit'] = true;
+            if ($model->RepairStage_id == 17)
+                $Params['BtnWorkStart'] = true;
+            if ($model->RepairStage_id == 18)
+                $Params['BtnWorkEnd'] = true;
+            if ($model->RepairStage_id == 20)
+                $Params['BtnExec'] = true;
+        } 
+        
+        /* Оборудование исправно */
+        if ($model->Status_id == 6) {
+            if ($model->RepairStage_id == 24)
+                $Params['BtnExec'] = true;
+        }
+        
+        $this->render('repair_engineer_information',array(
+            'model' => $model,
+            'Params' => $Params,
+        ));
+    }
+    
+    public function actionAccept($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'ACCEPT_Repairs';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplChange', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Repr_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionUndoAccept($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'UNDO_AcceptRepairs';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplChange', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Repr_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionGetDocuments($Repr_id) {
+        $this->renderPartial('documents', array(
+            'Repr_id' => $Repr_id,
+        ), null, true);
+    }
+    
+    public function actionCreateActDefectations($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToActDefectations';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Docm_id', Null);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Docm_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionCreateCostCalc($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToCostCalculations';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@Calc_id', Null);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Calc_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionCreateRepairSRM($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToSRM';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Docm_id', Null);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Docm_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionCreateRepairWarrantys($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToWarrantys';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Docm_id', Null);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Docm_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionCreateRepairUtil($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToUtilizations';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Docm_id', Null);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Docm_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionCreateWHDocType2($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToWHDocType9';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Docm_id', Null);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Docm_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionCreateBtnWHAct($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToWHDocType5';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Docm_id', Null);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Docm_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionCreateWHDocType7($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToWHDocType7';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Docm_id', Null);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Docm_id'];
+        }
+        else
+            echo 0;
+    }
+    
+    public function actionSendAgreeActDefectations($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'SEND_AgreeActDefectations';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Error', 0);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplChange', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Error'];
+        }
+        else
+            echo 100;
+    }
+    
+    public function actionExec($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'EXEC_Repairs';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Error', 0);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplChange', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Error'];
+        }
+        else
+            echo 100;
+    }
+    
+    public function actionProfit($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'UPDATE_RepairsProfit';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Error', 0);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplChange', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Error'];
+        }
+        else
+            echo 100;
+    }
+    
+    public function actionMonitoring($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'COPY_RepairToMonitoring';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Docm_id', 0);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['Docm_id'];
+        }
+        else
+            echo -1;
+    }
+    
+    public function actionWorkStart($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'INSERT_RepairWorkings';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@RepairWorking_id', 0);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@Empl_id', 0);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['RepairWorking_id'];
+        }
+        else
+            echo -1;
+    }
+    
+    public function actionWorkEnd($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'UPDATE_RepairWorkings';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@RepairWorking_id', 0);
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplChange', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo $Result['RepairWorking_id'];
+        }
+        else
+            echo -1;
+    }
+    
+    public function actionCreateDocuments($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'CREATE_RepairDocuments';
+            $StoredProc->ParametersRefresh();
+            
+            $StoredProc->SetParamValue('@Repr_id', $Repr_id);
+            $StoredProc->SetParamValue('@EmplCreate', Yii::app()->user->Employee_id);
+            
+            $Result = $StoredProc->Execute();
+            echo 1;
+        }
+        else
+            echo -1;
+    }
+    
+    public function actionGetProfit($Repr_id = 0) {
+        if ($Repr_id != 0) {
+            $Result = Yii::app()->db->createCommand('Select * From dbo.get_repair_profit(' . $Repr_id . ')')->queryAll();
+            echo json_encode($Result);
+        }
+    }
+    
+    public function actionGetInfo() {
+        if (isset($_POST['Params'])) {
+            $Object_id = $_POST['Params']['Object_id'];
+            $Date = Date('d.m.Y');
+            $Equip_id = $_POST['Params']['Equip_id'];
+            $SN = $_POST['Params']['SN'];
+            $Repr_id = $_POST['Params']['Repr_id'];
+            $Storage_id = $_POST['Params']['Storage_id'];
+            
+            if ($Repr_id == '')
+                $Repr_id = 'null';
+            
+            if ($Storage_id == '')
+                $Storage_id = 'null';
+            
+            $Result = Yii::app()->db->createCommand('Select * From dbo.get_equip_info_repairs(' . $Repr_id . ', ' . $Object_id . ', \'' . $Date . '\', ' . $Equip_id . ', \'' . $SN . '\', ' . $Storage_id . ')')->queryAll();
+            $Result[0]['LastDateMonitoring'] = DateTimeManager::YiiDateToAliton($Result[0]['LastDateMonitoring']);
+            echo json_encode($Result);
+        }
+    }
+    
+    
+    public function actionGetDefectExecTime($Equip_id = 0, $Defect_id = 0) {
+        $ExecTime = -1;
+        
+        if ($Equip_id != 0 && $Defect_id != 0) {
+            $Model = new RepairDefectsTime();
+            $Result = $Model->Find(array(
+                'd.Equip_id' => $Equip_id,
+                'd.Defect_id' => $Defect_id,
+            ));
+            $ExecTime = $Result[0]['ExecTime'];
+        }
+        echo $ExecTime;
+    }
 }

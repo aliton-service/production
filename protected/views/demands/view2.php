@@ -75,7 +75,7 @@
         $("#edUCreateName").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.UCreateName});
         $("#edUChangeName").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.UChangeName});
         $("#edComment").jqxInput({height: 25, width: 580, minLength: 1});
-        $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null}));
+        $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, dropDownVerticalAlignment: "top"}));
         
         $("#btnEdit").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null)});
         $("#btnClient").jqxButton({ width: 120, height: 30 });

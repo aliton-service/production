@@ -10,6 +10,8 @@ class aledit extends CWidget {
     public $Mode = 'Standart';
     public $Visible = true;
     public $OnKeyUpEnter = '';
+    public $OnChange = '';
+    public $PlaceHolder = '';
     
     protected $_assetsUrl;
     
@@ -66,6 +68,8 @@ class aledit extends CWidget {
             'Mode' => $this->Mode,
             'Visible' => $this->Visible,
             'OnKeyUpEnter' => $this->OnKeyUpEnter,
+            'OnChange' => $this->OnChange,
+            'PlaceHolder' => $this->PlaceHolder,
         );
         
         if ($this->Visible)

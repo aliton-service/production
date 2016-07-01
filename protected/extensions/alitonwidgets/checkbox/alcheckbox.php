@@ -8,6 +8,7 @@ class alcheckbox extends CWidget {
     public $Name = "";
     public $Visible = true;
     public $OnAfterClick = "";
+    public $OnChange = "";
     
     protected $_assetsUrl;
     
@@ -62,6 +63,7 @@ class alcheckbox extends CWidget {
             'Name' => $this->Name,
             'Visible' => $this->Visible,
             'OnAfterClick' => $this->OnAfterClick,
+            'OnChange' => $this->OnChange,
         );
         
         if ($this->Visible)

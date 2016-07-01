@@ -533,6 +533,7 @@
                 Checked: false,
                 Label: "",
                 Name: "",
+                OnChange: "",
             }, options || {});
             
             var id = settings.id;
@@ -593,6 +594,7 @@
                 Aliton.Objects[id].Ready = true;
             }
             Aliton.ChangeValue(id);
+            eval(alcheckboxSettings[id].OnChange);
         },
         
         DrawControl: function() {
@@ -1121,6 +1123,8 @@
                 Ready: false,
                 Mode: 'Standart',
                 OnKeyUpEnter: '',
+                OnChange: '',
+                PlaceHolder: '',
             }, options || {});
             
             var id = settings.id;
@@ -1148,11 +1152,13 @@
                     var Value = $("#" + settings.alEditInputSelector).val();
                     if (Value !== settings.Value) {
                         $(settings.alEditSelector).aledit("SetValue", Value);
+                        eval(settings.OnChange);
                     }
                     
                     if (event.keyCode == 13) {
                         Aliton.ChangeValue(id);
                         eval(settings.OnKeyUpEnter);
+                        eval(settings.OnChange);
                     }
                     
                     
@@ -1209,7 +1215,7 @@
             Str +=" <tbody>";
             Str +="     <tr>";
             Str +="         <td class='aleditc' style='width:100%;'>";
-            Str +="             <input id='" + aleditSettings[id].alEditInputSelector + "' class='aleditcontrol' name='" + aleditSettings[id].Name + "' type='text' " + ReadOnly + " style='width: 100%;' autocomplete='off'>";
+            Str +="             <input id='" + aleditSettings[id].alEditInputSelector + "' placeholder='" + aleditSettings[id].PlaceHolder + "' class='aleditcontrol' name='" + aleditSettings[id].Name + "' type='text' " + ReadOnly + " style='width: 100%;' autocomplete='off'>";
             Str +="         </td>";
             Str +="     </tr>";
             Str +=" </tbody>";
@@ -3406,7 +3412,7 @@
         SetValue: function(Value, Ready, F) {
             var id = $(this).attr("id");
             
-            if (F)
+            if ((F) && ((Value == true) || (Value == 'true')))
                 $(alradiobuttonSettings[id].alRadioButtonSelector).alradiobutton("ClearCheckedForGroup");
             
             alradiobuttonSettings[id].Checked = Value;
@@ -3425,7 +3431,10 @@
                 alradiobuttonSettings[id].Ready = true;
                 Aliton.Objects[id].Ready = true;
             }
-            Aliton.ChangeValue(id);
+            
+            if ((Value == true) || (Value == 'true'))
+                Aliton.ChangeValue(id);
+            
             
         },
         
@@ -3825,6 +3834,7 @@
                 ContentUrl: "",
                 FirstShow: true,
                 Show: false,
+                OnClose: "",
             }, options || {});
             
             var id = settings.id;
@@ -3906,6 +3916,7 @@
              }); 
              
             aldialogSettings[id].Show = false;
+            eval(aldialogSettings[id].OnClose);
         },
         
         ShowContent: function() {
@@ -3941,12 +3952,15 @@
             aldialogSettings[id].Show = true;
         },
         
-        Show: function(Params) {
+        Show: function(Params, Reload) {
             id = $(this).attr("id");
+            
+            if (Reload == 'udefined' || Reload == null)
+                Reload = false;
             
             $(this).aldialog("ShowContent");
             
-            if (aldialogSettings[id].FirstShow) 
+            if ((aldialogSettings[id].FirstShow) || (Reload))
                 $(this).aldialog("Load", Params);
         },
         

@@ -1,1277 +1,1030 @@
-<?php
-/**
- *
- * @var \Repair $model
- */
-?>
-
-<div class="form form-options">
-
-	<?php $form=$this->beginWidget('CActiveForm', array(
-		'id'=>'repairs-form',
-		'htmlOptions'=>array(
-			'class'=>'form-inline'
-		),
-		// Please note: When you enable ajax validation, make sure the corresponding
-		// controller action is handling ajax validation correctly.
-		// There is a call to performAjaxValidation() commented in generated controller code.
-		// See class documentation of CActiveForm for details on this.
-		'enableAjaxValidation'=>false,
-	)); ?>
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->labelEx($model,'Адрес объекта'); ?>
-<!--		--><?php //echo $form->dropDownList($model,'objc_id', $model->getObjectList(), array(//'name'=>'objc_id',
-//			'class'=>'form-control',
-//			'id'=>'object',
-//			'empty'=>array(''=>'выбрать адрес объекта'),
-//
-//		)); ?>
-<!--		--><?php //echo $form->error($model,'Object_id'); ?>
-<!--	</div>-->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->checkBox($model,'used',array('class'=>'form-control')); ?>
-<!--		--><?php //echo $form->labelEx($model,'used'); ?>
-<!--		--><?php //echo $form->error($model,'used'); ?>
-<!--	</div>-->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->labelEx($model,'date'); ?>
-<!--		--><?php //echo $form->textField($model,'date',array('class'=>'form-control datepicker')); ?>
-<!--		--><?php //echo $form->error($model,'date'); ?>
-<!--	</div>-->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->labelEx($model, 'eqip_id') ?>
-<!--		--><?php //echo $form->dropDownList($model, 'eqip_id', Equips::all(), array(
-//			'class'=>'form-control',
-//			'id'=>'equip',
-//			'empty'=>array(''=>'выбрать оборудование'),
-//			'style' => 'width:500px;',
-//		))?>
-<!--		--><?php //echo $form->error($model,'eqip_id'); ?>
-<!--	</div>-->
-<!---->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->labelEx($model,'docm_quant'); ?>
-<!--		--><?php //echo $form->textField($model,'docm_quant',array('class'=>'form-control datepicker')); ?>
-<!--		--><?php //echo $form->error($model,'docm_quant'); ?>
-<!--	</div>-->
-<!---->
-<!---->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->checkBox($model,'return',array('class'=>'form-control')); ?>
-<!--		--><?php //echo $form->labelEx($model,'return'); ?>
-<!--		--><?php //echo $form->error($model,'return'); ?>
-<!--	</div>-->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->checkBox($model,'wrnt',array('class'=>'form-control')); ?>
-<!--		--><?php //echo $form->labelEx($model,'wrnt'); ?>
-<!--		--><?php //echo $form->error($model,'wrnt'); ?>
-<!--	</div>-->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->checkBox($model,'work_ok',array('class'=>'form-control')); ?>
-<!--		--><?php //echo $form->labelEx($model,'work_ok'); ?>
-<!--		--><?php //echo $form->error($model,'work_ok'); ?>
-<!--	</div>-->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->labelEx($model, 'prtp_id') ?>
-<!--		--><?php //echo $form->dropDownList($model, 'prtp_id', RepairPriors::all(), array(
-//			'class'=>'form-control',
-//			'id'=>'equip',
-//			'empty'=>array(''=>'выбрать приоритет'),
-//			'style' => 'width:500px;',
-//		))?>
-<!--		--><?php //echo $form->error($model,'eqip_id'); ?>
-<!--	</div>-->
-<!---->
-<!---->
-<!--	<div class="row">-->
-<!--		--><?php //echo $form->labelEx($model, 'SN') ?>
-<!--		--><?php //echo $form->textField($model,'SN',array('class'=>'form-control')); ?>
-<!--		--><?php //echo $form->error($model,'SN'); ?>
-<!--	</div>-->
-<!---->
-<!--	<div class="row buttons">-->
-<!--		--><?php //echo CHtml::submitButton('Сохранить', array('class'=>'btn btn-primary')); ?>
-<!--	</div>-->
-<!---->
-<!---->
-<!---->
-<!--	<div class="row timepicker" style="position:absolute;background-color:white;margin:0;display:none;outline:2px solid orange">-->
-<!--		<label style="*color:orange">выберите время</label><br><br>-->
-<!--		<input class="hours form-control">-->
-<!--		<input class="minutes form-control">-->
-<!--		<input type="button" value="ok" class="add-time form-control btn btn-info">-->
-<!--	</div>-->
-
-
-		<?php
-		if($this->action->id == 'create' || $this->action->id == 'update') {
-
-			if($this->action->id =='create') {
-				?>
-<!--				<div class="form-field" id="repair-repeat">-->
-<!--				--><?php
-//				//echo $form->labelEx($model, 'Ремонт производится повторно');
-//				echo $form->labelEx($model,'Выберите причину повторного ремонта');
-//				$this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-//					'id' => 'repr-repeat',
-//					'popupid' => 'repr-repeat-grid',
-//					'data' => RepairRepeatReason::getData(),
-//					'label' => '',
-//					'name' => 'Repair[Repr_repeat_id]',
-//					'fieldname' => 'Repr_repeat_name',
-//					'keyfield' => 'Repr_repeat_id',
-//					'keyvalue' => $model->objc_id,
-//					'width' => 200,
-//					'showcolumns' => true,
-//					'columns' => array(
-//						'ReprRepeat' => array(
-//							'name' => 'Причина повторного ремонта',
-//							'fieldname' => 'Repr_repeat_name',
-//							'width' => 150,
-//							'height' => 23,
-//						),
-//					),
-//
-//
-//				));
-//				?>
-<!--				</div><hr>-->
-
-				<div class="form-field">
-<!--					--><?php //echo $form->checkBox($model,'Tmp_equip_replace',array('class'=>'form-control')); ?>
-<!--					--><?php //echo $form->labelEx($model,'Tmp_equip_replace', array('for'=>'Repair_Tmp_equip_replace')); ?>
-					<?php
-					$this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
-						'id' => 'tmpEquipReplace',
-						'Label' => 'Установленно подменное оборудование',
-						'Name' => 'Repair[Tmp_equip_replace]',
-						'Checked' => $model->Tmp_equip_replace
-					));
-					?>
-					<?php echo $form->error($model,'Tmp_equip_replace'); ?>
-				</div>
-				<div class="clearfix"></div>
-
-				<div class="field pull-left">
-					<?php echo $form->labelEx($model,'date'); ?>
-					<?php //echo $form->textField($model,'date',array('class'=>'form-control datepicker')); ?>
-					<?php $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-						'id' => 'date',
-						'Name' => 'Repair[date]',
-
-					)); ?>
-					<?php echo $form->error($model,'date'); ?>
-				</div>
-				<div class="field pull-left">
-					<?php echo $form->labelEx($model,'prtp_id'); ?>
-					<?php
-					$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-						'id' => 'repair-priors',
-						'Stretch' => true,
-						'ModelName' => 'RepairPriors',
-						'Height' => 300,
-						'Width' => 250,
-						'KeyField' => 'prtp_id',
-						'FieldName' => 'RepairPrior',
-						'Name' => 'Repair[prtp_id]',
-						'KeyValue' => $model->prtp_id,
-						'Type' => array(
-							'Mode' => 'Filter',
-							'Condition' => 'rp.RepairPrior like \':Value%\'',
-						),
-						'Columns' => array(
-							'RepairPrior' => array(
-								'Name' => 'Приоритет',
-								'FieldName' => 'RepairPrior',
-								'Width' => 300,
-							),
-						),
-					));
-					?>
-					<?php echo $form->error($model,'prtp_id'); ?>
-				</div>
-				<div class="clearfix"></div>
-
-				<?php
-			}
-		?>
-			<div class="field border pull-left" style="background-color: inherit">
-				<div class="title">Дата выполнения</div>
-				<div>
-					<div class="field pull-left">
-						<label>Желаемая</label>
-						<?php
-						$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-							'id' => 'best_date',
-							'Value' => DateTimeManager::YiiDateToAliton($model->best_date),
-							'Name' => 'Repair[best_date]'
-						));
-						?>
-					</div>
-					<div class="field pull-left">
-						<label>Предельная</label>
-						<?php
-						$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-							'id' => 'deadline',
-							'Name' => 'Repair[deadline]',
-						));
-						?>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-
-				<div class="clearfix"></div>
-
-	<div class="field pull-left">
-		<?php echo $form->labelEx($model,'Адрес'); ?>
-		<?php
-		$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-			'id' => 'addr-obj',
-			'Stretch' => true,
-			'ModelName' => 'ListObjects',
-			'Height' => 300,
-			'Width' => 350,
-			'KeyField' => 'Object_id',
-			'FieldName' => 'Addr',
-			'Name' => 'Repair[obcj_id]',
-			'Type' => array(
-				'Mode' => 'Filter',
-				'Condition' => 'Addr like \':Value%\'',
-			),
-			'Columns' => array(
-				'Addr' => array(
-					'Name' => 'Адрес',
-					'FieldName' => 'Addr',
-					'Width' => 350,
-				),
-			),
-			'OnAfterChange' => 'checkRepeatRepair(); getServiceDept();',
-		));
-		?>
-	</div>
-	<div class="field pull-left">
-		<?php echo $form->labelEx($model,'Юр. лицо'); ?>
-		<?php
-		$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-			'id' => 'juric',
-			'Stretch' => true,
-			'ModelName' => 'Juridicals',
-			'Height' => 300,
-			'Width' => 200,
-			'KeyField' => 'Jrdc_Id',
-			'FieldName' => 'JuridicalPerson',
-			'Type' => array(
-				'Mode' => 'Filter',
-				'Condition' => 'jur.JuridicalPerson like \':Value%\'',
-			),
-			'Columns' => array(
-				'JuridicalPerson' => array(
-					'Name' => 'Юр. лицо',
-					'FieldName' => 'JuridicalPerson',
-					'Width' => 250,
-				),
-			),
-		));
-
-		?>
-	</div>
-			<div class="clearfix"></div>
-
-	<div class="field pull-left">
-		<?php echo $form->labelEx($model,'Оборудование'); ?>
-		<?php
-		$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-			'id' => 'equip',
-			'Stretch' => true,
-			'ModelName' => 'Equips',
-			'Height' => 300,
-			'Width' => 250,
-			'KeyField' => 'Equip_id',
-			'FieldName' => 'EquipName',
-			'Name' => 'Repair[eqip_id]',
-			'KeyValue' => $model->eqip_id,
-			'Type' => array(
-				'Mode' => 'Filter',
-				'Condition' => 'e.EquipName like \':Value%\'',
-			),
-			'Columns' => array(
-				'EquipName' => array(
-					'Name' => 'Оборудование',
-					'FieldName' => 'EquipName',
-					'Width' => 300,
-				),
-			),
-			'OnAfterChange' => 'if(alcomboboxajaxSettings.equip.CurrentRow) { getInfoEquip(alcomboboxajaxSettings.equip.CurrentRow["Equip_id"]); }'
-		));
-
-		?>
-
-		</div>
-			<div class="form-field" id="repair-repeat" style="display: none;">
-				<?php
-				//echo $form->labelEx($model, 'Ремонт производится повторно');
-				echo $form->labelEx($model,'Выберите причину повторного ремонта');
-				$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-					'id' => 'repr-repeat',
-					'Stretch' => true,
-					'ModelName' => 'RepairRepeatReason',
-					'Height' => 300,
-					'Width' => 250,
-					'KeyField' => 'Equip_id',
-					'FieldName' => 'Repr_repeat_name',
-					'Name' => 'Repair[objc_id]',
-					'KeyValue' => $model->objc_id,
-					'Type' => array(
-						'Mode' => 'Filter',
-						'Condition' => 'rr.Repr_repeat_name like \':Value%\'',
-					),
-					'Columns' => array(
-						'Repr_repeat_name' => array(
-							'Name' => 'Причина повторного ремонта',
-							'FieldName' => 'Repr_repeat_name',
-							'Width' => 300,
-						),
-					),
-				));
-
-				?>
-			</div>
-<!--		<div class="form-field">-->
-<!--			--><?php //echo $form->labelEx($model, 'Ед. изм.') ?>
-<!--			--><?php //echo $form->textField($model,'Um_name',array('class'=>'form-control')); ?>
-<!--			--><?php //echo $form->error($model,'Um_name'); ?>
-<!--		</div>-->
-			<div class="field pull-left">
-				<?php echo $form->labelEx($model,'Ед. изм.'); ?>
-				<?php
-				$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-					'id' => 'um_name',
-					'Name' => 'Repair[um_name]',
-					'Value' => $model->um_name,
-					'Width' => 80,
-					'Name' => 'Repair[um_name]'
-				));
-				//echo $form->numberField($model,'docm_quant'); ?>
-				<?php echo $form->error($model,'um_name'); ?>
-			</div>
-
-			<div class="field pull-left">
-				<?php echo $form->labelEx($model,'Количество'); ?>
-				<?php
-				$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-					'id' => 'docm_quant',
-					'Name' => 'Repair[docm_quant]',
-					'Value' => $model->docm_quant,
-					'Width' => 80,
-					'Name' => 'Repair[docm_quant]'
-				));
-				//echo $form->numberField($model,'docm_quant'); ?>
-				<?php echo $form->error($model,'docm_quant'); ?>
-			</div>
-
-
-
-		<div class="field pull-left" style="margin-top: 17px">
-<!--			--><?php //echo $form->checkBox($model,'used',array('class'=>'form-control')); ?>
-<!--			--><?php //echo $form->labelEx($model,'Б/у', array('for'=>'Repair_used')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
-				'id' => 'used',
-				'Label' => 'Б/У',
-				'Name' => 'Repair[used]',
-				'Checked' => $model->used
-			));
-			?>
-			<?php echo $form->error($model,'used'); ?>
-		</div><div class="clearfix"></div>
-
-			<div class="field pull-left">
-				<?php echo $form->labelEx($model,'EquipState_id'); ?>
-				<?php
-				$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-					'id' => 'equipState',
-					'Stretch' => true,
-					'ModelName' => 'EquipState',
-					'Height' => 300,
-					'Width' => 250,
-					'KeyField' => 'EquipState_id',
-					'FieldName' => 'EquipState',
-					'Name' => 'Repair[EquipState_id]',
-					'KeyValue' => $model->EquipState_id,
-					'Type' => array(
-						'Mode' => 'Filter',
-						'Condition' => 'es.EquipState like \':Value%\'',
-					),
-					'Columns' => array(
-						'EquipState' => array(
-							'Name' => 'Причина повторного ремонта',
-							'FieldName' => 'EquipState',
-							'Width' => 300,
-						),
-					),
-				));
-				?>
-				<?php echo $form->error($model,'EquipState_id'); ?>
-			</div>
-
-			<div class="field pull-left">
-				<?php
-				$this->widget('application.extensions.alitonwidgets.radiobutton.alradiobutton', array(
-					'id' => 'payClient',
-					'Checked' => $model->repair_pay == 1 ? true : false,
-					'Label' => "Ремонт платный за счет клиента",
-					'GroupName' => 'payRepair',
-					'Value' => 1,
-					'Name' => 'Repair[repair_pay]'
-				));
-
-				$this->widget('application.extensions.alitonwidgets.radiobutton.alradiobutton', array(
-					'id' => 'payCompany',
-					'Checked' => $model->repair_pay == 2 ? true : false,
-					'Label' => "Ремонт платный за счет компании",
-					'GroupName' => 'payRepair',
-					'Value' => 2,
-					'Name' => 'Repair[repair_pay]'
-				));
-				?>
-			</div>
-
-			<div class="clearfix"></div>
-		<div class="form-field">
-<!--			--><?php //echo $form->checkBox($model,'return',array('class'=>'form-control')); ?>
-<!--			--><?php //echo $form->labelEx($model,'Требуется возврат', array('for'=>'Repair_return')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
-				'id' => 'return',
-				'Label' => 'Требуется возврат',
-				'Name' => 'Repair[return]',
-				'Checked' => $model->return
-			));
-			?>
-			<?php echo $form->error($model,'return'); ?>
-		</div>
-		<div class="form-field">
-<!--			--><?php //echo $form->checkBox($model,'wrnt',array('class'=>'form-control')); ?>
-<!--			--><?php //echo $form->labelEx($model,'На гарантии', array('for'=>'Repair_wrnt')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
-				'id' => 'wrnt',
-				'Label' => 'На гарантии',
-				'Name' => 'Repair[wrnt]',
-				'Checked' => $model->wrnt
-			));
-			?>
-			<?php echo $form->error($model,'wrnt'); ?>
-		</div>
-		<div class="form-field">
-<!--			--><?php //echo $form->checkBox($model,'work_ok',array('class'=>'form-control')); ?>
-<!--			--><?php //echo $form->labelEx($model,'Исправное', array('for'=>'Repair_work_ok')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
-				'id' => 'work_ok',
-				'Label' => 'Исправное',
-				'Name' => 'Repair[work_ok]',
-				'Checked' => $model->work_ok
-			));
-			?>
-			<?php echo $form->error($model,'work_ok'); ?>
-		</div>
-		<hr>
-
-
-		<?php
-		if($this->action->id == 'create' || Yii::app()->user->checkAccess('LogisticAdministrator')) {
-			?>
-			<div class="field">
-				<?php echo $form->labelEx($model, 'SN') ?>
-<!--				--><?php //echo $form->textField($model,'SN',array('class'=>'form-control', 'id'=>'equipSN')); ?>
-				<?php
-				$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-					'id' => 'equipSN',
-					'Name' => 'Repair[SN]',
-					'Value' => $model->SN,
-
-				));
-				?>
-				<?php echo $form->error($model,'SN'); ?>
-			</div><hr>
-			<?php
-		}
-		?>
-
-		<div id="repeatRepair" class="hidden">
-			<label>Выберите причину повторного ремонта</label>
-			<input>
-		</div>
-
-
-		<div class="form-field">
-			<?php echo $form->labelEx($model, 'Комплектность') ?>
-<!--			--><?php //echo $form->textArea($model,'set',array('class'=>'form-control')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-				'id' => 'set',
-				'Name' => 'Repair[set]',
-				'Value' => $model->set,
-				'Width' => 230,
-				'Height' => 60
-			));
-			?>
-			<?php echo $form->error($model,'set'); ?>
-		</div><hr>
-
-		<div class="form-field">
-			<?php echo $form->labelEx($model, 'Неисправность') ?>
-			<span>(<a href="#choiseDefect" id="choiseDefect">выбрать из списка</a>)</span>
-			<div class="defectList">
-				<?php
-				$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-					'id' => 'defectList',
-					'Stretch' => true,
-					'ModelName' => 'RepairDefects',
-					'Height' => 300,
-					'Width' => 200,
-					'KeyField' => 'RepairDefect_id',
-					'FieldName' => 'RepairDefect',
-					'Type' => array(
-						'Mode' => 'Filter',
-						'Condition' => 'rd.RepairDefect like \':Value%\'',
-					),
-					'Columns' => array(
-						'RepairDefect' => array(
-							'Name' => 'Неисправность',
-							'FieldName' => 'RepairDefect',
-							'Width' => 200,
-
-						),
-					),
-				));
-				?>
-			</div>
-<!--			--><?php //echo $form->textArea($model,'defect',array('class'=>'form-control')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-				'id' => 'defect',
-				'Name' => 'Repair[defect]',
-				'Value' => $model->defect,
-				'Width' => 230,
-				'Height' => 60
-			));
-			?>
-			<?php echo $form->error($model,'defect'); ?>
-		</div>
-
-		<div class="form-field">
-			<?php echo $form->labelEx($model, 'Примечание') ?>
-<!--			--><?php //echo $form->textArea($model,'note',array('class'=>'form-control')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-				'id' => 'note',
-				'Name' => 'Repair[note]',
-				'Value' => $model->note,
-				'Width' => 230,
-				'Height' => 60
-			));
-			?>
-			<?php echo $form->error($model,'note'); ?>
-		</div><hr>
-
-		<div class="field pull-left">
-			<?php echo $form->labelEx($model,'Сдал в ремонт'); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-				'id' => 'master',
-				'Stretch' => true,
-				'ModelName' => 'Employees',
-				'Height' => 300,
-				'Width' => 200,
-				'KeyField' => 'Employee_id',
-				'FieldName' => 'EmployeeName',
-				'KeyValue' => $model->mstr_empl_id,
-				'Name' => 'Repair[mstr_empl_id]',
-				'Type' => array(
-					'Mode' => 'Filter',
-					'Condition' => 'e.EmployeeName like \':Value%\'',
-				),
-				'Columns' => array(
-					'EmployeeName' => array(
-						'Name' => 'Сдал в ремонт',
-						'FieldName' => 'EmployeeName',
-						'Width' => 200,
-
-					),
-				),
-			));
-
-			?>
-		</div>
-
-		<div class="field pull-left">
-			<?php echo $form->labelEx($model,'Инженер ПРЦ'); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-				'id' => 'egnr',
-				'Stretch' => true,
-				'ModelName' => 'Employees',
-				'Height' => 300,
-				'Width' => 200,
-				'KeyField' => 'Employee_id',
-				'FieldName' => 'EmployeeName',
-				'KeyValue' => $model->egnr_empl_id,
-				'Name' => 'Repair[egnr_empl_id]',
-				'Type' => array(
-					'Mode' => 'Filter',
-					'Condition' => 'e.EmployeeName like \':Value%\'',
-				),
-				'Columns' => array(
-					'EmployeeName' => array(
-						'Name' => 'Инженер ПРЦ',
-						'FieldName' => 'EmployeeName',
-						'Width' => 200,
-
-					),
-				),
-			));
-
-			?>
-		</div>
-			<div class="clearfix"></div>
-
-			<div class="field pull-left">
-				<?php echo $form->labelEx($model,'EmplCreate'); ?>
-				<?php
-				$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-					'id' => 'emplCreate',
-					'Stretch' => true,
-					'ModelName' => 'Employees',
-					'Height' => 300,
-					'Width' => 200,
-					'KeyField' => 'Employee_id',
-					'FieldName' => 'EmployeeName',
-					'KeyValue' => $model->EmplCreate,
-					'Name' => 'Repair[EmplCreate]',
-					'Type' => array(
-						'Mode' => 'Filter',
-						'Condition' => 'e.EmployeeName like \':Value%\'',
-					),
-					'Columns' => array(
-						'EmployeeName' => array(
-							'Name' => 'Зарегистрировал',
-							'FieldName' => 'EmployeeName',
-							'Width' => 200,
-
-						),
-					),
-				));
-
-				?>
-				<?php echo $form->error($model,'EmplCreate'); ?>
-			</div>
-
-			<div class="field pull-left">
-				<?php echo $form->labelEx($model,'Доставил'); ?>
-				<?php
-				$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-					'id' => 'cur',
-					'Stretch' => true,
-					'ModelName' => 'Employees',
-					'Height' => 300,
-					'Width' => 200,
-					'KeyField' => 'Employee_id',
-					'FieldName' => 'EmployeeName',
-					'KeyValue' => $model->cur_empl_id,
-					'Name' => 'Repair[cur_empl_id]',
-					'Type' => array(
-						'Mode' => 'Filter',
-						'Condition' => 'e.EmployeeName like \':Value%\'',
-					),
-					'Columns' => array(
-						'EmployeeName' => array(
-							'Name' => 'Доставил',
-							'FieldName' => 'EmployeeName',
-							'Width' => 200,
-
-						),
-					),
-				));
-
-				?>
-			</div>
-			<div class="clearfix"></div>
-
-	<div class="form-field">
-<!--		--><?php //$reason = new DelayReasons();
-//		$reason_list = $reason->getData(); ?>
-		<?php echo $form->labelEx($model,'Причина просрочки'); ?>
-		<?php
-		$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-			'id' => 'delay',
-			'Stretch' => true,
-			'ModelName' => 'DelayReasons',
-			'Height' => 300,
-			'Width' => 200,
-			'KeyField' => 'dlrs_id',
-			'FieldName' => 'name',
-			'KeyValue' => $model->delayreason,
-			'Name' => 'Repair[delayreason]',
-			'Type' => array(
-				'Mode' => 'Filter',
-				'Condition' => 'd.name like \':Value%\'',
-			),
-			'Columns' => array(
-				'name' => array(
-					'Name' => 'Причина просрочки',
-					'FieldName' => 'name',
-					'Width' => 200,
-
-				),
-			),
-		));
-
-		?>
-	</div><hr>
-
-
-	<?php }
-	elseif ($this->action->id == 'repairPRC') {
-		if($model->status != 3) die('Оборудование не находится в ремонте в ПРЦ');
-		?>
-
-		<div class="form-field">
-			<!--			--><?php //echo $form->checkBox($model,'blank_correct',array('class'=>'form-control')); ?>
-			<!--			--><?php //echo $form->labelEx($model,'Без бланка/некор-ый', array('for'=>'Repair_blank_correct')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
-				'id' => 'blank_correct',
-				'Label' => 'Без бланка/некор-ый',
-				'Name' => 'Repair[blank_correct]',
-				'Checked' => $model->blank_correct
-			));
-			?>
-			<?php echo $form->error($model,'blank_correct'); ?>
-		</div><hr>
-
-		<div class="form-field">
-			<?php echo $form->labelEx($model, 'Неисправность') ?>
-<!--			--><?php //echo $form->textArea($model,'edefect',array('class'=>'form-control')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-				'id' => 'edefect',
-				'Name' => 'Repair[edefect]',
-				'Value' => $model->edefect
-			));
-			?>
-			<?php echo $form->error($model,'edefect'); ?>
-		</div>
-
-		<div class="form-field">
-			<?php echo $form->labelEx($model, 'Примечание') ?>
-<!--			--><?php //echo $form->textArea($model,'note',array('class'=>'form-control')); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-				'id' => 'note',
-				'Name' => 'Repair[note]',
-				'Value' => $model->note
-			));
-			?>0
-			<?php echo $form->error($model,'note'); ?>
-		</div><hr>
-
-		<div class="form-field">
-			<?php echo $form->labelEx($model, 'Времязатратность') ?>
-			<?php echo $form->numberField($model,'ExecHour',array('class'=>'form-control')); ?>
-			<?php echo $form->error($model,'ExecHour'); ?>
-		</div><hr>
-
-		<div class="form-field">
-			<?php echo $form->labelEx($model,'Дата выполнения ремонта:'); ?>
-		</div><div class="clearfix"></div>
-		<div class="form-field">
-			<?php echo $form->labelEx($model,'Планируемая'); ?>
-			<?php //echo $form->textField($model,'date_plan',array('class'=>'form-control datepicker')); ?>
-			<?php $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-				'Name' => 'Repair[date_plan]',
-				'id' => 'date-plan'
-
-			)); ?>
-			<?php echo $form->error($model,'date_plan'); ?>
-		</div>
-		<div class="form-field">
-			<?php echo $form->labelEx($model,'Фактическая'); ?>
-			<?php //echo $form->textField($model,'date_fact',array('class'=>'form-control datepicker')); ?>
-			<?php $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-				'Name' => 'Repair[date_fact]',
-				'id' => 'date-fact'
-
-			)); ?>
-			<?php echo $form->error($model,'date_fact'); ?>
-		</div><hr>
-
-		<?php
-	}
-
-	elseif ($this->action->id == 'repairSRM') {
-		if($model->status != 4) die('Оборудование не находится в ремонте в СРМ');
-		?>
-		<div class="form-field">
-			<?php echo $form->labelEx($model,'Дата выполнения ремонта:'); ?>
-		</div><div class="clearfix"></div>
-		<div class="form-field">
-			<?php echo $form->labelEx($model,'Планируемая'); ?>
-			<?php //echo $form->textField($model,'date_plan',array('class'=>'form-control datepicker')); ?>
-			<?php $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-				'Name' => 'Repair[date_plan]',
-				'id' => 'date-plan'
-			)); ?>
-			<?php echo $form->error($model,'date_plan'); ?>
-		</div>
-		<div class="form-field">
-			<?php echo $form->labelEx($model,'Фактическая'); ?>
-			<?php //echo $form->textField($model,'date_fact',array('class'=>'form-control datepicker')); ?>
-			<?php $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-				'Name' => 'Repair[date_fact]',
-				'id' => 'date-fact'
-
-			)); ?>
-			<?php echo $form->error($model,'date_fact'); ?>
-		</div><hr>
-		<?php
-	}
-
-	elseif ($this->action->id == 'diagnostic') {
-		if($model->status != 2) die('Оборудование не находится на диагностике');
-		?>
-
-		<div class="form-field">
-<!--			--><?php //$reason = new DelayReasons();
-//			$reason_list = $reason->getData(); ?>
-			<?php echo $form->labelEx($model,'Результат диагностики'); ?>
-			<?php
-			$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-				'id' => 'diagnos',
-				'Stretch' => true,
-				'ModelName' => 'RepairResults',
-				'Height' => 300,
-				'Width' => 200,
-				'KeyField' => 'rslt_id',
-				'FieldName' => 'ResultName',
-				'KeyValue' => $model->rslt_id,
-				'Name' => 'Repair[rslt_id]',
-				'Type' => array(
-					'Mode' => 'Filter',
-					'Condition' => 'rr.ResultName like \':Value%\'',
-				),
-				'Columns' => array(
-					'ResultName' => array(
-						'Name' => 'Результат диагностики',
-						'FieldName' => 'ResultName',
-						'Width' => 200,
-
-					),
-				),
-			));
-
-			?>
-		</div><hr>
-
-		<?php
-	}
-	?>
-
-
-		<div class="form-field">
-
-		</div>
-
-
-<!--	<div class="buttons">-->
-<!--		--><?php //echo CHtml::submitButton('Сохранить', array('class'=>'btn btn-primary')); ?>
-<!--	</div>-->
-
-	<div class="btn-group">
-		<?php
-		$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-			'id' => 'save',
-			'Type' => 'Form',
-			'Text' => 'Сохранить',
-			'FormName' => 'repairs-form'
-		));
-		?>
-	</div>
-<?php $this->endWidget(); ?>
-
-</div></div>
-
-<div class="form-menu">
-	<?php
-	$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-		'id' => 'delete',
-		'Type' => 'none',
-		'Text' => 'Выданное оборудование',
-
-	));
-	?>
-	<div id="equipInfo">
-		<div class="price"></div>
-		<div class="infoSN"></div>
-		<div class="repeatRepair"></div>
-		<div class="warranty"></div>
-	</div>
-	<div id="so"></div>
-</div>
-<div class="clearfix"></div>
-<!--<div id="qwe"><input></div>-->
-<?php
-
-?>
-
-<div id="needReturn" class="btn-group hidden">
-	<p style="font-size: 125%;margin-top: 0">Требуется возврат?</p>
-	<?php
-	$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-		'id' => 'returnNeed',
-		'Type' => 'none',
-		'Text' => 'Да',
-	));
-	$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-		'id' => 'returnNotNeed',
-		'Type' => 'none',
-		'Text' => 'Нет',
-	));
-	$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-		'id' => 'returnCancel',
-		'Type' => 'none',
-		'Text' => 'Отмена',
-	));
-	?>
-</div>
-<style>
-	.defectList #defectList {
-		visibility: hidden;
-		z-index: 0;
-		*margin-top: 0px;
-		position: absolute;
-	}
-</style>
-
-
-<script type="text/javascript">
-	var returnAnswer = false;
-	<?php
-	if($this->action->id === 'create') {
-		?>
-		$('#repairs-form').on('submit', function(e){
-			if(!returnAnswer) {
-				e.preventDefault()
-			}
-
-			if(!alcheckboxSettings.return.Checked) {
-				$('#needReturn').dialog({
-					modal: true,
-				})
-			}
-		})
-		<?php
-	}
-	?>
-
-	$('#returnNeed').on('click', function(){
-		returnAnswer = true
-		$('#return').alcheckbox('SetValue', true)
-		$('#repairs-form').submit()
-	})
-	$('#returnNotNeed').on('click', function(){
-		returnAnswer = true
-		$('#return').alcheckbox('SetValue', false)
-		$('#repairs-form').submit()
-	})
-	$('#returnCancel').on('click', function(){
-		returnAnswer = false;
-		$('#needReturn').dialog('close')
-	})
-
-	$('#choiseDefect').on('click', function(e){
-		e.preventDefault()
-		setTimeout(function(){$('#defectList').alcomboboxajax('ButtonClick', 'defectList');},1)
-
-	})
-
-//$("#repair-repeat").togglerDialog({
-//	label: 'Ремонт производится повторно',
-//	beforeShow: function (e) {
-//		//e.text($('#Repair_SN').val())
-//	},
-//	unchecked: function() {
-//
-//	}
-//})
-
-//$('#repair-repeat').alToggler({
-//	label:'Ремонт производится повторно',
-//})
-
-//$('.form').togglerEditForm()
-//$('#qwe').togglerEditForm()
-
-
-//var defect = ''
-//	$("#Repair_work_ok").on('click', function () {
-//		if($(this).is(':checked')) {
-//			defect = aleditSettings.defect.Value
-//			$('#defect').aledit('SetValue','Оборудование исправно')
-//		}
-//		else {
-//			$('#defect').aledit('SetValue',defect)
-//		}
-//	})
-
-
-//	$(".datepicker").datepicker({showButtonPanel:true, changeMonth:true, changeYear:true, dateFormat:'yy-mm-dd', t:null,
-//		beforeShow: function(){
-//			$('.timepicker').hide()
-//		},
-//		onSelect: function(dateText, inst) {
-//			t = $(this)
-//			var date = t.val()
-//			var pos = t.offset()
-//			console.log(pos)
-//			var hours = '00'
-//			var minutes = '00'
-//			var time = hours+':'+minutes
-//			t.val(date+' '+time)
-//			$('.timepicker').css({'top':pos.top+'px', 'left':pos.left+t.outerWidth()+'px'})
-//			$('.timepicker').show()
-//			$('html').on('keypress','body',function(e){
-//				//console.log(e)
-//				if(e.which==13) return false
-//			})
-//
-//			$('.hours').change(function(){
-//				//alert($(this).val())
-//				hours = $(this).val()
-//				//$('.hours').off()
-//				return false
-//			})
-//			$('.minutes').change(function(){
-//				//alert('dfgf')
-//				minutes = $(this).val()
-//				//	alert(hours)
-//				//$('.minutes').off()
-//				return false
-//			})
-//			$(".add-time").click(function(){
-//
-//				var time = hours+':'+minutes
-//				t.val(date+' '+time)
-//				$('.hours, .minutes').val('')
-//				$('.hours, .minutes').off()
-//				$('.timepicker').hide()
-//				return false
-//			})
-//		}
-//	});
-	//$(".datepicker").mask("99.99.9999 99:99",{placeholder:"dd.mm.yyyy hh:mm"});
-
-</script>
-
 <script>
-	$(document).on('change', '#equipSN input', function () {
-		if($(this).val() == 0) {
-			return false
-		}
-		$.ajax({
-			url: '<?=Yii::app()->createUrl('repair/equipInfoSN')?>',
-			data:'sn='+$(this).val(),
-			type: 'get',
-			success: function (r) {
-				$('#equipInfo .infoSN').html(r)
-			},
-			error: function () {
-				$('#equipInfo .infoSN').html('<p>Не удалось загрузить информацию по оборудованию</p>')
-			},
-			beforeSend: function() {
-				$('#equipInfo .infoSN').html('<div class="loader">Загрузка...</div>')
-			},
-			complete: function() {
-				$('#equipInfo .infoSN .loader').remove()
-			}
-		})
-		checkRepeatRepair()
-		checkWarranty();
-	})
+    function SaveClick() {
+        if (alcheckboxSettings['cbEquipReturn'].Checked == false || alcheckboxSettings['cbEquipReturn'].Checked == 'false') {
+            $("#Dialog").aldialog("Show");
+        }
+        else
+        {
+            $("#Repairs").submit();
+        }
+    }
+    
+    function RepOpen() {
+        $("#Parameters").submit();
+    }
+    
+    function AddrChange() {
+        if (alcomboboxajaxSettings["cmbAddress"].CurrentRow != null) {
+            $("#RepObject_id").val(alcomboboxajaxSettings["cmbAddress"].CurrentRow["Object_id"]);
+        }
+        else
+            $("#RepObject_id").val('');
+    }
+    
+    function GetInfo() {
+        var Data = {
+            Params: {
+                Repr_id: null,
+                Object_id: null,
+                Equip_id: null,
+                SN: null,
+                Storage_id: null,
+            },
+        };
+        
+        if (alcomboboxajaxSettings['cmbAddress'].CurrentRow != null)
+            Data.Params.Object_id = alcomboboxajaxSettings['cmbAddress'].CurrentRow['Object_id'];
+        else
+            Data.Params.Object_id = 'null';
+        
+        if (alcomboboxajaxSettings['cmbEquip'].CurrentRow != null)
+            Data.Params.Equip_id = alcomboboxajaxSettings['cmbEquip'].CurrentRow['Equip_id'];
+        else
+            Data.Params.Equip_id = 'null';
+        
+        if (alcomboboxajaxSettings['cmbStorages'].CurrentRow != null)
+            Data.Params.Storage_id = alcomboboxajaxSettings['cmbStorages'].CurrentRow['Storage_id'];
+        else
+            Data.Params.Storage_id = 'null';
+            
+        Data.Params.Repr_id = aleditSettings['edRepr_id'].Value;
+        Data.Params.SN = aleditSettings['edSN'].Value;
+        
+        
+        
+        $.ajax({
+            url: '/index.php?r=Repair/GetInfo',
+            type: 'POST',
+            data: Data, 
+            async: true,
+            success: function(Res){
+                Res = JSON.parse(Res);
+                
+                if (parseInt(Res[0].ExternalGuarantee) == 1)
+                    $("#ExternalGuarantee").html('Есть');
+                else
+                    $("#ExternalGuarantee").html('Нет');
+                
+                if (parseInt(Res[0].InternalGuarantee) == 1)
+                    $("#InternalGuarantee").html('Есть');
+                else
+                    $("#InternalGuarantee").html('Нет');
+                
+                if (Res[0].LastDatePurchase !=  '' && Res[0].LastDatePurchase != null)
+                    $("#LastDatePurchase").html(Res[0].LastDatePurchase);
+                
+                if (Res[0].LastSupplierPurchase !=  '' && Res[0].LastSupplierPurchase != null)
+                    $("#LastSupplierPurchase").html(Res[0].LastSupplierPurchase);
+                else
+                    $("#LastSupplierPurchase").html('');
+                
+                if (Res[0].PriceLow !=  '' && Res[0].PriceLow != null)
+                    $("#PriceLow").html(parseFloat(Res[0].PriceLow).toFixed(2));
+                else
+                    $("#PriceLow").html('');
+                
+                if (Res[0].PriceLowWHDoc !=  '' && Res[0].PriceLowWHDoc != null)
+                    $("#PriceLowWHDoc").html(parseFloat(Res[0].PriceLowWHDoc).toFixed(2));
+                else
+                    $("#PriceLowWHDoc").html('');
+                
+                if (Res[0].LastDateMonitoring !=  '' && Res[0].LastDateMonitoring != null)
+                    $("#LastDateMonitoring").html(Res[0].LastDateMonitoring);
+                else
+                    $("#LastDateMonitoring").html('');
+                
+                if (Res[0].EquipRepeated !=  '' && Res[0].EquipRepeated != null)
+                    $("#EquipRepeated").html(Res[0].EquipRepeated);
+                else
+                    $("#EquipRepeated").html('');
+                
+                if (Res[0].AddrRepeated !=  '' && Res[0].AddrRepeated != null)
+                    $("#AddrRepeated").html(Res[0].AddrRepeated);
+                else
+                    $("#AddrRepeated").html('');
+                
+                if (Res[0].EquipQuant !=  '' && Res[0].EquipQuant != null)
+                    $("#EquipQuant").html(parseFloat(Res[0].EquipQuant).toFixed(2));
+                else
+                    $("#EquipQuant").html('');
+                
+                if (Res[0].EquipQuantUsed !=  '' && Res[0].EquipQuantUsed != null)
+                    $("#EquipQuantUsed").html(parseFloat(Res[0].EquipQuantUsed).toFixed(2));
+                else
+                    $("#EquipQuantUsed").html('');
+                
+                if (Res[0].EquipReserv !=  '' && Res[0].EquipReserv != null)
+                    $("#EquipReserv").html(parseFloat(Res[0].EquipReserv).toFixed(2));
+                else
+                    $("#EquipReserv").html('');
+                
+                if (Res[0].EquipReady !=  '' && Res[0].EquipReady != null)
+                    $("#EquipReady").html(parseFloat(Res[0].EquipReady).toFixed(2));
+                else
+                    $("#EquipReady").html('');
+                
+            }
+        });
+        
+    };
+    
+    
+    function ChangeMaster() {
+        if (alcomboboxajaxSettings["cmbRepairMstrEmpl"].CurrentRow != null && alcomboboxajaxSettings["cmbRepairMstrEmpl"].CurrentRow != '') {
+            var TerritName =  alcomboboxajaxSettings["cmbRepairMstrEmpl"].CurrentRow["Territ_Name"];
+            if (TerritName != 'null' && TerritName != '' && TerritName !== null)
+                $("#edTerrit").html("<b>" + TerritName + "</b>");
+            else
+                $("#edTerrit").html("");
+                    
+        }
+    };
+    
+    function GET_ExecTime() {
+        var Equip_id = '';
+        var Defect_id = '';
+        
+        if (alcomboboxajaxSettings['cmbEquip'].CurrentRow != null)
+            Equip_id = alcomboboxajaxSettings['cmbEquip'].CurrentRow['Equip_id'];
+        if (alcomboboxajaxSettings['cmbRepairDefects'].CurrentRow != null)
+            Defect_id = alcomboboxajaxSettings['cmbRepairDefects'].CurrentRow['RepairDefect_id'];
+        
+        console.log(Equip_id);
+        
+        $.ajax({
+            url: '/index.php?r=Repair/GetDefectExecTime&Equip_id=' + Equip_id + '&Defect_id=' + Defect_id,
+            type: 'GET',
+            async: true,
+            success: function(Res){
+                if (Res != '-1') {
+                    var CurrentValue = aleditSettings['edPlanExecHours'].Value;
+                    if (CurrentValue == '' || CurrentValue == null)
+                        $('#edPlanExecHours').aledit('SetValue', Res);
+                        
+                }
+            },
+        });
+    };
+    
+    Aliton.Links.push({
+        Out: "cmbEquip",
+        In: "edUmName",
+        TypeControl: "Grid",
+        Condition: ":Value",
+        Field: "NameUnitMeasurement",
+        Name: "Filter1",
+        TypeFilter: "Internal",
+        TypeLink: "Filter",
+        isNullRun: true
+    });
+</script>    
 
-	function checkWarranty() {
-		var data = {
-			sn: $('#equipSN input').val(),
-		}
-		$.ajax({
-			url: '<?=Yii::app()->createUrl('repair/CheckWarranty')?>',
-			data: data,
-			type: 'get',
-			dataType: 'json',
-			success: function(r) {
-				if(r.status != 'ok' || !r.data.warranty) {
-					$('#equipInfo .warranty').html('<p>Не удалось определить гарантию</p>')
-					return false
-				}
-				$('#equipInfo .warranty').html(r.data.warranty)
-			},
-			error: function () {
-				$('#equipInfo .warranty').html('<p>Не удалось загрузить информацию о гарантии</p>')
-			},
-			beforeSend: function() {
-				$('#equipInfo .warranty').html('<div class="loader">Проверка на предмет повторного ремонта...</div>')
-			},
-			complete: function() {
-				$('#equipInfo .warranty .loader').remove()
-			}
-		})
-	}
+<form id="Parameters" class="form-inline"  target="blank" method="post" action="<?php echo Yii::app()->createUrl('Reports/ReportOpen', array(
+        'ReportName' => '/Склад/Выданное оборудование (детальный)',
+        'Render' => 0,
+    )); ?>">
 
-	function checkRepeatRepair() {
-		var data = {
-			sn: $('#equipSN input').val(),
-			objc_id: alcomboboxajaxSettings['addr-obj'].CurrentRow ? alcomboboxajaxSettings['addr-obj'].CurrentRow['Object_id'] : 0,
-		}
-		$.ajax({
-			url: '<?=Yii::app()->createUrl('repair/checkRepeatRepair')?>',
-			data: data,
-			type: 'get',
-			dataType: 'json',
-			success: function (r) {
-				if(r.status != 'ok' || !r.data.repeatRepair) {
-					$('#equipInfo .repeatRepair').html('<p>Не удалось определить дату последнего ремонта</p>')
-					return false
-				}
-				var msg = r.data.repeatRepair.equip ? '<p class="txt-red">ремонт оборудования повторный</p>' : '<p class="txt-green">ремонт оборудования НЕ повторный</p>'
-				msg += r.data.repeatRepair.object ? '<p class="txt-red">ремонт на объекте повторный</p>' : '<p class="txt-green">ремонт на объекте НЕ повторный</p>'
-				if(r.data.repeatRepair.equip || r.data.repeatRepair.object)  $('#repeatRepair').show()
-				$('#equipInfo .repeatRepair').html(msg)
-			},
-			error: function () {
-				$('#equipInfo .repeatRepair').html('<p>Не удалось загрузить информацию по оборудованию</p>')
-			},
-			beforeSend: function() {
-				$('#equipInfo .repeatRepair').html('<div class="loader">Проверка на предмет повторного ремонта...</div>')
-			},
-			complete: function() {
-				$('#equipInfo .repeatRepair .loader').remove()
-			}
-		})
-	}
-
-	function getServiceDept() {
-		var data = {
-			objgr: alcomboboxajaxSettings['addr-obj'].CurrentRow ? alcomboboxajaxSettings['addr-obj'].CurrentRow['ObjectGr_id'] : 0,
-		}
-		if(!data.objgr) {
-			$('#so').html('<p>Не удалось загрузить информацию о сервисном отделении. Вы не выбрали объект</p>')
-			return false
-		}
-		$.ajax({
-			url: '<?=Yii::app()->createUrl('repair/GetServiceDept')?>',
-			data: data,
-			type: 'get',
-			dataType: 'json',
-			success: function (r) {
-				if(r.status != 'ok' || !r.data.sd) {
-					$('#so').html('<p><strong>Сервисное отделение:</strong></p><p>Не удалось определить сервисное отделение</p>')
-					return false
-				}
-				$('#so').html(r.data.sd)
-			},
-			error: function () {
-				$('#so').html('<p>Не удалось загрузить информацию о сервисном отделении</p>')
-			},
-			beforeSend: function() {
-				$('#so').html('<div class="loader">Определяю сервисное отделение...</div>')
-			},
-			complete: function() {
-				$('#so .loader').remove()
-			}
-		})
-	}
-
-	function getInfoEquip(id) {
-		$.ajax({
-			url: '<?=Yii::app()->createUrl('repair/equipInfo')?>',
-			data:'id='+id,
-			type: 'get',
-			success: function (r) {
-				$('#equipInfo .price').html(r)
-			},
-			error: function () {
-				$('#equipInfo .price').html('<p>Не удалось загрузить информацию по оборудованию</p>')
-			},
-			beforeSend: function() {
-				$('#equipInfo .price').html('<div class="loader">Загрузка...</div>')
-			},
-			complete: function() {
-				$('#equipInfo .price .loader').remove()
-			}
-		})
+    <input id="RepObject_id" type="hidden" name="Parameters[Object_id]" value=""/> 
+</form>    
 
 
-	}
+<?php 
+    $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'Repairs',
+	'htmlOptions'=>array(
+		'class'=>'form-inline'
+		),
+    )); 
+?>
 
-//
-//	function getRepairRepeat(){
-//		var objc_id = $('input[name="Repair[objc_id]"]').val()
-//		var equip_id = $('input[name="Repair[eqip_id]"]').val()
-//
-//		if(objc_id == 0 || equip_id == 0) {
-//			return false
-//		}
-//
-//		var status = checkRepairRepeat(equip_id, objc_id)
-//		if(status == 'error') {
-//			alert('Не удалось определить дату последнего ремонта.')
-//			return false
-//		}
-//		if(status) {
-//			alert('Ремонт производится повторно, выберите причину.')
-//			$('#repair-repeat').slideDown(180)
-//			$('#alcomboboxedit_repr-repeat').focus()
-//		}
-//	}
+<?php
+    $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
+        'id' => 'edRepr_id',
+        'Width' => 100,
+        'Type' => 'String',
+        'Name' => 'Repairs[Repr_id]',
+        'Value' => $model->Repr_id,
+        'ReadOnly' => true,
+        'Visible' => false,
+    ));
+    
+?>
+<style>
+    .data-form {
+        float: left;
+        width: 1024px;
+    }
+    
+       
+    .data-row {
+        float: left;
+        width: 1024px;
+        margin-bottom: 8px;
+    }
+    
+    .data-row:first-child {
+        margin-top: 20px;
+    }
+    
+    .data-column {
+        float: left;
+        margin-left: 12px;
+    }
+    
+    .data-column:first-child {
+        margin-left: 0px;
+    }
+    
+</style>    
+
+<div class="data-form">
+    <div class="data-row">
+        <div class="data-column">Номер</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
+                    'id' => 'edNumber',
+                    'Width' => 100,
+                    'Type' => 'String',
+                    'Name' => 'Repairs[number]',
+                    'Value' => $model->Number,
+                    'ReadOnly' => true,
+                    'PlaceHolder' => '-НОМЕР-'
+                ));
+            ?>
+        </div>
+        <div class="data-column">Дата прих. оборудования</div>
+        <div class="data-column">
+            <?php
+                if ($model->Date == '' || $model->Date == null)
+                    $Date = Date('d.m.Y H:i');
+                else
+                    $Date = $model->Date;
+            
+                $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
+                    'id' => 'edDate',
+                    'Name' => 'Repairs[Date]',
+                    'Width' => 130,
+                    'Value' => DateTimeManager::YiiDateToAliton($Date),
+                    'ReadOnly' => false,
+                ));
+            ?>
+            <?php echo $form->error($model, 'Date'); ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">Срочность</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbPrior',
+                        'ModelName' => 'RepairPriors',
+                        'FieldName' => 'RepairPrior',
+                        'Name' => 'Repairs[Prtp_id]',
+                        'KeyField' => 'Prtp_id',
+                        'KeyValue' => $model->Prtp_id,
+                        
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "rp.RepairPrior like ':Value%'",
+                        ),
+                        'Width' => 150,
+                        'PopupWidth' => 200,
+                        'Columns' => array(
+                                'RepairPrior' => array(
+                                        'Name' => 'Приоритет',
+                                        'Width' => 120,
+                                        'FieldName' => 'RepairPrior',
+                                ),
+                        ),
+                ));
+            ?>
+            <?php echo $form->error($model, 'Prtp_id'); ?>
+        </div>
+        <div class="data-column">Заявка №</div>
+        <div class="data-column">
+            <?php
+                $DateStart = new DateTime(Date('Y-m-d'));
+                $DateStart->modify('-3 month');
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbDemand',
+                        'ModelName' => 'Demands',
+                        'FieldName' => 'Demand_id',
+                        'Name' => 'Repairs[Demand_id]',
+                        'KeyField' => 'Demand_id',
+                        'KeyValue' => $model->Demand_id,
+                        'Filters' => array(
+                            array(
+                                'Type' => 'Internal',
+                                'Control' => 'Form2',
+                                'Condition' => 'dbo.truncdate(d.DateReg) >= \'' . $DateStart->format('d.m.Y') . '\'',
+                                'Value' => '',
+                                'Name' => 'Filter1111',
+                            ),
+                        ),
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "cast(d.Demand_id as nvarchar) like ':Value%'",
+                        ),
+                        'Width' => 150,
+                        'PopupWidth' => 200,
+                        'Columns' => array(
+                                'RepairPrior' => array(
+                                        'Name' => '№ Заявки',
+                                        'Width' => 120,
+                                        'FieldName' => 'Demand_id',
+                                ),
+                        ),
+                ));
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                        'id' => 'cbRepairPay',
+                        'Label' => 'Ремонт платный',
+                        'Checked' => $model->RepairPay,
+                ));
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                        'id' => 'cbRepairPayByCompany',
+                        'Label' => 'Платный ремонт за счет Эльтона',
+                        'Checked' => $model->RepairPayByCompany,
+                ));
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">Желаемая дата</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
+                    'id' => 'edDateBest',
+                    'Name' => 'Repairs[DateBest]',
+                    'Width' => 130,
+                    'Value' => DateTimeManager::YiiDateToAliton($model->DateBest),
+                    'ReadOnly' => false,
+                ));
+            ?>
+        </div>
+        <div class="data-column">Предельная дата</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
+                    'id' => 'edDeadline',
+                    'Name' => 'Repairs[Deadline]',
+                    'Width' => 130,
+                    'Value' => DateTimeManager::YiiDateToAliton($model->Deadline),
+                    'ReadOnly' => false,
+                ));
+            ?>
+        </div>
+        <div class="data-column">Склад</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbStorages',
+                        'ModelName' => 'Storages',
+                        'FieldName' => 'Storage',
+                        'Name' => 'Repairs[Storage_id]',
+                        'KeyField' => 'Storage_id',
+                        'KeyValue' => $model->Storage_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "s.Storage like ':Value%'",
+                        ),
+                        'Width' => 200,
+                        'Columns' => array(
+                                'Storage' => array(
+                                        'Name' => 'Адрес',
+                                        'FieldName' => 'Storage',
+                                ),
+                        ),
+                ));
+
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">Адрес объекта</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbAddress',
+                        'ModelName' => 'ObjectsForCombobox',
+                        'FieldName' => 'Addr',
+                        'Name' => 'Repairs[Objc_id]',
+                        'KeyField' => 'Object_id',
+                        'KeyValue' => $model->Objc_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "a.Addr like ':Value%'",
+                        ),
+                        'OnAfterChange' => 'AddrChange();',
+                        'Width' => 300,
+                        'Columns' => array(
+                                'Address' => array(
+                                        'Name' => 'Адрес',
+                                        'FieldName' => 'Addr',
+                                ),
+                        ),
+                ));
+
+            ?>
+            <?php echo $form->error($model, 'Objc_id'); ?>
+        </div>
+        <div class="data-column">Юр. лицо</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbJuridical',
+                        'ModelName' => 'Juridicals',
+                        'FieldName' => 'JuridicalPerson',
+                        'Name' => 'Repairs[Jrdc_id]',
+                        'KeyField' => 'Jrdc_Id',
+                        'KeyValue' => $model->Jrdc_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "jur.JuridicalPerson like ':Value%'",
+                        ),
+                        'Width' => 180,
+                        'Columns' => array(
+                                'JuridialPerson' => array(
+                                        'Name' => 'Организация',
+                                        'Width' => 160,
+                                        'FieldName' => 'JuridicalPerson',
+                                ),
+                        ),
+                ));
+
+            ?>
+        </div>
+        <div class="data-column">Участок:</div>
+        <div id="edTerrit" class="data-column"></div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">Оборудование</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbEquip',
+                        'ModelName' => 'Equips',
+                        'FieldName' => 'EquipName',
+                        'Name' => 'Repairs[Eqip_id]',
+                        'KeyField' => 'Equip_id',
+                        'KeyValue' => $model->Eqip_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "e.EquipName like ':Value%'",
+                        ),
+                        'Width' => 300,
+                        'Columns' => array(
+                                'Address' => array(
+                                        'Name' => 'Оборудование',
+                                        'Width' => 240,
+                                        'FieldName' => 'EquipName',
+                                ),
+                        ),
+                ));
+
+            ?>
+            <?php echo $form->error($model, 'Eqip_id'); ?>
+        </div>
+        <div class="data-column">Ед. изм</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
+                    'id' => 'edUmName',
+                    'Width' => 100,
+                    'Type' => 'String',
+                    'ReadOnly' => true,
+                ));
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                    'id' => 'cbUsed',
+                    'Label' => 'Б\у',
+                    'Checked' => $model->Used,
+                ));
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">Серийный номер</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
+                    'id' => 'edSN',
+                    'Width' => 300,
+                    'Type' => 'String',
+                    'Name' => 'Repairs[SN]',
+                    'Value' => $model->SN, 
+                    'ReadOnly' => false,
+                    'OnChange' => 'GetInfo();',
+                ));
+            ?>
+        </div>
+        <div class="data-column">Физ. состояние</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
+                    'id' => 'edEvaluation',
+                    'Width' => 70,
+                    'Type' => 'String',
+                    'Name' => 'Repairs[Evaluation]',
+                    'Value' => $model->Evaluation, 
+                    'ReadOnly' => false,
+                ));
+            ?>
+            <?php echo $form->error($model, 'Evaluation'); ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbEvaluations',
+                        'ModelName' => 'RepairEvaluations',
+                        'FieldName' => 'RepairEvaluation',
+                        'KeyField' => 'RepairEvaluation_id',
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "r.RepairEvaluation like ':Value%'",
+                        ),
+                        'Width' => 22,
+                        'Columns' => array(
+                                'RepairEvaluation' => array(
+                                        'Name' => 'Оценка',
+                                        'Width' => 140,
+                                        'FieldName' => 'RepairEvaluation',
+                                ),
+                                'Evaluation' => array(
+                                        'Name' => 'Средний балл',
+                                        'Width' => 110,
+                                        'FieldName' => 'Evaluation',
+                                ),
+                            
+                                'Desc' => array(
+                                        'Name' => 'Хар-ка',
+                                        'Width' => 310,
+                                        'FieldName' => 'Desc',
+                                ),
+                        ),
+                ));
+
+            ?>
+        </div>
+        <div class="data-column">(Подсказка по оценкам)</div>
+    </div>
+    <div class="data-row" style="border: 1px solid #e5e5e5; padding: 4px;">
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                    'id' => 'cbSubstitution',
+                    'Label' => 'Обор. с подмены',
+                    'Name' => 'Repairs[Substitution]',
+                    'Checked' => $model->Substitution,
+                ));
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                    'id' => 'cbNoService',
+                    'Label' => 'Обор. не на обслуж.',
+                    'Checked' => false,
+                ));
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                    'id' => 'cbEquipReturn',
+                    'Label' => 'Требуется возврат',
+                    'Name' => 'Repairs[EquipReturn]',
+                    'Checked' => $model->EquipReturn,
+                ));
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                    'id' => 'cbEquipGood',
+                    'Label' => 'Оборудование исправно',
+                    'Name' => 'Repairs[EquipGood]',
+                    'Checked' => $model->EquipGood,
+                ));
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                    'id' => 'cbEquipWrnt',
+                    'Label' => 'Оборудование на гарантии',
+                    'Name' => 'Repairs[EquipWrnt]',
+                    'Checked' => $model->EquipWrnt,
+                ));
+            ?>
+        </div>
+        
+    </div>
+    <div class="data-row">
+        <div class="data-column">Комплектность</div>
+        <div class="data-column" style="margin-left: 50px;">Плановая времязатратность</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
+                    'id' => 'edPlanExecHours',
+                    'Width' => 100,
+                    'Type' => 'String',
+                    'Name' => 'Repairs[PlanExecHours]',
+                    'Value' => $model->PlanExecHours,
+                    'ReadOnly' => false,
+                ));
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbRepairIncorrects',
+                        'ModelName' => 'RepairIncorrects',
+                        'FieldName' => 'IncorrectName',
+                        'KeyField' => 'Incorrect_id',
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "ri.IncorrectName like ':Value%'",
+                        ),
+                        'Width' => 220,
+                        'Columns' => array(
+                            'IncorrectName' => array(
+                                    'Name' => 'Некорректная сдача',
+                                    'Width' => 200,
+                                    'FieldName' => 'IncorrectName',
+                            ),
+                        ),
+                        'ReadOnly' => true,
+                ));
+
+            ?>
+        </div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                    'id' => 'Incorrect',
+                    'Label' => 'Некорректная сдача в ремонт',
+                    'OnChange' => 'alcomboboxajaxSettings[\'cmbRepairIncorrects\'].ReadOnly = !alcheckboxSettings[\'Incorrect\'].Checked;',
+                ));
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
+                    'id' => 'cbEquipSet',
+                    'Name' => 'Repairs[EquipSet]',
+                    'Value' => $model->EquipSet,
+                    'Width' => 1000,
+                    'Height' => 70,
+                    
+                ));
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">Неисправность</div>
+        <div class="data-column" style="margin-left: 50px;">Неисправность из справочника</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbRepairDefects',
+                        'ModelName' => 'RepairDefects',
+                        'FieldName' => 'RepairDefect',
+                        'Name' => 'Repairs[Defect_id]',
+                        'KeyField' => 'RepairDefect_id',
+                        'KeyValue' => $model->Defect_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "rd.RepairDefect like ':Value%'",
+                        ),
+                        'OnAfterChange' => 'GET_ExecTime();',
+                        'Width' => 220,
+                        'Columns' => array(
+                                'RepairDefect' => array(
+                                        'Name' => 'Неисправность',
+                                        'Width' => 200,
+                                        'FieldName' => 'RepairDefect',
+                                ),
+                        ),
+                ));
+
+            ?>
+        </div>
+        <div class="data-column"><b>Рез-т диагностики</b></div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbRepairResult',
+                        'ModelName' => 'RepairResults',
+                        'FieldName' => 'ResultName',
+                        'Name' => 'Repairs[Rslt_id]',
+                        'KeyField' => 'rslt_id',
+                        'KeyValue' => $model->Rslt_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "rr.ResultName like ':Value%'",
+                        ),
+                        'Width' => 280,
+                        'Columns' => array(
+                                'Resultname' => array(
+                                        'Name' => 'Результат',
+                                        'Width' => 250,
+                                        'FieldName' => 'ResultName',
+                                ),
+                        ),
+                ));
+
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
+                    'id' => 'cbEquipDefects',
+                    'Name' => 'Repairs[EquipDefects]',
+                    'Value' => $model->EquipDefects,
+                    'Width' => 1000,
+                    'Height' => 70,
+                    
+                ));
+            ?>
+            <?php echo $form->error($model, 'EquipDefects'); ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">Неисправность 2</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
+                    'id' => 'edDefectsConfirm',
+                    'Label' => 'Неисправность подверждена',
+                    'Checked' => $model->DefectsConfirm,
+                ));
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
+                    'id' => 'cbEquipDefects2',
+                    'Name' => 'Repairs[EquipDefects2]',
+                    'Value' => $model->EquipDefects2,
+                    'Width' => 1000,
+                    'Height' => 70,
+                    
+                ));
+            ?>
+            <?php echo $form->error($model, 'EquipDefects'); ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">Примечание</div>
+    </div>
+    <div class="data-row">
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
+                    'id' => 'cbNote',
+                    'Name' => 'Repairs[Note]',
+                    'Value' => $model->Note,
+                    'Width' => 1000,
+                    'Height' => 70,
+                    
+                ));
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column" style="width: 120px;">Сдал в ремонт</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbRepairMstrEmpl',
+                        'ModelName' => 'Employees',
+                        'FieldName' => 'ShortName',
+                        'Name' => 'Repairs[Mstr_Empl_id]',
+                        'KeyField' => 'Employee_id',
+                        'KeyValue' => $model->Mstr_Empl_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "e.EmployeeName like ':Value%'",
+                        ),
+                        'Width' => 200,
+                        'OnAfterChange' => 'ChangeMaster();',
+                        'Columns' => array(
+                                'EmployeeName' => array(
+                                    'Name' => 'ФИО',
+                                    'FieldName' => 'EmployeeName',
+                                    'Width' => 250,
+                                ),
+                        ),
+                ));
+            ?>
+            <?php echo $form->error($model, 'Mstr_Empl_id'); ?>
+        </div>
+        <div class="data-column" style="width: 120px;">Инженер ПРЦ</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbRepairEngrEmpl',
+                        'ModelName' => 'Employees',
+                        'FieldName' => 'ShortName',
+                        'Name' => 'Repairs[Engr_Empl_id]',
+                        'KeyField' => 'Employee_id',
+                        'KeyValue' => $model->Engr_Empl_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "e.EmployeeName like ':Value%'",
+                        ),
+                        'Width' => 200,
+                        'Columns' => array(
+                                'EmployeeName' => array(
+                                    'Name' => 'ФИО',
+                                    'FieldName' => 'EmployeeName',
+                                    'Width' => 250,
+                                ),
+                        ),
+                ));
+            ?>
+        </div>
+    </div>
+    <div class="data-row">
+        <div class="data-column" style="width: 120px;">Зарегистрировал</div>
+        <div class="data-column">
+            <?php
+                if (Yii::app()->controller->action->id == 'Create')
+                    $model->Reg_Empl_id = Yii::app()->user->Employee_id;
+                
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbRepairRegEmpl',
+                        'ModelName' => 'Employees',
+                        'FieldName' => 'ShortName',
+                        'Name' => 'Repairs[Reg_Empl_id]',
+                        'KeyField' => 'Employee_id',
+                        'KeyValue' => $model->Reg_Empl_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "e.EmployeeName like ':Value%'",
+                        ),
+                        'Width' => 200,
+                        'Columns' => array(
+                                'EmployeeName' => array(
+                                    'Name' => 'ФИО',
+                                    'FieldName' => 'EmployeeName',
+                                    'Width' => 250,
+                                ),
+                        ),
+                ));
+            ?>
+            <?php echo $form->error($model, 'Reg_Empl_id'); ?>
+        </div>
+        <div class="data-column" style="width: 120px;">Доставл в ремонт</div>
+        <div class="data-column">
+            <?php
+                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
+                        'id' => 'cmbRepairCurEmpl',
+                        'ModelName' => 'Employees',
+                        'FieldName' => 'ShortName',
+                        'Name' => 'Repairs[Cur_Empl_id]',
+                        'KeyField' => 'Employee_id',
+                        'KeyValue' => $model->Cur_Empl_id,
+                        'Type' => array(
+                                'Mode' => 'Filter',
+                                'Condition' => "e.EmployeeName like ':Value%'",
+                        ),
+                        'Width' => 200,
+                        'Columns' => array(
+                                'EmployeeName' => array(
+                                    'Name' => 'ФИО',
+                                    'FieldName' => 'EmployeeName',
+                                    'Width' => 250,
+                                ),
+                        ),
+                ));
+            ?>
+        </div>
+    </div>
+</div>
+<div style="float: left;">
+    <table style="border: 1px solid #e5e5e5; width: 400px;">
+        <tbody>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Внешняя гарантия:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="ExternalGuarantee"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Внутренняя гарантия:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="InternalGuarantee"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Дата закупки:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="LastDatePurchase"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Поставщик:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="LastSupplierPurchase"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Цена из прайса:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="PriceLow"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Цена из  послед. прих. накладной:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="PriceLowWHDoc"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Дата послед. обновл. цены:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="LastDateMonitoring"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Повторный ремонт оборуд.:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="EquipRepeated"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Повторный ремонт на адресе:</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="AddrRepeated"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width: 200px; border: 1px solid #e5e5e5;">Наличие на складе:</td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Новое</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="EquipQuant"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Б\У</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="EquipQuantUsed"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Зарезервированно</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="EquipReserv"></td>
+            </tr>
+            <tr>
+                <td style="width: 200px; border: 1px solid #e5e5e5;">Готово к выдаче</td>
+                <td style="width: 200px; border: 1px solid #e5e5e5;" id="EquipReady"></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>    
+<div style="clear: both; margin-top: 6px"></div>
+
+<div style="float: left">
+    <?php
+        $this->widget('application.extensions.alitonwidgets.button.albutton', array(
+            'id' => 'SaveRepair',
+            'Width' => 124,
+            'Height' => 30,
+            'Text' => 'Сохранить',
+            //'FormName' => 'Repairs',
+            'Type' => 'None',
+            'OnAfterClick' => 'SaveClick();',
+        ));
+    ?>
+</div>
+
+<div style="float: left; margin-left: 50px">
+    <?php 
+        $this->widget('application.extensions.alitonwidgets.button.albutton', array(
+            'id' => 'Report',
+            'Width' => 184,
+            'Height' => 30,
+            'Text' => 'Выданное оборуд.',
+            'Type' => 'None',
+            'OnAfterClick' => 'RepOpen();',
+            
+        ));
+    ?>
+</div>
+
+<?php
 
 
-	function checkRepairRepeat(id, objc_id) {
-		var status;
-		$.ajax({
-			url: '<?=Yii::app()->createUrl('repair/repairRepeat')?>',
-			data:'id='+id+'&objc_id='+objc_id,
-			method: 'get',
-			async:false,
-			success: function (r) {
-				if (r > 0) {
-					status = true
-				} else {
-					status = false
-				}
-			},
-			error: function () {
-				status = 'error'
-			}
-		})
-		return status
-	}
+$this->endWidget(); 
 
-//	$('#repairs-form').on('click', function(e){
-//		e.preventDefault()
-//	})
-
-</script>
+?>
 
 
-
+<?php
+    $this->widget('application.extensions.alitonwidgets.dialog.aldialog', array(
+        'id' => 'Dialog',
+        'Width' => 400,
+        'Height' => 80,
+        'ContentUrl' => Yii::app()->createUrl('Repair/Return'),
+    ));
+?>

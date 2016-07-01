@@ -49,7 +49,11 @@ return array_merge(
     include(dirname(__FILE__).'/security/EquipSubgroupsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipTypesSecurity.php'),
     include(dirname(__FILE__).'/security/referenceSecurity.php'),
+    
+    /* Раздел Ремонт */ 
     include(dirname(__FILE__).'/security/RepairsSecurity.php'),
+    include(dirname(__FILE__).'/security/RepairActDefectationsSecurity.php'),
+        
     include(dirname(__FILE__).'/security/ObjectsSecurity.php'),
     include(dirname(__FILE__).'/security/WHDocumentsSecurity.php'),
     /* Заявки на доставку */
@@ -118,10 +122,19 @@ return array_merge(
     include(dirname(__FILE__).'/security/TaskExecutorsSecurity.php  '),
 
     /* Ремонт (материалы) */
-    include(dirname(__FILE__).'/security/RepairDetailsSecurity.php  '),
+    include(dirname(__FILE__).'/security/RepairMaterialsSecurity.php  '),
+        
+    /* Ремонт (сопроводительная накладная) */
+    include(dirname(__FILE__).'/security/RepairSRMSecurity.php'),
+        
+    /* Ремонт (гарантийные талоны) */
+    include(dirname(__FILE__).'/security/RepairWarrantysSecurity.php'),
+        
+    /* Ремонт (акт утилизации) */
+    include(dirname(__FILE__).'/security/RepairActUtilizationsSecurity.php'),
 
     /* Ремонт (ход работы) */
-    include(dirname(__FILE__).'/security/RepairCommentsSecurity.php  '),
+    include(dirname(__FILE__).'/security/RepairCommentsSecurity.php'),
         
     /* Отчеты */
     include(dirname(__FILE__).'/security/ReportsSecurity.php'),
@@ -250,7 +263,7 @@ return array_merge(
                 'AdminControlContacts',
                 'AdminContractsS',
                 'AdminReplaceMaster',
-                'AdminRepair',
+                'AdminRepairs',
                 'AdminExecuteReports',
                 'AdminRepDebtReasons',
                 'AdminRepDebtReasonDetails',
@@ -260,9 +273,12 @@ return array_merge(
                 'AdminTasks',
                 'AdminTaskNotes',
                 'AdminTaskExecutors',
-                'AdminRepairDetails',
+                'AdminRepairMaterials',
                 'AdminRepairComments',
-                
+                'AdminRepairActDefectations',
+                'AdminRepairSRM',
+                'AdminRepairWarrantys',
+                'AdminRepairActUtilizations',
                 
                 /* Отчеты*/
                 'Demand1Report',

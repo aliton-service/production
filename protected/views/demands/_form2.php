@@ -5,6 +5,7 @@
         // Присваиваем значения по умолчанию
         var Demand = {
             Demand_id: '<?php echo $model->Demand_id; ?>',
+            ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
             DateReg: Aliton.DateConvertToJs('<?php echo $model->DateReg; ?>'),
             Deadline: Aliton.DateConvertToJs('<?php echo $model->Deadline; ?>'),
             DType_id: '<?php echo $model->DType_id; ?>',
@@ -114,6 +115,7 @@
         $('#edRefusers').jqxTextArea({ disabled: true, placeHolder: '', height: 50, width: 800, minLength: 1});
         $('#edDemandText').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
         $("#btnSave").jqxButton({ width: 120, height: 30, disabled: true });
+        $("#btnClient").jqxButton({ width: 120, height: 30, disabled: false });
         
         if (!StateInsert) {
             $('#edRepMaster').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
@@ -257,6 +259,10 @@
         $("#btnSave").on('click', function () {
             $("#Demands").submit();
         });
+        
+        $("#btnClient").on('click', function(){
+            Aliton.ViewClient(Demand.ObjectGr_id);
+        });
     });
 </script>    
 
@@ -395,7 +401,8 @@
 <?php } ?>
 
 <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-    <input type="button" value="Сохранить" id='btnSave' />
+    <div class="row-column"><input type="button" value="Сохранить" id='btnSave' /></div>
+    <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

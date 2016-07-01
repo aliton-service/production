@@ -16,6 +16,7 @@ class algridajax extends CWidget {
     public $LocateUrl = '';
     public $ShowPager = true;
     public $Filters = array();
+    public $Sort = array();
     public $Combobox = false;
     public $FirstLoad = true;
     public $FilterControls = array();
@@ -104,6 +105,7 @@ class algridajax extends CWidget {
                         'Visible' => $this->Visible,
                         'ShowPager' => $this->ShowPager,
                         'Filters' => $this->Filters,
+                        'Sort' => $this->Sort,
                         'Combobox' => $this->Combobox,
                         'FilterControls' => $this->FilterControls,
                         'FirstLoad' => $this->FirstLoad,

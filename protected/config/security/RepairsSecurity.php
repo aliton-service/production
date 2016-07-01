@@ -1,61 +1,94 @@
 <?php
 
 return array(
-	'LogisticAdministrator' => array(
-		'type' => CAuthItem::TYPE_ROLE,
-		'description' => 'Руководитель отдела логистики',
-		'bizRule' => null,
-		'data' => null,
-		'defaultIndex' => 'repair',
-		'children' => array(
-			'AdminRepair'
-		),
-	),
-
-	'AdminRepair' => array(
+	'AdminRepairs' => array(
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'Админ раздела ремонт',
 		'bizRule' => null,
 		'data' => null,
-		'defaultIndex' => 'repair',
+		'defaultIndex' => 'Repairs',
 		'children' => array(
-			'ViewRepair',
-			'UpdateRepair',
-			'CreateRepair',
-			'DeleteRepair',
-			'EditDeliveryDemands',
+			'ViewRepairs',
+			'UpdateRepairs',
+			'CreateRepairs',
+			'DeleteRepairs',
+                        'SetTask',
+                        'SortTask',
+                        'ViewRepairEngineerInformation',
+                        'AcceptRepairs',
+                        'UndoAcceptRepairs',
 		),
 	),
 
-	'ViewRepair' => array(
-		'type' => CAuthItem::TYPE_ROLE,
-		'description' => 'ViewRepair',
+	'ViewRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'ViewRepairs',
 		'bizRule' => null,
 		'data' => null,
-		'defaultIndex' => 'repair',
+		'defaultIndex' => 'Repais',
 	),
 
-	'UpdateRepair' => array(
-		'type' => CAuthItem::TYPE_ROLE,
-		'description' => 'UpdateRepair',
+	'UpdateRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'UpdateRepairs',
 		'bizRule' => null,
 		'data' => null,
-		'defaultIndex' => 'repair',
+		'defaultIndex' => 'Repais',
 	),
 
-	'CreateRepair' => array(
-		'type' => CAuthItem::TYPE_ROLE,
-		'description' => 'CreateRepair',
+	'CreateRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'CreateRepairs',
 		'bizRule' => null,
 		'data' => null,
-		'defaultIndex' => 'repair',
+		'defaultIndex' => 'Repais',
 	),
 
-	'DeleteRepair' => array(
-		'type' => CAuthItem::TYPE_ROLE,
-		'description' => 'DeleteRepair',
+	'DeleteRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'DeleteRepairs',
 		'bizRule' => null,
 		'data' => null,
-		'defaultIndex' => 'repair',
+		'defaultIndex' => 'Repais',
+	),
+    
+        'SetTask' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'SetTask',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'SortTask' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'SortTask',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'ViewRepairEngineerInformation' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'ViewRepairEngineerInformation',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'AcceptRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'AcceptRepairs',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'UndoAcceptRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'UndoAcceptRepairs',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
 	),
 );

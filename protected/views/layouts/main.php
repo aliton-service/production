@@ -8,14 +8,15 @@
         <!-- Подключаем таблицу стилей для шапки -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/header.css">
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/admin/main.css">
-        
+        <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
         <!--<script type="text/javascript" src="/protected/extensions/alitonwidgets/button/assets/js/albutton.js"></script>-->
         <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
         <?php Yii::app()->clientScript->registerPackage('jquery_ui_css'); ?>
         <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
         <?php Yii::app()->clientScript->registerPackage('widgets_css'); ?>
         <?php Yii::app()->clientScript->registerPackage('graj'); ?>
-        
+        <?php //Yii::app()->clientScript->registerPackage('jqwidgets'); ?>
+        <script type="text/javascript" src="/js/jqwidgets/localization.js"></script>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
@@ -139,8 +140,25 @@
                                 )
                             )
                             ),
-                            array('label'=>'Ремонт', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewRepair'), 'items'=>array(
-                                array('label'=>'Реестр оборудования', 'url'=>array('/repair')),
+                            array('label'=>'Ремонт', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewRepairs'), 'items'=>array(
+                                array('label'=>'Формы', 'url'=>'#', 'items'=>array(
+                                    array('label'=>'Форма для менеджера по ремонту', 'url'=>array('/repair')),
+                                    array('label'=>'Форма для инженера ПРЦ', 'url'=>array('/repair/RepaisForEngineer')),
+                                    array('label'=>'Акты дефектации', 'url'=>array('/RepairActDefectations/Index')),
+                                    array('label'=>'Сопроводительные накладные', 'url'=>array('/RepairSRM/Index')),
+                                    array('label'=>'Гарантийные талоны', 'url'=>array('/RepairWarrantys/Index')),
+                                    array('label'=>'Акт утилизации', 'url'=>array('/RepairActUtilizations/Index')),
+                                    
+                                    )
+                                ),
+                                array('label'=>'Справочники', 'url'=>'#', 'items'=>array(
+                                    array('label'=>'Реестр оборудования', 'url'=>array('/repair')),
+                                    )
+                                ),
+                                array('label'=>'Отчеты', 'url'=>'#', 'items'=>array(
+                                    array('label'=>'Реестр оборудования', 'url'=>array('/repair')),
+                                    )
+                                )
                             )
                             ),
                             
@@ -177,10 +195,8 @@
                             array('label'=>'Авторизация', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                             array('label'=>'Выход ('.$fullname.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                             array('label'=>'Администрирование', 'url'=>array('/admin'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
-                            array('label'=>'Тестирование', 'url'=>array('test/index'), 'visible'=>Yii::app()->user->checkAccess('Administrator'), 'items' => array(
-                                array('label' => 'Тест jQWidgets', 'url' => Yii::app()->createUrl('Test/jqxGrid')),
-                            )),
-                            
+                            array('label'=>'Тестирование', 'url'=>array('test/index'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
+                            array('label'=>'Отправка SMS', 'url'=>array('test/send'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
                             array('label'=>'Отчеты', 'url'=>'#', 'items' => array(
                                 array('label'=>'Заявки', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Отчет по заявкам Call-центра', 

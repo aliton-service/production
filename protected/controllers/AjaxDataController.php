@@ -318,6 +318,19 @@ class AjaxDataController extends Controller
                 $ExternalFilters = $_POST["ExternalFilters"];
             
             $Model = new $ModelName();
+            
+            if ($ModelName === 'RepairDocuments') {
+                foreach ($InternalFilters as $Key => $Value) {
+                    if (substr($Value, 0, 1) === '#') {
+                        $Value = substr($Value, 1, strlen($Value));
+                        $Model->Repr_id = $Value;
+                        $Model->Query->from = str_replace('#Repr_id', $Value, $Model->Query->from);
+                        $InternalFilters[$Key] = '(1 = 1)';
+                    }
+                    
+                }
+            }
+            
             if (isset($_POST['params']) && !empty($_POST['params'])) {
                 $Model->setParams($_POST['params']);
             }

@@ -13,6 +13,8 @@ class albutton extends CWidget {
     public $OnAfterClick = '';
     public $OnAfterAjaxSuccess = '';
     public $Visible = true;
+    public $Style = '';
+    public $Enabled = true;
     
     protected $_assetsUrl;
     
@@ -73,20 +75,27 @@ class albutton extends CWidget {
             'OnAfterClick' => $this->OnAfterClick,
             'OnAfterAjaxSuccess' => $this->OnAfterAjaxSuccess,
             'Visible' => $this->Visible,
+            'Enabled' => $this->Enabled,
         );
         
         $img = '';
+        
+        if (!$this->Enabled)
+            $ClassOff = ' albuttonoff';
+        else
+            $ClassOff = '';
+        
         if ($this->ShowGlyph)
         {
             $img = '<div class="albuttonimg" style="margin-right:4px;" id="ContentHolder_btnImageAndTextImg"><div>';
         }
             
         if (!$this->Visible) 
-            echo '<div class="albutton" id="'.$this->id.'" style="width:'.$this->Width.'px;-khtml-user-select:none; display: none;">';
+            echo '<div class="albutton' . $ClassOff . '" id="'.$this->id.'" style="width:'.$this->Width.'px;-khtml-user-select:none; display: none; ' . $this->Style . '">';
         else
-            echo '<div class="albutton" id="'.$this->id.'" style="width:'.$this->Width.'px;-khtml-user-select:none;">';
+            echo '<div class="albutton' . $ClassOff . '" id="'.$this->id.'" style="width:'.$this->Width.'px;-khtml-user-select:none; ' . $this->Style . '">';
         
-        echo '    <div class="alb" id="alb_'.$this->id.'">' .
+        echo '    <div class="alb" id="alb_'.$this->id.'" style="' . $this->Style . '">' .
         '        <div class="alb_h">' .
         '            <input class="alb_i" value="'.$this->Text.'" type="submit" name="'.$this->FormName.'">' .
         '        </div>' . $img .

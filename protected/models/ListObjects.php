@@ -110,7 +110,7 @@ class ListObjects extends MainFormModel
                         AND (og.DelDate IS NULL)
                         AND (o.Doorway <> 'Общее')
                         AND (a.StreetName <> 'ЗИП ул.')";
-        $Order =    "\nOrder by a.Addr";
+        $Order =    "\nOrder by a.StreetName, dbo.StrToInt(a.House), dbo.StrToInt(a.Corp), dbo.StrToInt(o.Doorway)";
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
         $this->Query->setWhere($Where);

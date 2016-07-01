@@ -10,13 +10,21 @@
     border: 1px solid #c0c0c0;
     background-color: white;
     padding: 1px;
-    //font: 12px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
     cursor: pointer;
     display: inline-block;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
+    -webkit-user-select: none;
         
+}
+
+.albuttonoff {
+    background-color: #c0c0c0;
+}
+
+.albuttonoff:hover {
+    background-color: #c0c0c0 !important;
 }
 
 .albutton:hover {

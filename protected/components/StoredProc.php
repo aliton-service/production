@@ -107,6 +107,17 @@ class StoredProc
         return FALSE;
     }
 
+    public function SetParamValue($ParamName = '', $Value = null) {
+        for ($i = 0; $i <= count($this->Parameters)-1; ++$i) {
+            if ($this->Parameters[$i]['ParamName'] == $ParamName) {
+                if ($Value == '') $Value = null;
+                $this->Parameters[$i]['Value'] = $Value;
+                $this->CheckParam = TRUE;
+                return 0;
+            }
+        }
+    }
+    
     public function SetStoredProcParams($model)
     {
         // Устанавливаем параметры процедуры

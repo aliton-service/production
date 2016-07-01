@@ -2,75 +2,60 @@
 
 class RepairComments extends MainFormModel
 {
-	public $rpcm_id = null;
-	public $repr_id = null;
-	public $DateCreate = null;
-	public $user2 = null;
-	public $auto = null;
-	public $comment = null;
-	public $User = null;
-	public $Lock = null;
-	public $EmplLock = null;
-	public $DateLock = null;
-	public $EmplCreate = null;
-	public $EmplChange = null;
+    public $Rpcm_id;
+    public $Repr_id;
+    public $Date;
+    public $Auto;
+    public $Comment;
+    public $EmplCreate;
+    public $EmployeeName;
+        
+    public function rules() {
+            return array(
+                    array('Rpcm_id,
+                            Repr_id,
+                            Date,
+                            Auto,
+                            Comment,
+                            EmplCreate,
+                            EmployeeName', 'safe'),
+            );
+    }
+        
+    function __construct() {
+        parent::__construct();
+        
+        $this->SP_INSERT_NAME = 'INSERT_RepairComments';
+        $this->SP_UPDATE_NAME = '';
+        $this->SP_DELETE_NAME = '';
+                
+        $Select = "\nSelect
+                        rc.Rpcm_id,
+                        rc.Repr_id,
+                        rc.Date,
+                        rc.Auto,
+                        rc.Comment,
+                        rc.EmplCreate,
+                        dbo.FIO(e.EmployeeName) as EmployeeName";
+        $From = "\nFrom RepairComments rc left join Employees e on (rc.EmplCreate = e.Employee_id)";
+        $Order = "\nOrder by rc.Rpcm_id desc";
 
-	public $KeyFiled = 'rc.rpcm_id';
-	public $PrimaryKey = 'rpcm_id';
-
-	public $SP_INSERT_NAME = '';
-	public $SP_UPDATE_NAME = '';
-	public $SP_DELETE_NAME = '';
-
-	function __construct() {
-		parent::__construct();
-		$select = "
-		Select
-		  rc.rpcm_id,
-		  rc.repr_id,
-		  rc.DateCreate,
-		  rc.EmplCreate [user],
-		  rc.[auto],
-		  rc.comment,
-		  dbo.FIO(e.EmployeeName) EmplName
-		";
-		$from = " From RepairComments rc left join Employees_ForObj_v e on (rc.EmplCreate = e.employee_id) ";
-		$where = " Where rc.DelDate is null ";
-		$order = " Order by rc.rpcm_id desc";
-
-		$this->Query->setSelect($select);
-		$this->Query->setFrom($from);
-		$this->Query->setOrder($order);
-		$this->Query->setWhere($where);
-	}
-
-
-	public function rules()
-	{
-		return array(
-			array('repr_id', 'required'),
-			array('rpcm_id,repr_id,DateCreate,user2,auto,comment,User,Lock,EmplLock,DateLock,EmplCreate,EmplChange', 'safe'),
-		);
-	}
+        $this->Query->setSelect($Select);
+        $this->Query->setFrom($From);
+        $this->Query->setOrder($Order);
+    }
 
 
-	public function attributeLabels()
-	{
-		return array(
-			'rpcm_id' => 'rpcm_id',
-			'repr_id' => 'repr_id',
-			'DateCreate' => 'DateCreate',
-			'user2' => 'user2',
-			'auto' => 'auto',
-			'comment' => 'comment',
-			'User' => 'User',
-			'Lock' => 'Lock',
-			'EmplLock' => 'EmplLock',
-			'DateLock' => 'DateLock',
-			'EmplCreate' => 'EmplCreate',
-			'EmplChange' => 'EmplChange',
-		);
-	}
-
-
+    public function attributeLabels()
+    {
+        return array(
+            'Rpcm_id' => '',
+            'Repr_id' => '',
+            'Date' => '',
+            'Auto' => '',
+            'Comment' => '',
+            'EmplCreate' => '',
+            'EmployeeName' => '',
+        );
+    }
 }

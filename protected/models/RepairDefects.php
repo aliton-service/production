@@ -1,7 +1,8 @@
 <?php
 
 class RepairDefects extends MainFormModel {
-	public $RepairDefect_id = null;
+	
+        public $RepairDefect_id = null;
 	public $RepairDefect = null;
 	public $EmplCreate = null;
 	public $EmplChange = null;
@@ -43,7 +44,7 @@ class RepairDefects extends MainFormModel {
 	public function attributeLabels() {
 		return array(
 			'RepairDefect_id' => 'RepairDefect_id',
-			'RepairDefect' => 'Неисправность',
+			'RepairDefect' => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ',
 			'EmplCreate' => 'EmplCreate',
 			'EmplChange' => 'EmplChange',
 			'EmplDel' => 'EmplDel',

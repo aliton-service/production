@@ -51,7 +51,7 @@
         if (DefaultStreet !== '')
             var DefaultFilterStreet = GridFilters.CreateFilterAndFilterGroup('numericfilter', 1, DefaultStreet, 'EQUAL');
         if (DefaultHouse !== '')
-            var DefaultFilterHouse = GridFilters.CreateFilterAndFilterGroup('stringfilter', 1, DefaultHouse, 'EQUAL');
+            var DefaultFilterHouse = GridFilters.CreateFilterAndFilterGroup('stringfilter', 1, DefaultHouse, 'STR_EQUAL');
         if (DefaultNumber !== '')
             var DefaultFilterNumber = GridFilters.CreateFilterAndFilterGroup('numericfilter', 1, DefaultNumber, 'EQUAL');
         if (DefaultDemandType !== '')

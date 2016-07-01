@@ -5,6 +5,7 @@ class aldialog extends CWidget {
     public $ContentUrl = "";
     public $Width = 400;
     public $Height = 400;
+    public $OnClose = "";
     
     protected $_assetsUrl;
     
@@ -58,6 +59,7 @@ class aldialog extends CWidget {
             'Width' => $this->Width,
             'Height' => $this->Height,
             'ContentUrl' => $this->ContentUrl,
+            'OnClose' => $this->OnClose,
         );
         
         $options=CJavaScript::encode($options);
