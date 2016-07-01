@@ -79,11 +79,11 @@
         
         $("#btnEdit").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null)});
         $("#btnClient").jqxButton({ width: 120, height: 30 });
-        $("#btnToMaster").jqxButton({ width: 140, height: 30, disabled: !(Demand.DateMaster == null) });
+        $("#btnToMaster").jqxButton({ width: 170, height: 30, imgSrc: "/images/ok2.png", imgPosition: "left", disabled: !(Demand.DateMaster == null) });
         $("#btnSMS").jqxButton({ width: 120, height: 30 });
         $("#btnWorkOut").jqxButton({ width: 120, height: 30, disabled: !(Demand.WorkedOut == null)});
         $("#btnNotWork").jqxButton({ width: 140, height: 30, disabled: (Demand.WorkedOut == null)});
-        $("#btnExec").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null) });
+        $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
         $("#btnSend").jqxButton({ width: 120, height: 30 });
         $("#btnDelComment").jqxButton({ width: 120, height: 30 });
         $("#btnAddExecutor").jqxButton({ width: 120, height: 30 });
@@ -122,6 +122,7 @@
             $.extend(true, DialogDefaultSettings, {
                 width: 500,
                 height: 170,
+                isModal: false,
                 initContent: function () {
                     $("#edTextSMS").jqxTextArea({height: 80, width: '100%', minLength: 1});
                     $("#btnCloseDialog").jqxButton({ width: 120, height: 30 });
