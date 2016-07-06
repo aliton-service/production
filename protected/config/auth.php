@@ -279,7 +279,7 @@ return array_merge(
                 'AdminRepairSRM',
                 'AdminRepairWarrantys',
                 'AdminRepairActUtilizations',
-                
+                'AdminRegions',
                 /* Отчеты*/
                 'Demand1Report',
                 'WHDocuments1Report',

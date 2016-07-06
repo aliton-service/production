@@ -22,6 +22,7 @@
 class Regions extends MainFormModel
 {
     public $Region_id;
+    public $Sort;
     public $RegionName;
     public $Lock;
     public $EmplLock;
