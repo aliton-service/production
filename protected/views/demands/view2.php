@@ -364,9 +364,9 @@
     <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
     <div class="row-column"><input type="button" value="Передать мастеру" id='btnToMaster' /></div>
     <div class="row-column"><input type="button" value="Текст СМС" id='btnSMS' /></div>
-    <div class="row-column" style="margin-left: 120px"><input type="button" value="Отработано" id='btnWorkOut' /></div>
+    <div class="row-column" style="margin-left: 60px"><input type="button" value="Отработано" id='btnWorkOut' /></div>
     <div class="row-column"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
-    <div class="row-column" style="margin-left: 120px"><input type="button" value="Выполнено" id='btnExec' /></div>
+    <div class="row-column" style="margin-left: 60px"><input type="button" value="Выполнено" id='btnExec' /></div>
 </div>    
 <div style="clear: both;"></div>
 <div id='Tabs' style="margin-top: 5px;">
