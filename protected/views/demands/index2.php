@@ -115,9 +115,9 @@
                     }
                 }
             if ((Temp["DemandPrior_id"] == 1 || Temp["DemandPrior_id"] == 32) && Temp["FullOverDay"] == 0) 
-                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FF00FF;">' + value + '</span>';
+                return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
             if (Temp["FullOverDay"] !== 0)
-                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #FF0000;">' + value + '</span>';
+                return '<span class="backlight_red" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
         }
         
         $("#DemandsGrid").jqxGrid(
@@ -244,7 +244,22 @@
     
     
 </script>
-
+<style>
+    .backlight_red {
+        color: #FF0000;
+    }
+    
+    .backlight_pink {
+        color: #FF00FF;
+    }
+    
+    .jqx-fill-state-pressed .backlight_pink {
+        color: black;
+    }
+    .jqx-fill-state-pressed .backlight_red {
+        color: black;
+    }
+</style>
 <div><input type="button" value="Фильтры" id='btnShowHideFilter' /></div>
 <div style="clear: both;"></div>
 <div style="float: left; margin-top: 20px; width: 100%">
