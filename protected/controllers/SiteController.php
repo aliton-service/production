@@ -94,35 +94,27 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
-	/**
-	 * Displays the login page
-	 */
 	public function actionLogin()
 	{
+            $model = new LoginForm;
+            
+            if(isset($_POST['LoginForm']))
+            {
+                $model->attributes=$_POST['LoginForm'];
 
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				die(Yii::app()->user->returnUrl);
-//				$this->redirect(Yii::app()->user->returnUrl);
-			else {
-				throw new CHttpException(500, 'Неверный логин или пароль');
-			}
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
+                if($model->validate() && $model->login()) {
+                    echo 'Login';
+                    return 1;
+                }
+                else {
+                    echo 'NotLogin';
+                    return 0;
+                }
+            }
+		
+            $this->render('login',array(
+                'model'=>$model,
+            ));
 	}
 
 	/**

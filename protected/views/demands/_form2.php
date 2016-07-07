@@ -337,7 +337,7 @@
     <div class="row-column" style="width: 180px;">Согласованная дата</div>
 </div>
 <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-    <div class="row-column" style="width: 300px;"><input type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" /><div><?php echo $form->error($model, 'Contacts'); ?></div></div>
+    <div class="row-column" style="width: 300px;"><input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" /><div><?php echo $form->error($model, 'Contacts'); ?></div></div>
     <div class="row-column" style="width: 300px;"><div id='cmbContactInfo'></div></div>
     <div class="row-column" style="width: 180px;"><div id='edAgreeDate' name="Demands[AgreeDate]"></div></div>
 </div>

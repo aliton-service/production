@@ -63,6 +63,26 @@ var DateTimeDefaultSettings = {
     max: new Date(2999, 12, 31)
 };
 
+/* Настройки по умолчанию для инпутов */
+var InputDefaultSettings = {
+    height: 25,
+    minLength: 1
+}
+
+/* Настройки по умолчанию для пароль-инпутов */
+var PasswordInputDefaultSettings = {
+    height: 25,
+    minLength: 1,
+    showStrength: true,
+    showStrengthPosition: "right"
+}
+
+/* Настройки по умолчанию для кнопок */
+var ButtonDefaultSettings = {
+    width: 120,
+    height: 30
+}
+
 var GridFilters = {};
 
 GridFilters.CreateFilter = function(Type, Operator, Value, Condition, FilterGroup) {
