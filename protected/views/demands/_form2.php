@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
-                
+        var ReadOnly = (<?php echo json_encode($ReadOnly); ?>);
         // Присваиваем значения по умолчанию
         var Demand = {
             Demand_id: '<?php echo $model->Demand_id; ?>',
@@ -128,7 +128,11 @@
             $("#cmbCloseReason").jqxComboBox({ source: DataCloseReasons, width: '220', height: '25px', displayMember: "CloseReason", valueMember: "CloseReason_id"});
             $("#cmbDelayReason").jqxComboBox({ source: DataDelayReasons, width: '290', height: '25px', displayMember: "name", valueMember: "dlrs_id"});
             $("#cmbDemandResult").jqxComboBox({ source: DataDemandResults, width: '250', height: '25px', displayMember: "ResultName", valueMember: "Result_id"});
-            
+            $("#cmbDemandType").jqxComboBox({disabled: ReadOnly});
+            $("#cmbSystemType").jqxComboBox({disabled: ReadOnly});
+            $("#cmbEquipType").jqxComboBox({disabled: ReadOnly});
+            $("#cmbMalfunction").jqxComboBox({disabled: ReadOnly});
+            $("#cmbPrior").jqxComboBox({disabled: ReadOnly});
             // Проставляем знаячение
             if (Demand.DelayedClosureReason_id != '') $("#cmbDelayedClosureReason").jqxComboBox('val', Demand.DelayedClosureReason_id);
             if (Demand.TransferReason != '') $("#cmbTransferReason").jqxComboBox('val', Demand.TransferReason);
@@ -233,6 +237,9 @@
                 }
             }
         });
+        
+            
+        
         $("#cmbPrior").bind('change', function(event) {
             $("#btnSave").jqxButton({disabled: true});
             if (event.args) {
@@ -243,6 +250,9 @@
                 }
             }
         });
+        
+        
+        
         $('#cmbContactInfo').on('change', function (event) {
             var args = event.args;
             if (args) {

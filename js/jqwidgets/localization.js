@@ -78,25 +78,25 @@ var getLocalization = function (culture) {
                 currencysymbolposition: "before",
                 decimalseparator: '.',
                 thousandsseparator: ',',
-                pagergotopagestring: "Go to page:",
-                pagershowrowsstring: "Show rows:",
+                pagergotopagestring: "Стр.:",
+                pagershowrowsstring: "Партия:",
                 pagerrangestring: " of ",
-                pagerpreviousbuttonstring: "previous",
-                pagernextbuttonstring: "next",
-                pagerfirstbuttonstring: "first",
-                pagerlastbuttonstring: "last",
+                pagerpreviousbuttonstring: "Пред.",
+                pagernextbuttonstring: "След.",
+                pagerfirstbuttonstring: "Пред.",
+                pagerlastbuttonstring: "Посл.",
                 groupsheaderstring: "Drag a column and drop it here to group by that column",
                 sortascendingstring: "Сортировка Вверх",
                 sortdescendingstring: "Сортировка Вниз",
                 sortremovestring: "Удалить сортировку",
                 groupbystring: "Group By this column",
                 groupremovestring: "Remove from groups",
-                filterclearstring: "Clear",
-                filterstring: "Filter",
+                filterclearstring: "Очистить",
+                filterstring: "Фильтр",
                 filtershowrowstring: "Show rows where:",
-                filterorconditionstring: "Or",
-                filterandconditionstring: "And",
-                filterselectallstring: "(Select All)",
+                filterorconditionstring: "ИЛИ",
+                filterandconditionstring: "И",
+                filterselectallstring: "(Выбрать Все)",
                 filterchoosestring: "Please Choose:",
                 filterstringcomparisonoperators: ['Пусто', 'Не пусто', 'Содержит', 'Не содержит', 'Начинается с', 'Заканчивается на', 'Равно', 'Не равно'],
                 filternumericcomparisonoperators: ['Равно', 'Не равно', 'Меньше', 'Меньше или равно', 'Больше', 'Больше или равно', 'Пусто', 'Не пусто'],
@@ -106,8 +106,8 @@ var getLocalization = function (culture) {
                 emptydatastring: "No data to display",
                 filterselectstring: "Select Filter",
                 loadtext: "Загрузка.",
-                clearstring: "Clear",
-                todaystring: "Today"
+                clearstring: "Очистить",
+                todaystring: "Сегодня"
             }
             break;
         case "en":
@@ -218,8 +218,8 @@ var getLocalization = function (culture) {
                 emptydatastring: "No data to display",
                 filterselectstring: "Select Filter",
                 loadtext: "Loading...",
-                clearstring: "Clear",
-                todaystring: "Today"
+                clearstring: "Очистка",
+                todaystring: "Сегодня"
             }
             break;
     }

@@ -54,7 +54,7 @@ var DialogDefaultSettings = {
 /* Настройки по умолчанию для поля со временем */
 var DateTimeDefaultSettings = {
     showFooter: true,
-    todayString: 'Today',
+    todayString: 'Сегодня',
     width: '150px',
     height: '25px',
     formatString: 'dd.MM.yyyy HH:mm',

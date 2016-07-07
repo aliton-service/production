@@ -269,11 +269,9 @@ class DemandsController extends Controller
                 
                 $model = new Demands;
                 $model->setScenario($Scenario);
-                
-                
                     
                 
-                $ReadOnly = false;
+                $ReadOnly = true;
                 $ReadOnly = !Yii::app()->user->checkAccess('ChangeType');
                 
 		if ($id == null)
