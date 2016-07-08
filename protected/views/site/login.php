@@ -7,7 +7,7 @@
         $("#btnClear").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
         
         $("#edPassword").keydown(function(e){
-            var Symbols = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789~`!@#$%^&*()_-+=|{}:;?><,.йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁё';
+            var Symbols = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789~\'"`!@#$%^&*()_-+=|{}:;?><,.йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁё';
             var Pos = Symbols.indexOf(e.key);
             var Temp = '';
             if (Pos != -1) {
