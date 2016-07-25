@@ -75,7 +75,6 @@ return array(
                             'baseUrl' => '/css',
                             'css' => array(
                                     'aliton-widgets.css',
-                                    ''
                             ),
                         ),
                         'widgets' => array(

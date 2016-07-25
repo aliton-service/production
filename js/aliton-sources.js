@@ -31,6 +31,37 @@ Sources.SourceListObjects =
     }
 };
 
+Sources.SourceListObjectsMin =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Object_id' },
+        { name: 'ObjectGr_id' },
+        { name: 'Street_id' },
+        { name: 'House' },
+        { name: 'Addr', type: 'string' },
+        { name: 'FullName', type: 'string' },
+        { name: 'JuridicalPerson' },
+        { name: 'AreaName' },
+        { name: 'ServiceType' },
+        { name: 'MasterName'},
+        { name: 'year_construction' },
+        { name: 'VIP' },
+        { name: 'Territ_Name' },
+        { name: 'ContrS_id' },
+        { name: 'Status' }
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ListObjectsMin',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        Sources.SourceListObjects.totalrecords = data[0].TotalRows;
+    }
+};
+
 Sources.SourceListEmployees =
 {
     datatype: "json",

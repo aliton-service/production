@@ -83,12 +83,14 @@ class ListObjects extends MainFormModel
                         <> '' THEN 'Должник и особые условия' END AS Status,
                         C.ContrS_id,
                         c.jrdc_id,
-                        C.Master, C.JuridicalPerson,
+                        C.Master,
+                        C.JuridicalPerson,
                         og.Refusers,
                         p.FullName,
                         cg.ClientGroup,
                         CASE WHEN datepart(yyyy, getdate()) - og.year_construction <= 3 THEN 'Новостройка' ELSE '' END AS year_construction,
-                        ar.AreaName, CASE WHEN isNull(c.ServiceType, 'Не на обслуживании') 
+                        ar.AreaName,
+                        CASE WHEN isNull(c.ServiceType, 'Не на обслуживании') 
                          = 'Не на обслуживании' THEN 'ОП' ELSE 'СЦ' END AS GroupDep,
                         e2.EmployeeName AS SalesManager,
                         a.Street_id,

@@ -4,7 +4,7 @@
         /* Текущая выбранная строка данных */
         var CurrentRowData;       
         
-        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, Sources.SourceListObjects, {
+        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, Sources.SourceListObjectsMin, {
             /*
             filter: function () {
                 $("#ObjectsGrid").jqxGrid('updatebounddata', 'filter');
@@ -16,11 +16,11 @@
         }));
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#ObjectsGrid').jqxGrid('getrowdata', row);
-            if (Temp['Status'] === 'Должник')
+            if (Temp['Status'] === '1')//'Должник')
                 return '<span class="backlight_red" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
-            if (Temp["Status"] === "Особые условия")
+            if (Temp["Status"] === '2')//"Особые условия")
                 return '<span class="backlight_green" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
-            if (Temp["Status"] === "Должник и особые условия")
+            if (Temp["Status"] === '3')//"Должник и особые условия")
                return '<span class="backlight_blue" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
             
         }
