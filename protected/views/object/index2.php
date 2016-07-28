@@ -72,9 +72,9 @@
             $("#ObjInfo").click();
         });
 
-        $("#ObjInfo").jqxButton({ width: 120, height: 30 });
-        $("#NewDem").jqxButton({ width: 120, height: 30 });
-        $("#ViewDemands").jqxButton({ width: 140, height: 30 });
+        $("#ObjInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#NewDem").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#ViewDemands").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140}));
         $("#ViewDemands").on('click', function () {
             $('#OptionsDialog').jqxWindow('open');
         });
@@ -91,8 +91,8 @@
                 $('#ToDayDialog').jqxWindow('open');
         });
         
-        $("#edAddr").jqxInput({placeHolder: "Адрес", height: 25, width: 400, minLength: 1});
-        $("#edClient").jqxInput({placeHolder: "Клиент", height: 25, width: 200, minLength: 1});
+        $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 400}));
+        $("#edClient").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Клиент"}));
         GridFilters.AddControlFilter('edAddr', 'jqxInput', 'ObjectsGrid', 'Addr', 'stringfilter', 1, 'CONTAINS', true);
         GridFilters.AddControlFilter('edClient', 'jqxInput', 'ObjectsGrid', 'FullName', 'stringfilter', 1, 'CONTAINS', true);
         
@@ -101,8 +101,8 @@
                 width: 500,
                 height: 130,
                 initContent: function () {
-                    $("#ToDayDialogYes").jqxButton({ width: 120, height: 30 });
-                    $("#ToDayDialogCancel").jqxButton({ width: 120, height: 30 });
+                    $("#ToDayDialogYes").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+                    $("#ToDayDialogCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
                     
                     $("#ToDayDialogCancel").on('click', function ()
                     {
@@ -135,13 +135,13 @@
                     $("#rbDemAllObject").jqxRadioButton({ width: 230, height: 25, checked: false});
                     $("#rbParams").jqxRadioButton({ width: 130, height: 25, checked: false});
                     $("#cmbMasterFilter").jqxComboBox({ source: DataListEmployees, width: '200', height: '25px', displayMember: 'ShortName', valueMember: 'Employee_id'});
-                    $("#edNumber").jqxInput({placeHolder: "Номер", height: 25, width: 100, minLength: 1});
+                    $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Номер", width: 100}));
                     $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: null, readonly: false}));
                     $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '350', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"});
                     $("#cmbExecutor").jqxComboBox({ source: DataListEmployees, width: '200', height: '25px', displayMember: 'ShortName', valueMember: 'Employee_id'});
                     
-                    $("#OptionsDialogYes").jqxButton({ width: 120, height: 30 });
-                    $("#OptionsDialogCancel").jqxButton({ width: 120, height: 30 });
+                    $("#OptionsDialogYes").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+                    $("#OptionsDialogCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
                     
                     $("#OptionsDialogCancel").on('click', function () {
                         $('#OptionsDialog').jqxWindow('Close');

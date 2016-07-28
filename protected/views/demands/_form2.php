@@ -96,10 +96,10 @@
             }
         });
         // Инициализируем контроды
-        $("#edDemand_id").jqxInput({placeHolder: "-НОМЕР-", height: 25, width: 100, minLength: 1});
-        $("#edAddr").jqxInput({placeHolder: "Адрес", height: 25, width: 300, minLength: 1, value: Demand.Address});
+        $("#edDemand_id").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "-НОМЕР-", width: 100}));
+        $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 300, value: Demand.Address}));
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edServiceType").jqxInput({placeHolder: "Тариф обслуживания", height: 25, width: 200, minLength: 1, value: Demand.ServiceType});
+        $("#edServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Тариф обслуживания", value: Demand.ServiceType}));
         $("#chbDateMaster").jqxCheckBox({ width: 160, height: 25 });
         $("#chbOtherExecutor").jqxCheckBox({ width: 160, height: 25 });
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
@@ -110,12 +110,12 @@
         $("#cmbPrior").jqxComboBox({ source: DataPriors, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id"});
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.AgreeDate, }));
-        $("#edContacts").jqxInput({placeHolder: "Контактное лицо", height: 25, width: 300, minLength: 1});
+        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 300}));
         $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '300', height: '25px', displayMember: "contact", valueMember: "Info_id"});
         $('#edRefusers').jqxTextArea({ disabled: true, placeHolder: '', height: 50, width: 800, minLength: 1});
         $('#edDemandText').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
-        $("#btnSave").jqxButton({ width: 120, height: 30, disabled: true });
-        $("#btnClient").jqxButton({ width: 120, height: 30, disabled: false });
+        $("#btnSave").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
         
         if (!StateInsert) {
             $('#edRepMaster').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});

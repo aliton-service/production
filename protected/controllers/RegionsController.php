@@ -15,7 +15,7 @@ class RegionsController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			
 		);
 	}
 
@@ -95,14 +95,11 @@ class RegionsController extends Controller
 	{
 		$model=new Regions;
 
-		// Uncomment the following line if AJAX validation is needed
-		 $this->performAjaxValidation($model);
-
 		if(isset($_POST['Regions']))
 		{
 			$model->attributes=$_POST['Regions'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->Region_id));
+			if($model->insert())
+				$this->redirect(Yii::app()->createUrl('Regions/Index'));
 		}
 
 		$this->render('create',array(
@@ -115,34 +112,23 @@ class RegionsController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($Region_id)
 	{
-	$model=new Regions;
-		 if ($id == null)
-                        throw new CHttpException(404, 'Не выбран сотрудник.');
-                
-                
-                $model=$this->loadModel($id);
+            $model=new Regions;
+            $model->getModelPk($Region_id);
             
-                
-                if (!Yii::app()->LockManager->LockRecord('Regions', $model->tableSchema->primaryKey, $id))
-                    throw new CHttpException(404, 'Запись заблокирована другим пользователем');
+            if(isset($_POST['Regions']))
+            {
+                    $model->attributes=$_POST['Regions'];
+                        if ($model->validate()) {
+                        $model->update();
+                        $this->redirect(Yii::app()->createUrl('Regions/Index'));
+                    }
+            }
 
-		// Uncomment the following line if AJAX validation is needed
-		 $this->performAjaxValidation($model);
-
-		if(isset($_POST['Regions']))
-		{
-			$model->attributes=$_POST['Regions'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->Region_id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-                        'locktime'=>Yii::app()->LockManager->getLockTime($model->tableName()),
-                        'id'=>$id,
-		)); 
+            $this->render('update',array(
+                    'model'=>$model,
+            )); 
 	}
 
 	/**
@@ -150,17 +136,19 @@ class RegionsController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete()
 	{
-		//$this->loadModel($id)->delete();
-
-		$model=new Regions;
-		
-		$model->deleteCount($id, Yii::app()->user->Employee_id);
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+            if(isset($_POST['Region_id'])) {
+                $Region_id = $_POST['Region_id'];
+            }
+            $model=new Regions;
+            $model->getModelPk($Region_id);
+            
+            if(!is_null($Region_id)){
+                $model->delete();
+            }
+            
+            $this->redirect($this->createUrl('Regions/Index'));
 	}
 
 	/**
