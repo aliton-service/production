@@ -30,6 +30,7 @@ class Regions extends MainFormModel
     public $EmplDel;
     public $DateChange;
     public $EmplChange;
+    public $EmplCreate;
     public $DelDate;
             
     
@@ -38,6 +39,7 @@ class Regions extends MainFormModel
             // NOTE: you should only define rules for those attributes that
             // will receive user inputs.
             return array(
+                    array('Sort', 'SortValidate'),
                     array('Sort, EmplLock, EmplDel, EmplChange', 'numerical', 'integerOnly'=>true),
                     array('RegionName', 'length', 'max'=>50),
                     array('Lock, DateLock, DateChange, DelDate', 'safe'),
@@ -69,7 +71,7 @@ class Regions extends MainFormModel
         $this->Query->setFrom($From);
         $this->Query->setWhere($Where);
         $this->Query->setOrder($Order);
-        $this->KeyFiled = 'ci.Region_id';
+        $this->KeyFiled = 'r.Region_id';
         
         $this->SP_INSERT_NAME = 'INSERT_Regions';
         $this->SP_UPDATE_NAME = 'UPDATE_Regions';
@@ -81,7 +83,7 @@ class Regions extends MainFormModel
         return array(
                 'Region_id' => 'Region',
                 'RegionName' => 'Region Name',
-                'Sort' => 'Sort',
+                'Sort' => 'Порядок',
                 'Lock' => 'Lock',
                 'EmplLock' => 'Empl Lock',
                 'DateLock' => 'Date Lock',
@@ -90,5 +92,11 @@ class Regions extends MainFormModel
                 'EmplChange' => 'Empl Change',
                 'DelDate' => 'Del Date',
         );
+    }
+    
+    public function SortValidate($attribute, array $params = array()) {
+        if (($this->Sort < 0) || ($this->Sort > 10)) {
+            $this->addError($attribute, 'Введите в поле "Порядок" значение от 0 до 10');
+        }
     }
 }

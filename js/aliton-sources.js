@@ -467,3 +467,23 @@ Sources.SourceDemandsExecutors =
         Sources.SourceDemandsExecutors.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceListRegionsMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Region_id', type: 'int'},
+        {name: 'RegionName', type: 'string'},
+    ],
+    id: 'Region_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Regions',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceListRegionsMin.totalrecords = data[0].TotalRows;
+    }
+}

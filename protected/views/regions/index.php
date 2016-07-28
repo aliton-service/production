@@ -1,94 +1,76 @@
-<?php
-/* @var $this RegionsController */
-/* @var $model Regions */
-
-$this->breadcrumbs=array(
-	'Справочники'=>array('/reference/index'),
-	'Регионы'=>array('index'),
-	
-);
-
-$this->menu=array(
-	array('label'=>'Создать Регионы', 'url'=>array('create')),
-	array('label'=>'Редактировать Регионы', 'url'=>array('#'), 'itemOptions'=>array('data-action'=>'update')),
-	array('label'=>'Удалить Регионы', 'url'=>array('#'), 'itemOptions'=>array('data-action'=>'delete')),
-);
-
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#regions-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
-?>
-
-<h1>Редактирование Регионы</h1>
-
-
-
-
-
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'regions-grid',
-	'dataProvider'=>$model->search(),
-	'cssFile'=>'css/reference/gridview/styles.css',
-	'pager'=>array('cssFile'=>'css/reference/gridview/pager.css', ),
-	'filter'=>$model,
-	'columns'=>array(
-		// 'Region_id',
-		'RegionName'=>array('name'=>'RegionName', 'header'=>'Регион'),
-		// 'Sort',
-		// 'Lock',
-		// 'EmplLock',
-		// 'DateLock',
-		/*
-		'EmplDel',
-		'DateChange',
-		'EmplChange',
-		'DelDate',
-		*/
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); 
-?>
-
 <script type="text/javascript">
-	$('body').on('click','.items tbody tr', function(){
-		
-		var link = $(this).find('td.button-column a.update').attr('href');
-		$('li[data-action=update] a').attr('href', link);
+    $(document).ready(function () {      
+        /* Текущая выбранная строка данных */
+        var CurrentRowData;
+        
+        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListRegionsMin, {}));
 
-		link = $(this).find('td.button-column a.delete').attr('href');
-		$('li[data-action=delete] a').attr('href', link);
+        $("#RegionsGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                showfilterrow: true,
+                virtualmode: false,
+                width: '100%',
+                height: '400',
+                source: DemDataAdapter,
+                        /*
+                ready: function() {
+                    var State = $('#RegionsGrid').jqxGrid('getstate');
+                    var Columns = GridState.LoadGridSettings('#RegionsGrid', 'RegionIndex_RegionsGrid');
+                    $.extend(true, State.columns, Columns);
+                    $('#RegionsGrid').jqxGrid('loadstate', State);    
+                    $('#RegionsGrid').jqxGrid({source: DemDataAdapter});
+//                }*/
+                columns: [
+                    { text: 'Регион', dataField: 'RegionName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 }
+                ]
+        }));
+        $("#NewRegion").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#EditRegion").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#DelRegion").jqxButton($.extend(true, {}, ButtonDefaultSettings));
 
-	});
-
-	$('body').on('click','li[data-action=delete] a',function(){
-		$.ajax({
-			type: 'post',
-			url: $(this).attr('href'),
-			data: 'Regions=Regions',
-			success: function() {
-
-			}
-		})
-	})
+        $("#NewRegion").on('click', function ()
+        {
+            window.open('/index.php?r=Regions/Create');
+        });
+        
+        $("#RegionsGrid").on('rowselect', function (event) {
+            var Temp = $('#RegionsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowData = Temp;
+            } else {CurrentRowData = null};
+        });
+        
+        $("#EditRegion").on('click', function ()
+        {
+            window.open('/index.php?r=Regions/Update&Region_id=' + CurrentRowData.Region_id);
+        });
+        
+        $("#DelRegion").on('click', function ()
+        {
+            $.ajax({
+            type: "POST",
+            url: "/index.php?r=Regions/Delete",
+            data: { Region_id: CurrentRowData.Region_id },
+            success: function(){
+              $("#RegionsGrid").jqxGrid('updatebounddata');
+            }
+          });
+        });
+    });
+    
+    
+        
 </script>
 
 
+<div class="row">
+    <div id="RegionsGrid" class="jqxGridAliton"></div>
+</div>
 
-
+<div class="row">
+    <div class="row-column"><input type="button" value="Создать" id='NewRegion' /></div>
+    <div class="row-column"><input type="button" value="Изменить" id='EditRegion' /></div>
+    <div class="row-column"><input type="button" value="Удалить" id='DelRegion' /></div>
+</div>
