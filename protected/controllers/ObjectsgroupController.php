@@ -5,6 +5,15 @@ class ObjectsgroupController extends Controller
     public $layout='//layouts/column2';
     public $title = '';
     
+    public function actionHello()
+    {
+        //$Region = new Regions();
+        //$Region = $Region->Find(array());
+        $this->renderPartial('hello', array(
+                //'Region' => $Region,
+        ));
+    }
+    
     public function actionIndex($ObjectGr_id)
     {
         $model = new ObjectsGroup();
@@ -13,7 +22,7 @@ class ObjectsgroupController extends Controller
         $this->title = 'Карточка объекта: ' . $model->Address;
         
         $this->render('index', array(
-            'model' => $model
+            'model' => $model,
         ));
     }
     
@@ -34,7 +43,7 @@ class ObjectsgroupController extends Controller
                 ),
             
             array('allow',
-                    'actions'=>array('index'),
+                    'actions'=>array('index', 'Hello'),
                     'roles'=>array('ViewObjectsGroup'),
                 ),
             

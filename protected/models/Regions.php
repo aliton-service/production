@@ -69,7 +69,7 @@ class Regions extends MainFormModel
         $this->Query->setFrom($From);
         $this->Query->setWhere($Where);
         $this->Query->setOrder($Order);
-        $this->KeyFiled = 'ci.Region_id';
+        $this->KeyFiled = 'r.Region_id';
         
         $this->SP_INSERT_NAME = 'INSERT_Regions';
         $this->SP_UPDATE_NAME = 'UPDATE_Regions';

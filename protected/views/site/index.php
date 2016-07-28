@@ -43,6 +43,6 @@
     
     //echo '<br>$h: ' . holidays_count($datestart, $dateend, $holidays);
     */
-   
+
 ?>
 
