@@ -40,9 +40,9 @@ class Territory extends MainFormModel
 
             parent::__construct($scenario);
 
-            $this->SP_INSERT_NAME = 'INSERT_Territory';
-            $this->SP_UPDATE_NAME = 'UPDATE_Territory';
-            $this->SP_DELETE_NAME = 'DELETE_Territory';
+            $this->SP_INSERT_NAME = 'INSERT_TERRITORIES';
+            $this->SP_UPDATE_NAME = 'UPDATE_TERRITORIES';
+            $this->SP_DELETE_NAME = 'DELETE_TERRITORIES';
 
             $Select = "Select
                             t.Territ_Id,
@@ -75,30 +75,30 @@ class Territory extends MainFormModel
         
 	public function attributeLabels()
 	{
-		return array(
-			'Territ_Id' => 'Territ',
-			'Territ_Name' => 'Territ Name',
-			'Employee_Id' => 'Employee',
-			'Note' => 'Note',
-			'Lock' => 'Lock',
-			'EmplLock' => 'Empl Lock',
-			'DateLock' => 'Date Lock',
-			'EmplCreate' => 'Empl Create',
-			'DateCreate' => 'Date Create',
-			'EmplChange' => 'Empl Change',
-			'DateChange' => 'Date Change',
-			'DelDate' => 'Del Date',
-			'EmplDel' => 'Empl Del',
-		);
+            return array(
+                'Territ_Id' => 'Territ',
+                'Territ_Name' => 'Territ Name',
+                'Employee_Id' => 'Employee',
+                'Note' => 'Note',
+                'Lock' => 'Lock',
+                'EmplLock' => 'Empl Lock',
+                'DateLock' => 'Date Lock',
+                'EmplCreate' => 'Empl Create',
+                'DateCreate' => 'Date Create',
+                'EmplChange' => 'Empl Change',
+                'DateChange' => 'Date Change',
+                'DelDate' => 'Del Date',
+                'EmplDel' => 'Empl Del',
+            );
 	}
 
 	public function deleteCount($id, $empl_id) {
 	 
-		$Command = Yii::app()->db->createCommand(''
-                . "UPDATE Territory SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE Territ_Id = {$id}
-                ");
+            $Command = Yii::app()->db->createCommand(''
+            . "UPDATE Territory SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE Territ_Id = {$id}
+            ");
         
-        return $Command->queryAll();
+            return $Command->queryAll();
 	}
 	
         

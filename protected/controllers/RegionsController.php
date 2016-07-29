@@ -120,7 +120,7 @@ class RegionsController extends Controller
             if(isset($_POST['Regions']))
             {
                 $model->attributes=$_POST['Regions'];
-                    if ($model->validate()) {
+                if ($model->validate()) {
                     $model->update();
                     $this->redirect(Yii::app()->createUrl('Regions/Index'));
                 }

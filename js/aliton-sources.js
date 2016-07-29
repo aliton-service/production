@@ -531,3 +531,24 @@ Sources.SourceListStreetTypesMin =
         Sources.SourceListStreetTypesMin.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceListTerritoryMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Territ_Id', type: 'int'},
+        {name: 'Territ_Name', type: 'string'},
+        {name: 'Note', type: 'string'},
+    ],
+    id: 'Territ_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Territory',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceListTerritoryMin.totalrecords = data[0].TotalRows;
+    }
+};
