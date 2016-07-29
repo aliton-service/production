@@ -4,7 +4,7 @@
         /* Текущая выбранная строка данных */
         var CurrentRowData;       
         
-        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, Sources.SourceListObjectsMin, {
+        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListObjectsMin, {
             /*
             filter: function () {
                 $("#ObjectsGrid").jqxGrid('updatebounddata', 'filter');
