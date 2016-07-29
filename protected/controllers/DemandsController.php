@@ -256,9 +256,13 @@ class DemandsController extends Controller
             $Demand = new Demands();
             $Demand->getModelPk($Demand_id);
             
+            $Object = new Objects();
+            $Object->getModelPk($Demand->Object_id);
+            
             $this->render('view2', array(
 			'model'=>$Demand,
-			)
+                        'SpecCondition' => $Object->Condition,
+                    )
 		);
         }
 

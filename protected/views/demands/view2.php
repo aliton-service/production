@@ -72,6 +72,7 @@
         $("#edDelayReason").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DelayReason});
         $("#edResultName").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.ResultName});
         $("#edDemandText").jqxTextArea({height: 83, width: 480, minLength: 1});
+        $("#edSpecCondition").jqxTextArea({height: 83, width: 250, minLength: 1});
         $("#edUCreateName").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.UCreateName});
         $("#edUChangeName").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.UChangeName});
         $("#edComment").jqxInput({height: 25, width: 580, minLength: 1});
@@ -264,8 +265,8 @@
         });
     });
 </script>
-
-<div class="row" style="width: 800px; overflow: hidden; padding: 0px 20px 10px 0px; border: 1px solid #e5e5e5;">
+<div style="float: left; width: 840px;">
+    <div class="row" style="width: 800px; overflow: hidden; padding: 0px 20px 10px 0px; border: 1px solid #e5e5e5;">
     <div class="row">
         <div class="row-column">Номер</div>
         <div class="row-column"><input readonly id="edNumber" type="text"/></div>
@@ -359,6 +360,12 @@
         </div>
     </div>
 </div>
+</div>
+<div style="float: left; padding-top: 10px;">
+    <div>Особые условия</div>
+    <div><textarea readonly id="edSpecCondition"><?php echo $SpecCondition; ?></textarea></div>
+</div>
+<div style="clear: both"></div>
 <div class="row" style="margin-top: 5px; padding-left: 0px">
     <div class="row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
     <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
