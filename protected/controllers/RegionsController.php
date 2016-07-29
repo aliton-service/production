@@ -7,7 +7,7 @@ class RegionsController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
-
+        public $title = '';
 	/**
 	 * @return array action filters
 	 */
@@ -119,11 +119,11 @@ class RegionsController extends Controller
             
             if(isset($_POST['Regions']))
             {
-                    $model->attributes=$_POST['Regions'];
-                        if ($model->validate()) {
-                        $model->update();
-                        $this->redirect(Yii::app()->createUrl('Regions/Index'));
-                    }
+                $model->attributes=$_POST['Regions'];
+                    if ($model->validate()) {
+                    $model->update();
+                    $this->redirect(Yii::app()->createUrl('Regions/Index'));
+                }
             }
 
             $this->render('update',array(
@@ -156,14 +156,15 @@ class RegionsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model=new Regions('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Regions']))
-			$model->attributes=$_GET['Regions'];
+            $model=new Regions('search');
+            $model->unsetAttributes();  // clear any default values
+            if(isset($_GET['Regions']))
+                    $model->attributes=$_GET['Regions'];
 
-		$this->render('index',array(
-			'model'=>$model,
-		));
+            $this->title = 'Просмотр регионов';
+            $this->render('index',array(
+                    'model'=>$model,
+            ));
 	}
 
 	/**

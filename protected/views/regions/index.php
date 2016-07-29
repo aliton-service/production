@@ -29,17 +29,22 @@
         $("#NewRegion").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditRegion").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelRegion").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-
-        $("#NewRegion").on('click', function ()
-        {
-            window.open('/index.php?r=Regions/Create');
-        });
         
         $("#RegionsGrid").on('rowselect', function (event) {
             var Temp = $('#RegionsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowData = Temp;
             } else {CurrentRowData = null};
+        });
+        
+        $('#RegionsGrid').on('rowdoubleclick', function (event) { 
+            $("#EditRegion").click();
+        });
+        
+        
+        $("#NewRegion").on('click', function ()
+        {
+            window.open('/index.php?r=Regions/Create');
         });
         
         $("#EditRegion").on('click', function ()
@@ -50,13 +55,13 @@
         $("#DelRegion").on('click', function ()
         {
             $.ajax({
-            type: "POST",
-            url: "/index.php?r=Regions/Delete",
-            data: { Region_id: CurrentRowData.Region_id },
-            success: function(){
-              $("#RegionsGrid").jqxGrid('updatebounddata');
-            }
-          });
+                type: "POST",
+                url: "/index.php?r=Regions/Delete",
+                data: { Region_id: CurrentRowData.Region_id },
+                success: function(){
+                    $("#RegionsGrid").jqxGrid('updatebounddata');
+                }
+            });
         });
     });
     
@@ -64,6 +69,13 @@
         
 </script>
 
+<?php $this->setPageTitle('Регионы'); ?>
+<?php
+    $this->breadcrumbs=array(
+        'Справочники'=>array('/reference/index'),
+        'Регионы'=>array('index'),
+    );
+?>
 
 <div class="row">
     <div id="RegionsGrid" class="jqxGridAliton"></div>

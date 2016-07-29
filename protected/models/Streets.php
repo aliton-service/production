@@ -43,35 +43,35 @@ class Streets extends MainFormModel
 
 
 	public function __construct($scenario = '') {
-		parent::__construct($scenario);
+            parent::__construct($scenario);
 
-		$this->SP_INSERT_NAME = 'INSERT_STREETS';
-        $this->SP_UPDATE_NAME = 'UPDATE_STREETS';
-        $this->SP_DELETE_NAME = 'DELETE_STREETS';
+            $this->SP_INSERT_NAME = 'INSERT_STREETS';
+            $this->SP_UPDATE_NAME = 'UPDATE_STREETS';
+            $this->SP_DELETE_NAME = 'DELETE_STREETS';
 
-        $select = "Select 
-        			st.Street_id,
-        			st.StreetName,
-        			rg.RegionName,
-        			rg.Region_id,
-        			stype.StreetType_id,
-        			stype.StreetType
-        			";
-        $from = "From Streets st
-        		Left Join Regions rg
-        			On rg.Region_id = st.Region_id
-        		Left Join StreetTypes stype
-        			On stype.StreetType_id = st.StreetType_id        		
-        			";
+            $select = "Select 
+                                    st.Street_id,
+                                    st.StreetName,
+                                    rg.RegionName,
+                                    rg.Region_id,
+                                    stype.StreetType_id,
+                                    stype.StreetType
+                                    ";
+            $from = "From Streets st
+                            Left Join Regions rg
+                                    On rg.Region_id = st.Region_id
+                            Left Join StreetTypes stype
+                                    On stype.StreetType_id = st.StreetType_id        		
+                                    ";
 
-        $this->Query->setSelect($select);
-        $this->Query->setFrom($from);
-        $this->Query->setOrder("\nOrder by st.StreetName");
-        $this->Query->AddWhere('st.EmplDel is null');
-        
-        // Инициализация первичного ключа
-        $this->KeyFiled = 'st.Street_id';
-        $this->PrimaryKey = 'Street_id';
+            $this->Query->setSelect($select);
+            $this->Query->setFrom($from);
+            $this->Query->setOrder("\nOrder by st.StreetName");
+            $this->Query->AddWhere('st.EmplDel is null');
+
+            // Инициализация первичного ключа
+            $this->KeyFiled = 'st.Street_id';
+            $this->PrimaryKey = 'Street_id';
 	}
 
 	public function rules()

@@ -41,61 +41,61 @@ class StreetsController extends Controller
     {
         $this->title = 'Создание новой улицы';
         $model = new Streets();
-        $model->setScenario('Insert');
+//        $model->setScenario('Insert');
 
         if(isset($_POST['Streets'])) {
             $model->attributes=$_POST['Streets'];
             $model->EmplCreate = Yii::app()->user->Employee_id;
 
-            if ($model->validate()) {
-                $model->insert();
+            if($model->insert()) {
                 $this->redirect(Yii::app()->createUrl('Streets/index'));
-            }    
+            }   
         }
 
         $this->render('create',array(
                 'model'=>$model,
         ));
+        
     }
 
 
     public function actionUpdate($Street_id)
     {
         $this->title = 'Редактирование улицы';
-
-        $model = new Streets();
-        $model->setScenario('Update');
-
+        $model=new Streets;
+        $model->getModelPk($Street_id);
+        
         if ($Street_id == null)
                 throw new CHttpException(404, 'Не выбрана запись.');
 
         if(isset($_POST['Streets']))
         {
             $model->attributes=$_POST['Streets'];
-
             $model->EmplChange = Yii::app()->user->Employee_id;
-
+            
             if ($model->validate()) {
                 $model->update();
+                $this->redirect(Yii::app()->createUrl('Streets/Index'));
             }
         }
-        else
-        {
-            $model->getmodelPk($Street_id);
-            $this->title .= ' ' . $model->StreetName;
-        }
 
-        $this->render('update', array(
+        $this->render('update',array(
                 'model'=>$model,
-            )
-        );
+        )); 
     }
 
-    public function actionDelete($Street_id)
+    public function actionDelete()
     {
-        $model = new Streets();
-        $model->getmodelPk($Street_id);
-        $model->delete();
+        if(isset($_POST['Street_id'])) {
+            $Street_id = $_POST['Street_id'];
+        }
+        $model=new Streets;
+        $model->Street_id = $Street_id;
+        $model->EmplChange = Yii::app()->user->Employee_id;
+
+        if(!is_null($Street_id)){
+            $model->delete();
+        }
 
         $this->redirect($this->createUrl('Streets/Index'));
     }

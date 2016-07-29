@@ -1,115 +1,52 @@
-<script>
+<script type="text/javascript">
     
+    $(document).ready(function () {
+        
+        var DataRegionName = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListRegionsMin, {}));
+        var DataStreetType = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListStreetTypesMin, {}));
+        
+        $("#cmbRegionName").jqxComboBox({ source: DataRegionName, width: '300', height: '25px', displayMember: "RegionName", valueMember: "Region_id" });
+        $("#cmbStreetType").jqxComboBox({ source: DataStreetType, width: '300', height: '25px', displayMember: "StreetType", valueMember: "StreetType_id" });
+        
+        $("#StreetName").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Название улицы"}));
+        
+        $("#SaveNewStreet").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#SaveNewStreet").on('click', function ()
+        {
+            $('#Streets').submit();
+        });
+        
+        var Demand = {
+            Region_id: '<?php echo $model->Region_id; ?>',
+            StreetType_id: '<?php echo $model->StreetType_id; ?>',
+        };
+
+        if (Demand.Region_id != '') $("#cmbRegionName").jqxComboBox('val', Demand.Region_id);
+        if (Demand.StreetType_id != '') $("#cmbStreetType").jqxComboBox('val', Demand.StreetType_id);
+    });   
 </script>
 
-<?php 
-    $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'Streets',
-	'htmlOptions'=>array(
-		'class'=>'form-inline'
-		),
-	'enableAjaxValidation'=>false,
-    )); 
+<?php
+/* @var $this StreetsController */
+/* @var $model Streets */
+/* @var $form CActiveForm */
 ?>
 
 <?php
-    $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-        'id' => 'edStreet_id',
-        'Width' => 100,
-        'Type' => 'String',
-        'Name' => 'Streets[Street_id]',
-        'Value' => $model->Street_id,
-        'ReadOnly' => true,
-        'Visible' => false,
-    ));
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'Streets',
+        'htmlOptions'=>array(
+            'class'=>'form-inline',
+            ),
+     )); 
 ?>
 
-<div style="float: left; width: 200px">Регион:</div>
-<div style="float: left; ">
-    <?php
-        $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-            'id' => 'Region_id',
-            'Key' => 'Streets_Update_Region_id',
-            'ModelName' => 'Regions',
-            'Name' => 'Streets[Region_id]',
-            'FieldName' => 'RegionName',
-            'KeyField' => 'Region_id',
-            'KeyFieldPrefix' => 't.',
-            'KeyValue' => $model->Region_id,
-            'Type' => array(
-                'Mode' => 'Filter',
-                'Condition' => "r.RegionName like ':Value%'",
-                ),
-            'Width' => 300,
-            'Columns' => array(
-                'RegionName' => array(
-                    'Name' => 'Регион',
-                    'FieldName' => 'RegionName',
-                    'Width' => 250,
-                ),
-            ),
-        ));
-    ?>
-</div>
-<div><?php echo $form->error($model, 'Region_id'); ?></div>
-<div style="clear: both"></div>
+    <div class="row" style="width: 300px;">Регион: <div id='cmbRegionName' name="Streets[Region_id]"  class="row-column"></div></div>
+    <div class="row">Улица: <br/><input name="Streets[StreetName]" type="text" id="StreetName" value="<?php echo $model->StreetName; ?>" ></div>
+    <div class="row" style="width: 300px;">Тип улицы: <div id='cmbStreetType' name="Streets[StreetType_id]" class="row-column"></div></div>
+    
+    <br/>
+    <div class="row-column"><input type="button" value="Сохранить" id='SaveNewStreet' /></div>
 
-<div style="float: left; width: 200px; margin-top: 6px;">Наименование:</div>
-<div style="float: left; margin-top: 6px; ">
-<?php
-    $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-            'id' => 'edStreetName',
-            'Width' => 280,
-            'Type' => 'String',
-            'Value' => $model->StreetName,
-            'Name' => 'Streets[StreetName]',
-    ));
-?>
-</div>
-<div><?php echo $form->error($model, 'StreetName'); ?></div>
-<div style="clear: both"></div>
-<div style="float: left; width: 200px; margin-top: 6px;">Тип улицы:</div>
-<div style="float: left; margin-top: 6px;">
-    <?php
-        $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-            'id' => 'StreetType_id',
-            'Key' => 'Streets_Update_StreetType_id',
-            'ModelName' => 'Streettypes',
-            'Name' => 'Streets[StreetType_id]',
-            'FieldName' => 'StreetType',
-            'KeyField' => 'StreetType_id',
-            'KeyFieldPrefix' => 't.',
-            'KeyValue' => $model->StreetType_id,
-            'Type' => array(
-                'Mode' => 'Filter',
-                'Condition' => "st.StreetType like ':Value%'",
-                ),
-            'Width' => 300,
-            'Columns' => array(
-                'StreetType' => array(
-                    'Name' => 'Тип улицы',
-                    'FieldName' => 'StreetType',
-                    'Width' => 100,
-                ),
-            ),
-        ));
-    ?>
-</div>
-<div><?php echo $form->error($model, 'StreetType_id'); ?></div>
-<div style="clear: both"></div>
-<div style="float: left; margin-top: 6px;">
-    <div style="float: left;">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'SaveStreet',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Сохранить',
-                'FormName' => 'Streets',
-                'Type' => 'Form',
-            ));
-        ?>
-    </div> 
-</div>
+
 <?php $this->endWidget(); ?>
-

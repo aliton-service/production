@@ -1,141 +1,91 @@
-<script>
-    Aliton.Links.push({
-        Out: "edStreetName",
-        In: "StreetsGrid",
-        TypeControl: "Grid",
-        Condition: "st.StreetName like '%:Value%'",
-        Name: "Filter1",
-        Field: "",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
+<script type="text/javascript">
+    $(document).ready(function () {      
+        /* Текущая выбранная строка данных */
+        var CurrentRowData;
+        
+        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListStreetsMin, {}));
+
+        $("#StreetsGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                showfilterrow: true,
+                virtualmode: false,
+                width: '100%',
+                height: '400',
+                source: DemDataAdapter,
+//                source: DemDataAdapter,
+                        /*
+                ready: function() {
+                    var State = $('#StreetsGrid').jqxGrid('getstate');
+                    var Columns = GridState.LoadGridSettings('#StreetsGrid', 'StreetIndex_StreetsGrid');
+                    $.extend(true, State.columns, Columns);
+                    $('#StreetsGrid').jqxGrid('loadstate', State);    
+                    $('#StreetsGrid').jqxGrid({source: DemDataAdapter});
+//                }*/
+                columns: [
+                    { text: 'Регион', dataField: 'RegionName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
+                    { text: 'Улица', dataField: 'StreetName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
+                    { text: 'Тип улицы', dataField: 'StreetType', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
+                ]
+        }));
+        
+        $("#NewStreet").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#EditStreet").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#DelStreet").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        
+        $("#StreetsGrid").on('rowselect', function (event) {
+            var Temp = $('#StreetsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowData = Temp;
+            } else {CurrentRowData = null};
+        });
+        
+        $('#StreetsGrid').on('rowdoubleclick', function (event) { 
+            $("#EditStreet").click();
+        });
+        
+        
+        $("#NewStreet").on('click', function ()
+        {
+            window.open('/index.php?r=Streets/Create');
+        });
+        
+        $("#EditStreet").on('click', function ()
+        {
+            window.open('/index.php?r=Streets/Update&Street_id=' + CurrentRowData.Street_id);
+        });
+        
+        $("#DelStreet").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=Streets/Delete",
+                data: { Street_id: CurrentRowData.Street_id },
+                success: function(){
+                    $("#StreetsGrid").jqxGrid('updatebounddata');
+                }
+            });
+        });
     });
+    
 </script>
 <?php $this->setPageTitle('Улицы'); ?>
 <?php
     $this->breadcrumbs=array(
-            'Справочники'=>array('/reference/index'),
-            'Улицы'=>array('index'),
+        'Справочники'=>array('/reference/index'),
+        'Улицы'=>array('index'),
     );
 ?>
 
-<div style="float: left; margin-top: 16px;">
-    <div style="text-align: center; float: left">Поиск по наименованию</div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edStreetName',
-                    'Width' => 350,
-                    'Type' => 'String',
-            ));
-        ?>
-    </div>
+<div class="row">
+    <div id="StreetsGrid" class="jqxGridAliton"></div>
 </div>
 
-<div style="clear: both"></div>
-<div style="margin-top: 16px">
-    <?php
-        $this->widget('application.extensions.alitonwidgets.gridajax.algridajax', array(
-            'id' => 'StreetsGrid',
-            'Stretch' => true,
-            'Key' => 'Streets_Index_StreetsGrid',
-            'ModelName' => 'Streets',
-            'ShowFilters' => true,
-            'Height' => 230,
-            'Width' => 500,
-            'OnDblClick' => '$("#EditStreet").albutton("BtnClick");',
-            'Columns' => array(
-                'RegionName' => array(
-                    'Name' => 'Регион',
-                    'FieldName' => 'RegionName',
-                    'Width' => 200,
-                    'Filter' => array(
-                        'Condition' => "rg.RegionName like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'rg.RegionName desc',
-                        'Down' => 'rg.RegionName',
-                    ),
-                ),
-                'StreetName' => array(
-                    'Name' => 'Улица',
-                    'FieldName' => 'StreetName',
-                    'Width' => 350,
-                    'Filter' => array(
-                        'Condition' => "st.StreetName like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'st.StreetName desc',
-                        'Down' => 'st.StreetName',
-                    ),
-                ),
-                'StreetType' => array(
-                    'Name' => 'Тип улицы',
-                    'FieldName' => 'StreetType',
-                    'Width' => 100,
-                    'Filter' => array(
-                        'Condition' => "stype.StreetType like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'stype.StreetType desc',
-                        'Down' => 'stype.StreetType',
-                    ),
-                ),
-            ),
-        ));
-    ?>
+<div class="row">
+    <div class="row-column"><input type="button" value="Создать" id='NewStreet' /></div>
+    <div class="row-column"><input type="button" value="Изменить" id='EditStreet' /></div>
+    <div class="row-column"><input type="button" value="Удалить" id='DelStreet' /></div>
 </div>
 
-<div style="clear: both"></div>
-<div style="margin-top: 16px">
-    <div style="float: left">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'AddStreet',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Создать',
-                'Href' => Yii::app()->createUrl('Streets/Create'),
-            ));
-        ?>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'EditStreet',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Изменить',
-                'Href' => Yii::app()->createUrl('Streets/Update'),
-                'Params' => array(
-                        array(
-                                'ParamName' => 'Street_id',
-                                'NameControl' => 'StreetsGrid',
-                                'TypeControl' => 'Grid',
-                                'FieldControl' => 'Street_id',
-                        ),
-                ),
-            ));
-        ?>
-    </div>
-    <div style="clear: both"></div>
-    <div style="float: left; margin-top: 8px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'DelStreet',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Удалить',
-                'Href' => Yii::app()->createUrl('Streets/Delete'),
-                'Params' => array(
-                        array(
-                                'ParamName' => 'Street_id',
-                                'NameControl' => 'StreetsGrid',
-                                'TypeControl' => 'Grid',
-                                'FieldControl' => 'Street_id',
-                        ),
-                ),
-            ));
-        ?>
-    </div>
-</div>

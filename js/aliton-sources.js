@@ -486,4 +486,48 @@ Sources.SourceListRegionsMin =
     beforeprocessing: function (data) {
         Sources.SourceListRegionsMin.totalrecords = data[0].TotalRows;
     }
-}
+};
+
+
+Sources.SourceListStreetsMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Region_id', type: 'int'},
+        {name: 'RegionName', type: 'string'},
+        {name: 'Street_id', type: 'int'},
+        {name: 'StreetName', type: 'string'},
+        {name: 'StreetType', type: 'string'},
+    ],
+    id: 'Street_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Streets',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceListStreetsMin.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceListStreetTypesMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'StreetType_id', type: 'int'},
+        {name: 'StreetType', type: 'string'},
+    ],
+    id: 'StreetType_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=StreetTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceListStreetTypesMin.totalrecords = data[0].TotalRows;
+    }
+};
