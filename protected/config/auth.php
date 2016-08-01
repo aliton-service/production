@@ -5,6 +5,7 @@ return array_merge(
     include(dirname(__FILE__).'/security/regionsSecurity.php'),
     include(dirname(__FILE__).'/security/territorySecurity.php'),
     include(dirname(__FILE__).'/security/systemComplexitysSecurity.php'),
+    include(dirname(__FILE__).'/security/systemStatementsSecurity.php'),
     include(dirname(__FILE__).'/security/customersSecurity.php'),
     include(dirname(__FILE__).'/security/banksSecurity.php'),
     include(dirname(__FILE__).'/security/areasSecurity.php'),
@@ -284,6 +285,7 @@ return array_merge(
                 'AdminRegions',
                 'AdminTerritory',
                 'AdminSystemComplexitys',
+                'AdminSystemStatements',
                 /* Отчеты*/
                 'Demand1Report',
                 'WHDocuments1Report',
