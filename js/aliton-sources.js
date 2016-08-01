@@ -573,3 +573,24 @@ Sources.SourceListSystemComplexitysMin =
         Sources.SourceListSystemComplexitysMin.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceListSystemStatementsMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'SystemStatements_id', type: 'int'},
+        {name: 'SystemStatementsName', type: 'string'},
+        {name: 'Coefficient', type: 'float'},
+    ],
+    id: 'SystemStatements_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SystemStatements',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceListSystemStatementsMin.totalrecords = data[0].TotalRows;
+    }
+};
