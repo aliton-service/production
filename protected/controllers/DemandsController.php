@@ -497,8 +497,13 @@ class DemandsController extends Controller
                 }
             }
             else {
+                $Object = new Objects();
+                $Object->getModelPk($Demand->Object_id);
                 
-                $this->render('view2', array('model' => $model, ''));
+                $this->render('view2', array(
+                    'model' => $model,
+                    'SpecCondition' => $Object->Condition,
+                    ));
             }
 	}
 
@@ -533,6 +538,8 @@ class DemandsController extends Controller
 	public function actionDemandExec($id) {
             $model = new Demands();
             $model->getModelPk($id);
+            $Object = new Objects();
+            $Object->getModelPk($model->Object_id);
             
             if (($model->DateExec === "") || ($model->DateExec === null)) {
                 
@@ -542,7 +549,7 @@ class DemandsController extends Controller
                 
                 if ($model->validate()) {
                     $model->callProc('DEMAND_EXEC');
-                    $this->render('view2', array('model' => $model));
+                    $this->render('view2', array('model' => $model, 'SpecCondition' => $Object->Condition,));
                     
                 }
                 else {
@@ -561,7 +568,12 @@ class DemandsController extends Controller
                 }    
             }
             else {
-                $this->render('view2', array('model' => $model));
+                
+                
+                $this->render('view2', array(
+                    'model' => $model,
+                    'SpecCondition' => $Object->Condition,
+                ));
             }
             
 	}
