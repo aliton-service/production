@@ -568,8 +568,6 @@ class DemandsController extends Controller
                 }    
             }
             else {
-                
-                
                 $this->render('view2', array(
                     'model' => $model,
                     'SpecCondition' => $Object->Condition,
