@@ -552,3 +552,24 @@ Sources.SourceListTerritoryMin =
         Sources.SourceListTerritoryMin.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceListSystemComplexitysMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'SystemComplexitys_id', type: 'int'},
+        {name: 'SystemComplexitysName', type: 'string'},
+        {name: 'Coefficient', type: 'float'},
+    ],
+    id: 'SystemComplexitys_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SystemComplexitys',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceListSystemComplexitysMin.totalrecords = data[0].TotalRows;
+    }
+};

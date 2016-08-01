@@ -3,7 +3,7 @@
 return array(
     'AdminTerritory' => array(
         'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Админ раздела ремонт',
+        'description' => 'AdminTerritory',
         'bizRule' => null,
         'data' => null,
         'defaultIndex' => 'Territory',
@@ -17,7 +17,7 @@ return array(
     
     'ManagerTerritory' => array(
         'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Менеджер раздела ремонт',
+        'description' => 'ManagerTerritory',
         'bizRule' => null,
         'data' => null,
         'defaultIndex' => 'Territory',
@@ -30,7 +30,7 @@ return array(
     
     'UserTerritory' => array(
         'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Пользователь раздела ремонт',
+        'description' => 'UserTerritory',
         'bizRule' => null,
         'data' => null,
         'defaultIndex' => 'Territory',
