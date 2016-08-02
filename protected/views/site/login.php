@@ -10,6 +10,13 @@
             var Symbols = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789~\'"`!@#$%^&*()_-+=|{}:;?><,.йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁё';
             var Pos = Symbols.indexOf(e.key);
             var Temp = '';
+            
+            
+            if (e.key == 'Enter') {
+                $("#btnSubmit").click();
+                return false;
+            }
+        
             if (Pos != -1) {
                 Password += e.key;
             }
