@@ -3,7 +3,7 @@
         /* Текущая выбранная строка данных */
         var CurrentRowData;
         
-        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListPriceMonitoringMin, {
+        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, Sources.SourceListPriceMonitoringMin, {
             filter: function () {
                 $("#PriceMonitoringGrid").jqxGrid('updatebounddata', 'filter');
             },
@@ -40,6 +40,7 @@
                     { text: 'Срок поставки', dataField: 'delivery', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
                 ]
         }));
+        
         $("#NewPriceMonitoring").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditPriceMonitoring").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelPriceMonitoring").jqxButton($.extend(true, {}, ButtonDefaultSettings));
