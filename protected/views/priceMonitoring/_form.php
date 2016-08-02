@@ -13,7 +13,7 @@
         $("#price").jqxNumberInput({ width: '300px', height: '25px', inputMode: 'simple' });
         $("#price_retail").jqxNumberInput({ width: '300px', height: '25px', inputMode: 'simple' });
         
-        $("#delivery").jqxInput($.extend(true, {}, InputDefaultSettings, { width: '300px', height: '25px' }));
+        $("#delivery").jqxInput($.extend(true, {}, InputDefaultSettings, { width: '298px', height: '25px' }));
         
         $("#SaveNewPriceMonitoring").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#SaveNewPriceMonitoring").on('click', function ()
