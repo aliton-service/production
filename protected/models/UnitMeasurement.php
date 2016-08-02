@@ -51,7 +51,7 @@ class UnitMeasurement extends MainFormModel
 
 		$select = "Select um.* ";
 		$from = "From UnitMeasurement um ";
-		$where = "Where um.DelDate Is Null ";
+		$where = "";
 		$order = "Order By um.NameUnitMeasurement ";
 
 		$this->Query->setSelect($select);

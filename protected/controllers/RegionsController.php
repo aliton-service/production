@@ -93,18 +93,18 @@ class RegionsController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Regions;
+            $model=new Regions;
 
-		if(isset($_POST['Regions']))
-		{
-			$model->attributes=$_POST['Regions'];
-			if($model->insert())
-				$this->redirect(Yii::app()->createUrl('Regions/Index'));
-		}
+            if(isset($_POST['Regions']))
+            {
+                $model->attributes=$_POST['Regions'];
+                if($model->insert())
+                    $this->redirect(Yii::app()->createUrl('Regions/Index'));
+            }
 
-		$this->render('create',array(
-			'model'=>$model,
-		));
+            $this->render('create',array(
+                    'model'=>$model,
+            ));
 	}
 
 	/**
@@ -159,7 +159,7 @@ class RegionsController extends Controller
             $model=new Regions('search');
             $model->unsetAttributes();  // clear any default values
             if(isset($_GET['Regions']))
-                    $model->attributes=$_GET['Regions'];
+                $model->attributes=$_GET['Regions'];
 
             $this->title = 'Просмотр регионов';
             $this->render('index',array(
@@ -175,7 +175,7 @@ class RegionsController extends Controller
 		$model=new Regions('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Regions']))
-			$model->attributes=$_GET['Regions'];
+                    $model->attributes=$_GET['Regions'];
 
 		$this->render('admin',array(
 			'model'=>$model,
