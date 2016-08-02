@@ -638,7 +638,7 @@ Sources.SourceListEquipsMin =
         {name: 'EquipName', type: 'string'},
     ],
     id: 'Equip_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Equips',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipsListAll',
     type: 'POST',
     root: 'Rows',
     cache: false,
