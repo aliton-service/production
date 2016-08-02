@@ -1,94 +1,67 @@
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        
+        var DataEquipName = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {}));
+        var DataNameSupplier = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListSuppliersMin, {}));
+        
+        $("#date").jqxDateTimeInput({ width: '300px', height: '25px', formatString: 'dd-MM-yyyy' });
+        
+        $("#EquipName").jqxComboBox({ source: DataEquipName, width: '300', height: '25px', displayMember: "EquipName", valueMember: "Equip_id" });
+        $("#NameSupplier").jqxComboBox({ source: DataNameSupplier, width: '300', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id" });
+        
+        $("#price").jqxNumberInput({ width: '300px', height: '25px', inputMode: 'simple' });
+        $("#price_retail").jqxNumberInput({ width: '300px', height: '25px', inputMode: 'simple' });
+        
+        $("#delivery").jqxInput($.extend(true, {}, InputDefaultSettings, { width: '300px', height: '25px' }));
+        
+        $("#SaveNewPriceMonitoring").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#SaveNewPriceMonitoring").on('click', function ()
+        {
+            $('#PriceMonitoring').submit();
+        });
+        
+        var Demand = {
+            date: '<?php echo $model->date; ?>',
+            eqip_id: '<?php echo $model->eqip_id; ?>',
+            splr_id: '<?php echo $model->splr_id; ?>',
+            price: '<?php echo $model->price; ?>',
+            price_retail: '<?php echo $model->price_retail; ?>',
+            delivery: '<?php echo $model->delivery; ?>',
+        };
+
+        if (Demand.date != '') $("#date").jqxDateTimeInput('val', Demand.date);
+        if (Demand.eqip_id != '') $("#EquipName").jqxComboBox('val', Demand.eqip_id);
+        if (Demand.splr_id != '') $("#NameSupplier").jqxComboBox('val', Demand.splr_id);
+        if (Demand.price != '') $("#price").jqxNumberInput('val', Demand.price);
+        if (Demand.price_retail != '') $("#price_retail").jqxNumberInput('val', Demand.price_retail);
+        if (Demand.delivery != '') $("#delivery").jqxInput('val', Demand.delivery);
+    });   
+</script>
+
 <?php
-$form = $this->beginWidget('CActiveForm', array(
-	'id' => 'form-pm',
-	'htmlOptions'=>array(
-		'class'=>'form-inline'
-	),
-	'enableAjaxValidation' => true,
-	'enableClientValidation' => true,
-));
-
+/* @var $this PriceMonitoringController */
+/* @var $model PriceMonitoring */
+/* @var $form CActiveForm */
 ?>
-	<label>Дата</label>
-	<?php
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'DateEdit',
-		'Name' => 'PriceMonitoring[date]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->date),
-	));
-	?>
-<div><?php echo $form->error($model, 'date'); ?></div>
-	<label>Оборудование</label>
-	<?php
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'equip',
-		'Name' => 'PriceMonitoring[eqip_id]',
-		'ModelName' => 'Equips',
-		'FieldName' => 'EquipName',
-		'KeyField' => 'Equip_id',
-		'KeyValue' => $model->eqip_id,
-		'Width' => 200,
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => "e.EquipName like ':Value%'",
-		),
-		'Columns' => array(
-			'EquipName' => array(
-				'Name' => 'Оборудование',
-				'FieldName' => 'EquipName',
-				'Width' => 150,
-				'Height' => 23,
-			),
-		),
 
-	));
-	?>
-<div><?php echo $form->error($model, 'eqip_id'); ?></div>
-	<label>Поставщик</label>
-	<?php
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'supplier',
-		'Name' => 'PriceMonitoring[splr_id]',
-		'ModelName' => 'Suppliers',
-		'FieldName' => 'NameSupplier',
-		'KeyField' => 'Supplier_Id',
-		'KeyValue' => $model->splr_id,
-		'Width' => 200,
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => "s.NameSupplier like ':Value%'",
-		),
-		'Columns' => array(
-			'NameSupplier' => array(
-				'Name' => 'Поставщик',
-				'FieldName' => 'NameSupplier',
-				'Width' => 150,
-				'Height' => 23,
-			),
-		),
+<?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'PriceMonitoring',
+        'htmlOptions'=>array(
+            'class'=>'form-inline',
+        ),
+     )); 
+?>
 
-	));
-	?>
-<div><?php echo $form->error($model, 'splr_id'); ?></div>
-	<label>Цена</label>
-	<?php
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id'=>'equip-price',
-		'Name'=>'PriceMonitoring[price]',
-		'Value'=>$model->price,
-	));
-	?>
-	<div><?php echo $form->error($model, 'price'); ?></div>
+    <div class="row">Дата: <div id='date' name="PriceMonitoring[date]" ></div></div>
+    <div class="row">Оборудование: <br/><div name="PriceMonitoring[eqip_id]" type="text" id="EquipName" ></div><?php echo $form->error($model, 'eqip_id'); ?></div>
+    <div class="row">Поставщик: <br/><div name="PriceMonitoring[splr_id]" type="text" id="NameSupplier" ></div><?php echo $form->error($model, 'splr_id'); ?></div>
+    <div class="row">Цена закупка: <br/><div id='price' name="PriceMonitoring[price]"></div><?php echo $form->error($model, 'price'); ?></div>
+    <div class="row">Цена розница: <br/><div id='price_retail' name="PriceMonitoring[price_retail]"></div><?php echo $form->error($model, 'price_retail'); ?></div>
+    <div class="row">Срок поставки: <br/><input name="PriceMonitoring[delivery]" type="text" id="delivery" value="<?php echo $model->delivery; ?>"></div>
+    <br/>
+    <div class="row-column"><input type="button" value="Сохранить" id='SaveNewPriceMonitoring' /></div>
 
-	<?php
-	$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-		'id' => 'save-pricemonitoring',
-		'Height' => 30,
-		'Text' => 'Сохранить',
-		'Type' => 'none',
-		'OnAfterClick' => 'savePriceMonitoring()'
-	));
-	?>
-<div class="clearfix"></div>
-<!--<input type="submit" value="ok">-->
+
 <?php $this->endWidget(); ?>

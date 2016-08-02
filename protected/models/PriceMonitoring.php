@@ -25,19 +25,26 @@ class PriceMonitoring extends MainFormModel
 	public $mntr_id = null;
 	public $date = null;
 	public $eqip_id = null;
+	public $EquipName = null;
+	public $UnitMeasurement_Id = null;
+	public $NameUnitMeasurement = null;
 	public $splr_id = null;
+	public $NameSupplier = null;
 	public $price = null;
-	public $user_create = null;
+	public $price_high = null;
+	public $price_retail = null;
+	public $user_create_id = null;
+	public $EmployeeName = null;
 	public $date_create = null;
 	public $user_change = null;
+	public $user_change_id = null;
 	public $date_change = null;
-	public $user = null;
-	public $EmplCreate = null;
-	public $EmplChange = null;
-	public $DateCreate = null;
-	public $DateChange = null;
 	public $EmplDel = null;
 	public $DelDate = null;
+	public $delivery = null;
+	public $title = null;
+	public $user_delete = null;
+	public $date_delete = null;
 
 	public $KeyFiled = 'pm.mntr_id';
 	public $PrimaryKey = 'mntr_id';
@@ -58,29 +65,38 @@ class PriceMonitoring extends MainFormModel
 		$date_end = 'getdate()';
 
 		$this->select = "
-		select pm.mntr_id, pm.date, pm.eqip_id, pm.splr_id, pm.price, dbo.FIO(e.EmployeeName) user_create, eq.EquipName, s.NameSupplier, um.NameUnitMeasurement ums
+                    select pm.mntr_id, pm.date, pm.eqip_id, eqps.EquipName, unms.UnitMeasurement_Id, unms.NameUnitMeasurement, pm.splr_id, splrs.NameSupplier, 
+                        pm.price, pm.price_retail, pm.user_create_id, empl.EmployeeName, pm.delivery
 		";
 
 		$this->from = "
-		from PriceMonitoring pm left join Employees e on (e.Alias = replace(replace(pm.user_create, 'ELTON\', ''), 'ALITON\', '') or e.RemoteAlias = replace(replace(pm.user_create, 'ELTON\', ''), 'ALITON\', ''))
-		left join Equips eq on pm.eqip_id = eq.Equip_id
-		left join Suppliers s on pm.splr_id = s.Supplier_Id
-		left join UnitMeasurement um on eq.UnitMeasurement_id = um.UnitMeasurement_id
+                    from PriceMonitoring pm 
+
+                    left join Employees empl 
+                            on pm.user_create_id = empl.Employee_id
+
+                    left join Equips eqps
+                            on pm.eqip_id = eqps.Equip_id
+
+                    left join UnitMeasurement unms
+                            on eqps.UnitMeasurement_Id = unms.UnitMeasurement_Id
+
+                    left join Suppliers splrs
+                            on pm.splr_id = splrs.Supplier_Id
 		";
 
 		$this->where = "
-		where pm.DelDate is null and (dbo.truncdate([date]) between {$date_begin} and {$date_end})
+                    Where pm.date_delete is null
 		";
 
 		$this->order = "
-		order by date desc, eqip_id
+                    order by date desc, eqip_id
 		";
 
 		$this->Query->setSelect($this->select);
 		$this->Query->setFrom($this->from);
 		$this->Query->setOrder($this->order);
 		$this->Query->setWhere($this->where);
-
 	}
 
 	/**
@@ -99,14 +115,15 @@ class PriceMonitoring extends MainFormModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('date, eqip_id, splr_id, price', 'required'),
-			array('eqip_id, splr_id', 'numerical', 'integerOnly'=>true),
-			array('price', 'numerical'),
-			array('user_create, user_change', 'length', 'max'=>50),
-			array('date_create, date_change', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('mntr_id, date, eqip_id, splr_id, price, user_create, date_create, user_change, date_change', 'safe', 'on'=>'search'),
+                    array('price, price_retail', 'fieldValidate'),
+                    array('date, eqip_id, splr_id, price, price_retail, delivery', 'required'),
+                    array('eqip_id, splr_id', 'numerical', 'integerOnly'=>true),
+                    array('price, price_retail', 'numerical'),
+                    array('user_create_id, user_change_id', 'length', 'max'=>50),
+                    array('date_create, date_change', 'safe'),
+                    // The following rule is used by search().
+                    // @todo Please remove those attributes that should not be searched.
+                    array('mntr_id, date, eqip_id, splr_id, price, price_retail, user_create_id, date_create, user_change_id, date_change', 'safe'),
 		);
 	}
 
@@ -150,23 +167,32 @@ class PriceMonitoring extends MainFormModel
 
 	public function getMonitoringPrice($q=null, $date_begin = 'dateadd(mm, -3, getdate())', $date_end = 'getdate()') {
 		$this->select = "
-		select pm.mntr_id, pm.date, pm.eqip_id, pm.splr_id, pm.price, dbo.FIO(e.EmployeeName) user_create, eq.EquipName, s.NameSupplier, um.NameUnitMeasurement ums
+                    select pm.mntr_id, pm.date, pm.eqip_id, eqps.EquipName, unms.UnitMeasurement_Id, unms.NameUnitMeasurement, pm.splr_id, splrs.NameSupplier, 
+                        pm.price, pm.price_retail, pm.user_create_id, empl.EmployeeName, pm.delivery
 		";
 
 		$this->from = "
-		from PriceMonitoring pm left join Employees e on (e.Alias = replace(replace(pm.user_create, 'ELTON\', ''), 'ALITON\', '') or e.RemoteAlias = replace(replace(pm.user_create, 'ELTON\', ''), 'ALITON\', ''))
-		left join Equips eq on pm.eqip_id = eq.Equip_id
-		left join Suppliers s on pm.splr_id = s.Supplier_Id
-		left join UnitMeasurement um on eq.UnitMeasurement_id = um.UnitMeasurement_id
+		from PriceMonitoring pm 
+
+                    left join Employees empl 
+                            on pm.user_create_id = empl.Employee_id
+
+                    left join Equips eqps
+                            on pm.eqip_id = eqps.Equip_id
+
+                    left join UnitMeasurement unms
+                            on eqps.UnitMeasurement_Id = unms.UnitMeasurement_Id
+
+                    left join Suppliers splrs
+                            on pm.splr_id = splrs.Supplier_Id
 		";
 
 		$this->where = "
-		where pm.DelDate is null and dbo.truncdate([date]) between {$date_begin} and {$date_end}
-  --and (splr_id = :p_splr_id or :p_all_splr = 1)
+                    Where pm.date_delete is null
 		";
 
 		$this->order = "
-		order by date desc, eqip_id
+                    order by date desc, eqip_id
 		";
 
 		$this->Query->setSelect($this->select);
@@ -174,4 +200,10 @@ class PriceMonitoring extends MainFormModel
 		$this->Query->setOrder($this->order);
 		$this->Query->setWhere($this->where);
 	}
+        
+        public function fieldValidate($attribute, array $params = array()) {
+            if (($this->price == 0) || ($this->price_retail == 0)) {
+                $this->addError($attribute, 'Заполните все поля.');
+            }
+        }
 }

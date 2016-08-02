@@ -68,61 +68,63 @@ class PriceMonitoringController extends Controller
 
 
 	public function actionIndex() {
-		$this->render('index');
+            $this->render('index');
 	}
 
 	public function actionCreate() {
-		$model = new PriceMonitoring();
-		//$this->performAjaxValidation($model);
-		if(isset($_POST['PriceMonitoring'])) {
-			$model->attributes = $_POST['PriceMonitoring'];
-			$model->user = Yii::app()->user->Employee_id;
-			if($model->validate()) {
-				$model->insert();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Заявка на мониторинг создана'))));
-				} else {
-					$this->redirect('/?r=priceMonitoring');
-				}
-			}
-		}
-		if($this->isAjax()) {
-			$this->renderPartial('create', array('model'=>$model), false, true);
-		} else {
-			$this->render('create', array('model'=>$model));
-		}
+            $model=new PriceMonitoring;
+
+            if(isset($_POST['PriceMonitoring']))
+            {
+                $model->attributes=$_POST['PriceMonitoring'];
+                $model->user_create_id = Yii::app()->user->Employee_id;
+                if ($model->validate()) {
+                    if($model->insert())
+                        $this->redirect(Yii::app()->createUrl('PriceMonitoring/Index'));
+                }
+            }
+
+            $this->render('create',array(
+                    'model'=>$model,
+            ));
 	}
 
-	public function actionUpdate($id = false) {
-		$model = new PriceMonitoring();
-		if($id && (int)$id > 0 && isset($_POST['PriceMonitoring'])) {
-			$model->attributes = $_POST['PriceMonitoring'];
-			$model->mntr_id = (int)$id;
-			$model->user = Yii::app()->user->Employee_id;
-			$model->update();
-			if($this->isAjax()) {
-				die(json_encode(array('status'=>'ok','data'=>array('msg'=>'Заявка на мониторинг изменена'))));
-			}
-			else {
-				$this->redirect('/?r=priceMonitoring');
-			}
-		}
-		$model->getModelPk($id);
-		if($this->isAjax()) {
-			$this->renderPartial('update', array('model'=>$model), false, true);
-		} else {
-			$this->render('update', array('model'=>$model));
-		}
+	public function actionUpdate($mntr_id = false) {
+            $model=new PriceMonitoring;
+            $model->getModelPk($mntr_id);
+
+            if ($mntr_id == null)
+                    throw new CHttpException(404, 'Не выбрана запись.');
+
+            if(isset($_POST['PriceMonitoring']))
+            {
+                $model->attributes=$_POST['PriceMonitoring'];
+                $model->user_change_id = Yii::app()->user->Employee_id;
+
+                if ($model->validate()) {
+                    $model->update();
+                    $this->redirect(Yii::app()->createUrl('PriceMonitoring/Index'));
+                }
+            }
+
+            $this->render('update',array(
+                    'model'=>$model,
+            )); 
 	}
 
 	public function actionDelete() {
-		if(isset($_POST['id']) && (int)$_POST['id'] > 0) {
-			$model = new PriceMonitoring();
-			$model->user = Yii::app()->user->Employee_id;
-			$model->mntr_id = $_POST['id'];
-			$model->delete();
-			die('Удалено');
-		}
+            if(isset($_POST['mntr_id'])) {
+                $mntr_id = $_POST['mntr_id'];
+            }
+            $model = new PriceMonitoring;
+            $model->getModelPk($mntr_id);
+            $model->user_delete = Yii::app()->user->Employee_id;
+            
+            if(!is_null($mntr_id)){
+                $model->delete();
+            }
+            
+            $this->redirect($this->createUrl('PriceMonitoring/Index'));
 	}
 
 	protected function performAjaxValidation($model)

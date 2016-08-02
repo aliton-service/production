@@ -15,7 +15,7 @@
             Coefficient: '<?php echo $model->Coefficient; ?>'
         };
 
-        if (Demand.Region_id != '') $("#Coefficient").jqxNumberInput('val', Demand.Coefficient);
+        if (Demand.Coefficient != '') $("#Coefficient").jqxNumberInput('val', Demand.Coefficient);
         
     });   
 </script>

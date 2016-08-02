@@ -594,3 +594,80 @@ Sources.SourceListSystemStatementsMin =
         Sources.SourceListSystemStatementsMin.totalrecords = data[0].TotalRows;
     }
 };
+
+
+Sources.SourceListPriceMonitoringMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'mntr_id', type: 'int'},
+        {name: 'date', type: 'datetime'},
+        {name: 'eqip_id', type: 'int'},
+        {name: 'EquipName', type: 'nvarchar(200)'},
+        {name: 'UnitMeasurement_Id', type: 'int'},
+        {name: 'NameUnitMeasurement', type: 'varchar(250)'},
+        {name: 'splr_id', type: 'int'},
+        {name: 'NameSupplier', type: 'varchar(250)'},
+        {name: 'price', type: 'float'},
+        {name: 'price_high', type: 'float'},
+        {name: 'price_retail', type: 'float'},
+        {name: 'user_create_id', type: 'int'},
+        {name: 'EmployeeName', type: 'nvarchar(70)'},
+        {name: 'date_create', type: 'datetime'},
+        {name: 'user_change', type: 'nvarchar(50)'},
+        {name: 'date_change', type: 'datetime'},
+        {name: 'delivery', type: 'nvarchar(250)'},
+        {name: 'user_create_id', type: 'int'},
+    ],
+    id: 'mntr_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=PriceMonitoring',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        Sources.SourceListPriceMonitoringMin.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceListEquipsMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Equip_id', type: 'int'},
+        {name: 'EquipName', type: 'nvarchar(200)'},
+    ],
+    id: 'Equip_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Equips',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceListEquipsMin.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceListSuppliersMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Supplier_id', type: 'int'},
+        {name: 'NameSupplier', type: 'varchar(250)'},
+    ],
+    id: 'Supplier_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Suppliers',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceListSuppliersMin.totalrecords = data[0].TotalRows;
+    }
+};
+

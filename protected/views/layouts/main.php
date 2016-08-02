@@ -167,6 +167,7 @@
                             
                             array('label'=>'Склад', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('WHDocumentsView'), 'items'=>array(
                                 array('label'=>'Реестр документов', 'url'=>array('/storage')),
+                                array('label'=>'Мониторинг цен', 'url'=>array('/priceMonitoring/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPriceMonitoring')),
                             )
                             ),
 
