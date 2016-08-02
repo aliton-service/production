@@ -142,6 +142,9 @@ return array_merge(
     /* Отчеты */
     include(dirname(__FILE__).'/security/ReportsSecurity.php'),
         
+    /* Структура организации*/
+    include(dirname(__FILE__).'/security/OrganizationStructureSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -286,6 +289,7 @@ return array_merge(
                 'AdminTerritory',
                 'AdminSystemComplexitys',
                 'AdminSystemStatements',
+                'AdminOrganizationStructure',
                 /* Отчеты*/
                 'Demand1Report',
                 'WHDocuments1Report',

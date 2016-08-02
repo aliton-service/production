@@ -594,3 +594,32 @@ Sources.SourceListSystemStatementsMin =
         Sources.SourceListSystemStatementsMin.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceOrganizationStructure =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Structure_id', type: 'int'},
+        {name: 'Parent_id', type: 'int'},
+        {name: 'Empl_id', type: 'int'},
+        {name: 'ShortName', type: 'string'},
+    ],
+    id: 'Structure_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OrganizationStructure',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    
+    hierarchy:
+    {
+        keyDataField: { name: 'EmployeeKey' },
+        parentDataField: { name: 'ParentEmployeeKey' }
+    },
+    
+    beforeprocessing: function (data) {
+        Sources.SourceOrganizationStructure.totalrecords = data[0].TotalRows;
+    }
+};
