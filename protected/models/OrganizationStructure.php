@@ -19,6 +19,7 @@ class OrganizationStructure extends MainFormModel
     public function rules()
     {
         return array(
+            array('Empl_id', 'required'),
             array('Structure_id,
                     Parent_id,
                     Empl_id,
@@ -29,7 +30,7 @@ class OrganizationStructure extends MainFormModel
                     Lock,
                     EmplLock,
                     DateLock,
-                    DelDate,', 'safe', 'on'=>'search'),
+                    DelDate,', 'safe'),
         );
     }
     
@@ -74,7 +75,7 @@ class OrganizationStructure extends MainFormModel
             return array(
                     'Structure_id' => '',
                     'Parent_id' => '',
-                    'Empl_id' => '',
+                    'Empl_id' => 'Сотрудник',
                     'DateCreate' => '',
                     'EmplCreate' => '',
                     'DateChange' => '',

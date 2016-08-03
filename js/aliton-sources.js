@@ -626,7 +626,7 @@ Sources.SourceListPriceMonitoringMin =
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
-        Sources.SourceListPriceMonitoringMin.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -646,7 +646,7 @@ Sources.SourceListEquipsMin =
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-        Sources.SourceListEquipsMin.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -691,8 +691,8 @@ Sources.SourceOrganizationStructure =
     
     hierarchy:
     {
-        keyDataField: { name: 'EmployeeKey' },
-        parentDataField: { name: 'ParentEmployeeKey' }
+        keyDataField: { name: 'Structure_id' },
+        parentDataField: { name: 'Parent_id' }
     },
     
     beforeprocessing: function (data) {

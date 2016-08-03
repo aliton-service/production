@@ -21,11 +21,11 @@ class OrganizationStructureController extends Controller
                         'roles'=>array('ViewOrganizationStructure'),
                 ),
                 array('allow', 
-                        'actions'=>array('create'),
+                        'actions'=>array('create', 'EditForm'),
                         'roles'=>array('CreateOrganizationStructure'),
                 ),
                 array('allow', 
-                        'actions'=>array('update'),
+                        'actions'=>array('update', 'DragAndDrop'),
                         'roles'=>array('UpdateOrganizationStructure'),
                 ),
                 array('allow', 
@@ -37,59 +37,91 @@ class OrganizationStructureController extends Controller
                 ),
             );
 	}
+        
+        public function actionEditForm()
+        {
+            $model = new OrganizationStructure();
+            $model->Structure_id = 0;
+            if (isset($_POST['Structure_id'])) {
+                $model->getModelPk($_POST['Structure_id']);
+            }
+            if (isset($_POST['Parent_id'])) {
+                if ($_POST['Parent_id'] != -1)
+                    $model->Parent_id = $_POST['Parent_id'];
+            }
+            
+            $this->renderPartial('_form', array(
+                'model' => $model
+            ));
+        }
 
 	public function actionCreate()
 	{
             $this->title = 'Создание новой организации';
-            $model = new OrganizationsV();
-            $model->setScenario('Insert');
-
-            if(isset($_POST['PropForms'])) {
-                $model->attributes=$_POST['PropForms'];
+            $model = new OrganizationStructure();
+            
+            if(isset($_POST['OrganizationStructure'])) {
+                $model->attributes=$_POST['OrganizationStructure'];
                 $model->EmplCreate = Yii::app()->user->Employee_id;
 
                 if ($model->validate()) {
                     $model->insert();
-                    $this->redirect(Yii::app()->createUrl('propForms/index'));
+                    echo '1';
+                    return;
                 }    
             }
 
-            $this->render('create',array(
+            $this->renderPartial('_form',array(
                     'model'=>$model,
             ));
 	}
 
-	
-	public function actionUpdate($id)
-	{
-            $this->title = 'Редактирование организации';
-        
-            $model = new OrganizationsV();
-            $model->setScenario('Update');
-
-            if ($id == null)
-                    throw new CHttpException(404, 'Не выбрана запись.');
-
-            if(isset($_POST['PropForms']))
+	public function actionDragAndDrop() {
+            $model = new OrganizationStructure();
+            
+            if(isset($_POST['OrganizationStructure']))
             {
-                $model->attributes=$_POST['PropForms'];
-
+                $model->getModelPk($_POST['OrganizationStructure']['Structure_id']);
+                $model->Parent_id = $_POST['OrganizationStructure']['Parent_id'];
                 $model->EmplChange = Yii::app()->user->Employee_id;
 
                 if ($model->validate()) {
                     $model->update();
+                    echo '1';
+                    return;
+                }
+            }
+            
+            echo '0';
+        }
+        
+	public function actionUpdate()
+	{
+            $model = new OrganizationStructure();
+            
+            if(isset($_POST['OrganizationStructure']))
+            {
+                $model->attributes=$_POST['OrganizationStructure'];
+                $model->EmplChange = Yii::app()->user->Employee_id;
+
+                if ($model->validate()) {
+                    $model->update();
+                    echo '1';
+                    return;
                 }
             }
             else
             {
-                $model->getmodelPk($id);
-                $this->title .= ' ' . $model->FullName;
+                if (isset($_POST['Structure_id'])) {
+                    $model->getmodelPk($_POST['Structure_id']);
+                }
             }
-
-            $this->render('update', array(
+            
+            $this->render('_form', array(
                     'model'=>$model,
                 )
             );
+            
 	}
 
 	

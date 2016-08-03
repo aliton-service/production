@@ -84,6 +84,18 @@ var ButtonDefaultSettings = {
     height: 30
 };
 
+/* Настройки по умолчанию для Tree */
+var TreeDefaultSettings = {
+    height: '300px',
+    width: '400px'
+};
+
+/* Настройки по умолчанию для выпадающих списков */
+var ComboBoxDefaultSettings = {
+    width: '300px',
+    height: '25px',
+};
+
 var GridFilters = {};
 
 GridFilters.CreateFilter = function(Type, Operator, Value, Condition, FilterGroup) {
