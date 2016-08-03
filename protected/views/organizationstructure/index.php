@@ -39,6 +39,23 @@
                 }
             });
             
+            $("#btnDel").on('click', function () {
+                var item = $('#StructureGrid').jqxTree('getSelectedItem');
+                var Structure_id = null;
+                if (item != null) {
+                    Structure_id = item.value;
+                    $.ajax({
+                        url: "<?php echo Yii::app()->createUrl('OrganizationStructure/Delete');?>",
+                        type: 'POST',
+                        async: false,
+                        data: {Structure_id: Structure_id},
+                        success: function() {
+                            $('#StructureGrid').jqxTree({source: LoadData(DataOrganizationStructure)});
+                        }
+                    });
+                }
+            });
+            
             LoadForm = function(Structure_id, Parent_id) {
                 if (Structure_id == undefined)
                     Structure_id = 0;
@@ -74,7 +91,7 @@
                 var Url;
                 if (Mode == 'Insert')
                     Url = "<?php echo Yii::app()->createUrl('OrganizationStructure/Create');?>";
-                if (Mode == 'Insert')
+                if (Mode == 'Edit')
                     Url = "<?php echo Yii::app()->createUrl('OrganizationStructure/Update');?>";
                 if (Mode == 'Drag')
                     Url = "<?php echo Yii::app()->createUrl('OrganizationStructure/DragAndDrop');?>";

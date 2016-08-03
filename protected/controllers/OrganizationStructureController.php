@@ -117,7 +117,7 @@ class OrganizationStructureController extends Controller
                 }
             }
             
-            $this->render('_form', array(
+            $this->renderPartial('_form', array(
                     'model'=>$model,
                 )
             );
@@ -125,13 +125,16 @@ class OrganizationStructureController extends Controller
 	}
 
 	
-	public function actionDelete($id)
+	public function actionDelete()
 	{
-            $model = new OrganizationsV();
-            $model->getmodelPk($id);
-            $model->delete();
-            
-            $this->redirect($this->createUrl('propForms/Index'));
+            if (isset($_POST['Structure_id'])) { 
+                $model = new OrganizationStructure();
+                $model->Structure_id = $_POST['Structure_id'];
+                $model->delete();
+                echo '1';
+                return;
+            } else
+                echo '0';
 	}
 
 	public function actionIndex()
