@@ -30,7 +30,7 @@
      )); 
 
 ?>
-    <div class="row">Название региона: <input name="Regions[RegionName]" type="text" id="RegionName" value="<?php echo $model->RegionName; ?>"></div>
+    <div class="row">Название региона: <input name="Regions[RegionName]" type="text" id="RegionName" value="<?php echo $model->RegionName; ?>"><?php echo $form->error($model, 'RegionName'); ?></div>
     <div class="row">Порядок: <input name="Regions[Sort]" type="text" id="RegionSort" value="<?php echo $model->Sort; ?>"><?php echo $form->error($model, 'Sort'); ?></div>
     <br/>
     <div class="row-column"><input type="button" value="Сохранить" id='SaveNewRegion' /></div>

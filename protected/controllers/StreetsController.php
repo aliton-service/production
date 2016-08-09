@@ -47,7 +47,7 @@ class StreetsController extends Controller
             $model->attributes=$_POST['Streets'];
             $model->EmplCreate = Yii::app()->user->Employee_id;
 
-            if($model->insert()) {
+            if($model->validate() && $model->insert()) {
                 $this->redirect(Yii::app()->createUrl('Streets/index'));
             }   
         }

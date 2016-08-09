@@ -4,7 +4,7 @@
         
         
         $("#SystemComplexitysName").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Имя"}));
-        $("#Coefficient").jqxNumberInput({ width: '250px', height: '25px', inputMode: 'simple' });
+        $("#Coefficient").jqxNumberInput({ width: '120px', height: '25px', inputMode: 'simple' });
         $("#SaveNewSystemComplexitys").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#SaveNewSystemComplexitys").on('click', function ()
         {
@@ -37,7 +37,7 @@
 
 ?>
     <div class="row">Сложность системы: <br/><input name="SystemComplexitys[SystemComplexitysName]" type="text" id="SystemComplexitysName" value="<?php echo $model->SystemComplexitysName; ?>"></div>
-    <div class="row" style="width: 300px;">Коэффициент: <div id='Coefficient' name="SystemComplexitys[Coefficient]"  class="row-column"></div><?php echo $form->error($model, 'Coefficient'); ?></div>
+    <div class="row" style="width: 300px;">Коэффициент: <br/><div id='Coefficient' name="SystemComplexitys[Coefficient]"  class="row-column"></div><?php echo $form->error($model, 'Coefficient'); ?></div>
     <br/>
     <div class="row-column"><input type="button" value="Сохранить" id='SaveNewSystemComplexitys' /></div>
 

@@ -84,6 +84,27 @@ var ButtonDefaultSettings = {
     height: 30
 };
 
+/* Настройки по умолчанию для ComboBox */
+var ComboBoxDefaultSettings = {
+    height: 25,
+    width: 200
+    //minLength: 1
+};
+
+/* Настройки по умолчанию для TextArea */
+var TextAreaDefaultSettings = {
+    height: 70,
+    width: 340
+};
+
+
+/* Настройки по умолчанию для CheckBox */
+var CheckBoxDefaultSettings = {
+    width: 25, 
+    height: 25
+};
+
+
 var GridFilters = {};
 
 GridFilters.CreateFilter = function(Type, Operator, Value, Condition, FilterGroup) {

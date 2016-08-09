@@ -20,6 +20,7 @@ class Territory extends MainFormModel
 	public function rules()
 	{
             return array(
+                array('Territ_Name, Note', 'required'),
                 array('Territ_Id,'
                     . ' Territ_Name,'
                     . ' Employee_Id,'

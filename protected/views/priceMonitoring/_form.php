@@ -59,7 +59,7 @@
     <div class="row">Поставщик: <br/><div name="PriceMonitoring[splr_id]" type="text" id="NameSupplier" ></div><?php echo $form->error($model, 'splr_id'); ?></div>
     <div class="row">Цена закупка: <br/><div id='price' name="PriceMonitoring[price]"></div><?php echo $form->error($model, 'price'); ?></div>
     <div class="row">Цена розница: <br/><div id='price_retail' name="PriceMonitoring[price_retail]"></div><?php echo $form->error($model, 'price_retail'); ?></div>
-    <div class="row">Срок поставки: <br/><input name="PriceMonitoring[delivery]" type="text" id="delivery" value="<?php echo $model->delivery; ?>"></div>
+    <div class="row">Срок поставки: <br/><input name="PriceMonitoring[delivery]" type="text" id="delivery" value="<?php echo $model->delivery; ?>"><?php echo $form->error($model, 'delivery'); ?></div>
     <br/>
     <div class="row-column"><input type="button" value="Сохранить" id='SaveNewPriceMonitoring' /></div>
 
