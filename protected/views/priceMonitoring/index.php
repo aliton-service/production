@@ -1,9 +1,10 @@
 <script type="text/javascript">
+    
     $(document).ready(function () {      
         /* Текущая выбранная строка данных */
         var CurrentRowData;
         
-        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, Sources.SourceListPriceMonitoringMin, {
+        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListPriceMonitoringMin, {
             filter: function () {
                 $("#PriceMonitoringGrid").jqxGrid('updatebounddata', 'filter');
             },

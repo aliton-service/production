@@ -626,7 +626,7 @@ Sources.SourceListPriceMonitoringMin =
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
-        Sources.SourceListPriceMonitoringMin.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -638,7 +638,7 @@ Sources.SourceListEquipsMin =
         {name: 'EquipName', type: 'string'},
     ],
     id: 'Equip_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Equips',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipsListAll',
     type: 'POST',
     root: 'Rows',
     cache: false,
@@ -646,7 +646,7 @@ Sources.SourceListEquipsMin =
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-        Sources.SourceListEquipsMin.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -671,6 +671,32 @@ Sources.SourceListSuppliersMin =
     }
 };
 
+Sources.SourceOrganizationStructure =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Structure_id', type: 'int'},
+        {name: 'Parent_id', type: 'int'},
+        {name: 'Empl_id', type: 'int'},
+        {name: 'ShortName', type: 'string'},
+    ],
+    id: 'Structure_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OrganizationStructure',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    
+    hierarchy:
+    {
+        keyDataField: { name: 'Structure_id' },
+        parentDataField: { name: 'Parent_id' }
+    },
+    
+    beforeprocessing: function (data) {
+        Sources.SourceOrganizationStructure.totalrecords = data[0].TotalRows;
 
 Sources.SourceContactInfoMax =
 {

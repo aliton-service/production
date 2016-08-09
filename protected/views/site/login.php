@@ -5,26 +5,30 @@
         $("#edPassword").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Пароль", width: 160}));
         $("#btnSubmit").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
         $("#btnClear").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
-        
-        $("#edPassword").keydown(function(e){
-            var Symbols = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789~\'"`!@#$%^&*()_-+=|{}:;?><,.йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁё';
-            var Pos = Symbols.indexOf(e.key);
+        $("#edPassword").keypress(function(e){
             var Temp = '';
-            
-            
-            if (e.key == 'Enter') {
-                $("#btnSubmit").click();
-                return false;
-            }
-        
-            if (Pos != -1) {
-                Password += e.key;
-            }
+            Password += String.fromCharCode(e.charCode);
             for (var i = 1; i <= Password.length; i++){
                 Temp += '*'
             }
             $("#edPassword").val(Temp);
             return false;
+        });
+        
+        $("#edPassword").keydown(function(e){
+            if (    (e.which == 8) ||
+                    (e.which == 46) ||
+                    (e.which == 37) ||
+                    (e.which == 38) ||
+                    (e.which == 39) ||
+                    (e.which == 40) ||
+                    (e.which == 35) ||
+                    (e.which == 36) ||
+                    (e.which == 16)) return false;
+            if (e.which == 13) {
+                $("#btnSubmit").click();
+                return false;
+            }
         });
         
         $("#btnClear").click(function(e){

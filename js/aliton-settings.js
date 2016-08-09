@@ -84,6 +84,13 @@ var ButtonDefaultSettings = {
     height: 30
 };
 
+/* Настройки по умолчанию для Tree */
+var TreeDefaultSettings = {
+    height: '300px',
+    width: '400px'
+};
+
+
 /* Настройки по умолчанию для ComboBox */
 var ComboBoxDefaultSettings = {
     height: 25,
