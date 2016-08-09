@@ -141,7 +141,7 @@ Sources.SourceEquipTypes =
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-            Sources.SourceSystemTypes.totalrecords = data[0].TotalRows;
+            Sources.SourceEquipTypes.totalrecords = data[0].TotalRows;
         }
 };
 
@@ -854,4 +854,74 @@ Sources.SourceOrganizationsV =
     beforeprocessing: function (data) {
             this.totalrecords = data[0].TotalRows;
         }
+};
+
+
+Sources.SourceObjectsGroupSystems =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'ObjectsGroupSystem_id',  type: 'int' },
+        { name: 'ObjectGr_id',  type: 'int' },
+        { name: 'Sttp_id',  type: 'int' },
+        { name: 'Desc',  type: 'string' },
+        { name: 'SystemTypeName',  type: 'string' },
+        { name: 'Availability_id',  type: 'int' },
+        { name: 'Availability',  type: 'string' },
+        { name: 'Condition',  type: 'string' },
+        { name: 'sysav_id',  type: 'int' },
+        { name: 'count',  type: 'int' },
+        { name: 'Competitors',  type: 'string' },
+    ],
+    id: 'ObjectsGroupSystem_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectsGroupSystems',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+            this.totalrecords = data[0].TotalRows;
+        }
+};
+
+
+Sources.SourceSystemTypesMin =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'SystemType_Id', type: 'int' },
+        { name: 'SystemTypeName', type: 'string' },
+    ],
+    id: 'SystemType_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SystemTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceSystemAvailabilitys =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'code_id', type: 'int' },
+        { name: 'availability',  type: 'string' },
+    ],
+    id: 'code_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SystemAvailabilitys',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
 };
