@@ -751,7 +751,7 @@ Sources.SourceOrganizationsVMin =
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {

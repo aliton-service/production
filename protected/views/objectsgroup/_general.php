@@ -21,11 +21,10 @@
             Telephone: '<?php echo $model->Telephone; ?>',
             PostalAddress: <?php echo json_encode($model->PostalAddress); ?>,
             no_sms: '<?php echo $model->no_sms; ?>',
-            
+            AreaSize: '<?php echo $model->AreaSize; ?>',
             Refusers: <?php echo json_encode($model->Refusers); ?>,
             Note: <?php echo json_encode($model->Note); ?>,
             Information: <?php echo json_encode($model->Information); ?>,
-            
             Slmg_id: '<?php echo $model->Slmg_id; ?>',
             Srmg_id: '<?php echo $model->Srmg_id; ?>',
             Inmg_id: '<?php echo $model->Inmg_id; ?>',
@@ -46,9 +45,12 @@
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
         var DataOrg = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceOrganizationsVMin, {}));
         
-        
+        $("#FullName").on('bindingComplete', function (event) {
+            if (Demand.PropForm_id !== '') $("#FullName").jqxComboBox('val', Demand.PropForm_id);
+            $("#SaveNewObjectsGroup").jqxButton({disabled: false});
+        });
         $("#FullName").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrg, width: 300, displayMember: "FullName", valueMember: "Form_id" }));
-        
+      
         
         $("#JAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 365 }));
         $("#FAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
@@ -73,10 +75,10 @@
         $("#ClientGroup").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataClientGroup, width: 160, displayMember: "ClientGroup", valueMember: "clgr_id" }));
         $("#DoorwayList").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 830 }));
         $("#Journal").jqxDateTimeInput({ width: '110px', height: '25px', formatString: 'dd-MM-yyyy' });
-        
-        $("#ClientName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 620 }));
-        $("#Telephone").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 683 }));
-        $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 785 }));
+        $("#AreaSize").jqxNumberInput({ width: '120px', height: '25px', inputMode: 'simple'});
+        $("#ClientName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 320 }));
+        $("#Telephone").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 383 }));
+        $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 385 }));
         $("#no_sms").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
         
         $("#Information").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 915 }));
@@ -144,8 +146,6 @@
             }
         });
         
-        
-        if (Demand.PropForm_id !== '') $("#FullName").jqxComboBox('val', Demand.PropForm_id);
         if (Demand.Region !== '') $("#Region").jqxComboBox('val', Demand.Region);
         if (Demand.Area !== '') $("#Area").jqxComboBox('val', Demand.Area);
         if (Demand.Street !== '') $("#Street").jqxComboBox('val', Demand.Street);
@@ -159,7 +159,7 @@
         if (Demand.CountPorch !== '') $("#CountPorch").jqxInput('val', Demand.CountPorch);
         if (Demand.Floor !== '') $("#Floor").jqxInput('val', Demand.Floor);
         if (Demand.ClientGroup !== '') $("#ClientGroup").jqxComboBox('val', Demand.ClientGroup);
-        
+        if (Demand.AreaSize !== '') $("#AreaSize").jqxNumberInput('val', Demand.AreaSize);
         if (Demand.ClientName !== '') $("#ClientName").jqxInput('val', Demand.ClientName);
         if (Demand.Telephone !== '') $("#Telephone").jqxInput('val', Demand.Telephone);
         if (Demand.PostalAddress !== '') $("#PostalAddress").jqxInput('val', Demand.PostalAddress);
@@ -173,7 +173,7 @@
         if (Demand.Srmg_id !== '') $("#Srmg_id").jqxComboBox('val', Demand.Srmg_id);
         if (Demand.Inmg_id !== '') $("#Inmg_id").jqxComboBox('val', Demand.Inmg_id);
         
-        $("#SaveNewObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#SaveNewObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: true}));
         $("#SaveNewObjectsGroup").on('click', function ()
         {
             $('#ObjectsGroup').submit();
@@ -203,7 +203,10 @@
     <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
         <h2 style="font-size: 1em; margin: 0 10px 0 5px;">Клиент</h2>
 
-        <div class="row">Наименование: <div id="FullName" name="ObjectsGroup[PropForm_id]"></div><?php echo $form->error($model, 'FullName'); ?></div>
+        <div class="row">
+            <div class="row-column">Наименование:</div>
+            <div class="row-column"><div id="FullName" name="ObjectsGroup[PropForm_id]"></div><?php echo $form->error($model, 'FullName'); ?></div>
+        </div>
 
         <div class="row-column">
             <div class="row">ЮР.АДРЕС: <input type="text" id="JAddress"></div>
@@ -239,13 +242,19 @@
     </div>
     
     <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
-        <div style="width:900; float:left;">
-            <div class="row">Контактное лицо: <input readonly type="text" id="ClientName"></div>
-            <div class="row">Телефон: <input readonly type="text" id="Telephone"></div>
-        </div>
-        <div class="row-column"><div class="row" style="margin: 20px 10px;">Не отправлять смс: <div id="no_sms" name="ObjectsGroup[no_sms]"></div></div></div>
-        <div class="row-column"><div class="row">Почтовый адрес: <input type="text" id="PostalAddress" name="ObjectsGroup[PostalAddress]"></div></div>
+        <div class="row-column">Контактное лицо: <input readonly type="text" id="ClientName"></div>
+        <div class="row-column">Телефон: <input readonly type="text" id="Telephone"></div>
     </div>
+    <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
+        <div class="row-column">Не отправлять смс:</div>
+        <div class="row-column"><div id="no_sms" name="ObjectsGroup[no_sms]"></div></div>
+        <div class="row-column">Почтовый адрес:</div>    
+        <div class="row-column"><input type="text" id="PostalAddress" name="ObjectsGroup[PostalAddress]"></div>
+        <div class="row-column">Площадь</div>
+        <div class="row-column"><div id='AreaSize' name="ObjectsGroup[AreaSize]"></div></div>
+    </div>
+       
+    
     
     <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
         <div class="row" style="margin-top: 5px;">Общая информация: <textarea  type="text" id="Information" name="ObjectsGroup[Information]"></textarea></div>
