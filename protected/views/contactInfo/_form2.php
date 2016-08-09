@@ -36,12 +36,6 @@
             OGTelephone: '<?php echo $model2->Telephone; ?>',
         };
 
-        console.log(typeof(Number(Demand.NoSend)));
-        console.log(Demand.NoSend);
-        console.log(Demand.Main);
-        console.log(Demand.ForReport);
-        console.log(Boolean(Demand.ForReport));
-
         if (Demand.FIO != '') $("#FIO").jqxInput('val', Demand.FIO);
         if (Demand.Birthday != '') $("#Birthday").jqxDateTimeInput('val', Demand.Birthday);
         if (Demand.Main != '') $("#Main").jqxCheckBox({checked: Boolean(Number(Demand.Main))});
@@ -61,10 +55,6 @@
 /* @var $model ContactInfo */
 /* @var $form CActiveForm */
 ?>
-<?php echo 'ЛПР = ' . json_encode($model->Main) . '<br>'; ?>
-<?php echo 'ForReport = ' . json_encode($model->ForReport) . '<br>'; ?>
-<?php echo 'NoSend = ' . json_encode($model->NoSend) . '<br>'; ?>
-
 <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'ContactInfo',

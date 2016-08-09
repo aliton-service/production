@@ -70,7 +70,7 @@
             if (Demand.ServiceManager !== '') $("#ServiceManager").jqxInput('val', Demand.ServiceManager);
             if (Demand.SalesManager !== '') $("#SalesManager").jqxInput('val', Demand.SalesManager);
         };
-        var initGrid = function () {
+        var initContactInfoGrid = function () {
             
             var ObjectsGroup = {
                 ObjectGr_id: <?php echo $model->ObjectGr_id; ?>
@@ -154,7 +154,7 @@
             switch (tab) {
                 case 0:
                     initInputs ();
-                    initGrid();
+                    initContactInfoGrid();
                     break;
                 case 1:
                     initChart();
