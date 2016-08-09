@@ -699,3 +699,36 @@ Sources.SourceOrganizationStructure =
         Sources.SourceOrganizationStructure.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceOrganizationsV =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Form_id',  type: 'int' },
+        { name: 'FormName',  type: 'string' },
+        { name: 'JAddress',  type: 'string' },
+        { name: 'FAddress',  type: 'string' },
+        { name: 'telephone',  type: 'string' },
+        { name: 'bank_name',  type: 'string' },
+        { name: 'bik',  type: 'string' },
+        { name: 'cor_account',  type: 'string' },
+        { name: 'cityb',  type: 'string' },
+        { name: 'lph_name',  type: 'string' },
+        { name: 'DEBT',  type: 'string' },
+        { name: 'sum_price',  type: 'string' },
+        { name: 'sum_appz_price',  type: 'string' },
+        { name: 'sum_appz_price',  type: 'string' },
+    ],
+    id: 'Form_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OrganizationsV',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+            this.totalrecords = data[0].TotalRows;
+        }
+};
+
