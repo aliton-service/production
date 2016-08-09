@@ -40,6 +40,7 @@ class ObjectsGroup extends MainFormModel
     public $DoorwayList;
     public $ClientName;
     public $Telephone;
+    public $AreaSize;
     
     public function rules()
     {
@@ -76,6 +77,7 @@ class ObjectsGroup extends MainFormModel
                 . ' ObjectGr_id,'
                 . ' ClientName,'
                 . ' Telephone,'
+                . ' AreaSize,'
                 . ' PostalAddress', 'safe', 'on' => 'Insert, Update'),
         );
     }
@@ -116,6 +118,7 @@ class ObjectsGroup extends MainFormModel
                     ."  cg.ClientGroup,"
                     ."  og.Note,"
                     ."  og.Information,"
+                    ."  og.AreaSize,"
                     ."  og.Srmg_id,"
                     ."  og.Slmg_id,"
                     ."  og.Inmg_id,"
@@ -170,6 +173,7 @@ class ObjectsGroup extends MainFormModel
             'Srmg_id' => 'Менеджер СЦ',
             'Slmg_id' => 'Менеджер ОП',
             'Inmg_id' => 'Менеджер монтажа',
+            'AreaSize' => 'Площадь АППЗ',
 	);
     }
     
