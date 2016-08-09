@@ -697,6 +697,8 @@ Sources.SourceOrganizationStructure =
     
     beforeprocessing: function (data) {
         Sources.SourceOrganizationStructure.totalrecords = data[0].TotalRows;
+    }
+};
 
 Sources.SourceContactInfoMax =
 {
@@ -853,4 +855,3 @@ Sources.SourceOrganizationsV =
             this.totalrecords = data[0].TotalRows;
         }
 };
-
