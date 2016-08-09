@@ -24,7 +24,7 @@
         
         var Demand = {
             FIO: '<?php echo $model->FIO; ?>',
-            Birthday: '<?php echo $model->Birthday; ?>',
+            Birthday: Aliton.DateConvertToJs('<?php echo $model->Birthday; ?>'),
             Main: <?php echo json_encode($model->Main); ?>,
             ForReport: <?php echo json_encode($model->ForReport); ?>,
             Telephone: '<?php echo $model->Telephone; ?>',

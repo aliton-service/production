@@ -684,7 +684,7 @@ Sources.SourceContactInfoMax =
         { name: 'Email', type: 'string' },
         { name: 'CTelephone', type: 'string' },
         { name: 'Main', type: 'bool' },
-        { name: 'Birthday', type: 'string' },
+        { name: 'Birthday', type: 'date' },
         { name: 'ForReport', type: 'bool' },
         { name: 'NoSend', type: 'bool' },
     ],
