@@ -30,7 +30,8 @@ class ContactInfoController extends Controller
                 ),
             array('allow',
                     'actions'=>array('Delete'),
-                    'roles'=>array('DeleteContactInfo'),
+                    //'roles'=>array('DeleteContactInfo'),
+                'users'=>array('*'),
                 ),
             array('deny',  // deny all users
 			'users'=>array('*'),
@@ -78,7 +79,7 @@ class ContactInfoController extends Controller
     public function actionInsert($ObjectGr_id = FALSE)
     {
         $this->title = 'Добавление контактного лица';
-        $this->action_url = $this->createUrl('ContactInfo/insert', array('ObjectGr_id' => $ObjectGr_id));
+//        $this->action_url = $this->createUrl('ContactInfo/insert', array('ObjectGr_id' => $ObjectGr_id));
         
         if ($ObjectGr_id !== FALSE)
         {
@@ -89,8 +90,6 @@ class ContactInfoController extends Controller
             {
                 $model->attributes = $_POST['ContactInfo'];
                 
-                
-                
                 $this->performAjaxValidation($model);
                 
                 if ($model->validate())
@@ -100,14 +99,18 @@ class ContactInfoController extends Controller
                 }
                 
             }
+            $model2 = new ObjectsGroup();
+            $model2->getModelPk($ObjectGr_id);
+            
             
             $this->render('edit', array(
                'model' => $model,
+               'model2' => $model2
             ));
         }
     }
     
-    public function actionUpdate($Info_id = FALSE)
+    public function actionUpdate($ObjectGr_id = FALSE, $Info_id = FALSE)
     {
         $this->title = 'Редактирование контактного лица';
         $this->action_url = $this->createUrl('ContactInfo/update', array('Info_id' => $Info_id));
@@ -130,19 +133,21 @@ class ContactInfoController extends Controller
                 }
                 
             }
+            $model2 = new ObjectsGroup();
+            $model2->getModelPk($ObjectGr_id);
             
             $this->render('edit', array(
                'model' => $model,
+               'model2' => $model2
             ));
             
         }
     }
     
-    public function actionDelete($Info_id = false)
+    public function actionDelete()
     {
-        $this->title = 'Удаление контактного лица';
-        if ($Info_id !== FALSE)
-        {
+        if(isset($_POST['Info_id'])) {
+            $Info_id = $_POST['Info_id'];
             $model = new ContactInfo();
             $model->getModelPk($Info_id);
             $model->Delete();

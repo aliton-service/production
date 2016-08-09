@@ -77,7 +77,7 @@ class Streets extends MainFormModel
 	public function rules()
 	{
             return array(
-                array('StreetName, Region_id, StreetType_id', 'required'),   
+                array('StreetName, Region_id, StreetType_id', 'required'),
                 array('Street_id,
                         Region_id,
                         StreetType_id,
@@ -148,4 +148,5 @@ class Streets extends MainFormModel
 		$q->setOrder("\nOrder by StreetName");
 		return $q->QueryAll();
 	}
+        
 }

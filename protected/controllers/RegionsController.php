@@ -93,12 +93,13 @@ class RegionsController extends Controller
 	 */
 	public function actionCreate()
 	{
-            $model=new Regions;
+            $model = new Regions;
 
             if(isset($_POST['Regions']))
             {
                 $model->attributes=$_POST['Regions'];
-                if($model->insert())
+                $model->EmplCreate = Yii::app()->user->Employee_id;
+                if($model->validate() && $model->insert())
                     $this->redirect(Yii::app()->createUrl('Regions/Index'));
             }
 
@@ -120,6 +121,7 @@ class RegionsController extends Controller
             if(isset($_POST['Regions']))
             {
                 $model->attributes=$_POST['Regions'];
+                $model->EmplChange = Yii::app()->user->Employee_id;
                 if ($model->validate()) {
                     $model->update();
                     $this->redirect(Yii::app()->createUrl('Regions/Index'));
@@ -143,6 +145,7 @@ class RegionsController extends Controller
             }
             $model=new Regions;
             $model->getModelPk($Region_id);
+            $model->EmplDel = Yii::app()->user->Employee_id;
             
             if(!is_null($Region_id)){
                 $model->delete();

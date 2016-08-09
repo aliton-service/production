@@ -85,35 +85,38 @@ class ObjectsgroupController extends Controller
         ));
     }
     
-    public function actionUpdate()
+    public function actionUpdate($ObjectGr_id)
     {
         $model = new ObjectsGroup();
-        
         $model->setScenario('Update');
-        
+        $model->getModelPk($ObjectGr_id);
         $this->performAjaxValidation($model);
-        
+        $this->title = 'Редактирование карточки объекта: ' . $model->Address;
+
         if (isset($_POST['ObjectsGroup']))
         {
+            print_r($_POST['ObjectsGroup']);
+            
             $model->attributes = $_POST['ObjectsGroup'];
-            
-            //print_r($_POST['ObjectsGroup']);
-            
-            
-            
+                        
             if ($model->validate())
             {
-                $model->Update();
+                $model->update();
                 Yii::app()->LockManager->UnLockrecord('ObjectsGroup', 'ObjectGr_id', $model->ObjectGr_id);
                 $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
             }
             else
             {
+                alert('else');
                 $this->render('general', array(
                     'model' => $model,
                 ));
             }
         }
+        
+        $this->render('general', array(
+            'model' => $model,
+        ));
     }
     
     protected function performAjaxValidation($model)

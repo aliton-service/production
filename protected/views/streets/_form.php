@@ -41,9 +41,23 @@
      )); 
 ?>
 
-    <div class="row" style="width: 300px;">Регион: <div id='cmbRegionName' name="Streets[Region_id]"  class="row-column"></div></div>
-    <div class="row">Улица: <br/><input name="Streets[StreetName]" type="text" id="StreetName" value="<?php echo $model->StreetName; ?>" ></div>
-    <div class="row" style="width: 300px;">Тип улицы: <div id='cmbStreetType' name="Streets[StreetType_id]" class="row-column"></div></div>
+    <div class="row" style="width: 300px;">
+        Регион: 
+        <div id='cmbRegionName' name="Streets[Region_id]"  class="row-column"></div>
+        <?php echo $form->error($model, 'Region_id'); ?>
+    </div>
+
+    <div class="row">
+        Улица: <br/>
+        <input name="Streets[StreetName]" type="text" id="StreetName" value="<?php echo $model->StreetName; ?>" >
+        <?php echo $form->error($model, 'StreetName'); ?>
+    </div>
+
+    <div class="row" style="width: 300px;">
+        Тип улицы: 
+        <div id='cmbStreetType' name="Streets[StreetType_id]" class="row-column"></div>
+        <?php echo $form->error($model, 'StreetType_id'); ?>
+    </div>
     
     <br/>
     <div class="row-column"><input type="button" value="Сохранить" id='SaveNewStreet' /></div>

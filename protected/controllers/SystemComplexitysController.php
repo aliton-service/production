@@ -98,6 +98,7 @@ class SystemComplexitysController extends Controller
 		if(isset($_POST['SystemComplexitys']))
 		{
 			$model->attributes=$_POST['SystemComplexitys'];
+                        $model->EmplCreate = Yii::app()->user->Employee_id;
 			if ($model->validate()) {
                             if($model->insert())
                                     $this->redirect(Yii::app()->createUrl('SystemComplexitys/Index'));
@@ -123,6 +124,7 @@ class SystemComplexitysController extends Controller
             {
                 
                 $model->attributes=$_POST['SystemComplexitys'];
+                $model->EmplChange = Yii::app()->user->Employee_id;
                 
                 if ($model->validate()) {
                     $model->update();
@@ -147,6 +149,7 @@ class SystemComplexitysController extends Controller
             }
             $model=new SystemComplexitys;
             $model->getModelPk($SystemComplexitys_id);
+            $model->EmplDel = Yii::app()->user->Employee_id;
             
             if(!is_null($SystemComplexitys_id)){
                 $model->delete();

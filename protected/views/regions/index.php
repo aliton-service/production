@@ -14,14 +14,6 @@
                 width: '100%',
                 height: '400',
                 source: DemDataAdapter,
-                        /*
-                ready: function() {
-                    var State = $('#RegionsGrid').jqxGrid('getstate');
-                    var Columns = GridState.LoadGridSettings('#RegionsGrid', 'RegionIndex_RegionsGrid');
-                    $.extend(true, State.columns, Columns);
-                    $('#RegionsGrid').jqxGrid('loadstate', State);    
-                    $('#RegionsGrid').jqxGrid({source: DemDataAdapter});
-//                }*/
                 columns: [
                     { text: 'Регион', dataField: 'RegionName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 }
                 ]

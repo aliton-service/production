@@ -85,8 +85,8 @@ class TerritoryController extends Controller
             if(isset($_POST['Territory']))
             {
                 $model->attributes = $_POST['Territory'];
-                $model->EmplChange = Yii::app()->user->Employee_id;
-                if($model->insert())
+                $model->EmplCreate = Yii::app()->user->Employee_id;
+                if($model->validate() && $model->insert())
                     $this->redirect(Yii::app()->createUrl('Territory/Index'));
             }
 
@@ -133,7 +133,7 @@ class TerritoryController extends Controller
             }
             $model=new Territory;
             $model->Territ_Id = $Territ_Id;
-            $model->EmplChange = Yii::app()->user->Employee_id;
+            $model->EmplDel = Yii::app()->user->Employee_id;
             
             if(!is_null($Territ_Id)){
                 $model->delete();

@@ -90,11 +90,27 @@ var TreeDefaultSettings = {
     width: '400px'
 };
 
-/* Настройки по умолчанию для выпадающих списков */
+
+/* Настройки по умолчанию для ComboBox */
 var ComboBoxDefaultSettings = {
-    width: '300px',
-    height: '25px',
+    height: 25,
+    width: 200
+    //minLength: 1
 };
+
+/* Настройки по умолчанию для TextArea */
+var TextAreaDefaultSettings = {
+    height: 70,
+    width: 340
+};
+
+
+/* Настройки по умолчанию для CheckBox */
+var CheckBoxDefaultSettings = {
+    width: 25, 
+    height: 25
+};
+
 
 var GridFilters = {};
 

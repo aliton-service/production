@@ -43,7 +43,7 @@ class PriceMonitoring extends MainFormModel
 	public $DelDate = null;
 	public $delivery = null;
 	public $title = null;
-	public $user_delete = null;
+	public $user_delete_id = null;
 	public $date_delete = null;
 
 	public $KeyFiled = 'pm.mntr_id';
@@ -123,7 +123,7 @@ class PriceMonitoring extends MainFormModel
                     array('date_create, date_change', 'safe'),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
-                    array('mntr_id, date, eqip_id, splr_id, price, price_retail, user_create_id, date_create, user_change_id, date_change', 'safe'),
+                    array('mntr_id, date, eqip_id, splr_id, price, price_retail, user_create_id, date_create, user_change_id, date_change, delivery', 'safe'),
 		);
 	}
 

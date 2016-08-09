@@ -30,8 +30,8 @@
      )); 
 
 ?>
-    <div class="row">Название участка: <input name="Territory[Territ_Name]" type="text" id="Territ_Name" value="<?php echo $model->Territ_Name; ?>"></div>
-    <div class="row">Примечание: <input name="Territory[Note]" type="text" id="Note" value="<?php echo $model->Note; ?>"></div>
+    <div class="row">Название участка: <input name="Territory[Territ_Name]" type="text" id="Territ_Name" value="<?php echo $model->Territ_Name; ?>"><?php echo $form->error($model, 'Territ_Name'); ?></div>
+    <div class="row">Примечание: <input name="Territory[Note]" type="text" id="Note" value="<?php echo $model->Note; ?>"><?php echo $form->error($model, 'Note'); ?></div>
     <br/>
     <div class="row-column"><input type="button" value="Сохранить" id='SaveNewTerritory' /></div>
 

@@ -118,7 +118,7 @@ class PriceMonitoringController extends Controller
             }
             $model = new PriceMonitoring;
             $model->getModelPk($mntr_id);
-            $model->user_delete = Yii::app()->user->Employee_id;
+            $model->user_delete_id = Yii::app()->user->Employee_id;
             
             if(!is_null($mntr_id)){
                 $model->delete();

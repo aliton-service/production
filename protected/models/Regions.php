@@ -39,13 +39,14 @@ class Regions extends MainFormModel
             // NOTE: you should only define rules for those attributes that
             // will receive user inputs.
             return array(
+                    array('Sort, RegionName', 'required'),
                     array('Sort', 'SortValidate'),
                     array('Sort, EmplLock, EmplDel, EmplChange', 'numerical', 'integerOnly'=>true),
                     array('RegionName', 'length', 'max'=>50),
                     array('Lock, DateLock, DateChange, DelDate', 'safe'),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
-                    array('Region_id, RegionName, Sort, Lock, EmplLock, DateLock, EmplDel, DateChange, EmplChange, DelDate', 'safe', 'on'=>'search'),
+                    array('Region_id, RegionName, Sort, Lock, EmplLock, DateLock, EmplDel, DateChange, EmplChange, DelDate', 'safe'),
             );
     }
 

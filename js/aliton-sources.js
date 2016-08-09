@@ -79,7 +79,7 @@ Sources.SourceListEmployees =
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-        Sources.SourceListEmployees.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -508,7 +508,7 @@ Sources.SourceListStreetsMin =
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-        Sources.SourceListStreetsMin.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -697,6 +697,128 @@ Sources.SourceOrganizationStructure =
     
     beforeprocessing: function (data) {
         Sources.SourceOrganizationStructure.totalrecords = data[0].TotalRows;
+
+Sources.SourceContactInfoMax =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Info_id',  type: 'int' },
+        { name: 'FIO', type: 'string' },
+        { name: 'Telephone', type: 'string' },
+        { name: 'Cstm_id', type: 'int' },
+        { name: 'CustomerName', type: 'string' },
+        { name: 'Email', type: 'string' },
+        { name: 'CTelephone', type: 'string' },
+        { name: 'Main', type: 'bool' },
+        { name: 'Birthday', type: 'date' },
+        { name: 'ForReport', type: 'bool' },
+        { name: 'NoSend', type: 'bool' },
+    ],
+    id: 'Info_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContactInfo',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceContactInfoMax.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourceOrganizationsVMin =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Form_id',  type: 'int' },
+        { name: 'FormName',  type: 'string' },
+        { name: 'FullName',  type: 'string' },
+        { name: 'JAddress',  type: 'string' },
+        { name: 'FAddress',  type: 'string' },
+        { name: 'bank_name',  type: 'string' },
+        { name: 'bik',  type: 'string' },
+        { name: 'cor_account',  type: 'string' },
+        { name: 'inn',  type: 'string' },
+        { name: 'account',  type: 'string' },
+    ],
+    id: 'Form_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OrganizationsVMin',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceAreas =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Area_id',  type: 'int' },
+        { name: 'AreaName',  type: 'string' },
+    ],
+    id: 'Area_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Areas',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceAreas.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourceClientGroup =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'clgr_id',  type: 'int' },
+        { name: 'ClientGroup',  type: 'string' },
+    ],
+    id: 'clgr_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ClientGroups',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceClientGroup.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourceCustomers =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Customer_Id',  type: 'int' },
+        { name: 'CustomerName',  type: 'string' },
+    ],
+    id: 'Customer_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Customers',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        Sources.SourceCustomers.totalrecords = data[0].TotalRows;
     }
 };
 

@@ -37,6 +37,9 @@ class ObjectsGroup extends MainFormModel
     public $DateCreate;
     public $EmplChange;
     public $DateChange;
+    public $DoorwayList;
+    public $ClientName;
+    public $Telephone;
     
     public function rules()
     {
@@ -71,6 +74,8 @@ class ObjectsGroup extends MainFormModel
                 . ' EmplChange,'
                 . ' DateChange,'
                 . ' ObjectGr_id,'
+                . ' ClientName,'
+                . ' Telephone,'
                 . ' PostalAddress', 'safe', 'on' => 'Insert, Update'),
         );
     }
@@ -100,10 +105,13 @@ class ObjectsGroup extends MainFormModel
                     ."  og.Floor,"
                     ."  og.year_construction,"
                     ."  og.Entrance,"
+                    ."  dbo.get_doorways_list(og.ObjectGr_id) as DoorwayList,"
                     ."  og.CountPorch,"
                     ."  og.clgr_id,"
                     ."  og.Refusers,"
                     ."  og.Journal,"
+                    ."  og.ClientName,"
+                    ."  og.Telephone,"
                     ."  og.PostalAddress,"
                     ."  cg.ClientGroup,"
                     ."  og.Note,"

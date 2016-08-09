@@ -152,6 +152,13 @@ class StoredProc
                     if (($this->Parameters[$i]['Type'] === 'nvarchar') && ($Value === ''))
                         $Value = null;
                     
+                    if (($this->Parameters[$i]['Type'] === 'bool') && ($Value === 'True'))
+                        $Value = 1;
+                    else if (($this->Parameters[$i]['Type'] === 'bool') && ($Value === 'Fasle'))
+                        $Value = 0;
+                    else if (($this->Parameters[$i]['Type'] === 'bool') && ($Value === ''))
+                        $Value = null;
+                    
                     $this->Parameters[$i]['Value'] = $Value;
                 }    
             }
