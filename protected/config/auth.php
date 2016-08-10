@@ -294,6 +294,7 @@ return array_merge(
                 'AdminOrganizationStructure',
                 /* Отчеты*/
                 'Demand1Report',
+                'Demand2Report',
                 'WHDocuments1Report',
                 ),
         ),
