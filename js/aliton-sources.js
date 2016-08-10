@@ -925,3 +925,45 @@ Sources.SourceSystemAvailabilitys =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+
+Sources.SourceCompetitors =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'cmtr_id', type: 'int' },
+        { name: 'Competitor',  type: 'string' },
+    ],
+    id: 'cmtr_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Competitors',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceSystemCompetitors =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'SystemCompetitor_id', type: 'int' },
+        { name: 'ObjectsGroupSystem_id', type: 'int' },
+        { name: 'Cmtr_id', type: 'int' },
+        { name: 'Competitor',  type: 'string' },
+    ],
+    id: 'SystemCompetitor_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SystemCompetitors',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

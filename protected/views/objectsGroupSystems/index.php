@@ -24,7 +24,7 @@
                 showfilterrow: false,
                 virtualmode: false,
                 width: '100%',
-                height: '700',
+                height: '300',
                 source: OGSystemsDataAdapter,
                 columns: [
                     { text: 'Наличие системы', dataField: 'Availability', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
@@ -36,7 +36,7 @@
             })
         );
         
-        $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '400px'}));
+        $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '525px', width: '380'}));
         
         $('#EditDialog').jqxWindow({initContent: function() {
             $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -116,6 +116,27 @@
                 }
             });
         });
+        
+        
+        
+        
+        
+       var DataSystemCompetitors = new $.jqx.dataAdapter(Sources.SourceCompetitors);
+    
+        $("#Competitors2").jqxComboBox({source: DataSystemCompetitors, displayMember: "Competitor", valueMember: "cmtr_id", multiSelect: true, width: 350, height: 25 });
+
+        $("#Competitors2").on('change', function (event) {
+            var items = $("#Competitors2").jqxComboBox('getSelectedItems');
+            var selectedItems = "Selected Items: ";
+            $.each(items, function (index) {
+                selectedItems += this.label;
+                if (items.length - 1 != index) {
+                    selectedItems += ", ";
+                }
+            });
+            $("#log2").text(selectedItems);
+        });
+            
     });
     
         
@@ -131,11 +152,18 @@
     <div class="row-column"><input type="button" value="Удалить" id='DelObjectsGroupSystem' /></div>
 </div>
 
-<div id="EditDialog">
+
+
+    <div class="row-column" style="margin-top: 20px;">Обслуживающие организации: <br><div id="Competitors2"></div></div>
+    <div style="margin-top: 10px; font-size: 13px; font-family: Verdana;" id="log2"></div>
+    
+    
+
+    <div id="EditDialog">
     <div id="DialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="overflow: hidden;" id="DialogContent">
+    <div style="overflow: hidden; padding: 10px;" id="DialogContent">
         <div style="overflow: hidden;" id="BodyDialog"></div>
         <div id="BottomDialog">
             <div class="row">

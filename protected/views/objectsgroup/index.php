@@ -153,6 +153,11 @@
             });
         };
         
+        var loadPage = function (url) {
+            $.get(url, function (data) {
+                $('#content2').html(data);
+            });
+        };
         
         var initWidgets = function (tab) {
             switch (tab) {
@@ -166,12 +171,9 @@
             }
         };
         $('#jqxTabs').jqxTabs({ width: 1800, height: 860,  initTabContent: initWidgets });
+        $('#jqxTabs').jqxTabs({ selectedItem: 1 });
  
-        var loadPage = function (url) {
-            $.get(url, function (data) {
-                $('#content2').html(data);
-            });
-        };
+        
 
         
     });
