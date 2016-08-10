@@ -46,27 +46,27 @@ class ObjectsGroupSystemsController extends Controller
         if (isset($_GET['ObjectGr_id']))
         {
             $ObjectGr_id = $_GET['ObjectGr_id'];
-            $ObjectsGroupSystems = new ObjectsGroupSystems();
-            $ObjectsGroupSystems = $ObjectsGroupSystems->Find(array('ObjectGr_id' => $ObjectGr_id));
+            $model = new ObjectsGroupSystems();
+//            $model = $model->Find(array('ObjectGr_id' => $ObjectGr_id));
             
             $this->renderPartial('index', array(
-                'ObjectsGroupSystems' => $ObjectsGroupSystems,
+                'model' => $model,
                 'ObjectGr_id' => $ObjectGr_id,
             ), false, true);
         }
     }
     
-    public function actionInsert($ObjectGr_id = FALSE)
+    public function actionInsert()
     {
         $this->title = 'Добавление системы';
+        
+        $ObjectGr_id = $_POST['ObjectGr_id'];
         $this->action_url = $this->createUrl('ObjectsGroupSystems/insert', array('ObjectGr_id' => $ObjectGr_id));
         
-        if ($ObjectGr_id !== FALSE)
-        {
-            $model = new ObjectsGroupSystems();
-            $model->ObjectGr_id = $ObjectGr_id;
-            
-            if (isset($_POST['ObjectsGroupSystems']))
+        $model = new ObjectsGroupSystems();
+        $model->ObjectGr_id = $ObjectGr_id;
+                
+        if (isset($_POST['ObjectsGroupSystems']))
             {
                 $model->attributes = $_POST['ObjectsGroupSystems'];
                 
@@ -80,41 +80,40 @@ class ObjectsGroupSystemsController extends Controller
                 
             }
             
-            $this->render('edit', array(
-               'model' => $model,
+            $this->renderPartial('_form', array(
+                'model' => $model
             ));
-        }
+        
     }
     
-    public function actionUpdate($ObjectsGroupSystem_id = FALSE)
+    public function actionUpdate()
     {
         $this->title = 'Редактирование системы';
+        
+        $ObjectsGroupSystem_id = $_POST['ObjectsGroupSystem_id'];
         $this->action_url = $this->createUrl('ObjectsGroupSystems/update', array('ObjectsGroupSystem_id' => $ObjectsGroupSystem_id));
         
-        if ($ObjectsGroupSystem_id !== FALSE)
+        $model = new ObjectsGroupSystems();
+        $model->getModelPk($ObjectsGroupSystem_id);
+
+        if (isset($_POST['ObjectsGroupSystems']))
         {
-            $model = new ObjectsGroupSystems();
-            $model->getModelPk($ObjectsGroupSystem_id);
-            
-            if (isset($_POST['ObjectsGroupSystems']))
+            $model->attributes = $_POST['ObjectsGroupSystems'];
+
+            $this->performAjaxValidation($model);
+
+            if ($model->validate())
             {
-                $model->attributes = $_POST['ObjectsGroupSystems'];
-                
-                $this->performAjaxValidation($model);
-                
-                if ($model->validate())
-                {
-                    $model->Update();
-                    $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                }
-                
+                $model->Update();
+                $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
             }
-            
-            $this->render('edit', array(
-               'model' => $model,
-            ));
-            
+
         }
+
+        $this->renderPartial('_form', array(
+            'model' => $model
+        ));
+        
     }
     
     protected function performAjaxValidation($model)

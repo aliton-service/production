@@ -92,11 +92,14 @@
         var find = function(id) {
             for (var i = 0; i < DataOrg.records.length; i++) {
                 if (DataOrg.records[i].Form_id == id) {
+//                    console.log(DataOrg.records[i]);
                     return DataOrg.records[i];
                 }
             }
             return null;
         };
+        
+        console.log(DataOrg);
         
         $("#FullName").on('select', function(event){
             var args = event.args;

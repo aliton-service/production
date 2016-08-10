@@ -70,7 +70,10 @@
             if (Demand.ServiceManager !== '') $("#ServiceManager").jqxInput('val', Demand.ServiceManager);
             if (Demand.SalesManager !== '') $("#SalesManager").jqxInput('val', Demand.SalesManager);
         };
-        var initGrid = function () {
+        
+        
+        
+        var initContactInfoGrid = function () {
             
             var ObjectsGroup = {
                 ObjectGr_id: <?php echo $model->ObjectGr_id; ?>
@@ -150,18 +153,29 @@
             });
         };
         
+        var loadPage = function (url) {
+            $.get(url, function (data) {
+                $('#content2').html(data);
+            });
+        };
+        
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
                     initInputs ();
-                    initGrid();
+                    initContactInfoGrid();
                     break;
                 case 1:
-                    initChart();
+                    loadPage('<?php echo Yii::app()->createUrl('ObjectsGroupsystems/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>');
                     break;
             }
         };
         $('#jqxTabs').jqxTabs({ width: 1800, height: 860,  initTabContent: initWidgets });
+        $('#jqxTabs').jqxTabs({ selectedItem: 1 });
+ 
+        
+
+        
     });
 </script>
     
@@ -247,8 +261,9 @@ $this->breadcrumbs=array(
                 <div class="row-column"><input type="button" value="Удалить" id='DelContactInfo' /></div>
             </div>
         </div>
-        <div style="overflow: hidden; margin-left: 10px;">
-            <div id='jqxChart' style="width: 100%; height: 100%">
+        <div id='content2' style="overflow: hidden; margin-left: 10px;">
+            <div style="width: 100%; height: 100%">
+                
             </div>
         </div>
     </div>

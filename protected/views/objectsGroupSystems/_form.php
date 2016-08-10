@@ -1,114 +1,91 @@
-<?php
-   $form=$this->beginWidget('CActiveForm', array(
-            'id'=>'ObjectsGroupSystems',
-            'action'=> $this->action_url,
-            'enableClientValidation'=>true,
-            'enableAjaxValidation'=>true,
-    ));
+<script type="text/javascript">
+        $(document).ready(function () {
+            var OGSystems = {
+                ObjectsGroupSystem_id: '<?php echo $model->ObjectsGroupSystem_id; ?>',
+                SystemType_Id: '<?php echo $model->Sttp_id; ?>',
+                Availability: '<?php echo $model->Availability_id; ?>',
+                Count: '<?php echo $model->Count; ?>',
+                Competitors: '<?php echo $model->Competitors; ?>',
+                Condition: '<?php echo $model->Condition; ?>',
+                Desc: '<?php echo $model->Desc; ?>',
+            };
+            
+            var DataSystemTypes = new $.jqx.dataAdapter(Sources.SourceSystemTypesMin);
+            var DataSystemAvailabilitys = new $.jqx.dataAdapter(Sources.SourceSystemAvailabilitys);
+            var DataCompetitors = new $.jqx.dataAdapter(Sources.SourceCompetitors);
+            
+            
+            $("#SystemType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemTypes, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width:300 }));;
+            $("#Availability").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemAvailabilitys, displayMember: "availability", valueMember: "code_id", width:200, autoDropDownHeight: true }));;
+            $("#Count").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100}));
+    
+            $("#Competitors").jqxComboBox({source: DataCompetitors, displayMember: "Competitor", valueMember: "cmtr_id", multiSelect: true, width: 340, height: 25 });
 
-    echo '<input name="ObjectsGroupSystems[ObjectGr_id]" id="ObjectsGroupSystems_ObjectGr_id" type="text" style="display: none;" value="' . $model->ObjectGr_id . '"/>';
-    echo '<input name="ObjectsGroupSystems[ObjectsGroupSystem_id]" id="ObjectsGroupSystems_ObjectsGroupSystem_id" type="text" style="display: none;" value="' . $model->ObjectsGroupSystem_id . '"/>';
+            $("#Competitors").on('change', function (event) {
+                var items = $("#Competitors").jqxComboBox('getSelectedItems');
+                var selectedItems = "Selected Items: ";
+                $.each(items, function (index) {
+                    selectedItems += this.label;
+                    if (items.length - 1 != index) {
+                        selectedItems += ", ";
+                    }
+                });
+                $("#log").text(selectedItems);
+            });
+            
+            $("#Condition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
+            $("#Desc").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
+
+            var DataSystemCompetitors = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSystemCompetitors, {}), {
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["sc.ObjectsGroupSystem_id = " + OGSystems.ObjectsGroupSystem_id]
+                    });
+                    return data;
+                }
+            });
+            console.log(OGSystems.ObjectsGroupSystem_id);
+            console.log(DataSystemCompetitors);
+//            DataSystemCompetitors.dataBind();
+            
+//            var find = function(data) {
+//                for (var i = 0; i < data.records.length; i++) 
+//                {
+//                    return $("#Competitors").jqxComboBox('selectItem', data.records[i].Competitor);
+//                }
+//                return null;
+//            };
+//            find(DataSystemCompetitors);
+            
+            if (OGSystems.SystemType_Id != '') $("#SystemType").jqxComboBox('val', OGSystems.SystemType_Id);
+            if (OGSystems.Availability != '') $("#Availability").jqxComboBox('val', OGSystems.Availability);
+            if (OGSystems.Count != '') $("#Count").jqxInput('val', OGSystems.Count);
+//            if (OGSystems.Competitors != '') $("#Competitors").jqxComboBox('val', OGSystems.Competitors);
+            if (OGSystems.Condition != '') $("#Condition").jqxInput('val', OGSystems.Condition);
+            if (OGSystems.Desc != '') $("#Desc").jqxTextArea('val', OGSystems.Desc);
+            
+            
+        });
+</script>        
+<?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'ObjectsGroupSystems',
+        'htmlOptions'=>array(
+            'class'=>'form-inline'
+        ),
+    )); 
 ?>
 
-<table>
-    <tbody>
-        <tr>
-            <td><?php echo $form->labelEx($model,'Sttp_id'); ?></td>
-            <td>
-                <?php
-                    $SystemTypes = new SystemTypes();
-                    $SystemTypes = $SystemTypes->getData();
-                    $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                        'id' => 'cmbSystemType',
-                        'popupid' => 'cmbSystemTypeGrid',
-                        'data' => $SystemTypes,
-                        'label' => '',
-                        'name' => 'ObjectsGroupSystems[Sttp_id]',
-                        'fieldname' => 'SystemTypeName',
-                        'keyfield' => 'SystemType_Id',
-                        'keyvalue' => $model->Sttp_id,
-                        'width' => 200,
-                        'showcolumns' => true,
-                        'columns' => array(
-                            'SystemTypeName' => array(
-                                'name' => 'Тип системы',
-                                'fieldname' => 'SystemTypeName',
-                                'width' => 150,
-                                'height' => 23,
-                            ),
-                        ),
-
-                    ));
-                    echo $form->error($model,'Sttp_id');
-                ?>
-            </td>
-        </tr>
-        <tr>
-            <td><?php echo $form->labelEx($model,'Availability_id'); ?></td>
-            <td>
-                <?php
-                    $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                        'id' => 'cmbSystemAvailabilitys',
-                        'ModelName' => 'SystemAvailabilitys',
-                        'Name' => 'ObjectsGroupSystems[Availability_id]',
-                        'FieldName' => 'availability',
-                        'KeyField' => 'code_id',
-                        'KeyValue' => $model->Availability_id,
-                        'Width' => 200,
-                        'Type' => array(
-                            'Mode' => 'Filter',
-                            'Condition' => 'sa.availability like \':Value%\'',
-                        ),
-                        'Columns' => array(
-                            'availability' => array(
-                                'Name' => 'Наличие',
-                                'FieldName' => 'availability',
-                                'Width' => 150,
-                                'Height' => 23,
-                            ),
-                        ),
-
-                    ));
-                    echo $form->error($model,'Availability_id');
-                ?>
-            </td>
-            <td><?php echo $form->labelEx($model,'Count'); ?></td>
-            <td>
-                <?php echo $form->textField($model,'Count'); ?>
-                <?php echo $form->error($model,'Count'); ?>
-            </td>
-        </tr>
-        <tr>
-            <td><?php echo $form->labelEx($model,'Condition'); ?></td>
-            <td colspan="3">
-                <?php echo $form->textArea($model,'Condition', array('style' => 'width: 500px')); ?>
-                <?php echo $form->error($model,'Condition'); ?>
-            </td>
-        </tr>
-        <tr>
-            <td><?php echo $form->labelEx($model,'Desc'); ?></td>
-            <td colspan="3">
-                <?php echo $form->textArea($model,'Desc', array('style' => 'width: 500px')); ?>
-                <?php echo $form->error($model,'Desc'); ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <br>
-                <?php
-                    $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                        'id' => 'Save',
-                        'Width' => 114,
-                        'Height' => 30,
-                        'Text' => 'Сохранить',
-                        'Type' => 'Form',
-                        'FormName' => 'ObjectsGroupSystems',
-                        'Href' => $this->action_url,
-                    ));
-                ?>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<?php echo 'Competitors = '; var_dump($model->Competitors); ?>
+  
+<div class="row"><div class="row-column">Тип системы: <div id='SystemType' name="ObjectsGroupSystems[Sttp_id]"></div><?php echo $form->error($model, 'Sttp_id'); ?></div></div>  
+<div class="row">
+    <div class="row-column">Наличие: <div id='Availability' name="ObjectsGroupSystems[Availability_id]"></div><?php echo $form->error($model, 'Availability_id'); ?></div>  
+    <div class="row-column">Кол-во систем: <br><input id="Count" name="ObjectsGroupSystems[Count]" type="text"><?php echo $form->error($model, 'Count'); ?></div>
+    <div class="row-column" style="margin-top: 20px;">Обслуживающие организации: <br><div id="Competitors"></div></div>
+    <div style="margin-top: 10px; font-size: 13px; font-family: Verdana;" id="log"></div>
+    <div class="row-column" style="margin-top: 20px;">Условия: <textarea id="Condition"></textarea>
+    <div class="row-column" style="margin-top: 20px;">Примечание: <textarea id="Desc"></textarea>
+</div>  
 
 <?php $this->endWidget(); ?>
