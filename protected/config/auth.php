@@ -292,6 +292,7 @@ return array_merge(
                 'AdminSystemStatements',
                 'AdminPriceMonitoring',
                 'AdminOrganizationStructure',
+                'AdminObjectsGroupSystems',
                 /* Отчеты*/
                 'Demand1Report',
                 'WHDocuments1Report',
