@@ -64,23 +64,23 @@ class ObjectsGroupSystemsController extends Controller
         $model = new ObjectsGroupSystems();
                 
         if (isset($_POST['ObjectsGroupSystems']))
+        {
+            $model->attributes = $_POST['ObjectsGroupSystems'];
+
+            $this->performAjaxValidation($model);
+
+            if ($model->validate())
             {
-                $model->attributes = $_POST['ObjectsGroupSystems'];
-                
-                $this->performAjaxValidation($model);
-                
-                if ($model->validate())
-                {
-                    $model->Insert();
-                    echo '1';
-                    return;
-                }
-                
+                $model->Insert();
+                echo '1';
+                return;
             }
-            $model->ObjectGr_id = $ObjectGr_id;
-            $this->renderPartial('_form', array(
-                'model' => $model
-            ));
+
+        }
+        $model->ObjectGr_id = $ObjectGr_id;
+        $this->renderPartial('_form', array(
+            'model' => $model
+        ));
         
     }
     
@@ -91,14 +91,13 @@ class ObjectsGroupSystemsController extends Controller
         if (isset($_POST['ObjectsGroupSystem_id'])) 
             $ObjectsGroupSystem_id = $_POST['ObjectsGroupSystem_id'];
         
-        
         $model = new ObjectsGroupSystems();
         
-
         if (isset($_POST['ObjectsGroupSystems']))
         {
             $model->attributes = $_POST['ObjectsGroupSystems'];
             $ObjectsGroupSystem_id = $model->ObjectsGroupSystem_id;
+            
             $this->performAjaxValidation($model);
 
             if ($model->validate())

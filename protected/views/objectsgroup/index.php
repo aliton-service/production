@@ -153,9 +153,15 @@
             });
         };
         
-        var loadPage = function (url) {
+//        var loadPage = function (url) {
+//            $.get(url, function (data) {
+//                $('#content2').html(data);
+//            });
+//        };
+
+        var loadPage = function (url, tabIndex) {
             $.get(url, function (data) {
-                $('#content2').html(data);
+                $('#content' + tabIndex).html(data);
             });
         };
         
@@ -166,12 +172,15 @@
                     initContactInfoGrid();
                     break;
                 case 1:
-                    loadPage('<?php echo Yii::app()->createUrl('ObjectsGroupsystems/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>');
+                    loadPage('<?php echo Yii::app()->createUrl('ObjectsGroupsystems/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 1);
+                    break;
+                case 2:
+                    loadPage('<?php echo Yii::app()->createUrl('Contacts/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 2);
                     break;
             }
         };
         $('#jqxTabs').jqxTabs({ width: 1800, height: 860,  initTabContent: initWidgets });
-        $('#jqxTabs').jqxTabs({ selectedItem: 1 });
+        $('#jqxTabs').jqxTabs({ selectedItem: 2 });
  
         
 
@@ -204,6 +213,13 @@ $this->breadcrumbs=array(
                 <div style="height: 15px; margin-top: 3px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
                         Системы
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Контакты
                     </div>
                 </div>
             </li>
@@ -261,10 +277,7 @@ $this->breadcrumbs=array(
                 <div class="row-column"><input type="button" value="Удалить" id='DelContactInfo' /></div>
             </div>
         </div>
-        <div id='content2' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%">
-                
-            </div>
-        </div>
+        <div id='content1' style="overflow: hidden; margin-left: 10px;"></div>
+        <div id='content2' style="overflow: hidden; margin-left: 10px;"></div>
     </div>
 </div>

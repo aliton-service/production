@@ -59,29 +59,29 @@ class Contacts extends MainFormModel
                     c.date,
                     c.cntp_id,
                     ct.ContactName as cntp_name,
-                   c.info_id,
-                   ci.contact,
-                   c.empl_id,
-                   dbo.FIO(e.EmployeeName) empl_name,
-                   dbo.FIO(e1.EmployeeName) UserCreateName,
-                   c.text,
-                   c.rslt_id,
-                   r.ResultName rslt_name,
-                   c.note,
-                   c.drsn_id,
-                   dr.name drsn_name,
-                   c.pay_date,
-                   c.next_date,
-                   c.next_cntp_id,
-                   si.sourceInfo_name,
-                   ct2.ContactName as next_cntp_name,
-                   c.next_info_id,
-                   ci2.contact next_contact,
-                   c.Telephone,
-                   c.Kind,
-                   c.SourceInfo_id,
-                   ck.Kind_Name,
-                   case when bn.base_name = 'База монтажа и отдела продаж' then 'Монтаж'
+                    c.info_id,
+                    ci.contact,
+                    c.empl_id,
+                    dbo.FIO(e.EmployeeName) empl_name,
+                    dbo.FIO(e1.EmployeeName) UserCreateName,
+                    c.text,
+                    c.rslt_id,
+                    r.ResultName rslt_name,
+                    c.note,
+                    c.drsn_id,
+                    dr.name drsn_name,
+                    c.pay_date,
+                    c.next_date,
+                    c.next_cntp_id,
+                    si.sourceInfo_name,
+                    ct2.ContactName as next_cntp_name,
+                    c.next_info_id,
+                    ci2.contact next_contact,
+                    c.Telephone,
+                    c.Kind,
+                    c.SourceInfo_id,
+                    ck.Kind_Name,
+                    case when bn.base_name = 'База монтажа и отдела продаж' then 'Монтаж'
                     when bn.base_name = 'База СЦ' then 'СЦ'
                     when bn.base_name = 'База ОП' then 'ОП'
                     else 'СЦ' end GroupContact,
@@ -131,7 +131,38 @@ class Contacts extends MainFormModel
         // will receive user inputs.
         return array(
             
-            array('cont_id, ObjectGr_id, date, cntp_id, EmplDel, cntp_name, info_id, contact, empl_id, empl_name, UserCreateName, text, rslt_id, rslt_name, note, drsn_id, drsn_name, pay_date, next_date, next_cntp_id, sourceInfo_name, next_cntp_name, next_info_id, next_contact, Telephone, Kind, SourceInfo_id, Kind_Name, base_name, PaySum, time_length, EmplCreate, EmplChange', 'safe'),
+            array('cont_id, '
+                . 'ObjectGr_id, '
+                . 'date, cntp_id, '
+                . 'EmplDel, '
+                . 'cntp_name, '
+                . 'info_id, '
+                . 'contact, '
+                . 'empl_id, '
+                . 'empl_name, '
+                . 'UserCreateName, '
+                . 'text, '
+                . 'rslt_id, '
+                . 'rslt_name, '
+                . 'note, '
+                . 'drsn_id, '
+                . 'drsn_name, '
+                . 'pay_date, '
+                . 'next_date, '
+                . 'next_cntp_id, '
+                . 'sourceInfo_name, '
+                . 'next_cntp_name, '
+                . 'next_info_id, '
+                . 'next_contact, '
+                . 'Telephone, '
+                . 'Kind, '
+                . 'SourceInfo_id, '
+                . 'Kind_Name, '
+                . 'base_name, '
+                . 'PaySum, '
+                . 'time_length, '
+                . 'EmplCreate, '
+                . 'EmplChange', 'safe'),
         );
     }
 

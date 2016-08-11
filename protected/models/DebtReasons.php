@@ -14,8 +14,51 @@
  * @property integer $EmplDel
  * @property string $DelDate
  */
-class DebtReasons extends CActiveRecord
+class DebtReasons extends MainFormModel
 {
+    public $drsn_Id;
+    public $name;
+    public $Lock;
+    public $EmplLock;
+    public $DateLock;
+    public $EmplChange;
+    public $DateChange;
+    public $EmplDel;
+    public $DelDate;
+    
+    function __construct($scenario = '') {
+
+        parent::__construct($scenario);
+
+        $this->SP_INSERT_NAME = 'INSERT_DebtReasons';
+        $this->SP_UPDATE_NAME = 'UPDATE_DebtReasons';
+        $this->SP_DELETE_NAME = 'DELETE_DebtReasons';
+
+        $select = "Select 
+                    dr.drsn_Id,
+                    dr.name,
+                    dr.Lock,
+                    dr.EmplLock,
+                    dr.DateLock,
+                    dr.EmplChange,
+                    dr.DateChange,
+                    dr.EmplDel,
+                    dr.DelDate
+                    ";
+        $from = "\nFrom DebtReasons dr";
+        $Where = "\nWhere dr.DelDate is null";
+        
+        $this->Query->setSelect($select);
+        $this->Query->setFrom($from);
+        $this->Query->setWhere($Where);      
+
+        
+        // Инициализация первичного ключа
+        $this->KeyFiled = 'dr.drsn_Id';
+        $this->PrimaryKey = 'drsn_Id';
+
+
+    }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -32,35 +75,22 @@ class DebtReasons extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'required'),
 			array('EmplLock, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>50),
 			array('Lock, DateLock, DateChange, DelDate', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('drsn_Id, name, Lock, EmplLock, DateLock, EmplChange, DateChange, EmplDel, DelDate', 'safe', 'on'=>'search'),
+			array('drsn_Id, name, Lock, EmplLock, DateLock, EmplChange, DateChange, EmplDel, DelDate', 'safe'),
 		);
 	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
-
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
 	{
 		return array(
-			'drsn_Id' => 'Drsn',
-			'name' => 'Name',
+			'drsn_Id' => 'DebtReasons',
+			'name' => 'DebtReasons Name',
 			'Lock' => 'Lock',
 			'EmplLock' => 'Empl Lock',
 			'DateLock' => 'Date Lock',
@@ -71,60 +101,9 @@ class DebtReasons extends CActiveRecord
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('drsn_Id',$this->drsn_Id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('Lock',$this->Lock);
-		$criteria->compare('EmplLock',$this->EmplLock);
-		$criteria->compare('DateLock',$this->DateLock,true);
-		$criteria->compare('EmplChange',$this->EmplChange);
-		$criteria->compare('DateChange',$this->DateChange,true);
-		$criteria->compare('EmplDel',$this->EmplDel);
-		$criteria->compare('DelDate',$this->DelDate,true);
-		$criteria->compare('EmplDel', array(null));
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return DebtReasons the static model class
-	 */
-	 public function deleteCount($id, $empl_id) {
-	 
-		$Command = Yii::app()->db->createCommand(''
-                . "UPDATE DebtReasons SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE drsn_Id = {$id}
-                ");
-        
-        return $Command->queryAll();
-	}
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 
-	public static function all()
-        {
-            return CHtml::listData(self::model()->findAll(), 'drsn_Id', 'name');
-        }
 }

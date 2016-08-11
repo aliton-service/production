@@ -192,19 +192,18 @@ Sources.SourceContactInfo =
 {
     datatype: "json",
     datafields: [
-        { name: 'Info_id' },
-        { name: 'contact' },
+        { name: 'Info_id', type: 'int' },
+        { name: 'contact', type: 'string' },
     ],
     id: 'Info_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContactInfo',
-    type: 'POST',
     root: 'Rows',
     cache: false,
     async: false,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-            Sources.SourceContactInfo.totalrecords = data[0].TotalRows;
+            this.totalrecords = data[0].TotalRows;
         }
 };
 
@@ -958,6 +957,108 @@ Sources.SourceSystemCompetitors =
     ],
     id: 'SystemCompetitor_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SystemCompetitors',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceContacts =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'cont_id', type: 'int' },
+        { name: 'ObjectGr_id', type: 'int' },
+        { name: 'date', type: 'datetime' },
+        { name: 'GroupContact', type: 'string' },
+        { name: 'Kind', type: 'int' },
+        { name: 'Kind_Name', type: 'string' },
+        { name: 'sourceInfo_name', type: 'string' },
+        { name: 'info_id', type: 'int' },
+        { name: 'cntp_id', type: 'int' },
+        { name: 'cntp_name', type: 'string' },
+        { name: 'empl_id', type: 'int' },
+        { name: 'empl_name', type: 'string' },
+        { name: 'contact', type: 'string' },
+        { name: 'UserCreateName', type: 'string' },
+        { name: 'next_date', type: 'datetime' },
+        { name: 'next_cntp_name', type: 'string' },
+        { name: 'next_contact', type: 'string' },
+        { name: 'text', type: 'string' },
+        { name: 'rslt_id', type: 'int' },
+        { name: 'rslt_name', type: 'string' },
+        { name: 'drsn_id', type: 'int' },
+        { name: 'drsn_name', type: 'string' },
+        { name: 'note', type: 'string' },
+        { name: 'pay_date', type: 'datetime' },
+    ],
+    id: 'cont_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Contacts',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceContactKinds =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Kind_id', type: 'int' },
+        { name: 'Kind_name', type: 'string' },
+    ],
+    id: 'Kind_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContactKinds',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceContactTypes =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Contact_id', type: 'int' },
+        { name: 'ContactName', type: 'string' },
+    ],
+    id: 'Contact_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContactTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceDebtReasons =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'drsn_Id', type: 'int' },
+        { name: 'name', type: 'string' },
+    ],
+    id: 'drsn_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DebtReasons',
     root: 'Rows',
     cache: false,
     async: false,

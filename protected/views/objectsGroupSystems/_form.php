@@ -15,7 +15,7 @@
             var DataCompetitors = new $.jqx.dataAdapter(Sources.SourceCompetitors);
             
             
-            $("#SystemType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemTypes, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width:300 }));;
+            $("#SystemType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemTypes, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width:300 }));
             $("#Availability").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemAvailabilitys, displayMember: "availability", valueMember: "code_id", width:200, autoDropDownHeight: true }));;
             $("#count").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100}));
     
@@ -83,9 +83,9 @@
     <div class="row-column">Наличие: <div id='Availability' name="ObjectsGroupSystems[Availability_id]"></div><?php echo $form->error($model, 'Availability_id'); ?></div>  
     <div class="row-column">Кол-во систем: <br><input id="count" name="ObjectsGroupSystems[count]" type="text"><?php echo $form->error($model, 'count'); ?></div>
     <div class="row-column" style="margin-top: 20px;">Обслуживающие организации: <br><div id="Competitors"></div></div>
-    <div style="margin-top: 10px; font-size: 13px; font-family: Verdana;" id="log" name="ObjectsGroupSystems[Competitors]"></div>
-    <div class="row-column" style="margin-top: 20px;">Условия: <textarea id="Condition" name="ObjectsGroupSystems[Condition]"></textarea>
-    <div class="row-column" style="margin-top: 20px;">Примечание: <textarea id="Desc" name="ObjectsGroupSystems[Desc]"></textarea>
+    <div id="log" style="margin-top: 10px; font-size: 13px; font-family: Verdana;" name="ObjectsGroupSystems[Competitors]"></div>
+    <div class="row-column" style="margin-top: 20px;">Условия: <textarea id="Condition" name="ObjectsGroupSystems[Condition]"></textarea></div>
+    <div class="row-column" style="margin-top: 20px;">Примечание: <textarea id="Desc" name="ObjectsGroupSystems[Desc]"></textarea></div>
 </div>  
 
 <?php $this->endWidget(); ?>
