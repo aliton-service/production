@@ -22,6 +22,18 @@ class ObjectController extends Controller
                     'roles' => array('ViewObjects'),
                 ),
             array('allow', 
+                    'actions' => array('Insert'),
+                    'roles' => array('CreateObjects'),
+                ),
+            array('allow', 
+                    'actions' => array('Update'),
+                    'roles' => array('UpdateObjects'),
+                ),
+            array('allow', 
+                    'actions' => array('Delete'),
+                    'roles' => array('DeleteObjects'),
+                ),
+            array('allow', 
                     'actions' => array('TodayDemands', 'TodayDemandsDialog'),
                     'users' => array('*'),
                 ),
@@ -34,89 +46,89 @@ class ObjectController extends Controller
     public function actionIndex()
     {
         $this->title = 'Список объектов';
-        //$this->render('index'); 
         $this->render('index2');
     }
     
     
-    public function actionInsert($ObjectGr_id = FALSE)
+    public function actionInsert()
     {
         $this->title = 'Добавление подъезда';
-        $this->action_url = $this->createUrl('Object/insert', array('ObjectGr_id' => $ObjectGr_id));
 
-        if ($ObjectGr_id !== FALSE)
+        $model = new Objects();
+        
+        if (isset($_POST['ObjectGr_id']))
         {
-            $model = new Objects();
-            $model->ObjectGr_id = $ObjectGr_id;
-
-            if (isset($_POST['Objects']))
-            {
-                $model->attributes = $_POST['Objects'];
-
-                $this->performAjaxValidation($model);
-
-                if ($model->validate())
-                {
-                    $model->Insert();
-                    $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                }
-            }
-
-            $this->render('edit', array(
-               'model' => $model,
-            ));
+            if ($_POST['ObjectGr_id'] == 0) 
+                return;
+            $model->ObjectGr_id = $_POST['ObjectGr_id'];
         }
+        
+        if (isset($_POST['Objects']))
+        {
+            $model->attributes = $_POST['Objects'];
+            
+            if ($model->validate())
+            {
+                $model->Insert();
+                echo '1';
+                return;
+            }
+            
+                
+        }
+            
+        $this->renderPartial('edit', array(
+           'model' => $model,
+        ));
     }
     
-    public function actionUpdate($Object_id = FALSE)
+    public function actionUpdate()
     {
         $this->title = 'Редактирование подъезда';
-        $this->action_url = $this->createUrl('Object/update', array('Object_id' => $Object_id));
+        $model = new Objects();
         
-        if ($Object_id !== FALSE)
+        if (isset($_POST['Object_id']))
         {
-            $model = new Objects();
-            $model->getModelPk($Object_id);
+            if ($_POST['Object_id'] == 0) 
+                return;
+            $model->getModelPk($_POST['Object_id']);
+        }
+        
+        if (isset($_POST['Objects']))
+        {
+            $model->attributes = $_POST['Objects'];
             
-            if (isset($_POST['Objects']))
+            if ($model->validate())
             {
-                $model->attributes = $_POST['Objects'];
-                
-                print_r($_POST['Objects']);
-                
-                $this->performAjaxValidation($model);
-                
-                if ($model->validate())
-                {
-                    $model->Update();
-                    Yii::app()->LockManager->UnLockRecord('Objects', 'Object_id', $model->Object_id);
-                    $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                }
-                
+                $model->Update();
+                echo '1';
+                return;
             }
             
-            $this->render('edit', array(
-               'model' => $model,
-            ));
-            
+                
         }
+            
+        $this->renderPartial('edit', array(
+           'model' => $model,
+        ));
     }
     
-    public function actionDelete($Object_id = FALSE)
+    public function actionDelete()
     {
         $this->title = 'Удаление подъезда';
-        $this->action_url = $this->createUrl('Object/delete', array('Object_id' => $Object_id));
         
-        if ($Object_id !== FALSE)
+        
+        if (isset($_POST['Object_id'])) 
         {
             $model = new Objects();
-            $model->getModelPk($Object_id);
+            $model->getModelPk($_POST['Object_id']);
                             
-            $this->performAjaxValidation($model);
-                
             $model->Delete();
-            $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
+            echo '1';
+            return;
         }
+        
+        echo '0';
     }
     
     public function actionTodayDemands($Object_id) {

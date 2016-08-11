@@ -247,6 +247,7 @@ return array_merge(
                 'SeniorDispatcher',
                 'AdminDemands',
                 'Storekeeper',
+                'AdminObjects',
                 'AdminWhActs',
                 'AdminPriceMonitoring',
                 'AdminWHDocuments',
@@ -297,6 +298,7 @@ return array_merge(
                 'AdminContacts',
                 /* Отчеты*/
                 'Demand1Report',
+                'Demand2Report',
                 'WHDocuments1Report',
                 ),
         ),

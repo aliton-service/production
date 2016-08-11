@@ -111,6 +111,13 @@ var CheckBoxDefaultSettings = {
     height: 25
 };
 
+var NumberInputDefaultSettings = {
+    width: 125, 
+    height: 25,
+    inputMode: 'simple'
+};
+
+
 
 var GridFilters = {};
 

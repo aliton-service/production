@@ -208,6 +208,10 @@
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Отчет по заявкам Call-центра', 'Render' => 0)),
                                             'visible'=>Yii::app()->user->checkAccess('Demand1Report')
                                         ),
+                                    array('label' => 'Чужие и удаленные заявки СЦ', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Чужие и удаленные заявки СЦ', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('Demand2Report')
+                                        ),
                                 )),
                                 array('label'=>'Склад', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Выданное оборудование (детальный)',

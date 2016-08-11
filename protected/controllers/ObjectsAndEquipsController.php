@@ -9,8 +9,21 @@ class ObjectsAndEquipsController extends Controller
     {
         if (isset($_GET['ObjectGr_id']))
         {
+            $ObjectGr_id = $_GET['ObjectGr_id'];
+            $Objects = new Objects();
+            $Objects = $Objects->Find(array(
+                'o.ObjectGr_id' => $ObjectGr_id,
+                'o.Doorway' => '\'Общее\'',
+            ));
+            
+            if (count($Objects) > 0)
+                $Object_id = $Objects[0]['Object_id'];
+            else
+                $Object_id = 0;
+            
             $this->renderPartial('view', array(
                 'ObjectGr_id' => $_GET['ObjectGr_id'],
+                'CommonObject_id' => $Object_id,
             ), FALSE, TRUE);
         }
     }
@@ -19,8 +32,21 @@ class ObjectsAndEquipsController extends Controller
     {
         if (isset($_GET['ObjectGr_id']))
         {
+            $ObjectGr_id = $_GET['ObjectGr_id'];
+            $Objects = new Objects();
+            $Objects = $Objects->Find(array(
+                'o.ObjectGr_id' => $ObjectGr_id,
+                'o.Doorway' => '\'Общее\'',
+            ));
+            
+            if (count($Objects) > 0)
+                $Object_id = $Objects[0]['Object_id'];
+            else
+                $Object_id = 0;
+            
             $this->render('view', array(
                 'ObjectGr_id' => $_GET['ObjectGr_id'],
+                'CommonObject_id' => $Object_id,
             ));
         }
     }

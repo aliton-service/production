@@ -93,6 +93,8 @@ class ReportsController extends Controller
             return 'wh_report1';
         else if ($ReportName == '/Заявки/Отчет по заявкам Call-центра')
             return 'demand_report1';
+        else if ($ReportName == '/Заявки/Чужие и удаленные заявки СЦ')
+            return 'demand_report2';
         else
             return 'standart';
     }

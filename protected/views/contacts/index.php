@@ -6,7 +6,7 @@
         
         var Contacts = {
             ObjectGr_id: '<?php echo $ObjectGr_id; ?>',
-            text: '<?php echo $model->text; ?>',
+            text: '<?php echo json_encode($model->text); ?>',
             rslt_name: '<?php echo $model->rslt_name; ?>',
             note: '<?php echo $model->note; ?>',
             drsn_name: '<?php echo $model->drsn_name; ?>',

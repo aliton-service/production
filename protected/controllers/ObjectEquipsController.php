@@ -44,99 +44,75 @@ class ObjectEquipsController extends Controller
         }
     }
     
-    public function actionInsert($Object_id = FALSE)
+    public function actionInsert()
     {
-        $code = 0;
-        $this->title = 'Добавление оборудования';
-        $this->action_url = $this->createUrl('ObjectEquips/insert', array('Object_id' => $Object_id));
-        $Code = 0;
+        $model = new ObjectEquips();
         
-        if ($Object_id !== FALSE)
-        {
-            $model = new ObjectEquips();
+        if (isset($_POST['Object_Id'])) {
+            $Object_id = $_POST['Object_Id'];
             $model->Object_Id = $Object_id;
-
-            if (isset($_POST['ObjectEquips']))
-            {
-                $model->attributes = $_POST['ObjectEquips'];
-
-                $this->performAjaxValidation($model);
-
-                if ($model->validate())
-                {
-                    $Result = $model->Insert();
-                    
-                    $Code = $Result['Code'];
-                    
-                    $model->getModelPk($Code);
-                    
-                    $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                }
-            }
-            
-            $this->render('edit', array(
-               'model' => $model,
-            ));
         }
+        
+        if (isset($_POST['ObjectGr_id'])) {
+            $ObjectGr_id = $_POST['ObjectGr_id'];
+            $model->ObjectGr_id = $ObjectGr_id;
+        }
+            
+        if (isset($_POST['ObjectEquips']))
+        {
+            $model->attributes = $_POST['ObjectEquips'];
+            if ($model->validate())
+            {
+                $model->Insert();
+                echo '1';
+                return;
+            }
+        }
+        
+        $this->renderPartial('edit', array(
+           'model' => $model,
+        ));
     }
     
-    public function actionUpdate($Code = FALSE)
+    public function actionUpdate()
     {
-        $this->title = 'Редактирование оборудования';
-        $this->action_url = $this->createUrl('ObjectEquips/update', array('Code' => $Code));
+        $model = new ObjectEquips();
         
-        if ($Code !== FALSE)
-        {
-            $model = new ObjectEquips();
+        if (isset($_POST['Code'])) {
+            $Code = $_POST['Code'];
             $model->getModelPk($Code);
-            
-            if (isset($_POST['ObjectEquips']))
-            {
-                $model->attributes = $_POST['ObjectEquips'];
-                
-                $this->performAjaxValidation($model);
-                
-                if ($model->validate())
-                {
-                    $model->Update();
-                    Yii::app()->LockManager->UnLockRecord('ObjectsEquip', 'Code', $model->Code);
-                    $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                }
-                
-            }
-            
-            $this->render('edit', array(
-               'model' => $model,
-            ));
-            
         }
+        
+            
+        if (isset($_POST['ObjectEquips']))
+        {
+            $model->attributes = $_POST['ObjectEquips'];
+            if ($model->validate())
+            {
+                $model->Update();
+                echo '1';
+                return;
+            }
+        }
+        
+        $this->renderPartial('edit', array(
+           'model' => $model,
+        ));
     }
     
-    public function actionDelete($Code = FALSE)
+    public function actionDelete()
     {
-        $this->title = 'Удаление оборудования';
-        $this->action_url = $this->createUrl('ObjectEquips/delete', array('Code' => $Code));
-        
-        if ($Code !== FALSE)
+        if (isset($_POST['Code']))
         {
             $model = new ObjectEquips();
-            $model->getModelPk($Code);
-                            
-            $this->performAjaxValidation($model);
-                
+            $model->getModelPk($_POST['Code']);
             $model->Delete();
-            $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
+            echo '1';
+            return;
         }
+        echo '0';
     }
-    
-    protected function performAjaxValidation($model)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='ObjectEquips')
-        {
-                echo CActiveForm::validate($model);
-                Yii::app()->end();
-        }
-    }
+
     
 }
 

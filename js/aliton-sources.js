@@ -967,6 +967,125 @@ Sources.SourceSystemCompetitors =
     }
 };
 
+Sources.SourceObjects =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Object_id', type: 'int' },
+        { name: 'ObjectGr_id', type: 'int' },
+        { name: 'Address_id', type: 'int' },
+        { name: 'Doorway',  type: 'string' },
+        { name: 'ObjectType',  type: 'int' },
+        { name: 'ObjectTypeName',  type: 'string' },
+        { name: 'Note',  type: 'string' },
+        { name: 'Complexity_id',  type: 'int' },
+        { name: 'ComplexityName',  type: 'string' },
+        { name: 'Condition',  type: 'string' },
+        { name: 'Code',  type: 'string' },
+        { name: 'MasterKey',  type: 'string' },
+        { name: 'Signal',  type: 'string' },
+        { name: 'Cntp_id',  type: 'int' },
+        { name: 'ConnectionType',  type: 'string' },
+    ],
+    id: 'Object_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Objects',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceObjectEquips =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Code', type: 'int' },
+        { name: 'Object_Id', type: 'int' },
+        { name: 'ObjectGr_id', type: 'int' },
+        { name: 'Equip_id',  type: 'int' },
+        { name: 'EquipName',  type: 'string' },
+        { name: 'EquipQuant',  type: 'string' },
+        { name: 'Note',  type: 'string' },
+        { name: 'StockNumber',  type: 'string' },
+        { name: 'DateInstall',  type: 'date' },
+        { name: 'DateService',  type: 'date' },
+        { name: 'Status',  type: 'string' },
+        { name: 'Condition',  type: 'string' },
+        { name: 'flag',  type: 'string' },
+        { name: 'Location',  type: 'string' },
+    ],
+    id: 'Object_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectEquips',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceObjectTypes =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'ObjectType_Id', type: 'int' },
+        { name: 'ObjectType', type: 'string' },
+    ],
+    id: 'Object_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceComplexityTypes =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Complexity_Id', type: 'int' },
+        { name: 'ComplexityName', type: 'string' },
+    ],
+    id: 'Object_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ComplexityTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceConnectionTypes =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'ConnectionType_id', type: 'int' },
+        { name: 'ConnectionType', type: 'string' },
+    ],
+    id: 'Object_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ConnectionTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
 
 Sources.SourceContacts =
 {
