@@ -1068,3 +1068,23 @@ Sources.SourceDebtReasons =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+
+Sources.SourceSourceInfo =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'SourceInfo_id', type: 'int' },
+        { name: 'SourceInfo_name', type: 'string' },
+    ],
+    id: 'SourceInfo_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SourceInfo',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
