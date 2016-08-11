@@ -24,8 +24,9 @@ class ObjectEquips extends MainFormModel
     public function rules() {
         return array(
             /* обязательные поля*/
-            array('Object_Id, Equip_id', 'required'),
+            array('Equip_id', 'required'),
             array('Code,'
+                . 'Object_Id,'
                 . 'ObjectGr_id,'
                 . 'EquipName,'
                 . 'EquipQuant,'

@@ -1,143 +1,47 @@
 <?php
 
-/**
- * This is the model class for table "ComplexityTypes".
- *
- * The followings are the available columns in table 'ComplexityTypes':
- * @property integer $Complexity_Id
- * @property string $ComplexityName
- * @property boolean $Lock
- * @property integer $EmplLock
- * @property string $DateLock
- * @property integer $EmplCreate
- * @property string $DateCreate
- * @property integer $EmplChange
- * @property string $DateChange
- * @property integer $EmplDel
- * @property string $DelDate
- */
-class ComplexityTypes extends CActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'ComplexityTypes';
-	}
+class ComplexityTypes extends MainFormModel {
+	
+    public $Complexity_Id;
+    public $ComplexityName;
+    
+    public function rules()
+    {
+        return array(
+                array(' Complexity_Id,
+                        ComplexityName', 'safe'),
+        );
+    }
+    
+    public function __construct($scenario = '') {
+        parent::__construct($scenario);
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('ComplexityName', 'required'),
-			array('EmplLock, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
-			array('ComplexityName', 'length', 'max'=>50),
-			array('Lock, DateLock, DateCreate, DateChange, DelDate', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('Complexity_Id, ComplexityName, Lock, EmplLock, DateLock, EmplCreate, DateCreate, EmplChange, DateChange, EmplDel, DelDate', 'safe', 'on'=>'search'),
-		);
-	}
+        $this->SP_INSERT_NAME = '';
+        $this->SP_UPDATE_NAME = '';
+        $this->SP_DELETE_NAME = '';
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+        $Select =   "\nSelect
+                            ct.Complexity_Id,
+                            ct.ComplexityName";
+        $From =     "\nFrom ComplexityTypes ct";
+        $Where =    "\nWhere ct.DelDate is Null";
+        $Order =    "\nOrder by ct.ComplexityName";
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'Complexity_Id' => 'Complexity',
-			'ComplexityName' => 'Complexity Name',
-			'Lock' => 'Lock',
-			'EmplLock' => 'Empl Lock',
-			'DateLock' => 'Date Lock',
-			'EmplCreate' => 'Empl Create',
-			'DateCreate' => 'Date Create',
-			'EmplChange' => 'Empl Change',
-			'DateChange' => 'Date Change',
-			'EmplDel' => 'Empl Del',
-			'DelDate' => 'Del Date',
-		);
-	}
+        $this->Query->setSelect($Select);
+        $this->Query->setFrom($From);
+        $this->Query->setWhere($Where);
+        $this->Query->setOrder($Order);
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+        $this->KeyFiled = 'ct.Complexity_Id';
 
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('Complexity_Id',$this->Complexity_Id);
-		$criteria->compare('ComplexityName',$this->ComplexityName,true);
-		$criteria->compare('Lock',$this->Lock);
-		$criteria->compare('EmplLock',$this->EmplLock);
-		$criteria->compare('DateLock',$this->DateLock,true);
-		$criteria->compare('EmplCreate',$this->EmplCreate);
-		$criteria->compare('DateCreate',$this->DateCreate,true);
-		$criteria->compare('EmplChange',$this->EmplChange);
-		$criteria->compare('DateChange',$this->DateChange,true);
-		$criteria->compare('EmplDel',$this->EmplDel);
-		$criteria->compare('DelDate',$this->DelDate,true);
-		$criteria->compare('EmplDel', array(null));
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return ComplexityTypes the static model class
-	 */
-	 public function deleteCount($id, $empl_id) {
-	 
-		$Command = Yii::app()->db->createCommand(''
-                . "UPDATE ComplexityTypes SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE Complexity_Id = {$id}
-                ");
-        
-        return $Command->queryAll();
-	}
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
-        public static function all()
-        {
-            return CHtml::listData(self::model()->findAll(), 'Complexity_Id', 'ComplexityName');
-        }
-        
-        public function getData() {
-            $q = new SQLQuery();
-            $q->setSelect("Select Complexity_Id, ComplexityName");
-            $q->setFrom("\nFrom ComplexityTypes");
-            $q->setWhere("\nWhere DelDate is Null");
-            return $q->QueryAll();
-        }
+    }
+    
+    public function attributeLabels()
+    {
+        return array(
+            'Complexity_Id' => '',
+            'ComplexityName' => '',
+            );
+    }
 }
+

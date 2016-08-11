@@ -246,6 +246,7 @@ return array_merge(
                 'SeniorDispatcher',
                 'AdminDemands',
                 'Storekeeper',
+                'AdminObjects',
                 'AdminWhActs',
                 'AdminPriceMonitoring',
                 'AdminWHDocuments',

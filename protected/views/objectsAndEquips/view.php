@@ -1,184 +1,433 @@
-<script>
-    Aliton.Links.push({
-        Out: "DoorwaysGrid",
-        In: "ObjectEquipsGrid",
-        TypeControl: "Grid",
-        Condition: "o.Object_id = :Value",
-        Field: "Object_id",
-        Name: "DoorwaysGrid_Filter1",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-    });
+<script type="text/javascript">
+    $(document).ready(function(){
+        var Mode = '';
+        var House = {
+            ObjectGr_id: <?php echo json_encode($ObjectGr_id); ?>,
+            CommonObject_id: <?php echo json_encode($CommonObject_id); ?>
+        };
+        
+        var ObjectCorrentRow = {};
+        var EquipCurrentRow = {};
+        var EquipCommonCurrentRow = {};
+        
+        var DataObjects = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceObjects, {}), {
+                        formatData: function (data) {
+                            $.extend(data, {
+                                Filters: ["o.ObjectGr_id = " + House.ObjectGr_id, "o.Doorway <> 'Общее'"],
+                            });
+                            return data;
+                        },
+                    });
+        
+        $('#edObjectNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: 'Примечаие', height: 180, width: '300px', minLength: 1 }));
+        $('#btnAddObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnEditObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnDelObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        
+        $('#EditObjectDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '500px', width: '580'}));
+        
+        $('#EditObjectDialog').jqxWindow({initContent: function() {
+            $('#btnObjectOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            $('#btnObjectCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            $('#btnObjectCancel').on('click', function(){
+                $('#EditObjectDialog').jqxWindow('close');   
+            });
+            $('#btnObjectOk').on('click', function(){
+                Save(Mode);
+            });
+        }});
     
-    Aliton.Links.push({
-        Out: "DoorwaysGrid",
-        In: "DoorwayNote",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "Note",
-        Name: "DoorwaysGrid_Filter1",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false,
+        $('#EditObjectEquipDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '500px', width: '580'}));
+        $('#EditObjectEquipDialog').jqxWindow({initContent: function() {
+            $('#btnObjectEquipOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
+            $('#btnObjectEquipCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            $('#btnObjectEquipCancel').on('click', function(){
+                $('#EditObjectEquipDialog').jqxWindow('close');   
+            });
+            $('#btnObjectEquipOk').on('click', function(){
+                if (Mode == 'Insert')
+                    SaveEquip('<?php echo Yii::app()->createUrl('ObjectEquips/Insert'); ?>');
+                if (Mode == 'Update')
+                    SaveEquip('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>');
+            });
+        }});
+        
+        $('#btnAddObject').on('click', function(){
+            Mode = 'Insert';
+            LoadEditForm('Insert', 0, House.ObjectGr_id);
+            $('#EditObjectDialog').jqxWindow('open');
+        });
+        
+        $('#btnEditObject').on('click', function(){
+            Mode = 'Update';
+            LoadEditForm(Mode, ObjectCorrentRow.Object_id, House.ObjectGr_id);
+            $('#EditObjectDialog').jqxWindow('open');
+        });
+        
+        $('#btnDelObject').on('click', function(){
+            $.ajax({
+                url: '<?php echo Yii::app()->createUrl('Object/Delete'); ?>',
+                type: 'POST',
+                async: false,
+                data: {
+                    Object_id: ObjectCorrentRow.Object_id
+                },
+                success: function(Res) {
+                    if (Res === '1') {
+                        $('#EditObjectDialog').jqxWindow('close');
+                        $("#ObjectsGrid").jqxGrid('updatebounddata');
+                    }
+                    else
+                        $('#EditObjectDialog #BodyDialog').html(Res);
+                }
+            });
+        });
+        
+        DeleteEquip = function(Code) {
+            $.ajax({
+                url: '<?php echo Yii::app()->createUrl('ObjectEquips/Delete'); ?>',
+                type: 'POST',
+                async: false,
+                data: {Code: Code},
+                success: function(Res) {
+                    if (Res === '1') {
+                        $('#EditObjectEquipDialog').jqxWindow('close');
+                        $("#ObjectEquipsGrid").jqxGrid('updatebounddata');
+                        $("#CommonEquipsGrid").jqxGrid('updatebounddata');
+                    }
+                }
+            });
+        };
+        
+        SaveEquip = function(Url) {
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: $('#ObjectEquips').serialize(),
+                success: function(Res) {
+                    if (Res === '1') {
+                        $('#EditObjectEquipDialog').jqxWindow('close');
+                        $("#ObjectEquipsGrid").jqxGrid('updatebounddata');
+                        $("#CommonEquipsGrid").jqxGrid('updatebounddata');
+                    }
+                    else
+                        $('#BodyDialog').html(Res);
+                }
+            });
+        };
+        
+        Save = function(Mode) {
+            var Url = '';
+            if (Mode == 'Insert')
+                Url = '<?php echo Yii::app()->createUrl('Object/Insert');?>';
+            if (Mode == 'Update')
+                Url = '<?php echo Yii::app()->createUrl('Object/Update');?>';
+        
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: $('#Objects').serialize(),
+                success: function(Res) {
+                    if (Res === '1') {
+                        $('#EditObjectDialog').jqxWindow('close');
+                        $("#ObjectsGrid").jqxGrid('updatebounddata');
+                    }
+                    else
+                        $('#BodyDialog').html(Res);
+                }
+            });
+        };
+        
+        LoadEditForm = function(Mode, Object_id, ObjectGr_id) {
+            var Url = '';
+            if (Mode == 'Insert')
+                Url = '<?php echo Yii::app()->createUrl('Object/Insert');?>';
+            if (Mode == 'Update')
+                Url = '<?php echo Yii::app()->createUrl('Object/Update');?>';
+        
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: {
+                    Object_id: Object_id,
+                    ObjectGr_id: ObjectGr_id
+                },
+                success: function(Res) {
+                    $('#EditObjectDialog #BodyDialog').html(Res);
+                }
+            });
+        };
+        
+        LoadObjectEquips = function() {
+            var DataObjectEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceObjectEquips, {}), {
+                        formatData: function (data) {
+                            $.extend(data, {
+                                Filters: ["o.Object_id = " + ObjectCorrentRow.Object_id],
+                            });
+                            return data;
+                        },
+                    });
+            DataObjectEquips.dataBind();
+            $("#ObjectEquipsGrid").jqxGrid({source: DataObjectEquips});
+        };
+        
+        LoadForm = function(Url, Data, Elem, AfterFunction) {
+            if (Data == undefined)
+                Data = {};
+            
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    //Elem.html(Res);
+                    eval(AfterFunction);
+                }
+            });
+        };
+        
+        var initWidgets = function (tab) {
+            switch (tab) {
+                case 0:
+                    $("#ObjectEquipsGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            height: 200,
+                            width: '100%',
+                            showfilterrow: false,
+                            autoshowfiltericon: true,
+                            pagesizeoptions: ['10', '200', '500', '1000'],
+                            pagesize:200,
+                            virtualmode: false,
+                            columns:
+                                [
+                                    { text: 'Оборудование', datafield: 'EquipName', width: 160 },
+                                    { text: 'Количество', datafield: 'EquipQuant', width: 60 },
+                                    { text: 'Описание оборудования', datafield: 'StockNumber', width: 100 },
+                                    { text: 'Дата установки', cellsformat: 'dd.MM.yyyy', datafield: 'DateInstall', width: 100 },
+                                    { text: 'Дата постановки на обслуживание', cellsformat: 'dd.MM.yyyy', datafield: 'DateService', width: 100 },
+                                    { text: 'Местоположение', datafield: 'Location', width: 100 },
+                                ],
+                            }));
+                    
+                    $('#btnAddEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnEditEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnDelEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnAddEquip').on('click', function(){
+                        Mode = 'Insert';
+                        LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Insert'); ?>', {Object_Id: ObjectCorrentRow.Object_id}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
+                        $('#EditObjectEquipDialog').jqxWindow('open');
+                    });
+                    
+                    $('#btnEditEquip').on('click', function(){
+                        Mode = 'Update';
+                        LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>', {Code: EquipCurrentRow.Code}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
+                        $('#EditObjectEquipDialog').jqxWindow('open');
+                    });
+                    
+                    $('#btnDelEquip').on('click', function(){
+                        if (EquipCurrentRow != undefined)
+                            DeleteEquip(EquipCurrentRow.Code);
+                    });
+                    
+                    $("#ObjectEquipsGrid").on('rowselect', function(event){
+                        EquipCurrentRow = $('#ObjectEquipsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+        
+                    break;
+                case 1:
+                    var DataCommonEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceObjectEquips, {}), {
+                        formatData: function (data) {
+                            $.extend(data, {
+                                Filters: ["o.Object_id = " + House.CommonObject_id],
+                            });
+                            return data;
+                        },
+                    });
+                    
+                    $("#CommonEquipsGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            height: 200,
+                            width: '100%',
+                            showfilterrow: false,
+                            autoshowfiltericon: true,
+                            pagesizeoptions: ['10', '200', '500', '1000'],
+                            pagesize:200,
+                            source: DataCommonEquips,
+                            virtualmode: false,
+                            columns:
+                                [
+                                    { text: 'Оборудование', datafield: 'EquipName', width: 160 },
+                                    { text: 'Количество', datafield: 'EquipQuant', width: 60 },
+                                    { text: 'Описание оборудования', datafield: 'StockNumber', width: 100 },
+                                    { text: 'Дата установки', cellsformat: 'dd.MM.yyyy', datafield: 'DateInstall', width: 100 },
+                                    { text: 'Дата постановки на обслуживание', cellsformat: 'dd.MM.yyyy', datafield: 'DateService', width: 100 },
+                                    { text: 'Местоположение', datafield: 'Location', width: 100 },
+                                ],
+                            }));
+                    
+                    $('#btnAddCommonEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnEditCommonEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnDelCommonEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnAddCommonEquip').on('click', function(){
+                        Mode = 'Insert';
+                        LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Insert'); ?>', {ObjectGr_id: House.ObjectGr_id}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
+                        $('#EditObjectEquipDialog').jqxWindow('open');
+                    });
+                    
+                    $('#btnEditCommonEquip').on('click', function(){
+                        Mode = 'Update';
+                        LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>', {Code: EquipCommonCurrentRow.Code}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
+                        $('#EditObjectEquipDialog').jqxWindow('open');
+                    });
+                    
+                    $('#btnDelCommonEquip').on('click', function(){
+                        if (EquipCommonCurrentRow != undefined)
+                            DeleteEquip(EquipCommonCurrentRow.Code);
+                    });
+                    
+                    $("#CommonEquipsGrid").on('rowselect', function(event){
+                        EquipCommonCurrentRow = $('#CommonEquipsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
+                    break;
+            }
+        };
+        
+        $('#EquipTabs').jqxTabs({ width: '100%', height: 300,  initTabContent: initWidgets });
+        
+        $("#ObjectsGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                height: 200,
+                width: '100%',
+                showfilterrow: false,
+                autoshowfiltericon: true,
+                source: DataObjects,
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize:200,
+                virtualmode: false,
+                columns:
+                    [
+                        { text: 'Число квартир', datafield: 'ObjectTypeName', width: 60 },
+                        { text: 'Подъезд', datafield: 'Doorway', width: 100},
+                        { text: 'Тип', datafield: 'ComplexityName', width: 100},
+                        { text: 'Условия', datafield: 'Condition', width: 100},
+                        { text: 'Мастер ключ', datafield: 'MasterKey', width: 100},
+                        { text: 'Код', datafield: 'Code', width: 100},
+                        { text: 'Сигнал ОДС', datafield: 'Signal', width: 100},
+                        { text: 'Тип связи', datafield: 'ConnectionType', width: 100},
+                    ],
+                }));
+        
+        $("#ObjectsGrid").on('rowselect', function(event){
+            ObjectCorrentRow = $('#ObjectsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (ObjectCorrentRow != undefined) {
+                $("#edObjectNote").jqxTextArea('val', ObjectCorrentRow.Note);
+                LoadObjectEquips();
+                
+            }
+        });
+        
+        
+        
     });
 </script>
 
-<div style="float: left">
+<div class="row">
+    <div class="row-column">
+        <div id="ObjectsGrid" class="jqxGridAliton"></div>
+    </div>
+    <div class="row-column">
+        <div>Примечание</div>
+        <div><textarea id="edObjectNote"></textarea></div>
+    </div>
+</div>
+<div class="row">
+    <div class="row-column"><input type="button" value="Добавить" id='btnAddObject' /></div>
+    <div class="row-column"><input type="button" value="Изменить" id='btnEditObject' /></div>
+    <div class="row-column"><input type="button" value="Удалить" id='btnDelObject' /></div>
+</div>
+<div class="row">
+    <div id='jqxWidget'>
+        <div id='EquipTabs'>
+            <ul>
+                <li>
+                    <div style="height: 15px; margin-top: 3px;">
+                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                            Оборудование на подъезде
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div style="height: 15px; margin-top: 3px;">
+                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                            Оборудование на доме
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div id='content1' style="overflow: hidden; margin-left: 10px;">
+                <div style="overflow: hidden; width: 100%">
+                    <div class="row">
+                            <div id="ObjectEquipsGrid" class="jqxGridAliton"></div>
+                    </div>
+                    <div class="row">
+                        <div class="row-column"><input type="button" value="Добавить" id='btnAddEquip' /></div>
+                        <div class="row-column"><input type="button" value="Изменить" id='btnEditEquip' /></div>
+                        <div class="row-column"><input type="button" value="Удалить" id='btnDelEquip' /></div>
+                    </div>
+                </div>
+            </div>
+            <div id='content2' style="overflow: hidden; margin-left: 10px;">
+                <div style="overflow: hidden; width: 100%">
+                    <div class="row">
+                            <div id="CommonEquipsGrid" class="jqxGridAliton"></div>
+                    </div>
+                    <div class="row">
+                        <div class="row-column"><input type="button" value="Добавить" id='btnAddCommonEquip' /></div>
+                        <div class="row-column"><input type="button" value="Изменить" id='btnEditCommonEquip' /></div>
+                        <div class="row-column"><input type="button" value="Удалить" id='btnDelCommonEquip' /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="EditObjectDialog">
+    <div id="DialogHeader">
+        <span id="HeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="overflow: hidden; padding: 10px;" id="DialogContent">
+        <div style="overflow: hidden;" id="BodyDialog"></div>
+        <div id="BottomDialog">
+            <div class="row">
+                <div class="row-column"><input type="button" value="Сохранить" id='btnObjectOk' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnObjectCancel' /></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="EditObjectEquipDialog">
+    <div id="DialogHeader">
+        <span id="HeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="overflow: hidden; padding: 10px;" id="DialogContent">
+        <div style="overflow: hidden;" id="BodyObjectEquipDialog"></div>
+        <div id="BottomObjectEquipDialog">
+            <div class="row">
+                <div class="row-column"><input type="button" value="Сохранить" id='btnObjectEquipOk' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnObjectEquipCancel' /></div>
+            </div>
+        </div>
+    </div>
+</div>
     
-<?php
-    $this->widget('application.extensions.alitonwidgets.gridajax.algridajax', array(
-        'id' => 'DoorwaysGrid',
-        'Width' => 800,
-        'Height' => 150,
-        'Stretch' => false,
-        'ModelName' => 'Objects',
-        'Filters' => array(
-            array(
-                'Type' => 'Internal',
-                'Condition' => 'o.ObjectGr_id = ' . $ObjectGr_id,
-                'Control' => 'Form',
-            ),
-            array(
-                'Type' => 'Internal',
-                'Condition' => "o.Doorway <> 'Общее'",
-                'Control' => 'Form',
-            ),
-        ),
-        'Columns' => array(
-            'ObjectTypeName' => array(
-                'Name' => 'Число квартир',
-                'FieldName' => 'ObjectTypeName',
-                'Width' => 100,
-            ),
-            'Doorway' => array(
-                'Name' => 'Подъезд',
-                'FieldName' => 'Doorway',
-                'Width' => 100,
-            ),
-            'ComplexityName' => array(
-                'Name' => 'Тип',
-                'FieldName' => 'ComplexityName',
-                'Width' => 100,
-            ),
-            'Condition' => array(
-                'Name' => 'Условия',
-                'FieldName' => 'Condition',
-                'Width' => 100,
-            ),
-            'MasterKey' => array(
-                'Name' => 'Мастер ключ',
-                'FieldName' => 'MasterKey',
-                'Width' => 50,
-            ),
-            'Code' => array(
-                'Name' => 'Код',
-                'FieldName' => 'Code',
-                'Width' => 50,
-            ),
-            'Signal' => array(
-                'Name' => 'Сигнал ОДС',
-                'FieldName' => 'Signal',
-                'Width' => 50,
-            ),
-            'ConnectionType' => array(
-                'Name' => 'Тип связи',
-                'FieldName' => 'ConnectionType',
-                'Width' => 50,
-            ),
-        ),
-    ));
-?>
-</div>
-<div style="float: left; padding-left: 10px">
-<div>Примечание</div>
-    <?php
 
-    $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-        'id' => 'DoorwayNote',
-        'Width' => 250,
-        'Height' => 180,
-        'ReadOnly' => true,
-    ));
-    ?>
-</div>
-<div style="clear: left; padding-top: 10px">    
-    <?php
-        $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-            'id' => 'AddObject',
-            'Width' => 114,
-            'Height' => 30,
-            'Text' => 'Добавить',
-            'Href' => Yii::app()->createUrl('Object/insert', array('ObjectGr_id' => $ObjectGr_id)),
-        ));
-    ?>
-
-    <?php
-        $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-            'id' => 'EditObject',
-            'Width' => 114,
-            'Height' => 30,
-            'Text' => 'Изменить',
-            'Href' => Yii::app()->createUrl('Object/update'),
-            'Params' => array(
-                array(
-                    'ParamName' => 'Object_id',
-                    'NameControl' => 'DoorwaysGrid',
-                    'TypeControl' => 'Grid',
-                    'FieldControl' => 'Object_id',
-                ),
-            ),
-        ));
-    ?>
-
-    <?php
-        $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-            'id' => 'DeleteObject',
-            'Width' => 114,
-            'Height' => 30,
-            'Text' => 'Удалить',
-            'Href' => Yii::app()->createUrl('Objects/delete'),
-            'Params' => array(
-                array(
-                    'ParamName' => 'Object_id',
-                    'NameControl' => 'DoorwaysGrid',
-                    'TypeControl' => 'Grid',
-                    'FieldControl' => 'Object_id',
-                ),
-            ),
-        ));
-    ?>
-
-
-<div style="padding-top: 10px">
-    <?php
-    $this->widget('application.extensions.alitonwidgets.tabs.altabs', array(
-        'reload' => false,
-        
-        'header' => array(
-            array(
-                'name'=>'Оборудование на подъезде',
-                'ajax'=>true,
-                'options'=>array(
-                    'url'=>$this->createUrl('ObjectsAndEquips/ObjectEquips')
-                ),
-            ),
-            array(
-                'name'=>'Оборудование на доме',
-                'ajax'=>true,
-                'options'=>array(
-                    'url'=>$this->createUrl('ObjectsAndEquips/CommonEquips', array('ObjectGr_id' => $ObjectGr_id))
-                ),
-            ),
-        ),
-        'content'=> array(
-            array(
-                'id'=>'ObjectEquipsTab',
-            ),
-            array(
-                'id'=>'CommonTab',
-            ),
-        ),
-    ));
-?>
-</div>            
-                

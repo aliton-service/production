@@ -11,6 +11,35 @@
                 'ViewObjects',
             ),
         ),
+        
+        'ManagerObjects' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Просмотр объектов',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'Object/index',
+            'children' => array(
+                'ViewObjects',
+                'CreateObjects',
+                'UpdateObjects',
+            ),
+        ),
+        
+        'AdminObjects' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Просмотр объектов',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'Object/index',
+            'children' => array(
+                'ViewObjects',
+                'ViewObjects',
+                'CreateObjects',
+                'UpdateObjects',
+                'DeleteObjects',
+            ),
+        ),
+        
         'ViewObjects' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Просмотр',

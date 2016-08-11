@@ -9,6 +9,8 @@ class AjaxDataController extends Controller
         
         if(isset($_POST['Filters']))
             $Result = $model->Find(array(), $_POST['Filters']);
+        else if (isset($_GET['Filters']))
+            $Result = $model->Find(array(), $_GET['Filters']);
         else
             $Result = $model->Find(array());
         
