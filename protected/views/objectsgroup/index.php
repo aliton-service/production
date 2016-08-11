@@ -159,6 +159,8 @@
                     $('#content2').html(data);
                 if (index == 2)
                     $('#content3').html(data);
+                if (index == 3)
+                    $('#content4').html(data);
                     
             });
         };
@@ -174,6 +176,9 @@
                     break;
                 case 2:
                     loadPage('<?php echo Yii::app()->createUrl('ObjectsAndEquips/ajaxview', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 2);
+                    break;
+                case 3:
+                    loadPage('<?php echo Yii::app()->createUrl('Contacts/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 3);
                     break;
             }
         };
@@ -218,6 +223,13 @@ $this->breadcrumbs=array(
                 <div style="height: 15px; margin-top: 3px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
                         Оборудование
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Контакты
                     </div>
                 </div>
             </li>
@@ -281,6 +293,11 @@ $this->breadcrumbs=array(
             </div>
         </div>
         <div id='content3' style="overflow: hidden; margin-left: 10px;">
+            <div style="width: 100%; height: 100%">
+                
+            </div>
+        </div>
+        <div id='content4' style="overflow: hidden; margin-left: 10px;">
             <div style="width: 100%; height: 100%">
                 
             </div>

@@ -28,12 +28,10 @@ class ObjectsGroupSystemsController extends Controller
                     'actions'=>array('Update'),
                     'roles'=>array('UpdateObjectsGroupSystems'),
                 ),
-            /*
             array('allow',
                     'actions'=>array('Delete'),
                     'roles'=>array('DeleteObjectsGroupSystems'),
                 ),
-            */
             array('deny',  // deny all users
 			'users'=>array('*'),
                 ),
@@ -60,42 +58,11 @@ class ObjectsGroupSystemsController extends Controller
     {
         $this->title = 'Добавление системы';
         
-        $ObjectGr_id = $_POST['ObjectGr_id'];
-        $this->action_url = $this->createUrl('ObjectsGroupSystems/insert', array('ObjectGr_id' => $ObjectGr_id));
+        if (isset($_POST['ObjectGr_id'])) 
+            $ObjectGr_id = $_POST['ObjectGr_id'];
         
         $model = new ObjectsGroupSystems();
-        $model->ObjectGr_id = $ObjectGr_id;
                 
-        if (isset($_POST['ObjectsGroupSystems']))
-            {
-                $model->attributes = $_POST['ObjectsGroupSystems'];
-                
-                $this->performAjaxValidation($model);
-                
-                if ($model->validate())
-                {
-                    $model->Insert();
-                    $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                }
-                
-            }
-            
-            $this->renderPartial('_form', array(
-                'model' => $model
-            ));
-        
-    }
-    
-    public function actionUpdate()
-    {
-        $this->title = 'Редактирование системы';
-        
-        $ObjectsGroupSystem_id = $_POST['ObjectsGroupSystem_id'];
-        $this->action_url = $this->createUrl('ObjectsGroupSystems/update', array('ObjectsGroupSystem_id' => $ObjectsGroupSystem_id));
-        
-        $model = new ObjectsGroupSystems();
-        $model->getModelPk($ObjectsGroupSystem_id);
-
         if (isset($_POST['ObjectsGroupSystems']))
         {
             $model->attributes = $_POST['ObjectsGroupSystems'];
@@ -104,17 +71,66 @@ class ObjectsGroupSystemsController extends Controller
 
             if ($model->validate())
             {
-                $model->Update();
-                $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
+                $model->Insert();
+                echo '1';
+                return;
             }
 
         }
-
+        $model->ObjectGr_id = $ObjectGr_id;
         $this->renderPartial('_form', array(
             'model' => $model
         ));
         
     }
+    
+    public function actionUpdate()
+    {
+        $this->title = 'Редактирование системы';
+        
+        if (isset($_POST['ObjectsGroupSystem_id'])) 
+            $ObjectsGroupSystem_id = $_POST['ObjectsGroupSystem_id'];
+        
+        $model = new ObjectsGroupSystems();
+        
+        if (isset($_POST['ObjectsGroupSystems']))
+        {
+            $model->attributes = $_POST['ObjectsGroupSystems'];
+            $ObjectsGroupSystem_id = $model->ObjectsGroupSystem_id;
+            
+            $this->performAjaxValidation($model);
+
+            if ($model->validate())
+            {
+                $model->Update();
+                echo '1';
+                return;
+            }
+
+        }
+        
+        $model->getModelPk($ObjectsGroupSystem_id);
+        $this->renderPartial('_form', array(
+            'model' => $model
+        ));
+        
+    }
+    
+    public function actionDelete()
+    {
+        if(isset($_POST['ObjectsGroupSystem_id'])) {
+            $ObjectsGroupSystem_id = $_POST['ObjectsGroupSystem_id'];
+        }
+        $model = new ObjectsGroupSystems;
+        $model->getModelPk($ObjectsGroupSystem_id);
+
+        if(!is_null($ObjectsGroupSystem_id)){
+            $model->delete();
+        }
+
+        $this->redirect($this->createUrl('ObjectsGroupSystems/Index'));
+    }
+    
     
     protected function performAjaxValidation($model)
     {

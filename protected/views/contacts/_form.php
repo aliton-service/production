@@ -1,374 +1,89 @@
-<div class="form">
-
-<?php 
-    $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'Contacts',
-	'htmlOptions'=>array(
-		'class'=>'form-inline'
-		),
-	'enableAjaxValidation'=>false,
-    )); 
-    
-    echo '<input name="Contacts[ObjectGr_id]" id="Contacts_ObjectGr_id" type="text" style="display: none;" value="' . $model->ObjectGr_id . '"/>';
-    echo '<input name="Contacts[cont_id]" id="Contacts_cont_id" type="text" style="display: none;" value="' . $model->cont_id . '"/>';
-?>
-
-    <table>
-        <tbody>
-            <tr>
-                <td><?php echo $form->labelEx($model,'Тема контакта'); ?></td>
-                <td>
-                    <?php
-                    $ContactKinds = new ContactKinds();
-                    $ContactKinds = $ContactKinds->getData();
-                    $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                        'id' => 'cmbContactKind',
-                        'popupid' => 'cmbContactKindGrid',
-                        'data' => $ContactKinds,
-                        'label' => '',
-                        'name' => 'Contacts[Kind]',
-                        'fieldname' => 'Kind_name',
-                        'keyfield' => 'Kind_id',
-                        'keyvalue' => $model->Kind,
-                        'width' => 200,
-                        'showcolumns' => true,
-                        'columns' => array(
-                            'Kind_name' => array(
-                                'name' => 'Тема',
-                                'fieldname' => 'Kind_name',
-                                'width' => 150,
-                                'height' => 23,
-                            ),
-                        ),
-                        
-                    ));
-                    ?>
-                </td>
-                <td><?php echo $form->labelEx($model,'date'); ?></td>
-                <td>
-                    <?php $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-                            'id' => 'edDate',
-                            'Name' => 'Contacts[date]',
-                            'Value' => DateTimeManager::YiiDateToAliton($model->date),
-                        ));
-                        echo $form->error($model,'date');
-                    ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model,'cntp_id'); ?></td>
-                <td>
-                    <?php
-                    $ContactTypes = new ContactTypes();
-                    $ContactTypes = $ContactTypes->getData();
-                    $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                        'id' => 'cmbContactType',
-                        'popupid' => 'cmbContactTypeGrid',
-                        'data' => $ContactTypes,
-                        'label' => '',
-                        'name' => 'Contacts[cntp_id]',
-                        'fieldname' => 'ContactName',
-                        'keyfield' => 'Contact_id',
-                        'keyvalue' => $model->cntp_id,
-                        'width' => 200,
-                        'showcolumns' => true,
-                        'columns' => array(
-                            'ContactName' => array(
-                                'name' => 'Тип',
-                                'fieldname' => 'ContactName',
-                                'width' => 150,
-                                'height' => 23,
-                            ),
-                        ),
-                        
-                    ));
-                    ?>
-                    <?php echo $form->error($model,'cntp_id'); ?>
-                </td>
+<script type="text/javascript">
+        $(document).ready(function () {
+            var Contact = {
+                ObjectGr_id: <?php echo $model->ObjectGr_id; ?>,
+                cont_id: '<?php echo $model->cont_id; ?>',
+                Kind: '<?php echo $model->Kind; ?>',
+                rslt_name: '<?php echo $model->rslt_name; ?>',
+                note: '<?php echo $model->note; ?>',
+                date: '<?php echo $model->date; ?>',
+                cntp_id: '<?php echo $model->cntp_id; ?>',
+                empl_id: '<?php echo $model->empl_id; ?>',
+                info_id: '<?php echo $model->info_id; ?>',
+                pay_date: '<?php echo $model->pay_date; ?>',
+                text: '<?php echo $model->text; ?>',
+                drsn_id: '<?php echo $model->drsn_id; ?>',
+            };
             
-                <td><?php echo $form->labelEx($model,'empl_id'); ?></td>
-                <td>
-                    <?php
-                        $Employees = new Employees();
-                        $Employees = $Employees->getData();
-                        $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                            'id' => 'cmbEmpl',
-                            'popupid' => 'cmbEmplGrid',
-                            'data' => $Employees,
-                            'label' => '',
-                            'name' => 'Contacts[empl_id]',
-                            'fieldname' => 'EmployeeName',
-                            'keyfield' => 'empl_id',
-                            'width' => 300,
-                            'showcolumns' => true,
-                            'columns' => array(
-                                'Srmg_id' => array(
-                                    'name' => 'Сотрудник',
-                                    'fieldname' => 'EmployeeName',
-                                    'width' => 250,
-                                    'height' => 23,
-                                ),
-                            ),
-                        ));
-                        
-                    ?>
-                    <?php echo $form->error($model,'empl_id'); ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model, 'info_id'); ?></td>
-                <td colspan="3">
-                    <?php
-                        $ContactInfo = new ContactInfo();
-                        $ContactInfo = $ContactInfo->Find(array('ci.ObjectGr_id' => $model->ObjectGr_id));
-                        
-                        $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                            'id' => 'cmbContactInfo',
-                            'popupid' => 'cmbContactInfoGrid',
-                            'data' => $ContactInfo,
-                            'label' => '',
-                            'name' => 'Contacts[info_id]',
-                            'fieldname' => 'contact',
-                            'keyfield' => 'Info_id',
-                            'keyvalue' => $model->info_id,
-                            'width' => 400,
-                            'showcolumns' => true,
-                            'columns' => array(
-                                'contact' => array(
-                                    'name' => 'Контактное лицо',
-                                    'fieldname' => 'contact',
-                                    'width' => 150,
-                                    'height' => 23,
-                                ),
-                            ),
-                        ));
-                     
-                    ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model,'Содержание'); ?></td>
-                <td>
-                    <?php echo $form->textArea($model,'text',array('style'=>'width:400px;height: 70px;min-width:250px', 'class'=>'form-control')); ?>
-                    <?php echo $form->error($model,'text'); ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model, 'drsn_id'); ?></td>
-                <td>
-                    <?php
-                        $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                            'id' => 'cmbDelayReason',
-                            'ModelName' => 'DelayReasons',
-                            'Name' => 'Contacts[drsn_id]',
-                            'FieldName' => 'name',
-                            'KeyField' => 'drsn_id',
-                            'KeyValue' => $model->drsn_id,
-                            'Width' => 300,
-                            'Type' => array(
-                                'Mode' => 'Filter',
-                                'Condition' => 'd.name like \':Value%\'',
-                            ),
-                            'Columns' => array(
-                                'Name' => array(
-                                    'Name' => 'Причина долга',
-                                    'FieldName' => 'name',
-                                    'Width' => 150,
-                                    
-                                ),
-                            ),
-                        ));
-                    ?>
-                    <?php echo $form->error($model,'drsn_id'); ?>
-                </td>
-                <td><?php echo $form->labelEx($model, 'SourceInfo_id'); ?></td>
-                <td>
-                    <?php
-                        $SourceInfo = new SourceInfo();
-                        $SourceInfo = $SourceInfo->getData();
-                        
-                        $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                            'id' => 'cmbSourceInfo',
-                            'popupid' => 'cmbSourceInfoGrid',
-                            'data' => $SourceInfo,
-                            'label' => '',
-                            'name' => 'Contacts[SourceInfo_id]',
-                            'fieldname' => 'SourceInfo_name',
-                            'keyfield' => 'SourceInfo_id',
-                            'keyvalue' => $model->SourceInfo_id,
-                            'width' => 300,
-                            'showcolumns' => true,
-                            'columns' => array(
-                                'SourceInfo_name' => array(
-                                    'name' => 'Источник информации о фирме',
-                                    'fieldname' => 'SourceInfo_name',
-                                    'width' => 150,
-                                    'height' => 23,
-                                ),
-                            ),
-                        ));
-                    ?>
-                    <?php echo $form->error($model,'SourceInfo_id'); ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model, 'rslt_id'); ?></td>
-                <td>    
-                    <?php
-                        $Results = new Results();
-                        $Results = $Results->getData();
-                        
-                        $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                            'id' => 'cmbResult',
-                            'popupid' => 'cmbResultGrid',
-                            'data' => $Results,
-                            'label' => '',
-                            'name' => 'Contacts[SourceInfo_id]',
-                            'fieldname' => 'ResultName',
-                            'keyfield' => 'rslt_id',
-                            'keyvalue' => $model->rslt_id,
-                            'width' => 300,
-                            'showcolumns' => true,
-                            'columns' => array(
-                                'SourceInfo_name' => array(
-                                    'name' => 'Результат',
-                                    'fieldname' => 'ResultName',
-                                    'width' => 150,
-                                    'height' => 23,
-                                ),
-                            ),
-                        ));
-                    ?>
-                    <?php echo $form->error($model, 'rslt_id'); ?>
-                </td>
-                <td><?php echo $form->labelEx($model,'pay_date'); ?></td>
-                <td>
-                    <?php $this->widget('application.extensions.alitonwidgets.datepicker.aldatepicker', array(
-                            'name' => 'Contacts[pay_date]',
-                            'value' => $model->pay_date,
-                        ));
-                        echo $form->error($model,'pay_date');
-                    ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model, 'Telephone'); ?></td>
-                <td>
-                    <?php echo $form->textField($model,'Telephone',array('class'=>'form-control')); ?>
-                    <?php echo $form->error($model,'Telephone'); ?>
-                </td>
-                <td><?php echo $form->labelEx($model,'PaySum'); ?></td>
-                <td>
-                    <?php echo $form->textField($model,'PaySum',array('class'=>'form-control')); ?>
-                    <?php echo $form->error($model,'PaySum'); ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model,'time_length'); ?></td>
-                <td>
-                    <?php echo $form->textField($model,'time_length',array('size'=>30,'maxlength'=>100, 'class'=>'form-control time')); ?>
-                    <?php echo $form->error($model,'time_length'); ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model,'note'); ?></td>
-                <td>
-                    <?php echo $form->textArea($model,'note',array('style'=>'width:400px;height: 70px;min-width:250px', 'class'=>'form-control')); ?>
-                    <?php echo $form->error($model,'note'); ?>
-                </td>
-            </tr>
-        </tbody>
-</table>
-    <br>
-    <div style="border-bottom: 1px Solid #c0c0c0">Следующий контакт</div>   
-    <br>
-    <table>
-        <tbody>
-            <tr>
-                <td><?php echo $form->labelEx($model,'next_date'); ?></td>
-                <td>
-                    <?php $this->widget('application.extensions.alitonwidgets.datepicker.aldatepicker', array(
-                            'name' => 'Contacts[next_date]',
-                            'value' => $model->next_date,
-                        ));
-                        echo $form->error($model,'next_date');
-                    ?>
-                </td>
-                <td><?php echo $form->labelEx($model,'next_cntp_id'); ?></td>
-                <td>
-                    <?php
-                    $ContactTypes = new ContactTypes();
-                    $ContactTypes = $ContactTypes->getData();
-                    $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                        'id' => 'cmbNextContactType',
-                        'popupid' => 'cmbNextContactTypeGrid',
-                        'data' => $ContactTypes,
-                        'label' => '',
-                        'name' => 'Contacts[next_cntp_id]',
-                        'fieldname' => 'ContactName',
-                        'keyfield' => 'Contact_id',
-                        'keyvalue' => $model->next_cntp_id,
-                        'width' => 200,
-                        'showcolumns' => true,
-                        'columns' => array(
-                            'ContactName' => array(
-                                'name' => 'Тип',
-                                'fieldname' => 'ContactName',
-                                'width' => 150,
-                                'height' => 23,
-                            ),
-                        ),
-                        
-                    ));
-                    ?>
-                    <?php echo $form->error($model,'next_cntp_id'); ?>
-                </td>
-            </tr>
-            <tr>
-                <td><?php echo $form->labelEx($model, 'next_info_id'); ?></td>
-                <td colspan="2">
-                    <?php
-                        $ContactInfo = new ContactInfo();
-                        $ContactInfo = $ContactInfo->Find(array('ci.ObjectGr_id' => $model->ObjectGr_id));
-                        
-                        $this->widget('application.extensions.alitonwidgets.combobox.alcombobox', array(
-                            'id' => 'cmbNextContactInfo',
-                            'popupid' => 'cmbNextContactInfoGrid',
-                            'data' => $ContactInfo,
-                            'label' => '',
-                            'name' => 'Contacts[next_info_id]',
-                            'fieldname' => 'contact',
-                            'keyfield' => 'next_info_id',
-                            'keyvalue' => $model->next_info_id,
-                            'width' => 400,
-                            'showcolumns' => true,
-                            'columns' => array(
-                                'contact' => array(
-                                    'name' => 'Контактное лицо',
-                                    'fieldname' => 'contact',
-                                    'width' => 150,
-                                    'height' => 23,
-                                ),
-                            ),
-                        ));
-                     
-                    ?>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    
-<?php
-    $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-        'id' => 'Save',
-        'Width' => 114,
-        'Height' => 30,
-        'Text' => 'Сохранить',
-        'FormName' => 'Contacts',
-        'Href' => $this->action_url,
-    ));
-?>
-    
-<?php $this->endWidget(); ?>
+            console.log('<?php echo $model->date; ?>');
+            
+            var DataContactKinds = new $.jqx.dataAdapter(Sources.SourceContactKinds);
+            var DataContactTypes = new $.jqx.dataAdapter(Sources.SourceContactTypes);
+            var DataEmpl = new $.jqx.dataAdapter(Sources.SourceListEmployees);
+            
+            var DataContactInfo = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContactInfo, {}), {
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["ci.ObjectGr_id = " + Contact.ObjectGr_id],
+                    });
+                    return data;
+                },
+            });
+            var DataDebtReasons = new $.jqx.dataAdapter(Sources.SourceDebtReasons);
+            
+            $("#ContactKinds").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactKinds, displayMember: "Kind_name", valueMember: "Kind_id", width:300 }));
+            $("#date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true, height: '25', width: '180' }));
+            $("#ContactTypes").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactTypes, displayMember: "ContactName", valueMember: "Contact_id", width:255 }));
+            $("#empl").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "EmployeeName", valueMember: "Employee_id", width:250 }));
+            $("#ContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "contact", valueMember: "Info_id", width:500 }));
+            $("#textField2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 760 }));
+            $("#DebtReasons").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataDebtReasons, displayMember: "name", valueMember: "drsn_Id", width:250 }));
 
-</div><!-- form -->
+            $("#pay").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd-MM-yyyy', value: null, height: '25', width: '180' }));
+            
+            if (Contact.Kind != '') $("#ContactKinds").jqxComboBox('val', Contact.Kind);
+            if (Contact.date != '') $("#date").jqxDateTimeInput('val', Contact.date);
+            if (Contact.cntp_id != '') $("#ContactTypes").jqxComboBox('val', Contact.cntp_id);
+            if (Contact.empl_id != '') $("#empl").jqxComboBox('val', Contact.empl_id);
+            if (Contact.info_id != '') $("#ContactInfo").jqxComboBox('val', Contact.info_id);
+            if (Contact.text != '') $("#textField2").jqxTextArea('val', Contact.text);
+            if (Contact.drsn_id != '') $("#DebtReasons").jqxComboBox('val', Contact.drsn_id);
+
+            
+            if (Contact.pay_date != '') $("#pay").jqxDateTimeInput('val', Contact.pay_date);
+        });
+</script> 
+<?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'Contacts',
+        'htmlOptions'=>array(
+            'class'=>'form-inline'
+        ),
+    )); 
+?>
+<input type="hidden" name="Contacts[ObjectGr_id]" value="<?php // echo $model->ObjectGr_id; ?>">
+<input type="hidden" name="Contacts[cont_id]" value="<?php // echo $model->cont_id; ?>">
+
+<div class="" style="margin-top: 0; overflow: hidden;">
+    <div class="row-column">Тема: <div id='ContactKinds' name="Contacts[Kind]"></div><?php echo $form->error($model, 'Kind'); ?></div>
+    <div class="row-column">Дата и время: <div id='date' name="Contacts[date]"></div></div>
+    <div class="row-column">Тип: <div id='ContactTypes' name="Contacts[cntp_id]"></div><?php echo $form->error($model, 'cntp_id'); ?></div>
+</div>
+
+<div class="" style="margin-top: 10px; overflow: hidden;">
+    <div class="row-column">Исполнитель: <div id='empl' name="Contacts[empl_id]"></div><?php echo $form->error($model, 'empl_id'); ?></div>
+    <div class="row-column">Контактное лицо: <div id='ContactInfo' name="Contacts[info_id]"></div><?php echo $form->error($model, 'info_id'); ?></div>
+</div>
+
+<div class="" style="margin-top: 10px; overflow: hidden;">
+    <div class="row-column">Содержание: <textarea id="textField2" name="Contacts[text]"></textarea></div>
+</div>
+
+<div class="" style="margin-top: 10px; overflow: hidden;">
+    <div class="row-column">Причина долга: <div id='DebtReasons' name="Contacts[drsn_id]"></div><?php echo $form->error($model, 'drsn_id'); ?></div>
+</div>
+
+<div class="row-column">Дата согласованной оплаты: <div id='pay' name="Contacts[pay_date]"></div></div> 
+
+
+<?php $this->endWidget(); ?>

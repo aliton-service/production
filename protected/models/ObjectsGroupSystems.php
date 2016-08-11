@@ -10,9 +10,11 @@ class ObjectsGroupSystems extends MainFormModel
     public $Condition;
     public $Availability_id;
     public $Availability;
-    public $Count;
+    public $count;
     public $EmplCreate;
     public $Competitors;
+    public $SysCmplxt_id;
+    public $SysSttmnt_id;
 
     public function rules() {
         return array(
@@ -24,7 +26,7 @@ class ObjectsGroupSystems extends MainFormModel
                 . 'Desc,'
                 . 'Condition,'
                 . 'Availability,'
-                . 'Count,'
+                . 'count,'
                 . 'EmplCreate,'
                 . 'Competitors', 'safe'),
         );
@@ -47,7 +49,7 @@ class ObjectsGroupSystems extends MainFormModel
                     ."  s.Condition,"
                     ."  s.Availability_id,"
                     ."  a.Availability,"
-                    ."  s.[Count],"
+                    ."  s.count,"
                     ."  s.EmplCreate,"
                     ."  cast(dbo.get_competitor_info(s.ObjectsGroupSystem_id) as nvarchar(50)) as Competitors";
         $From =     "\nFrom ObjectsGroupSystems s left join SystemTypes st on (s.Sttp_id = st.SystemType_id)"

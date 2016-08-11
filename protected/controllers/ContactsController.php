@@ -25,86 +25,107 @@ class ContactsController extends Controller
 	 */
 	public function accessRules()
 	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('*'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
+            return array(
+
+                array('allow',
+                        'actions'=>array('Index'),
+                        'roles'=>array('ViewContacts'),
+                    ),
+                array('allow',
+                        'actions'=>array('Insert'),
+                        'roles'=>array('InsretContacts'),
+                    ),
+                array('allow',
+                        'actions'=>array('Update'),
+                        'roles'=>array('UpdateContacts'),
+                    ),
+                array('allow',
+                        'actions'=>array('Delete'),
+                        'roles'=>array('DeleteContacts'),
+                    ),
+                array('deny',  // deny all users
+                            'users'=>array('*'),
+                    ),
+            );
 	}
 
 	
-	public function actionIndex($ObjectGr_id)
+	public function actionIndex()
 	{
-            $this->renderPartial('index',array(
-                    'ObjectGr_id'=>$ObjectGr_id,
-            ), false, true);
+
+            if (isset($_GET['ObjectGr_id']))
+            {
+                $ObjectGr_id = $_GET['ObjectGr_id'];
+                $model = new Contacts();
+                $model->getModelPk($ObjectGr_id);
+    //            $model = $model->Find(array('ObjectGr_id' => $ObjectGr_id));
+
+                $this->renderPartial('index', array(
+                    'model' => $model,
+                    'ObjectGr_id' => $ObjectGr_id,
+                ), false, true);
+            }
 	}
 
-	public function actionCreate($ObjectGr_id) {
-		$this->title = 'Создание контакта';
-                $this->action_url = $this->createUrl('Contacts/create', array('ObjectGr_id' => $ObjectGr_id));
-                $model = new Contacts;
-                $model->ObjectGr_id = $ObjectGr_id;
-                
-		if(isset($_POST['Contacts']))
-		{
-			$model->attributes=$_POST['Contacts'];
-			
-			$model->cont_id = null;
-			$this->performAjaxValidation($model);
-                        
-                        if ($model->validate())
-                        {
-                            $model->Insert();
-                            $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                        }
-		}
+	public function actionInsert() 
+        {
+            $this->title = 'Создание контакта';
+            
+            if (isset($_POST['ObjectGr_id'])) 
+                $ObjectGr_id = $_POST['ObjectGr_id'];
+            
+            $model = new Contacts;
 
-		$this->render('create',array(
-                    'model'=>$model,
-                    'ObjectGr_id'=>$ObjectGr_id,
-                    ));
+            if(isset($_POST['Contacts']))
+            {
+                $model->attributes=$_POST['Contacts'];
+
+                $model->cont_id = null;
+                $this->performAjaxValidation($model);
+
+                if ($model->validate())
+                {
+                    $model->Insert();
+                    echo '1';
+                    return;
+                }
+            }
+
+            $model->ObjectGr_id = $ObjectGr_id;
+            $this->renderPartial('_form', array(
+                'model' => $model
+            ));
+            
 	}
 
-	public function actionUpdate($cont_id) {
-		$this->title = 'Редактирование контакта';
-                $this->action_url = $this->createUrl('Contacts/update', array('cont_id' => $cont_id));
-                       
-                $model = new Contacts;
-                
-		if(isset($_POST['Contacts']))
-		{
-			$model->attributes=$_POST['Contacts'];
-			$model->cont_id = $cont_id;
-                        
-                        $this->performAjaxValidation($model);
-                
-                        if ($model->validate())
-                        {
-                            $model->Update();
-                            $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                        }
-			
-		}
-		$model->getmodelPk($cont_id);
-		$model->date = Yii::app()->dateFormatter->formatDateTime($model->date, 'short','short');
-		$model->next_date = Yii::app()->dateFormatter->formatDateTime($model->next_date, 'short','short');
-		$this->render('update',array(
-			'model'=>$model,
-			'cont_id'=>$cont_id,
-			));
+	public function actionUpdate() 
+        {
+            $this->title = 'Редактирование контакта';
+            
+            if (isset($_POST['cont_id'])) 
+                $cont_id = $_POST['cont_id'];
+
+            $model = new Contacts;
+
+            if(isset($_POST['Contacts']))
+            {
+                $model->attributes=$_POST['Contacts'];
+                $cont_id = $model->cont_id;
+
+                $this->performAjaxValidation($model);
+
+                if ($model->validate())
+                {
+                    $model->Update();
+                    echo '1';
+                    return;
+                }
+
+            }
+            $model->getModelPk($cont_id);
+            $this->renderPartial('_form', array(
+                'model' => $model
+            ));
 	}
 
 

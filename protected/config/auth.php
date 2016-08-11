@@ -53,6 +53,7 @@ return array_merge(
     include(dirname(__FILE__).'/security/EquipSubgroupsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipTypesSecurity.php'),
     include(dirname(__FILE__).'/security/referenceSecurity.php'),
+    include(dirname(__FILE__).'/security/ContactsSecurity.php'),
     
     /* Раздел Ремонт */ 
     include(dirname(__FILE__).'/security/RepairsSecurity.php'),
@@ -293,6 +294,8 @@ return array_merge(
                 'AdminSystemStatements',
                 'AdminPriceMonitoring',
                 'AdminOrganizationStructure',
+                'AdminObjectsGroupSystems',
+                'AdminContacts',
                 /* Отчеты*/
                 'Demand1Report',
                 'Demand2Report',
