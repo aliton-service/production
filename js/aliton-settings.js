@@ -13,7 +13,7 @@ var GridDefaultSettings = {
     columnsresize: true,
     columnsreorder: true,
     virtualmode: false,
-    autosavestate: true,
+    //autosavestate: true,
     enableanimations: false,
     //autoloadstate: true,
     //enablebrowserselection: true,
