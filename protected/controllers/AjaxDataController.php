@@ -6,11 +6,15 @@ class AjaxDataController extends Controller
     public function actionDataJQXSimple($ModelName) {
         $model = new $ModelName();
         
+        $TopCount = -1;
+        
+        if (isset($_POST['TopCount'])) 
+            $TopCount = $_POST['TopCount'];
         
         if(isset($_POST['Filters']))
-            $Result = $model->Find(array(), $_POST['Filters']);
+            $Result = $model->Find(array(), $_POST['Filters'], $TopCount);
         else if (isset($_GET['Filters']))
-            $Result = $model->Find(array(), $_GET['Filters']);
+            $Result = $model->Find(array(), $_GET['Filters'], $TopCount);
         else
             $Result = $model->Find(array());
         

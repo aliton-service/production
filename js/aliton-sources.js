@@ -1187,3 +1187,98 @@ Sources.SourceDebtReasons =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+/*
+ * 
+ *  public $dldm_id;
+    public $date;
+    public $user_sender;
+    public $objc_id;
+    public $dltp_id;
+    public $mstr_id;
+    public $prty_id;
+    public $bestdate;
+    public $deadline;
+    public $plandate;
+    public $text;
+    public $phonenumber;
+    public $empl_dlvr_id;
+    public $date_logist;
+    public $user_logist;
+    public $note;
+    public $date_delivery;
+    public $rep_delivery;
+    public $Contacts;
+    public $dlrs_id;
+    public $date_promise;
+    public $prtp_id;
+    public $prdoc_id;
+    public $calc_id;
+    public $docm_id;
+    public $dmnd_id;
+    public $repr_id;
+    public $Lock;
+    public $EmplLock;
+    public $DateLock;
+    public $EmplCreate;
+    public $DateCreate;
+    public $EmplChange;
+    public $DateChange;
+    public $EmplDel;
+    public $DelDate;
+*/
+ 
+
+Sources.DeliveryDemandsSource =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'dldm_id', type: 'int'},
+        { name: 'date', type: 'date'},
+        { name: 'user_sender', type: 'int'},
+        { name: 'user_sender_name', type: 'string'},
+        { name: 'objc_id', type: 'int'},
+        { name: 'dltp_id', type: 'int'},
+        { name: 'DeliveryType', type: 'string'},
+        { name: 'mstr_id', type: 'int'},
+        { name: 'MasterName', type: 'string'},
+        { name: 'prty_id', type: 'int'},
+        { name: 'DemandPrior', type: 'string'},
+        { name: 'bestdate', type: 'date'},
+        { name: 'deadline', type: 'date'},
+        { name: 'plandate', type: 'date'},
+        { name: 'text', type: 'string'},
+        { name: 'phonenumber', type: 'string'},
+        { name: 'empl_dlvr_id', type: 'int'},
+        { name: 'DeliveryMan', type: 'string'},
+        { name: 'date_logist', type: 'date'},
+        { name: 'user_logist', type: 'int'},
+        { name: 'user_logist_name', type: 'string'},
+        { name: 'note', type: 'string'},
+        { name: 'date_delivery', type: 'date'},
+        { name: 'rep_delivery', type: 'string'},
+        { name: 'Contacts', type: 'string'},
+        { name: 'dlrs_id', type: 'int'},
+        { name: 'date_promise', type: 'date'},
+        { name: 'prtp_id', type: 'int'},
+        { name: 'prdoc_id', type: 'int'},
+        { name: 'calc_id', type: 'int'},
+        { name: 'docm_id', type: 'int'},
+        { name: 'dmnd_id', type: 'int'},
+        { name: 'repr_id', type: 'int'},
+        { name: 'Addr', type: 'string'},
+        { name: 'overday', type: 'int'},
+        
+        
+        
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=DeliveryDemands',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

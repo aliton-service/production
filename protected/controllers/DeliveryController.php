@@ -2,94 +2,45 @@
 
 class DeliveryController extends Controller
 {
-    public $layout='//layouts/column2';
+    public $title = '';
+    
+    public function filters()
+    {
+            return array(
+                    'accessControl', // perform access control for CRUD operations
+                    'postOnly + delete', // we only allow deletion via POST request
+            );
+    }
 
-	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
-	}
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','repDelivery','repDeliveryReason','addition','process','equip','GetDeadline'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','take'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('*'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
+    public function accessRules()
+    {
+            return array(
+                    array('allow',  // allow all users to perform 'index' and 'view' actions
+                            'actions'=>array('index','view','repDelivery','repDeliveryReason','addition','process','equip','GetDeadline'),
+                            'users'=>array('*'),
+                    ),
+                    array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                            'actions'=>array('create','update','take'),
+                            'users'=>array('*'),
+                    ),
+                    array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                            'actions'=>array('admin','delete'),
+                            'users'=>array('*'),
+                    ),
+                    array('deny',  // deny all users
+                            'users'=>array('*'),
+                    ),
+            );
+    }
+	
+    public function actionIndex()
+    {
+        $this->title = 'Заявки на доставку';
+        $model = new DeliveryDemands();
+        $this->render('index');
+    }
 
 	
-	public function actionIndex($ajax=false)
-	{
-
-		$model = new Delivery;
-		$filter = array();
-
-//		if($ajax) {
-//
-//			isset($_GET['Delivery']) ? $filter = $_GET['Delivery'] : '';
-//			//var_dump($filter);
-//			$model->setFilter($filter);
-//		}
-//
-//		 $DataRow = $model->Find(array());
-//           // var_dump($DataRow);
-//           $Data = $model->filter($DataRow);
-//        //var_dump($Data);
-//            $DataProvider=new CArrayDataProvider($Data, array(
-//                'keyField' => 'dldm_id',
-//
-//                'pagination' => array(
-//                'pageSize' => 15,
-//            )));
-
-        $request = new CHttpRequest;
-        $top = $request->getParam('top',200);
-        $date_range = $request->getParam('date',false);
-        $id  = $request->getParam('id',false);
-        $date_range['fixday'] ? $date = $date_range['fixday'] : $date=false;
-        $empl_id = $request->getParam('empl_id',false);
-        $master_id = $request->getParam('master_id',false);
-		$status = $request->getParam('status',false);
-		$address = $request->getParam('address',false);
-
-		$this->render('index',array(
-			'model'=>$model,
-			//'data'=>$DataProvider,
-//			'top'=>$top,
-			'date_range'=>$date_range,
-			'id'=>$id,
-			'date'=>$date,
-			'empl_id'=>$empl_id,
-			'master_id'=>$master_id,
-			'status'=>$status,
-			'address'=>$address,
-			)
-		);
-	}
 
 	public function actionCreate() {
 		$model = new Delivery;
