@@ -58,17 +58,17 @@
         $("#rslt_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 370 }));
         $("#pay_date").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
         
-        $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '770', width: '840'}));
+        $('#EditContactDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '770', width: '840'}));
         
-        $('#EditDialog').jqxWindow({initContent: function() {
-            $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#EditContactDialog').jqxWindow({initContent: function() {
+            $("#btnContactOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             $("#btnNotReach").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             $("#btnClientInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
-            $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#btnContactCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         }});
 
-        $("#btnCancel").on('click', function () {
-            $('#EditDialog').jqxWindow('close');
+        $("#btnContactCancel").on('click', function () {
+            $('#EditContactDialog').jqxWindow('close');
         });
         
         SendForm = function(Mode, Form) {
@@ -90,7 +90,7 @@
                 data: Data,
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
-                        $('#EditDialog').jqxWindow('close');
+                        $('#EditContactDialog').jqxWindow('close');
                         $("#ContactsGrid").jqxGrid('updatebounddata');
 //                        $('#ContactsGrid').jqxGrid({source: LoadData(ContactsDataAdapter)});
                     } else {
@@ -101,7 +101,7 @@
             });
         }
 
-        $("#btnOk").on('click', function () {
+        $("#btnContactOk").on('click', function () {
             SendForm(Mode);
         });
 
@@ -175,14 +175,14 @@
         {
             Mode = 'Insert';
             LoadFormInsert(Contacts.ObjectGr_id);
-            $('#EditDialog').jqxWindow('open');
+            $('#EditContactDialog').jqxWindow('open');
         });
         
         $("#EditContact").on('click', function ()
         {
             Mode = 'Edit';
             LoadFormUpdate(CurrentRowData.cont_id);
-            $('#EditDialog').jqxWindow('open');
+            $('#EditContactDialog').jqxWindow('open');
         });
         
         $("#btnReload").on('click', function ()
@@ -239,18 +239,18 @@
 </div>
 
 
-    <div id="EditDialog">
-    <div id="DialogHeader">
-        <span id="HeaderText">Вставка\Редактирование записи</span>
+<div id="EditContactDialog">
+    <div id="DialogContactHeader">
+        <span id="HeaderContactText">Вставка\Редактирование записи</span>
     </div>
-    <div style="overflow-x: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" id="DialogContent">
+    <div style="overflow-x: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" id="DialogContactContent">
         <div style="" id="BodyContactDialog"></div>
-        <div id="BottomDialog">
+        <div id="BottomContactDialog">
             <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>
+                <div class="row-column"><input type="button" value="Сохранить" id='btnContactOk' /></div>
                 <div class="row-column"><input type="button" value="Недозвон" id='btnNotReach' /></div>
                 <div class="row-column"><input type="button" value="Карточка клиента" id='btnClientInfo' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnContactCancel' /></div>
             </div>
         </div>
     </div>
