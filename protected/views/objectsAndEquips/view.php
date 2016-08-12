@@ -326,6 +326,8 @@
                     ],
                 }));
         
+        
+        
         $("#ObjectsGrid").on('rowselect', function(event){
             ObjectCorrentRow = $('#ObjectsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (ObjectCorrentRow != undefined) {
@@ -335,7 +337,7 @@
             }
         });
         
-        
+        $("#ObjectsGrid").jqxGrid('selectrow', 0);
         
     });
 </script>

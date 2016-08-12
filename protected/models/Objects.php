@@ -77,10 +77,12 @@ class Objects extends MainFormModel
                     ."  left outer join ComplexityTypes c on (o.Complexity_id = c.Complexity_id)"
                     ."  left join ConnectionTypes ct on (o.Cntp_id = ct.ConnectionType_id)";
         $Where =    "\nWhere o.DelDate is Null";
+        $Order = "\nOrder by dbo.StrToInt(o.Doorway)";
         
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
         $this->Query->setWhere($Where);
+        $this->Query->setOrder($Order);
         $this->KeyFiled = 'o.Object_id';
     }
     
