@@ -38,7 +38,7 @@
             });
         }});
     
-        $('#EditObjectEquipDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '500px', width: '580'}));
+        $('#EditObjectEquipDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '420px', width: '580'}));
         $('#EditObjectEquipDialog').jqxWindow({initContent: function() {
             $('#btnObjectEquipOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
             $('#btnObjectEquipCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -113,7 +113,7 @@
                         $("#CommonEquipsGrid").jqxGrid('updatebounddata');
                     }
                     else
-                        $('#BodyDialog').html(Res);
+                        $('#BodyObjectEquipDialog').html(Res);
                 }
             });
         };
@@ -135,8 +135,9 @@
                         $('#EditObjectDialog').jqxWindow('close');
                         $("#ObjectsGrid").jqxGrid('updatebounddata');
                     }
-                    else
+                    else {
                         $('#BodyDialog').html(Res);
+                    }
                 }
             });
         };
@@ -305,7 +306,7 @@
         $("#ObjectsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: 200,
-                width: '100%',
+                width: '600px',
                 showfilterrow: false,
                 autoshowfiltericon: true,
                 source: DataObjects,
@@ -419,8 +420,8 @@
     <div id="DialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="overflow: hidden; padding: 10px;" id="DialogContent">
-        <div style="overflow: hidden;" id="BodyObjectEquipDialog"></div>
+    <div style="/* overflow: hidden; */padding: 10px;" id="DialogContent">
+        <div style="/*overflow: hidden;*/" id="BodyObjectEquipDialog"></div>
         <div id="BottomObjectEquipDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnObjectEquipOk' /></div>
