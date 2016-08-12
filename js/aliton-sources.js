@@ -1281,6 +1281,10 @@ Sources.DeliveryDemandsSource =
     cache: false,
     pagenum: 0,
     pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
 
 Sources.SourceSourceInfo =
 {
