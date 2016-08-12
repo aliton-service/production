@@ -6,14 +6,14 @@
         
         var Contacts = {
             ObjectGr_id: '<?php echo $ObjectGr_id; ?>',
-            text: '<?php echo json_encode($model->text); ?>',
+            text: <?php echo json_encode($model->text); ?>,
             rslt_name: '<?php echo $model->rslt_name; ?>',
-            note: '<?php echo $model->note; ?>',
+            note: <?php echo json_encode($model->note); ?>,
             drsn_name: '<?php echo $model->drsn_name; ?>',
             pay_date: '<?php echo $model->pay_date; ?>',
         };
             
-        var ContactsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContacts, {}), {
+        var ContactsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.Contacts, {}), {
             formatData: function (data) {
                 $.extend(data, {
                     Filters: ["c.ObjectGr_id = " + Contacts.ObjectGr_id],
@@ -58,10 +58,12 @@
         $("#rslt_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 370 }));
         $("#pay_date").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
         
-        $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '1200px', width: '1900'}));
+        $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '770', width: '840'}));
         
         $('#EditDialog').jqxWindow({initContent: function() {
             $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#btnNotReach").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#btnClientInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
             $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         }});
 
@@ -92,7 +94,7 @@
                         $("#ContactsGrid").jqxGrid('updatebounddata');
 //                        $('#ContactsGrid').jqxGrid({source: LoadData(ContactsDataAdapter)});
                     } else {
-                        $('#BodyDialog').html(Res);
+                        $('#BodyContactDialog').html(Res);
                     }
 
                 }
@@ -102,21 +104,32 @@
         $("#btnOk").on('click', function () {
             SendForm(Mode);
         });
+
+        $("#btnNotReach").on('click', function () {
+            if(Mode == 'Insert') {
+                $("#ContactTypes").jqxComboBox('val', '11');
+                $("#textField2").jqxTextArea('val', 'Недозвон');
+                SendForm(Mode);
+            }
+        });
+
+        $("#btnClientInfo").on('click', function () {
+            window.open('/index.php?r=ObjectsGroup/Index&ObjectGr_id=' + Contacts.ObjectGr_id);
+        });
             
         
         $("#NewContact").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditContact").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#btnReload").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelContact").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        
-        $("#ContactsGrid").jqxGrid('selectrow', 0);
-        
+                
         $("#ContactsGrid").on('rowselect', function (event) {
             var Temp = $('#ContactsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowData = Temp;
             } else {CurrentRowData = null};
             
-            console.log(CurrentRowData);
+//            console.log(CurrentRowData.cont_id);
             
             if (CurrentRowData.text != '') $("#textField").jqxTextArea('val', CurrentRowData.text);
             if (CurrentRowData.rslt_name != '') $("#rslt_name").jqxInput('val', CurrentRowData.rslt_name);
@@ -134,7 +147,7 @@
                     ObjectGr_id: ObjectGr_id
                 },
                 success: function(Res) {
-                    $('#BodyDialog').html(Res);
+                    $('#BodyContactDialog').html(Res);
                 }
             });
         };
@@ -148,7 +161,7 @@
                     cont_id: cont_id
                 },
                 success: function(Res) {
-                    $('#BodyDialog').html(Res);
+                    $('#BodyContactDialog').html(Res);
                 }
             });
         };
@@ -171,21 +184,31 @@
             LoadFormUpdate(CurrentRowData.cont_id);
             $('#EditDialog').jqxWindow('open');
         });
-           
-        $("#DelContact").on('click', function ()
+        
+        $("#btnReload").on('click', function ()
         {
             $.ajax({
                 type: "POST",
-                url: "/index.php?r=Contacts/Delete",
-                data: { Contact_id: CurrentRowData.Contact_id },
+                url: "/index.php?r=Contacts/Index",
                 success: function(){
                     $("#ContactsGrid").jqxGrid('updatebounddata');
                     $("#ContactsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });
-        
-            
+           
+        $("#DelContact").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=Contacts/Delete",
+                data: { cont_id: CurrentRowData.cont_id },
+                success: function(){
+                    $("#ContactsGrid").jqxGrid('updatebounddata');
+                    $("#ContactsGrid").jqxGrid('selectrow', 0);
+                }
+            });
+        });
     });
     
         
@@ -211,6 +234,7 @@
 <div class="row">
     <div class="row-column"><input type="button" value="Создать" id='NewContact' /></div>
     <div class="row-column"><input type="button" value="Изменить" id='EditContact' /></div>
+    <div class="row-column"><input type="button" value="Обновить" id='btnReload' /></div>
     <div class="row-column"><input type="button" value="Удалить" id='DelContact' /></div>
 </div>
 
@@ -219,11 +243,13 @@
     <div id="DialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="overflow: hidden; padding: 10px;" id="DialogContent">
-        <div style="overflow: hidden;" id="BodyDialog"></div>
+    <div style="overflow-x: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" id="DialogContent">
+        <div style="" id="BodyContactDialog"></div>
         <div id="BottomDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>
+                <div class="row-column"><input type="button" value="Недозвон" id='btnNotReach' /></div>
+                <div class="row-column"><input type="button" value="Карточка клиента" id='btnClientInfo' /></div>
                 <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel' /></div>
             </div>
         </div>

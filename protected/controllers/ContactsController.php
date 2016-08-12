@@ -79,7 +79,7 @@ class ContactsController extends Controller
             if(isset($_POST['Contacts']))
             {
                 $model->attributes=$_POST['Contacts'];
-
+                $ObjectGr_id = $model->ObjectGr_id;
                 $model->cont_id = null;
                 $this->performAjaxValidation($model);
 
@@ -127,6 +127,21 @@ class ContactsController extends Controller
                 'model' => $model
             ));
 	}
+        
+        public function actionDelete()
+        {
+            if(isset($_POST['cont_id'])) {
+                $cont_id = $_POST['cont_id'];
+            }
+            $model = new Contacts;
+            $model->getModelPk($cont_id);
+
+            if(!is_null($cont_id)){
+                $model->delete();
+            }
+
+//            $this->redirect($this->createUrl('ObjectsGroupSystems/Index'));
+        }
 
 
 	/**

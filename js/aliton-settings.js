@@ -43,6 +43,8 @@ var GridDefaultSettings = {
 /* Настройки по умолчанию для диалогового окна (модальный режим) */
 var DialogDefaultSettings = {  
     width: 500,
+    maxHeight: 2000,
+    maxWidth: 2000,
     height: 130,
     resizable: false,
     position: 'center',
