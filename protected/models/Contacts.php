@@ -103,10 +103,11 @@ class Contacts extends MainFormModel
                     left join SourceInfo si on si.sourceInfo_id=c.SourceInfo_id
                      left join Employees_ForObj_v e1 on (c.EmplCreate = e1.Employee_id)
                     ";
+        $Where =    "\nWhere c.DelDate is Null";
 
         $this->Query->setSelect($select);
         $this->Query->setFrom($from);
-        // $this->Query->AddWhere('c.EmplDel IS NULL ');        
+        $this->Query->setWhere($Where);       
         $this->Query->setOrder('order by c.date desc');
 
         
@@ -130,7 +131,7 @@ class Contacts extends MainFormModel
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            
+            array('date, cntp_id, Kind', 'required'),
             array('cont_id, '
                 . 'ObjectGr_id, '
                 . 'date, cntp_id, '

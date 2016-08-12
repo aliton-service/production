@@ -127,6 +127,21 @@ class ContactsController extends Controller
                 'model' => $model
             ));
 	}
+        
+        public function actionDelete()
+        {
+            if(isset($_POST['cont_id'])) {
+                $cont_id = $_POST['cont_id'];
+            }
+            $model = new Contacts;
+            $model->getModelPk($cont_id);
+
+            if(!is_null($cont_id)){
+                $model->delete();
+            }
+
+//            $this->redirect($this->createUrl('ObjectsGroupSystems/Index'));
+        }
 
 
 	/**

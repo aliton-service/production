@@ -1087,7 +1087,7 @@ Sources.SourceConnectionTypes =
     }
 };
 
-Sources.SourceContacts =
+Sources.Contacts =
 {
     datatype: "json",
     datafields: [
@@ -1097,6 +1097,7 @@ Sources.SourceContacts =
         { name: 'GroupContact', type: 'string' },
         { name: 'Kind', type: 'int' },
         { name: 'Kind_Name', type: 'string' },
+        { name: 'SourceInfo_id', type: 'int' },
         { name: 'sourceInfo_name', type: 'string' },
         { name: 'info_id', type: 'int' },
         { name: 'cntp_id', type: 'int' },
@@ -1114,7 +1115,9 @@ Sources.SourceContacts =
         { name: 'drsn_id', type: 'int' },
         { name: 'drsn_name', type: 'string' },
         { name: 'note', type: 'string' },
+        { name: 'Telephone', type: 'string' },
         { name: 'pay_date', type: 'datetime' },
+        { name: 'time_length', type: 'int' },
     ],
     id: 'cont_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Contacts',
@@ -1198,6 +1201,29 @@ Sources.SourceSourceInfo =
     ],
     id: 'SourceInfo_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SourceInfo',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+
+Sources.SourceResults =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Result_Id', type: 'int'},
+        {name: 'ResultName', type: 'string'},
+    ],
+    id: 'Result_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Results',
+    type: 'POST',
     root: 'Rows',
     cache: false,
     async: false,
