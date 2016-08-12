@@ -94,7 +94,7 @@
                         $("#ContactsGrid").jqxGrid('updatebounddata');
 //                        $('#ContactsGrid').jqxGrid({source: LoadData(ContactsDataAdapter)});
                     } else {
-                        $('#BodyDialog').html(Res);
+                        $('#BodyContactDialog').html(Res);
                     }
 
                 }
@@ -147,7 +147,7 @@
                     ObjectGr_id: ObjectGr_id
                 },
                 success: function(Res) {
-                    $('#BodyDialog').html(Res);
+                    $('#BodyContactDialog').html(Res);
                 }
             });
         };
@@ -161,7 +161,7 @@
                     cont_id: cont_id
                 },
                 success: function(Res) {
-                    $('#BodyDialog').html(Res);
+                    $('#BodyContactDialog').html(Res);
                 }
             });
         };
@@ -243,8 +243,8 @@
     <div id="DialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="overflow: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" id="DialogContent">
-        <div style="overflow: hidden;" id="BodyDialog"></div>
+    <div style="overflow-x: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" id="DialogContent">
+        <div style="" id="BodyContactDialog"></div>
         <div id="BottomDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>

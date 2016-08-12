@@ -79,7 +79,7 @@ class ContactsController extends Controller
             if(isset($_POST['Contacts']))
             {
                 $model->attributes=$_POST['Contacts'];
-
+                $ObjectGr_id = $model->ObjectGr_id;
                 $model->cont_id = null;
                 $this->performAjaxValidation($model);
 

@@ -92,9 +92,9 @@
 <input type="hidden" name="Contacts[cont_id]" value="<?php echo $model->cont_id; ?>">
 
 <div class="" style="margin-top: 0; overflow: hidden;">
-    <div class="row-column">Тема: <div id='ContactKinds' name="Contacts[Kind]"></div><?php echo $form->error($model, 'ContactKinds'); ?></div>
+    <div class="row-column">Тема: <div id='ContactKinds' name="Contacts[Kind]"></div><?php echo $form->error($model, 'Kind'); ?></div>
     <div class="row-column">Дата и время: <div id='date' name="Contacts[date]"></div></div>
-    <div class="row-column">Тип: <div id='ContactTypes' name="Contacts[cntp_id]"></div><?php echo $form->error($model, 'ContactTypes'); ?></div>
+    <div class="row-column">Тип: <div id='ContactTypes' name="Contacts[cntp_id]"></div><?php echo $form->error($model, 'cntp_id'); ?></div>
 </div>
 
 <div class="" style="margin-top: 10px; overflow: hidden;">
