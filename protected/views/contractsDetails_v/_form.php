@@ -14,7 +14,7 @@
             $("#ItemName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 540 }));
             $("#Equip").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEquip, displayMember: "EquipName", valueMember: "Equip_id", width: 540 }));
             $("#um_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
-            $("#Garant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+//            $("#").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
          
             if (ContractsDetails_v.ItemName != '') $("#ItemName").jqxInput('val', ContractsDetails_v.ItemName);
             if (ContractsDetails_v.Equip != '') $("#Equip").jqxComboBox('val', ContractsDetails_v.Equip);
