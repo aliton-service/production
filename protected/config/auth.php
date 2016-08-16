@@ -298,6 +298,7 @@ return array_merge(
                 'AdminOrganizationStructure',
                 'AdminObjectsGroupSystems',
                 'AdminContacts',
+                'AdminDeliveryDemands',
                 /* Отчеты*/
                 'Demand1Report',
                 'Demand2Report',

@@ -259,8 +259,9 @@ Sources.SourceListAddresses =
 {
     datatype: "json",
     datafields: [
-        { name: 'Object_id' },
-        { name: 'Addr' },
+        { name: 'Object_id', type: 'int' },
+        { name: 'ObjectGr_id', type: 'int' },
+        { name: 'Addr', type: 'string' },
     ],
     id: 'Object_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AddressList',
@@ -1261,6 +1262,7 @@ Sources.DeliveryDemandsSource =
         { name: 'date_delivery', type: 'date'},
         { name: 'rep_delivery', type: 'string'},
         { name: 'Contacts', type: 'string'},
+        { name: 'contact_info', type: 'string'},
         { name: 'dlrs_id', type: 'int'},
         { name: 'date_promise', type: 'date'},
         { name: 'prtp_id', type: 'int'},
@@ -1317,6 +1319,111 @@ Sources.SourceResults =
     ],
     id: 'Result_Id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Results',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDeliveryComments =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dlcm_id', type: 'int'},
+        {name: 'Employeename', type: 'string'},
+        {name: 'text', type: 'string'},
+        {name: 'date_create', type: 'date'},
+    ],
+    id: 'dlcm_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DeliveryComments',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDeliveryDetails =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dldt_id', type: 'int'},
+        {name: 'equipname', type: 'string'},
+        {name: 'um_name', type: 'string'},
+        {name: 'quant', type: 'float'},
+        {name: 'used', type: 'bool'},
+    ],
+    id: 'dldt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DeliveryDetails',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDeliveryTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dltp_id', type: 'int'},
+        {name: 'DeliveryType', type: 'string'},
+    ],
+    id: 'dltp_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DeliveryTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDemandPriors =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'DemandPrior_id', type: 'int'},
+        {name: 'DemandPrior', type: 'string'},
+    ],
+    id: 'DemandPrior_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DemandPriors',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDelayReasons =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dlrs_id', type: 'int'},
+        {name: 'name', type: 'string'},
+    ],
+    id: 'dlrs_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DelayReasons',
     type: 'POST',
     root: 'Rows',
     cache: false,

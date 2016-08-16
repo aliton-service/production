@@ -99,8 +99,6 @@
             return null;
         };
         
-        console.log(DataOrg);
-        
         $("#FullName").on('select', function(event){
             var args = event.args;
             if (args) {

@@ -49,34 +49,23 @@ class DeliveryComments extends MainFormModel
 
 		parent::__construct($scenario);
 
-		$select = "
-		Select
-			dc.dlcm_id,
-			dc.dldm_id,
-			dc.EmplCreate,
-			dc.date_create,
-			dc.[text],
-			dbo.FIO_N(e.Employee_id) employeename
-		";
-		$from = "
-		From DeliveryComments dc
-		left join Employees_ForObj_v e on (dc.EmplCreate = e.Employee_id)
-		";
-		$where = "
-		Where dc.DelDate is Null
-		";
-		$order = "
-		Order by dc.dlcm_id desc
-		";
-		$this->Query->setSelect($select);
-		$this->Query->setFrom($from);
-		$this->Query->setOrder($order);
-		$this->Query->setWhere($where);
+		$Select = "\nSelect
+                                dc.dlcm_id,
+                                dc.dldm_id,
+                                dc.EmplCreate,
+                                dc.date_create,
+                                dc.[text],
+                                e.ShortName as Employeename";
+		$From = "\nFrom DeliveryComments dc left join Employees e on (dc.EmplCreate = e.Employee_id)";
+		$Where = "\nWhere dc.DelDate is Null";
+		$Order = "\nOrder by dc.dlcm_id desc";
+		$this->Query->setSelect($Select);
+		$this->Query->setFrom($From);
+		$this->Query->setOrder($Order);
+		$this->Query->setWhere($Where);
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
+	
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
