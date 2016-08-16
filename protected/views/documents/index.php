@@ -51,8 +51,8 @@
         $("#dmnd_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
         $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
         $("#date_act").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_act, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
-        $("#SpecialCondition2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 800 }));
-        $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 330 }));
+        $("#SpecialCondition2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420 }));
+        $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 320 }));
         $("#ExecDay").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Garant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
@@ -272,19 +272,19 @@
         <div class="row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
     </div>
     
-    <div class="row" style="padding: 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
+    <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
         <div style="overflow: hidden;">
             <div class="row-column" style="margin: 0 0 15px 0; width: 100%; font-weight: 500;">Выполненные работы</div>
             <div class="row-column">Заявка: <input readonly id="dmnd_id" type="text"></div>
             <div class="row-column" style="padding-top: 3px;">Дата выполнения работ: </div><div class="row-column"><div id="DateExec"></div></div>
             <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_act"></div></div>
             <div class="row-column" style="padding-top: 10px;">Перечень работ: <textarea readonly id="SpecialCondition2" ></textarea></div>
-        </div>
-
-        <div style="overflow: hidden; margin-top: 10px;">
-            <div class="row-column">Контактное лицо: <input readonly id="FIO" type="text"></div>
-            <div class="row-column">Срок: </div><div class="row-column"><div id="ExecDay" type="text"></div></div>
-            <div class="row-column">Гарантия: </div><div class="row-column"><div id="Garant" type="text"></div></div>
+       
+            <div class="row-column" style="padding-top: 10px;">Контактное лицо: <br><input readonly id="FIO" type="text"></div>
+            <div class="row">
+                <div class="row-column">Срок: </div><div class="row-column"><div id="ExecDay" type="text"></div></div>
+                <div class="row-column">Гарантия: </div><div class="row-column"><div id="Garant" type="text"></div></div>
+            </div>
         </div>
     </div>
     

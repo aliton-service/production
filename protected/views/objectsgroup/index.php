@@ -187,8 +187,8 @@
                     break;
             }
         };
-        $('#jqxTabs').jqxTabs({ width: 1800, height: 860,  initTabContent: initWidgets });
-        $('#jqxTabs').jqxTabs({ selectedItem: 3 });
+        $('#jqxTabs').jqxTabs({ width: '100%', height: 860,  initTabContent: initWidgets });
+//        $('#jqxTabs').jqxTabs({ selectedItem: 3 });
  
         
 
@@ -291,7 +291,7 @@ $this->breadcrumbs=array(
             <hr style="border-color: #cecece;"/>
             <div class="row" style="margin: 5px 10px;">Контактные лица: </div>
             
-            <div style=" overflow: hidden; margin-left: 15px;"><div id="ContactInfoGrid" class="jqxGridAliton"></div></div>
+            <div style=" margin-left: 15px; padding-right: 15px"><div id="ContactInfoGrid" class="jqxGridAliton"></div></div>
             
             <div class="row" style="margin-left: 10px;">
                 <div class="row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>
