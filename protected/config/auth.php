@@ -323,6 +323,7 @@ return array_merge(
                 'AdminChildrens',
                 'AdminEmployees',
                 'AdminInstructings',
+                'AdminOrganizationStructure',
                 ),
         ),
     )
