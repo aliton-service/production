@@ -67,8 +67,8 @@
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
                         $('#EditDialog').jqxWindow('close');
+                        $('#ObjectsGroupSystemsGrid').jqxGrid({source: LoadData(OGSystemsDataAdapter)});
                         $("#ObjectsGroupSystemsGrid").jqxGrid('updatebounddata');
-//                        $('#ObjectsGroupSystemsGrid').jqxGrid({source: LoadData(OGSystemsDataAdapter)});
                     } else {
                         $('#BodyDialog').html(Res);
                     }

@@ -6,7 +6,7 @@
  * Time: 14:11
  */
 
-class ContractsSController extends Controller
+class DocumentsController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -37,7 +37,7 @@ class ContractsSController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions' => array('index', 'view', 'equipAnalog'),
 				'roles' => array(
-					'ViewContractsS',
+					'ViewDocuments',
 
 				),
 			),
@@ -45,7 +45,7 @@ class ContractsSController extends Controller
 				'actions' => array('create'),
 				'roles' => array(
 
-					'CreateContractsS',
+					'CreateDocuments',
 
 				),
 			),
@@ -53,7 +53,7 @@ class ContractsSController extends Controller
 				'actions' => array('update'),
 				'roles' => array(
 
-					'UpdateContractsS',
+					'UpdateDocuments',
 
 				),
 			),
@@ -62,7 +62,7 @@ class ContractsSController extends Controller
 				'actions' => array('delete'),
 				'roles' => array(
 
-					'DeleteContractsS',
+					'DeleteDocuments',
 
 				),
 
@@ -84,17 +84,17 @@ class ContractsSController extends Controller
 
 	public function actionCreate()
 	{
-		$model = new ContractsS;
+		$model = new Documents;
 
-		if (isset($_POST['ContractsS'])) {
-			$model->attributes = $_POST['ContractsS'];
+		if (isset($_POST['Documents'])) {
+			$model->attributes = $_POST['Documents'];
 			$model->EmplCreate = Yii::app()->user->Employee_id;
 			if ($model->validate()) {
 				$model->insert();
 				if ($this->isAjax()) {
 					die(json_encode(array('status' => 'ok', 'data' => array('msg' => '������ � ������������ ������� �������'))));
 				} else {
-					$this->redirect('/?r=ContractsS');
+					$this->redirect('/?r=Documents');
 				}
 			}
 		}
@@ -110,15 +110,15 @@ class ContractsSController extends Controller
 
 	public function actionUpdate($id)
 	{
-		$model = new ContractsS;
+		$model = new Documents;
 		if ($id == null)
 			throw new CHttpException(404, '�� ������ ���������.');
 
-//		if (!Yii::app()->LockManager->LockRecord('ContractsS', $model->tableSchema->primaryKey, $id))
+//		if (!Yii::app()->LockManager->LockRecord('Documents', $model->tableSchema->primaryKey, $id))
 //			throw new CHttpException(404, '������ ������������� ������ �������������');
 
-		if($id && (int)$id > 0 && isset($_POST['ContractsS'])) {
-			$model->attributes = $_POST['ContractsS'];
+		if($id && (int)$id > 0 && isset($_POST['Documents'])) {
+			$model->attributes = $_POST['Documents'];
 			$model->ContrS_id = (int)$id;
 			$model->EmplChange = Yii::app()->user->Employee_id;
 			if ($model->validate()) {
@@ -127,7 +127,7 @@ class ContractsSController extends Controller
 					die(json_encode(array('status' => 'ok', 'data' => array('msg' => '������ � ������������ ������� ��������'))));
 				} else {
 
-					$this->redirect('/?r=ContractsS');
+					$this->redirect('/?r=Documents');
 				}
 			}
 		} else {
@@ -145,32 +145,32 @@ class ContractsSController extends Controller
 
 	public function actionDelete($id)
 	{
-		$model = new ContractsS;
+		$model = new Documents;
 		$model->ContrS_id = $id;
 		$model->EmplDel = Yii::app()->user->Employee_id;
 		$model->delete();
 		if($this->isAjax()) {
-			die(json_encode(array('status'=>'ok','data'=>array('msg'=>'������ � ������������ ������� �������'))));
+			die(json_encode(array('status'=>'ok','data'=>array('msg'=>''))));
 		}
 		else {
-			$this->redirect('/?r=ContractsS');
+			$this->redirect('/?r=Documents');
 		}
 
 	}
 
 
-	public function actionIndex()
+	public function actionIndex($ContrS_id = NULL)
 	{
-            if (isset($_GET['ObjectGr_id']))
+            if ($ContrS_id !== NULL)
             {
-                $ObjectGr_id = $_GET['ObjectGr_id'];
-                $model = new ContractsS();
-                $model->getModelPk($ObjectGr_id);
+                $model = new Documents();
+                $model->getModelPk($ContrS_id);
+                $this->title = $model->DocType_Name .' № ' . $model->ContrS_id;
 
-                $this->renderPartial('index', array(
-                    'model' => $model,
-                    'ObjectGr_id' => $ObjectGr_id,
-                ), false, true);
+                $this->render('index', array(
+                   'model' => $model
+                ));
+
             }
 	}
 

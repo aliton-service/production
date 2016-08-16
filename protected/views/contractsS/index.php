@@ -1,143 +1,129 @@
-<?php
-/**
- *
- * @var ContractsSController $this
- */
-
-$this->title = 'Поиск счетов';
-?>
-<div class="pull-left">
-	Номер:
-</div>
-
-<div class="field pull-left">
-	<?php
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'number',
-		'Width' => 200,
-		'Type' => 'String',
-	//	'Mode' => "Auto",
-	));
-?>
-</div>
-
-<div class="pull-left">
-	Сумма:
-</div>
-
-<div class="field pull-left">
-	<?php
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'price',
-		'Width' => 200,
-		'Type' => 'String',
-	//	'Mode' => "Auto",
-	));
-	?>
-</div>
-<?php
-
-$this->widget('application.extensions.alitonwidgets.gridajax.algridajax', array(
-	'id' => 'search-acc',
-	'Stretch' => true,
-	'Key' => 'Search_Account_Index_Grid_1',
-	'ModelName' => 'ContractsS',
-	'ShowFilters' => true,
-	'Height' => 300,
-	'Width' => 500,
-	'Columns' => array(
-		'DocType_Name' => array(
-			'Name' => 'Тип документа',
-			'FieldName' => 'DocType_Name',
-			'Width' => 100,
-			'Filter' => array(
-				'Condition' => 'dt.DocType_Name Like \':Value%\'',
-			),
-			'Sort' => array(
-				'Up' => 'dt.DocType_Name desc',
-				'Down' => 'dt.DocType_Name',
-			),
-		),
-		'ContrDateS' => array(
-			'Name' => 'Дата',
-			'FieldName' => 'ContrDateS',
-			'Width' => 100,
-			'Format' => 'd.m.Y',
-			'Filter' => array(
-				'Condition' => 'c.ContrDateS = :Value',
-			),
-			'Sort' => array(
-				'Up' => 'c.ContrDateS desc',
-				'Down' => 'c.ContrDateS',
-			),
-		),
-		'ContrNumS' => array(
-			'Name' => 'Номер',
-			'FieldName' => 'ContrNumS',
-			'Width' => 100,
-			'Filter' => array(
-				'Condition' => "c.ContrNumS like '%:Value%'",
-			),
-			'Sort' => array(
-				'Up' => 'c.ContrNumS desc',
-				'Down' => 'c.ContrNumS',
-			),
-		),
-		'Addr' => array(
-			'Name' => 'Адрес',
-			'FieldName' => 'Addr',
-			'Width' => 100,
-			'Filter' => array(
-				'Condition' => 'a.Addr Like \':Value%\'',
-			),
-			'Sort' => array(
-				'Up' => 'a.Addr desc',
-				'Down' => 'a.Addr',
-			),
-		),
-		'Price' => array(
-			'Name' => 'Начисления',
-			'FieldName' => 'Price',
-			'Width' => 100,
-			'Filter' => array(
-				'Condition' => 'Price Like \':Value%\'',
-			),
-			'Sort' => array(
-				'Up' => 'Price desc',
-				'Down' => 'Price',
-			),
-		),
-
-
-	),
-
-
-));
-
-?>
-<script>
-	Aliton.Links = [
-		{
-			Out: "number",
-			In: "search-acc",
-			TypeControl: "Grid",
-			Condition: "c.ContrNumS like '%:Value%'",
-			//Field: "Employee_id",
-			Name: "Edit1_Filter1",
-			TypeFilter: "Internal",
-			TypeLink: "Filter",
-			isNullRun: false
-		},
-		{
-			Out: "price",
-			In: "search-acc",
-			TypeControl: "Grid",
-			Condition: "((case when c.DocType_id = 4 then round(c.PriceMonth, 2) else round(c.Price, 2) end) = :Value)",
-			//Field: "Employee_id",
-			Name: "Edit1_Filter2",
-			TypeFilter: "Internal",
-			TypeLink: "Filter",
-			isNullRun: false
-		}
-	]
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        /* Текущая выбранная строка данных */
+        var CurrentRowData;
+        
+        var Contracts = {
+            ObjectGr_id: '<?php echo $ObjectGr_id; ?>',
+        };
+            
+        var ContractsSDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractsS, {}), {
+            formatData: function (data) {
+                $.extend(data, {
+                    Filters: ["c.ObjectGr_id = " + Contracts.ObjectGr_id],
+                });
+                return data;
+            },
+        });
+            
+        $("#ContractsGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                showfilterrow: false,
+                virtualmode: false,
+                width: '100%',
+                height: '300',
+                source: ContractsSDataAdapter,
+                columns: [
+                    { text: 'Вид документа', dataField: 'DocType_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
+                    { text: 'Тип договора', dataField: 'crtp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
+                    { text: 'Подписание акта', dataField: 'date_doc', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 150 },
+                    { text: 'Номер', dataField: 'ContrNumS', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Дата', dataField: 'ContrDateS', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Действует с', dataField: 'ContrSDateStart', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'по', dataField: 'ContrSDateEnd', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Сумма долга', dataField: 'debt', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Периодичность оплаты', dataField: 'PaymentName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 170 },
+                    { text: 'Вид оплаты', dataField: 'PaymentTypeName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Оплачено по', dataField: 'DatePay', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Долг', dataField: 'Debtor', columntype: 'checkbox', filtercondition: 'STARTS_WITH', width: 80 },
+                    { text: 'Оплачено', dataField: 'CalcSum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                ]
+            })
+        );
+        
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
+        $("#MasterName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
+        $("#DateExecuting").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 170 }));
+        $("#SpecialCondition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 470 }));
+        $("#ContrNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 470 }));
+        
+        $("#ContractsGrid").on('rowselect', function (event) {
+            var Temp = $('#ContractsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowData = Temp;
+            } else {CurrentRowData = null};
+            
+            console.log(CurrentRowData);
+            
+            if (CurrentRowData.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
+            if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
+            if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxInput('val', CurrentRowData.DateExecuting);
+            if (CurrentRowData.SpecialCondition != '') $("#SpecialCondition").jqxTextArea('val', CurrentRowData.SpecialCondition);
+            if (CurrentRowData.ContrNote != '') $("#ContrNote").jqxTextArea('val', CurrentRowData.ContrNote);
+        });
+        
+        
+        $("#NewContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#MoreInformContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
+        $("#DelContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+                
+        
+        $('#ContractsGrid').on('rowdoubleclick', function (event) { 
+            $("#MoreInformContract").click();
+        });
+        
+        
+        $("#NewContract").on('click', function () 
+        {
+            window.open('/index.php?r=Documents/Create');
+        });
+        
+        $("#MoreInformContract").on('click', function ()
+        {
+            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id);
+        });
+           
+        $("#DelContract").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=ContractsS/Delete",
+                data: { Contract_id: CurrentRowData.Contract_id },
+                success: function(){
+                    $("#ContractsGrid").jqxGrid('updatebounddata');
+                }
+            });
+        });
+        
+    });
+    
+        
 </script>
+
+<div class="row">
+    <div id="ContractsGrid" class="jqxGridAliton"></div>
+</div>
+
+
+<div class="row">
+    <div class="row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
+    <div class="row-column">Мастер: <input readonly id="MasterName" type="text"></div>
+    <div class="row-column">Дата проводки через ВЦКП: <input readonly id='DateExecuting' type="text"></div> 
+</div>
+
+<div class="row">
+    <div class="row-column">Особые договоренности: <textarea readonly id="SpecialCondition" ></textarea></div>
+    <div class="row-column">Примечание: <textarea readonly id="ContrNote" ></textarea></div>
+</div>
+
+
+<div class="row">
+    <div class="row-column"><input type="button" value="Создать" id='NewContract' /></div>
+    <div class="row-column"><input type="button" value="Дополнительно" id='MoreInformContract' /></div>
+    <div class="row-column"><input type="button" value="Удалить" id='DelContract' /></div>
+</div>
+
+</div>

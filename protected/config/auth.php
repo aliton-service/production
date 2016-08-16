@@ -101,6 +101,8 @@ return array_merge(
 
     /* Поиск счетов */
     include(dirname(__FILE__).'/security/ContractsSSecurity.php'),
+    include(dirname(__FILE__).'/security/ContractsDetails_vSecurity.php'),
+    include(dirname(__FILE__).'/security/DocumentsSecurity.php'),
 
     /* Перевод мастеров */
     include(dirname(__FILE__).'/security/ReplaceMasterSecurity.php  '),
@@ -299,6 +301,8 @@ return array_merge(
                 'AdminObjectsGroupSystems',
                 'AdminContacts',
                 'AdminDeliveryDemands',
+                'AdminDocuments',
+                'AdminContractsDetails_v',
                 /* Отчеты*/
                 'Demand1Report',
                 'Demand2Report',

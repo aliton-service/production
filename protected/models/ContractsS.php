@@ -5,6 +5,7 @@ class ContractsS extends MainFormModel
 	public $ContrS_id = null;
 	public $ObjectGr_id = null;
 	public $ContrNumS = null;
+	public $title = null;
 	public $ContrDateS = null;
 	public $ContrSDateStart = null;
 	public $ContrSDateEnd = null;
@@ -16,7 +17,7 @@ class ContractsS extends MainFormModel
 	public $MasterTel = null;
 	public $ServiceType_id = null;
 	public $Debtor = null;
-	public $Note = null;
+	public $ContrNote = null;
 	public $DateCreate = null;
 	public $DateChange = null;
 	public $User2 = null;
@@ -24,12 +25,14 @@ class ContractsS extends MainFormModel
 	public $PaymentPeriod_id = null;
 	public $PaymentType_id = null;
 	public $DocType_id = null;
+	public $DocType_Name = null;
 	public $Reason_id = null;
 	public $LastChangeDate = null;
 	public $SpecialCondition = null;
 	public $Jrdc_id = null;
 	public $DelDate = null;
 	public $crtp_id = null;
+	public $crtp_name = null;
 	public $Prolong = null;
 	public $date_doc = null;
 	public $date_act = null;
@@ -56,9 +59,10 @@ class ContractsS extends MainFormModel
 	public $EmplChange = null;
 	public $EmplDel = null;
 	public $UserCheckUp = null;
+	public $JuridicalPerson = null;
+	public $MasterName = null;
 
-	public $KeyFiled = 'c.ContrS_id';
-	public $PrimaryKey = 'ContrS_id';
+	
 
 	public $SP_INSERT_NAME = '';
 	public $SP_UPDATE_NAME = '';
@@ -72,10 +76,10 @@ class ContractsS extends MainFormModel
 			array('Price, PriceMonth, Debt, PrePayment, discount', 'numerical'),
 			array('ContrNumS, DocNumber', 'length', 'max'=>30),
 			array('MasterTel, User2', 'length', 'max'=>50),
-			array('Note, SpecialCondition', 'length', 'max'=>1073741823),
+			array('ContrNote, SpecialCondition', 'length', 'max'=>1073741823),
 			array('CalcSum', 'length', 'max'=>19),
 			array('ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Debtor, DateCreate, DateChange, LastChangeDate, DelDate, Prolong, date_doc, date_act, DateExecuting, JobExec, WorkText, Annex, DocDate, date_checkup, Lock, DateLock', 'safe'),
-			array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, Empl_id, Master, MasterTel, ServiceType_id, Debtor, Note, DateCreate, DateChange, User2, ServiceRate_id, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, Prolong, date_doc, date_act, Debt, DateExecuting, dmnd_id, JobExec, CalcSum, calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp', 'safe'),
+			array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, Empl_id, Master, MasterTel, ServiceType_id, Debtor, ContrNote, DateCreate, DateChange, User2, ServiceRate_id, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, Prolong, date_doc, date_act, Debt, DateExecuting, dmnd_id, JobExec, CalcSum, calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp', 'safe'),
 		);
 	}
 
@@ -87,16 +91,34 @@ class ContractsS extends MainFormModel
 			c.ContrDateS,
 			c.ContrNumS,
 			dt.DocType_Name,
+                        c.crtp_id,
+                        ct.name crtp_name,
+                        c.date_doc,
 			c.ContrSDateStart,
 			c.ContrSDateEnd,
+                        pp.PaymentName,
+                        pt.PaymentTypeName,
 			a.Addr,
+                        c.CalcSum,
+                        c.Jrdc_id,
+                        j.JuridicalPerson,
+                        e.EmployeeName MasterName,
+                        c.SpecialCondition,
+                        c.Note ContrNote,
+                        c.DateExecuting,
 			case when c.DocType_id = 4 then round(c.PriceMonth, 2) else round(c.Price, 2) end Price
 		";
 
 		$from = "
-		from contractss c left join ObjectsGroup og on (c.ObjectGr_id = og.ObjectGr_id)
+		from ContractsS c left join ObjectsGroup og on (c.ObjectGr_id = og.ObjectGr_id)
 		left join Addresses_v a on (a.Address_id = og.Address_id)
 		left join DocTypes dt on (c.DocType_id = dt.DocType_Id)
+                left join ContractTypes ct on (c.crtp_id = ct.crtp_id)
+                left join PaymentPeriods pp on (c.PaymentPeriod_id = pp.PaymentPeriod_Id)
+                left join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_Id)
+                left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
+                left join ContractMasterHistory ch on (c.ContrS_id = ch.ContrS_id and ch.DelDate is Null and dbo.truncdate(getdate()) between dbo.truncdate(ch.WorkDateStart) and dbo.truncdate(ch.WorkDateEnd))
+                left join Employees_ForObj_v e on (ch.Master = e.Employee_id)
 		";
 
 		$where = "
@@ -108,12 +130,110 @@ class ContractsS extends MainFormModel
 		$order = "
 		order by c.ContrS_id
 		";
+                
+                // Инициализация первичного ключа
+                $this->KeyFiled = 'c.contrs_id';
+                $this->PrimaryKey = 'contrs_id';
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);
 		$this->Query->setWhere($where);
 		$this->Query->setOrder($order);
 	}
+        
+        
+//        c.ServiceType_id,
+//        st.ServiceType,
+//        c.SpecialCondition,
+//        c.Reason_id,
+//        c.LastChangeDate,
+//        e.EmployeeName EmployeeName,
+//        case when dbo.truncdate(getdate()) between c.ContrSDateStart and c.ContrSDateEnd then 1
+//             when getdate() < c.ContrSDateStart then 2
+//        else 0 end Status,
+//        c.crtp_id,
+//        ct.name crtp_name,
+//        c.Prolong,
+//        c.debt,
+//        case when c.debt < 0 then 0 else c.debt end debt2,
+//       c.date_doc,
+//       c.date_act,
+//       c.DateExecuting,
+//       c.JobExec,
+//       c.dmnd_id,
+//       c.CalcSum,
+//       c.Calc_id
+//    from ContractsS c left join ServiceTypes st on (c.ServiceType_id = st.Servicetype_id)
+//         left outer join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
+//         left join ContractMasterHistory ch on (c.ContrS_id = ch.ContrS_id and ch.DelDate is Null and dbo.truncdate(getdate()) between dbo.truncdate(ch.WorkDateStart) and dbo.truncdate(ch.WorkDateEnd))
+//         left outer join Employees_ForObj_v e on (ch.Master = e.Employee_id)
+//         left outer join DocTypes dt on (c.DocType_id = dt.DocType_id)
+//         left outer join PaymentPeriods p on (c.PaymentPeriod_id = p.PaymentPeriod_id)
+//         left outer join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_id)
+//
+//         left outer join ContractTypes ct on (c.crtp_id = ct.crtp_id)
+//    where
+//        c.ObjectGr_id = :ObjectGr_id
+//        and c.DelDate is Null
+
+ 
+
+//    select
+//    c.ContrS_id,
+//    dbo.get_sumpayments(c.ContrS_id) summa,
+//    c.ObjectGr_id,
+//    c.DocType_id,
+//    dt.DocType_Name,
+//    c.ContrNumS, 
+//    c.ContrDateS, 
+//    c.ContrSDateStart, 
+//    c.ContrSDateEnd, 
+//    c.DatePay,
+//    c.Price, 
+//    c.PriceMonth,
+//    c.PaymentPeriod_id,
+//    p.PaymentName,
+//    c.PaymentType_id,
+//    pt.PaymentTypeName,
+//    c.Jrdc_id,
+//    j.JuridicalPerson,
+//    ch.Master Master,
+//    dbo.fio(e.EmployeeName) MasterName,
+//    c.Debtor,
+//    c.Note,
+//    c.ServiceType_id,
+//    st.ServiceType,
+//    c.SpecialCondition,
+//    c.Reason_id,
+//    c.LastChangeDate,
+//    e.EmployeeName EmployeeName,
+//    case when dbo.truncdate(getdate()) between c.ContrSDateStart and c.ContrSDateEnd then 1
+//         when getdate() < c.ContrSDateStart then 2
+//    else 0 end Status,
+//    c.crtp_id,
+//    ct.name crtp_name,
+//    c.Prolong,
+//    c.debt,
+//    case when c.debt < 0 then 0 else c.debt end debt2,
+//   c.date_doc,
+//   c.date_act,
+//   c.DateExecuting,
+//   c.JobExec,
+//   c.dmnd_id,
+//   c.CalcSum,
+//   c.Calc_id
+//from ContractsS c left join ServiceTypes st on (c.ServiceType_id = st.Servicetype_id)
+//     left outer join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
+//     left join ContractMasterHistory ch on (c.ContrS_id = ch.ContrS_id and ch.DelDate is Null and dbo.truncdate(getdate()) between dbo.truncdate(ch.WorkDateStart) and dbo.truncdate(ch.WorkDateEnd))
+//     left outer join Employees_ForObj_v e on (ch.Master = e.Employee_id)
+//     left outer join DocTypes dt on (c.DocType_id = dt.DocType_id)
+//     left outer join PaymentPeriods p on (c.PaymentPeriod_id = p.PaymentPeriod_id)
+//     left outer join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_id)
+//     
+//     left outer join ContractTypes ct on (c.crtp_id = ct.crtp_id)
+//where
+//    c.ObjectGr_id = :ObjectGr_id
+//    and c.DelDate is Null
 
 
 	public function attributeLabels()
@@ -133,7 +253,7 @@ class ContractsS extends MainFormModel
 			'MasterTel' => 'Master Tel',
 			'ServiceType_id' => 'Service Type',
 			'Debtor' => 'Debtor',
-			'Note' => 'Note',
+			'ContrNote' => 'Contr Note',
 			'DateCreate' => 'Date Create',
 			'DateChange' => 'Date Change',
 			'User2' => 'User2',

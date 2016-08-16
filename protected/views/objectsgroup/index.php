@@ -161,6 +161,8 @@
                     $('#content3').html(data);
                 if (index == 3)
                     $('#content4').html(data);
+                if (index == 4)
+                    $('#content5').html(data);
                     
             });
         };
@@ -178,12 +180,15 @@
                     loadPage('<?php echo Yii::app()->createUrl('ObjectsAndEquips/ajaxview', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 2);
                     break;
                 case 3:
-                    loadPage('<?php echo Yii::app()->createUrl('Contacts/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 3);
+                    loadPage('<?php echo Yii::app()->createUrl('ContractsS/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 3);
+                    break;
+                case 4:
+                    loadPage('<?php echo Yii::app()->createUrl('Contacts/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 4);
                     break;
             }
         };
         $('#jqxTabs').jqxTabs({ width: 1800, height: 860,  initTabContent: initWidgets });
-        //$('#jqxTabs').jqxTabs({ selectedItem: 1 });
+        $('#jqxTabs').jqxTabs({ selectedItem: 3 });
  
         
 
@@ -223,6 +228,13 @@ $this->breadcrumbs=array(
                 <div style="height: 15px; margin-top: 3px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
                         Оборудование
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Договора и оплаты
                     </div>
                 </div>
             </li>
@@ -298,6 +310,11 @@ $this->breadcrumbs=array(
             </div>
         </div>
         <div id='content4' style="overflow: hidden; margin-left: 10px;">
+            <div style="width: 100%; height: 100%">
+                
+            </div>
+        </div>
+        <div id='content5' style="overflow: hidden; margin-left: 10px;">
             <div style="width: 100%; height: 100%">
                 
             </div>

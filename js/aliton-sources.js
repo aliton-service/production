@@ -642,7 +642,7 @@ Sources.SourceListEquipsMin =
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
@@ -1424,6 +1424,94 @@ Sources.SourceDelayReasons =
     ],
     id: 'dlrs_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DelayReasons',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceContractsS =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ContrS_id', type: 'int'},
+        {name: 'ContrNumS', type: 'string'},
+        {name: 'DocType_Name', type: 'string'},
+        {name: 'crtp_name', type: 'string'},
+        {name: 'date_doc', type: 'date'},
+        {name: 'ContrDateS', type: 'date'},
+        {name: 'ContrSDateStart', type: 'date'},
+        {name: 'ContrSDateEnd', type: 'date'},
+        {name: 'PaymentName', type: 'string'},
+        {name: 'PaymentTypeName', type: 'string'},
+        {name: 'DatePay', type: 'date'},
+        {name: 'Debtor', type: 'bool'},
+        {name: 'CalcSum', type: 'float'},
+        {name: 'JuridicalPerson', type: 'string'},
+        {name: 'MasterName', type: 'string'},
+        {name: 'SpecialCondition', type: 'string'},
+        {name: 'ContrNote', type: 'string'},
+        {name: 'DateExecuting', type: 'date'},
+    ],
+    id: 'ContrS_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractsS',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourceContractsDetails_v =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'csdt_id', type: 'int'},
+        {name: 'ContrS_id', type: 'int'},
+        {name: 'Equip_id', type: 'int'},
+        {name: 'Name', type: 'string'},
+        {name: 'ItemName', type: 'string'},
+        {name: 'Price', type: 'string'},
+        {name: 'Quant', type: 'string'},
+        {name: 'Sum', type: 'string'},
+        {name: 'Note', type: 'string'},
+    ],
+    id: 'csdt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractsDetails_v',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourceUnitMeasurement =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'UnitMeasurement_Id', type: 'int'},
+        {name: 'NameUnitMeasurement', type: 'string'},
+    ],
+    id: 'UnitMeasurement_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=UnitMeasurement',
     type: 'POST',
     root: 'Rows',
     cache: false,
