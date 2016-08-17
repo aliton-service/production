@@ -59,6 +59,8 @@ class ReportsController extends Controller
        
         }
         
+        $ResultHtml = str_ireplace('<div style="HEIGHT:100%;WIDTH:100%;" class="ap">', '<div class="ap">', $ResultHtml);
+        
         if (!$Ajax)
             $this->render($this->GetViewForReport($ReportName), array(
                 'ResultHtml' => $ResultHtml,
