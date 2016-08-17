@@ -326,6 +326,25 @@ return array_merge(
                 'AdminOrganizationStructure',
                 ),
         ),
+        
+        'HeadServiceCentr' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель СЦ',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'UserObjects',
+                'ManagerObjectsGroup',
+                'ManagerDemands',
+                'AdminExecuteReports',
+                'ManagerContactInfo',
+                'ManagerObjectsGroupSystems',
+                'UserDeliveryDemands',
+                'ManagerContacts',
+                'Demand2Report',
+            ),
+        ),
     )
 );
 
