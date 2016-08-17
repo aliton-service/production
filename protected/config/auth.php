@@ -300,6 +300,7 @@ return array_merge(
                 'AdminOrganizationStructure',
                 'AdminObjectsGroupSystems',
                 'AdminContacts',
+                'AdminDeliveryDemands',
                 'AdminDocuments',
                 'AdminContractsDetails_v',
                 /* Отчеты*/
@@ -322,7 +323,27 @@ return array_merge(
                 'AdminChildrens',
                 'AdminEmployees',
                 'AdminInstructings',
+                'AdminOrganizationStructure',
                 ),
+        ),
+        
+        'HeadServiceCentr' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель СЦ',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'UserObjects',
+                'ManagerObjectsGroup',
+                'ManagerDemands',
+                'AdminExecuteReports',
+                'ManagerContactInfo',
+                'ManagerObjectsGroupSystems',
+                'UserDeliveryDemands',
+                'ManagerContacts',
+                'Demand2Report',
+            ),
         ),
     )
 );

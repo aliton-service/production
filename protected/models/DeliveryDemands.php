@@ -21,10 +21,13 @@ class DeliveryDemands extends MainFormModel
     public $empl_dlvr_id;
     public $date_logist;
     public $user_logist;
+    public $user_logist_name;
     public $note;
+    public $Addr;
     public $date_delivery;
     public $rep_delivery;
     public $Contacts;
+    public $contact_info;
     public $dlrs_id;
     public $date_promise;
     public $prtp_id;
@@ -42,8 +45,9 @@ class DeliveryDemands extends MainFormModel
     public $DateChange;
     public $EmplDel;
     public $DelDate;
-
-
+    public $DeliveryMan;
+    public $delayreasonname;
+            
 
     function __construct($scenario = '') {
 
@@ -86,6 +90,7 @@ class DeliveryDemands extends MainFormModel
                        dp.sort,
                        dbo.get_wdays_diff(d.deadline, isnull(d.date_delivery, getdate())) as overday,
                        d.dlrs_id,
+                       dr.name AS delayreasonname,
                        d.dmnd_id,
                        d.calc_id,
                        ar.AreaName";
@@ -98,7 +103,9 @@ class DeliveryDemands extends MainFormModel
                         left outer join Employees_ForObj_v e2 on (d.user_sender = e2.Employee_id)
                         left outer join Employees_ForObj_v e3 on (d.user_logist = e3.Employee_id)
                         left join ObjectsGroup og on (o.ObjectGr_id = og.ObjectGr_id)
-                        left join Areas ar on (ar.Area_id = og.Area_id) ";
+                        left join Areas ar on (ar.Area_id = og.Area_id)
+                        left join DelayReasonsLogistik as dr on (d.dlrs_id = dr.dlrs_id)
+                        ";
         $Where = "\nWhere (1 = 1)";
         $Order = "\nOrder by
                       case when d.date_logist is Null then 0 else 1 end,
@@ -113,10 +120,12 @@ class DeliveryDemands extends MainFormModel
         $this->PrimaryKey = 'dldm_id';
     }
 
-
+    
+        
     public function rules()
     {
         return array(
+                array('prty_id, dltp_id, deadline', 'required'),
                 array('dldm_id,
                         date,
                         user_sender,
@@ -136,6 +145,7 @@ class DeliveryDemands extends MainFormModel
                         date_delivery,
                         rep_delivery,
                         Contacts,
+                        contact_info,
                         dlrs_id,
                         date_promise,
                         prtp_id,
@@ -163,13 +173,14 @@ class DeliveryDemands extends MainFormModel
                     'date' => 'Date',
                     'user_sender' => 'User Sender',
                     'objc_id' => 'Objc',
-                    'dltp_id' => 'Dltp',
+                    'dltp_id' => 'Вид',
                     'mstr_id' => 'Mstr',
-                    'prty_id' => 'Prty',
+                    'prty_id' => 'Приоритет',
                     'bestdate' => 'Bestdate',
                     'deadline' => 'Deadline',
                     'plandate' => 'Plandate',
                     'text' => 'Text',
+                    'contact_info' => 'contact_info',
                     'phonenumber' => 'Phonenumber',
                     'empl_dlvr_id' => 'Empl Dlvr',
                     'date_logist' => 'Date Logist',
