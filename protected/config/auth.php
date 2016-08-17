@@ -149,6 +149,9 @@ return array_merge(
     /* Структура организации*/
     include(dirname(__FILE__).'/security/OrganizationStructureSecurity.php'),
         
+    /* Комментарии */
+    include(dirname(__FILE__).'/security/DeliveryCommentsSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -303,6 +306,7 @@ return array_merge(
                 'AdminDeliveryDemands',
                 'AdminDocuments',
                 'AdminContractsDetails_v',
+                'AdminDeliveryComments',
                 /* Отчеты*/
                 'Demand1Report',
                 'Demand2Report',

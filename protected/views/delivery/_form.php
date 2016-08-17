@@ -129,15 +129,16 @@
         if ((Log) && (!StateInsert)) {
             $("#edEditDeliveryMan").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees.records, width: '210', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
             if (DeliveryDemands.empl_dlvr_id != '') $("#edEditDeliveryMan").jqxComboBox("val", DeliveryDemands.empl_dlvr_id);
-            var DataDelayReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDelayReasons, {async: false}));
+            var DataDelayReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDelayReasonsLogistik, {async: false}));
             $("#edEditDelayReason").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataDelayReasons, width: '470', height: '25px', displayMember: "name", valueMember: "dlrs_id"}));
+            if (DeliveryDemands.Dlrs_id != '') $("#edEditDelayReason").jqxComboBox("val", DeliveryDemands.Dlrs_id);
             if (DeliveryDemands.empl_dlvr_id != '') $("#edEditDelayReason").jqxComboBox("val", DeliveryDemands.empl_dlvr_id);
             $("#edEditNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
             if (DeliveryDemands.Note != '') $("#edEditNote").jqxTextArea("val", DeliveryDemands.Note);
             $("#edEditRepDelivery").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
-            if (DeliveryDemands.Note != '') $("#edEditRepDelivery").jqxTextArea("val", DeliveryDemands.Note);
-            $("#edEditDateLogist").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.BestDate}));
-            $("#edEditDateDelivery").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.BestDate}));
+            if (DeliveryDemands.RepDelivery != '') $("#edEditRepDelivery").jqxTextArea("val", DeliveryDemands.RepDelivery);
+            $("#edEditDateLogist").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.DateLogist,  readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+            $("#edEditDateDelivery").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.DateDelivery}));
             $("#edEditDatePlan").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.PlanDate}));
             
         }
@@ -258,6 +259,8 @@
     <div class="row-column">Выполнена<div id="edEditDateDelivery" name="DeliveryDemands[date_delivery]"></div></div>
     <div class="row-column" style="float: right;">Планируется выполнить<div id="edEditDatePlan" name="DeliveryDemands[plandate]"></div></div>
 </div>    
+<input type="hidden" id="edUserLogist" name="DeliveryDemands[user_logist]" value="<?php echo $model->user_logist; ?>"/>
+
 
 <?php } ?>
 

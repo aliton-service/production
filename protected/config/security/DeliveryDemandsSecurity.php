@@ -13,6 +13,7 @@
                 'InsertDeliveryDemands',
                 'DeleteDeliveryDemands',
                 'LogDeliveryDemands',
+                'ToLogistDeliveryDemands',
             ),
         ),
         
@@ -40,6 +41,7 @@
                 'EditDeliveryDemands',
                 'InsertDeliveryDemands',
                 'LogDeliveryDemands',
+                'ToLogistDeliveryDemands',
             ),
         ),
         
@@ -75,6 +77,12 @@
             'children' => array(
                 'EditDeliveryDemands',
             ),
+        ),
+        'ToLogistDeliveryDemands' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Передать логисту',
+            'bizRule' => null,
+            'data' => null,
         ),
     );
 ?>

@@ -37,13 +37,7 @@ class DeliveryComments extends MainFormModel
 
 	public $SP_INSERT_NAME = 'INSERT_DeliveryComments';
 	public $SP_DELETE_NAME = 'DELETE_DeliveryComments';
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'DeliveryComments';
-	}
+	
 
 	function __construct($scenario = '', $print_reason = false) {
 
@@ -68,58 +62,34 @@ class DeliveryComments extends MainFormModel
 	
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('dldm_id, DateCreate', 'required'),
-			array('dldm_id, EmplCreate, EmplLock, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
-			array('text, DelDate, Lock, DateLock, DateChange', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('dlcm_id, dldm_id, DateCreate, text, DelDate, EmplCreate, Lock, EmplLock, DateLock, EmplChange, DateChange, EmplDel', 'safe', 'on'=>'search'),
-		);
+            return array(
+                array('dlcm_id,'
+                    . ' dldm_id,'
+                    . ' DateCreate,'
+                    . ' text,'
+                    . ' DelDate,'
+                    . ' EmplCreate,'
+                    . ' Lock,'
+                    . ' EmplLock,'
+                    . ' DateLock, EmplChange, DateChange, EmplDel', 'safe'),
+            );
 	}
 
-
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
 	public function attributeLabels()
 	{
-		return array(
-			'dlcm_id' => 'Dlcm',
-			'dldm_id' => 'Dldm',
-			'DateCreate' => 'Date Create',
-			'text' => 'Text',
-			'DelDate' => 'Del Date',
-			'EmplCreate' => 'Empl Create',
-			'Lock' => 'Lock',
-			'EmplLock' => 'Empl Lock',
-			'DateLock' => 'Date Lock',
-			'EmplChange' => 'Empl Change',
-			'DateChange' => 'Date Change',
-			'EmplDel' => 'Empl Del',
-		);
-	}
-
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return DeliveryComments the static model class
-	 */
-	 public function deleteCount($id, $empl_id) {
-	 
-		$Command = Yii::app()->db->createCommand(''
-                . "UPDATE DeliveryComments SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE dlcm_id = {$id}
-                ");
-        
-        return $Command->queryAll();
-	}
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
+            return array(
+                    'dlcm_id' => 'Dlcm',
+                    'dldm_id' => 'Dldm',
+                    'DateCreate' => 'Date Create',
+                    'text' => 'Text',
+                    'DelDate' => 'Del Date',
+                    'EmplCreate' => 'Empl Create',
+                    'Lock' => 'Lock',
+                    'EmplLock' => 'Empl Lock',
+                    'DateLock' => 'Date Lock',
+                    'EmplChange' => 'Empl Change',
+                    'DateChange' => 'Date Change',
+                    'EmplDel' => 'Empl Del',
+            );
 	}
 }

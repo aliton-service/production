@@ -1335,6 +1335,7 @@ Sources.SourceDeliveryComments =
     datatype: "json",
     datafields: [
         {name: 'dlcm_id', type: 'int'},
+        {name: 'EmplCreate', type: 'int'},
         {name: 'Employeename', type: 'string'},
         {name: 'text', type: 'string'},
         {name: 'date_create', type: 'date'},
@@ -1512,6 +1513,26 @@ Sources.SourceUnitMeasurement =
     ],
     id: 'UnitMeasurement_Id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=UnitMeasurement',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDelayReasonsLogistik =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dlrs_id', type: 'int'},
+        {name: 'name', type: 'string'},
+    ],
+    id: 'dlrs_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DelayReasonsLogistik',
     type: 'POST',
     root: 'Rows',
     cache: false,

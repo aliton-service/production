@@ -20,6 +20,10 @@ class DeliveryController extends Controller
                         'roles'=>array('ViewDeliveryDemands'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                        'actions'=>array('ToLogist'),
+                        'roles'=>array('ToLogistDeliveryDemands'),
+                ),
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
                         'actions'=>array('Insert'),
                         'roles'=>array('InsertDeliveryDemands'),
                 ),
@@ -86,7 +90,7 @@ class DeliveryController extends Controller
             $model->getModelPk($_POST['DeliveryDemands']['dldm_id']);
             $model->attributes = $_POST['DeliveryDemands'];
             if ($model->validate()) {
-                $model->Insert();
+                $model->Update();
                 echo '1';
                 return;
             }
@@ -104,5 +108,24 @@ class DeliveryController extends Controller
             $Result = $Query->QueryRow();
             echo $Result['Deadline'];            
         }
+    }
+    
+    public function actionToLogist() {
+        if (isset($_POST['Dldm_id'])) {
+            $model = new DeliveryDemands();
+            $model->getModelPk($_POST['Dldm_id']);
+            if ($model->date_logist == null || $model->date_logist == '') {
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'TO_LOGIST';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $_POST['Dldm_id'];
+                $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+                $sp->CheckParam = true;
+                $sp->Execute();
+                echo '1';
+                return;
+            }
+        }
+        echo '0';
     }
 }
