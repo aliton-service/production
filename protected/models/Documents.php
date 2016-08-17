@@ -135,17 +135,18 @@ class Documents extends MainFormModel
 		";
 
 		$from = "
-		From ContractsS c left join ServiceTypes st on (c.ServiceType_id = st.Servicetype_id)
-                    left outer join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
+		From ContractsS c 
+                    left join ServiceTypes st on (c.ServiceType_id = st.Servicetype_id)
+                    left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
                     left join ContractMasterHistory ch on (c.ContrS_id = ch.ContrS_id and ch.DelDate is Null and dbo.truncdate(getdate()) between dbo.truncdate(ch.WorkDateStart) and dbo.truncdate(ch.WorkDateEnd))
-                    left outer join Employees_ForObj_v e on (ch.Master = e.Employee_id)
-                    left outer join DocTypes dt on (c.DocType_id = dt.DocType_id)
-                    left outer join PaymentPeriods p on (c.PaymentPeriod_id = p.PaymentPeriod_id)
-                    left outer join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_id)
-                    left outer join ContractTypes ct on (c.crtp_id = ct.crtp_id)
+                    left join Employees_ForObj_v e on (ch.Master = e.Employee_id)
+                    left join DocTypes dt on (c.DocType_id = dt.DocType_id)
+                    left join PaymentPeriods p on (c.PaymentPeriod_id = p.PaymentPeriod_id)
+                    left join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_id)
+                    left join ContractTypes ct on (c.crtp_id = ct.crtp_id)
                     left join FullDemands d on (c.dmnd_id = d.Demand_id)
                     left join ContactInfo ci on (ci.Info_id = c.Info)
-                    left outer join Employees_ForObj_v e2 on (c.Empl_id = e2.Employee_id)
+                    left join Employees_ForObj_v e2 on (c.Empl_id = e2.Employee_id)
 		";
 
 		$where = "

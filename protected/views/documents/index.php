@@ -96,19 +96,19 @@
                 showfilterrow: false,
                 virtualmode: false,
                 width: '100%',
-                height: '150',
+                height: '170',
                 source: ContractsDetails_vDataAdapter,
                 columns: [
                     { text: 'Наименование', dataField: 'ItemName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
                     { text: 'Количество', dataField: 'Quant', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
-                    { text: 'Цена', dataField: 'Price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120, decimalDigits: 2 },
-                    { text: 'Сумма', dataField: 'Sum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Цена', dataField: 'price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120, decimalDigits: 2 },
+                    { text: 'Сумма', dataField: 'sum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
                 ]
             })
         );
-        var summaryData = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'Sum', ['sum']);
-//        console.log(summaryData);
-        $("#GridSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100 }));
+        var summaryData = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
+        
+        $("#GridSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         if (summaryData.sum != '') $("#GridSum").jqxNumberInput('val', summaryData.sum);
         
         $("#CDetailsGrid").on('rowselect', function (event) {
@@ -132,7 +132,7 @@
         $("#DelContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         
-        $('#CDetailsEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '570px', width: '700'}));
+        $('#CDetailsEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '360px', width: '700'}));
         
         $('#CDetailsEditDialog').jqxWindow({initContent: function() {
             $("#CDetailsBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -206,7 +206,7 @@
         };
         
         $('#CDetailsGrid').on('rowdoubleclick', function (event) { 
-            $("#EditContract").click();
+            $("#EditContractsDetails").click();
         });
         
         $("#NewContractsDetails").on('click', function ()
@@ -231,6 +231,7 @@
                 data: { csdt_id: CurrentRowData.csdt_id},
                 success: function(){
                     $("#CDetailsGrid").jqxGrid('updatebounddata');
+                    $("#CDetailsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });
@@ -241,7 +242,7 @@
 </script>
 
 
-<div style=" width: 850px; background-color: #F2F2F2;">
+<div style="background-color: #F2F2F2;">
     <div class="row">
         <div class="row-column">Номер: <input readonly id="ContrS_id" type="text"></div>
         <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
@@ -297,8 +298,8 @@
         <div class="row-column"><input type="button" value="Изменить" id='EditContract' /></div>
         <div class="row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
         <div class="row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
-        <div class="row-column" style="float: right;"><input type="button" value="Печатать" id='PrintContract' /></div>
-        <div class="row-column" style="float: right;"><input type="button" value="Утвердить" id='СonfirmContract' /></div>
+        <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
+        <div class="row-column"><input type="button" value="Утвердить" id='СonfirmContract' /></div>
     </div>
 
     <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
@@ -310,8 +311,8 @@
         <div class="row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Печать" id='PrintContractsDetails' /></div>
-        <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><input readonly id="GridSum" type="text"></div>
-        <div class="row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
+        <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum"></div></div>
+        <div class="row-column"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
     </div>
 </div>
 <div id="CDetailsEditDialog">

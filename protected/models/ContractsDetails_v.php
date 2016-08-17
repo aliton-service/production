@@ -8,10 +8,11 @@ class ContractsDetails_v extends MainFormModel
     public $Name;
     public $ItemName;
     public $um_name;
-    public $Price;
+    public $price;
     public $Quant;
-    public $Sum;
+    public $sum;
     public $Note;
+    public $EmplCreate;
 
 
     public $SP_INSERT_NAME = '';
@@ -23,19 +24,20 @@ class ContractsDetails_v extends MainFormModel
     {
         return array(
             array('csdt_id, ContrS_id, Equip_id, Quant', 'numerical', 'integerOnly'=>true),
-            array('Price, Sum', 'numerical'),
+            array('Equip_id, Name, price, Quant', 'required'),
+            array('price, sum', 'numerical'),
             array('Name, ItemName', 'length', 'max'=>50),
             array('Note', 'length', 'max'=>1073741823),
-            array('Sum', 'length', 'max'=>19),
-            array('csdt_id, ContrS_id, Equip_id, Name, ItemName, um_name, Price, Quant, Sum, Note', 'safe'),
+            array('sum', 'length', 'max'=>19),
+            array('csdt_id, ContrS_id, Equip_id, Name, ItemName, um_name, price, Quant, sum, Note', 'safe'),
         );
     }
 
     function __construct($scenario='') {
         
-        $this->SP_INSERT_NAME = 'INSERT_ContractsDetails_v';
-        $this->SP_UPDATE_NAME = 'UPDATE_ContractsDetails_v';
-        $this->SP_DELETE_NAME = 'DELETE_ContractsDetails_v';
+        $this->SP_INSERT_NAME = 'INSERT_ContractsDetails';
+        $this->SP_UPDATE_NAME = 'UPDATE_ContractsDetails';
+        $this->SP_DELETE_NAME = 'DELETE_ContractsDetails';
         
         parent::__construct($scenario);
         $select = "
@@ -46,9 +48,9 @@ class ContractsDetails_v extends MainFormModel
                 c.Name,
                 c.ItemName,
                 c.um_name,
-                c.Price,
+                c.price,
                 c.Quant,
-                c.Sum,
+                c.sum,
                 c.Note
         ";
 
@@ -73,21 +75,6 @@ class ContractsDetails_v extends MainFormModel
         $this->Query->setOrder($order);
     }
         
-//Select
-//  c.csdt_id,
-//  c.ContrS_id,
-//  c.Equip_id,
-//  c.Name,
-//  c.ItemName,
-//  c.Price,
-//  c.Quant,
-//  c.Sum,
-//  c.Note
-//From ContractsDetails_v c
-//Where c.ContrS_id = :ContrS_id
-//
-// 
-
     public function attributeLabels()
     {
         return array(
@@ -96,9 +83,9 @@ class ContractsDetails_v extends MainFormModel
             'Equip_id' => 'Equip id',
             'Name' => 'Наименование',
             'ItemName' => 'Наименование',
-            'Price' => 'Цена',
+            'price' => 'Цена',
             'Quant' => 'Количество',
-            'Sum' => 'Сумма',
+            'sum' => 'Сумма',
             'Note' => 'Примечание',
         );
     }
