@@ -67,7 +67,7 @@ Sources.SourceListEmployees =
     datatype: "json",
     datafields: [
         {name: 'Employee_id', type: 'int'},
-        {name: '$Employee_id_For_Demands', type: 'string'},
+        {name: 'Employee_id_For_Demands', type: 'string'},
         {name: 'EmployeeName', type: 'string'},
         {name: 'ShortName', type: 'string'}
     ],
@@ -194,6 +194,7 @@ Sources.SourceContactInfo =
     datafields: [
         { name: 'Info_id', type: 'int' },
         { name: 'contact', type: 'string' },
+        { name: 'FIO', type: 'string' },
     ],
     id: 'Info_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContactInfo',
@@ -1513,6 +1514,72 @@ Sources.SourceUnitMeasurement =
     ],
     id: 'UnitMeasurement_Id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=UnitMeasurement',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourceJuridicalsMin =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Jrdc_Id',  type: 'int' },
+        { name: 'JuridicalPerson',  type: 'string' },
+    ],
+    id: 'Jrdc_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=JuridicalsMin',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourceContractTypes =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'crtp_id',  type: 'int' },
+        { name: 'name',  type: 'string' },
+    ],
+    id: 'crtp_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourcePaymentTypes =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'PaymentType_Id',  type: 'int' },
+        { name: 'PaymentTypeName',  type: 'string' },
+    ],
+    id: 'PaymentType_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PaymentTypes',
     type: 'POST',
     root: 'Rows',
     cache: false,

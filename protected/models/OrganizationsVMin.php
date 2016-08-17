@@ -42,23 +42,23 @@ class OrganizationsVMin extends MainFormModel
             $this->SP_DELETE_NAME = 'DELETE_PropForms';
 
             $Select =   "Select "
-                        ."  Form_id,
-                            FormName,
-                            FullName,
-                            inn,
-                            account,
-                            bank_name,
-                            bik,
-                            cor_account,
-                            JAddress,
-                            FAddress,
-                            EmplCreate,
-                            EmplChange,
-                            date_create,
-                            date_change";
-            $From =     "\nFrom Organizations_v p";
-            $Order =    "\nOrder by p.FullName";
-            $Where =    "\nWhere p.DelDate is null";
+                        ."  ov.Form_id,
+                            ov.FormName,
+                            ov.FullName,
+                            ov.inn,
+                            ov.account,
+                            ov.bank_name,
+                            ov.bik,
+                            ov.cor_account,
+                            ov.JAddress,
+                            ov.FAddress,
+                            ov.EmplCreate,
+                            ov.EmplChange,
+                            ov.date_create,
+                            ov.date_change";
+            $From =     "\nFrom Organizations_v ov";
+            $Order =    "\nOrder by ov.FullName";
+            $Where =    "\nWhere ov.DelDate is null";
 
             $this->Query->setSelect($Select);
             $this->Query->setFrom($From);
@@ -66,7 +66,7 @@ class OrganizationsVMin extends MainFormModel
             $this->Query->setOrder($Order);
             
             
-            $this->KeyFiled = 'p.Form_id';
+            $this->KeyFiled = 'ov.Form_id';
     
         }
 

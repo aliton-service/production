@@ -13,7 +13,7 @@
             
             var DataEquip = new $.jqx.dataAdapter(Sources.SourceListEquipsMin);
             
-            $("#Equip").on('bindingComplecte', function(){
+            $("#Equip").on('bindingComplete', function(){
                 if (ContractsDetails_v.Equip != '') {
                     $("#Equip").jqxComboBox('val', ContractsDetails_v.Equip);
                 }
@@ -38,7 +38,6 @@
                 var args = event.args;
                 if (args) {
                     var item = args.item;
-                    console.log(item.originalItem.NameUM);
                     var itemVal = item.originalItem.NameUM;
                     if (itemVal != '') $("#NameUM").jqxInput('val', itemVal);
                 }

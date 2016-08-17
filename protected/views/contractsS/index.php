@@ -83,7 +83,7 @@
         
         $("#MoreInformContract").on('click', function ()
         {
-            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id);
+            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id + '&ObjectGr_id=' + Contracts.ObjectGr_id);
         });
            
         $("#DelContract").on('click', function ()
