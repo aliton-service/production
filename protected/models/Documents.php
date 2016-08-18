@@ -54,112 +54,129 @@ class Documents extends MainFormModel
         public $demand_id;
         public $empl_name;
         public $empl_id;
+        public $EmplLock;
+        public $EmplCreate;
+        public $EmplChange;
+        public $EmplDel;
+        public $UserCheckUp;
         public $discount;
 
 	public $SP_INSERT_NAME = '';
 	public $SP_UPDATE_NAME = '';
 	public $SP_DELETE_NAME = '';
+	public $SP_CHECKUP_NAME = '';
 
 
 	public function rules()
 	{
 		return array(
-			array('ObjectGr_id, Empl_id, Master, ServiceType_id, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, Jrdc_id, crtp_id, dmnd_id, calc_id, ExecDay, Garant, Info, EmplLock, EmplCreate, EmplChange, EmplDel, UserCheckUp', 'numerical', 'integerOnly'=>true),
+			array('ObjectGr_id, empl_id, Master, ServiceType_id, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, Jrdc_id, crtp_id, dmnd_id, Calc_id, ExecDay, Garant, Info, EmplLock, EmplCreate, EmplChange, EmplDel, UserCheckUp', 'numerical', 'integerOnly'=>true),
 			array('Price, PriceMonth, PrePayment, discount', 'numerical'),
 			array('ContrNumS, DocNumber', 'length', 'max'=>30),
 			array('SpecialCondition', 'length', 'max'=>1073741823),
 			array('CalcSum', 'length', 'max'=>19),
 			array('ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Debtor, LastChangeDate, Prolong, date_doc, date_act, DateExecuting, JobExec, WorkText, Annex, DocDate, date_checkup, Lock, DateLock', 'safe'),
-			array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, Empl_id, Master, ServiceType_id, Debtor, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, '
-                            . 'Prolong, date_doc, date_act, Debtor, DateExecuting, dmnd_id, JobExec, CalcSum, calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp', 'safe'),
+			array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, empl_id, Master, ServiceType_id, Debtor, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, '
+                            . 'Prolong, date_doc, date_act, Debtor, DateExecuting, dmnd_id, JobExec, CalcSum, Calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp, Note', 'safe'),
 		);
 	}
 
 	function __construct($scenario='') {
-		parent::__construct($scenario);
-		$select = "
-                    select
-                        c.ContrS_id, 
-                        c.ObjectGr_id, 
-                        c.DocType_id, 
-                        dt.DocType_Name,
-                        dbo.get_sumpayments(c.ContrS_id) summa,
-                        c.ContrNumS, 
-                        c.ContrDateS, 
-                        c.ContrSDateStart, 
-                        c.ContrSDateEnd,
-                        c.DatePay, 
-                        c.Price, 
-                        c.PriceMonth, 
-                        c.PaymentPeriod_id, 
-                        p.PaymentName,
-                        c.PaymentType_id, 
-                        pt.PaymentTypeName, 
-                        c.Jrdc_id, 
-                        j.JuridicalPerson,
-                        ch.Master Master, 
-                        e.EmployeeName MasterName, 
-                        c.Debtor, 
-                        c.Note,
-                        c.ServiceType_id, 
-                        st.ServiceType, 
-                        c.SpecialCondition, 
-                        c.Reason_id,
-                        c.LastChangeDate, 
-                        c.crtp_id, 
-                        ct.name crtp_name, 
-                        c.Prolong,
-                        c.date_doc, 
-                        c.date_act, 
-                        c.DateExecuting, 
-                        c.JobExec, 
-                        c.dmnd_id,
-                        c.CalcSum, 
-                        c.Calc_id, 
-                        d.DateExec, 
-                        c.WorkText, 
-                        c.ExecDay, 
-                        c.PrePayment, 
-                        c.Garant,
-                        c.Annex, 
-                        c.DocNumber, 
-                        c.DocDate, 
-                        c.Info, 
-                        ci.FIO, 
-                        c.date_checkup, 
-                        dbo.FIO_N(c.UserCheckUp) user_checkup,
-                        case when c.dmnd_id is null then (select t.demand_id from costcalculations t where t.deldate is null and t.calc_id = c.calc_id) else c.dmnd_id end demand_id,
-                        dbo.fio(e2.employeename) empl_name, 
-                        c.empl_id, 
-                        isnull(c.discount, 0) discount
-		";
+            
+            $this->SP_INSERT_NAME = 'INSERT_CONTRACTS';
+            $this->SP_UPDATE_NAME = 'UPDATE_CONTRACTS';
+            $this->SP_DELETE_NAME = 'DELETE_CONTRACTS';
+            $this->SP_CHECKUP_NAME = 'CHECKUP_ContractsS';
+        
+            parent::__construct($scenario);
+            $select = "
+                select
+                    c.ContrS_id, 
+                    c.ObjectGr_id, 
+                    c.DocType_id, 
+                    dt.DocType_Name,
+                    dbo.get_sumpayments(c.ContrS_id) summa,
+                    c.ContrNumS, 
+                    c.ContrDateS, 
+                    c.ContrSDateStart, 
+                    c.ContrSDateEnd,
+                    c.DatePay, 
+                    c.Price, 
+                    c.PriceMonth, 
+                    c.PaymentPeriod_id, 
+                    p.PaymentName,
+                    c.PaymentType_id, 
+                    pt.PaymentTypeName, 
+                    c.Jrdc_id, 
+                    j.JuridicalPerson,
+                    ch.Master Master, 
+                    e.EmployeeName MasterName, 
+                    c.Debtor, 
+                    c.Note,
+                    c.ServiceType_id, 
+                    st.ServiceType, 
+                    c.SpecialCondition, 
+                    c.Reason_id,
+                    c.LastChangeDate, 
+                    c.crtp_id, 
+                    ct.name crtp_name, 
+                    c.Prolong,
+                    c.date_doc, 
+                    c.date_act, 
+                    c.DateExecuting, 
+                    c.JobExec, 
+                    c.dmnd_id,
+                    c.CalcSum, 
+                    c.Calc_id, 
+                    d.DateExec, 
+                    c.WorkText, 
+                    c.ExecDay, 
+                    c.PrePayment, 
+                    c.Garant,
+                    c.Annex, 
+                    c.DocNumber, 
+                    c.DocDate, 
+                    c.Info, 
+                    ci.FIO, 
+                    c.date_checkup, 
+                    dbo.FIO_N(c.UserCheckUp) user_checkup,
+                    case when c.dmnd_id is null then (select t.demand_id from costcalculations t where t.deldate is null and t.calc_id = c.Calc_id) else c.dmnd_id end demand_id,
+                    dbo.fio(e2.employeename) empl_name, 
+                    c.empl_id,
+                    c.EmplLock,
+                    c.EmplCreate,
+                    c.EmplChange,
+                    c.EmplDel,
+                    c.UserCheckUp,
+                    isnull(c.discount, 0) discount
+            ";
 
-		$from = "
-		From ContractsS c 
-                    left join ServiceTypes st on (c.ServiceType_id = st.Servicetype_id)
-                    left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
-                    left join ContractMasterHistory ch on (c.ContrS_id = ch.ContrS_id and ch.DelDate is Null and dbo.truncdate(getdate()) between dbo.truncdate(ch.WorkDateStart) and dbo.truncdate(ch.WorkDateEnd))
-                    left join Employees_ForObj_v e on (ch.Master = e.Employee_id)
-                    left join DocTypes dt on (c.DocType_id = dt.DocType_id)
-                    left join PaymentPeriods p on (c.PaymentPeriod_id = p.PaymentPeriod_id)
-                    left join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_id)
-                    left join ContractTypes ct on (c.crtp_id = ct.crtp_id)
-                    left join FullDemands d on (c.dmnd_id = d.Demand_id)
-                    left join ContactInfo ci on (ci.Info_id = c.Info)
-                    left join Employees_ForObj_v e2 on (c.Empl_id = e2.Employee_id)
-		";
+            $from = "
+            From ContractsS c 
+                left join ServiceTypes st on (c.ServiceType_id = st.Servicetype_id)
+                left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
+                left join ContractMasterHistory ch on (c.ContrS_id = ch.ContrS_id and ch.DelDate is Null and dbo.truncdate(getdate()) between dbo.truncdate(ch.WorkDateStart) and dbo.truncdate(ch.WorkDateEnd))
+                left join Employees_ForObj_v e on (ch.Master = e.Employee_id)
+                left join DocTypes dt on (c.DocType_id = dt.DocType_id)
+                left join PaymentPeriods p on (c.PaymentPeriod_id = p.PaymentPeriod_id)
+                left join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_id)
+                left join ContractTypes ct on (c.crtp_id = ct.crtp_id)
+                left join FullDemands d on (c.dmnd_id = d.Demand_id)
+                left join ContactInfo ci on (ci.Info_id = c.Info)
+                left join Employees_ForObj_v e2 on (c.empl_id = e2.Employee_id)
+            ";
 
-		$where = "
-		Where
-                    c.DelDate is Null
-		";
-        // Инициализация первичного ключа
-                $this->KeyFiled = 'c.contrs_id';
-                $this->PrimaryKey = 'contrs_id';
+            $where = "
+            Where
+                c.DelDate is Null
+            ";
+    // Инициализация первичного ключа
+            $this->KeyFiled = 'c.contrs_id';
+            $this->PrimaryKey = 'contrs_id';
 
-		$this->Query->setSelect($select);
-		$this->Query->setFrom($from);
-		$this->Query->setWhere($where);
+            $this->Query->setSelect($select);
+            $this->Query->setFrom($from);
+            $this->Query->setWhere($where);
 	}
         
 
@@ -175,7 +192,7 @@ class Documents extends MainFormModel
 			'DatePay' => 'Date Pay',
 			'Price' => 'Price',
 			'PriceMonth' => 'Price Month',
-			'Empl_id' => 'Empl',
+			'empl_id' => 'Empl',
 			'Master' => 'Master',
 			'ServiceType_id' => 'Service Type',
 			'Debtor' => 'Debtor',

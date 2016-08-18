@@ -679,7 +679,7 @@ Sources.SourceOrganizationStructure =
     datafields: [
         {name: 'Structure_id', type: 'int'},
         {name: 'Parent_id', type: 'int'},
-        {name: 'Empl_id', type: 'int'},
+        {name: 'empl_id', type: 'int'},
         {name: 'ShortName', type: 'string'},
     ],
     id: 'Structure_id',

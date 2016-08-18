@@ -1,7 +1,7 @@
 <?php
 return array(
 
-	/** Роли для таблицы ContractsS  **/
+	/** ContractsS **/
 	'ManagerContractsS' => array(
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'ManagerContractsS',

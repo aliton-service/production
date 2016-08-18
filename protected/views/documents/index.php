@@ -31,6 +31,7 @@
             Note: <?php echo json_encode($model->Note); ?>,
             date_checkup: Aliton.DateConvertToJs('<?php echo $model->date_checkup; ?>'),
             user_checkup: '<?php echo $model->user_checkup; ?>',
+            EmplChange: '<?php echo $model->EmplChange; ?>',
         };
             
         
@@ -123,10 +124,70 @@
         
         $("#EditContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#PrintContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#СonfirmContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#CheckupContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
-        $('#EditContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '700px', width: '900'}));
+        $("#CheckupContract").on('click', function () {
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Documents/Checkup');?>",
+                type: 'POST',
+                async: false,
+                data: { 
+                    ContrS_id: CurrentContract.ContrS_id,
+                },
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $("#user_checkup").jqxInput('val', CurrentContract.EmplChange);
+                        location.reload();
+                    }
+                }
+            });
+            
+        });
         
+        
+        
+        
+        
+        
+        $('#EditContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '620px', width: '870'}));
+        
+        $('#EditContractDialog').jqxWindow({initContent: function() {
+            $("#ContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#ContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        }});
+        
+        $("#ContractBtnCancel").on('click', function () {
+            $('#EditContractDialog').jqxWindow('close');
+        });
+        
+        
+        var SendFormContract = function(Form) {
+            var Data;
+            if (Form == undefined)
+                Data = $('#Documents').serialize();
+            else Data = Form;
+                
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Documents/Update');?>",
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#EditContractDialog').jqxWindow('close');
+                        location.reload();
+                    } else {
+                        $('#ContractBodyDialog').html(Res);
+                    }
+                }
+            });
+        }
+
+        $("#ContractBtnOk").on('click', function () {
+            SendFormContract();
+        });
+        
+    
         $("#EditContract").on('click', function ()
         {
             $.ajax({
@@ -143,6 +204,10 @@
             });
             $('#EditContractDialog').jqxWindow('open');
         });
+        
+        
+        
+        
         
         $("#NewContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -268,7 +333,6 @@
         
 </script>
 
-
 <div style="background-color: #F2F2F2;">
     <div class="row">
         <div class="row-column">Номер: <input readonly id="ContrS_id" type="text"></div>
@@ -326,7 +390,7 @@
         <div class="row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
         <div class="row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
         <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
-        <div class="row-column"><input type="button" value="Утвердить" id='СonfirmContract' /></div>
+        <div class="row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
     </div>
 
     <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
@@ -346,7 +410,7 @@
     <div id="ContractDialogHeader">
         <span id="ContractHeaderText">Редактирование счета № <?php echo $model->ContrS_id; ?></span>
     </div>
-    <div style="overflow: hidden; padding: 10px;" id="ContractDialogContent">
+    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="ContractDialogContent">
         <div style="overflow: hidden;" id="ContractBodyDialog"></div>
         <div id="ContractBottomDialog">
             <div class="row">

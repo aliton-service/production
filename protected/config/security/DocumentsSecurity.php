@@ -26,6 +26,7 @@ return array(
 			'CreateDocuments',
 			'UpdateDocuments',
 			'DeleteDocuments',
+			'CheckupDocuments',
 		),
 	),
 
@@ -64,6 +65,13 @@ return array(
 	'DeleteDocuments' => array(
 		'type' => CAuthItem::TYPE_OPERATION,
 		'description' => 'DeleteDocuments',
+		'bizRule' => null,
+		'data' => null,
+	),
+    
+	'CheckupDocuments' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'CheckupDocuments',
 		'bizRule' => null,
 		'data' => null,
 	),

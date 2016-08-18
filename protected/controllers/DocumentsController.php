@@ -138,38 +138,6 @@ class DocumentsController extends Controller
                 'model' => $model
             ));
             
-            
-            
-//            $model = new Documents;
-//            if ($id == null)
-//                    throw new CHttpException(404, '');
-//
-////		if (!Yii::app()->LockManager->LockRecord('Documents', $model->tableSchema->primaryKey, $id))
-////			throw new CHttpException(404, '');
-//
-//            if($id && (int)$id > 0 && isset($_POST['Documents'])) {
-//                    $model->attributes = $_POST['Documents'];
-//                    $model->ContrS_id = (int)$id;
-//                    $model->EmplChange = Yii::app()->user->Employee_id;
-//                    if ($model->validate()) {
-//                            $model->update();
-//                            if ($this->isAjax()) {
-//                                    die(json_encode(array('status' => 'ok', 'data' => array('msg' => '������ � ������������ ������� ��������'))));
-//                            } else {
-//
-//                                    $this->redirect('/?r=Documents');
-//                            }
-//                    }
-//            } else {
-//                    $model->getModelPk($id);
-//            }
-//            if($this->isAjax()) {
-//                    $this->renderPartial('update', array('model'=>$model), false, true);
-//            } else {
-//                    $this->render('update', array('model'=>$model));
-//            }
-
-
 	}
 
 
@@ -195,7 +163,6 @@ class DocumentsController extends Controller
                 $ContrS_id = $_GET['ContrS_id'];
                 $model = new Documents();
                 $model->getModelPk($ContrS_id);
-                $model->ObjectGr_id = $_GET['ObjectGr_id'];
                 $this->title = $model->DocType_Name .' № ' . $model->ContrS_id;
 
                 $this->render('index', array(
@@ -203,6 +170,30 @@ class DocumentsController extends Controller
                 ));
             }
 	}
+        
+        protected function performAjaxValidation($model)
+        {
+            if(isset($_POST['ajax']) && $_POST['ajax']==='regions-form')
+            {
+                echo CActiveForm::validate($model);
+                Yii::app()->end();
+            }
+        }
+        
+
+	public function actionCheckup()
+	{
+            if (isset($_POST['ContrS_id'])) {
+                
+                $model = new Documents();
+                $model->attributes=$_POST['ContrS_id'];
+                $ContrS_id = $model->ContrS_id;
+
+                $model->CHECKUP();
+            }
+            
+	}
+        
 
 }
 
