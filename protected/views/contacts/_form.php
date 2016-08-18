@@ -44,8 +44,8 @@
             $("#ContactKinds").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactKinds, displayMember: "Kind_name", valueMember: "Kind_id", width:300 }));
             $("#date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true, height: '25', width: '180' }));
             $("#ContactTypes").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactTypes.records, displayMember: "ContactName", valueMember: "Contact_id", width:255 }));
-            $("#empl").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "EmployeeName", valueMember: "Employee_id", width:250 }));
-            $("#ContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "contact", valueMember: "Info_id", width:500 }));
+            $("#empl").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "ShortName", valueMember: "Employee_id", width:160 }));
+            $("#ContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "contact", valueMember: "Info_id", width:585, autoDropDownHeight: true }));
             $("#textField2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 760 }));
             $("#DebtReasons").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataDebtReasons, displayMember: "name", valueMember: "drsn_Id", width:250 }));
             $("#SourceInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSourceInfo, displayMember: "SourceInfo_name", valueMember: "SourceInfo_id", width:220 }));
@@ -57,7 +57,7 @@
             $("#note2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 760 }));
             $("#next_date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true, value: null, height: '25', width: '180' }));
             $("#nextContactTypes").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactTypes.records, displayMember: "ContactName", valueMember: "Contact_id", width:300 }));
-            $("#nextContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "contact", valueMember: "Info_id", width:600 }));
+            $("#nextContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "contact", valueMember: "Info_id", width:600, autoDropDownHeight: true }));
             
 //            console.log(Contact.date);
             if (Contact.Kind != '') $("#ContactKinds").jqxComboBox('val', Contact.Kind);

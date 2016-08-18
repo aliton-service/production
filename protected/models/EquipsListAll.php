@@ -4,11 +4,11 @@ class EquipsListAll extends MainFormModel
 {
     public $Equip_id;
     public $EquipName;
+    public $NameUM;
     
     public function rules() {
         return array(
-            array('Equip_id,'
-                . 'EquipName,', 'safe'),
+            array('Equip_id, EquipName, NameUM', 'safe'),
         );
     }
     
@@ -22,10 +22,14 @@ class EquipsListAll extends MainFormModel
         
         $Select =   "Select
                         e.Equip_id,
-                        e.EquipName";
-        $From =     "\nFrom Equips e";
-        $Where =    "\nWhere e.DelDate is null";
-        $Order =    "\nOrder by e.EquipName";
+                        e.EquipName,
+                        um.NameUnitMeasurement NameUM";
+        $From = "
+                From Equips e
+                left join UnitMeasurement um on (e.UnitMeasurement_Id = um.UnitMeasurement_Id)
+            ";
+        $Where = "\nWhere e.DelDate is null";
+        $Order = "\nOrder by e.EquipName";
         
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);

@@ -92,16 +92,16 @@ class Contacts extends MainFormModel
                     ";
         $from = "\nFrom Contacts c left join ContactTypes ct on (c.cntp_id = ct.contact_id)
                     left join ContactInfo_v ci on (c.info_id = ci.info_id)
-                     left join Employees_ForObj_v  e on (c.empl_id = e.Employee_id)
+                    left join Employees_ForObj_v  e on (c.empl_id = e.Employee_id)
                     left join Results r on (c.rslt_id = r.Result_id) 
-                     left join DebtReasons dr on (c.drsn_id =dr.drsn_id)
+                    left join DebtReasons dr on (c.drsn_id =dr.drsn_id)
                     left join ContactTypes ct2 on (c.next_cntp_id = ct2.contact_id)
-                     left join ContactInfo_v ci2 on (c.next_info_id = ci2.info_id)
-                     left join ContactKinds ck on (c.Kind = ck.Kind_id)
+                    left join ContactInfo_v ci2 on (c.next_info_id = ci2.info_id)
+                    left join ContactKinds ck on (c.Kind = ck.Kind_id)
                     left join Departments d on (e.Dep_id = d.Dep_id)
-                     left join Basenames bn on (d.bn_id = bn.bn_id)
+                    left join Basenames bn on (d.bn_id = bn.bn_id)
                     left join SourceInfo si on si.sourceInfo_id=c.SourceInfo_id
-                     left join Employees_ForObj_v e1 on (c.EmplCreate = e1.Employee_id)
+                    left join Employees_ForObj_v e1 on (c.EmplCreate = e1.Employee_id)
                     ";
         $Where =    "\nWhere c.DelDate is Null";
 

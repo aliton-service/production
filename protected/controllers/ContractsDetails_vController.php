@@ -69,18 +69,15 @@ class ContractsDetails_vController extends Controller
 
     public function actionInsert() 
     {
-        $this->title = 'Создание контакта';
-
         if (isset($_POST['ContrS_id'])) 
             $ContrS_id = $_POST['ContrS_id'];
 
         $model = new ContractsDetails_v;
-
+        
         if(isset($_POST['ContractsDetails_v']))
         {
             $model->attributes=$_POST['ContractsDetails_v'];
-            $ObjectGr_id = $model->ObjectGr_id;
-            $model->cont_id = null;
+            $ContrS_id = $model->ContrS_id;
             $this->performAjaxValidation($model);
 
             if ($model->validate())
@@ -100,17 +97,15 @@ class ContractsDetails_vController extends Controller
 
     public function actionUpdate() 
     {
-        $this->title = 'Редактирование';
-
-        if (isset($_POST['cont_id'])) 
-            $cont_id = $_POST['cont_id'];
+        if (isset($_POST['csdt_id'])) 
+            $csdt_id = $_POST['csdt_id'];
 
         $model = new ContractsDetails_v;
 
         if(isset($_POST['ContractsDetails_v']))
         {
             $model->attributes=$_POST['ContractsDetails_v'];
-            $cont_id = $model->cont_id;
+            $csdt_id = $model->csdt_id;
 
             $this->performAjaxValidation($model);
 
@@ -122,7 +117,7 @@ class ContractsDetails_vController extends Controller
             }
 
         }
-        $model->getModelPk($cont_id);
+        $model->getModelPk($csdt_id);
         $this->renderPartial('_form', array(
             'model' => $model
         ));
@@ -130,17 +125,15 @@ class ContractsDetails_vController extends Controller
 
     public function actionDelete()
     {
-        if(isset($_POST['cont_id'])) {
-            $cont_id = $_POST['cont_id'];
+        if(isset($_POST['csdt_id'])) {
+            $csdt_id = $_POST['csdt_id'];
         }
         $model = new ContractsDetails_v;
-        $model->getModelPk($cont_id);
+        $model->getModelPk($csdt_id);
 
-        if(!is_null($cont_id)){
+        if(!is_null($csdt_id)){
             $model->delete();
         }
-
-//            $this->redirect($this->createUrl('ObjectsGroupSystems/Index'));
     }
 
 

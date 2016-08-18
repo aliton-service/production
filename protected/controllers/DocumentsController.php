@@ -92,7 +92,7 @@ class DocumentsController extends Controller
 			if ($model->validate()) {
 				$model->insert();
 				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => '������ � ������������ ������� �������'))));
+					die(json_encode(array('status' => 'ok', 'data' => array('msg' => ''))));
 				} else {
 					$this->redirect('/?r=Documents');
 				}
@@ -108,36 +108,66 @@ class DocumentsController extends Controller
 	}
 
 
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-		$model = new Documents;
-		if ($id == null)
-			throw new CHttpException(404, '�� ������ ���������.');
+            if (isset($_POST['ContrS_id'])) 
+                $ContrS_id = $_POST['ContrS_id'];
 
-//		if (!Yii::app()->LockManager->LockRecord('Documents', $model->tableSchema->primaryKey, $id))
-//			throw new CHttpException(404, '������ ������������� ������ �������������');
+            $model = new Documents;
+            
+            if (isset($_POST['ObjectGr_id'])) 
+                $model->ObjectGr_id = $_POST['ObjectGr_id'];
 
-		if($id && (int)$id > 0 && isset($_POST['Documents'])) {
-			$model->attributes = $_POST['Documents'];
-			$model->ContrS_id = (int)$id;
-			$model->EmplChange = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->update();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => '������ � ������������ ������� ��������'))));
-				} else {
+            if(isset($_POST['Documents']))
+            {
+                $model->attributes=$_POST['Documents'];
+                $ContrS_id = $model->ContrS_id;
 
-					$this->redirect('/?r=Documents');
-				}
-			}
-		} else {
-			$model->getModelPk($id);
-		}
-		if($this->isAjax()) {
-			$this->renderPartial('update', array('model'=>$model), false, true);
-		} else {
-			$this->render('update', array('model'=>$model));
-		}
+                $this->performAjaxValidation($model);
+
+                if ($model->validate())
+                {
+                    $model->Update();
+                    echo '1';
+                    return;
+                }
+
+            }
+            $model->getModelPk($ContrS_id);
+            $this->renderPartial('_form', array(
+                'model' => $model
+            ));
+            
+            
+            
+//            $model = new Documents;
+//            if ($id == null)
+//                    throw new CHttpException(404, '');
+//
+////		if (!Yii::app()->LockManager->LockRecord('Documents', $model->tableSchema->primaryKey, $id))
+////			throw new CHttpException(404, '');
+//
+//            if($id && (int)$id > 0 && isset($_POST['Documents'])) {
+//                    $model->attributes = $_POST['Documents'];
+//                    $model->ContrS_id = (int)$id;
+//                    $model->EmplChange = Yii::app()->user->Employee_id;
+//                    if ($model->validate()) {
+//                            $model->update();
+//                            if ($this->isAjax()) {
+//                                    die(json_encode(array('status' => 'ok', 'data' => array('msg' => '������ � ������������ ������� ��������'))));
+//                            } else {
+//
+//                                    $this->redirect('/?r=Documents');
+//                            }
+//                    }
+//            } else {
+//                    $model->getModelPk($id);
+//            }
+//            if($this->isAjax()) {
+//                    $this->renderPartial('update', array('model'=>$model), false, true);
+//            } else {
+//                    $this->render('update', array('model'=>$model));
+//            }
 
 
 	}
@@ -159,23 +189,20 @@ class DocumentsController extends Controller
 	}
 
 
-	public function actionIndex($ContrS_id = NULL)
+	public function actionIndex()
 	{
-            if ($ContrS_id !== NULL)
-            {
+            if (isset($_GET['ContrS_id'])) {
+                $ContrS_id = $_GET['ContrS_id'];
                 $model = new Documents();
                 $model->getModelPk($ContrS_id);
+                $model->ObjectGr_id = $_GET['ObjectGr_id'];
                 $this->title = $model->DocType_Name .' № ' . $model->ContrS_id;
 
                 $this->render('index', array(
                    'model' => $model
                 ));
-
             }
 	}
-
-
-
 
 }
 

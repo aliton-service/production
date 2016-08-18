@@ -51,15 +51,10 @@ class EquipsController extends Controller
 
 				),
 			),
-			/* array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin'),
-				'roles'=>array(
-					'AdminEquips',
-					
-					
-				),
-
-			), */
+                        array('allow', 
+				'actions' => array('EquipInfo'),
+				'users' => array('*'),
+			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions' => array('delete'),
 				'roles' => array(
@@ -75,10 +70,31 @@ class EquipsController extends Controller
 		);
 	}
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
+	
+        public function actionEquipInfo() {
+            $Info = array(
+                'Check' => 0,
+                'Quant' => 0,
+                'QuantUsed' => 0,
+                'QuantReserv' => 0,
+            );
+            
+            if (isset($_POST['Equip_id'])) {
+                $Query = new SQLQuery();
+                $Query->setSelect("\nSelect
+                                        dbo.get_wh_inventory(t.eqip_id, getdate(), 0, 1) quant,
+                                        dbo.get_wh_inventory(t.eqip_id, getdate(), 1, 1) quant_used,
+                                        dbo.get_wh_reserv(t.eqip_id, getdate(), 1) quant_reserv");
+                $Query->setWhere("\nFrom (Select " . $_POST['Equip_id'] . " as eqip_id) t");
+                $Result = $Query->QueryRow();
+                $Info['Quant'] = $Result['quant'];
+                $Info['QuantUsed'] = $Result['quant_used'];
+                $Info['QuantReserv'] = $Result['quant_reserv'];
+                $Info['Check'] = 1;
+            }
+            echo json_encode($Info);
+        }
+        
 	public function actionView($id)
 	{
 		$this->render('view', array(

@@ -166,6 +166,15 @@
                     $('#btnDelEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     
                     $('#btnAddEquip').on('click', function(){
+                        $.ajax({
+                            url: '<?php echo Yii::app()->createUrl('DeliveryDetails/Create'); ?>',
+                            type: 'POST',
+                            data: {dldm_id: DeliveryDemands.Dldm_id},
+                            async: false,
+                            success: function(Res) {
+                                $('#BodyDeliveryDetailDialog').html(Res);
+                            }
+                        });
                         $('#EditDeliveryDetailDialog').jqxWindow('open');
                     });
                     
@@ -176,12 +185,29 @@
         };
         $('#edTabs').jqxTabs({ width: '100%', height: 345, initTabContent: initWidgets});
         
-        $('#EditDeliveryDetailDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '300px', width: '700px', position: 'center'}));
+        $('#EditDeliveryDetailDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '210px', width: '700px', position: 'center'}));
         $('#EditDeliveryDetailDialog').jqxWindow({initContent: function() {
             $('#btnDeliveryDetailOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
             $('#btnDeliveryDetailCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
             $('#btnDeliveryDetailCancel').on('click', function(){
                 $('#EditDeliveryDetailDialog').jqxWindow('close');
+            });
+            $('#btnDeliveryDetailOk').on('click', function(){
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('DeliveryDetails/Create')); ?>,
+                    type: 'POST',
+                    data: $("#DeliveryDetails").serialize(),
+                    success: function(Res) {
+                        if (Res == '1') {
+                            $("#DeliveryDetailsGrid").jqxGrid('updatebounddata');
+                            $('#EditDeliveryDetailDialog').jqxWindow('close');
+                        }
+                        else
+                            $('#BodyDeliveryDemDialog').html(Res);
+                    
+                    }
+                });
+                //
             });
             
         }});
@@ -207,7 +233,7 @@
         $('#EditDeliveryDemandDialog').on('open', function(){
             $('#btnDeliveryDemOk').jqxButton({disabled: true});
         });
-        $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '800px', width: '740'}));
+        $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '800px', width: '740', position: 'center'}));
         $('#EditDeliveryDemandDialog').jqxWindow({initContent: function() {
             $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
             $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -234,7 +260,7 @@
                             location.reload();
                         }
                         else
-                            $('#BodyDeliveryDemDialog').html(Res);
+                            $('#BodyDeliveryDetailDialog').html(Res);
                     }
                 });
             });

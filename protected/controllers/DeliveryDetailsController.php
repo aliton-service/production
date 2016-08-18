@@ -34,7 +34,7 @@ class DeliveryDetailsController extends Controller
 
     public function actionCreate()
     {
-        $model = new DeliveryComments;
+        $model = new DeliveryDetails();
         if (isset($_POST['dldm_id']))
             $model->dldm_id = $_POST['dldm_id'];
         
@@ -54,7 +54,7 @@ class DeliveryDetailsController extends Controller
 
     public function actionUpdate()
     {
-        $model = new DeliveryComments;
+        $model = new DeliveryDetails();
         if (isset($_POST['dldt_id'])) 
             $model->getModelPk ($_POST['dldt_id']);
         
