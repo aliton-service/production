@@ -33,44 +33,31 @@ class DocumentsController extends Controller
 	 */
 	public function accessRules()
 	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions' => array('index', 'view', 'equipAnalog'),
-				'roles' => array(
-					'ViewDocuments',
-
-				),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions' => array('create'),
-				'roles' => array(
-
-					'CreateDocuments',
-
-				),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions' => array('update'),
-				'roles' => array(
-
-					'UpdateDocuments',
-
-				),
-			),
-
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions' => array('delete'),
-				'roles' => array(
-
-					'DeleteDocuments',
-
-				),
-
-			),
-			array('deny',  // deny all users
-				'users' => array('*'),
-			),
-		);
+            return array(
+                array('allow',  // allow all users to perform 'index' and 'view' actions
+                    'actions' => array('index', 'view', 'equipAnalog'),
+                    'roles' => array('ViewDocuments'),
+                ),
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                    'actions' => array('create'),
+                    'roles' => array('CreateDocuments'),
+                ),
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                    'actions' => array('update'),
+                    'roles' => array('UpdateDocuments'),
+                ),
+                array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                    'actions' => array('delete'),
+                    'roles' => array('DeleteDocuments'),
+                ),
+                array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                    'actions' => array('checkup'),
+                    'roles' => array('CheckupDocuments'),
+                ),
+                array('deny',  // deny all users
+                    'users' => array('*'),
+                ),
+            );
 	}
 
 
@@ -164,10 +151,19 @@ class DocumentsController extends Controller
                 $model = new Documents();
                 $model->getModelPk($ContrS_id);
                 $this->title = $model->DocType_Name .' № ' . $model->ContrS_id;
-
-                $this->render('index', array(
-                   'model' => $model
-                ));
+                
+                switch ($model->DocType_id) {
+                    case 8:
+                        $this->render('indexInvoice', array(
+                            'model' => $model
+                         ));
+                        break;
+                    case 3:
+                        $this->render('indexInvoiceOrder', array(
+                            'model' => $model
+                         ));
+                        break;
+                }
             }
 	}
         
@@ -184,13 +180,21 @@ class DocumentsController extends Controller
 	public function actionCheckup()
 	{
             if (isset($_POST['ContrS_id'])) {
-                
                 $model = new Documents();
-                $model->attributes=$_POST['ContrS_id'];
-                $ContrS_id = $model->ContrS_id;
-
-                $model->CHECKUP();
+                $model->getModelPk($_POST['ContrS_id']);
+                if ($model->user_checkup == null || $model->user_checkup == '') {
+                    $sp = new StoredProc();
+                    $sp->ProcedureName = 'CHECKUP_ContractsS';
+                    $sp->ParametersRefresh();
+                    $sp->Parameters[0]['Value'] = $_POST['ContrS_id'];
+                    $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+                    $sp->CheckParam = true;
+                    $sp->Execute();
+                    echo '1';
+                    return;
+                }
             }
+            echo '0';
             
 	}
         

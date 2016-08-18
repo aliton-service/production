@@ -1,79 +1,80 @@
 <?php
 return array(
 
-	/**  Documents  **/
-	'ManagerDocuments' => array(
-		'type' => CAuthItem::TYPE_ROLE,
-		'description' => 'ManagerDocuments',
-		'bizRule' => null,
-		'data' => null,
-		'defaultIndex' => 'Documents/index',
-		'children' => array(
-			'ViewDocuments',
-			'CreateDocuments',
-			'UpdateDocuments',
-		),
-	),
+    /**  Documents  **/
 
-	'AdminDocuments' => array(
-		'type' => CAuthItem::TYPE_ROLE,
-		'description' => 'AdminDocuments',
-		'bizRule' => null,
-		'data' => null,
-		'defaultIndex' => 'Documents/index',
-		'children' => array(
-			'ViewDocuments',
-			'CreateDocuments',
-			'UpdateDocuments',
-			'DeleteDocuments',
-			'CheckupDocuments',
-		),
-	),
+    'AdminDocuments' => array(
+        'type' => CAuthItem::TYPE_ROLE,
+        'description' => 'AdminDocuments',
+        'bizRule' => null,
+        'data' => null,
+        'defaultIndex' => 'Documents/index',
+        'children' => array(
+            'ViewDocuments',
+            'CreateDocuments',
+            'UpdateDocuments',
+            'DeleteDocuments',
+            'CheckupDocuments',
+        ),
+    ),
 
-	'UserDocuments' => array(
-		'type' => CAuthItem::TYPE_ROLE,
-		'description' => 'UserDocuments',
-		'bizRule' => null,
-		'data' => null,
-		'defaultIndex' => 'Documents/index',
-		'children' => array(
-			'ViewDocuments'
-		),
-	),
+    'ManagerDocuments' => array(
+        'type' => CAuthItem::TYPE_ROLE,
+        'description' => 'ManagerDocuments',
+        'bizRule' => null,
+        'data' => null,
+        'defaultIndex' => 'Documents/index',
+        'children' => array(
+            'ViewDocuments',
+            'CreateDocuments',
+            'UpdateDocuments',
+        ),
+    ),
 
-	'ViewDocuments' => array(
-		'type' => CAuthItem::TYPE_OPERATION,
-		'description' => 'ViewDocuments',
-		'bizRule' => null,
-		'data' => null,
-	),
+    'UserDocuments' => array(
+        'type' => CAuthItem::TYPE_ROLE,
+        'description' => 'UserDocuments',
+        'bizRule' => null,
+        'data' => null,
+        'defaultIndex' => 'Documents/index',
+        'children' => array(
+            'ViewDocuments'
+        ),
+    ),
 
-	'CreateDocuments' => array(
-		'type' => CAuthItem::TYPE_OPERATION,
-		'description' => 'CreateDocuments',
-		'bizRule' => null,
-		'data' => null,
-	),
+    'ViewDocuments' => array(
+        'type' => CAuthItem::TYPE_OPERATION,
+        'description' => 'ViewDocuments',
+        'bizRule' => null,
+        'data' => null,
+    ),
 
-	'UpdateDocuments' => array(
-		'type' => CAuthItem::TYPE_OPERATION,
-		'description' => 'UpdateDocuments',
-		'bizRule' => null,
-		'data' => null,
-	),
+    'CreateDocuments' => array(
+        'type' => CAuthItem::TYPE_OPERATION,
+        'description' => 'CreateDocuments',
+        'bizRule' => null,
+        'data' => null,
+    ),
 
-	'DeleteDocuments' => array(
-		'type' => CAuthItem::TYPE_OPERATION,
-		'description' => 'DeleteDocuments',
-		'bizRule' => null,
-		'data' => null,
-	),
-    
-	'CheckupDocuments' => array(
-		'type' => CAuthItem::TYPE_OPERATION,
-		'description' => 'CheckupDocuments',
-		'bizRule' => null,
-		'data' => null,
-	),
+    'UpdateDocuments' => array(
+        'type' => CAuthItem::TYPE_OPERATION,
+        'description' => 'UpdateDocuments',
+        'bizRule' => null,
+        'data' => null,
+    ),
+
+    'DeleteDocuments' => array(
+        'type' => CAuthItem::TYPE_OPERATION,
+        'description' => 'DeleteDocuments',
+        'bizRule' => null,
+        'data' => null,
+    ),
+
+    'CheckupDocuments' => array(
+        'type' => CAuthItem::TYPE_OPERATION,
+        'description' => 'CheckupDocuments',
+        'bizRule' => null,
+        'data' => null,
+    ),
 
 );

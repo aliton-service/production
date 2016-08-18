@@ -126,28 +126,21 @@
         $("#PrintContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#CheckupContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
+        $('#CheckupContract').jqxButton({disabled: (CurrentContract.user_checkup != '')});
+        
         $("#CheckupContract").on('click', function () {
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('Documents/Checkup');?>",
                 type: 'POST',
                 async: false,
-                data: { 
-                    ContrS_id: CurrentContract.ContrS_id,
-                },
+                data: { ContrS_id: CurrentContract.ContrS_id },
                 success: function(Res) {
-                    if (Res == '1' || Res == 1) {
-                        $("#user_checkup").jqxInput('val', CurrentContract.EmplChange);
+                    if (Res == '1') {
                         location.reload();
                     }
                 }
             });
-            
         });
-        
-        
-        
-        
-        
         
         $('#EditContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '620px', width: '870'}));
         
@@ -389,8 +382,8 @@
         <div class="row-column"><input type="button" value="Изменить" id='EditContract' /></div>
         <div class="row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
         <div class="row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
-        <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
         <div class="row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
+        <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
     </div>
 
     <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
@@ -401,11 +394,13 @@
         <div class="row-column"><input type="button" value="Добавить" id='NewContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsDetails' /></div>
-        <div class="row-column"><input type="button" value="Печать" id='PrintContractsDetails' /></div>
+        <div class="row-column"><input type="button" value="Печатать" id='PrintContractsDetails' /></div>
         <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum"></div></div>
         <div class="row-column"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
     </div>
 </div>
+
+
 <div id="EditContractDialog">
     <div id="ContractDialogHeader">
         <span id="ContractHeaderText">Редактирование счета № <?php echo $model->ContrS_id; ?></span>
@@ -420,6 +415,8 @@
         </div>
     </div>
 </div>
+
+
 <div id="CDetailsEditDialog">
     <div id="CDetailsDialogHeader">
         <span id="CDetailsHeaderText">Вставка\Редактирование записи</span>

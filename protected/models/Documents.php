@@ -64,7 +64,6 @@ class Documents extends MainFormModel
 	public $SP_INSERT_NAME = '';
 	public $SP_UPDATE_NAME = '';
 	public $SP_DELETE_NAME = '';
-	public $SP_CHECKUP_NAME = '';
 
 
 	public function rules()
@@ -86,7 +85,6 @@ class Documents extends MainFormModel
             $this->SP_INSERT_NAME = 'INSERT_CONTRACTS';
             $this->SP_UPDATE_NAME = 'UPDATE_CONTRACTS';
             $this->SP_DELETE_NAME = 'DELETE_CONTRACTS';
-            $this->SP_CHECKUP_NAME = 'CHECKUP_ContractsS';
         
             parent::__construct($scenario);
             $select = "

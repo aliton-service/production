@@ -66,10 +66,45 @@
         });
         
         
-        $("#NewContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#dropDownBtnContracts").jqxDropDownButton($.extend(true, {}, ButtonDefaultSettings, { autoOpen: true, width: 210, height: 28 }));
+        $("#jqxTreeContracts").jqxTree({ width: 210 });
         $("#MoreInformContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
+        $("#ReloadContracts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-                
+        
+        var newDocType = function (itemLabel) {
+            switch (itemLabel) {
+                case 'Договор обслуживания':
+                    
+                    break;
+                case 'Доп.соглашение':
+                    
+                    break;
+                case 'Счет':
+                    
+                    break;
+                case 'Счет-заказ':
+                    
+                    break;
+                default:
+                    alert( 'Что-то пошло не так' );
+            }
+        };
+        
+        $('#jqxTreeContracts').on('select', function (event) {
+            var args = event.args;
+            var item = $('#jqxTreeContracts').jqxTree('getItem', args.element);
+            console.log(item.label);
+            newDocType(item.label)
+        });
+        
+        
+        var dropDownBtnContent = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 5px;">Создать</div>';
+        $("#dropDownBtnContracts").jqxDropDownButton('setContent', dropDownBtnContent);
+ 
+ 
+ 
+ 
         
         $('#ContractsGrid').on('rowdoubleclick', function (event) { 
             $("#MoreInformContract").click();
@@ -83,7 +118,19 @@
         
         $("#MoreInformContract").on('click', function ()
         {
-            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id + '&ObjectGr_id=' + Contracts.ObjectGr_id);
+            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id);
+        });
+        
+        $("#ReloadContracts").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=ContractsS/Index",
+                success: function(){
+                    $("#ContractsGrid").jqxGrid('updatebounddata');
+                    $("#ContractsGrid").jqxGrid('selectrow', 0);
+                }
+            });
         });
            
         $("#DelContract").on('click', function ()
@@ -121,9 +168,40 @@
 
 
 <div class="row">
-    <div class="row-column"><input type="button" value="Создать" id='NewContract' /></div>
+    <div class="row-column">
+        <div id='jqxWidget'>
+            <div style='float: left;' id="dropDownBtnContracts">
+                <div style="border: none;" id='jqxTreeContracts'>
+                    <ul>
+                        <li><div style="width: 160px; height: 20px;">Договор обслуживания</div></li>
+                        <li><div style="width: 160px; height: 20px;">Доп. соглашение</div></li>
+                        <li><div style="width: 160px; height: 20px;">Счет</div></li>
+                        <li><div style="width: 160px; height: 20px;">Счет-заказ</div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row-column"><input type="button" value="Дополнительно" id='MoreInformContract' /></div>
+    <div class="row-column"><input type="button" value="Обновить" id='ReloadContracts' /></div>
     <div class="row-column"><input type="button" value="Удалить" id='DelContract' /></div>
 </div>
 
+
+<div id="EditContractDialog">
+    <div id="ContractDialogHeader">
+        <span id="ContractHeaderText">Новый <?php echo $model->ContrS_id; ?></span>
+    </div>
+    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="ContractDialogContent">
+        <div style="overflow: hidden;" id="ContractBodyDialog"></div>
+        <div id="ContractBottomDialog">
+            <div class="row">
+                <div class="row-column"><input type="button" value="Сохранить" id='ContractBtnOk' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='ContractBtnCancel' /></div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
