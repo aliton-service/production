@@ -123,6 +123,10 @@
             });
         };
         
+        $('#EditDeliveryDemandDialog').on('open', function (event) {
+            $('#btnDeliveryDemOk').jqxButton({disabled: true});
+        }); 
+        
         $('#btnNew').on('click', function(){
             LoadEditForm('<?php echo Yii::app()->createUrl('Delivery/Insert'); ?>', null, 'POST');
             $('#EditDeliveryDemandDialog').jqxWindow('open');

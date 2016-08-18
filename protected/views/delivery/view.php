@@ -3,6 +3,7 @@
         var DeliveryDemands = {
             Dldm_id: <?php echo json_encode($model->dldm_id); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
+            DateLogist: Aliton.DateConvertToJs('<?php echo $model->date_logist; ?>'),
             DeliveryType: <?php echo json_encode($model->DeliveryType); ?>,
             DemandPrior: <?php echo json_encode($model->DemandPrior); ?>,
             BestDate: Aliton.DateConvertToJs('<?php echo $model->bestdate; ?>'),
@@ -18,6 +19,7 @@
             Note: <?php echo json_encode($model->note); ?>,
             Sender: <?php echo json_encode($model->user_sender_name); ?>,
             Logist: <?php echo json_encode($model->user_logist_name); ?>,
+            CurrentUser: <?php echo json_encode(Yii::app()->user->Employee_id); ?>
         };
         
         $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '120px', height: '25px', decimalDigits: 0 }));
@@ -38,9 +40,22 @@
         $("#edSender").jqxInput({height: 25, width: 250, minLength: 1});
         $("#edLogist").jqxInput({height: 25, width: 250, minLength: 1});
         $('#btnEdit').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnAccept').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnAccept').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: (DeliveryDemands.DateLogist != null), width: 120, height: 30 }));
         $('#btnPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $("#edComment").jqxInput({height: 25, width: 450, minLength: 1});
+        
+        
+        $('#btnAccept').on('click', function(){
+                $.ajax({
+                    url: '<?php echo Yii::app()->createUrl('Delivery/ToLogist')?>',
+                    data: {Dldm_id: DeliveryDemands.Dldm_id},
+                    type: 'POST',
+                    async: false,
+                    success: function(Res) {
+                        if (Res == '1')
+                            location.reload();
+                    }
+                });
+        });
         
         var initWidgets = function (tab) {
             switch (tab) {
@@ -71,8 +86,52 @@
                                     { text: 'Текст сообщения', datafield: 'text', width: 450 },
                                 ],
                             }));
+                    $("#edComment").jqxInput({height: 25, width: 450, minLength: 1});
                     $('#btnSend').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnDelComment').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $("#edComment").on('keydown', function(event){
+                        if (event.which == 13)
+                            $('#btnSend').click();   
+                    });
+                    
+                    $('#btnSend').on('click', function(){
+                        $.ajax({
+                            url: '<?php echo Yii::app()->createUrl('DeliveryComments/Create')?>',
+                            type: 'POST',
+                            data: {
+                                DeliveryComments: {
+                                    dldm_id: DeliveryDemands.Dldm_id,
+                                    text: $("#edComment").jqxInput('val'),
+                                    EmplCreate: DeliveryDemands.CurrentUser
+                                }
+                            },
+                            success: function(Res) {
+                                if (Res == '1') {
+                                    $("#edComment").jqxInput('val', ''),
+                                    $("#DeliveryCommentsGrid").jqxGrid("updatebounddata");
+                                }
+                            }
+                        });
+                    });
+                    
+                    $('#btnDelComment').on('click', function(){
+                        var rowindex = $('#DeliveryCommentsGrid').jqxGrid('getselectedrowindex');
+                        var Row = $('#DeliveryCommentsGrid').jqxGrid('getrowdata', rowindex);
+                        if (Row != undefined) {
+                            if (Row.EmplCreate != parseInt(DeliveryDemands.CurrentUser)) return 0;
+                            $.ajax({
+                                url: '<?php echo Yii::app()->createUrl('DeliveryComments/Delete')?>',
+                                type: 'POST',
+                                data: {Dlcm_id: Row.dlcm_id},
+                                success: function(Res) {
+                                    if (Res == '1')
+                                        $("#DeliveryCommentsGrid").jqxGrid("updatebounddata");
+
+                                }
+                            });
+                        }
+                    });
+                    
                     break;
                 case 1:
                     var DataDetails = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDeliveryDetails, {}), {
@@ -105,10 +164,53 @@
                     $('#btnAddEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnEditEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnDelEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnAddEquip').on('click', function(){
+                        $.ajax({
+                            url: '<?php echo Yii::app()->createUrl('DeliveryDetails/Create'); ?>',
+                            type: 'POST',
+                            data: {dldm_id: DeliveryDemands.Dldm_id},
+                            async: false,
+                            success: function(Res) {
+                                $('#BodyDeliveryDetailDialog').html(Res);
+                            }
+                        });
+                        $('#EditDeliveryDetailDialog').jqxWindow('open');
+                    });
+                    
+                    
+                    
                     break;
             }
         };
         $('#edTabs').jqxTabs({ width: '100%', height: 345, initTabContent: initWidgets});
+        
+        $('#EditDeliveryDetailDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '210px', width: '700px', position: 'center'}));
+        $('#EditDeliveryDetailDialog').jqxWindow({initContent: function() {
+            $('#btnDeliveryDetailOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            $('#btnDeliveryDetailCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            $('#btnDeliveryDetailCancel').on('click', function(){
+                $('#EditDeliveryDetailDialog').jqxWindow('close');
+            });
+            $('#btnDeliveryDetailOk').on('click', function(){
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('DeliveryDetails/Create')); ?>,
+                    type: 'POST',
+                    data: $("#DeliveryDetails").serialize(),
+                    success: function(Res) {
+                        if (Res == '1') {
+                            $("#DeliveryDetailsGrid").jqxGrid('updatebounddata');
+                            $('#EditDeliveryDetailDialog').jqxWindow('close');
+                        }
+                        else
+                            $('#BodyDeliveryDemDialog').html(Res);
+                    
+                    }
+                });
+                //
+            });
+            
+        }});
         
         if (DeliveryDemands.Dldm_id != '') $("#edNumber").jqxNumberInput('val', DeliveryDemands.Dldm_id); 
         if (DeliveryDemands.DeliveryType != '') $("#edDeliveryType").jqxInput('val', DeliveryDemands.DeliveryType); 
@@ -128,11 +230,20 @@
             LoadEditForm('<?php echo Yii::app()->createUrl('Delivery/Update'); ?>', {Dldm_id: DeliveryDemands.Dldm_id}, 'POST');
             $('#EditDeliveryDemandDialog').jqxWindow('open');
         });
-        
-        $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '800px', width: '740'}));
+        $('#EditDeliveryDemandDialog').on('open', function(){
+            $('#btnDeliveryDemOk').jqxButton({disabled: true});
+        });
+        $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '800px', width: '740', position: 'center'}));
         $('#EditDeliveryDemandDialog').jqxWindow({initContent: function() {
             $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
             $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            $('#btnDeliveryDemAccept').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: (DeliveryDemands.DateLogist != null), width: 120, height: 30 }));
+            
+            $('#btnDeliveryDemAccept').on('click', function(){
+                var Tmp = new Date();
+                $('#edEditDateLogist').jqxDateTimeInput({value: Tmp});
+                $('#edUserLogist').val(DeliveryDemands.CurrentUser);
+            });
             
             $('#btnDeliveryDemCancel').on('click', function(){
                 $('#EditDeliveryDemandDialog').jqxWindow('close');
@@ -146,10 +257,10 @@
                     success: function(Res) {
                         if (Res == '1') {
                             $('#EditDeliveryDemandDialog').jqxWindow('close');
-                            $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
+                            location.reload();
                         }
                         else
-                            $('#BodyDeliveryDemDialog').html(Res);
+                            $('#BodyDeliveryDetailDialog').html(Res);
                     }
                 });
             });
@@ -227,7 +338,7 @@
 <div class="row" style="width: 1024px">
     <div class="row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
     <div class="row-column"><input type="button" value="Принять" id='btnAccept' /></div>
-    <div class="row-column" style="float: right;"><input type="button" value="Принять" id='btnPrint' /></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Печать" id='btnPrint' /></div>
 </div>
 <div id='edTabs' style="margin-top: 5px;">
     <ul>
@@ -275,7 +386,23 @@
         <div id="BottomDeliveryDemDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnDeliveryDemOk' /></div>
+                <div class="row-column" style="margin-left: 160px"><input type="button" value="Принять" id='btnDeliveryDemAccept' /></div>
                 <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnDeliveryDemCancel' /></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="EditDeliveryDetailDialog">
+    <div id="DeliveryDetailDialogHeader">
+        <span id="HeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogDeliveryDetailContent">
+        <div id="BodyDeliveryDetailDialog"></div>
+        <div id="BottomDeliveryDetailDialog">
+            <div class="row">
+                <div class="row-column"><input type="button" value="Сохранить" id='btnDeliveryDetailOk' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnDeliveryDetailCancel' /></div>
             </div>
         </div>
     </div>
