@@ -14,6 +14,7 @@
                 'DeleteDeliveryDemands',
                 'LogDeliveryDemands',
                 'ToLogistDeliveryDemands',
+                'UndoExecDeliveryDemands',
             ),
         ),
         
@@ -81,6 +82,12 @@
         'ToLogistDeliveryDemands' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Передать логисту',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'UndoExecDeliveryDemands' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Отменить выполнение',
             'bizRule' => null,
             'data' => null,
         ),
