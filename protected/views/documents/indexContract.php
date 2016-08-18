@@ -9,6 +9,7 @@
             ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
             JuridicalPerson: '<?php echo $model->JuridicalPerson; ?>',
             ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
+            DateExecuting2: Aliton.DateConvertToJs('<?php echo $model->DateExecuting; ?>'),
             crtp_name: '<?php echo $model->crtp_name; ?>',
             Annex: <?php echo json_encode($model->Annex); ?>,
             Debtor: <?php echo json_encode($model->Debtor); ?>,
@@ -37,6 +38,7 @@
         $("#ContrS_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 260 }));
         $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
+        $("#DateExecuting2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExecuting2, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#Annex").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
         $("#Debtor").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
@@ -328,6 +330,7 @@
     <div class="row">
         <div class="row-column">Номер: <input readonly id="ContrS_id" type="text"></div>
         <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
+        <div class="row-column" style="padding-top: 3px;">Дата проводки через ВЦКП: </div><div class="row-column"><div id="DateExecuting2" type="text"></div></div>
         <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor" type="checkbox"></div></div>
     </div>
 

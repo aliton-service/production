@@ -156,12 +156,22 @@ class DocumentsController extends Controller
                     case 8:
                         $this->render('indexInvoice', array(
                             'model' => $model
-                         ));
+                        ));
                         break;
                     case 3:
                         $this->render('indexInvoiceOrder', array(
                             'model' => $model
-                         ));
+                        ));
+                        break;
+                    case 5:
+                        $this->render('indexAgreement', array(
+                            'model' => $model
+                        ));
+                        break;
+                    case 4:
+                        $this->render('indexContract', array(
+                            'model' => $model
+                        ));
                         break;
                 }
             }
