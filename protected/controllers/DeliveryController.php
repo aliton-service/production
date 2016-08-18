@@ -24,6 +24,10 @@ class DeliveryController extends Controller
                         'roles'=>array('ToLogistDeliveryDemands'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                        'actions'=>array('UndoExec'),
+                        'roles'=>array('UndoExecDeliveryDemands'),
+                ),
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
                         'actions'=>array('Insert'),
                         'roles'=>array('InsertDeliveryDemands'),
                 ),
@@ -128,4 +132,24 @@ class DeliveryController extends Controller
         }
         echo '0';
     }
+    
+    public function actionUndoExec() {
+        if (isset($_POST['Dldm_id'])) {
+            $model = new DeliveryDemands();
+            $model->getModelPk($_POST['Dldm_id']);
+            if ($model->date_delivery != null && $model->date_delivery != '') {
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'UNDO_ExecDeliveryDemand';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $_POST['Dldm_id'];
+                $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+                $sp->CheckParam = true;
+                $sp->Execute();
+                echo '1';
+                return;
+            }
+        }
+        echo '0';
+    }
+    
 }

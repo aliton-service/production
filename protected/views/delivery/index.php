@@ -37,7 +37,37 @@
         $('#btnNew').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnUndoExec').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 160, height: 30 }));
         $('#btnRefresh').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        
+        $('#btnPrint').on('click', function(){
+            
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Заявки на доставку/Заявка на доставку',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[Dldm_id]=' + DeliveryDemand.dldm_id);
+        });
+        $('#btnAccept').on('click', function(){
+            $.ajax({
+                url: '<?php echo Yii::app()->createUrl('Delivery/ToLogist')?>',
+                data: {Dldm_id: DeliveryDemand.dldm_id},
+                type: 'POST',
+                async: false,
+                success: function(Res) {
+                    if (Res == '1')
+                        $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
+                }
+            });
+        });
+        $('#btnUndoExec').on('click', function(){
+                $.ajax({
+                    url: '<?php echo Yii::app()->createUrl('Delivery/UndoExec')?>',
+                    data: {Dldm_id: DeliveryDemand.dldm_id},
+                    type: 'POST',
+                    async: false,
+                    success: function(Res) {
+                        $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
+                    }
+                });
+        });
         // Привязка фильтров к гриду
         GridFilters.AddControlFilter('cmbExecutor', 'jqxComboBox', 'DeliveryDemandsGrid', 'mstr_id', 'numericfilter', 1, 'EQUAL', true);
         GridFilters.AddControlFilter('edNoAccept', 'jqxCheckBox', 'DeliveryDemandsGrid', 'date_logist', 'datefilter', 1, 'NULL', true);

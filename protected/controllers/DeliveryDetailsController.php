@@ -72,4 +72,21 @@ class DeliveryDetailsController extends Controller
             'model' => $model,
         ));
     }
+    
+    public function actionDelete()
+    {
+        $model = new DeliveryDetails();
+        if (isset($_POST['dldt_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'DELETE_DeliveryDetails';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['dldt_id'];
+            $sp->CheckParam = true;
+            $sp->Execute();
+            echo '1';
+            return;
+            
+        }
+        echo '0';
+    }
 }

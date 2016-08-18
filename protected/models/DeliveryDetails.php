@@ -16,6 +16,7 @@ class DeliveryDetails extends MainFormModel
     public $equipname = null;
     public $um_name = null;
     public $EmplCreate = null;
+    public $EmplChange = null;
 
     public $KeyField = 'dt.dldt_id';
     public $KeyFiled = 'dt.dldt_id';
@@ -60,7 +61,8 @@ class DeliveryDetails extends MainFormModel
     public function rules()
     {
         return array(
-            array('dldm_id, equip_id, quant', 'required'),
+            array('dldm_id, equip_id', 'required'),
+            array('quant', 'fieldValidate'),
             array('dldt_id,'
                 . ' dldm_id,'
                 . ' equip_id,'
@@ -72,6 +74,12 @@ class DeliveryDetails extends MainFormModel
                 . ' user_change,'
                 . ' deldate', 'safe'),
         );
+    }
+    
+    public function fieldValidate($attribute, array $params = array()) {
+        if (($this->quant === '') || (int)$this->quant === 0) {
+            $this->addError($attribute, 'Количество должно быть больше 0');
+        }
     }
 
     public function attributeLabels()

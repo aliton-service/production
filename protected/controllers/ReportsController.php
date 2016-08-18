@@ -87,6 +87,15 @@ class ReportsController extends Controller
                 $i++;
             }
         }
+        if (isset($_GET['Parameters'])) {
+            foreach ($_GET['Parameters'] as $key => $value) {
+                if ($value == '') $value = null;
+                $Parameters[$i] = new ParameterValue();
+                $Parameters[$i]->Name = $key;
+                $Parameters[$i]->Value = $value;
+                $i++;
+            }
+        }
         return $Parameters;
     }
     

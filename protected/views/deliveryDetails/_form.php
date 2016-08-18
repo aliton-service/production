@@ -11,6 +11,7 @@
             equipname: <?php echo json_encode($model->equipname); ?>,
             um_name: <?php echo json_encode($model->um_name); ?>,
         };
+        $("#btnDeliveryDetailOk").jqxButton({disabled: true});
         $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 50}));
         var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
         var find = function(id) {
@@ -46,6 +47,7 @@
         });
         $("#edEditDetailEquip").on('bindingComplete', function(){
             if (DeliveryDetail.equip_id != '') $("#edEditDetailEquip").jqxComboBox('val', DeliveryDetail.equip_id);
+            $("#btnDeliveryDetailOk").jqxButton({disabled: false});
         });
         $("#edEditDetailEquip").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEquips, width: '385', height: '25px', displayMember: "EquipName", valueMember: "Equip_id"}));
         $("#edQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: false, width: '80px', height: '25px', decimalDigits: 0 }));
@@ -67,6 +69,7 @@
         ),
     )); 
 ?>
+<input type="hidden" name="DeliveryDetails[dldt_id]" value="<?php echo $model->dldt_id; ?>" />
 <input type="hidden" name="DeliveryDetails[dldm_id]" value="<?php echo $model->dldm_id; ?>" />
 <div class="row">
     <div class="row-column">

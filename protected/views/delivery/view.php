@@ -22,6 +22,8 @@
             CurrentUser: <?php echo json_encode(Yii::app()->user->Employee_id); ?>
         };
         
+        var DetailMode = '';
+        
         $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '120px', height: '25px', decimalDigits: 0 }));
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDeliveryType").jqxInput({height: 25, width: 200, minLength: 1});
@@ -42,7 +44,14 @@
         $('#btnEdit').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnAccept').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: (DeliveryDemands.DateLogist != null), width: 120, height: 30 }));
         $('#btnPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        
+        $('#btnPrint').on('click', function(){
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Заявки на доставку/Заявка на доставку',
+                'Ajax' => false,
+                'Render' => true,
+                'Parameters' => array('Dldm_id' => $model->dldm_id),
+            ))); ?>)
+        });
         
         $('#btnAccept').on('click', function(){
                 $.ajax({
@@ -142,6 +151,13 @@
                             return data;
                         },
                     });
+                    $("#DeliveryDetailsGrid").on('rowselect', function (event) {
+                        Row = $('#DeliveryDetailsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                        if (Row != undefined) {
+                            $('#btnEditEquip').jqxButton({disabled: false});
+                            $('#btnDelEquip').jqxButton({disabled: false});
+                        }
+                    });
                     $("#DeliveryDetailsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 200,
@@ -162,10 +178,11 @@
                                 ],
                             }));
                     $('#btnAddEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-                    $('#btnEditEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-                    $('#btnDelEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnEditEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: true, width: 120, height: 30 }));
+                    $('#btnDelEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: true, width: 120, height: 30 }));
                     
                     $('#btnAddEquip').on('click', function(){
+                        DetailMode = 'Create';
                         $.ajax({
                             url: '<?php echo Yii::app()->createUrl('DeliveryDetails/Create'); ?>',
                             type: 'POST',
@@ -178,7 +195,39 @@
                         $('#EditDeliveryDetailDialog').jqxWindow('open');
                     });
                     
+                    $('#btnEditEquip').on('click', function(){
+                        DetailMode = 'Update';
+                        var rowindex = $('#DeliveryDetailsGrid').jqxGrid('getselectedrowindex');
+                        var Row = $('#DeliveryDetailsGrid').jqxGrid('getrowdata', rowindex);
+                        if (Row != undefined) {
+                            $.ajax({
+                                url: '<?php echo Yii::app()->createUrl('DeliveryDetails/Update'); ?>',
+                                type: 'POST',
+                                data: {dldt_id: Row.dldt_id},
+                                async: false,
+                                success: function(Res) {
+                                    $('#BodyDeliveryDetailDialog').html(Res);
+                                }
+                            });
+                        };
+                        $('#EditDeliveryDetailDialog').jqxWindow('open');
+                    });
                     
+                    $('#btnDelEquip').on('click', function(){
+                        var rowindex = $('#DeliveryDetailsGrid').jqxGrid('getselectedrowindex');
+                        var Row = $('#DeliveryDetailsGrid').jqxGrid('getrowdata', rowindex);
+                        if (Row != undefined) {
+                            $.ajax({
+                                url: '<?php echo Yii::app()->createUrl('DeliveryDetails/Delete'); ?>',
+                                type: 'POST',
+                                data: {dldt_id: Row.dldt_id},
+                                async: false,
+                                success: function(Res) {
+                                    $("#DeliveryDetailsGrid").jqxGrid('updatebounddata');
+                                }
+                            });
+                        }
+                    });
                     
                     break;
             }
@@ -193,8 +242,14 @@
                 $('#EditDeliveryDetailDialog').jqxWindow('close');
             });
             $('#btnDeliveryDetailOk').on('click', function(){
+                var url = '';
+                if (DetailMode == 'Create')
+                    url = <?php echo json_encode(Yii::app()->createUrl('DeliveryDetails/Create')); ?>;
+                else
+                    url = <?php echo json_encode(Yii::app()->createUrl('DeliveryDetails/Update')); ?>;
+                
                 $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('DeliveryDetails/Create')); ?>,
+                    url: url,
                     type: 'POST',
                     data: $("#DeliveryDetails").serialize(),
                     success: function(Res) {
@@ -203,7 +258,7 @@
                             $('#EditDeliveryDetailDialog').jqxWindow('close');
                         }
                         else
-                            $('#BodyDeliveryDemDialog').html(Res);
+                            $('#BodyDeliveryDetailDialog').html(Res);
                     
                     }
                 });
@@ -372,7 +427,7 @@
             <div style="margin-top: 6px;">
                 <div style="float: left;"><input type="button" value="Добавить" id='btnAddEquip' /></div>
                 <div style="float: left; margin-left: 6px;"><input type="button" value="Изменить" id='btnEditEquip' /></div>
-                <div style="float: left; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelEquip' /></div>
+                <div style="float: right; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelEquip' /></div>
             </div>
         </div>
     </div>
