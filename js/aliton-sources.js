@@ -1457,6 +1457,7 @@ Sources.SourceContractsS =
         {name: 'Debtor', type: 'bool'},
         {name: 'CalcSum', type: 'float'},
         {name: 'JuridicalPerson', type: 'string'},
+        {name: 'Master', type: 'int'},
         {name: 'MasterName', type: 'string'},
         {name: 'SpecialCondition', type: 'string'},
         {name: 'ContrNote', type: 'string'},
@@ -1600,6 +1601,74 @@ Sources.SourcePaymentTypes =
     ],
     id: 'PaymentType_Id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PaymentTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+
+Sources.SourcePaymentPeriods =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'PaymentPeriod_Id',  type: 'int' },
+        { name: 'PaymentName',  type: 'string' },
+    ],
+    id: 'PaymentPeriod_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PaymentPeriods',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceServiceTypes =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'ServiceType_id',  type: 'int' },
+        { name: 'ServiceType',  type: 'string' },
+    ],
+    id: 'ServiceType_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ServiceTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceContractMasterHistory =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'History_id',  type: 'int' },
+        { name: 'ContrS_id',  type: 'int' },
+        { name: 'Master',  type: 'int' },
+        { name: 'EmployeeName',  type: 'string' },
+        { name: 'WorkDateStart',  type: 'date' },
+        { name: 'WorkDateEnd',  type: 'date' },
+    ],
+    id: 'History_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractMasterHistory',
     type: 'POST',
     root: 'Rows',
     cache: false,

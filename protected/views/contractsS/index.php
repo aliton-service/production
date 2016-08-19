@@ -40,6 +40,7 @@
                     { text: 'Оплачено по', dataField: 'DatePay', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
                     { text: 'Долг', dataField: 'Debtor', columntype: 'checkbox', filtercondition: 'STARTS_WITH', width: 80 },
                     { text: 'Оплачено', dataField: 'CalcSum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'MasterName', dataField: 'MasterName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
                 ]
             })
         );
@@ -77,7 +78,7 @@
                 case 'Договор обслуживания':
                     
                     break;
-                case 'Доп. соглашение':
+                case 'Доп.соглашение':
                     
                     break;
                 case 'Счет':
@@ -174,7 +175,7 @@
                 <div style="border: none;" id='jqxTreeContracts'>
                     <ul>
                         <li><div style="width: 160px; height: 20px;">Договор обслуживания</div></li>
-                        <li><div style="width: 160px; height: 20px;">Доп. соглашение</div></li>
+                        <li><div style="width: 160px; height: 20px;">Доп.соглашение</div></li>
                         <li><div style="width: 160px; height: 20px;">Счет</div></li>
                         <li><div style="width: 160px; height: 20px;">Счет-заказ</div></li>
                     </ul>

@@ -97,20 +97,22 @@ class DocumentsController extends Controller
 
 	public function actionUpdate()
 	{
-            if (isset($_POST['ContrS_id'])) 
+            if (isset($_POST['ContrS_id'])) {
                 $ContrS_id = $_POST['ContrS_id'];
-
+            }
+            
             $model = new Documents;
             
-            if (isset($_POST['ObjectGr_id'])) 
+            if (isset($_POST['ObjectGr_id'])) {
                 $model->ObjectGr_id = $_POST['ObjectGr_id'];
+            }
 
             if(isset($_POST['Documents']))
             {
                 $model->attributes=$_POST['Documents'];
-                $ContrS_id = $model->ContrS_id;
+//                $ContrS_id = $model->ContrS_id;
 
-                $this->performAjaxValidation($model);
+                
 
                 if ($model->validate())
                 {
@@ -120,10 +122,33 @@ class DocumentsController extends Controller
                 }
 
             }
+            
             $model->getModelPk($ContrS_id);
-            $this->renderPartial('_form', array(
-                'model' => $model
-            ));
+            
+            switch ($model->DocType_id) {
+                case 8:
+                    $this->renderPartial('_formInvoice', array(
+                        'model' => $model
+                    ));
+                    break;
+                case 3:
+                    $this->renderPartial('_formInvoiceOrder', array(
+                        'model' => $model
+                    ));
+                    break;
+                case 5:
+                    $this->renderPartial('_formAgreement', array(
+                        'model' => $model
+                    ));
+                    break;
+                case 4:
+                    $this->renderPartial('_formContract', array(
+                        'model' => $model
+                    ));
+                    break;
+            }
+                
+            
             
 	}
 

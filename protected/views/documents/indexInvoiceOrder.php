@@ -6,27 +6,16 @@
         
         var CurrentContract = {
             ContrS_id: '<?php echo $model->ContrS_id; ?>',
+            ContrNumS: '<?php echo $model->ContrNumS; ?>',
+            WorkText: '<?php echo $model->WorkText; ?>',
             ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
             JuridicalPerson: '<?php echo $model->JuridicalPerson; ?>',
             ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
-            crtp_name: '<?php echo $model->crtp_name; ?>',
-            Annex: <?php echo json_encode($model->Annex); ?>,
-            Debtor: <?php echo json_encode($model->Debtor); ?>,
-            DocNumber: '<?php echo $model->DocNumber; ?>',
-            DocDate: Aliton.DateConvertToJs('<?php echo $model->DocDate; ?>'),
             PaymentTypeName: '<?php echo $model->PaymentTypeName; ?>',
             Price: '<?php echo $model->Price; ?>',
-            CalcSum: '<?php echo $model->CalcSum; ?>',
-            PrePayment: '<?php echo $model->PrePayment; ?>',
-            summa: '<?php echo $model->summa; ?>',
-            empl_name: '<?php echo $model->empl_name; ?>',
-            dmnd_id: '<?php echo $model->dmnd_id; ?>',
-            DateExec: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
-            date_act: Aliton.DateConvertToJs('<?php echo $model->date_act; ?>'),
+            discount: '<?php echo $model->discount; ?>',
             SpecialCondition: <?php echo json_encode($model->SpecialCondition); ?>,
             FIO: '<?php echo $model->FIO; ?>',
-            ExecDay: '<?php echo $model->ExecDay; ?>',
-            Garant: '<?php echo $model->Garant; ?>',
             Note: <?php echo json_encode($model->Note); ?>,
             date_checkup: Aliton.DateConvertToJs('<?php echo $model->date_checkup; ?>'),
             user_checkup: '<?php echo $model->user_checkup; ?>',
@@ -34,49 +23,28 @@
         };
             
         
-        $("#ContrS_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 260 }));
+        $("#ContrNumS").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#WorkText").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 335 }));
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 240 }));
         $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#Annex").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
-        $("#Debtor").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
-        $("#DocNumber").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#DocDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DocDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#PaymentTypeName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#CalcSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#PrePayment").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#summa").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 270 }));
-        $("#dmnd_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
-        $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#date_act").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_act, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420 }));
-        $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 360 }));
-        $("#ExecDay").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-        $("#Garant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+        $("#discount").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
+        $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
         $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
         $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         
         
-        if (CurrentContract.ContrS_id != '') $("#ContrS_id").jqxInput('val', CurrentContract.ContrS_id);
+        if (CurrentContract.ContrNumS != '') $("#ContrNumS").jqxInput('val', CurrentContract.ContrNumS);
+        if (CurrentContract.WorkText != '') $("#WorkText").jqxInput('val', CurrentContract.WorkText);
         if (CurrentContract.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentContract.JuridicalPerson);
-        if (CurrentContract.crtp_name != '') $("#crtp_name").jqxInput('val', CurrentContract.crtp_name);
-        if (CurrentContract.Annex != '') $("#Annex").jqxCheckBox({checked: Boolean(Number(CurrentContract.Annex))});
-        if (CurrentContract.Debtor != '') $("#Debtor").jqxCheckBox({checked: Boolean(Number(CurrentContract.Debtor))});
-        if (CurrentContract.DocNumber != '') $("#DocNumber").jqxInput('val', CurrentContract.DocNumber);
         if (CurrentContract.PaymentTypeName != '') $("#PaymentTypeName").jqxInput('val', CurrentContract.PaymentTypeName);
         if (CurrentContract.Price != '') $("#Price").jqxNumberInput('val', CurrentContract.Price);
-        if (CurrentContract.CalcSum != '') $("#CalcSum").jqxNumberInput('val', CurrentContract.CalcSum);
-        if (CurrentContract.PrePayment != '') $("#PrePayment").jqxNumberInput('val', CurrentContract.PrePayment);
-        if (CurrentContract.summa != '') $("#summa").jqxNumberInput('val', CurrentContract.summa);
-        if (CurrentContract.empl_name != '') $("#empl_name").jqxInput('val', CurrentContract.empl_name);
-        if (CurrentContract.dmnd_id != '') $("#dmnd_id").jqxInput('val', CurrentContract.dmnd_id);
+        if (CurrentContract.discount != '') $("#discount").jqxNumberInput('val', CurrentContract.discount);
         if (CurrentContract.SpecialCondition != '') $("#SpecialCondition1").jqxTextArea('val', CurrentContract.SpecialCondition);
         if (CurrentContract.FIO != '') $("#FIO").jqxInput('val', CurrentContract.FIO);
-        if (CurrentContract.ExecDay != '') $("#ExecDay").jqxNumberInput('val', CurrentContract.ExecDay);
-        if (CurrentContract.Garant != '') $("#Garant").jqxNumberInput('val', CurrentContract.Garant);
         if (CurrentContract.Note != '') $("#Note").jqxTextArea('val', CurrentContract.Note);
         if (CurrentContract.user_checkup != '') $("#user_checkup").jqxInput('val', CurrentContract.user_checkup);
         
@@ -203,7 +171,6 @@
         $("#NewContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#ReloadContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#PrintContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         
@@ -326,49 +293,27 @@
 
 <div style="background-color: #F2F2F2;">
     <div class="row">
-        <div class="row-column">Номер: <input readonly id="ContrS_id" type="text"></div>
+        <div class="row-column">Номер: <input readonly id="ContrNumS" type="text"></div>
         <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
-        <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor" type="checkbox"></div></div>
+    </div>
+    
+    <div class="row">
+        <div class="row-column">Наименование вида работ: <input readonly id="WorkText" type="text"></div>
+        <div class="row-column">Вид оплаты: <input readonly id="PaymentTypeName" type="text"></div>
     </div>
 
     <div class="row">
         <div class="row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
-        <div class="row-column">Тип контракта: <input readonly id="crtp_name" type="text"></div>
-        <div class="row-column" style="padding-top: 3px;">Приложение: </div><div class="row-column"><div id="Annex" type="checkbox"></div></div>
+        <div class="row-column">Контактное лицо: <input readonly id="FIO" type="text"></div>
     </div>
     
     <div class="row">
-        <div class="row-column">Номер договора: <input readonly id="DocNumber" type="text"></div>
-        <div class="row-column" style="padding-top: 3px;">Дата договора: </div><div class="row-column"><div id="DocDate"></div></div>
-        <div class="row-column">Вид оплаты: <input readonly id="PaymentTypeName" type="text"></div>
+        <div class="row-column" style="padding-top: 10px;">Особые договоренности: <textarea readonly id="SpecialCondition1" ></textarea></div>
     </div>
     
     <div class="row">
-        <div class="row-column">Сумма начисления: </div><div class="row-column"><div id="Price" type="text"></div></div>
-        <div class="row-column">Предварительная сумма: </div><div class="row-column"><div id="CalcSum" type="text"></div></div>
-        <div class="row-column">Аванс: </div><div class="row-column"><div id="PrePayment" type="text"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Оплачено: </div><div class="row-column"><div id="summa" type="text"></div></div>
-        <div class="row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
-    </div>
-    
-    <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
-        <div style="overflow: hidden;">
-            <div class="row-column" style="margin: 0 0 10px 0; width: 100%; font-weight: 500;">Выполненные работы</div>
-            <div class="row-column">Заявка: <input readonly id="dmnd_id" type="text"></div>
-            <div class="row-column" style="padding-top: 3px;">Дата выполнения работ: </div><div class="row-column"><div id="DateExec"></div></div>
-            <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_act"></div></div>
-            <div class="row-column" style="padding-top: 10px;">Перечень работ: <textarea readonly id="SpecialCondition1" ></textarea></div>
-       
-            <div class="row-column" style="padding-top: 10px;">Контактное лицо: <br><input readonly id="FIO" type="text"></div>
-            
-            <div class="row-column" style="padding-top: 18px; ">
-                <div class="row-column">Срок: </div><div class="row-column"><div id="ExecDay" type="text"></div></div>
-                <div class="row-column">Гарантия: </div><div class="row-column"><div id="Garant" type="text"></div></div>
-            </div>
-        </div>
+        <div class="row-column">Сумма: </div><div class="row-column"><div id="Price" type="text"></div></div>
+        <div class="row-column">Скидка: </div><div class="row-column"><div id="discount" type="text"></div></div>
     </div>
     
     <div class="row">
@@ -391,9 +336,8 @@
         <div class="row-column"><input type="button" value="Добавить" id='NewContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsDetails' /></div>
-        <div class="row-column"><input type="button" value="Печатать" id='PrintContractsDetails' /></div>
         <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum"></div></div>
-        <div class="row-column"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
+        <div class="row-column" style="margin-left: 150px;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
     </div>
 </div>
 

@@ -152,6 +152,9 @@ return array_merge(
     /* Комментарии */
     include(dirname(__FILE__).'/security/DeliveryCommentsSecurity.php'),
         
+    /* Привязка мастера к договору */
+    include(dirname(__FILE__).'/security/ContractMasterHistorySecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -307,6 +310,7 @@ return array_merge(
                 'AdminDocuments',
                 'AdminContractsDetails_v',
                 'AdminDeliveryComments',
+                'AdminContractMasterHistory',
                 /* Отчеты*/
                 'Demand1Report',
                 'Demand2Report',

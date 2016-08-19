@@ -75,8 +75,7 @@ class Documents extends MainFormModel
 			array('SpecialCondition', 'length', 'max'=>1073741823),
 			array('CalcSum', 'length', 'max'=>19),
 			array('ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Debtor, LastChangeDate, Prolong, date_doc, date_act, DateExecuting, JobExec, WorkText, Annex, DocDate, date_checkup, Lock, DateLock', 'safe'),
-			array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, empl_id, Master, ServiceType_id, Debtor, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, '
-                            . 'Prolong, date_doc, date_act, Debtor, DateExecuting, dmnd_id, JobExec, CalcSum, Calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp, Note', 'safe'),
+			array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, empl_id, Master, ServiceType_id, Debtor, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, Prolong, date_doc, date_act, Debtor, DateExecuting, dmnd_id, JobExec, CalcSum, Calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp, Note', 'safe'),
 		);
 	}
 
@@ -107,7 +106,7 @@ class Documents extends MainFormModel
                     pt.PaymentTypeName, 
                     c.Jrdc_id, 
                     j.JuridicalPerson,
-                    ch.Master Master, 
+                    c.Master, 
                     e.EmployeeName MasterName, 
                     c.Debtor, 
                     c.Note,
@@ -154,7 +153,7 @@ class Documents extends MainFormModel
                 left join ServiceTypes st on (c.ServiceType_id = st.Servicetype_id)
                 left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
                 left join ContractMasterHistory ch on (c.ContrS_id = ch.ContrS_id and ch.DelDate is Null and dbo.truncdate(getdate()) between dbo.truncdate(ch.WorkDateStart) and dbo.truncdate(ch.WorkDateEnd))
-                left join Employees_ForObj_v e on (ch.Master = e.Employee_id)
+                left join Employees_ForObj_v e on (c.Master = e.Employee_id)
                 left join DocTypes dt on (c.DocType_id = dt.DocType_id)
                 left join PaymentPeriods p on (c.PaymentPeriod_id = p.PaymentPeriod_id)
                 left join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_id)

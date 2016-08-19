@@ -108,6 +108,7 @@
 
 <input type="hidden" name="Documents[ContrS_id]" value="<?php echo $model->ContrS_id; ?>">
 <input type="hidden" name="Documents[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>">
+<input type="hidden" name="Documents[DocType_id]" value="<?php echo $model->DocType_id; ?>">
 
 <div class="row">
     <div class="row-column">Номер: <input id="ContrS_id2" name="Documents[ContrNumS]" type="text"></div>
@@ -135,7 +136,7 @@
 </div>
 
 <div class="row">
-    <div class="row-column">Сумма начисления: </div><div class="row-column"><div id="Price2" name="Documents[Price]" type="text"></div></div>
+    <div class="row-column">Сумма начислений: </div><div class="row-column"><div id="Price2" name="Documents[Price]" type="text"></div></div>
     <div class="row-column">Предварительная сумма: </div><div class="row-column"><div id="CalcSum2" name="Documents[CalcSum]" type="text"></div></div>
     <div class="row-column">Аванс: </div><div class="row-column"><div id="PrePayment2" name="Documents[PrePayment]" type="text"></div></div>
 </div>
