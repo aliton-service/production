@@ -1,9 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         
-        /* Текущая выбранная строка данных */
-        var CurrentRowData;
-        
         var CurrentContract = {
             ContrS_id: '<?php echo $model->ContrS_id; ?>',
             ContrNumS: '<?php echo $model->ContrNumS; ?>',
@@ -20,7 +17,6 @@
             Price: '<?php echo $model->Price; ?>',
             CalcSum: '<?php echo $model->CalcSum; ?>',
             PrePayment: '<?php echo $model->PrePayment; ?>',
-            summa: '<?php echo $model->summa; ?>',
             empl_name: '<?php echo $model->empl_name; ?>',
             dmnd_id: '<?php echo $model->dmnd_id; ?>',
             DateExec: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
@@ -36,7 +32,7 @@
         };
             
         
-        $("#ContrNumS7").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#ContrNumS3").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 260 }));
         $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
@@ -49,7 +45,6 @@
         $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#CalcSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#PrePayment").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#summa").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 270 }));
         $("#dmnd_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
         $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
@@ -63,7 +58,7 @@
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         
         
-        if (CurrentContract.ContrNumS != '') $("#ContrNumS7").jqxInput('val', CurrentContract.ContrNumS);
+        if (CurrentContract.ContrNumS != '') $("#ContrNumS3").jqxInput('val', CurrentContract.ContrNumS);
         if (CurrentContract.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentContract.JuridicalPerson);
         if (CurrentContract.crtp_name != '') $("#crtp_name").jqxInput('val', CurrentContract.crtp_name);
         if (CurrentContract.Annex != '') $("#Annex").jqxCheckBox({checked: Boolean(Number(CurrentContract.Annex))});
@@ -73,7 +68,6 @@
         if (CurrentContract.Price != '') $("#Price").jqxNumberInput('val', CurrentContract.Price);
         if (CurrentContract.CalcSum != '') $("#CalcSum").jqxNumberInput('val', CurrentContract.CalcSum);
         if (CurrentContract.PrePayment != '') $("#PrePayment").jqxNumberInput('val', CurrentContract.PrePayment);
-        if (CurrentContract.summa != '') $("#summa").jqxNumberInput('val', CurrentContract.summa);
         if (CurrentContract.empl_name != '') $("#empl_name").jqxInput('val', CurrentContract.empl_name);
         if (CurrentContract.dmnd_id != '') $("#dmnd_id").jqxInput('val', CurrentContract.dmnd_id);
         if (CurrentContract.SpecialCondition != '') $("#SpecialCondition1").jqxTextArea('val', CurrentContract.SpecialCondition);
@@ -82,7 +76,8 @@
         if (CurrentContract.Garant != '') $("#Garant").jqxNumberInput('val', CurrentContract.Garant);
         if (CurrentContract.Note != '') $("#Note").jqxTextArea('val', CurrentContract.Note);
         if (CurrentContract.user_checkup != '') $("#user_checkup").jqxInput('val', CurrentContract.user_checkup);
-
+        
+        
         $("#EditContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#PrintContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#CheckupContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -161,9 +156,8 @@
         
         
         $.get('<?php echo Yii::app()->createUrl('ContractsDetails_v/index', array('ContrS_id' => $model->ContrS_id)) ?>', function (data) {
-                $('#contentContractDetails2').html(data);
+                $('#contentContractDetails3').html(data);
         });
-        
         
     });
     
@@ -172,9 +166,9 @@
 
 <div style="background-color: #F2F2F2;">
     <div class="row">
-        <div class="row-column">Номер: <input readonly id="ContrNumS7" type="text"></div>
+        <div class="row-column">Номер: <input readonly id="ContrNumS3" type="text"></div>
         <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
-        <div class="row-column" style="padding-top: 3px;">Дата выполнения работ по акту: </div><div class="row-column"><div id="date_doc" type="text"></div></div>
+        <div class="row-column" style="padding-top: 3px;">Дата прихода ориг. документа: </div><div class="row-column"><div id="date_doc" type="text"></div></div>
         <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor" type="checkbox"></div></div>
     </div>
 
@@ -196,11 +190,6 @@
         <div class="row-column">Аванс: </div><div class="row-column"><div id="PrePayment" type="text"></div></div>
     </div>
     
-    <div class="row">
-        <div class="row-column">Оплачено: </div><div class="row-column"><div id="summa" type="text"></div></div>
-        <div class="row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
-    </div>
-    
     <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
         <div style="overflow: hidden;">
             <div class="row-column" style="margin: 0 0 10px 0; width: 100%; font-weight: 500;">Выполненные работы</div>
@@ -219,6 +208,10 @@
     </div>
     
     <div class="row">
+        <div class="row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
+    </div>
+    
+    <div class="row">
         <div class="row-column">Примечание: <textarea readonly id="Note" ></textarea></div>
     </div>
 
@@ -232,7 +225,7 @@
 
     <div class="row" style="padding: 0 10px 10px 10px; border: 1px solid #ddd; background-color: #eee;">
         <div class="row-column" style="margin: 0 0 10px 0; width: 100%; font-weight: 500;">Спецификация</div>
-        <div id='contentContractDetails2' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
+        <div id='contentContractDetails3' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
     </div>
 </div>
 

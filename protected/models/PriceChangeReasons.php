@@ -1,125 +1,65 @@
 <?php
 
-/**
- * This is the model class for table "PriceChangeReasons".
- *
- * The followings are the available columns in table 'PriceChangeReasons':
- * @property integer $Reason_Id
- * @property string $ReasonName
- * @property boolean $Lock
- * @property integer $EmplLock
- * @property string $DateLock
- * @property integer $EmplChange
- * @property string $DateChange
- * @property integer $EmplDel
- * @property string $DelDate
- */
-class PriceChangeReasons extends CActiveRecord
+class PriceChangeReasons extends MainFormModel
 {
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'PriceChangeReasons';
-	}
+    public $Reason_id;
+    public $ReasonName;
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('ReasonName', 'required'),
-			array('EmplLock, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
-			array('ReasonName', 'length', 'max'=>50),
-			array('Lock, DateLock, DateChange, DelDate', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('Reason_Id, ReasonName, Lock, EmplLock, DateLock, EmplChange, DateChange, EmplDel, DelDate', 'safe', 'on'=>'search'),
-		);
-	}
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+    public $SP_INSERT_NAME = '';
+    public $SP_UPDATE_NAME = '';
+    public $SP_DELETE_NAME = '';
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'Reason_Id' => 'Reason',
-			'ReasonName' => 'Reason Name',
-			'Lock' => 'Lock',
-			'EmplLock' => 'Empl Lock',
-			'DateLock' => 'Date Lock',
-			'EmplChange' => 'Empl Change',
-			'DateChange' => 'Date Change',
-			'EmplDel' => 'Empl Del',
-			'DelDate' => 'Del Date',
-		);
-	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+    public function rules()
+    {
+        return array(
+            array('Reason_id', 'numerical', 'integerOnly'=>true),
+            array('ReasonName', 'required'),
+            array('Reason_id, ReasonName', 'safe'),
+        );
+    }
 
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('Reason_Id',$this->Reason_Id);
-		$criteria->compare('ReasonName',$this->ReasonName,true);
-		$criteria->compare('Lock',$this->Lock);
-		$criteria->compare('EmplLock',$this->EmplLock);
-		$criteria->compare('DateLock',$this->DateLock,true);
-		$criteria->compare('EmplChange',$this->EmplChange);
-		$criteria->compare('DateChange',$this->DateChange,true);
-		$criteria->compare('EmplDel',$this->EmplDel);
-		$criteria->compare('DelDate',$this->DelDate,true);
-		$criteria->compare('EmplDel', array(null));
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return PriceChangeReasons the static model class
-	 */
-	 public function deleteCount($id, $empl_id) {
-	 
-		$Command = Yii::app()->db->createCommand(''
-                . "UPDATE PriceChangeReasons SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE Reason_Id = {$id}
-                ");
+    function __construct($scenario='') {
         
-        return $Command->queryAll();
-	}
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+        $this->SP_INSERT_NAME = 'INSERT_PriceChangeReasons';
+        $this->SP_UPDATE_NAME = 'UPDATE_PriceChangeReasons';
+        $this->SP_DELETE_NAME = 'DELETE_PriceChangeReasons';
+        
+        parent::__construct($scenario);
+        $select = "
+            select 
+                r.Reason_id,
+                r.ReasonName
+        ";
+
+        $from = "
+            from PriceChangeReasons r
+        ";
+
+//        $where = "
+//	";
+
+        $order = "
+            order by r.ReasonName
+        ";
+
+        // Инициализация первичного ключа
+        $this->KeyFiled = 'r.Reason_id';
+        $this->PrimaryKey = 'Reason_id';
+
+        $this->Query->setSelect($select);
+        $this->Query->setFrom($from);
+//	$this->Query->setWhere($where);
+        $this->Query->setOrder($order);
+    }
+        
+    public function attributeLabels()
+    {
+        return array(
+            'Reason_id' => 'Reason id',
+            'ReasonName' => 'ReasonName',
+        );
+    }
+
 }

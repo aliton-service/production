@@ -80,57 +80,60 @@ class ContractsS extends MainFormModel
                 array('ContrNote, SpecialCondition', 'length', 'max'=>1073741823),
                 array('CalcSum', 'length', 'max'=>19),
                 array('ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Debtor, DateCreate, DateChange, LastChangeDate, DelDate, Prolong, date_doc, date_act, DateExecuting, JobExec, WorkText, Annex, DocDate, date_checkup, Lock, DateLock', 'safe'),
-                array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, Empl_id, Master, MasterTel, ServiceType_id, Debtor, ContrNote, DateCreate, DateChange, User2, ServiceRate_id, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, Prolong, date_doc, date_act, Debt, DateExecuting, dmnd_id, JobExec, CalcSum, calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp', 'safe'),
+                array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, Empl_id, Master, MasterName, MasterTel, ServiceType_id, Debtor, ContrNote, DateCreate, DateChange, User2, ServiceRate_id, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, Prolong, date_doc, date_act, Debt, DateExecuting, dmnd_id, JobExec, CalcSum, calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp', 'safe'),
             );
 	}
 
 	function __construct($scenario='') {
-		parent::__construct($scenario);
-		$select = "\nSelect
-                                c.ContrS_id,
-                                c.ContrDateS,
-                                c.ContrNumS,
-                                dt.DocType_Name,
-                                c.crtp_id,
-                                ct.name crtp_name,
-                                c.date_doc,
-                                c.ContrSDateStart,
-                                c.ContrSDateEnd,
-                                pp.PaymentName,
-                                pt.PaymentTypeName,
-                                a.Addr,
-                                c.CalcSum,
-                                c.Jrdc_id,
-                                j.JuridicalPerson,
-                                e.EmployeeName MasterName,
-                                c.SpecialCondition,
-                                c.Note ContrNote,
-                                c.DateExecuting,
-                                case when c.DocType_id = 4 then round(c.PriceMonth, 2) else round(c.Price, 2) end Price";
+            
+            $this->SP_DELETE_NAME = 'DELETE_CONTRACTS';
+            
+            parent::__construct($scenario);
+            $select = "\nSelect
+                            c.ContrS_id,
+                            c.ContrDateS,
+                            c.ContrNumS,
+                            dt.DocType_Name,
+                            c.crtp_id,
+                            ct.name crtp_name,
+                            c.date_doc,
+                            c.ContrSDateStart,
+                            c.ContrSDateEnd,
+                            pp.PaymentName,
+                            pt.PaymentTypeName,
+                            a.Addr,
+                            c.CalcSum,
+                            c.Jrdc_id,
+                            j.JuridicalPerson,
+                            e.EmployeeName MasterName,
+                            c.SpecialCondition,
+                            c.Note ContrNote,
+                            c.DateExecuting,
+                            case when c.DocType_id = 4 then round(c.PriceMonth, 2) else round(c.Price, 2) end Price";
 
-		$from = "\nFrom ContractsS c left join ObjectsGroup og on (c.ObjectGr_id = og.ObjectGr_id)
-                                left join Addresses_v a on (a.Address_id = og.Address_id)
-                                left join DocTypes dt on (c.DocType_id = dt.DocType_Id)
-                                left join ContractTypes ct on (c.crtp_id = ct.crtp_id)
-                                left join PaymentPeriods pp on (c.PaymentPeriod_id = pp.PaymentPeriod_Id)
-                                left join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_Id)
-                                left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
-                                left join Employees_ForObj_v e on (c.Master = e.Employee_id)";
+            $from = "\nFrom ContractsS c left join ObjectsGroup og on (c.ObjectGr_id = og.ObjectGr_id)
+                            left join Addresses_v a on (a.Address_id = og.Address_id)
+                            left join DocTypes dt on (c.DocType_id = dt.DocType_Id)
+                            left join ContractTypes ct on (c.crtp_id = ct.crtp_id)
+                            left join PaymentPeriods pp on (c.PaymentPeriod_id = pp.PaymentPeriod_Id)
+                            left join PaymentTypes pt on (c.PaymentType_id = pt.PaymentType_Id)
+                            left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
+                            left join Employees_ForObj_v e on (c.Master = e.Employee_id)";
 
-		$where = "\nWhere c.DelDate is null
-			and og.DelDate is null
-			and c.DocType_id in (4, 5, 8)";
+            $where = "\nWhere c.DelDate is null
+                    and og.DelDate is null
+                    and c.DocType_id in (3, 4, 5, 8)";
 
-		$order = "\nOrder by c.ContrS_id";
-                
-                // Инициализация первичного ключа
-                $this->KeyFiled = 'c.contrs_id';
-                $this->PrimaryKey = 'contrs_id';
+            $order = "\nOrder by c.ContrS_id";
 
-		$this->Query->setSelect($select);
-		$this->Query->setFrom($from);
-		$this->Query->setWhere($where);
-		$this->Query->setOrder($order);
+            // Инициализация первичного ключа
+            $this->KeyFiled = 'c.contrs_id';
+            $this->PrimaryKey = 'contrs_id';
+
+            $this->Query->setSelect($select);
+            $this->Query->setFrom($from);
+            $this->Query->setWhere($where);
+            $this->Query->setOrder($order);
 	}
         
         

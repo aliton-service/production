@@ -26,7 +26,7 @@ class ContractsDetails_v extends MainFormModel
             array('csdt_id, ContrS_id, Equip_id, Quant', 'numerical', 'integerOnly'=>true),
             array('Equip_id, Name, price, Quant', 'required'),
             array('price, sum', 'numerical'),
-            array('Name, ItemName', 'length', 'max'=>50),
+            array('Name, ItemName', 'length', 'max'=>150),
             array('Note', 'length', 'max'=>1073741823),
             array('sum', 'length', 'max'=>19),
             array('csdt_id, ContrS_id, Equip_id, Name, ItemName, um_name, price, Quant, sum, Note', 'safe'),

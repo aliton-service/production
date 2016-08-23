@@ -1,4 +1,6 @@
 <script type="text/javascript">
+    
+    
     $(document).ready(function () {
         
         /* Текущая выбранная строка данных */
@@ -40,13 +42,14 @@
                     { text: 'Оплачено по', dataField: 'DatePay', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
                     { text: 'Долг', dataField: 'Debtor', columntype: 'checkbox', filtercondition: 'STARTS_WITH', width: 80 },
                     { text: 'Оплачено', dataField: 'CalcSum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'MasterName', dataField: 'MasterName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
                 ]
             })
         );
         
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
         $("#MasterName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
-        $("#DateExecuting").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 170 }));
+        $("#DateExecuting").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
         $("#SpecialCondition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 470 }));
         $("#ContrNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 470 }));
         
@@ -56,7 +59,6 @@
                 CurrentRowData = Temp;
             } else {CurrentRowData = null};
             
-            console.log(CurrentRowData);
             
             if (CurrentRowData.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
             if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
@@ -72,30 +74,84 @@
         $("#ReloadContracts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
-        var newDocType = function (itemLabel) {
+        
+        $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '650px', width: '870'}));
+        
+        $('#NewContractDialog').jqxWindow({initContent: function() {
+            $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        }});
+        
+        $("#NewContractBtnCancel").on('click', function () {
+            $('#NewContractDialog').jqxWindow('close');
+        });
+        
+        
+        var SendFormContract = function(Form) {
+            var Data;
+            if (Form == undefined)
+                Data = $('#Documents').serialize();
+            else Data = Form;
+                
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#NewContractDialog').jqxWindow('close');
+                        location.reload();
+                    } else {
+                        $('#NewContractBodyDialog').html(Res);
+                    }
+                }
+            });
+        }
+
+        $("#NewContractBtnOk").on('click', function () {
+            SendFormContract();
+        });
+        
+        var openCreateWindow = function (itemLabel) {
+            var DocType_id;
             switch (itemLabel) {
                 case 'Договор обслуживания':
-                    
+                    DocType_id = 4;
                     break;
                 case 'Доп.соглашение':
-                    
+                    DocType_id = 5;
                     break;
                 case 'Счет':
-                    
+                    DocType_id = 8;
                     break;
                 case 'Счет-заказ':
-                    
+                    DocType_id = 3;
                     break;
-                default:
-                    alert( 'Что-то пошло не так' );
             }
+            
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: { 
+                    ObjectGr_id: Contracts.ObjectGr_id,
+                    DocType_id: DocType_id
+                },
+                success: function(Res) {
+                    $('#NewContractBodyDialog').html(Res);
+                    $('#NewContractHeaderText').html(itemLabel);
+                }
+            });
+            $('#NewContractDialog').jqxWindow('open');
         };
+
         
         $('#jqxTreeContracts').on('select', function (event) {
             var args = event.args;
             var item = $('#jqxTreeContracts').jqxTree('getItem', args.element);
-            console.log(item.label);
-            newDocType(item.label)
+            openCreateWindow(item.label);
+            $("#jqxTreeContracts").jqxTree('selectItem', null);
         });
         
         
@@ -103,18 +159,10 @@
         $("#dropDownBtnContracts").jqxDropDownButton('setContent', dropDownBtnContent);
  
  
- 
- 
-        
-        $('#ContractsGrid').on('rowdoubleclick', function (event) { 
+        $('#ContractsGrid').on('rowdoubleclick', function () { 
             $("#MoreInformContract").click();
         });
         
-        
-        $("#NewContract").on('click', function () 
-        {
-            window.open('/index.php?r=Documents/Create');
-        });
         
         $("#MoreInformContract").on('click', function ()
         {
@@ -138,14 +186,118 @@
             $.ajax({
                 type: "POST",
                 url: "/index.php?r=ContractsS/Delete",
-                data: { Contract_id: CurrentRowData.Contract_id },
+                data: { ContrS_id: CurrentRowData.ContrS_id },
                 success: function(){
                     $("#ContractsGrid").jqxGrid('updatebounddata');
                 }
             });
         });
         
+        
+        
+        var loadPage = function (url, index) {
+            $.get(url, function (data) {
+                if (index == 0)
+                    $('#contentContractSystems').html(data);
+                if (index == 1)
+                    $('#contentContractPriceHistory').html(data);
+                if (index == 2)
+                    $('#content3').html(data);
+                if (index == 3)
+                    $('#content4').html(data);
+            });
+        };
+        
+        var initWidgets = function (tab) {
+            switch (tab) {
+                case 0:
+                    loadPage('<?php echo Yii::app()->createUrl('ContractSystems/index', array('ContrS_id' => $model->ContrS_id)) ?>', 0);
+                    break;
+                case 1:
+                    loadPage('<?php echo Yii::app()->createUrl('ContractPriceHistory/index', array('ContrS_id' => $model->ContrS_id)) ?>', 1);
+                    break;
+                case 2:
+                    loadPage('<?php echo Yii::app()->createUrl('/index', array('ContrS_id' => $model->ContrS_id)) ?>', 2);
+                    break;
+                case 3:
+                    loadPage('<?php echo Yii::app()->createUrl('/index', array('ContrS_id' => $model->ContrS_id)) ?>', 3);
+                    break;
+            }
+        };
+        $('#jqxTabsContracts').jqxTabs({ width: '99%', height: 285,  initTabContent: initWidgets });
+        $('#jqxTabsContracts').on('selecting', function (event) { 
+            var selectedTab = event.args.item;
+            switch(selectedTab) {
+                case 0:
+                    $('#BtnOkDialogWindow').on('click', function(){
+                        SendFormContractSystems(Mode);
+                    });
+                    break; 
+                case 1:
+                    $('#BtnOkDialogWindow').on('click', function(){
+                        SendFormContractPriceHistory(Mode);
+                    });
+                    break; 
+            }
+            
+            
+        }); 
+        
+        var SendFormContractPriceHistory = function(Mode) {
+            var Url;
+            if (Mode == 'InsertContractPriceHistory')
+                Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Insert');?>";
+            if (Mode == 'UpdateContractPriceHistory')
+                Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Update');?>";
+            
+            var Data = $('#ContractPriceHistory').serialize();
+            
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#EditDialogWindow').jqxWindow('close');
+                        $("#ContractPriceHistoryGrid").jqxGrid('updatebounddata');
+                    } else {
+                        $('#BodyDialogWindow').html(Res);
+                    }
+
+                }
+            });
+        };
+        
+        var SendFormContractSystems = function(Mode, Form) {
+            var Url;
+            if (Mode == 'Insert')
+                Url = "<?php echo Yii::app()->createUrl('ContractSystems/Insert');?>";
+            
+            var Data;
+            if (Form == undefined)
+                Data = $('#ContractSystems').serialize();
+            else Data = Form;
+                
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#EditDialogWindow').jqxWindow('close');
+                        $("#ContractSystemsGrid").jqxGrid('updatebounddata');
+                    } else {
+                        $('#BodyDialogWindow').html(Res);
+                    }
+
+                }
+            });
+        };
+        
     });
+    
     
         
 </script>
@@ -174,7 +326,7 @@
                 <div style="border: none;" id='jqxTreeContracts'>
                     <ul>
                         <li><div style="width: 160px; height: 20px;">Договор обслуживания</div></li>
-                        <li><div style="width: 160px; height: 20px;">Доп. соглашение</div></li>
+                        <li><div style="width: 160px; height: 20px;">Доп.соглашение</div></li>
                         <li><div style="width: 160px; height: 20px;">Счет</div></li>
                         <li><div style="width: 160px; height: 20px;">Счет-заказ</div></li>
                     </ul>
@@ -188,20 +340,72 @@
 </div>
 
 
-<div id="EditContractDialog">
-    <div id="ContractDialogHeader">
-        <span id="ContractHeaderText">Новый <?php echo $model->ContrS_id; ?></span>
+<div id='jqxWidgetContracts' style="margin-top: 15px;">
+    <div id='jqxTabsContracts'>
+        <ul>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Типы обслуживаемых подсистем
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        История изменения расценок
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        История платежей
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        История мастеров
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div id='contentContractSystems' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
+        <div id='contentContractPriceHistory' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
+        <div id='content3' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
+        <div id='content4' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
     </div>
-    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="ContractDialogContent">
-        <div style="overflow: hidden;" id="ContractBodyDialog"></div>
-        <div id="ContractBottomDialog">
+</div>
+
+
+<div id="NewContractDialog">
+    <div id="NewContractDialogHeader">
+        <span id="NewContractHeaderText"></span>
+    </div>
+    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="NewContractDialogContent">
+        <div style="overflow: hidden;" id="NewContractBodyDialog"></div>
+        <div id="NewContractBottomDialog">
             <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='ContractBtnOk' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='ContractBtnCancel' /></div>
+                <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
             </div>
         </div>
     </div>
 </div>
 
-
-
+<div id="EditDialogWindow">
+    <div id="DialogHeader">
+        <span id="DialogWindowHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogWindowContent">
+        <div id="BodyDialogWindow"></div>
+        <div id="BottomDialogWindow">
+            <div class="row">
+                <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogWindow' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogWindow' /></div>
+            </div>
+        </div>
+    </div>
+</div>
