@@ -6,6 +6,7 @@
         
         var CurrentContract = {
             ContrS_id: '<?php echo $model->ContrS_id; ?>',
+            ContrNumS: '<?php echo $model->ContrNumS; ?>',
             ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
             JuridicalPerson: '<?php echo $model->JuridicalPerson; ?>',
             ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
@@ -32,7 +33,7 @@
         };
             
         
-        $("#ContrS_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#ContrNumS").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 260 }));
         $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#DateExecuting2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExecuting, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
@@ -55,7 +56,7 @@
         $("#MasterName2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
         $("#ServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
         
-        if (CurrentContract.ContrS_id != '') $("#ContrS_id").jqxInput('val', CurrentContract.ContrS_id);
+        if (CurrentContract.ContrNumS != '') $("#ContrNumS").jqxInput('val', CurrentContract.ContrNumS);
         if (CurrentContract.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentContract.JuridicalPerson);
         if (CurrentContract.crtp_name != '') $("#crtp_name").jqxInput('val', CurrentContract.crtp_name);
         if (CurrentContract.PaymentName != '') $("#PaymentName").jqxInput('val', CurrentContract.PaymentName);
@@ -153,7 +154,7 @@
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
                         $('#EditContractDialog').jqxWindow('close');
-//                        //location.reload();
+                        location.reload();
                     } else {
                         $('#ContractBodyDialog').html(Res);
                     }
@@ -187,10 +188,10 @@
         
         
         
-        $("#NewContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#EditContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#ReloadContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#DelContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#NewContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#EditContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#ReloadContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#DelContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         
         $('#MastersEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '240px', width: '370'}));
@@ -263,24 +264,24 @@
         
         
         $('#MastersGrid').on('rowdoubleclick', function (event) { 
-            $("#EditContractsDetails").click();
+            $("#EditContractsMasters").click();
         });
         
-        $("#NewContractsDetails").on('click', function ()
+        $("#NewContractsMasters").on('click', function ()
         {
             Mode = 'Insert';
             LoadFormMasters(Mode, CurrentContract.ContrS_id);
             $('#MastersEditDialog').jqxWindow('open');
         });
         
-        $("#EditContractsDetails").on('click', function ()
+        $("#EditContractsMasters").on('click', function ()
         {
             Mode = 'Update';
             LoadFormMasters(Mode, CurrentRowData.History_id);
             $('#MastersEditDialog').jqxWindow('open');
         });
            
-        $("#DelContractsDetails").on('click', function ()
+        $("#DelContractsMasters").on('click', function ()
         {
             $.ajax({
                 type: "POST",
@@ -293,7 +294,7 @@
             });
         });
         
-        $("#ReloadContractsDetails").on('click', function ()
+        $("#ReloadContractsMasters").on('click', function ()
         {
             $.ajax({
                 type: "POST",
@@ -312,7 +313,7 @@
 
 <div style="background-color: #F2F2F2;">
     <div class="row">
-        <div class="row-column">Номер: <input readonly id="ContrS_id" type="text"></div>
+        <div class="row-column">Номер: <input readonly id="ContrNumS" type="text"></div>
         <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
         <div class="row-column" style="padding-top: 3px;">Дата проводки через ВЦКП: </div><div class="row-column"><div id="DateExecuting2" type="text"></div></div>
     </div>
@@ -371,17 +372,17 @@
         <div id="MastersGrid" class="jqxGridAliton"></div>
     </div>
     <div class="row">
-        <div class="row-column"><input type="button" value="Добавить" id='NewContractsDetails' /></div>
-        <div class="row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>
-        <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsDetails' /></div>
-        <div class="row-column" style="margin-left: 310px;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
+        <div class="row-column"><input type="button" value="Добавить" id='NewContractsMasters' /></div>
+        <div class="row-column"><input type="button" value="Изменить" id='EditContractsMasters' /></div>
+        <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsMasters' /></div>
+        <div class="row-column" style="margin-left: 310px;"><input type="button" value="Удалить" id='DelContractsMasters' /></div>
     </div>
 </div>
 
 
 <div id="EditContractDialog">
     <div id="ContractDialogHeader">
-        <span id="ContractHeaderText">Редактирование договора № <?php echo $model->ContrS_id; ?></span>
+        <span id="ContractHeaderText">Редактирование договора № <?php echo $model->ContrNumS; ?></span>
     </div>
     <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="ContractDialogContent">
         <div style="overflow: hidden;" id="ContractBodyDialog"></div>

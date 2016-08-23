@@ -155,6 +155,15 @@ return array_merge(
     /* Привязка мастера к договору */
     include(dirname(__FILE__).'/security/ContractMasterHistorySecurity.php'),
         
+    /* Привязка оборудования к договору */
+    include(dirname(__FILE__).'/security/ContractEquipsSecurity.php'),
+        
+    /* Типы обслуживаемых подсистем для договора */
+    include(dirname(__FILE__).'/security/ContractSystemsSecurity.php'),
+        
+    /* История изменения расценок для договора */
+    include(dirname(__FILE__).'/security/ContractPriceHistorySecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -311,6 +320,9 @@ return array_merge(
                 'AdminContractsDetails_v',
                 'AdminDeliveryComments',
                 'AdminContractMasterHistory',
+                'AdminContractEquips',
+                'AdminContractSystems',
+                'AdminContractPriceHistory',
                 /* Отчеты*/
                 'Demand1Report',
                 'Demand2Report',

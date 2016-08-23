@@ -11,7 +11,7 @@ return array(
         'defaultIndex' => 'Documents/index',
         'children' => array(
             'ViewDocuments',
-            'CreateDocuments',
+            'InsertDocuments',
             'UpdateDocuments',
             'DeleteDocuments',
             'CheckupDocuments',
@@ -26,7 +26,7 @@ return array(
         'defaultIndex' => 'Documents/index',
         'children' => array(
             'ViewDocuments',
-            'CreateDocuments',
+            'InsertDocuments',
             'UpdateDocuments',
         ),
     ),
@@ -49,9 +49,9 @@ return array(
         'data' => null,
     ),
 
-    'CreateDocuments' => array(
+    'InsertDocuments' => array(
         'type' => CAuthItem::TYPE_OPERATION,
-        'description' => 'CreateDocuments',
+        'description' => 'InsertDocuments',
         'bizRule' => null,
         'data' => null,
     ),

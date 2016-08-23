@@ -143,18 +143,18 @@ class ContractsSController extends Controller
 	}
 
 
-	public function actionDelete($id)
+	public function actionDelete()
 	{
-		$model = new ContractsS;
-		$model->ContrS_id = $id;
-		$model->EmplDel = Yii::app()->user->Employee_id;
-		$model->delete();
-		if($this->isAjax()) {
-			die(json_encode(array('status'=>'ok','data'=>array('msg'=>'������ � ������������ ������� �������'))));
-		}
-		else {
-			$this->redirect('/?r=ContractsS');
-		}
+            if(isset($_POST['ContrS_id'])) 
+            {
+                $ContrS_id = $_POST['ContrS_id'];
+                
+                $model = new ContractsS;
+                $model->EmplChange = Yii::app()->user->Employee_id;
+                $model->getModelPk($ContrS_id);
+
+                $model->delete();
+            }
 
 	}
 

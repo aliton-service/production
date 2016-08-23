@@ -2,7 +2,8 @@
     $(document).ready(function () {
         
         var Document = {
-            ContrS_id: '<?php echo $model->ContrNumS; ?>',
+            ContrS_id: '<?php echo $model->ContrS_id; ?>',
+            ContrNumS: '<?php echo $model->ContrNumS; ?>',
             ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
             JuridicalPerson: '<?php echo $model->Jrdc_id; ?>',
             ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
@@ -25,8 +26,8 @@
             ExecDay: '<?php echo $model->ExecDay; ?>',
             Garant: '<?php echo $model->Garant; ?>',
             Note: <?php echo json_encode($model->Note); ?>,
-            ContrSDateStart: '<?php echo $model->ContrSDateStart; ?>',
-            ContrSDateEnd: '<?php echo $model->ContrSDateEnd; ?>',
+            ContrSDateStart: Aliton.DateConvertToJs('<?php echo $model->ContrSDateStart; ?>'),
+            ContrSDateEnd: Aliton.DateConvertToJs('<?php echo $model->ContrSDateEnd; ?>'),
         };
             
         var DataJuridical = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
@@ -42,54 +43,56 @@
             },
         });
 
-        $("#ContrS_id2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#ContrDateS2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrDateS, width: 102}));
-        $("#date_doc2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102, value: null }));
-        $("#ContrSDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateStart, width: 102}));
-        $("#ContrSDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateEnd, width: 102}));
-        $("#JuridicalPerson2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridical, displayMember: "JuridicalPerson", valueMember: "Jrdc_Id", width: 200, autoDropDownHeight: true }));
-        $("#ContactType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContractTypes, displayMember: "name", valueMember: "crtp_id", width: 130, autoDropDownHeight: true }));
-        $("#empl").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 180 }));
+        $("#ContrNumS4").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, value: "-Авто-" }));
+        $("#ContrDateS4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102}));
+        $("#date_doc4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102, value: null }));
+        $("#ContrSDateStart4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102}));
+        $("#ContrSDateEnd4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102}));
+        $("#JuridicalPerson4").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridical, displayMember: "JuridicalPerson", valueMember: "Jrdc_Id", width: 200, autoDropDownHeight: true }));
+        $("#ContactType4").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContractTypes, displayMember: "name", valueMember: "crtp_id", width: 130, autoDropDownHeight: true }));
+        $("#empl4").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 180 }));
         
-        $("#Annex2").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
-        $("#Debtor2").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
-        $("#DocNumber2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#DocDate2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DocDate, width: 102}));
-        $("#PaymentType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPaymentTypes, displayMember: "PaymentTypeName", valueMember: "PaymentType_Id", width: 130, autoDropDownHeight: true }));
+        $("#Annex4").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
+        $("#Debtor4").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
+        $("#DocNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#DocDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DocDate, width: 102}));
+        $("#PaymentType4").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPaymentTypes, displayMember: "PaymentTypeName", valueMember: "PaymentType_Id", width: 130, autoDropDownHeight: true }));
         
-        $("#Price2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#CalcSum2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#PrePayment2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#dmnd_id2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
-        $("#DateExec2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DateExec, width: 102}));
-        $("#date_act2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.date_act, width: 102}));
-        $("#SpecialCondition2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420 }));
-        $("#ContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "FIO", valueMember: "Info_id", width:360, autoDropDownHeight: true }));
+        $("#Price4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#CalcSum4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#PrePayment4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#dmnd_id4").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
+        $("#DateExec4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DateExec, width: 102}));
+        $("#date_act4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.date_act, width: 102}));
+        $("#SpecialCondition4").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420 }));
+        $("#ContactInfo4").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "FIO", valueMember: "Info_id", width:360, autoDropDownHeight: true }));
         
-        $("#ExecDay2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-        $("#Garant2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-        $("#Note2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
+        $("#ExecDay4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+        $("#Garant4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+        $("#Note4").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
         
         
-        if (Document.ContrS_id != '') $("#ContrS_id2").jqxInput('val', Document.ContrS_id);
-        if (Document.JuridicalPerson != '') $("#JuridicalPerson2").jqxComboBox('val', Document.JuridicalPerson);
-        if (Document.date_doc != '') $("#date_doc2").jqxDateTimeInput('val', Document.date_doc);
-        
-        if (Document.ContactType != '') $("#ContactType").jqxComboBox('val', Document.ContactType);
-        if (Document.empl != '') $("#empl").jqxComboBox('val', Document.empl);
-        if (Document.Annex != '') $("#Annex2").jqxCheckBox({checked: Boolean(Number(Document.Annex))});
-        if (Document.Debtor != '') $("#Debtor2").jqxCheckBox({checked: Boolean(Number(Document.Debtor))});
-        if (Document.DocNumber != '') $("#DocNumber2").jqxInput('val', Document.DocNumber);
-        if (Document.PaymentType != '') $("#PaymentType").jqxComboBox('val', Document.PaymentType);
-        if (Document.Price != '') $("#Price2").jqxNumberInput('val', Document.Price);
-        if (Document.CalcSum != '') $("#CalcSum2").jqxNumberInput('val', Document.CalcSum);
-        if (Document.PrePayment != '') $("#PrePayment2").jqxNumberInput('val', Document.PrePayment);
-        if (Document.dmnd_id != '') $("#dmnd_id2").jqxInput('val', Document.dmnd_id);
-        if (Document.SpecialCondition != '') $("#SpecialCondition2").jqxTextArea('val', Document.SpecialCondition);
-        if (Document.ContactInfo != '') $("#ContactInfo").jqxComboBox('val', Document.ContactInfo);
-        if (Document.ExecDay != '') $("#ExecDay2").jqxNumberInput('val', Document.ExecDay);
-        if (Document.Garant != '') $("#Garant2").jqxNumberInput('val', Document.Garant);
-        if (Document.Note != '') $("#Note2").jqxTextArea('val', Document.Note);
+        if (Document.ContrNumS != '') $("#ContrNumS4").jqxInput('val', Document.ContrNumS);
+        if (Document.ContrDateS !== null) $("#ContrDateS4").jqxDateTimeInput('val', Document.ContrDateS);
+        if (Document.JuridicalPerson != '') $("#JuridicalPerson4").jqxComboBox('val', Document.JuridicalPerson);
+        if (Document.date_doc != '') $("#date_doc4").jqxDateTimeInput('val', Document.date_doc);
+        if (Document.ContrSDateStart !== null) $("#ContrSDateStart4").jqxDateTimeInput('val', Document.ContrSDateStart);
+        if (Document.ContrSDateEnd !== null) $("#ContrSDateEnd4").jqxDateTimeInput('val', Document.ContrSDateEnd);
+        if (Document.ContactType != '') $("#ContactType4").jqxComboBox('val', Document.ContactType);
+        if (Document.empl != '') $("#empl4").jqxComboBox('val', Document.empl);
+        if (Document.Annex != '') $("#Annex4").jqxCheckBox({checked: Boolean(Number(Document.Annex))});
+        if (Document.Debtor != '') $("#Debtor4").jqxCheckBox({checked: Boolean(Number(Document.Debtor))});
+        if (Document.DocNumber != '') $("#DocNumber4").jqxInput('val', Document.DocNumber);
+        if (Document.PaymentType != '') $("#PaymentType4").jqxComboBox('val', Document.PaymentType);
+        if (Document.Price != '') $("#Price4").jqxNumberInput('val', Document.Price);
+        if (Document.CalcSum != '') $("#CalcSum4").jqxNumberInput('val', Document.CalcSum);
+        if (Document.PrePayment != '') $("#PrePayment4").jqxNumberInput('val', Document.PrePayment);
+        if (Document.dmnd_id != '') $("#dmnd_id4").jqxInput('val', Document.dmnd_id);
+        if (Document.SpecialCondition != '') $("#SpecialCondition4").jqxTextArea('val', Document.SpecialCondition);
+        if (Document.ContactInfo != '') $("#ContactInfo4").jqxComboBox('val', Document.ContactInfo);
+        if (Document.ExecDay != '') $("#ExecDay4").jqxNumberInput('val', Document.ExecDay);
+        if (Document.Garant != '') $("#Garant4").jqxNumberInput('val', Document.Garant);
+        if (Document.Note != '') $("#Note4").jqxTextArea('val', Document.Note);
         
        
     });
@@ -111,55 +114,55 @@
 <input type="hidden" name="Documents[DocType_id]" value="<?php echo $model->DocType_id; ?>">
 
 <div class="row">
-    <div class="row-column">Номер: <input id="ContrS_id2" name="Documents[ContrNumS]" type="text"></div>
-    <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS2"  name="Documents[ContrDateS]" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Дата выполнения работ по акту: </div><div class="row-column"><div id="date_doc2" name="Documents[date_doc]" type="text"></div></div>
+    <div class="row-column">Номер: <input id="ContrNumS4" name="Documents[ContrNumS]" type="text"></div>
+    <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS4"  name="Documents[ContrDateS]" type="text"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Дата выполнения работ по акту: </div><div class="row-column"><div id="date_doc4" name="Documents[date_doc]" type="text"></div></div>
 </div>
 
 <div class="row">
-    <div class="row-column" style="padding-top: 3px;">Срок действия с: </div><div class="row-column"><div id="ContrSDateStart" name="Documents[ContrSDateStart]" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd" name="Documents[ContrSDateEnd]" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Приложение: </div><div class="row-column"><div id="Annex2" name="Documents[Annex]" type="checkbox"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor2" name="Documents[Debtor]" type="checkbox"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Срок действия с: </div><div class="row-column"><div id="ContrSDateStart4" name="Documents[ContrSDateStart]" type="text"></div></div>
+    <div class="row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd4" name="Documents[ContrSDateEnd]" type="text"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Приложение: </div><div class="row-column"><div id="Annex4" name="Documents[Annex]" type="checkbox"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor4" name="Documents[Debtor]" type="checkbox"></div></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Юр. лицо: </div><div class="row-column"><div id="JuridicalPerson2" name="Documents[Jrdc_id]" type="text"></div></div>
-    <div class="row-column">Тип контракта: </div><div class="row-column"><div id="ContactType" name="Documents[crtp_id]" type="text"></div></div>
-    <div class="row-column">Менеджер: </div><div class="row-column"><div id="empl" name="Documents[empl_id]" type="text"></div></div>
+    <div class="row-column">Юр. лицо: </div><div class="row-column"><div id="JuridicalPerson4" name="Documents[Jrdc_id]" type="text"></div></div>
+    <div class="row-column">Тип контракта: </div><div class="row-column"><div id="ContactType4" name="Documents[crtp_id]" type="text"></div></div>
+    <div class="row-column">Менеджер: </div><div class="row-column"><div id="empl4" name="Documents[empl_id]" type="text"></div></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Номер договора: <input id="DocNumber2" name="Documents[DocNumber]" type="text"></div>
-    <div class="row-column" style="padding-top: 3px;">Дата договора: </div><div class="row-column"><div id="DocDate2" name="Documents[DocDate]"></div></div>
-    <div class="row-column">Вид оплаты: </div><div class="row-column"><div id="PaymentType" name="Documents[PaymentType_id]" type="text"></div></div>
+    <div class="row-column">Номер договора: <input id="DocNumber4" name="Documents[DocNumber]" type="text"></div>
+    <div class="row-column" style="padding-top: 3px;">Дата договора: </div><div class="row-column"><div id="DocDate4" name="Documents[DocDate]"></div></div>
+    <div class="row-column">Вид оплаты: </div><div class="row-column"><div id="PaymentType4" name="Documents[PaymentType_id]" type="text"></div></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Сумма начислений: </div><div class="row-column"><div id="Price2" name="Documents[Price]" type="text"></div></div>
-    <div class="row-column">Предварительная сумма: </div><div class="row-column"><div id="CalcSum2" name="Documents[CalcSum]" type="text"></div></div>
-    <div class="row-column">Аванс: </div><div class="row-column"><div id="PrePayment2" name="Documents[PrePayment]" type="text"></div></div>
+    <div class="row-column">Сумма начислений: </div><div class="row-column"><div id="Price4" name="Documents[Price]" type="text"></div></div>
+    <div class="row-column">Предварительная сумма: </div><div class="row-column"><div id="CalcSum4" name="Documents[CalcSum]" type="text"></div></div>
+    <div class="row-column">Аванс: </div><div class="row-column"><div id="PrePayment4" name="Documents[PrePayment]" type="text"></div></div>
 </div>
 
 <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
     <div style="overflow: hidden;">
         <div class="row-column" style="margin: 0 0 10px 0; width: 100%; font-weight: 500;">Выполненные работы</div>
-        <div class="row-column">Заявка: <input id="dmnd_id2" name="Documents[dmnd_id]" type="text"></div>
-        <div class="row-column" style="padding-top: 3px;">Дата выполнения работ: </div><div class="row-column"><div id="DateExec2" name="Documents[DateExec]"></div></div>
-        <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_act2" name="Documents[date_act]"></div></div>
-        <div class="row-column" style="padding-top: 10px;">Перечень работ: <textarea id="SpecialCondition2" name="Documents[SpecialCondition]"></textarea></div>
+        <div class="row-column">Заявка: <input id="dmnd_id4" name="Documents[dmnd_id]" type="text"></div>
+        <div class="row-column" style="padding-top: 3px;">Дата выполнения работ: </div><div class="row-column"><div id="DateExec4" name="Documents[DateExec]"></div></div>
+        <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_act4" name="Documents[date_act]"></div></div>
+        <div class="row-column" style="padding-top: 10px;">Перечень работ: <textarea id="SpecialCondition4" name="Documents[SpecialCondition]"></textarea></div>
 
-        <div class="row-column" style="padding-top: 10px;">Контактное лицо: <div id="ContactInfo" name="Documents[Info]" type="text"></div></div>
+        <div class="row-column" style="padding-top: 10px;">Контактное лицо: <div id="ContactInfo4" name="Documents[Info]" type="text"></div></div>
 
         <div class="row-column" style="padding-top: 18px; ">
-            <div class="row-column">Срок: </div><div class="row-column"><div id="ExecDay2" name="Documents[ExecDay]" type="text"></div></div>
-            <div class="row-column">Гарантия: </div><div class="row-column"><div id="Garant2" name="Documents[Garant]" type="text"></div></div>
+            <div class="row-column">Срок: </div><div class="row-column"><div id="ExecDay4" name="Documents[ExecDay]" type="text"></div></div>
+            <div class="row-column">Гарантия: </div><div class="row-column"><div id="Garant4" name="Documents[Garant]" type="text"></div></div>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="row-column">Примечание: <textarea id="Note2" name="Documents[Note]"></textarea></div>
+    <div class="row-column">Примечание: <textarea id="Note4" name="Documents[Note]"></textarea></div>
 </div>
 
 <?php $this->endWidget(); ?>

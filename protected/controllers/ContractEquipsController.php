@@ -1,6 +1,6 @@
 <?php
 
-class ContractsDetails_vController extends Controller
+class ContractEquipsController extends Controller
 {
     public $layout='//layouts/column2';
     
@@ -29,19 +29,19 @@ class ContractsDetails_vController extends Controller
 
             array('allow',
                     'actions'=>array('Index'),
-                    'roles'=>array('ViewContractsDetails_v'),
+                    'roles'=>array('ViewContractEquips'),
                 ),
             array('allow',
                     'actions'=>array('Insert'),
-                    'roles'=>array('InsretContractsDetails_v'),
+                    'roles'=>array('InsretContractEquips'),
                 ),
             array('allow',
                     'actions'=>array('Update'),
-                    'roles'=>array('UpdateContractsDetails_v'),
+                    'roles'=>array('UpdateContractEquips'),
                 ),
             array('allow',
                     'actions'=>array('Delete'),
-                    'roles'=>array('DeleteContractsDetails_v'),
+                    'roles'=>array('DeleteContractEquips'),
                 ),
             array('deny',  // deny all users
                         'users'=>array('*'),
@@ -52,41 +52,30 @@ class ContractsDetails_vController extends Controller
 
     public function actionIndex()
     {
-//        $model=new ContractsDetails_v();
-//        $model->unsetAttributes();  // clear any default values
-//        if(isset($_GET['ContrS_id']))
-//            $model->attributes=$_GET['ContrS_id'];
-//
-//        $this->renderPartial('index', array(
-//            'model' => $model
-//        ), false, true);
-//            
-            
-        if (isset($_GET['ContrS_id']))
+        if (isset($_GET['contrs_id']))
         {
-            $ContrS_id = $_GET['ContrS_id'];
-            $model = new ContractsDetails_v();
-            $model->getModelPk($ContrS_id);
-//            $model = $model->Find(array('ContrS_id' => $ContrS_id));
+            $contrs_id = $_GET['contrs_id'];
+            $model = new ContractEquips();
+            $model->getModelPk($contrs_id);
 
             $this->renderPartial('index', array(
                 'model' => $model,
-                'ContrS_id' => $ContrS_id
+                'contrs_id' => $contrs_id
             ), false, true);
         }
     }
 
     public function actionInsert() 
     {
-        if (isset($_POST['ContrS_id'])) 
-            $ContrS_id = $_POST['ContrS_id'];
+        if (isset($_POST['contrs_id'])) 
+            $contrs_id = $_POST['contrs_id'];
 
-        $model = new ContractsDetails_v;
+        $model = new ContractEquips;
         
-        if(isset($_POST['ContractsDetails_v']))
+        if(isset($_POST['ContractEquips']))
         {
-            $model->attributes=$_POST['ContractsDetails_v'];
-            $ContrS_id = $model->ContrS_id;
+            $model->attributes=$_POST['ContractEquips'];
+            $contrs_id = $model->contrs_id;
             $this->performAjaxValidation($model);
 
             if ($model->validate())
@@ -97,7 +86,7 @@ class ContractsDetails_vController extends Controller
             }
         }
 
-        $model->ContrS_id = $ContrS_id;
+        $model->contrs_id = $contrs_id;
         $this->renderPartial('_form', array(
             'model' => $model
         ));
@@ -106,15 +95,16 @@ class ContractsDetails_vController extends Controller
 
     public function actionUpdate() 
     {
-        if (isset($_POST['csdt_id'])) 
-            $csdt_id = $_POST['csdt_id'];
+        if (isset($_POST['creq_id'])) {
+            $creq_id = $_POST['creq_id'];
+        }
+        
+        $model = new ContractEquips;
 
-        $model = new ContractsDetails_v;
-
-        if(isset($_POST['ContractsDetails_v']))
+        if(isset($_POST['ContractEquips']))
         {
-            $model->attributes=$_POST['ContractsDetails_v'];
-            $csdt_id = $model->csdt_id;
+            $model->attributes=$_POST['ContractEquips'];
+            $creq_id = $model->creq_id;
 
             $this->performAjaxValidation($model);
 
@@ -126,7 +116,7 @@ class ContractsDetails_vController extends Controller
             }
 
         }
-        $model->getModelPk($csdt_id);
+        $model->getModelPk($creq_id);
         $this->renderPartial('_form', array(
             'model' => $model
         ));
@@ -134,13 +124,13 @@ class ContractsDetails_vController extends Controller
 
     public function actionDelete()
     {
-        if(isset($_POST['csdt_id'])) {
-            $csdt_id = $_POST['csdt_id'];
+        if(isset($_POST['creq_id'])) {
+            $creq_id = $_POST['creq_id'];
         }
-        $model = new ContractsDetails_v;
-        $model->getModelPk($csdt_id);
+        $model = new ContractEquips;
+        $model->getModelPk($creq_id);
 
-        if(!is_null($csdt_id)){
+        if(!is_null($creq_id)){
             $model->delete();
         }
     }

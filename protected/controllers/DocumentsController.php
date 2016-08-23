@@ -38,11 +38,11 @@ class DocumentsController extends Controller
                     'actions' => array('index', 'view', 'equipAnalog'),
                     'roles' => array('ViewDocuments'),
                 ),
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array('create'),
-                    'roles' => array('CreateDocuments'),
+                array('allow', // allow authenticated user to perform 'insert' and 'update' actions
+                    'actions' => array('insert'),
+                    'roles' => array('InsertDocuments'),
                 ),
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                array('allow', // allow authenticated user to perform 'update' and 'update' actions
                     'actions' => array('update'),
                     'roles' => array('UpdateDocuments'),
                 ),
@@ -69,27 +69,53 @@ class DocumentsController extends Controller
 	}
 
 
-	public function actionCreate()
+	public function actionInsert()
 	{
-		$model = new Documents;
+            $model = new Documents;
+            
+            if (isset($_POST['DocType_id'])) {
+                $model->DocType_id = $_POST['DocType_id'];
+            } 
+            
+            if(isset($_POST['Documents']))
+            {
+                $model->attributes=$_POST['Documents'];
 
-		if (isset($_POST['Documents'])) {
-			$model->attributes = $_POST['Documents'];
-			$model->EmplCreate = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->insert();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => ''))));
-				} else {
-					$this->redirect('/?r=Documents');
-				}
-			}
-		}
-		if ($this->isAjax()) {
-			$this->renderPartial('create', array('model' => $model), false, true);
-		} else {
-			$this->render('create', array('model' => $model));
-		}
+                if ($model->validate())
+                {
+                    $model->Insert();
+                    echo '1';
+                    return;
+                }
+
+            }
+            
+            if (isset($_POST['ObjectGr_id'])) {
+                $model->ObjectGr_id = $_POST['ObjectGr_id'];
+            }
+            
+            switch ($model->DocType_id) {
+                case 8:
+                    $this->renderPartial('_formInvoice', array(
+                        'model' => $model
+                    ));
+                    break;
+                case 3:
+                    $this->renderPartial('_formInvoiceOrder', array(
+                        'model' => $model
+                    ));
+                    break;
+                case 5:
+                    $this->renderPartial('_formAgreement', array(
+                        'model' => $model
+                    ));
+                    break;
+                case 4:
+                    $this->renderPartial('_formContract', array(
+                        'model' => $model
+                    ));
+                    break;
+            }
 
 
 	}
@@ -147,13 +173,11 @@ class DocumentsController extends Controller
                     ));
                     break;
             }
-                
-            
             
 	}
 
 
-	public function actionDelete($id)
+	public function actionDelete()
 	{
 		$model = new Documents;
 		$model->ContrS_id = $id;
@@ -175,7 +199,7 @@ class DocumentsController extends Controller
                 $ContrS_id = $_GET['ContrS_id'];
                 $model = new Documents();
                 $model->getModelPk($ContrS_id);
-                $this->title = $model->DocType_Name .' № ' . $model->ContrS_id;
+                $this->title = $model->DocType_Name .' № ' . $model->ContrNumS;
                 
                 switch ($model->DocType_id) {
                     case 8:

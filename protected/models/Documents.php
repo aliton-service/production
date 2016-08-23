@@ -70,11 +70,11 @@ class Documents extends MainFormModel
 	{
 		return array(
 			array('ObjectGr_id, empl_id, Master, ServiceType_id, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, Jrdc_id, crtp_id, dmnd_id, Calc_id, ExecDay, Garant, Info, EmplLock, EmplCreate, EmplChange, EmplDel, UserCheckUp', 'numerical', 'integerOnly'=>true),
-			array('Price, PriceMonth, PrePayment, discount', 'numerical'),
+                        array('Jrdc_id, Price', 'required'),
+                        array('Price, PriceMonth, PrePayment, discount', 'numerical'),
 			array('ContrNumS, DocNumber', 'length', 'max'=>30),
 			array('SpecialCondition', 'length', 'max'=>1073741823),
 			array('CalcSum', 'length', 'max'=>19),
-			array('ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Debtor, LastChangeDate, Prolong, date_doc, date_act, DateExecuting, JobExec, WorkText, Annex, DocDate, date_checkup, Lock, DateLock', 'safe'),
 			array('ContrS_id, ObjectGr_id, ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, DatePay, Price, PriceMonth, empl_id, Master, ServiceType_id, Debtor, PaymentPeriod_id, PaymentType_id, DocType_id, Reason_id, LastChangeDate, SpecialCondition, Jrdc_id, DelDate, crtp_id, Prolong, date_doc, date_act, Debtor, DateExecuting, dmnd_id, JobExec, CalcSum, Calc_id, WorkText, ExecDay, PrePayment, Garant, Annex, DocNumber, DocDate, Info, date_checkup, discount, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel, UserCheckUp, Note', 'safe'),
 		);
 	}
@@ -168,8 +168,8 @@ class Documents extends MainFormModel
                 c.DelDate is Null
             ";
     // Инициализация первичного ключа
-            $this->KeyFiled = 'c.contrs_id';
-            $this->PrimaryKey = 'contrs_id';
+            $this->KeyFiled = 'c.ContrS_id';
+            $this->PrimaryKey = 'ContrS_id';
 
             $this->Query->setSelect($select);
             $this->Query->setFrom($from);

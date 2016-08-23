@@ -5,7 +5,8 @@
         var CurrentRowData;
         
         var CurrentContract = {
-            ContrS_id: '<?php echo $model->ContrS_id; ?>',
+//            ContrS_id: '<?php echo $model->ContrS_id; ?>',
+            ContrS_id: '<?php echo $ContrS_id; ?>',
         };
             
         
@@ -24,8 +25,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '100%',
-                height: '170',
+                width: '99%',
+                height: '180',
                 source: ContractsDetails_vDataAdapter,
                 columns: [
                     { text: 'Наименование', dataField: 'ItemName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
@@ -88,7 +89,8 @@
                     if (Res == '1' || Res == 1) {
                         $('#CDetailsEditDialog').jqxWindow('close');
                         $("#CDetailsGrid").jqxGrid('updatebounddata');
-//                        $('#CDetailsGrid').jqxGrid({source: LoadData(CurrentContractDataAdapter)});
+                        var summaryData = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
+                        $("#GridSum").jqxNumberInput('val', summaryData.sum);
                     } else {
                         $('#CDetailsBodyDialog').html(Res);
                     }
@@ -152,6 +154,8 @@
                 success: function(){
                     $("#CDetailsGrid").jqxGrid('updatebounddata');
                     $("#CDetailsGrid").jqxGrid('selectrow', 0);
+                    var summaryData4 = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
+                    $("#GridSum").jqxNumberInput('val', summaryData4.sum);
                 }
             });
         });
@@ -173,11 +177,9 @@
         
 </script>
 
+<div style="margin-top: 10px;">
+    <div id="CDetailsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
 
-    <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
-        <div class="row-column" style="margin: 0 0 10px 0; width: 100%; font-weight: 500;">Спецификация</div>
-        <div id="CDetailsGrid" class="jqxGridAliton"></div>
-    </div>
     <div class="row">
         <div class="row-column"><input type="button" value="Добавить" id='NewContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>

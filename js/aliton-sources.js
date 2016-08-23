@@ -1679,3 +1679,103 @@ Sources.SourceContractMasterHistory =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+
+Sources.SourceContractEquips =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'creq_id',  type: 'int' },
+        { name: 'contrs_id',  type: 'int' },
+        { name: 'eqip_id',  type: 'int' },
+        { name: 'equipname',  type: 'string' },
+        { name: 'um_name',  type: 'string' },
+        { name: 'price',  type: 'string' },
+        { name: 'quant',  type: 'string' },
+        { name: 'sum',  type: 'string' },
+    ],
+    id: 'creq_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractEquips',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceContractSystems =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'ContractSystem_id',  type: 'int' },
+        { name: 'ContrS_id',  type: 'int' },
+        { name: 'SystemType_id',  type: 'int' },
+        { name: 'SystemTypeName',  type: 'string' },
+    ],
+    id: 'ContractSystem_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractSystems',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceContractPriceHistory =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'PriceHistory_id',  type: 'int' },
+        { name: 'ContrS_id',  type: 'int' },
+        { name: 'Reason_id',  type: 'int' },
+        { name: 'ServiceType_id',  type: 'int' },
+        { name: 'DateStart',  type: 'date' },
+        { name: 'DateEnd',  type: 'date' },
+        { name: 'Price',  type: 'string' },
+        { name: 'PriceMonth',  type: 'string' },
+        { name: 'ReasonName',  type: 'string' },
+        { name: 'ServiceType',  type: 'string' },
+    ],
+    id: 'PriceHistory_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractPriceHistory',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourcePriceChangeReasons =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Reason_id',  type: 'int' },
+        { name: 'ReasonName',  type: 'string' },
+    ],
+    id: 'Reason_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PriceChangeReasons',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
