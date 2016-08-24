@@ -46,6 +46,7 @@
                 ]
             })
         );
+
         
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
         $("#MasterName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
@@ -53,19 +54,7 @@
         $("#SpecialCondition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 470 }));
         $("#ContrNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 470 }));
         
-        $("#ContractsGrid").on('rowselect', function (event) {
-            var Temp = $('#ContractsGrid').jqxGrid('getrowdata', event.args.rowindex);
-            if (Temp !== undefined) {
-                CurrentRowData = Temp;
-            } else {CurrentRowData = null};
-            
-            
-            if (CurrentRowData.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
-            if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
-            if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxInput('val', CurrentRowData.DateExecuting);
-            if (CurrentRowData.SpecialCondition != '') $("#SpecialCondition").jqxTextArea('val', CurrentRowData.SpecialCondition);
-            if (CurrentRowData.ContrNote != '') $("#ContrNote").jqxTextArea('val', CurrentRowData.ContrNote);
-        });
+        
         
         
         $("#dropDownBtnContracts").jqxDropDownButton($.extend(true, {}, ButtonDefaultSettings, { autoOpen: true, width: 210, height: 28 }));
@@ -195,79 +184,95 @@
         
         
         
-        var loadPage = function (url, index) {
-            $.get(url, function (data) {
-                if (index == 0)
-                    $('#contentContractSystems').html(data);
-                if (index == 1)
-                    $('#contentContractPriceHistory').html(data);
-                if (index == 2)
-                    $('#content3').html(data);
-                if (index == 3)
-                    $('#content4').html(data);
+        
+        
+        $('#jqxTabsContracts').jqxTabs({ width: '99%', height: 285 });
+        
+        
+        
+        $("#ContractsGrid").on('rowselect', function (event) {
+            var Temp = $('#ContractsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowData = Temp;
+            } else {CurrentRowData = null};
+            
+            console.log(CurrentRowData.ContrS_id);
+            
+            if (CurrentRowData.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
+            if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
+            if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxInput('val', CurrentRowData.DateExecuting);
+            if (CurrentRowData.SpecialCondition != '') $("#SpecialCondition").jqxTextArea('val', CurrentRowData.SpecialCondition);
+            if (CurrentRowData.ContrNote != '') $("#ContrNote").jqxTextArea('val', CurrentRowData.ContrNote);
+            
+            var ContractSystemsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractSystems, {}), {
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["cs.ContrS_id = " + CurrentRowData.ContrS_id],
+                    });
+                    return data;
+                },
             });
-        };
-        
-        var initWidgets = function (tab) {
-            switch (tab) {
-                case 0:
-                    loadPage('<?php echo Yii::app()->createUrl('ContractSystems/index', array('ContrS_id' => $model->ContrS_id)) ?>', 0);
-                    break;
-                case 1:
-                    loadPage('<?php echo Yii::app()->createUrl('ContractPriceHistory/index', array('ContrS_id' => $model->ContrS_id)) ?>', 1);
-                    break;
-                case 2:
-                    loadPage('<?php echo Yii::app()->createUrl('/index', array('ContrS_id' => $model->ContrS_id)) ?>', 2);
-                    break;
-                case 3:
-                    loadPage('<?php echo Yii::app()->createUrl('/index', array('ContrS_id' => $model->ContrS_id)) ?>', 3);
-                    break;
-            }
-        };
-        $('#jqxTabsContracts').jqxTabs({ width: '99%', height: 285,  initTabContent: initWidgets });
-        $('#jqxTabsContracts').on('selecting', function (event) { 
-            var selectedTab = event.args.item;
-            switch(selectedTab) {
-                case 0:
-                    $('#BtnOkDialogWindow').on('click', function(){
-                        SendFormContractSystems(Mode);
+            ContractSystemsDataAdapter.dataBind();
+            $("#ContractSystemsGrid").jqxGrid({source: ContractSystemsDataAdapter});
+            
+            
+            var ContractPriceHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractPriceHistory, {}), {
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["ph.ContrS_id = " + CurrentRowData.ContrS_id],
                     });
-                    break; 
-                case 1:
-                    $('#BtnOkDialogWindow').on('click', function(){
-                        SendFormContractPriceHistory(Mode);
-                    });
-                    break; 
-            }
-            
-            
-        }); 
+                    return data;
+                },
+            });
+            ContractSystemsDataAdapter.dataBind();
+            $("#ContractPriceHistoryGrid").jqxGrid({source: ContractPriceHistoryDataAdapter});
+        });
         
-        var SendFormContractPriceHistory = function(Mode) {
-            var Url;
-            if (Mode == 'InsertContractPriceHistory')
-                Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Insert');?>";
-            if (Mode == 'UpdateContractPriceHistory')
-                Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Update');?>";
-            
-            var Data = $('#ContractPriceHistory').serialize();
-            
-            $.ajax({
-                url: Url,
-                type: 'POST',
-                async: false,
-                data: Data,
-                success: function(Res) {
-                    if (Res == '1' || Res == 1) {
-                        $('#EditDialogWindow').jqxWindow('close');
-                        $("#ContractPriceHistoryGrid").jqxGrid('updatebounddata');
-                    } else {
-                        $('#BodyDialogWindow').html(Res);
-                    }
 
-                }
-            });
-        };
+        
+        
+        /* Текущая выбранная строка данных */
+        var CurrentRowDataCS;
+        
+        
+        $("#ContractSystemsGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                showfilterrow: false,
+                virtualmode: false,
+                width: '99%',
+                height: '180',
+                columns: [
+                    { text: 'Тип подсистемы', dataField: 'SystemTypeName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
+                ]
+            })
+        );
+       
+        $("#ContractSystemsGrid").on('rowselect', function (event) {
+            var Temp = $('#ContractSystemsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowDataCS = Temp;
+            } else {CurrentRowDataCS = null};
+            
+//            console.log(CurrentRowDataCS.csdt_id);
+        });
+    
+        
+        $("#NewContractSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#DelContractSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        
+        $('#EditDialogContractSystems').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '170px', width: '340'}));
+        
+        $('#EditDialogContractSystems').jqxWindow({initContent: function() {
+            $("#BtnOkDialogContractSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#BtnCancelDialogContractSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        }});
+
+        $("#BtnCancelDialogContractSystems").on('click', function () {
+            $('#EditDialogContractSystems').jqxWindow('close');
+        });
         
         var SendFormContractSystems = function(Mode, Form) {
             var Url;
@@ -286,18 +291,212 @@
                 data: Data,
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
-                        $('#EditDialogWindow').jqxWindow('close');
+                        $('#EditDialogContractSystems').jqxWindow('close');
                         $("#ContractSystemsGrid").jqxGrid('updatebounddata');
                     } else {
-                        $('#BodyDialogWindow').html(Res);
+                        $('#BodyDialogContractSystems').html(Res);
                     }
 
                 }
             });
         };
+
+        $("#BtnOkDialogContractSystems").on('click', function () {
+            SendFormContractSystems(Mode);
+        });
         
-    });
+        var LoadFormContractSystems = function(Mode, id) {
+            var Url;
+            var Data;
+            if (Mode == 'Insert') {
+                Url = "<?php echo Yii::app()->createUrl('ContractSystems/Insert');?>";
+                Data = { ContrS_id: id };
+            }
+            
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    $('#BodyDialogContractSystems').html(Res);
+                }
+            });
+        };
+        
+        
+        $("#NewContractSystems").on('click', function ()
+        {
+            Mode = 'Insert';
+            LoadFormContractSystems(Mode, CurrentRowData.ContrS_id);
+            $('#EditDialogContractSystems').jqxWindow('open');
+        });
+        
+        
+        $("#DelContractSystems").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=ContractSystems/Delete",
+                data: { ContractSystem_id: CurrentRowDataCS.ContractSystem_id},
+                success: function(){
+                    $("#ContractSystemsGrid").jqxGrid('updatebounddata');
+                    $("#ContractSystemsGrid").jqxGrid('selectrow', 0);
+                }
+            });
+        });
+        
+        
+        
+        
+        
+        /* Текущая выбранная строка данных */
+        var CurrentRowDataCPH;
+        
+        
+        $("#ContractPriceHistoryGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                showfilterrow: false,
+                virtualmode: false,
+                width: '99%',
+                height: '180',
+                columns: [
+                    { text: 'Тариф', dataField: 'ServiceType', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Дата изменения', dataField: 'DateStart', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Расценка', dataField: 'Price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Ежемесячные начисления', dataField: 'PriceMonth', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Причина изменения', dataField: 'ReasonName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                ]
+            })
+        );
+       
+        $("#ContractPriceHistoryGrid").on('rowselect', function (event) {
+            var Temp = $('#ContractPriceHistoryGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowDataCPH = Temp;
+            } else {CurrentRowDataCPH = null};
+            
+//            console.log(CurrentRowDataCPH.PriceHistory_id);
+        });
     
+        
+        $("#NewContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#EditContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#DelContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        
+        $('#EditDialogContractPriceHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '600'}));
+        
+        $('#EditDialogContractPriceHistory').jqxWindow({initContent: function() {
+            $("#BtnOkDialogContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#BtnCancelDialogContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        }});
+
+        $("#BtnCancelDialogContractPriceHistory").on('click', function () {
+            $('#EditDialogContractPriceHistory').jqxWindow('close');
+        });
+        
+        var SendFormContractPriceHistory = function(Mode, Form) {
+            var Url;
+            if (Mode == 'InsertContractPriceHistory')
+                Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Insert');?>";
+            if (Mode == 'UpdateContractPriceHistory')
+                Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Update');?>";
+            
+            var Data;
+            if (Form == undefined)
+                Data = $('#ContractPriceHistory').serialize();
+            else Data = Form;
+                
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#EditDialogContractPriceHistory').jqxWindow('close');
+                        $("#ContractPriceHistoryGrid").jqxGrid('updatebounddata');
+                    } else {
+                        $('#BodyDialogContractPriceHistory').html(Res);
+                    }
+
+                }
+            });
+        }
+
+        $("#BtnOkDialogContractPriceHistory").on('click', function () {
+            SendFormContractPriceHistory(Mode);
+        });
+        
+        var LoadFormContractPriceHistory = function(Mode, id) {
+            var Date = CurrentRowData.ContrSDateEnd;
+            var DateEnd = Date.getDate() + '.' + (Date.getMonth()+1) + '.' + Date.getFullYear();
+            var Url;
+            var Data;
+            if (Mode == 'InsertContractPriceHistory') {
+                Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Insert');?>";
+                Data = { 
+                    ContrS_id: id, 
+                    DateEnd: DateEnd 
+                };
+            }
+            if (Mode == 'UpdateContractPriceHistory') {
+                Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Update');?>";
+                Data = { PriceHistory_id: id };
+            }
+            
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    $('#BodyDialogContractPriceHistory').html(Res);
+                }
+            });
+        };
+        
+        
+        $("#NewContractPriceHistory").on('click', function ()
+        {
+            Mode = 'InsertContractPriceHistory';
+            LoadFormContractPriceHistory(Mode, CurrentRowData.ContrS_id);
+            $('#EditDialogContractPriceHistory').jqxWindow('open');
+        });
+        
+        $("#EditContractPriceHistory").on('click', function ()
+        {
+            Mode = 'UpdateContractPriceHistory';
+            LoadFormContractPriceHistory(Mode, CurrentRowData.ContrS_id);
+            $('#EditDialogContractPriceHistory').jqxWindow('open');
+        });
+        
+        
+        $("#DelContractPriceHistory").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=ContractPriceHistory/Delete",
+                data: { PriceHistory_id: CurrentRowDataCPH.PriceHistory_id},
+                success: function(){
+                    $("#ContractPriceHistoryGrid").jqxGrid('updatebounddata');
+                    $("#ContractPriceHistoryGrid").jqxGrid('selectrow', 0);
+                }
+            });
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        $("#ContractsGrid").jqxGrid('selectrow', 0);
+    });
     
         
 </script>
@@ -372,8 +571,63 @@
                 </div>
             </li>
         </ul>
-        <div id='contentContractSystems' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
-        <div id='contentContractPriceHistory' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
+        
+        
+        <div id='contentContractSystems' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%">
+            <div style="margin-top: 10px;">
+                <div id="ContractSystemsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+
+                <div class="row">
+                    <div class="row-column"><input type="button" value="Добавить" id='NewContractSystems' /></div>
+                    <div class="row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractSystems' /></div>
+                </div>
+            </div>
+
+            <div id="EditDialogContractSystems">
+                <div id="">
+                    <span id="">Вставка\Редактирование записи</span>
+                </div>
+                <div style="overflow: hidden; padding: 10px;" id="">
+                    <div style="overflow: hidden;" id="BodyDialogContractSystems"></div>
+                    <div id="">
+                        <div class="row">
+                            <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogContractSystems' /></div>
+                            <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogContractSystems' /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div id='contentContractPriceHistory' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%">
+            <div style="margin-top: 10px;">
+                <div id="ContractPriceHistoryGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+
+                <div class="row">
+                    <div class="row-column"><input type="button" value="Добавить" id='NewContractPriceHistory' /></div>
+                    <div class="row-column"><input type="button" value="Изменить" id='EditContractPriceHistory' /></div>
+                    <div class="row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractPriceHistory' /></div>
+                </div>
+            </div>
+
+            <div id="EditDialogContractPriceHistory">
+                <div id="">
+                    <span id="">Вставка\Редактирование записи</span>
+                </div>
+                <div style="overflow: hidden; padding: 10px;" id="">
+                    <div style="overflow: hidden;" id="BodyDialogContractPriceHistory"></div>
+                    <div id="">
+                        <div class="row">
+                            <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogContractPriceHistory' /></div>
+                            <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogContractPriceHistory' /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
         <div id='content3' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
         <div id='content4' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
     </div>
@@ -395,17 +649,3 @@
     </div>
 </div>
 
-<div id="EditDialogWindow">
-    <div id="DialogHeader">
-        <span id="DialogWindowHeaderText">Вставка\Редактирование записи</span>
-    </div>
-    <div style="padding: 10px;" id="DialogWindowContent">
-        <div id="BodyDialogWindow"></div>
-        <div id="BottomDialogWindow">
-            <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogWindow' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogWindow' /></div>
-            </div>
-        </div>
-    </div>
-</div>

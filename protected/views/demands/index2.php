@@ -219,13 +219,13 @@
                 $("#edDemandText").jqxTextArea('val', CurrentRowData.DemandText);
 
                 var DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceExecutorReports, {}), {
-                        formatData: function (data) {
-                            $.extend(data, {
-                                Filters: ["ex.Demand_id = " + CurrentRowData.Demand_id],
-                            });
-                            return data;
-                        },
-                    });
+                    formatData: function (data) {
+                        $.extend(data, {
+                            Filters: ["ex.Demand_id = " + CurrentRowData.Demand_id],
+                        });
+                        return data;
+                    },
+                });
                 DataExecutorReports.dataBind();
                 $("#ProgressGrid").jqxGrid({source: DataExecutorReports});
             }

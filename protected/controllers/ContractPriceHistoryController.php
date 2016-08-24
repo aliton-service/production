@@ -89,6 +89,10 @@ class ContractPriceHistoryController extends Controller
             $model->ContrS_id = $_POST['ContrS_id'];
         }
         
+        if (isset($_POST['DateEnd'])) { 
+            $model->DateEnd = $_POST['DateEnd'];
+        }
+        
         $this->renderPartial('_form', array(
             'model' => $model
         ));
@@ -97,16 +101,11 @@ class ContractPriceHistoryController extends Controller
 
     public function actionUpdate() 
     {
-        if (isset($_POST['PriceHistory_id'])) 
-            $PriceHistory_id = $_POST['PriceHistory_id'];
-
         $model = new ContractPriceHistory;
-
+        
         if(isset($_POST['ContractPriceHistory']))
         {
-            $model->attributes=$_POST['ContractPriceHistory'];
-            $PriceHistory_id = $model->PriceHistory_id;
-
+            $model->attributes = $_POST['ContractPriceHistory'];
 
             if ($model->validate())
             {
@@ -116,21 +115,26 @@ class ContractPriceHistoryController extends Controller
             }
 
         }
-        $model->getModelPk($PriceHistory_id);
-        $this->renderPartial('_form', array(
-            'model' => $model
-        ));
+        
+        if (isset($_POST['PriceHistory_id']))
+        {
+            $PriceHistory_id = $_POST['PriceHistory_id'];
+            $model->getModelPk($PriceHistory_id);
+            
+            $this->renderPartial('_form', array(
+                'model' => $model
+            ));
+        }
     }
 
     public function actionDelete()
     {
         if(isset($_POST['PriceHistory_id'])) {
             $PriceHistory_id = $_POST['PriceHistory_id'];
-        }
-        $model = new ContractPriceHistory;
-        $model->getModelPk($PriceHistory_id);
-
-        if(!is_null($PriceHistory_id)){
+        
+            $model = new ContractPriceHistory;
+            $model->getModelPk($PriceHistory_id);
+            
             $model->delete();
         }
     }
