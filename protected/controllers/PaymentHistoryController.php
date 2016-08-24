@@ -1,6 +1,6 @@
 <?php
 
-class ContractPriceHistoryController extends Controller
+class PaymentHistoryController extends Controller
 {
     public $layout='//layouts/column2';
     
@@ -29,19 +29,19 @@ class ContractPriceHistoryController extends Controller
 
             array('allow',
                 'actions'=>array('Index'),
-                'roles'=>array('ViewContractPriceHistory'),
+                'roles'=>array('ViewPaymentHistory'),
             ),
             array('allow',
                 'actions'=>array('Insert'),
-                'roles'=>array('InsretContractPriceHistory'),
+                'roles'=>array('InsretPaymentHistory'),
             ),
             array('allow',
                 'actions'=>array('Update'),
-                'roles'=>array('UpdateContractPriceHistory'),
+                'roles'=>array('UpdatePaymentHistory'),
             ),
             array('allow',
                 'actions'=>array('Delete'),
-                'roles'=>array('DeleteContractPriceHistory'),
+                'roles'=>array('DeletePaymentHistory'),
             ),
             array('deny',  // deny all users
                     'users'=>array('*'),
@@ -52,30 +52,30 @@ class ContractPriceHistoryController extends Controller
 
     public function actionIndex()
     {
-        if (isset($_GET['ContrS_id']))
+        if (isset($_GET['cntr_id']))
         {
-            $ContrS_id = $_GET['ContrS_id'];
-            $model = new ContractPriceHistory();
-            $model->getModelPk($ContrS_id);
-//            $model = $model->Find(array('ContrS_id' => $ContrS_id));
+            $cntr_id = $_GET['cntr_id'];
+            $model = new PaymentHistory();
+            $model->getModelPk($cntr_id);
+//            $model = $model->Find(array('cntr_id' => $cntr_id));
 
             $this->renderPartial('index', array(
                 'model' => $model,
-                'ContrS_id' => $ContrS_id
+                'cntr_id' => $cntr_id
             ), false, true);
         }
     }
 
     public function actionInsert() 
     {
-        $model = new ContractPriceHistory;
+        $model = new PaymentHistory;
         
-        if(isset($_POST['ContractPriceHistory']))
+        if(isset($_POST['PaymentHistory']))
         {
-            $model->attributes=$_POST['ContractPriceHistory'];
-            $model->EmplCreate = Yii::app()->user->Employee_id;
-            $model->EmplChange = Yii::app()->user->Employee_id;
-            $ContrS_id = $model->ContrS_id;
+            $model->attributes=$_POST['PaymentHistory'];
+            $model->user_create = Yii::app()->user->Employee_id;
+//            $model->EmplChange = Yii::app()->user->Employee_id;
+            $cntr_id = $model->cntr_id;
 
             if ($model->validate())
             {
@@ -85,8 +85,8 @@ class ContractPriceHistoryController extends Controller
             }
         }
         
-        if (isset($_POST['ContrS_id'])) { 
-            $model->ContrS_id = $_POST['ContrS_id'];
+        if (isset($_POST['cntr_id'])) { 
+            $model->cntr_id = $_POST['cntr_id'];
         }
         
         if (isset($_POST['DateEnd'])) { 
@@ -101,11 +101,12 @@ class ContractPriceHistoryController extends Controller
 
     public function actionUpdate() 
     {
-        $model = new ContractPriceHistory;
+        $model = new PaymentHistory;
         
-        if(isset($_POST['ContractPriceHistory']))
+        if(isset($_POST['PaymentHistory']))
         {
-            $model->attributes = $_POST['ContractPriceHistory'];
+            $model->attributes = $_POST['PaymentHistory'];
+            $model->user_change = Yii::app()->user->Employee_id;
 
             if ($model->validate())
             {
@@ -116,10 +117,10 @@ class ContractPriceHistoryController extends Controller
 
         }
         
-        if (isset($_POST['PriceHistory_id']))
+        if (isset($_POST['pmhs_id']))
         {
-            $PriceHistory_id = $_POST['PriceHistory_id'];
-            $model->getModelPk($PriceHistory_id);
+            $pmhs_id = $_POST['pmhs_id'];
+            $model->getModelPk($pmhs_id);
             
             $this->renderPartial('_form', array(
                 'model' => $model
@@ -130,13 +131,13 @@ class ContractPriceHistoryController extends Controller
     
     public function actionDelete()
     {
-        if(isset($_POST['ContrS_id'])) {
-            $ContrS_id = $_POST['ContrS_id'];
+        if(isset($_POST['pmhs_id'])) {
+            $pmhs_id = $_POST['pmhs_id'];
 
-            $model = new ContractsS;
-            $model->getModelPk($ContrS_id);
+            $model = new PaymentHistory;
+            $model->getModelPk($pmhs_id);
 
-            $model->ClearContractPriceHistory();
+            $model->Delete();
         }
     }
 

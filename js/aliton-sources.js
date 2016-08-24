@@ -1779,3 +1779,55 @@ Sources.SourcePriceChangeReasons =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+
+Sources.SourcePaymentHistory =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'pmhs_id',  type: 'int' },
+        { name: 'cntr_id',  type: 'int' },
+        { name: 'date',  type: 'date' },
+        { name: 'year_start',  type: 'int' },
+        { name: 'year_end',  type: 'int' },
+        { name: 'month_start',  type: 'int' },
+        { name: 'month_end',  type: 'int' },
+        { name: 'sum',  type: 'string' },
+        { name: 'note',  type: 'string' },
+        { name: 'month_start_name',  type: 'string' },
+        { name: 'month_end_name',  type: 'string' },
+    ],
+    id: 'pmhs_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PaymentHistory',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceMonths =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Month_id',  type: 'int' },
+        { name: 'Month_name',  type: 'string' },
+        { name: 'Month_name_eu',  type: 'string' },
+    ],
+    id: 'Month_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Months',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

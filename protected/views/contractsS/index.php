@@ -90,7 +90,8 @@
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
                         $('#NewContractDialog').jqxWindow('close');
-                        location.reload();
+                        $("#ContractsGrid").jqxGrid('updatebounddata');
+                        $("#ContractsGrid").jqxGrid('selectrow', 0);
                     } else {
                         $('#NewContractBodyDialog').html(Res);
                     }
@@ -102,34 +103,18 @@
             SendFormContract();
         });
         
-        var openCreateWindow = function (itemLabel) {
-            var DocType_id;
-            switch (itemLabel) {
-                case 'Договор обслуживания':
-                    DocType_id = 4;
-                    break;
-                case 'Доп.соглашение':
-                    DocType_id = 5;
-                    break;
-                case 'Счет':
-                    DocType_id = 8;
-                    break;
-                case 'Счет-заказ':
-                    DocType_id = 3;
-                    break;
-            }
-            
+        var openCreateWindow = function (DocType_Name) {
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                 type: 'POST',
                 async: false,
                 data: { 
                     ObjectGr_id: Contracts.ObjectGr_id,
-                    DocType_id: DocType_id
+                    DocType_Name: DocType_Name
                 },
                 success: function(Res) {
                     $('#NewContractBodyDialog').html(Res);
-                    $('#NewContractHeaderText').html(itemLabel);
+                    $('#NewContractHeaderText').html(DocType_Name);
                 }
             });
             $('#NewContractDialog').jqxWindow('open');
@@ -178,6 +163,7 @@
                 data: { ContrS_id: CurrentRowData.ContrS_id },
                 success: function(){
                     $("#ContractsGrid").jqxGrid('updatebounddata');
+                    $("#ContractsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });
@@ -224,8 +210,20 @@
                     return data;
                 },
             });
-            ContractSystemsDataAdapter.dataBind();
+            ContractPriceHistoryDataAdapter.dataBind();
             $("#ContractPriceHistoryGrid").jqxGrid({source: ContractPriceHistoryDataAdapter});
+            
+            
+            var PaymentHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePaymentHistory, {}), {
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["ph.cntr_id = " + CurrentRowData.ContrS_id],
+                    });
+                    return data;
+                },
+            });
+            PaymentHistoryDataAdapter.dataBind();
+            $("#PaymentHistoryGrid").jqxGrid({source: PaymentHistoryDataAdapter});
         });
         
 
@@ -384,7 +382,7 @@
         
         $("#NewContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#DelContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#ClearContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
         
         
         $('#EditDialogContractPriceHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '600'}));
@@ -422,7 +420,6 @@
                     } else {
                         $('#BodyDialogContractPriceHistory').html(Res);
                     }
-
                 }
             });
         }
@@ -470,17 +467,21 @@
         $("#EditContractPriceHistory").on('click', function ()
         {
             Mode = 'UpdateContractPriceHistory';
-            LoadFormContractPriceHistory(Mode, CurrentRowData.ContrS_id);
+            LoadFormContractPriceHistory(Mode, CurrentRowDataCPH.PriceHistory_id);
             $('#EditDialogContractPriceHistory').jqxWindow('open');
         });
         
+        $('#ContractPriceHistoryGrid').on('rowdoubleclick', function () { 
+            $("#EditContractPriceHistory").click();
+        });
         
-        $("#DelContractPriceHistory").on('click', function ()
+        
+        $("#ClearContractPriceHistory").on('click', function ()
         {
             $.ajax({
                 type: "POST",
                 url: "/index.php?r=ContractPriceHistory/Delete",
-                data: { PriceHistory_id: CurrentRowDataCPH.PriceHistory_id},
+                data: { ContrS_id: CurrentRowData.ContrS_id},
                 success: function(){
                     $("#ContractPriceHistoryGrid").jqxGrid('updatebounddata');
                     $("#ContractPriceHistoryGrid").jqxGrid('selectrow', 0);
@@ -495,6 +496,160 @@
         
         
         
+        
+        /* Текущая выбранная строка данных */
+        var CurrentRowDataPH;
+        
+        
+        $("#PaymentHistoryGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                showfilterrow: false,
+                virtualmode: false,
+                width: '99%',
+                height: '180',
+                columns: [
+                    { text: 'Дата', columngroup: 'Payment', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Сумма', columngroup: 'Payment', dataField: 'sum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Месяц с', columngroup: 'PaymentPeriod', dataField: 'month_start_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Год с', columngroup: 'PaymentPeriod', dataField: 'year_start', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
+                    { text: 'Месяц по', columngroup: 'PaymentPeriod', dataField: 'month_end_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Год по', columngroup: 'PaymentPeriod', dataField: 'year_end', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
+                ],
+                columngroups: 
+                [
+                    { text: 'Платеж', align: 'center', name: 'Payment' },
+                    { text: 'Период оплаты', align: 'center', name: 'PaymentPeriod' },
+                ]
+            })
+        );
+       
+        $("#PaymentHistoryGrid").on('rowselect', function (event) {
+            var Temp = $('#PaymentHistoryGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowDataPH = Temp;
+            } else {CurrentRowDataPH = null};
+            
+            console.log(CurrentRowDataPH.pmhs_id);
+            if (CurrentRowDataPH.note != '') $("#NotePaymentHistory").jqxTextArea('val', CurrentRowDataPH.note);
+        });
+        
+        $('#PaymentHistoryGrid').on('rowdoubleclick', function () { 
+            $("#EditPaymentHistory").click();
+        });
+        
+        $("#NotePaymentHistory").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 270, height: 160 }));
+        
+        $("#NewPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#EditPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#DelPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        
+        $('#EditDialogPaymentHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '430px', width: '300'}));
+        
+        $('#EditDialogPaymentHistory').jqxWindow({initContent: function() {
+            $("#BtnOkDialogPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#BtnCancelDialogPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        }});
+
+        $("#BtnCancelDialogPaymentHistory").on('click', function () {
+            $('#EditDialogPaymentHistory').jqxWindow('close');
+        });
+        
+        var SendFormPaymentHistory = function(Mode, Form) {
+            var Url;
+            if (Mode == 'Insert')
+                Url = "<?php echo Yii::app()->createUrl('PaymentHistory/Insert');?>";
+            if (Mode == 'Update') {
+                Url = "<?php echo Yii::app()->createUrl('PaymentHistory/Update'); ?>";
+            }
+            
+            var Data;
+            if (Form == undefined)
+                Data = $('#PaymentHistory').serialize();
+            else Data = Form;
+                
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#EditDialogPaymentHistory').jqxWindow('close');
+                        $("#PaymentHistoryGrid").jqxGrid('updatebounddata');
+                    } else {
+                        $('#BodyDialogPaymentHistory').html(Res);
+                    }
+
+                }
+            });
+        };
+
+        $("#BtnOkDialogPaymentHistory").on('click', function () {
+            SendFormPaymentHistory(Mode);
+        });
+        
+        var LoadFormPaymentHistory = function(Mode, id) {
+            var Url;
+            var Data;
+            if (Mode == 'Insert') {
+                Url = "<?php echo Yii::app()->createUrl('PaymentHistory/Insert'); ?>";
+                Data = { cntr_id: id };
+            }
+            if (Mode == 'Update') {
+                Url = "<?php echo Yii::app()->createUrl('PaymentHistory/Update'); ?>";
+                Data = { pmhs_id: id };
+            }
+            
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    $('#BodyDialogPaymentHistory').html(Res);
+                }
+            });
+        };
+        
+        
+        $("#NewPaymentHistory").on('click', function ()
+        {
+            Mode = 'Insert';
+            LoadFormPaymentHistory(Mode, CurrentRowData.ContrS_id);
+            $('#EditDialogPaymentHistory').jqxWindow('open');
+        });
+        
+        $("#EditPaymentHistory").on('click', function ()
+        {
+            Mode = 'Update';
+            LoadFormPaymentHistory(Mode, CurrentRowDataPH.pmhs_id);
+            $('#EditDialogPaymentHistory').jqxWindow('open');
+        });
+        
+        
+        $("#DelPaymentHistory").on('click', function ()
+        {
+            console.log('CurrentRowDataPH.pmhs_id = ');
+            console.log(CurrentRowDataPH.pmhs_id);
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=PaymentHistory/Delete",
+                data: { pmhs_id: CurrentRowDataPH.pmhs_id},
+                success: function(){
+                    $("#PaymentHistoryGrid").jqxGrid('updatebounddata');
+                    $("#PaymentHistoryGrid").jqxGrid('selectrow', 0);
+                }
+            });
+        });
+        
+        
+        
+        
+        
+        $('#jqxTabsContracts').jqxTabs({ selectedItem: 2 });
         $("#ContractsGrid").jqxGrid('selectrow', 0);
     });
     
@@ -607,7 +762,7 @@
                 <div class="row">
                     <div class="row-column"><input type="button" value="Добавить" id='NewContractPriceHistory' /></div>
                     <div class="row-column"><input type="button" value="Изменить" id='EditContractPriceHistory' /></div>
-                    <div class="row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractPriceHistory' /></div>
+                    <div class="row-column"><input type="button" value="Очистить тарифы" id='ClearContractPriceHistory' /></div>
                 </div>
             </div>
 
@@ -628,7 +783,37 @@
         </div>
         
         
-        <div id='content3' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
+        <div id='contentPaymentHistory' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%">
+            <div style="margin-top: 10px;">
+                <div class="row" style="padding: 0;">
+                    <div class="row-column" style="width: 83%;"><div id="PaymentHistoryGrid" class="jqxGridAliton" style="margin-right: 10px"></div></div>
+
+                    <div class="row-column">Примечание: <textarea readonly id="NotePaymentHistory" name="Contacts[note]"></textarea></div>
+                </div>
+                <div class="row">
+                    <div class="row-column"><input type="button" value="Добавить" id='NewPaymentHistory' /></div>
+                    <div class="row-column"><input type="button" value="Изменить" id='EditPaymentHistory' /></div>
+                    <div class="row-column" style="float: right; margin-right: 25px;"><input type="button" value="Удалить" id='DelPaymentHistory' /></div>
+                </div>
+            </div>
+
+            <div id="EditDialogPaymentHistory">
+                <div id="">
+                    <span id="">Вставка\Редактирование записи</span>
+                </div>
+                <div style="overflow: hidden; padding: 10px;" id="">
+                    <div style="overflow: hidden;" id="BodyDialogPaymentHistory"></div>
+                    <div id="">
+                        <div class="row">
+                            <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogPaymentHistory' /></div>
+                            <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogPaymentHistory' /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
         <div id='content4' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
     </div>
 </div>

@@ -3,7 +3,7 @@
             var ContractPriceHistoryForm = {
                 PriceHistory_id: '<?php echo $model->PriceHistory_id; ?>',
                 ContrS_id: '<?php echo $model->ContrS_id; ?>',
-                DateEnd: '<?php echo $model->DateEnd; ?>',
+                DateEnd: Aliton.DateConvertToJs('<?php echo $model->DateEnd; ?>'),
                 Reason: '<?php echo $model->Reason_id; ?>',
                 DateStart: Aliton.DateConvertToJs('<?php echo $model->DateStart; ?>'),
                 ServiceType: '<?php echo $model->ServiceType_id; ?>',
@@ -42,10 +42,10 @@
 <input type="hidden" name="ContractPriceHistory[DateEnd]" value="<?php echo $model->DateEnd; ?>">
 
 <div class="row"><div class="row-column">Причина изменения: </div><div class="row-column"><div id='Reason' name="ContractPriceHistory[Reason_id]"></div><?php echo $form->error($model, 'Reason_id'); ?></div></div>
-<div class="row"><div class="row-column">Дата начала действия: </div><div class="row-column"><div id="DateStart" name="ContractPriceHistory[DateStart]" type="text"></div></div></div>
+<div class="row"><div class="row-column">Дата начала действия: </div><div class="row-column"><div id="DateStart" name="ContractPriceHistory[DateStart]"></div></div></div>
 <div class="row"><div class="row-column">Тариф: </div><div class="row-column"><div id='ServiceType' name="ContractPriceHistory[ServiceType_id]"></div><?php echo $form->error($model, 'ServiceType_id'); ?></div></div>
-<div class="row"><div class="row-column">Расценка: </div><div class="row-column"><div id="Price" name="ContractPriceHistory[Price]" type="text"><?php echo $form->error($model, 'Price'); ?></div></div></div>
-<div class="row"><div class="row-column">Ежемесячные начисления: </div><div class="row-column"><div id="PriceMonth" name="ContractPriceHistory[PriceMonth]" type="text"><?php echo $form->error($model, 'PriceMonth'); ?></div></div></div>
+<div class="row"><div class="row-column">Расценка: </div><div class="row-column"><div id="Price" name="ContractPriceHistory[Price]"><?php echo $form->error($model, 'Price'); ?></div></div></div>
+<div class="row"><div class="row-column">Ежемесячные начисления: </div><div class="row-column"><div id="PriceMonth" name="ContractPriceHistory[PriceMonth]"><?php echo $form->error($model, 'PriceMonth'); ?></div></div></div>
 
 
 <?php $this->endWidget(); ?>
