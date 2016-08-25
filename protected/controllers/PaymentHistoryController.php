@@ -157,18 +157,7 @@ class PaymentHistoryController extends Controller
         return $model;
     }
 
-    /**
-     * Performs the AJAX validation.
-     * @param Regions $model the model to be validated
-     */
-    protected function performAjaxValidation($model)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='regions-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-    }
+
 }
 
 

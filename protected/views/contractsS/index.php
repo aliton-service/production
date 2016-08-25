@@ -170,10 +170,7 @@
         
         
         
-        
-        
         $('#jqxTabsContracts').jqxTabs({ width: '99%', height: 285 });
-        
         
         
         $("#ContractsGrid").on('rowselect', function (event) {
@@ -202,6 +199,7 @@
             $("#ContractSystemsGrid").jqxGrid({source: ContractSystemsDataAdapter});
             
             
+            
             var ContractPriceHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractPriceHistory, {}), {
                 formatData: function (data) {
                     $.extend(data, {
@@ -214,6 +212,7 @@
             $("#ContractPriceHistoryGrid").jqxGrid({source: ContractPriceHistoryDataAdapter});
             
             
+            
             var PaymentHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePaymentHistory, {}), {
                 formatData: function (data) {
                     $.extend(data, {
@@ -224,9 +223,25 @@
             });
             PaymentHistoryDataAdapter.dataBind();
             $("#PaymentHistoryGrid").jqxGrid({source: PaymentHistoryDataAdapter});
+            
+            
+            
+            var ContractMasterHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractMasterHistory, {}), {
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["c.ContrS_id = " + CurrentRowData.ContrS_id],
+                    });
+                    return data;
+                },
+            });
+            ContractMasterHistoryDataAdapter.dataBind();
+            $("#ContractMasterHistoryGrid").jqxGrid({source: ContractMasterHistoryDataAdapter});
         });
         
 
+        
+        
+        
         
         
         /* Текущая выбранная строка данных */
@@ -343,6 +358,7 @@
                 }
             });
         });
+        
         
         
         
@@ -649,7 +665,152 @@
         
         
         
-        $('#jqxTabsContracts').jqxTabs({ selectedItem: 2 });
+        
+        
+        
+        
+        /* Текущая выбранная строка данных */
+        var CurrentRowDataMH;
+        
+        
+        $("#ContractMasterHistoryGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                showfilterrow: false,
+                virtualmode: false,
+                width: '99%',
+                height: '180',
+                columns: [
+                    { text: 'Мастер', dataField: 'EmployeeName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
+                    { text: 'Дата с', dataField: 'WorkDateStart', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Дата по', dataField: 'WorkDateEnd', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 120 },
+                ]
+            })
+        );
+       
+        $("#ContractMasterHistoryGrid").on('rowselect', function (event) {
+            var Temp = $('#ContractMasterHistoryGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowDataMH = Temp;
+            } else {CurrentRowDataMH = null};
+            
+            console.log(CurrentRowDataMH.History_id);
+        });
+        
+        
+        
+        $("#NewContractMasterHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#ReloadContractMasterHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#DelContractMasterHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        
+        $('#EditDialogContractMasterHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '270px', width: '340'}));
+        
+        $('#EditDialogContractMasterHistory').jqxWindow({initContent: function() {
+            $("#BtnOkDialogContractMasterHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#BtnCancelDialogContractMasterHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        }});
+
+        $("#BtnCancelDialogContractMasterHistory").on('click', function () {
+            $('#EditDialogContractMasterHistory').jqxWindow('close');
+        });
+        
+        var SendFormContractMasterHistory = function(Mode, Form) {
+            var Url;
+            if (Mode == 'Insert')
+                Url = "<?php echo Yii::app()->createUrl('ContractMasterHistory/Insert');?>";
+            if (Mode == 'Update') {
+                Url = "<?php echo Yii::app()->createUrl('ContractMasterHistory/Update'); ?>";
+            }
+            
+            var Data;
+            if (Form == undefined)
+                Data = $('#ContractMasterHistory').serialize();
+            else Data = Form;
+                
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#EditDialogContractMasterHistory').jqxWindow('close');
+                        $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
+                    } else {
+                        $('#BodyDialogContractMasterHistory').html(Res);
+                    }
+
+                }
+            });
+        };
+
+        $("#BtnOkDialogContractMasterHistory").on('click', function () {
+            SendFormContractMasterHistory(Mode);
+        });
+        
+        var LoadFormContractMasterHistory = function(Mode, id) {
+            var Url;
+            var Data;
+            if (Mode == 'Insert') {
+                Url = "<?php echo Yii::app()->createUrl('ContractMasterHistory/Insert'); ?>";
+                Data = { ContrS_id: id };
+            }
+            if (Mode == 'Update') {
+                Url = "<?php echo Yii::app()->createUrl('ContractMasterHistory/Update'); ?>";
+                Data = { History_id: id };
+            }
+            
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    $('#BodyDialogContractMasterHistory').html(Res);
+                }
+            });
+        };
+        
+        
+        $("#NewContractMasterHistory").on('click', function ()
+        {
+            Mode = 'Insert';
+            LoadFormContractMasterHistory(Mode, CurrentRowData.ContrS_id);
+            $('#EditDialogContractMasterHistory').jqxWindow('open');
+        });
+        
+        $("#ReloadContractMasterHistory").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=ContractMasterHistory/Index",
+                success: function(){
+                    $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
+                    $("#ContractMasterHistoryGrid").jqxGrid('selectrow', 0);
+                }
+            });
+        });
+        
+        
+        $("#DelContractMasterHistory").on('click', function ()
+        {
+            console.log('CurrentRowDataMH.History_id = ');
+            console.log(CurrentRowDataMH.History_id);
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=ContractMasterHistory/Delete",
+                data: { History_id: CurrentRowDataMH.History_id},
+                success: function(){
+                    $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
+                    $("#ContractMasterHistoryGrid").jqxGrid('selectrow', 0);
+                }
+            });
+        });
+        
+        
+        
         $("#ContractsGrid").jqxGrid('selectrow', 0);
     });
     
@@ -788,7 +949,7 @@
                 <div class="row" style="padding: 0;">
                     <div class="row-column" style="width: 83%;"><div id="PaymentHistoryGrid" class="jqxGridAliton" style="margin-right: 10px"></div></div>
 
-                    <div class="row-column">Примечание: <textarea readonly id="NotePaymentHistory" name="Contacts[note]"></textarea></div>
+                    <div class="row-column">Примечание: <textarea readonly id="NotePaymentHistory"></textarea></div>
                 </div>
                 <div class="row">
                     <div class="row-column"><input type="button" value="Добавить" id='NewPaymentHistory' /></div>
@@ -814,7 +975,33 @@
         </div>
         
         
-        <div id='content4' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
+        <div id='contentContractMasterHistory' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%">
+            <div style="margin-top: 10px;">
+                <div class="row" style="padding: 0;">
+                    <div class="row-column" style="width: 100%;"><div id="ContractMasterHistoryGrid" class="jqxGridAliton" style="margin-right: 10px"></div></div>
+                </div>
+                <div class="row">
+                    <div class="row-column"><input type="button" value="Добавить" id='NewContractMasterHistory' /></div>
+                    <div class="row-column"><input type="button" value="Обновить" id='ReloadContractMasterHistory' /></div>
+                    <div class="row-column" style="float: right; margin-right: 25px;"><input type="button" value="Удалить" id='DelContractMasterHistory' /></div>
+                </div>
+            </div>
+
+            <div id="EditDialogContractMasterHistory">
+                <div id="">
+                    <span id="">Вставка\Редактирование записи</span>
+                </div>
+                <div style="padding: 10px;" id="">
+                    <div id="BodyDialogContractMasterHistory"></div>
+                    <div id="">
+                        <div class="row">
+                            <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogContractMasterHistory' /></div>
+                            <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogContractMasterHistory' /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

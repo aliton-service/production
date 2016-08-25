@@ -58,17 +58,16 @@ class ObjectsGroupSystemsController extends Controller
     {
         $this->title = 'Добавление системы';
         
-        if (isset($_POST['ObjectGr_id'])) 
-            $ObjectGr_id = $_POST['ObjectGr_id'];
-        
         $model = new ObjectsGroupSystems();
+        
+        if (isset($_POST['ObjectGr_id'])) {
+            $model->ObjectGr_id = $_POST['ObjectGr_id'];
+        }
                 
         if (isset($_POST['ObjectsGroupSystems']))
         {
             $model->attributes = $_POST['ObjectsGroupSystems'];
-
-            $this->performAjaxValidation($model);
-
+            
             if ($model->validate())
             {
                 $model->Insert();
@@ -77,7 +76,9 @@ class ObjectsGroupSystemsController extends Controller
             }
 
         }
-        $model->ObjectGr_id = $ObjectGr_id;
+        
+        
+            
         $this->renderPartial('_form', array(
             'model' => $model
         ));
