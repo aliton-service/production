@@ -188,6 +188,7 @@
             }
         };
         $('#jqxTabs').jqxTabs({ width: '100%', height: 860,  initTabContent: initWidgets });
+//        $('#jqxTabs').jqxTabs({ selectedItem: 3 });
         
 
         

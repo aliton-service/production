@@ -547,7 +547,7 @@
                 CurrentRowDataPH = Temp;
             } else {CurrentRowDataPH = null};
             
-//            console.log(CurrentRowDataPH.pmhs_id);
+            console.log(CurrentRowDataPH.pmhs_id);
             if (CurrentRowDataPH.note != '') $("#NotePaymentHistory").jqxTextArea('val', CurrentRowDataPH.note);
         });
         

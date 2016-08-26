@@ -167,6 +167,9 @@ return array_merge(
     /* История платежей для договора */
     include(dirname(__FILE__).'/security/PaymentHistorySecurity.php'),
         
+    /* Заявки на мониторинг */
+    include(dirname(__FILE__).'/security/MonitoringDemandsSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -327,6 +330,7 @@ return array_merge(
                 'AdminContractSystems',
                 'AdminContractPriceHistory',
                 'AdminPaymentHistory',
+                'AdminMonitoringDemands',
                 /* Отчеты*/
                 'Demand1Report',
                 'Demand2Report',

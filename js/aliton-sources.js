@@ -1831,3 +1831,78 @@ Sources.SourceMonths =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+
+Sources.SourceMonitoringDemands =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'mndm_id',  type: 'int' },
+        { name: 'Date',  type: 'datetime' },
+        { name: 'Prior',  type: 'int' },
+        { name: 'DemandPrior',  type: 'string' },
+        { name: 'Deadline',  type: 'datetime' },
+        { name: 'WishDate',  type: 'datetime' },
+        { name: 'PlanDate',  type: 'datetime' },
+        { name: 'Description',  type: 'string' },
+        { name: 'UserName',  type: 'string' },
+        { name: 'Note',  type: 'string' },
+        { name: 'DateExec',  type: 'datetime' },
+        { name: 'Calc_id',  type: 'int' },
+        { name: 'Dmnd_id',  type: 'int' },
+        { name: 'Repr_id',  type: 'int' },
+        { name: 'User2',  type: 'string' },
+        { name: 'EmplAccept',  type: 'string' },
+        { name: 'UserCreate2',  type: 'string' },
+        { name: 'DateCreate',  type: 'datetime' },
+        { name: 'UserChange2',  type: 'string' },
+        { name: 'DateChange',  type: 'datetime' },
+        { name: 'UserAccept2',  type: 'string' },
+        { name: 'DateAccept',  type: 'datetime' },
+        { name: 'OverDays',  type: 'int' },
+        { name: 'DelDate',  type: 'datetime' },
+        { name: 'prtp_id',  type: 'int' },
+        { name: 'prdoc_id',  type: 'int' },
+        { name: 'Lock',  type: 'bool' },
+        { name: 'EmplLock',  type: 'int' },
+        { name: 'DateLock',  type: 'date' },
+        { name: 'EmplCreate',  type: 'int' },
+        { name: 'EmplChange',  type: 'int' },
+        { name: 'EmplDel',  type: 'int' },
+    ],
+    id: 'mndm_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=MonitoringDemands',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceMonitoringDemandDetails =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'mndt_id',  type: 'int' },
+        { name: 'EquipName',  type: 'datetime' },
+        { name: 'Price',  type: 'int' },
+        { name: 'Note',  type: 'string' },
+        { name: 'NameUnitMeasurement',  type: 'string' },
+    ],
+    id: 'mndt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=MonitoringDemandDetails',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
