@@ -36,7 +36,20 @@
         if (MonitoringDemands3.WishDate != null) $("#WishDate3").jqxDateTimeInput('val', MonitoringDemands3.WishDate);
         if (MonitoringDemands3.Description != '') $("#Description3").jqxTextArea('val', MonitoringDemands3.Description);
         
-                
+        var getDeadline = function (daysAmount) {
+            var newDate = new Date();
+            var days = daysAmount;
+
+            while (days > 0) 
+            {
+                newDate.setDate(newDate.getDate() + 1);
+                if (newDate.getDay() < 6 && newDate.getDay() > 0) { // если это не выходной
+                    days--;
+                }
+            }
+            return newDate;
+        };
+        
         $('#Prior3').on('select', function (event) 
         {
             var args = event.args;
@@ -47,44 +60,27 @@
                 var newDate;
 
                 switch(value) {
-                    case 1:
+                    case 1: // Срочная
                         newDate = new Date();
                         $("#Deadline3").jqxDateTimeInput('val', newDate);
                         break;
-                    case 8:
-                        newDate = new Date('2016-09-19');
-                        console.log('getDay (если это не выходной) = ' + newDate.getDay());
-                        var days = 6;
-                        var days2 = 20;
                         
-                        while (days > 0 && days2 > 0) 
-                        {
-                            console.log('getDay (если это не выходной) = ' + newDate.getDay());
-                            if (newDate.getDay() < 6 && newDate.getDay() > 0) // если это не выходной
-                            {
-                                newDate.setDate(newDate.getDate() + 1);
-                                days--;
-                                console.log('if');
-                            }
-                            console.log('getDate = ' + newDate.getDate());
-                            console.log('newDate = ' + newDate);
-                            console.log(' ');
-                            console.log('days = ' + days);
-                            console.log(' ');
-                            days2--;
-                        }
+                    case 8: // Текущая
+                        newDate = getDeadline(2);
+                        $("#Deadline3").jqxDateTimeInput('val', newDate);
+                        break;
                         
+                    case 10: // Отложенная
+                        newDate = getDeadline(14);
                         $("#Deadline3").jqxDateTimeInput('val', newDate);
                         break;
-                    case 10:
-                        newDate = new Date('2016.09.30');
+                        
+                    case 9: // Плановая
+                        newDate = getDeadline(10);
                         $("#Deadline3").jqxDateTimeInput('val', newDate);
                         break;
-                    case 9:
-                        newDate = new Date('2016.09.31');
-                        $("#Deadline3").jqxDateTimeInput('val', newDate);
-                        break;
-                    case 11:
+                        
+                    case 11: // Условно выполнена
                         newDate = new Date('2999.01.01');
                         $("#Deadline3").jqxDateTimeInput('val', newDate);
                         break;
