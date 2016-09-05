@@ -18,12 +18,12 @@
         var DataConnectionTypes = new $.jqx.dataAdapter(Sources.SourceConnectionTypes);
         
         $("#edDoorway").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Подъезд", width: 150}));
-        $("#cmbObjectType").jqxComboBox({ source: DataObjectTypes, width: '300', height: '25px', displayMember: "ObjectType", valueMember: "ObjectType_Id"});
+        $("#cmbObjectType").jqxComboBox({ source: DataObjectTypes, width: '100', height: '25px', displayMember: "ObjectType", valueMember: "ObjectType_Id"});
         $("#edCode").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Код", width: 150}));
         $("#edMasterKey").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 150}));
-        $("#cmbComplexity").jqxComboBox({ source: DataComplexityTypes, width: '300', height: '25px', displayMember: "ComplexityName", valueMember: "Complexity_Id"});
+        $("#cmbComplexity").jqxComboBox({ source: DataComplexityTypes, width: '150', height: '25px', displayMember: "ComplexityName", valueMember: "Complexity_Id", autoDropDownHeight: true});
         $("#edSignal").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: '120px', height: '25px', decimalDigits: 0 }));
-        $("#cmbConnType").jqxComboBox({ source: DataConnectionTypes, width: '150', height: '25px', displayMember: "ConnectionType", valueMember: "ConnectionType_id"});
+        $("#cmbConnType").jqxComboBox({ source: DataConnectionTypes, width: '150', height: '25px', displayMember: "ConnectionType", valueMember: "ConnectionType_id", autoDropDownHeight: true});
         $('#edNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: 'Примечание', height: 50, width: 420, minLength: 1}));
         $('#edCondition').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: 'Условия', height: 50, width: 420, minLength: 1}));
         
