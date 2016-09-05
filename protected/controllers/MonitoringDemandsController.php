@@ -185,7 +185,6 @@ class MonitoringDemandsController extends Controller
                 $sp->ParametersRefresh();
                 $sp->Parameters[0]['Value'] = $_POST['mndm_id'];
                 
-                
                 $sp->CheckParam = true;
                 $sp->Execute();
             }

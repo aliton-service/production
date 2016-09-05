@@ -297,10 +297,11 @@
         if(MonitoringDemands2.EmplNameAccept !== '') { $('#btnAcceptEmployeeName').jqxButton({disabled: true }); }
         
         $("#btnExecute").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        if(MonitoringDemands2.EmplNameAccept === '' || MonitoringDemands2.DateExec !== '') {
+        
+        if(MonitoringDemands2.EmplNameAccept === '' || MonitoringDemands2.DateExec !== null) {
             $('#btnExecute').jqxButton({disabled: true });
         }
-        else if(MonitoringDemands2.EmplNameAccept !== '' && MonitoringDemands2.DateExec === '') {
+        else if(MonitoringDemands2.EmplNameAccept !== '' && MonitoringDemands2.DateExec === null) {
             $('#btnExecute').jqxButton({disabled: false });
         } 
         
@@ -319,6 +320,7 @@
                     $('#AcceptEmployeeName').jqxInput('val', Res);
                     $('#btnAcceptEmployeeName').jqxButton({disabled: true });
                     $('#btnExecute').jqxButton({disabled: false });
+                    $("#DateAccept").jqxDateTimeInput('val', new Date());
                 }
             });
         });
@@ -332,6 +334,7 @@
                 success: function(Res) {
                     console.log(Res);
                     $('#btnExecute').jqxButton({disabled: true });
+                    $("#DateExec").jqxDateTimeInput('val', new Date());
                 }
             });
         });

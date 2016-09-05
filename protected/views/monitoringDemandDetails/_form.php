@@ -11,8 +11,8 @@
 
         $("#Equip").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEquip, displayMember: "EquipName", valueMember: "Equip_id", width: 600 }));
         $("#quant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-        $("#price_high").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
-        $("#sum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+        $("#price_high").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, readOnly: true }));
+        $("#sum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, readOnly: true }));
         
         $("#Equip").on('bindingComplete', function(){
             if (MonitoringDemandDetails.Equip != '') $("#Equip").jqxComboBox('val', MonitoringDemandDetails.Equip);
@@ -32,14 +32,14 @@
                     data: { Equip_id: value },
                     success: function(Res) {
                         console.log(Res);
-                        $('#price_high').jqxInput('val', Res);
+                        $('#price_high').jqxNumberInput('val', Res);
                     }
                 });
             }
         }); 
         
         if (MonitoringDemandDetails.quant != '') $("#quant").jqxNumberInput('val', MonitoringDemandDetails.quant);
-        if (MonitoringDemandDetails.price_high != '') $("#price_high").jqxInput('val', MonitoringDemandDetails.price_high);
+        if (MonitoringDemandDetails.price_high != '') $("#price_high").jqxNumberInput('val', MonitoringDemandDetails.price_high);
         
         var setSum = function () {
             var price = $('#price_high').val();
@@ -82,7 +82,7 @@
 
 <div class="row">
     <div class="row-column">Количество: <div id="quant" name="MonitoringDemandDetails[quant]"></div><?php echo $form->error($model, 'quant'); ?></div>
-    <div class="row-column">Цена: <br><input readonly id="price_high" type="text"></div>
+    <div class="row-column">Цена: <div id="price_high"></div></div>
     <div class="row-column">Сумма: <div id="sum"></div></div>
 </div>
 

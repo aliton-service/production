@@ -1904,7 +1904,7 @@ Sources.SourceMonitoringDemandDetails =
     type: 'POST',
     root: 'Rows',
     cache: false,
-//    async: false,
+    async: false,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
