@@ -26,6 +26,7 @@ class PriceMonitoring extends MainFormModel
 	public $date = null;
 	public $eqip_id = null;
 	public $EquipName = null;
+	public $Mndm_id = null;
 	public $UnitMeasurement_Id = null;
 	public $NameUnitMeasurement = null;
 	public $splr_id = null;
@@ -35,6 +36,7 @@ class PriceMonitoring extends MainFormModel
 	public $price_retail = null;
 	public $user_create_id = null;
 	public $EmployeeName = null;
+	public $ShortName = null;
 	public $date_create = null;
 	public $user_change = null;
 	public $user_change_id = null;
@@ -43,7 +45,7 @@ class PriceMonitoring extends MainFormModel
 	public $DelDate = null;
 	public $delivery = null;
 	public $title = null;
-	public $user_delete_id = null;
+	public $user_delete = null;
 	public $date_delete = null;
 
 	public $KeyFiled = 'pm.mntr_id';
@@ -65,8 +67,22 @@ class PriceMonitoring extends MainFormModel
 		$date_end = 'getdate()';
 
 		$this->select = "
-                    select pm.mntr_id, pm.date, pm.eqip_id, eqps.EquipName, unms.UnitMeasurement_Id, unms.NameUnitMeasurement, pm.splr_id, splrs.NameSupplier, 
-                        pm.price, pm.price_retail, pm.user_create_id, empl.EmployeeName, pm.delivery
+                    select 
+                        pm.mntr_id, 
+                        pm.date, 
+                        pm.eqip_id, 
+                        pm.Mndm_id, 
+                        eqps.EquipName, 
+                        unms.UnitMeasurement_Id, 
+                        unms.NameUnitMeasurement, 
+                        pm.splr_id, 
+                        splrs.NameSupplier, 
+                        pm.price, 
+                        pm.price_retail, 
+                        pm.user_create_id, 
+                        empl.EmployeeName, 
+                        empl.ShortName, 
+                        pm.delivery
 		";
 
 		$this->from = "

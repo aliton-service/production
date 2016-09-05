@@ -33,7 +33,8 @@ class MonitoringDemands extends MainFormModel
 	public $EmplCreate = null;
 	public $EmplChange = null;
 	public $EmplDel = null;
-	public $EmplAccept = null;
+	public $EmplNameAccept = null;
+        public $title = null;
 
 	public $KeyFiled = 'm.mndm_id';
 	public $PrimaryKey = 'mndm_id';
@@ -72,15 +73,17 @@ class MonitoringDemands extends MainFormModel
                     dp.DemandPrior,
                     m.Deadline,
                     m.Description,
-                    dbo.FIO(e.EmployeeName) as UserName,
+                    e.ShortName as UserName,
                     m.DateAccept,
                     m.DateExec,
                     m.WishDate,
                     m.Note,
                     m.User2,
+                    m.UserChange2,
+                    m.UserAccept2,
                     m.UserCreate2,
                     dbo.FIO(e2.EmployeeName) as UserAc,
-                    e2.ShortName EmplAccept,
+                    e2.ShortName EmplNameAccept,
                     m.PlanDate,
                     dbo.get_wdays_diff(m.Deadline, isNull(m.DateExec, getdate())) as OverDays,
                     m.prtp_id,
@@ -89,8 +92,8 @@ class MonitoringDemands extends MainFormModel
 
 		$from = "
 		From MonitoringDemands m left join DemandPriors dp on (m.Prior = dp.DemandPrior_id)
-                    left join Employees_ForObj_v e on (e.Alias = m.User2)
-                    left join Employees_ForObj_v e2 on (e2.Alias = m.UserAccept2)
+                    left join Employees e on (e.Alias = m.User2)
+                    left join Employees e2 on (e2.Alias = m.UserAccept2)
 		";
 
 		$where = "

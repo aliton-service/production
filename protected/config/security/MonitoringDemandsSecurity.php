@@ -34,6 +34,9 @@
                 'InsretMonitoringDemands',
                 'UpdateMonitoringDemands',
                 'DeleteMonitoringDemands',
+                'AcceptMonitoringDemands',
+                'ExecuteMonitoringDemands',
+                'CancelAcceptanceMonitoringDemands',
             ),
         ),
         
@@ -59,6 +62,24 @@
         'DeleteMonitoringDemands' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Удаление',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'AcceptMonitoringDemands' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Принять',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'CancelAcceptanceMonitoringDemands' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Отменить принятие',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'ExecuteMonitoringDemands' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Выполнить',
             'bizRule' => null,
             'data' => null,
         ),

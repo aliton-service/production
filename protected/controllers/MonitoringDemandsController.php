@@ -40,6 +40,18 @@ class MonitoringDemandsController extends Controller
                     'roles'=>array('UpdateMonitoringDemands'),
                 ),
             array('allow',
+                    'actions'=>array('Accept'),
+                    'roles'=>array('AcceptMonitoringDemands'),
+                ),
+            array('allow',
+                    'actions'=>array('CancelAcceptance'),
+                    'roles'=>array('CancelAcceptanceMonitoringDemands'),
+                ),
+            array('allow',
+                    'actions'=>array('Execute'),
+                    'roles'=>array('ExecuteMonitoringDemands'),
+                ),
+            array('allow',
                     'actions'=>array('Delete'),
                     'roles'=>array('DeleteMonitoringDemands'),
                 ),
@@ -82,7 +94,14 @@ class MonitoringDemandsController extends Controller
         if(isset($_POST['MonitoringDemands']))
         {
             $model->attributes = $_POST['MonitoringDemands'];
-            $model->User2 = Yii::app()->user->Employee_id;
+            
+            $Employee_id = Yii::app()->user->Employee_id;
+            $Query = new SQLQuery();
+            $Query->setSelect("Select Alias from Employees where Employee_id = " . $Employee_id);
+            $Result = $Query->QueryRow();
+            $Employee_Alias = $Result['Alias'];
+                
+            $model->User2 = $Employee_Alias;
             $model->UserCreate2 = Yii::app()->user->Employee_id;
 
             if ($model->validate())
@@ -126,6 +145,79 @@ class MonitoringDemandsController extends Controller
             'model' => $model
         ));
     }
+    
+    public function actionAccept() 
+    {
+        if (isset($_POST['mndm_id'])) {
+            $model = new MonitoringDemands();
+            $model->getModelPk($_POST['mndm_id']);
+            if ($model->UserAccept2 == null || $model->UserAccept2 == '') {
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'ACCEPT_MonitoringDemands';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $_POST['mndm_id'];
+                
+                $Employee_id = Yii::app()->user->Employee_id;
+                $Query = new SQLQuery();
+                $Query->setSelect("Select Alias, ShortName from Employees where Employee_id = " . $Employee_id);
+                $Result = $Query->QueryRow();
+                $Employee_Alias = $Result['Alias'];
+                
+                $sp->Parameters[1]['Value'] = $Employee_Alias;
+                
+                $sp->CheckParam = true;
+                $sp->Execute();
+                
+                $ShortName = $Result['ShortName'];
+                echo $ShortName;
+            }
+        }
+    }
+    
+    public function actionCancelAcceptance() 
+    {
+        if (isset($_POST['mndm_id'])) {
+            $model = new MonitoringDemands();
+            $model->getModelPk($_POST['mndm_id']);
+            if ($model->UserAccept2 !== null || $model->UserAccept2 !== '') {
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'UNDO_MonitoringDemands';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $_POST['mndm_id'];
+                
+                
+                $sp->CheckParam = true;
+                $sp->Execute();
+            }
+        }
+    }
+    
+    
+    public function actionExecute() 
+    {
+        if (isset($_POST['mndm_id'])) {
+            $model = new MonitoringDemands();
+            $model->getModelPk($_POST['mndm_id']);
+            if ($model->UserAccept2 !== null && $model->DateExec == null && $model->UserChange2 == null) {
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'EXEC_MonitoringDemands';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $_POST['mndm_id'];
+                
+                $Employee_id = Yii::app()->user->Employee_id;
+                $Query = new SQLQuery();
+                $Query->setSelect("Select Alias, ShortName from Employees where Employee_id = " . $Employee_id);
+                $Result = $Query->QueryRow();
+                $Employee_Alias = $Result['Alias'];
+                
+                $sp->Parameters[1]['Value'] = $Employee_Alias;
+                
+                $sp->CheckParam = true;
+                $sp->Execute();
+            }
+        }
+    }
+    
 
     public function actionDelete()
     {
@@ -134,6 +226,7 @@ class MonitoringDemandsController extends Controller
         }
         $model = new MonitoringDemands;
         $model->getModelPk($mndm_id);
+        $model->UserChange2 = Yii::app()->user->Employee_id;
 
         if(!is_null($mndm_id)){
             $model->delete();

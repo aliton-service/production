@@ -54,6 +54,7 @@ return array_merge(
     include(dirname(__FILE__).'/security/EquipTypesSecurity.php'),
     include(dirname(__FILE__).'/security/referenceSecurity.php'),
     include(dirname(__FILE__).'/security/ContactsSecurity.php'),
+    include(dirname(__FILE__).'/security/EquipForMDDetailsSecurity.php'),
     
     /* Раздел Ремонт */ 
     include(dirname(__FILE__).'/security/RepairsSecurity.php'),
@@ -169,6 +170,7 @@ return array_merge(
         
     /* Заявки на мониторинг */
     include(dirname(__FILE__).'/security/MonitoringDemandsSecurity.php'),
+    include(dirname(__FILE__).'/security/MonitoringDemandDetailsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -331,7 +333,9 @@ return array_merge(
                 'AdminContractPriceHistory',
                 'AdminPaymentHistory',
                 'AdminMonitoringDemands',
-                /* Отчеты*/
+                'AdminMonitoringDemandDetails',
+                'AdminEquipForMDDetails',
+                /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
                 'WHDocuments1Report',

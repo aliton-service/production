@@ -2,10 +2,17 @@
 
 class MonitoringDemandDetails extends MainFormModel
 {
-	public $mndt_id = null;
-	public $EquipName = null;
-	public $Price = null;
-	public $NameUnitMeasurement = null;
+	public $mndt_id;
+	public $mndm_id;
+	public $EquipName;
+	public $price;
+	public $Note;
+	public $NameUnitMeasurement;
+	public $equip_id;
+	public $quant;
+	public $price_low;
+	public $price_high;
+	public $UserCreate;
 
 	public $SP_INSERT_NAME = 'INSERT_MonitoringDemandDetails';
 	public $SP_UPDATE_NAME = 'UPDATE_MonitoringDemandDetails';
@@ -15,11 +22,11 @@ class MonitoringDemandDetails extends MainFormModel
 	{
             // NOTE: you should only define rules for those attributes that will receive user inputs.
             return array(
-                array('EquipName, Price, Note, NameUnitMeasurement', 'required'),
-                array('Price', 'numerical'),
+                array('equip_id, quant', 'required'),
+                array('price_high', 'numerical'),
                 array('Note', 'length', 'max'=>1073741823),
                 array('EquipName, NameUnitMeasurement', 'length', 'max'=>100),
-                array('mndt_id, EquipName, Price, Note, NameUnitMeasurement', 'safe'),
+                array('mndt_id, mndm_id, EquipName, price_high, Note, NameUnitMeasurement', 'safe'),
             );
 	}
         
@@ -29,20 +36,26 @@ class MonitoringDemandDetails extends MainFormModel
 		$select = "
                     Select
                         m.mndt_id,
+                        m.mndm_id,
                         e.EquipName,
-                        m.Price,
+                        m.price,
                         m.Note,
-                        u.NameUnitMeasurement
+                        u.NameUnitMeasurement,
+                        m.equip_id,
+                        m.quant,
+                        p.price_low,
+                        p.price_high
 		";
 
 		$from = "
-                    From MonitoringDemandDetails m left join Equips e on (m.Equip_id = e.Equip_id)
+                    From MonitoringDemandDetails m left join Equips e on (m.equip_id = e.Equip_id)
                         left join UnitMeasurement_v u on (e.UnitMeasurement_id = u.UnitMeasurement_id)
+                        left join PriceListDetails_v p on (m.equip_id = p.eqip_id)
 		";
 
-//		$where = "
-//                    Where m.DelDate is Null
-//		";
+		$where = "
+                    Where m.DelDate is Null
+		";
 
 //		$order = "
 //		";
@@ -53,7 +66,7 @@ class MonitoringDemandDetails extends MainFormModel
         
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);
-//		$this->Query->setWhere($where);
+		$this->Query->setWhere($where);
 //                $this->Query->setOrder($order);
 	}
 
@@ -71,7 +84,10 @@ class MonitoringDemandDetails extends MainFormModel
 	{
 		return array(
 			'mndt_id' => 'mndt_id',
-			'EquipName' => 'EquipName',
+			'mndm_id' => 'mndm_id',
+			'EquipName' => 'Оборудование',
+			'equip_id' => 'Оборудование',
+			'quant' => 'Количество',
 			'Price' => 'Price',
 			'Note' => 'Note',
 			'NameUnitMeasurement' => 'NameUnitMeasurement',

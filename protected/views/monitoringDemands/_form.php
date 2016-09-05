@@ -21,10 +21,10 @@
             },
         });
 
-        $("#mndm_id3").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, value: "-Авто-" }));
-        $("#Date3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, showTimeButton: true }));
+        $("#mndm_id3").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, placeHolder: "-Авто-" }));
+        $("#Date3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, showCalendarButton: false, value: new Date() }));
         $("#Prior3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPriors, displayMember: "DemandPrior", valueMember: "DemandPrior_id", width: 220, autoDropDownHeight: true }));
-        $("#Deadline3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, showCalendarButton: false }));
+        $("#Deadline3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, showCalendarButton: false, value: null }));
         $("#WishDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, showTimeButton: true }));
         $("#Description3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 590 }));
         
@@ -43,7 +43,7 @@
             if (args) {
                 var item = args.item;
                 var value = item.value;
-                console.log(value);
+//                console.log(value);
                 var newDate;
 
                 switch(value) {
@@ -52,7 +52,28 @@
                         $("#Deadline3").jqxDateTimeInput('val', newDate);
                         break;
                     case 8:
-                        newDate = new Date('2016.09.29');
+                        newDate = new Date('2016-09-19');
+                        console.log('getDay (если это не выходной) = ' + newDate.getDay());
+                        var days = 6;
+                        var days2 = 20;
+                        
+                        while (days > 0 && days2 > 0) 
+                        {
+                            console.log('getDay (если это не выходной) = ' + newDate.getDay());
+                            if (newDate.getDay() < 6 && newDate.getDay() > 0) // если это не выходной
+                            {
+                                newDate.setDate(newDate.getDate() + 1);
+                                days--;
+                                console.log('if');
+                            }
+                            console.log('getDate = ' + newDate.getDate());
+                            console.log('newDate = ' + newDate);
+                            console.log(' ');
+                            console.log('days = ' + days);
+                            console.log(' ');
+                            days2--;
+                        }
+                        
                         $("#Deadline3").jqxDateTimeInput('val', newDate);
                         break;
                     case 10:
@@ -86,12 +107,12 @@
 
 
 <div class="row">
-    <div class="row-column">Номер: <input id="mndm_id3" name="MonitoringDemands[mndm_id]"  type="text"></div>
+    <div class="row-column">Номер: <input id="mndm_id3" name="MonitoringDemands[mndm_id]" type="text"></div>
     <div class="row-column">Подана: </div><div class="row-column"><div id="Date3"  name="MonitoringDemands[Date]"></div></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Приоритет <div id="Prior3" name="MonitoringDemands[Prior]"></div><?php echo $form->error($model, 'Prior'); ?></div>
+    <div class="row-column">Приоритет: <div id="Prior3" name="MonitoringDemands[Prior]"></div><?php echo $form->error($model, 'Prior'); ?></div>
     <div class="row-column">Предельная дата: <div id="Deadline3" name="MonitoringDemands[Deadline]"></div></div>
     <div class="row-column">Желаемая дата: <div id="WishDate3" name="MonitoringDemands[WishDate]"></div></div>
 </div>

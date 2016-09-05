@@ -206,7 +206,7 @@ $this->breadcrumbs=array(
 ?>
 
     
-<div id='jqxWidget'>
+<div id='jqxWidget' style="background-color: #F2F2F2;">
     <div id='jqxTabs'>
         <ul>
             <li>
@@ -245,59 +245,85 @@ $this->breadcrumbs=array(
                 </div>
             </li>
         </ul>
-        <div style="overflow: hidden;">
-            <div style="overflow: hidden;  margin-bottom: 10px; background-color: #F2F2F2;">
+        <div style="overflow: hidden; margin: 10px 15px; background-color: #F2F2F2;">
+            <div style="overflow: hidden;">
                 <div class="row">
-                    <span style="margin-left: 10px;">Клиент: <input readonly type="text" id="FullName"></span>
-                    <span style="margin-left: 10px;">Тип клиента: <input readonly type="text" id="LphName"></span>
-                </div>
-
-                <div class="row" style="margin-left: 10px;">Адрес: <input readonly type="text" id="Address"></div>
-
-                <div class="row">
-                    <span style="margin-left: 10px;">Квартир: <input readonly type="text" id="Apartment"></span>
-                    <span style="margin-left: 10px;">Кол-во этажей: <input readonly type="text" id="Floor"></span>
-                    <span style="margin-left: 10px;">Год постройки: <input readonly type="text" id="year_construction"></span>
+                    <div class="row-column">Клиент: <input readonly type="text" id="FullName"></div>
+                    <div class="row-column">Тип клиента: <input readonly type="text" id="LphName"></div>
                 </div>
 
                 <div class="row">
-                    <span style="margin-left: 10px;">Подъезды: <input readonly type="text" id="DoorwayList"></span>
-                    <span style="margin-left: 10px;">Кол-во подъездов: <input readonly type="text" id="CountPorch"></span>
+                    <div class="row-column">Адрес: <input readonly type="text" id="Address"></div>
                 </div>
 
                 <div class="row">
-                    <span style="margin-left: 10px;">Сегмент: <input readonly type="text" id="ClientGroup"></span>
-                    <span style="margin-left: 10px;">Журнал: <input readonly type="text" id="Journal"></span>
+                    <div class="row-column">Квартир: <input readonly type="text" id="Apartment"></div>
+                    <div class="row-column">Кол-во этажей: <input readonly type="text" id="Floor"></div>
+                    <div class="row-column">Год постройки: <input readonly type="text" id="year_construction"></div>
                 </div>
 
-                <div class="row" style="margin-left: 10px;">Почта: <input readonly type="text" id="PostalAddress"></div>
+                <div class="row">
+                    <div class="row-column">Подъезды: <input readonly type="text" id="DoorwayList"></div>
+                    <div class="row-column">Кол-во подъездов: <input readonly type="text" id="CountPorch"></div>
+                </div>
 
-                <div style="display: inline-block; margin: 0; ">
-                    <div class="row" style="margin-left: 10px; display: inline-block;">Отказники: <textarea readonly type="text" id="Refusers"></textarea></div>
-                    <div class="row" style="display: inline-block;">Примечание: <textarea readonly type="text" id="Note"></textarea></div>
-                    <div class="row" style="margin-left: 10px;">Общая информация: <textarea readonly type="text" id="Information"></textarea></div>
+                <div class="row">
+                    <div class="row-column">Сегмент: <input readonly type="text" id="ClientGroup"></div>
+                    <div class="row-column">Журнал: <input readonly type="text" id="Journal"></div>
+                </div>
+
+                <div class="row">
+                    <div class="row-column">Почта: <input readonly type="text" id="PostalAddress"></div>
                 </div>
                 
-                <div style="overflow: hidden; padding: 50px 0 0 40px; display: inline-block;">
-                    <div class="row">Менеджер М: <input readonly type="text" id="InstallManager"></div>
-                    <div class="row">Менеджер СЦ: <input readonly type="text" id="ServiceManager"></div>
-                    <div class="row">Менеджер ОП: <input readonly type="text" id="SalesManager"></div>
+                <div class="row" style="margin: 0; padding: 0;">
+                    <div class="row-column" style="padding: 0;">
+                        <div class="row">
+                            <div class="row-column">Отказники: <textarea readonly type="text" id="Refusers"></textarea></div>
+                            <div class="row-column">Примечание: <textarea readonly type="text" id="Note"></textarea></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="row-column">Общая информация: <textarea readonly type="text" id="Information"></textarea></div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="margin-top: 85px;">
+                        <div class="row">
+                            <div class="row-column">Менеджер М: <input readonly type="text" id="InstallManager"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="row-column">Менеджер СЦ: <input readonly type="text" id="ServiceManager"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="row-column">Менеджер ОП: <input readonly type="text" id="SalesManager"></div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="row" style="margin-left: 10px;"><input type="button" value="Изменить" id='ChangeObjectsGroup' /></div>
+                <div class="row" style="margin: 0;"><input type="button" value="Изменить" id='ChangeObjectsGroup' /></div>
             </div>
             
             <hr style="border-color: #cecece;"/>
-            <div class="row" style="margin: 5px 10px;">Контактные лица: </div>
-            
-            <div style=" margin-left: 15px; padding-right: 15px"><div id="ContactInfoGrid" class="jqxGridAliton"></div></div>
-            
-            <div class="row" style="margin-left: 10px;">
-                <div class="row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>
-                <div class="row-column"><input type="button" value="Изменить" id='EditContactInfo' /></div>
-                <div class="row-column"><input type="button" value="Удалить" id='DelContactInfo' /></div>
+                
+            <div class="row">
+
+                <div class="row" style="margin: 0 0 5px 0;">
+                    <div class="row-column">Контактные лица: </div>
+                </div>
+
+                <div style="padding-right: 15px"><div id="ContactInfoGrid" class="jqxGridAliton"></div></div>
+
+                <div class="row" style="padding: 0;">
+                    <div class="row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>
+                    <div class="row-column"><input type="button" value="Изменить" id='EditContactInfo' /></div>
+                    <div class="row-column"><input type="button" value="Удалить" id='DelContactInfo' /></div>
+                </div>
             </div>
         </div>
+        
         <div id='content2' style="overflow: hidden; margin-left: 10px;">
             <div style="width: 100%; height: 100%">
                 
