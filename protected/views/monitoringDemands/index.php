@@ -378,8 +378,9 @@
         
         $('#btnEnd').on('click', function () {
             var pagesize = getPageSize();
-            $('#rowNum').html('Запись ' + (pagesize - 2) + ' из ' + pagesize);
             $('#MonitoringDemandsGrid').jqxGrid('selectrow', pagesize - 1);
+            var rowindex = $('#MonitoringDemandsGrid').jqxGrid('getselectedrowindex');
+            $('#rowNum').html('Запись ' + rowindex + ' из ' + (pagesize - 1));
 //            $('#btnPrevious').jqxButton({disabled: false });
 //            $('#btnStart').jqxButton({disabled: false });
         });
