@@ -29,13 +29,14 @@
         $("#Description3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 590 }));
         
         
-        if (MonitoringDemands3.mndm_id != '') $("#mndm_id3").jqxInput('val', MonitoringDemands3.mndm_id);
-        if (MonitoringDemands3.Date != null) $("#Date3").jqxDateTimeInput('val', MonitoringDemands3.Date);
-        if (MonitoringDemands3.Prior != '') $("#Prior3").jqxComboBox('val', MonitoringDemands3.Prior);
-        if (MonitoringDemands3.Deadline != null) $("#Deadline3").jqxDateTimeInput('val', MonitoringDemands3.Deadline);
-        if (MonitoringDemands3.WishDate != null) $("#WishDate3").jqxDateTimeInput('val', MonitoringDemands3.WishDate);
-        if (MonitoringDemands3.Description != '') $("#Description3").jqxTextArea('val', MonitoringDemands3.Description);
+        if (MonitoringDemands3.mndm_id !== '') $("#mndm_id3").jqxInput('val', MonitoringDemands3.mndm_id);
+        if (MonitoringDemands3.Date !== null) $("#Date3").jqxDateTimeInput('val', MonitoringDemands3.Date);
+        if (MonitoringDemands3.Prior !== '') $("#Prior3").jqxComboBox('val', MonitoringDemands3.Prior);
+        if (MonitoringDemands3.Deadline !== null) $("#Deadline3").jqxDateTimeInput('val', MonitoringDemands3.Deadline);
+        if (MonitoringDemands3.WishDate !== null) $("#WishDate3").jqxDateTimeInput('val', MonitoringDemands3.WishDate);
+        if (MonitoringDemands3.Description !== '') $("#Description3").jqxTextArea('val', MonitoringDemands3.Description);
         
+  
         var getDeadline = function (workingDaysAmount) { // принимает количество рабочих дней
             var newDate = new Date();
             var days = workingDaysAmount;

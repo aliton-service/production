@@ -104,7 +104,7 @@
                 height: '300',
                 source: MonitoringDemandDetailsDataAdapter,
                 columns: [
-                    { text: 'Оборудование', dataField: 'equip_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
+                    { text: 'equip_id', dataField: 'equip_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80 },
                     { text: 'Оборудование', dataField: 'EquipName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
                     { text: 'Ед.изм.', dataField: 'NameUnitMeasurement', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 60 },
                     { text: 'Кол-во', dataField: 'quant', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 60 },

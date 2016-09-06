@@ -22,21 +22,22 @@
                 width: '100%',
                 height: '400',
                 source: DemDataAdapter,
-                        /*
+                /*
                 ready: function() {
                     var State = $('#PriceMonitoringGrid').jqxGrid('getstate');
                     var Columns = GridState.LoadGridSettings('#PriceMonitoringGrid', 'PriceMonitoringIndex_PriceMonitoringGrid');
                     $.extend(true, State.columns, Columns);
                     $('#PriceMonitoringGrid').jqxGrid('loadstate', State);    
                     $('#PriceMonitoringGrid').jqxGrid({source: DemDataAdapter});
-                }*/
+                }
+            */
                 columns: [
                     { text: 'Дата', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Оборудование', dataField: 'EquipName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 600 },
                     { text: 'Ед.изм.', dataField: 'NameUnitMeasurement', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 60 },
                     { text: 'Поставщик', dataField: 'NameSupplier', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 160 },
-                    { text: 'Цена закупка', dataField: 'price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 110 },
-                    { text: 'Цена розница', dataField: 'price_retail', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 110 },
+                    { text: 'Цена закупки', dataField: 'price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 110 },
+                    { text: 'Цена розницы', dataField: 'price_retail', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 110 },
                     { text: 'Создал', dataField: 'ShortName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 160 },
                     { text: 'Срок поставки', dataField: 'delivery', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
                 ]
