@@ -20,9 +20,6 @@
         
         $("#BeginDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
         $("#EndDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
-//        $("#LastDemands").jqxRadioButton($.extend(true, {}, RadioButtonDefaultSettings, { checked:true }));
-//        $("#DemandsCount").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 60, symbolPosition: 'right', min: 0, decimalDigits: 0, value: 200, spinButtons: true }));
-//        $("#unlimited").jqxRadioButton($.extend(true, {}, RadioButtonDefaultSettings, {}));
         
         $("#Number").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#Date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
@@ -63,9 +60,7 @@
         var addfilter = function (args = [], dataField, filtertype, filter_or_operator)
         {                
                 var filtergroup = new $.jqx.filter();
-                
                 var newFilter;
-                
                 for(var i = 0; i < args.length; i++)
                 {
 //                    console.log(args[i].value);
@@ -75,11 +70,8 @@
                         filtergroup.addfilter(filter_or_operator, newFilter);
                     }
                 }
-
-                $("#MonitoringDemandsGrid").jqxGrid('addfilter', dataField, filtergroup);
-                
+            $("#MonitoringDemandsGrid").jqxGrid('addfilter', dataField, filtergroup);
             $("#MonitoringDemandsGrid").jqxGrid('applyfilters');
-            
         }
         
         $('#Number').on('valueChanged', function () {
@@ -188,8 +180,6 @@
             addfilter(args, 'DateExec', 'stringfilter', 1);
         });
         
-       
-        
         
         
         $('#btnReset').on('click', function () { 
@@ -204,15 +194,10 @@
         });
         
         
-        
         $("#btnPrint").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        
         $("#btnAcceptEmployeeName").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        
         $("#btnCancelAcceptance").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
-        
         $("#Description").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 1045, height: 55 }));
-        
         
         
         var MonitoringDemandsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemands));
@@ -256,7 +241,7 @@
             var Temp = $('#MonitoringDemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowData = Temp;
-            } else {CurrentRowData = null};
+            } else {CurrentRowData = null;}
             
 //            console.log(CurrentRowData);
             if (CurrentRowData !== null && CurrentRowData.Description !== null) {
@@ -562,19 +547,6 @@
         </div>
     </div>
 </div>
-<!--<div class="row" style="margin-bottom: 10px;">
-    <div class="row-column" style="padding: 0 10px 10px 10px; border: 1px solid #ddd; background-color: #eee;">
-        <div class="row" style="margin: 0; padding: 0;"><div class="row-column" style="margin: 0 0 5px 0;">Выберите период за который будут отображены заявки:</div></div>
-        <div class="row" style="">
-            <div class="row-column"><div id='PeriodDemands'></div></div><div class="row-column">За период </div>
-            <div class="row-column">с </div><div class="row-column"><div id='BeginDate' ></div></div>
-            <div class="row-column">по </div><div class="row-column"><div id='EndDate'></div></div>
-            <div class="row-column" style="margin-left: 25px;"><div id='LastDemands'></div></div><div class="row-column">Последние </div>
-            <div class="row-column"><div id="DemandsCount"></div></div>
-            <div class="row-column" style="margin-left: 25px;"><div id='unlimited'></div></div><div class="row-column">Неограниченно </div>
-        </div>
-    </div>
-</div>-->
 
 
 <div id='jqxTabsMonitoringDemands'>
@@ -608,7 +580,6 @@
             <div id="MonitoringDemandDetailsGrid" class="jqxGridAliton"></div>
         </div>
     </div>
-
 </div>
 
 
