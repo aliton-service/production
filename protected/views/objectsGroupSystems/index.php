@@ -24,7 +24,7 @@
                 showfilterrow: false,
                 virtualmode: false,
                 width: '100%',
-                height: '700',
+                height: '550',
                 source: OGSystemsDataAdapter,
                 columns: [
                     { text: 'Наличие системы', dataField: 'Availability', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
@@ -36,7 +36,7 @@
             })
         );
         
-        $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '570px', width: '380'}));
+        $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '520px', width: '390'}));
         
         $('#EditDialog').jqxWindow({initContent: function() {
             $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -67,8 +67,8 @@
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
                         $('#EditDialog').jqxWindow('close');
-                        $('#ObjectsGroupSystemsGrid').jqxGrid({source: LoadData(OGSystemsDataAdapter)});
                         $("#ObjectsGroupSystemsGrid").jqxGrid('updatebounddata');
+                        $("#ObjectsGroupSystemsGrid").jqxGrid('selectrow', 0);
                     } else {
                         $('#BodyDialog').html(Res);
                     }
@@ -125,6 +125,9 @@
             $("#EditObjectsGroupSystem").click();
         });
         
+        console.log('OGSystems.ObjectGr_id = ');
+        console.log(OGSystems.ObjectGr_id);
+        
         $("#NewObjectsGroupSystem").on('click', function () 
         {
             Mode = 'Insert';
@@ -147,6 +150,7 @@
                 data: { ObjectsGroupSystem_id: CurrentRowData.ObjectsGroupSystem_id },
                 success: function(){
                     $("#ObjectsGroupSystemsGrid").jqxGrid('updatebounddata');
+                    $("#ObjectsGroupSystemsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });
@@ -172,8 +176,8 @@
     <div id="DialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="overflow: hidden; padding: 10px;" id="DialogContent">
-        <div style="overflow: hidden;" id="BodyDialog"></div>
+    <div style="padding: 10px;" id="DialogContent">
+        <div id="BodyDialog"></div>
         <div id="BottomDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>

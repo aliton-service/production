@@ -119,6 +119,11 @@ var NumberInputDefaultSettings = {
     inputMode: 'simple'
 };
 
+var RadioButtonDefaultSettings = {
+    width: 20, 
+    height: 22
+};
+
 
 
 var GridFilters = {};

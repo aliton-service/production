@@ -17,11 +17,11 @@
             
             $("#SystemType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemTypes, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width:300 }));
             $("#Availability").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemAvailabilitys, displayMember: "availability", valueMember: "code_id", width:200, autoDropDownHeight: true }));;
-            $("#count").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100}));
+            $("#count").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
     
             $("#Competitors").jqxComboBox({source: DataCompetitors, displayMember: "Competitor", valueMember: "cmtr_id", multiSelect: true, width: 340, height: 25 });
             
-            $("#Competitors").on('change', function (event) {
+            $("#Competitors").on('change', function () {
                 var items = $("#Competitors").jqxComboBox('getSelectedItems');
                 var selectedItems = "Selected Items: ";
                 $.each(items, function (index) {
@@ -59,7 +59,7 @@
             
             if (OGSystems.SystemType_Id != '') $("#SystemType").jqxComboBox('val', OGSystems.SystemType_Id);
             if (OGSystems.Availability != '') $("#Availability").jqxComboBox('val', OGSystems.Availability);
-            if (OGSystems.count != '') $("#count").jqxInput('val', OGSystems.count);
+            if (OGSystems.count != '') $("#count").jqxNumberInput('val', OGSystems.count);
 //            if (OGSystems.Competitors != '') $("#Competitors").jqxComboBox('val', OGSystems.Competitors);
             if (OGSystems.Condition != '') $("#Condition").jqxTextArea('val', OGSystems.Condition);
             if (OGSystems.Desc != '') $("#Desc").jqxTextArea('val', OGSystems.Desc);
@@ -81,7 +81,7 @@
     <input type="hidden" name="ObjectsGroupSystems[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>">
     <input type="hidden" name="ObjectsGroupSystems[ObjectsGroupSystem_id]" value="<?php echo $model->ObjectsGroupSystem_id; ?>">
     <div class="row-column">Наличие: <div id='Availability' name="ObjectsGroupSystems[Availability_id]"></div><?php echo $form->error($model, 'Availability_id'); ?></div>  
-    <div class="row-column">Кол-во систем: <br><input id="count" name="ObjectsGroupSystems[count]" type="text"><?php echo $form->error($model, 'count'); ?></div>
+    <div class="row-column">Кол-во систем: <div id="count" name="ObjectsGroupSystems[count]" type="text"><?php echo $form->error($model, 'count'); ?></div></div>
     <div class="row-column" style="margin-top: 20px;">Обслуживающие организации: <br><div id="Competitors"></div></div>
     <div id="log" style="margin-top: 10px; font-size: 13px; font-family: Verdana;" name="ObjectsGroupSystems[Competitors]"></div>
     <div class="row-column" style="margin-top: 20px;">Условия: <textarea id="Condition" name="ObjectsGroupSystems[Condition]"></textarea></div>

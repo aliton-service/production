@@ -200,8 +200,8 @@
      )); 
 
 ?>
-<div style="margin-left: 10px;  background-color: #F2F2F2;">
-    <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
+<div style="margin: 0; background-color: #F2F2F2;">
+    <div class="row" style="margin: 0; padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
         <h2 style="font-size: 1em; margin: 0 10px 0 5px;">Клиент</h2>
 
         <div class="row">
@@ -209,67 +209,91 @@
             <div class="row-column"><div id="FullName" name="ObjectsGroup[PropForm_id]"></div><?php echo $form->error($model, 'FullName'); ?></div>
         </div>
 
-        <div class="row-column">
-            <div class="row">ЮР.АДРЕС: <input type="text" id="JAddress"></div>
-            <div class="row">ФАКТ.АДРЕС: <input type="text" id="FAddress"></div>
+        <div class="row">
+            <div class="row-column">ЮР.АДРЕС: <input type="text" id="JAddress"></div>
+            <div class="row-column">ИНН: <input type="text" id="inn"></div>
         </div>
-        <div class="row">ИНН: <input type="text" id="inn"></div>
-        <div class="row">Р/СЧ: <input type="text" id="account"></div>
-        <div class="row-column"><div class="row">БАНК: <input type="text" id="bank_name"></div></div>
-        <div class="row-column"><div class="row">БИК: <input type="text" id="bik"></div></div>
-        <div class="row">КОР/СЧ: <input type="text" id="cor_account"></div>
+        
+        <div class="row">
+            <div class="row-column">ФАКТ.АДРЕС: <input type="text" id="FAddress"></div>
+            <div class="row-column">Р/СЧ: <input type="text" id="account"></div>
+        </div>
+        
+        <div class="row">
+            <div class="row-column">БАНК: <input type="text" id="bank_name"></div>
+            <div class="row-column">БИК: <input type="text" id="bik"></div>
+            <div class="row-column">КОР/СЧ: <input type="text" id="cor_account"></div>
+        </div>
     </div>
 
-    <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
+    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
         <h2 style="display: inline-block; float: left; font-size: 1em; margin: 0 10px 0 5px;">Адрес проведения работ</h2> 
         <span id="errorStreet" style="margin-left: 150px; color: red; font-weight: bold;"></span>
-        <div class="row-column" style="clear: both;"><div class="row">Регион: <div id="Region" name="ObjectsGroup[Region_id]"></div></div></div>
-        <div class="row-column"><div class="row">Район: <div id="Area" name="ObjectsGroup[Area_id]"></div></div></div>
-        <div class="row-column"><div class="row">Улица: <div id="Street" name="ObjectsGroup[Street_id]"></div><?php echo $form->error($model, 'StreetName'); ?></div></div>
+        
+        <div class="row">
+            <div class="row-column">Регион: <div id="Region" name="ObjectsGroup[Region_id]"></div></div>
+            <div class="row-column">Район: <div id="Area" name="ObjectsGroup[Area_id]"></div></div>
+            <div class="row-column">Улица: <div id="Street" name="ObjectsGroup[Street_id]"></div><?php echo $form->error($model, 'StreetName'); ?></div>
 
-        <div class="row-column"><div class="row">Дом: <br><input type="text" id="House" name="ObjectsGroup[House]"></div></div>
-        <div class="row-column"><div class="row">Корпус: <br><input type="text" id="Corp" name="ObjectsGroup[Corp]"></div></div>
-        <div class="row-column"><div class="row">Помещение: <br><input type="text" id="Room" name="ObjectsGroup[Room]"></div></div>
+            <div class="row-column">Дом: <br><input type="text" id="House" name="ObjectsGroup[House]"></div>
+            <div class="row-column">Корпус: <br><input type="text" id="Corp" name="ObjectsGroup[Corp]"></div>
+            <div class="row-column">Помещение: <br><input type="text" id="Room" name="ObjectsGroup[Room]"></div>
+        </div>
     </div>
-    
-    <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
-        <div class="row-column"><div class="row">Кол-во подъездов: <br><input type="text" id="CountPorch" name="ObjectsGroup[CountPorch]"></div></div>
-        <div class="row-column"><div class="row">Кол-во этажей: <br><input type="text" id="Floor" name="ObjectsGroup[Floor]"></div></div>
-        <div class="row-column"><div class="row">Кол-во квартир: <br><input type="text" id="Apartment" name="ObjectsGroup[Apartment]"></div></div>
-        <div class="row-column"><div class="row">Год постройки: <br><input type="text" id="year_construction" name="ObjectsGroup[year_construction]"></div></div>
-        <div class="row-column"><div class="row">Сегмент: <div id="ClientGroup" name="ObjectsGroup[clgr_id]"></div></div></div>
-        <div class="row">Журнал: <div id='Journal' name="ObjectsGroup[Journal]" ></div></div>
-        <div class="row">Подъезды: <input readonly type="text" id="DoorwayList"></div>
-    </div>
-    
-    <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
-        <div class="row-column">Контактное лицо: <input readonly type="text" id="ClientName"></div>
-        <div class="row-column">Телефон: <input readonly type="text" id="Telephone"></div>
-    </div>
-    <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
-        <div class="row-column">Не отправлять смс:</div>
-        <div class="row-column"><div id="no_sms" name="ObjectsGroup[no_sms]"></div></div>
-        <div class="row-column">Почтовый адрес:</div>    
-        <div class="row-column"><input type="text" id="PostalAddress" name="ObjectsGroup[PostalAddress]"></div>
-        <div class="row-column">Площадь</div>
-        <div class="row-column"><div id='AreaSize' name="ObjectsGroup[AreaSize]"></div></div>
-    </div>
-       
-    
     
     <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
-        <div class="row" style="margin-top: 5px;">Общая информация: <textarea  type="text" id="Information" name="ObjectsGroup[Information]"></textarea></div>
-        <div class="row" style="margin-top: 5px; display: inline-block;">Отказники: <textarea  type="text" id="Refusers" name="ObjectsGroup[Refusers]"></textarea></div>
-        <div class="row" style="margin-top: 5px; display: inline-block;">Примечание: <textarea  type="text" id="Note" name="ObjectsGroup[Note]"></textarea></div>
+        <div class="row" style="margin-top: 0;">
+            <div class="row-column">Кол-во подъездов: <br><input type="text" id="CountPorch" name="ObjectsGroup[CountPorch]"></div>
+            <div class="row-column">Кол-во этажей: <br><input type="text" id="Floor" name="ObjectsGroup[Floor]"></div>
+            <div class="row-column">Кол-во квартир: <br><input type="text" id="Apartment" name="ObjectsGroup[Apartment]"></div>
+            <div class="row-column">Год постройки: <br><input type="text" id="year_construction" name="ObjectsGroup[year_construction]"></div>
+            <div class="row-column">Сегмент: <div id="ClientGroup" name="ObjectsGroup[clgr_id]"></div></div>
+            <div class="row-column">Журнал: <div id='Journal' name="ObjectsGroup[Journal]" ></div></div>
+        </div>
+        
+        <div class="row" style="margin-top: 0;">
+            <div class="row-column">Подъезды: <input readonly type="text" id="DoorwayList"></div>
+        </div>
     </div>
     
-    <div class="row" style="padding-bottom: 10px; width: 950px; border: 1px solid #ddd;">
-        <div class="row-column"><div class="row" style="margin-top: 0;">Менеджер ОП: <div id="Slmg_id" name="ObjectsGroup[Slmg_id]"></div></div></div>
-        <div class="row-column"><div class="row" style="margin-top: 0;">Менеджер СЦ: <div id="Srmg_id" name="ObjectsGroup[Srmg_id]"></div></div></div>
-        <div class="row-column"><div class="row" style="margin-top: 0;">Менеджер Монтажа: <div id="Inmg_id" name="ObjectsGroup[Inmg_id]"></div></div></div>
+    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
+        <div class="row" style="margin-top: 0;">
+            <div class="row-column">Контактное лицо: <input readonly type="text" id="ClientName"></div>
+            <div class="row-column">Телефон: <input readonly type="text" id="Telephone"></div>
+        </div>
+    </div>
+    
+    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
+        <div class="row" style="margin-top: 0;">
+            <div class="row-column">Не отправлять смс:</div>
+            <div class="row-column"><div id="no_sms" name="ObjectsGroup[no_sms]"></div></div>
+            <div class="row-column">Почтовый адрес:</div>    
+            <div class="row-column"><input type="text" id="PostalAddress" name="ObjectsGroup[PostalAddress]"></div>
+            <div class="row-column">Площадь</div>
+            <div class="row-column"><div id='AreaSize' name="ObjectsGroup[AreaSize]"></div></div>
+        </div>
+    </div>
+    
+    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
+        <div class="row" style="margin-top: 0;">
+            <div class="row-column">Общая информация: <textarea  type="text" id="Information" name="ObjectsGroup[Information]"></textarea></div>
+        </div>
+        
+        <div class="row" style="margin-top: 0;">
+            <div class="row-column">Отказники: <textarea  type="text" id="Refusers" name="ObjectsGroup[Refusers]"></textarea></div>
+            <div class="row-column">Примечание: <textarea  type="text" id="Note" name="ObjectsGroup[Note]"></textarea></div>
+        </div>
+    </div>
+    
+    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
+        <div class="row" style="margin-top: 0;">
+            <div class="row-column">Менеджер ОП: <div id="Slmg_id" name="ObjectsGroup[Slmg_id]"></div></div>
+            <div class="row-column">Менеджер СЦ: <div id="Srmg_id" name="ObjectsGroup[Srmg_id]"></div></div>
+            <div class="row-column">Менеджер Монтажа: <div id="Inmg_id" name="ObjectsGroup[Inmg_id]"></div></div>
+        </div>
     </div>
         
-    <div class="row" style="clear: both; padding: 0;"><input type="button" value="Сохранить" id='SaveNewObjectsGroup' /></div>
+    <div class="row" style="clear: both; margin-left: 5px;"><input type="button" value="Сохранить" id='SaveNewObjectsGroup' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

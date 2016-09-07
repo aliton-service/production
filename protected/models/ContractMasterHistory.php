@@ -19,7 +19,7 @@ class ContractMasterHistory extends MainFormModel
     {
         return array(
             array('History_id, ContrS_id, Master', 'numerical', 'integerOnly'=>true),
-            array('ContrS_id, Master', 'required'),
+            array('ContrS_id, Master, WorkDateStart, WorkDateEnd', 'required'),
             array('EmployeeName', 'length', 'max'=>50),
             array('History_id, ContrS_id, Master, EmployeeName, WorkDateStart, WorkDateEnd', 'safe'),
         );
@@ -68,10 +68,10 @@ class ContractMasterHistory extends MainFormModel
         return array(
             'History_id' => 'History id',
             'ContrS_id' => 'ContrS id',
-            'Master' => 'Master',
-            'EmployeeName' => 'EmployeeName',
-            'WorkDateStart' => 'WorkDateStart',
-            'WorkDateEnd' => 'WorkDateEnd',
+            'Master' => 'Имя мастера',
+            'EmployeeName' => 'Имя мастера',
+            'WorkDateStart' => 'с',
+            'WorkDateEnd' => 'по',
         );
     }
 

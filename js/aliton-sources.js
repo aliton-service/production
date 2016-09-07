@@ -602,7 +602,7 @@ Sources.SourceListPriceMonitoringMin =
     datatype: "json",
     datafields: [
         {name: 'mntr_id', type: 'int'},
-        {name: 'date', type: 'datetime'},
+        {name: 'date', type: 'date'},
         {name: 'eqip_id', type: 'int'},
         {name: 'EquipName', type: 'string'},
         {name: 'UnitMeasurement_Id', type: 'int'},
@@ -614,11 +614,11 @@ Sources.SourceListPriceMonitoringMin =
         {name: 'price_retail', type: 'float'},
         {name: 'user_create_id', type: 'int'},
         {name: 'EmployeeName', type: 'string'},
-        {name: 'date_create', type: 'datetime'},
+        {name: 'ShortName', type: 'string'},
+        {name: 'date_create', type: 'date'},
         {name: 'user_change', type: 'string'},
-        {name: 'date_change', type: 'datetime'},
+        {name: 'date_change', type: 'date'},
         {name: 'delivery', type: 'string'},
-        {name: 'user_create_id', type: 'int'},
     ],
     id: 'mntr_id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=PriceMonitoring',
@@ -644,7 +644,7 @@ Sources.SourceListEquipsMin =
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: true,
+    async: false,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
@@ -1773,6 +1773,138 @@ Sources.SourcePriceChangeReasons =
     root: 'Rows',
     cache: false,
     async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourcePaymentHistory =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'pmhs_id',  type: 'int' },
+        { name: 'cntr_id',  type: 'int' },
+        { name: 'date',  type: 'date' },
+        { name: 'year_start',  type: 'int' },
+        { name: 'year_end',  type: 'int' },
+        { name: 'month_start',  type: 'int' },
+        { name: 'month_end',  type: 'int' },
+        { name: 'sum',  type: 'string' },
+        { name: 'note',  type: 'string' },
+        { name: 'month_start_name',  type: 'string' },
+        { name: 'month_end_name',  type: 'string' },
+    ],
+    id: 'pmhs_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PaymentHistory',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceMonths =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Month_id',  type: 'int' },
+        { name: 'Month_name',  type: 'string' },
+        { name: 'Month_name_eu',  type: 'string' },
+    ],
+    id: 'Month_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Months',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceMonitoringDemands =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'mndm_id',  type: 'int' },
+        { name: 'Date',  type: 'date' },
+        { name: 'Prior',  type: 'int' },
+        { name: 'DemandPrior',  type: 'string' },
+        { name: 'Deadline',  type: 'date' },
+        { name: 'WishDate',  type: 'date' },
+        { name: 'PlanDate',  type: 'date' },
+        { name: 'Description',  type: 'string' },
+        { name: 'UserName',  type: 'string' },
+        { name: 'Note',  type: 'string' },
+        { name: 'DateExec',  type: 'date' },
+        { name: 'Calc_id',  type: 'int' },
+        { name: 'Dmnd_id',  type: 'int' },
+        { name: 'Repr_id',  type: 'int' },
+        { name: 'User2',  type: 'string' },
+        { name: 'EmplNameAccept',  type: 'string' },
+        { name: 'UserCreate2',  type: 'string' },
+        { name: 'DateCreate',  type: 'date' },
+        { name: 'UserChange2',  type: 'string' },
+        { name: 'DateChange',  type: 'date' },
+        { name: 'UserAccept2',  type: 'string' },
+        { name: 'DateAccept',  type: 'date' },
+        { name: 'OverDays',  type: 'int' },
+        { name: 'DelDate',  type: 'date' },
+        { name: 'prtp_id',  type: 'int' },
+        { name: 'prdoc_id',  type: 'int' },
+        { name: 'Lock',  type: 'bool' },
+        { name: 'EmplLock',  type: 'int' },
+        { name: 'DateLock',  type: 'date' },
+        { name: 'EmplCreate',  type: 'int' },
+        { name: 'EmplChange',  type: 'int' },
+        { name: 'EmplDel',  type: 'int' },
+        { name: 'prtp_id',  type: 'int' },
+    ],
+    id: 'mndm_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=MonitoringDemands',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceMonitoringDemandDetails =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'mndt_id',  type: 'int' },
+        { name: 'EquipName',  type: 'date' },
+        { name: 'equip_id',  type: 'int' },
+        { name: 'price',  type: 'int' },
+        { name: 'quant',  type: 'int' },
+        { name: 'Note',  type: 'string' },
+        { name: 'NameUnitMeasurement',  type: 'string' },
+        { name: 'price_low',  type: 'float' },
+        { name: 'price_high',  type: 'float' },
+    ],
+    id: 'mndt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=MonitoringDemandDetails',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+//    async: false,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {

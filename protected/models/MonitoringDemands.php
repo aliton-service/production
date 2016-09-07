@@ -1,60 +1,29 @@
 <?php
 
-/**
- * This is the model class for table "MonitoringDemands".
- *
- * The followings are the available columns in table 'MonitoringDemands':
- * @property integer $mndm_id
- * @property string $Date
- * @property integer $Prior
- * @property string $Deadline
- * @property string $WishDate
- * @property string $PlanDate
- * @property string $Description
- * @property string $Note
- * @property string $DateExec
- * @property integer $Calc_id
- * @property integer $Dmnd_id
- * @property integer $Repr_id
- * @property string $User2
- * @property string $UserCreate2
- * @property string $DateCreate
- * @property string $UserChange2
- * @property string $DateChange
- * @property string $UserAccept2
- * @property string $DateAccept
- * @property string $DelDate
- * @property integer $prtp_id
- * @property integer $prdoc_id
- * @property boolean $Lock
- * @property integer $EmplLock
- * @property string $DateLock
- * @property integer $EmplCreate
- * @property integer $EmplChange
- * @property integer $EmplDel
- */
 class MonitoringDemands extends MainFormModel
 {
-
 	public $mndm_id = null;
 	public $Date = null;
 	public $Prior = null;
+	public $DemandPrior = null;
 	public $Deadline = null;
 	public $WishDate = null;
 	public $PlanDate = null;
 	public $Description = null;
+	public $UserName = null;
 	public $Note = null;
 	public $DateExec = null;
 	public $Calc_id = null;
 	public $Dmnd_id = null;
 	public $Repr_id = null;
-	public $User2 = null;
+	public $User2;
 	public $UserCreate2 = null;
 	public $DateCreate = null;
 	public $UserChange2 = null;
 	public $DateChange = null;
 	public $UserAccept2 = null;
 	public $DateAccept = null;
+	public $OverDays = null;
 	public $DelDate = null;
 	public $prtp_id = null;
 	public $prdoc_id = null;
@@ -64,7 +33,8 @@ class MonitoringDemands extends MainFormModel
 	public $EmplCreate = null;
 	public $EmplChange = null;
 	public $EmplDel = null;
-	public $EmplAccept = null;
+	public $EmplNameAccept = null;
+        public $title = null;
 
 	public $KeyFiled = 'm.mndm_id';
 	public $PrimaryKey = 'mndm_id';
@@ -80,50 +50,66 @@ class MonitoringDemands extends MainFormModel
 	private $order = null;
 
 
+        public function rules()
+	{
+            // NOTE: you should only define rules for those attributes that will receive user inputs.
+            return array(
+                array('Date, Prior', 'required'),
+                array('Prior, Calc_id, Dmnd_id, Repr_id, prtp_id, prdoc_id, EmplLock, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
+                array('Description, Note', 'length', 'max'=>1073741823),
+                array('User2, UserChange2, UserAccept2', 'length', 'max'=>50),
+                array('mndm_id, Date, Prior, Deadline, WishDate, PlanDate, Description, Note, DateExec, Calc_id, Dmnd_id, Repr_id, User2, UserCreate2, DateCreate, UserChange2, DateChange, UserAccept2, DateAccept, DelDate, prtp_id, prdoc_id, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel', 'safe'),
+            );
+	}
+
 	function __construct($scenario='') {
 		parent::__construct($scenario);
 
 		$select = "
 		Select
-		   m.mndm_id,
-		   m.Date,
-		   m.Prior,
-		   dp.DemandPrior,
-		   m.Deadline,
-		   m.Description,
-		   dbo.FIO(e.EmployeeName) as UserName,
-		   m.DateAccept,
-		   m.DateExec,
-		   m.WishDate,
-		   m.Note,
-		   dbo.FIO(e2.EmployeeName) as UserAc,
-		   m.EmplAccept,
-		   m.PlanDate,
-		   dbo.get_wdays_diff(m.Deadline, isNull(m.DateExec, getdate())) as OverDays,
-		   m.prtp_id,
-		   m.prdoc_id
+                    m.mndm_id,
+                    m.Date,
+                    m.Prior,
+                    dp.DemandPrior,
+                    m.Deadline,
+                    m.Description,
+                    e.ShortName as UserName,
+                    m.DateAccept,
+                    m.DateExec,
+                    m.WishDate,
+                    m.Note,
+                    m.User2,
+                    m.UserChange2,
+                    m.UserAccept2,
+                    m.UserCreate2,
+                    dbo.FIO(e2.EmployeeName) as UserAc,
+                    e2.ShortName EmplNameAccept,
+                    m.PlanDate,
+                    dbo.get_wdays_diff(m.Deadline, isNull(m.DateExec, getdate())) as OverDays,
+                    m.prtp_id,
+                    m.prdoc_id
 		";
 
 		$from = "
 		From MonitoringDemands m left join DemandPriors dp on (m.Prior = dp.DemandPrior_id)
-		 left join Employees_ForObj_v e on (e.Employee_id = m.EmplCreate)
-		 left join Employees_ForObj_v e2 on (e2.Employee_id = m.EmplAccept)
+                    left join Employees e on (e.Alias = m.User2)
+                    left join Employees e2 on (e2.Alias = m.UserAccept2)
 		";
 
 		$where = "
-		Where m.DelDate is Null
+                    Where m.DelDate is Null
 		";
 
 		$order = "
 		Order by
-		  case when m.DateExec is Null then
-			0 else 1 end,
-		  case when m.DateExec is Null then
-			case when m.DateAccept is Null then
-			  0 else 1 end else 0 end,
-		  case when m.DateExec is Null then
-			prior else 0 end,
-		  mndm_id desc
+                    case when m.DateExec is Null then
+                          0 else 1 end,
+                    case when m.DateExec is Null then
+                          case when m.DateAccept is Null then
+                            0 else 1 end else 0 end,
+                    case when m.DateExec is Null then
+                          prior else 0 end,
+                    mndm_id desc
 		";
 
 		$this->Query->setSelect($select);
@@ -138,28 +124,11 @@ class MonitoringDemands extends MainFormModel
 	 */
 	public function tableName()
 	{
-		return 'MonitoringDemands';
+            return 'MonitoringDemands';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('Date, Prior, User2, UserCreate2, DateCreate', 'required'),
-			array('Prior, Calc_id, Dmnd_id, Repr_id, prtp_id, prdoc_id, EmplLock, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
-			array('Description, Note', 'length', 'max'=>1073741823),
-			array('User2, UserCreate2, UserChange2, UserAccept2', 'length', 'max'=>50),
-			array('Deadline, WishDate, PlanDate, DateExec, DateChange, DateAccept, DelDate, Lock, DateLock', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('mndm_id, Date, Prior, Deadline, WishDate, PlanDate, Description, Note, DateExec, Calc_id, Dmnd_id, Repr_id, User2, UserCreate2, DateCreate, UserChange2, DateChange, UserAccept2, DateAccept, DelDate, prtp_id, prdoc_id, Lock, EmplLock, DateLock, EmplCreate, EmplChange, EmplDel', 'safe', 'on'=>'search'),
-		);
-	}
-
+	
+	
 	/**
 	 * @return array relational rules.
 	 */

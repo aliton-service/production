@@ -73,10 +73,6 @@ class DocumentsController extends Controller
 	{
             $model = new Documents;
             
-            if (isset($_POST['DocType_id'])) {
-                $model->DocType_id = $_POST['DocType_id'];
-            } 
-            
             if(isset($_POST['Documents']))
             {
                 $model->attributes=$_POST['Documents'];
@@ -93,28 +89,33 @@ class DocumentsController extends Controller
             if (isset($_POST['ObjectGr_id'])) {
                 $model->ObjectGr_id = $_POST['ObjectGr_id'];
             }
-            
-            switch ($model->DocType_id) {
-                case 8:
-                    $this->renderPartial('_formInvoice', array(
-                        'model' => $model
-                    ));
-                    break;
-                case 3:
-                    $this->renderPartial('_formInvoiceOrder', array(
-                        'model' => $model
-                    ));
-                    break;
-                case 5:
-                    $this->renderPartial('_formAgreement', array(
-                        'model' => $model
-                    ));
-                    break;
-                case 4:
-                    $this->renderPartial('_formContract', array(
-                        'model' => $model
-                    ));
-                    break;
+            if (isset($_POST['DocType_Name'])) {
+                switch ($_POST['DocType_Name']) {
+                    case 'Счет':
+                        $model->DocType_id = 8;
+                        $this->renderPartial('_formInvoice', array(
+                            'model' => $model
+                        ));
+                        break;
+                    case 'Счет-заказ':
+                        $model->DocType_id = 3;
+                        $this->renderPartial('_formInvoiceOrder', array(
+                            'model' => $model
+                        ));
+                        break;
+                    case 'Доп.соглашение':
+                        $model->DocType_id = 5;
+                        $this->renderPartial('_formAgreement', array(
+                            'model' => $model
+                        ));
+                        break;
+                    case 'Договор обслуживания':
+                        $model->DocType_id = 4;
+                        $this->renderPartial('_formContract', array(
+                            'model' => $model
+                        ));
+                        break;
+                }
             }
 
 

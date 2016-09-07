@@ -20,7 +20,6 @@ class ContractPriceHistory extends MainFormModel
     public $SP_UPDATE_NAME = '';
     public $SP_DELETE_NAME = '';
 
-
     public function rules()
     {
         return array(
@@ -34,7 +33,7 @@ class ContractPriceHistory extends MainFormModel
         
         $this->SP_INSERT_NAME = 'INSERT_ContractPriceHistory';
         $this->SP_UPDATE_NAME = 'UPDATE_ContractPriceHistory';
-        $this->SP_DELETE_NAME = 'DELETE_ContractPriceHistory';
+
         
         parent::__construct($scenario);
         $select = "

@@ -78,15 +78,36 @@ class PriceMonitoringController extends Controller
             {
                 $model->attributes=$_POST['PriceMonitoring'];
                 $model->user_create_id = Yii::app()->user->Employee_id;
-                if ($model->validate()) {
-                    if($model->insert())
+                if (isset($_POST['PriceMonitoring']['Mndm_id'])) $model->Mndm_id = $_POST['PriceMonitoring']['Mndm_id'];
+                
+                if ($model->validate()) 
+                {
+                    if($model->Mndm_id !== NULL && $model->Mndm_id != '') {
+                        $model->insert();
+                        echo '1';
+                        return;
+                    } else {
+                        $model->insert();
                         $this->redirect(Yii::app()->createUrl('PriceMonitoring/Index'));
+                    }
                 }
             }
-
-            $this->render('create',array(
+            
+            if (isset($_POST['Mndm_id']))
+            {
+                if (isset($_POST['eqip_id'])) $model->eqip_id = $_POST['eqip_id'];
+                if (isset($_POST['Mndm_id'])) $model->Mndm_id = $_POST['Mndm_id'];
+                
+                $this->renderPartial('_form', array(
+                    'model' => $model
+                ));
+                return;
+            }
+            else {
+                $this->render('create',array(
                     'model'=>$model,
-            ));
+                ));
+            }
 	}
 
 	public function actionUpdate($mntr_id = false) {
@@ -118,7 +139,7 @@ class PriceMonitoringController extends Controller
             }
             $model = new PriceMonitoring;
             $model->getModelPk($mntr_id);
-            $model->user_delete_id = Yii::app()->user->Employee_id;
+            $model->user_delete = Yii::app()->user->Employee_id;
             
             if(!is_null($mntr_id)){
                 $model->delete();

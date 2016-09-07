@@ -108,7 +108,7 @@
         $("#btnNotReach").on('click', function () {
             if(Mode == 'Insert') {
                 $("#ContactTypes").jqxComboBox('val', '11');
-                $("#textField2").jqxTextArea('val', 'Недозвон');
+                $("#textField").jqxTextArea('val', 'Недозвон');
                 SendForm(Mode);
             }
         });
