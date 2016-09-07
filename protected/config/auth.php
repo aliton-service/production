@@ -261,6 +261,7 @@ return array_merge(
                 'Dispatcher',
                 'AdminEvents',
                 'AdminEventOffers',
+                'AdministartorDispatchers',
             ),
         ),
 

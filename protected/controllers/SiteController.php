@@ -37,6 +37,33 @@ class SiteController extends Controller
                 $this->render('index');
             
 	}
+        
+        public function actionICPH() 
+        {
+            $model = new ContractPriceHistory();
+            $model->PriceHistory_id = null;
+            $model->ContrS_id = 17189;
+            $model->DateStart = '23.08.2016';
+            $model->DateEnd = '23.08.2017';
+            $model->Price = '100';
+            $model->PriceMonth = '100';
+            $model->Reason_id = 4;
+            $model->ReasonName;
+            $model->ServiceType_id = 56;
+            $model->ServiceType;
+    
+            $model->EmplCreate = Yii::app()->user->Employee_id;
+            $model->EmplChange = Yii::app()->user->Employee_id;
+            $ContrS_id = $model->ContrS_id;
+
+            if ($model->validate())
+            {
+                $model->Insert();
+                echo '1';
+                return;
+            }
+              
+        }
 
         public function actionTest()
         {

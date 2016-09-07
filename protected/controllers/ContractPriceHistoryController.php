@@ -68,7 +68,7 @@ class ContractPriceHistoryController extends Controller
 
     public function actionInsert() 
     {
-        $model = new ContractPriceHistory;
+        $model = new ContractPriceHistory();
         
         if(isset($_POST['ContractPriceHistory']))
         {
