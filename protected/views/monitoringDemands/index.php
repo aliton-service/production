@@ -201,6 +201,14 @@
             var rowBoundIndex = args.rowindex;
             var pagesize = getPageSize();
             $('#rowNum').html('Запись ' + (rowBoundIndex + 1) + ' из ' + pagesize);
+                
+            if(rowBoundIndex === 0) {
+                $('#btnPrevious').jqxButton({disabled: true });
+                $('#btnStart').jqxButton({disabled: true });
+            } else {
+                $('#btnPrevious').jqxButton({disabled: false });
+                $('#btnStart').jqxButton({disabled: false });
+            }
             
             if (CurrentRowData !== null) {
                 var MonitoringDemandDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemandDetails, {}), {
@@ -228,7 +236,6 @@
                     $('#btnAcceptEmployeeName').jqxButton({disabled: false });
                     $('#btnCancelAcceptance').jqxButton({disabled: true }); 
                 }
-            
             }
         });
         
@@ -242,9 +249,8 @@
                     console.log(Res);
                     $('#btnAcceptEmployeeName').jqxButton({disabled: true });
                     $('#btnCancelAcceptance').jqxButton({disabled: false });
-//                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-//                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
-                    location.reload();
+                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });
@@ -259,9 +265,8 @@
                     console.log(Res);
                     $('#btnAcceptEmployeeName').jqxButton({disabled: false });
                     $('#btnCancelAcceptance').jqxButton({disabled: true });
-//                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-//                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
-                    location.reload();
+                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });
@@ -283,8 +288,8 @@
             $('#MonitoringDemandsGrid').jqxGrid('selectrow', 0);
             var pagesize = getPageSize();
             $('#rowNum').html('Запись 1 из ' + pagesize);
-//            $('#btnPrevious').jqxButton({disabled: true });
-//            $('#btnStart').jqxButton({disabled: true });
+            $('#btnPrevious').jqxButton({disabled: true });
+            $('#btnStart').jqxButton({disabled: true });
         });
         
         $('#btnPrevious').on('click', function () { 
@@ -294,8 +299,8 @@
                 var pagesize = getPageSize();
                 $('#rowNum').html('Запись ' + (rowindex) + ' из ' + pagesize);
             } else {
-//                $('#btnPrevious').jqxButton({disabled: true });
-//                $('#btnStart').jqxButton({disabled: true });
+                $('#btnPrevious').jqxButton({disabled: true });
+                $('#btnStart').jqxButton({disabled: true });
             }
         });
         
@@ -304,8 +309,8 @@
             $('#MonitoringDemandsGrid').jqxGrid('selectrow', rowindex + 1);
             var pagesize = getPageSize();
             $('#rowNum').html('Запись ' + (rowindex + 2) + ' из ' + pagesize);
-//            $('#btnPrevious').jqxButton({disabled: false });
-//            $('#btnStart').jqxButton({disabled: false });
+            $('#btnPrevious').jqxButton({disabled: false });
+            $('#btnStart').jqxButton({disabled: false });
         });
         
         $('#btnEnd').on('click', function () {
@@ -313,8 +318,8 @@
             $('#MonitoringDemandsGrid').jqxGrid('selectrow', pagesize - 1);
             var rowindex = $('#MonitoringDemandsGrid').jqxGrid('getselectedrowindex');
             $('#rowNum').html('Запись ' + rowindex + ' из ' + (pagesize - 1));
-//            $('#btnPrevious').jqxButton({disabled: false });
-//            $('#btnStart').jqxButton({disabled: false });
+            $('#btnPrevious').jqxButton({disabled: false });
+            $('#btnStart').jqxButton({disabled: false });
         });
         
         
