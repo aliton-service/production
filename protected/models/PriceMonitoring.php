@@ -154,6 +154,7 @@ class PriceMonitoring extends MainFormModel
 			'eqip_id' => 'Оборудование',
 			'splr_id' => 'Поставщик',
 			'price' => 'Цена',
+			'delivery' => 'Срок поставки',
 			'user_create' => 'User Create',
 			'date_create' => 'Date Create',
 			'user_change' => 'User Change',

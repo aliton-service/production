@@ -94,6 +94,10 @@
             },
         });
         
+        $("#MonitoringDemandDetailsGrid").on('bindingcomplete', function(){
+            $('#MonitoringDemandDetailsGrid').jqxGrid('selectrow', 0);
+        });
+        
         $("#MonitoringDemandDetailsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -104,7 +108,7 @@
                 height: '300',
                 source: MonitoringDemandDetailsDataAdapter,
                 columns: [
-                    { text: 'equip_id', dataField: 'equip_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80 },
+                    { text: 'equip_id', dataField: 'equip_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80, hidden: true },
                     { text: 'Оборудование', dataField: 'EquipName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
                     { text: 'Ед.изм.', dataField: 'NameUnitMeasurement', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 60 },
                     { text: 'Кол-во', dataField: 'quant', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 60 },
@@ -113,9 +117,7 @@
                 ]
             })
         );
-    
-        $('#MonitoringDemandDetailsGrid').jqxGrid('hidecolumn', 'equip_id');
-    
+        
         $("#MonitoringDemandDetailsGrid").on('rowselect', function (event) {
             var Temp = $('#MonitoringDemandDetailsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
@@ -155,7 +157,7 @@
                     if (Res == '1' || Res == 1) {
                         $('#EditDialogMDDetails').jqxWindow('close');
                         $("#MonitoringDemandDetailsGrid").jqxGrid('updatebounddata');
-                        $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
+//                        $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
                     } else {
                         $('#BodyDialogMDDetails').html(Res);
                     }
@@ -173,7 +175,7 @@
         $("#ReloadMonitoringDemandDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#AddPriceMonitoringDemandDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 250 }));
         
-        $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
+//        $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
         
         $('#MonitoringDemandDetailsGrid').on('rowdoubleclick', function () { 
             $("#EditMonitoringDemandDetails").click();
@@ -226,7 +228,7 @@
                 data: { mndt_id: CurrentRowData.mndt_id },
                 success: function(){
                     $("#MonitoringDemandDetailsGrid").jqxGrid('updatebounddata');
-                    $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
+//                    $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });
@@ -238,7 +240,7 @@
                 url: "/index.php?r=MonitoringDemands/Index",
                 success: function(){
                     $("#MonitoringDemandDetailsGrid").jqxGrid('updatebounddata');
-                    $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
+//                    $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });

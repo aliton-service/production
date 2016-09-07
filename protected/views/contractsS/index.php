@@ -348,15 +348,17 @@
         
         $("#DelContractSystems").on('click', function ()
         {
-            $.ajax({
-                type: "POST",
-                url: "/index.php?r=ContractSystems/Delete",
-                data: { ContractSystem_id: CurrentRowDataCS.ContractSystem_id},
-                success: function(){
-                    $("#ContractSystemsGrid").jqxGrid('updatebounddata');
-                    $("#ContractSystemsGrid").jqxGrid('selectrow', 0);
-                }
-            });
+            if(typeof CurrentRowDataCS !== 'undefined') {
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?r=ContractSystems/Delete",
+                    data: { ContractSystem_id: CurrentRowDataCS.ContractSystem_id},
+                    success: function(){
+                        $("#ContractSystemsGrid").jqxGrid('updatebounddata');
+                        $("#ContractSystemsGrid").jqxGrid('selectrow', 0);
+                    }
+                });
+            }
         });
         
         
@@ -648,17 +650,17 @@
         
         $("#DelPaymentHistory").on('click', function ()
         {
-            console.log('CurrentRowDataPH.pmhs_id = ');
-            console.log(CurrentRowDataPH.pmhs_id);
-            $.ajax({
-                type: "POST",
-                url: "/index.php?r=PaymentHistory/Delete",
-                data: { pmhs_id: CurrentRowDataPH.pmhs_id},
-                success: function(){
-                    $("#PaymentHistoryGrid").jqxGrid('updatebounddata');
-                    $("#PaymentHistoryGrid").jqxGrid('selectrow', 0);
-                }
-            });
+            if(typeof CurrentRowDataPH !== 'undefined') {
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?r=PaymentHistory/Delete",
+                    data: { pmhs_id: CurrentRowDataPH.pmhs_id},
+                    success: function(){
+                        $("#PaymentHistoryGrid").jqxGrid('updatebounddata');
+                        $("#PaymentHistoryGrid").jqxGrid('selectrow', 0);
+                    }
+                });
+            }
         });
         
         
@@ -695,7 +697,7 @@
                 CurrentRowDataMH = Temp;
             } else {CurrentRowDataMH = null};
             
-            console.log(CurrentRowDataMH.History_id);
+//            console.log(CurrentRowDataMH.History_id);
         });
         
         
@@ -796,17 +798,17 @@
         
         $("#DelContractMasterHistory").on('click', function ()
         {
-            console.log('CurrentRowDataMH.History_id = ');
-            console.log(CurrentRowDataMH.History_id);
-            $.ajax({
-                type: "POST",
-                url: "/index.php?r=ContractMasterHistory/Delete",
-                data: { History_id: CurrentRowDataMH.History_id},
-                success: function(){
-                    $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
-                    $("#ContractMasterHistoryGrid").jqxGrid('selectrow', 0);
-                }
-            });
+            if(typeof CurrentRowDataMH !== 'undefined') {
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?r=ContractMasterHistory/Delete",
+                    data: { History_id: CurrentRowDataMH.History_id},
+                    success: function(){
+                        $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
+                        $("#ContractMasterHistoryGrid").jqxGrid('selectrow', 0);
+                    }
+                });
+            }
         });
         
         
@@ -931,8 +933,8 @@
                 <div id="">
                     <span id="">Вставка\Редактирование записи</span>
                 </div>
-                <div style="overflow: hidden; padding: 10px;" id="">
-                    <div style="overflow: hidden;" id="BodyDialogContractPriceHistory"></div>
+                <div style="padding: 10px;" id="">
+                    <div id="BodyDialogContractPriceHistory"></div>
                     <div id="">
                         <div class="row">
                             <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogContractPriceHistory' /></div>
@@ -962,8 +964,8 @@
                 <div id="">
                     <span id="">Вставка\Редактирование записи</span>
                 </div>
-                <div style="overflow: hidden; padding: 10px;" id="">
-                    <div style="overflow: hidden;" id="BodyDialogPaymentHistory"></div>
+                <div style="padding: 10px;" id="">
+                    <div id="BodyDialogPaymentHistory"></div>
                     <div id="">
                         <div class="row">
                             <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogPaymentHistory' /></div>

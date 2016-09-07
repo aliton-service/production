@@ -93,7 +93,7 @@ class PriceMonitoringController extends Controller
                 }
             }
             
-            if (isset($_POST['Mndm_id']))
+            if (isset($_POST['Mndm_id']) || $model->Mndm_id !== NULL)
             {
                 if (isset($_POST['eqip_id'])) $model->eqip_id = $_POST['eqip_id'];
                 if (isset($_POST['Mndm_id'])) $model->Mndm_id = $_POST['Mndm_id'];

@@ -22,11 +22,11 @@
         $("#EndDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
         
         $("#Number").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#Date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
+        $("#Date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy HH:mm', value: null }));
         $("#Prior").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPriors, displayMember: "DemandPrior", valueMember: "DemandPrior_id", width: 220, autoDropDownHeight: true }));
         $("#btnReset").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180 }));
         
-        $("#Number").jqxNumberInput('val', null);
+//        $("#Number").jqxNumberInput('val', null);
         
         
         
@@ -56,142 +56,143 @@
 //        $('#jqxGrid').jqxGrid('addfilter', datafield, filtergroup, true);
         
         
+       
+//        
+//        var addfilter = function (args = [], dataField, filtertype, filter_or_operator)
+//        {                
+//                var filtergroup = new $.jqx.filter();
+//                var newFilter;
+//                for(var i = 0; i < args.length; i++)
+//                {
+////                    console.log(args[i].value);
+//                    if(args[i].value !== 0 && args[i].value !== ''){
+//
+//                        newFilter = filtergroup.createfilter(filtertype, args[i].value, args[i].filtercondition);
+//                        filtergroup.addfilter(filter_or_operator, newFilter);
+//                    }
+//                }
+//            $("#MonitoringDemandsGrid").jqxGrid('addfilter', dataField, filtergroup);
+//            $("#MonitoringDemandsGrid").jqxGrid('applyfilters');
+//        }
+//        
+//        $('#Number').on('valueChanged', function () {
+//            var numberVal = $("#Number").val();
+//            var args = [
+//                { value: numberVal, filtercondition: 'CONTAINS' },
+//            ];
+//            addfilter(args, 'mndm_id', 'stringfilter', 0);
+//        });
+//        
+//                
+//        var changeDateFormat = function (strDate = '') {
+//            if(strDate !== '') {
+//                var newDateVal = strDate[3] + strDate[4] + '.' + strDate[0] + strDate[1] + '.'+ strDate[6] + strDate[7] + strDate[8] + strDate[9];
+//                return newDateVal;
+//            } else {
+//                return strDate;
+//            }
+//        };
+//        
+//        
+//        $('#Date').on('valueChanged', function () {
+//            var dateVal = $("#Date").val();
+//            var newDateVal = changeDateFormat(dateVal);
+//            
+//            var args = [
+//                { value: newDateVal, filtercondition: 'EQUAL' },
+//            ];
+//            addfilter(args, 'Date', 'datefilter', 0);
+//        });
+//        
+//        
+//        var getFieldsVal = function () {
+//            var beginDateVal = $("#BeginDate").val();
+//            var newBeginDateVal = changeDateFormat(beginDateVal);
+//            
+//            var endDateVal = $("#EndDate").val();
+//            var newEndDateVal = changeDateFormat(endDateVal);
+//            
+//            var args = [
+//                { value: newBeginDateVal, filtercondition: 'GREATER_THAN_OR_EQUAL' },
+//                { value: newEndDateVal, filtercondition: 'LESS_THAN_OR_EQUAL' },
+//            ];
+//            addfilter(args, 'Date', 'datefilter', 0);
+//        };
+//        
+//        $('#BeginDate').on('valueChanged', function () {
+//            getFieldsVal();
+//        });
+//        
+//        
+//        $('#EndDate').on('valueChanged', function () {
+//            getFieldsVal();
+//        });
+//        
+//        
+//        $('#Prior').on('select', function () {
+//            var priorVal = $("#Prior").val();
+//            var args = [
+//                { value: priorVal, filtercondition: 'EQUAL' },
+//            ];
+//            addfilter(args, 'Prior', 'numericfilter', 0);
+//        });
+//        
+//        
+//        $('#Master').on('select', function () {
+//            var masterVal = $("#Master").val();
+//            var args = [
+//                { value: masterVal, filtercondition: 'EQUAL' },
+//            ];
+//            addfilter(args, 'prtp_id', 'numericfilter', 0);
+////        });
+//        
+//        
+//        
+//        
+//        $('#notAcceptedDemands').on('checked', function () { 
+//            var args = [
+//                { value: null, filtercondition: 'EMPTY' },
+//            ];
+//            addfilter(args, 'DateAccept', 'stringfilter', 0);
+//        });
+//        
+//        $('#notAcceptedDemands').on('unchecked', function () { 
+//            var args = [
+//                { value: null, filtercondition: 'EMPTY' },
+//                { value: null, filtercondition: 'NOT_EMPTY' },
+//            ];
+//            addfilter(args, 'DateAccept', 'stringfilter', 1);
+//        });
+//        
+//        
+//        
+//        $('#unfulfilledDemands').on('checked', function () { 
+//            var args = [
+//                { value: null, filtercondition: 'EMPTY' },
+//            ];
+//            addfilter(args, 'DateExec', 'stringfilter', 0);
+//        });
+//        
+//        $('#unfulfilledDemands').on('unchecked', function () { 
+//            var args = [
+//                { value: null, filtercondition: 'EMPTY' },
+//                { value: null, filtercondition: 'NOT_EMPTY' },
+//            ];
+//            addfilter(args, 'DateExec', 'stringfilter', 1);
+//        });
         
-        var addfilter = function (args = [], dataField, filtertype, filter_or_operator)
-        {                
-                var filtergroup = new $.jqx.filter();
-                var newFilter;
-                for(var i = 0; i < args.length; i++)
-                {
-//                    console.log(args[i].value);
-                    if(args[i].value !== 0 && args[i].value !== ''){
-
-                        newFilter = filtergroup.createfilter(filtertype, args[i].value, args[i].filtercondition);
-                        filtergroup.addfilter(filter_or_operator, newFilter);
-                    }
-                }
-            $("#MonitoringDemandsGrid").jqxGrid('addfilter', dataField, filtergroup);
-            $("#MonitoringDemandsGrid").jqxGrid('applyfilters');
-        }
-        
-        $('#Number').on('valueChanged', function () {
-            var numberVal = $("#Number").val();
-            var args = [
-                { value: numberVal, filtercondition: 'CONTAINS' },
-            ];
-            addfilter(args, 'mndm_id', 'stringfilter', 0);
-        });
-        
-                
-        var changeDateFormat = function (strDate = '') {
-            if(strDate !== '') {
-                var newDateVal = strDate[3] + strDate[4] + '.' + strDate[0] + strDate[1] + '.'+ strDate[6] + strDate[7] + strDate[8] + strDate[9];
-                return newDateVal;
-            } else {
-                return strDate;
-            }
-        };
         
         
-        $('#Date').on('valueChanged', function () {
-            var dateVal = $("#Date").val();
-            var newDateVal = changeDateFormat(dateVal);
-            
-            var args = [
-                { value: newDateVal, filtercondition: 'EQUAL' },
-            ];
-            addfilter(args, 'Date', 'datefilter', 0);
-        });
-        
-        
-        var getFieldsVal = function () {
-            var beginDateVal = $("#BeginDate").val();
-            var newBeginDateVal = changeDateFormat(beginDateVal);
-            
-            var endDateVal = $("#EndDate").val();
-            var newEndDateVal = changeDateFormat(endDateVal);
-            
-            var args = [
-                { value: newBeginDateVal, filtercondition: 'GREATER_THAN_OR_EQUAL' },
-                { value: newEndDateVal, filtercondition: 'LESS_THAN_OR_EQUAL' },
-            ];
-            addfilter(args, 'Date', 'datefilter', 0);
-        };
-        
-        $('#BeginDate').on('valueChanged', function () {
-            getFieldsVal();
-        });
-        
-        
-        $('#EndDate').on('valueChanged', function () {
-            getFieldsVal();
-        });
-        
-        
-        $('#Prior').on('select', function () {
-            var priorVal = $("#Prior").val();
-            var args = [
-                { value: priorVal, filtercondition: 'EQUAL' },
-            ];
-            addfilter(args, 'Prior', 'numericfilter', 0);
-        });
-        
-        
-        $('#Master').on('select', function () {
-            var masterVal = $("#Master").val();
-            var args = [
-                { value: masterVal, filtercondition: 'EQUAL' },
-            ];
-            addfilter(args, 'prtp_id', 'numericfilter', 0);
-        });
-        
-        
-        
-        
-        $('#notAcceptedDemands').on('checked', function () { 
-            var args = [
-                { value: null, filtercondition: 'EMPTY' },
-            ];
-            addfilter(args, 'DateAccept', 'stringfilter', 0);
-        });
-        
-        $('#notAcceptedDemands').on('unchecked', function () { 
-            var args = [
-                { value: null, filtercondition: 'EMPTY' },
-                { value: null, filtercondition: 'NOT_EMPTY' },
-            ];
-            addfilter(args, 'DateAccept', 'stringfilter', 1);
-        });
-        
-        
-        
-        $('#unfulfilledDemands').on('checked', function () { 
-            var args = [
-                { value: null, filtercondition: 'EMPTY' },
-            ];
-            addfilter(args, 'DateExec', 'stringfilter', 0);
-        });
-        
-        $('#unfulfilledDemands').on('unchecked', function () { 
-            var args = [
-                { value: null, filtercondition: 'EMPTY' },
-                { value: null, filtercondition: 'NOT_EMPTY' },
-            ];
-            addfilter(args, 'DateExec', 'stringfilter', 1);
-        });
-        
-        
-        
-        $('#btnReset').on('click', function () { 
-            $('#MonitoringDemandsGrid').jqxGrid('clearfilters');
-            $("#Number").jqxNumberInput('val', null);
-            $("#Date").jqxDateTimeInput('val', null);
-            $("#BeginDate").jqxDateTimeInput('val', null);
-            $("#EndDate").jqxDateTimeInput('val', null);
-            $("#Prior").jqxComboBox('clearSelection');
-            $('#notAcceptedDemands').jqxCheckBox('uncheck');
-            $('#unfulfilledDemands').jqxCheckBox('uncheck');
-        });
+//        $('#btnReset').on('click', function () { 
+//            $('#MonitoringDemandsGrid').jqxGrid('clearfilters');
+//            $("#Number").jqxNumberInput('val', null);
+//            $("#Date").jqxDateTimeInput('val', null);
+//            $("#BeginDate").jqxDateTimeInput('val', null);
+//            $("#EndDate").jqxDateTimeInput('val', null);
+//            $("#Prior").jqxComboBox('clearSelection');
+//            $('#notAcceptedDemands').jqxCheckBox('uncheck');
+//            $('#unfulfilledDemands').jqxCheckBox('uncheck');
+//        });
         
         
         $("#btnPrint").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -200,30 +201,36 @@
         $("#Description").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 1045, height: 55 }));
         
         
-        var MonitoringDemandsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemands));
+        var MonitoringDemandsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemands, {
+            filter: function () {
+                $("#MonitoringDemandsGrid").jqxGrid('updatebounddata', 'filter');
+            },
+            sort: function () {
+                $("#MonitoringDemandsGrid").jqxGrid('updatebounddata', 'sort');
+            }
+        }));
         
-        
-        $("#MonitoringDemandsGrid").on('bindingComplete', function(){
-            $('#MonitoringDemandsGrid').jqxGrid('hidecolumn', 'Prior');
-            var index = $('#MonitoringDemandsGrid').jqxGrid('getrowboundindex', 0);
-            $('#MonitoringDemandsGrid').jqxGrid('selectrow', index);
+        $("#MonitoringDemandsGrid").on('bindingcomplete', function(){
+            $('#MonitoringDemandsGrid').jqxGrid('selectrow', 0);
         });
+        
+        
                     
         $("#MonitoringDemandsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
                 showfilterrow: false,
-                virtualmode: false,
-                filterable: true,
+                virtualmode: true,
                 width: '99.8%',
                 height: '440',
                 source: MonitoringDemandsDataAdapter,
+
                 columns: [
                     { text: 'Номер', dataField: 'mndm_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
                     { text: 'Дата', dataField: 'Date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
-                    { text: 'Подал', dataField: 'UserName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 170 },
-                    { text: 'Prior', dataField: 'Prior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50 },
+                    { text: 'Подал', dataField: 'UserName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 170, filterable: false, sortable: false },
+                    { text: 'Prior', dataField: 'Prior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50, hidden: true },
                     { text: 'Приоритет', dataField: 'DemandPrior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
                     { text: 'Дата принятия', dataField: 'DateAccept', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Принял', dataField: 'EmplNameAccept', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
@@ -233,17 +240,34 @@
             })
         );
         
-//        $('#MonitoringDemandsGrid').jqxGrid('hidecolumn', 'Prior');
         
+         // Привязка фильтров к гриду
+        GridFilters.AddControlFilter('notAcceptedDemands', 'jqxCheckBox', 'MonitoringDemandsGrid', 'DateAccept', 'datefilter', 1, 'NULL', true);
+        GridFilters.AddControlFilter('unfulfilledDemands', 'jqxCheckBox', 'MonitoringDemandsGrid', 'DateExec', 'datefilter', 1, 'NULL', true);
+        GridFilters.AddControlFilter('Date', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 1, 'GREATER_THAN_OR_EQUAL', true);
         
+        GridFilters.AddControlFilter('Number', 'jqxNumberInput', 'MonitoringDemandsGrid', 'mndm_id', 'numericfilter', 1, 'EQUAL', true);
+
+        GridFilters.AddControlFilter('Prior', 'jqxComboBox', 'MonitoringDemandsGrid', 'Prior', 'numericfilter', 1, 'EQUAL', true);
         
+
+//        $('#Date').on('valueChanged', function () {
+//            var dateVal = $("#Date").val();
+//            var newDateVal = changeDateFormat(dateVal);
+//            
+//            var args = [
+//                { value: newDateVal, filtercondition: 'EQUAL' },
+//            ];
+//            addfilter(args, 'Date', 'datefilter', 0);
+//        });
+
         $("#MonitoringDemandsGrid").on('rowselect', function (event) {
             var Temp = $('#MonitoringDemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowData = Temp;
             } else {CurrentRowData = null;}
             
-//            console.log(CurrentRowData);
+            console.log(CurrentRowData);
             if (CurrentRowData !== null && CurrentRowData.Description !== null) {
                 $("#Description").jqxTextArea('val', CurrentRowData.Description);
             } else {
@@ -255,69 +279,69 @@
             var pagesize = getPageSize();
             $('#rowNum').html('Запись ' + (rowBoundIndex + 1) + ' из ' + pagesize);
             
-            var MonitoringDemandDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemandDetails, {}), {
-                formatData: function (data) {
-                    $.extend(data, {
-                        Filters: ["m.mndm_id = " + CurrentRowData.mndm_id],
-                    });
-                    return data;
-                },
-            });
+            if (CurrentRowData !== null) {
+                var MonitoringDemandDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemandDetails, {}), {
+                    formatData: function (data) {
+                        $.extend(data, {
+                            Filters: ["m.mndm_id = " + CurrentRowData.mndm_id],
+                        });
+                        return data;
+                    },
+                });
+
+                MonitoringDemandDetailsDataAdapter.dataBind();
+                $("#MonitoringDemandDetailsGrid").jqxGrid({source: MonitoringDemandDetailsDataAdapter});
             
-            MonitoringDemandDetailsDataAdapter.dataBind();
-            $("#MonitoringDemandDetailsGrid").jqxGrid({source: MonitoringDemandDetailsDataAdapter});
-
             
-            if(CurrentRowData.EmplNameAccept !== null) { 
-                $('#btnAcceptEmployeeName').jqxButton({disabled: true }); 
-                if(CurrentRowData.DateExec == null) {
-                    $('#btnCancelAcceptance').jqxButton({disabled: false });
-                } else if (CurrentRowData.DateExec !== null) {
-                    $('#btnCancelAcceptance').jqxButton({disabled: true });
-                }
-            }
-            if(CurrentRowData.EmplNameAccept === null) { 
-                $('#btnAcceptEmployeeName').jqxButton({disabled: false });
-                $('#btnCancelAcceptance').jqxButton({disabled: true }); 
-            }
-
-
-            $("#btnAcceptEmployeeName").on('click', function () {                
-                $.ajax({
-                    url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Accept');?>",
-                    type: 'POST',
-                    async: false,
-                    data: { mndm_id: CurrentRowData.mndm_id },
-                    success: function(Res) {
-                        console.log(Res);
-                        $('#btnAcceptEmployeeName').jqxButton({disabled: true });
+                if(CurrentRowData.EmplNameAccept !== null) { 
+                    $('#btnAcceptEmployeeName').jqxButton({disabled: true }); 
+                    if(CurrentRowData.DateExec == null) {
                         $('#btnCancelAcceptance').jqxButton({disabled: false });
-//                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-//                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
-                        location.reload();
-                    }
-                });
-            });
-
-            $("#btnCancelAcceptance").on('click', function () {                
-                $.ajax({
-                    url: "<?php echo Yii::app()->createUrl('MonitoringDemands/CancelAcceptance');?>",
-                    type: 'POST',
-                    async: false,
-                    data: { mndm_id: CurrentRowData.mndm_id },
-                    success: function(Res) {
-                        console.log(Res);
-                        $('#btnAcceptEmployeeName').jqxButton({disabled: false });
+                    } else if (CurrentRowData.DateExec !== null) {
                         $('#btnCancelAcceptance').jqxButton({disabled: true });
-//                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-//                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
-                        location.reload();
                     }
-                });
-            });
+                }
+                if(CurrentRowData.EmplNameAccept === null) { 
+                    $('#btnAcceptEmployeeName').jqxButton({disabled: false });
+                    $('#btnCancelAcceptance').jqxButton({disabled: true }); 
+                }
+            
+            }
         });
         
-        
+        $("#btnAcceptEmployeeName").on('click', function () {                
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Accept');?>",
+                type: 'POST',
+                async: false,
+                data: { mndm_id: CurrentRowData.mndm_id },
+                success: function(Res) {
+                    console.log(Res);
+                    $('#btnAcceptEmployeeName').jqxButton({disabled: true });
+                    $('#btnCancelAcceptance').jqxButton({disabled: false });
+//                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+//                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
+                    location.reload();
+                }
+            });
+        });
+
+        $("#btnCancelAcceptance").on('click', function () {                
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/CancelAcceptance');?>",
+                type: 'POST',
+                async: false,
+                data: { mndm_id: CurrentRowData.mndm_id },
+                success: function(Res) {
+                    console.log(Res);
+                    $('#btnAcceptEmployeeName').jqxButton({disabled: false });
+                    $('#btnCancelAcceptance').jqxButton({disabled: true });
+//                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+//                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
+                    location.reload();
+                }
+            });
+        });
         
         $("#btnStart").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 80 }));
         $("#btnPrevious").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 80 }));
@@ -489,11 +513,6 @@
             })
         );
     
-        
-        
-        
-        $('#MonitoringDemandsGrid').jqxGrid('selectrow', 0);
-        
         
     });
     

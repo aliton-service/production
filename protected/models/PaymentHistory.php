@@ -26,7 +26,7 @@ class PaymentHistory extends MainFormModel
         return array(
             array('pmhs_id, cntr_id', 'numerical', 'integerOnly'=>true),
             array('sum', 'numerical'),
-            array('cntr_id, date, sum, year_start, year_end, month_start, month_end, note', 'required'),
+            array('cntr_id, date, sum, year_start, year_end, month_start, month_end', 'required'),
             array('pmhs_id, cntr_id, date, sum, year_start, year_end, month_start, month_end, note', 'safe'),
         );
     }

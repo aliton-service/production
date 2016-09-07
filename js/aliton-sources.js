@@ -252,7 +252,7 @@ Sources.DemandsSource =
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
-        Sources.DemandsSource.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -1871,14 +1871,14 @@ Sources.SourceMonitoringDemands =
         { name: 'EmplDel',  type: 'int' },
         { name: 'prtp_id',  type: 'int' },
     ],
-    id: 'mndm_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=MonitoringDemands',
-    type: 'POST',
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=MonitoringDemands',
+    //type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    //async: false,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }
@@ -1900,13 +1900,13 @@ Sources.SourceMonitoringDemandDetails =
         { name: 'price_high',  type: 'float' },
     ],
     id: 'mndt_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=MonitoringDemandDetails',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=MonitoringDemandDetails',
     type: 'POST',
     root: 'Rows',
     cache: false,
-//    async: false,
+    async: true,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }

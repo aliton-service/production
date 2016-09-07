@@ -64,9 +64,9 @@ class ContractSystems extends MainFormModel
     public function attributeLabels()
     {
         return array(
-            'ContractSystem_id' => 'ContrS ContractSystem_id',
+            'ContractSystem_id' => 'ContractSystem_id',
             'ContrS_id' => 'ContrS id',
-            'SystemType_id' => 'SystemType id',
+            'SystemType_id' => 'Тип подсистемы',
             'SystemTypeName' => 'Наименование',
         );
     }
