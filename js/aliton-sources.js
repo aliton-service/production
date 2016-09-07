@@ -1846,6 +1846,7 @@ Sources.SourceMonitoringDemands =
         { name: 'PlanDate',  type: 'date' },
         { name: 'Description',  type: 'string' },
         { name: 'UserName',  type: 'string' },
+        { name: 'Employee_id',  type: 'int' },
         { name: 'Note',  type: 'string' },
         { name: 'DateExec',  type: 'date' },
         { name: 'Calc_id',  type: 'int' },

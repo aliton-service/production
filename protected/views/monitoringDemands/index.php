@@ -14,7 +14,7 @@
             },
         });
         
-        $("#Master").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 200, placeHolder: "Выберите мастера" }));
+        $("#UserCreate").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 200, placeHolder: "Заявку подал" }));
         $("#notAcceptedDemands").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 170, height: 30 }));
         $("#unfulfilledDemands").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 180, height: 30 }));
         
@@ -22,11 +22,11 @@
         $("#EndDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
         
         $("#Number").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#Date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy HH:mm', value: null }));
+        $("#Date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
         $("#Prior").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPriors, displayMember: "DemandPrior", valueMember: "DemandPrior_id", width: 220, autoDropDownHeight: true }));
         $("#btnReset").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180 }));
         
-//        $("#Number").jqxNumberInput('val', null);
+        $("#Number").jqxNumberInput('val', null);
         
         
         
@@ -75,14 +75,6 @@
 //            $("#MonitoringDemandsGrid").jqxGrid('applyfilters');
 //        }
 //        
-//        $('#Number').on('valueChanged', function () {
-//            var numberVal = $("#Number").val();
-//            var args = [
-//                { value: numberVal, filtercondition: 'CONTAINS' },
-//            ];
-//            addfilter(args, 'mndm_id', 'stringfilter', 0);
-//        });
-//        
 //                
 //        var changeDateFormat = function (strDate = '') {
 //            if(strDate !== '') {
@@ -92,17 +84,6 @@
 //                return strDate;
 //            }
 //        };
-//        
-//        
-//        $('#Date').on('valueChanged', function () {
-//            var dateVal = $("#Date").val();
-//            var newDateVal = changeDateFormat(dateVal);
-//            
-//            var args = [
-//                { value: newDateVal, filtercondition: 'EQUAL' },
-//            ];
-//            addfilter(args, 'Date', 'datefilter', 0);
-//        });
 //        
 //        
 //        var getFieldsVal = function () {
@@ -128,71 +109,8 @@
 //            getFieldsVal();
 //        });
 //        
-//        
-//        $('#Prior').on('select', function () {
-//            var priorVal = $("#Prior").val();
-//            var args = [
-//                { value: priorVal, filtercondition: 'EQUAL' },
-//            ];
-//            addfilter(args, 'Prior', 'numericfilter', 0);
-//        });
-//        
-//        
-//        $('#Master').on('select', function () {
-//            var masterVal = $("#Master").val();
-//            var args = [
-//                { value: masterVal, filtercondition: 'EQUAL' },
-//            ];
-//            addfilter(args, 'prtp_id', 'numericfilter', 0);
-////        });
-//        
-//        
-//        
-//        
-//        $('#notAcceptedDemands').on('checked', function () { 
-//            var args = [
-//                { value: null, filtercondition: 'EMPTY' },
-//            ];
-//            addfilter(args, 'DateAccept', 'stringfilter', 0);
-//        });
-//        
-//        $('#notAcceptedDemands').on('unchecked', function () { 
-//            var args = [
-//                { value: null, filtercondition: 'EMPTY' },
-//                { value: null, filtercondition: 'NOT_EMPTY' },
-//            ];
-//            addfilter(args, 'DateAccept', 'stringfilter', 1);
-//        });
-//        
-//        
-//        
-//        $('#unfulfilledDemands').on('checked', function () { 
-//            var args = [
-//                { value: null, filtercondition: 'EMPTY' },
-//            ];
-//            addfilter(args, 'DateExec', 'stringfilter', 0);
-//        });
-//        
-//        $('#unfulfilledDemands').on('unchecked', function () { 
-//            var args = [
-//                { value: null, filtercondition: 'EMPTY' },
-//                { value: null, filtercondition: 'NOT_EMPTY' },
-//            ];
-//            addfilter(args, 'DateExec', 'stringfilter', 1);
-//        });
+ 
         
-        
-        
-//        $('#btnReset').on('click', function () { 
-//            $('#MonitoringDemandsGrid').jqxGrid('clearfilters');
-//            $("#Number").jqxNumberInput('val', null);
-//            $("#Date").jqxDateTimeInput('val', null);
-//            $("#BeginDate").jqxDateTimeInput('val', null);
-//            $("#EndDate").jqxDateTimeInput('val', null);
-//            $("#Prior").jqxComboBox('clearSelection');
-//            $('#notAcceptedDemands').jqxCheckBox('uncheck');
-//            $('#unfulfilledDemands').jqxCheckBox('uncheck');
-//        });
         
         
         $("#btnPrint").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -225,12 +143,12 @@
                 width: '99.8%',
                 height: '440',
                 source: MonitoringDemandsDataAdapter,
-
                 columns: [
                     { text: 'Номер', dataField: 'mndm_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
                     { text: 'Дата', dataField: 'Date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Подал', dataField: 'UserName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 170, filterable: false, sortable: false },
                     { text: 'Prior', dataField: 'Prior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50, hidden: true },
+                    { text: 'Employee_id', dataField: 'e.Employee_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50, hidden: true },
                     { text: 'Приоритет', dataField: 'DemandPrior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
                     { text: 'Дата принятия', dataField: 'DateAccept', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Принял', dataField: 'EmplNameAccept', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
@@ -242,24 +160,29 @@
         
         
          // Привязка фильтров к гриду
-        GridFilters.AddControlFilter('notAcceptedDemands', 'jqxCheckBox', 'MonitoringDemandsGrid', 'DateAccept', 'datefilter', 1, 'NULL', true);
-        GridFilters.AddControlFilter('unfulfilledDemands', 'jqxCheckBox', 'MonitoringDemandsGrid', 'DateExec', 'datefilter', 1, 'NULL', true);
-        GridFilters.AddControlFilter('Date', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 1, 'GREATER_THAN_OR_EQUAL', true);
+        GridFilters.AddControlFilter('UserCreate', 'jqxComboBox', 'MonitoringDemandsGrid', 'e.Employee_id', 'numericfilter', 0, 'EQUAL', true);
+        GridFilters.AddControlFilter('notAcceptedDemands', 'jqxCheckBox', 'MonitoringDemandsGrid', 'DateAccept', 'datefilter', 0, 'NULL', true);
+        GridFilters.AddControlFilter('unfulfilledDemands', 'jqxCheckBox', 'MonitoringDemandsGrid', 'DateExec', 'datefilter', 0, 'NULL', true);
         
-        GridFilters.AddControlFilter('Number', 'jqxNumberInput', 'MonitoringDemandsGrid', 'mndm_id', 'numericfilter', 1, 'EQUAL', true);
-
-        GridFilters.AddControlFilter('Prior', 'jqxComboBox', 'MonitoringDemandsGrid', 'Prior', 'numericfilter', 1, 'EQUAL', true);
+        GridFilters.AddControlFilter('Number', 'jqxNumberInput', 'MonitoringDemandsGrid', 'mndm_id', 'numericfilter', 0, 'EQUAL', true);
+        GridFilters.AddControlFilter('Date', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 0, 'DATE_EQUAL', true);
+        GridFilters.AddControlFilter('Prior', 'jqxComboBox', 'MonitoringDemandsGrid', 'Prior', 'numericfilter', 0, 'EQUAL', true);
         
-
-//        $('#Date').on('valueChanged', function () {
-//            var dateVal = $("#Date").val();
-//            var newDateVal = changeDateFormat(dateVal);
-//            
-//            var args = [
-//                { value: newDateVal, filtercondition: 'EQUAL' },
-//            ];
-//            addfilter(args, 'Date', 'datefilter', 0);
-//        });
+        GridFilters.AddControlFilter('BeginDate', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 0, 'DATE_GREATER_THAN_OR_EQUAL', true);
+        GridFilters.AddControlFilter('EndDate', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 0, 'DATE_LESS_THAN_OR_EQUAL', true);
+        
+        $('#btnReset').on('click', function () {
+            $("#Date").jqxDateTimeInput('val', null);
+            $("#Prior").jqxComboBox('clearSelection');
+            $("#UserCreate").jqxComboBox('clearSelection');
+            $('#notAcceptedDemands').jqxCheckBox('uncheck');
+            $('#unfulfilledDemands').jqxCheckBox('uncheck');
+            $("#BeginDate").jqxDateTimeInput('val', null);
+            $("#Number").jqxNumberInput('val', null);
+            $("#EndDate").jqxDateTimeInput('val', null);
+            $('#MonitoringDemandsGrid').jqxGrid('clearfilters');
+        });
+        
 
         $("#MonitoringDemandsGrid").on('rowselect', function (event) {
             var Temp = $('#MonitoringDemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -524,7 +447,7 @@
 <div class="row" style="margin: 5px 0 10px 0; padding: 0;">
     <div class="row-column">
         <div class="row" style="margin: 0; padding: 0 10px 5px 10px; border: 1px solid #ddd; background-color: #eee;">
-            <div class="row-column" style="margin: 0;"><div id="Master" style="margin: 5px 0 0 0;"></div></div>
+            <div class="row-column" style="margin: 0;"><div id="UserCreate" style="margin: 5px 0 0 0;"></div></div>
         </div>
         <div class="row" style="margin: 10px 0 0 0; padding: 0 10px 5px 10px; border: 1px solid #ddd; background-color: #eee;">
             <div class="row" style="margin: 0;"><div class="row-column" style="margin: 0 0 5px 0;">Показывать только:</div></div>

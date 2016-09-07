@@ -186,6 +186,25 @@ GridFilters.AddControlFilter = function(ID_CONTROL, TYPE_CONTROL, ID, FieldName,
         });
     };
     
+    if (TYPE_CONTROL == 'jqxNumberInput') {
+        $('#' + ID_CONTROL).on('change', function (event) { 
+            Value = $('#' + ID_CONTROL).jqxNumberInput('val');
+            var isCompleted = $('#' + ID).jqxGrid('isBindingCompleted');
+            if (Value != '' && Value != null && isCompleted)
+                GridFilters.AddFilter(ID, FieldName, Type, Operator, Value, Condition, Apply, FilterGroup);
+            else
+                $('#' + ID).jqxGrid('removefilter', FieldName);
+        });
+        $('#' + ID_CONTROL).on('keydown', function(event) {
+            Value = $('#' + ID_CONTROL).jqxNumberInput('val');
+            var isCompleted = $('#' + ID).jqxGrid('isBindingCompleted');
+            if (Value != '' && Value != null && isCompleted)
+                GridFilters.AddFilter(ID, FieldName, Type, Operator, Value, Condition, Apply, FilterGroup);
+            else
+                $('#' + ID).jqxGrid('removefilter', FieldName);
+        });
+    };
+    
     if (TYPE_CONTROL == 'jqxComboBox') {
         $('#' + ID_CONTROL).on('keydown', function(event) {
             var isCompleted = $('#' + ID).jqxGrid('isBindingCompleted');

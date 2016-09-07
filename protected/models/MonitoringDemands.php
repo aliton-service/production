@@ -11,6 +11,7 @@ class MonitoringDemands extends MainFormModel
 	public $PlanDate = null;
 	public $Description = null;
 	public $UserName = null;
+	public $Employee_id = null;
 	public $Note = null;
 	public $DateExec = null;
 	public $Calc_id = null;
@@ -74,6 +75,7 @@ class MonitoringDemands extends MainFormModel
                     m.Deadline,
                     m.Description,
                     e.ShortName as UserName,
+                    e.Employee_id,
                     m.DateAccept,
                     m.DateExec,
                     m.WishDate,
