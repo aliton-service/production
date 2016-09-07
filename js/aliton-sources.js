@@ -1872,11 +1872,11 @@ Sources.SourceMonitoringDemands =
         { name: 'prtp_id',  type: 'int' },
     ],
     id: 'mndm_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=MonitoringDemands',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=MonitoringDemands',
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {

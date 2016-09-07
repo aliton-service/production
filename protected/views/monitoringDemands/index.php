@@ -200,13 +200,18 @@
         $("#Description").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 1045, height: 55 }));
         
         
-        var MonitoringDemandsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemands));
+        var MonitoringDemandsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemands, {
+            filter: function () {
+                $("#MonitoringDemandsGrid").jqxGrid('updatebounddata', 'filter');
+            },
+            sort: function () {
+                $("#MonitoringDemandsGrid").jqxGrid('updatebounddata', 'sort');
+            }
+        }));
         
         
         $("#MonitoringDemandsGrid").on('bindingComplete', function(){
-            $('#MonitoringDemandsGrid').jqxGrid('hidecolumn', 'Prior');
-            var index = $('#MonitoringDemandsGrid').jqxGrid('getrowboundindex', 0);
-            $('#MonitoringDemandsGrid').jqxGrid('selectrow', index);
+            $('#MonitoringDemandsGrid').jqxGrid('selectrow', 0);
         });
                     
         $("#MonitoringDemandsGrid").jqxGrid(
@@ -214,7 +219,7 @@
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
                 showfilterrow: false,
-                virtualmode: false,
+                virtualmode: true,
                 filterable: true,
                 width: '99.8%',
                 height: '440',
@@ -223,7 +228,7 @@
                     { text: 'Номер', dataField: 'mndm_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
                     { text: 'Дата', dataField: 'Date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Подал', dataField: 'UserName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 170 },
-                    { text: 'Prior', dataField: 'Prior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50 },
+                    { text: 'Prior', dataField: 'Prior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50, hidden: true },
                     { text: 'Приоритет', dataField: 'DemandPrior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
                     { text: 'Дата принятия', dataField: 'DateAccept', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Принял', dataField: 'EmplNameAccept', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
@@ -282,38 +287,40 @@
             }
 
 
-            $("#btnAcceptEmployeeName").on('click', function () {                
-                $.ajax({
-                    url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Accept');?>",
-                    type: 'POST',
-                    async: false,
-                    data: { mndm_id: CurrentRowData.mndm_id },
-                    success: function(Res) {
-                        console.log(Res);
-                        $('#btnAcceptEmployeeName').jqxButton({disabled: true });
-                        $('#btnCancelAcceptance').jqxButton({disabled: false });
+            
+        });
+        
+        $("#btnAcceptEmployeeName").on('click', function () {                
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Accept');?>",
+                type: 'POST',
+                async: false,
+                data: { mndm_id: CurrentRowData.mndm_id },
+                success: function(Res) {
+                    console.log(Res);
+                    $('#btnAcceptEmployeeName').jqxButton({disabled: true });
+                    $('#btnCancelAcceptance').jqxButton({disabled: false });
 //                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
 //                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
-                        location.reload();
-                    }
-                });
+                    location.reload();
+                }
             });
+        });
 
-            $("#btnCancelAcceptance").on('click', function () {                
-                $.ajax({
-                    url: "<?php echo Yii::app()->createUrl('MonitoringDemands/CancelAcceptance');?>",
-                    type: 'POST',
-                    async: false,
-                    data: { mndm_id: CurrentRowData.mndm_id },
-                    success: function(Res) {
-                        console.log(Res);
-                        $('#btnAcceptEmployeeName').jqxButton({disabled: false });
-                        $('#btnCancelAcceptance').jqxButton({disabled: true });
+        $("#btnCancelAcceptance").on('click', function () {                
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/CancelAcceptance');?>",
+                type: 'POST',
+                async: false,
+                data: { mndm_id: CurrentRowData.mndm_id },
+                success: function(Res) {
+                    console.log(Res);
+                    $('#btnAcceptEmployeeName').jqxButton({disabled: false });
+                    $('#btnCancelAcceptance').jqxButton({disabled: true });
 //                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
 //                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
-                        location.reload();
-                    }
-                });
+                    location.reload();
+                }
             });
         });
         
@@ -489,12 +496,6 @@
             })
         );
     
-        
-        
-        
-        $('#MonitoringDemandsGrid').jqxGrid('selectrow', 0);
-        
-        
     });
     
         
