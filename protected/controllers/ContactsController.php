@@ -52,19 +52,19 @@ class ContactsController extends Controller
 	
 	public function actionIndex()
 	{
-
+            $model = new Contacts();
+            
             if (isset($_GET['ObjectGr_id']))
             {
                 $ObjectGr_id = $_GET['ObjectGr_id'];
-                $model = new Contacts();
                 $model->getModelPk($ObjectGr_id);
-    //            $model = $model->Find(array('ObjectGr_id' => $ObjectGr_id));
 
                 $this->renderPartial('index', array(
                     'model' => $model,
                     'ObjectGr_id' => $ObjectGr_id,
                 ), false, true);
             }
+
 	}
 
 	public function actionInsert() 
@@ -92,6 +92,8 @@ class ContactsController extends Controller
             }
 
             $model->ObjectGr_id = $ObjectGr_id;
+            if($model->empl_id == null) $model->empl_id = Yii::app()->user->Employee_id;
+            
             $this->renderPartial('_form', array(
                 'model' => $model
             ));

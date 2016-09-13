@@ -35,12 +35,12 @@
         
         $("#ContrNumS").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 260 }));
-        $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#DateExecuting2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExecuting, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#DatePay").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DatePay, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#ContrSDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateStart, width: 102}));
-        $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#ContrSDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateEnd, width: 102}));
+        $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
+        $("#DateExecuting2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExecuting, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
+        $("#DatePay").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DatePay, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
+        $("#ContrSDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateStart, width: 102, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
+        $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
+        $("#ContrSDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateEnd, width: 102, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
         $("#PaymentName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#Prolong").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));

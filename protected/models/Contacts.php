@@ -90,11 +90,12 @@ class Contacts extends MainFormModel
                     c.EmplChange,
                     c.EmplCreate
                     ";
-        $from = "\nFrom Contacts c left join ContactTypes ct on (c.cntp_id = ct.contact_id)
+        $from = "\nFrom Contacts c 
+                    left join ContactTypes ct on (c.cntp_id = ct.contact_id)
                     left join ContactInfo_v ci on (c.info_id = ci.info_id)
                     left join Employees_ForObj_v  e on (c.empl_id = e.Employee_id)
                     left join Results r on (c.rslt_id = r.Result_id) 
-                    left join DebtReasons dr on (c.drsn_id =dr.drsn_id)
+                    left join DebtReasons dr on (c.drsn_id = dr.drsn_id)
                     left join ContactTypes ct2 on (c.next_cntp_id = ct2.contact_id)
                     left join ContactInfo_v ci2 on (c.next_info_id = ci2.info_id)
                     left join ContactKinds ck on (c.Kind = ck.Kind_id)
@@ -102,6 +103,7 @@ class Contacts extends MainFormModel
                     left join Basenames bn on (d.bn_id = bn.bn_id)
                     left join SourceInfo si on si.sourceInfo_id=c.SourceInfo_id
                     left join Employees_ForObj_v e1 on (c.EmplCreate = e1.Employee_id)
+                    left join ObjectsGroup og on (og.ObjectGr_id = c.ObjectGr_id)
                     ";
         $Where =    "\nWhere c.DelDate is Null";
 
@@ -178,8 +180,8 @@ class Contacts extends MainFormModel
             'cont_id' => 'cont_id',
             'ObjectGr_id' => 'ObjectGr_id',
             'date' => 'Дата',
-            'cntp_id' => 'Тип контакта',
-            'cntp_name' => 'Тип контакта',
+            'cntp_id' => 'Тип',
+            'cntp_name' => 'Тип',
             'info_id' => 'Контактное лицо',
             'contact' => 'contact',
             'empl_id' => 'Исполнитель',
@@ -199,7 +201,7 @@ class Contacts extends MainFormModel
             'next_info_id' => 'Контактное лицо',
             'next_contact' => 'next_contact',
             'Telephone' => 'Телефоны',
-            'Kind' => 'Kind',
+            'Kind' => 'Тема',
             'SourceInfo_id' => 'Источник информации о фирме',
             'Kind_Name' => 'Тема контакта',
             'base_name' => 'base_name',

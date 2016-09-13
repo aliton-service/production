@@ -8,6 +8,10 @@
         
         var Contracts = {
             ObjectGr_id: '<?php echo $ObjectGr_id; ?>',
+            Price: '<?php echo $model->Price; ?>',
+            PriceMonth: '<?php echo $model->PriceMonth; ?>',
+            Reason_id: '<?php echo $model->Reason_id; ?>',
+            LastChangeDate: '<?php echo $model->LastChangeDate; ?>',
         };
             
         var ContractsSDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractsS, {}), {
@@ -171,6 +175,7 @@
         
         
         $('#jqxTabsContracts').jqxTabs({ width: '99%', height: 285 });
+        $('#jqxTabsContracts').jqxTabs({ selectedItem: 1 });
         
         
         $("#ContractsGrid").on('rowselect', function (event) {
@@ -179,7 +184,7 @@
                 CurrentRowData = Temp;
             } else {CurrentRowData = null};
             
-            console.log(CurrentRowData.ContrS_id);
+            console.log(CurrentRowData);
             
             if (CurrentRowData.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
             if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
@@ -445,7 +450,7 @@
         $("#BtnOkDialogContractPriceHistory").on('click', function () {
             SendFormContractPriceHistory(Mode);
         });
-        
+        console.log('Reason_id ' +Contracts.Reason_id);
         var LoadFormContractPriceHistory = function(Mode, id) {
             var Date = CurrentRowData.ContrSDateEnd;
             var DateEnd = Date.getDate() + '.' + (Date.getMonth()+1) + '.' + Date.getFullYear();
@@ -455,7 +460,11 @@
                 Url = "<?php echo Yii::app()->createUrl('ContractPriceHistory/Insert');?>";
                 Data = { 
                     ContrS_id: id, 
-                    DateEnd: DateEnd 
+                    DateEnd: DateEnd,
+                    Price: Contracts.Price,
+//                    PriceMonth: Contracts.PriceMonth,
+//                    Reason_id: Contracts.Reason_id,
+//                    DateStart: Contracts.LastChangeDate,
                 };
             }
             if (Mode == 'UpdateContractPriceHistory') {

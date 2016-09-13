@@ -92,6 +92,18 @@ class ContractPriceHistoryController extends Controller
         if (isset($_POST['DateEnd'])) { 
             $model->DateEnd = $_POST['DateEnd'];
         }
+        if (isset($_POST['Price'])) { 
+            $model->Price = $_POST['Price'];
+        }
+        if (isset($_POST['PriceMonth'])) { 
+            $model->PriceMonth = $_POST['PriceMonth'];
+        }
+        if (isset($_POST['Reason_id'])) { 
+            $model->Reason_id = $_POST['Reason_id'];
+        }
+        if (isset($_POST['DateStart'])) { 
+            $model->DateStart = $_POST['DateStart'];
+        }
         
         $this->renderPartial('_form', array(
             'model' => $model
