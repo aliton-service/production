@@ -69,9 +69,11 @@ class ReplaceMasterController extends Controller
 		$data_count = $model->getMasterCount($id);
                 
 //                print_r($data_count);
-//                print_r($data_count[0]['object']);
+                print_r($data_count[0]['object']);
                 
-                echo json_encode(array('status'=>'ok','data'=>$data_count));
+//                echo json_encode($data_count[0]['object']);
+//                echo json_encode($data_count[0]['contract']);
+//                echo json_encode(array('status'=>'ok','data'=>$data_count));
                 return;
             }
 	}

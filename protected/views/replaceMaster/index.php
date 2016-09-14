@@ -45,6 +45,7 @@
 //                                console.log('data_count = ' + data_count);
 //                                console.log(typeof data_count);
                                 console.log('Res = ' + Res);
+                                console.log('Res = ' + Res[0]);
                             }
                         });
                     }
