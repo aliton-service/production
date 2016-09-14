@@ -36,6 +36,9 @@
         ),
     )); 
 ?>
+<?php // echo ' Price = ' . $model->Price; ?>
+<?php // echo ' PriceMonth = ' . $model->PriceMonth; ?>
+<?php // echo ' Reason_id = ' . $model->Reason; ?>
 
 <input type="hidden" name="ContractPriceHistory[PriceHistory_id]" value="<?php echo $model->PriceHistory_id; ?>">
 <input type="hidden" name="ContractPriceHistory[ContrS_id]" value="<?php echo $model->ContrS_id; ?>">

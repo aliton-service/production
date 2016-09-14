@@ -262,6 +262,7 @@ Sources.SourceListAddresses =
     datafields: [
         { name: 'Object_id', type: 'int' },
         { name: 'ObjectGr_id', type: 'int' },
+        { name: 'Address_id', type: 'int' },
         { name: 'Addr', type: 'string' },
     ],
     id: 'Object_id',
@@ -272,8 +273,8 @@ Sources.SourceListAddresses =
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-            Sources.SourceListAddresses.totalrecords = data[0].TotalRows;
-        }
+            this.totalrecords = data[0].TotalRows;
+   }
 };
 
 Sources.SourceTerritory =
@@ -1097,7 +1098,7 @@ Sources.Contacts =
     datafields: [
         { name: 'cont_id', type: 'int' },
         { name: 'ObjectGr_id', type: 'int' },
-        { name: 'date', type: 'datetime' },
+        { name: 'date', type: 'date' },
         { name: 'GroupContact', type: 'string' },
         { name: 'Kind', type: 'int' },
         { name: 'Kind_Name', type: 'string' },
@@ -1110,7 +1111,7 @@ Sources.Contacts =
         { name: 'empl_name', type: 'string' },
         { name: 'contact', type: 'string' },
         { name: 'UserCreateName', type: 'string' },
-        { name: 'next_date', type: 'datetime' },
+        { name: 'next_date', type: 'date' },
         { name: 'next_cntp_name', type: 'string' },
         { name: 'next_contact', type: 'string' },
         { name: 'text', type: 'string' },
@@ -1120,8 +1121,11 @@ Sources.Contacts =
         { name: 'drsn_name', type: 'string' },
         { name: 'note', type: 'string' },
         { name: 'Telephone', type: 'string' },
-        { name: 'pay_date', type: 'datetime' },
+        { name: 'pay_date', type: 'date' },
         { name: 'time_length', type: 'int' },
+        { name: 'FullName', type: 'string' },
+        { name: 'Addr', type: 'string' },
+        { name: 'Debt', type: 'float' },
     ],
     id: 'cont_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Contacts',
@@ -1463,6 +1467,10 @@ Sources.SourceContractsS =
         {name: 'SpecialCondition', type: 'string'},
         {name: 'ContrNote', type: 'string'},
         {name: 'DateExecuting', type: 'date'},
+        {name: 'Price', type: 'float'},
+        {name: 'PriceMonth', type: 'float'},
+        {name: 'Reason_id', type: 'int'},
+        {name: 'LastChangeDate', type: 'date'},
     ],
     id: 'ContrS_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractsS',
@@ -2082,6 +2090,49 @@ Sources.SourceInstructings =
     root: 'Rows',
     cache: false,
     async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceControlContacts =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'ObjectGr_id',  type: 'int' },
+        { name: 'Org_id',  type: 'int' },
+        { name: 'PKey',  type: 'int' },
+        { name: 'FullName',  type: 'string' },
+        { name: 'Addr',  type: 'string' },
+        { name: 'Address_id',  type: 'int' },
+        { name: 'Doctype_Name',  type: 'string' },
+        { name: 'ContrNumS',  type: 'int' },
+        { name: 'ContrDateS',  type: 'date' },
+        { name: 'empl_name',  type: 'string' },
+        { name: 'empl_id',  type: 'int' },
+        { name: 'text',  type: 'string' },
+        { name: 'next_date',  type: 'date' },
+        { name: 'next_info_id',  type: 'int' },
+        { name: 'next_cntp_id',  type: 'int' },
+        { name: 'next_cntp_name',  type: 'string' },
+        { name: 'next_contact',  type: 'string' },
+        { name: 'contact',  type: 'string' },
+        { name: 'note',  type: 'string' },
+        { name: 'date',  type: 'date' },
+        { name: 'rslt_name',  type: 'string' },
+        { name: 'drsn_name',  type: 'string' },
+        { name: 'cntp_name',  type: 'string' },
+        { name: 'debt',  type: 'int' },
+        { name: 'last_cont',  type: 'date' },
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=ControlContacts',
+//    type: 'POST',
+    root: 'Rows',
+    cache: false,
+//    async: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {

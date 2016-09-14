@@ -24,7 +24,7 @@
         $("#mndm_id3").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, placeHolder: "-Авто-" }));
         $("#Date3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, showCalendarButton: false, value: new Date() }));
         $("#Prior3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPriors, displayMember: "DemandPrior", valueMember: "DemandPrior_id", width: 220, autoDropDownHeight: true }));
-        $("#Deadline3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, showCalendarButton: false, value: null }));
+        $("#Deadline3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, value: null }));
         $("#WishDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, showTimeButton: true }));
         $("#Description3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 590 }));
         

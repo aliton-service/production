@@ -33,14 +33,14 @@
                 source: ContactsDataAdapter,
                 columns: [
                     { text: 'Отдел', columngroup: 'Current', dataField: 'GroupContact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
-                    { text: 'Тема', columngroup: 'Current', dataField: 'Kind_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
-                    { text: 'Источник', columngroup: 'Current', dataField: 'sourceInfo_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
-                    { text: 'Дата', columngroup: 'Current', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Тема', columngroup: 'Current', dataField: 'Kind_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 230 },
+                    { text: 'Источник', columngroup: 'Current', dataField: 'sourceInfo_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90 },
+                    { text: 'Дата', columngroup: 'Current', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
                     { text: 'Тип', columngroup: 'Current', dataField: 'cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
                     { text: 'Контактное лицо', columngroup: 'Current', dataField: 'contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
                     { text: 'Сотрудник', columngroup: 'Current', dataField: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
                     { text: 'Создал', columngroup: 'Current', dataField: 'UserCreateName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
-                    { text: 'Дата', columngroup: 'Next', dataField: 'next_date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Дата', columngroup: 'Next', dataField: 'next_date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
                     { text: 'Тип', columngroup: 'Next', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
                     { text: 'Контактное лицо', columngroup: 'Next', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
                 ],
@@ -56,7 +56,7 @@
         $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 450 }));
         $("#drsn_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 370 }));
         $("#rslt_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 370 }));
-        $("#pay_date").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
+        $("#pay_date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: null, height: '25', width: '200', readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
         
         $('#EditContactDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '770', width: '840'}));
         
@@ -130,12 +130,13 @@
             } else {CurrentRowData = null};
             
 //            console.log(CurrentRowData.cont_id);
-            
-            if (CurrentRowData.text != '') $("#textField").jqxTextArea('val', CurrentRowData.text);
-            if (CurrentRowData.rslt_name != '') $("#rslt_name").jqxInput('val', CurrentRowData.rslt_name);
-            if (CurrentRowData.note != '') $("#note").jqxTextArea('val', CurrentRowData.note);
-            if (CurrentRowData.drsn_name != '') $("#drsn_name").jqxInput('val', CurrentRowData.drsn_name);
-            if (CurrentRowData.pay_date != '') $("#pay_date").jqxInput('val', CurrentRowData.pay_date);
+            if(CurrentRowData !== null) {
+                if (CurrentRowData.text !== null) $("#textField").jqxTextArea('val', CurrentRowData.text);
+                if (CurrentRowData.rslt_name !== null) $("#rslt_name").jqxInput('val', CurrentRowData.rslt_name);
+                if (CurrentRowData.note !== null) $("#note").jqxTextArea('val', CurrentRowData.note);
+                if (CurrentRowData.drsn_name !== null) $("#drsn_name").jqxInput('val', CurrentRowData.drsn_name);
+                if (CurrentRowData.pay_date !== null) $("#pay_date").jqxDateTimeInput('val', CurrentRowData.pay_date);
+            }
         });
         
         var LoadFormInsert = function(ObjectGr_id) {
@@ -209,6 +210,9 @@
                 }
             });
         });
+        
+        
+        $('#ContactsGrid').jqxGrid('selectrow', 0);
     });
     
         
@@ -220,14 +224,14 @@
 </div>
 <div class="row"  style="margin: 0;">
     <div class="row-column">
-        <div class="row">Содержание: <textarea readonly id="textField" name="Contacts[text]"></textarea></div>
-        <div class="row">Примечание: <textarea readonly id="note" name="Contacts[note]"></textarea></div>
+        <div class="row">Содержание: <textarea readonly id="textField"></textarea></div>
+        <div class="row">Примечание: <textarea readonly id="note"></textarea></div>
     </div>   
 
     <div class="row-column">
-        <div class="row">Причина долга: <br><input readonly id="drsn_name" name="Contacts[drsn_name]" type="text"></div>
-        <div class="row">Результат: <br><input readonly id="rslt_name" name="Contacts[rslt_name]" type="text"></div>
-        <div class="row">Дата согласованной оплаты: <br><input readonly id='pay_date' name="Contacts[pay_date]" type="text"></div> 
+        <div class="row">Причина долга: <br><input readonly id="drsn_name" type="text"></div>
+        <div class="row">Результат: <br><input readonly id="rslt_name" type="text"></div>
+        <div class="row">Дата согласованной оплаты: <div id='pay_date'></div></div>
     </div>
 </div>
     
@@ -243,7 +247,7 @@
     <div id="DialogContactHeader">
         <span id="HeaderContactText">Вставка\Редактирование записи</span>
     </div>
-    <div style="overflow-x: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" id="DialogContactContent">
+    <div id="DialogContactContent" style="overflow-x: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" >
         <div style="" id="BodyContactDialog"></div>
         <div id="BottomContactDialog">
             <div class="row">

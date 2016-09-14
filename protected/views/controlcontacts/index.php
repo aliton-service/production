@@ -1,679 +1,390 @@
-<script>
-    Aliton.Links.push({
-        Out: "CmbClients",
-        In: "ControlContactsGrid",
-        TypeControl: "Grid",
-        Condition: "og.PropForm_id = :Value",
-        Field: "Form_id",
-        Name: "Filter1",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        /* Текущая выбранная строка данных */
+        var CurrentRowData;
+        
+        var ControlContacts = {
+            Employee_id: '<?php echo $model->Employee_id; ?>',
+        };
+
+        var DataOrganizations = new $.jqx.dataAdapter(Sources.SourceOrganizationsVMin);
+        var DataAddress = new $.jqx.dataAdapter(Sources.SourceListAddresses);
+        var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
+
+        $("#Organizations").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrganizations, displayMember: "FormName", valueMember: "Form_id", width: 350 }));
+        $("#Address").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddress, displayMember: "Addr", valueMember: "Address_id", width: 380 }));
+        $("#Employee").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 200 }));
+        
+        $("#DebtMin").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { min: 0, decimalDigits: 0 }));
+        $("#DebtMax").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { min: 0, decimalDigits: 0 }));
+        
+        $("#DebtMin").jqxNumberInput('val', null);
+        $("#DebtMax").jqxNumberInput('val', null);
+        
+        $("#BeginDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
+        $("#EndDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
+        
+        
+        $("#date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, formatString: 'dd.MM.yyyy HH:mm', value: null, readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
+        $("#Type").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 190 }));
+        $("#Contact").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 420 }));
+        
+        $("#textField").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 400 }));
+        $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 55 }));
+        $("#drsn_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 287 }));
+        $("#debt").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
+        $("#rslt_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 325 }));
+        $("#next_date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: null, height: '25', width: '180', readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
+        
+        
+        
+//        $("#btnReset").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180 }));
+        
+        
+        
+//        var filtergroup = new $.jqx.filter();
+//        var filtervalue = 10; // Each cell value is compared with the filter's value.
+//        // filtertype - numericfilter, stringfilter, datefilter or booelanfilter. 
+//        // condition
+//        // possible conditions for string filter: 'EMPTY', 'NOT_EMPTY', 'CONTAINS', 'CONTAINS_CASE_SENSITIVE',
+//        // 'DOES_NOT_CONTAIN', 'DOES_NOT_CONTAIN_CASE_SENSITIVE', 'STARTS_WITH', 'STARTS_WITH_CASE_SENSITIVE',
+//        // 'ENDS_WITH', 'ENDS_WITH_CASE_SENSITIVE', 'EQUAL', 'EQUAL_CASE_SENSITIVE', 'NULL', 'NOT_NULL'
+//        // possible conditions for numeric filter: 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'
+//        
+//        // possible conditions for date filter: 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'                         
+//        var filter = filtergroup.createfilter(filtertype, filtervalue, condition);
+//        var filter2 = filtergroup.createfilter(filtertype, filtervalue2, condition2);
+//        // To create a custom filter, you need to call the createfilter function and pass a custom callback function as a fourth parameter.
+//        // If the callback's name is 'customfilter', the Grid will pass 3 params to this function - filter's value, current cell value to evaluate and the condition.                        
+//        // operator - 0 for "and" and 1 for "or"
+//        filtergroup.addfilter(operator, filter);
+//        filtergroup.addfilter(operator, filter2);
+//        // datafield is the bound field.
+//        // adds a filter to the grid.
+//        $('#grid').jqxGrid('addfilter', datafield, filtergroup);
+//        // to add and apply the filter, use this:
+//        $('#jqxGrid').jqxGrid('addfilter', datafield, filtergroup, true);
+        
+        var AddFilters = function (args = [], ID, dataField, filterType, operator)
+        {                
+                var filtergroup = new $.jqx.filter();
+                var newFilter;
+                for(var i = 0; i < args.length; i++)
+                {
+//                    console.log(args[i].value);
+                    if(args[i].value !== null && args[i].value !== '' && args[i].value !== 0){
+
+                        newFilter = filtergroup.createfilter(filterType, args[i].value, args[i].filtercondition);
+                        filtergroup.addfilter(operator, newFilter);
+                    }
+                }
+            $('#' + ID).jqxGrid('addfilter', dataField, filtergroup);
+            $('#' + ID).jqxGrid('applyfilters');
+        }
+
+        
+        $('#DebtMin').on('change', function (event)
+        {
+            var debtMinValue = event.args.value;
+            var debtMaxValue = $('#DebtMax').val();
+            
+            var data = [
+                { value: debtMinValue, filtercondition: 'GREATER_THAN_OR_EQUAL' },
+                { value: debtMaxValue, filtercondition: 'LESS_THAN_OR_EQUAL' },
+            ];
+            AddFilters(data, 'ControlContactsGrid', 'c.debt', 'numericfilter', 0);
+        }); 
+        
+        $('#DebtMax').on('change', function (event)
+        {
+            var debtMaxValue = event.args.value;
+            var debtMinValue = $('#DebtMin').val();
+            
+            var data = [
+                { value: debtMinValue, filtercondition: 'GREATER_THAN_OR_EQUAL' },
+                { value: debtMaxValue, filtercondition: 'LESS_THAN_OR_EQUAL' },
+            ];
+            AddFilters(data, 'ControlContactsGrid', 'c.debt', 'numericfilter', 0);
+        }); 
+        
+        var changeDateFormat = function (date = null) {
+            if (date !== null) {
+                var NewDateVal = new Date(date);
+                var month = NewDateVal.getMonth()+ 1;
+                if(month < 10) {
+                    month = '0' + month;
+                }
+                NewDateVal = NewDateVal.getDate() + "." + month  + "." + NewDateVal.getFullYear();
+                return NewDateVal;
+            }
+            return null;
+        };
+        
+        
+        $('#BeginDate').on('valueChanged', function () {
+            var beginDateVal = $("#BeginDate").jqxDateTimeInput('getDate'); 
+            var NewBeginDateVal = changeDateFormat(beginDateVal);
+            
+            var endDateVal = $("#EndDate").jqxDateTimeInput('getDate'); 
+            var NewEndDateVal = changeDateFormat(endDateVal);
+            
+            var data = [
+                { value: NewBeginDateVal, filtercondition: 'DATE_GREATER_THAN_OR_EQUAL' },
+                { value: NewEndDateVal, filtercondition: 'DATE_LESS_THAN_OR_EQUAL' },
+            ];
+            AddFilters(data, 'ControlContactsGrid', 'next_date', 'datefilter', 0);
+        });
+        
+        $('#EndDate').on('valueChanged', function () {
+            var beginDateVal = $("#BeginDate").jqxDateTimeInput('getDate'); 
+            var NewBeginDateVal = changeDateFormat(beginDateVal);
+            
+            var endDateVal = $("#EndDate").jqxDateTimeInput('getDate'); 
+            var NewEndDateVal = changeDateFormat(endDateVal);
+            
+            var data = [
+                { value: NewBeginDateVal, filtercondition: 'DATE_GREATER_THAN_OR_EQUAL' },
+                { value: NewEndDateVal, filtercondition: 'DATE_LESS_THAN_OR_EQUAL' },
+            ];
+            AddFilters(data, 'ControlContactsGrid', 'next_date', 'datefilter', 0);
+        });
+        
+        
+
+        var ControlContactsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceControlContacts, {
+            filter: function () {
+                $("#ControlContactsGrid").jqxGrid('updatebounddata', 'filter');
+            },
+            sort: function () {
+                $("#ControlContactsGrid").jqxGrid('updatebounddata', 'sort');
+            }
+        }));
+        
+        $("#ControlContactsGrid").on('bindingcomplete', function(){
+            $("#Employee").jqxComboBox('selectItem', ControlContacts.Employee_id);
+            
+            $('#ControlContactsGrid').jqxGrid('selectrow', 0);
+        });
+                    
+        $("#ControlContactsGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                showfilterrow: false,
+                virtualmode: true,
+                width: '99.8%',
+                height: '400',
+                source: ControlContactsDataAdapter,
+                columns: [
+                    { text: 'Запланированная дата', dataField: 'next_date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 170 },
+                    { text: 'Тип контакта', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 140 },
+                    { text: 'Контактное лицо', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Организация', dataField: 'FullName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 220 },
+                    { text: 'Form_id', dataField: 'Form_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
+                    { text: 'Адрес', dataField: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Address_id', dataField: 'og.Address_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
+                    { text: 'Долг', dataField: 'debt', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80 },
+                    { text: 'c.debt', dataField: 'c.debt', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80, hidden: true },
+                    { text: 'Исполнитель', dataField: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
+                    { text: 'empl_id', dataField: 'cnt.empl_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
+                ]
+            })
+        );
+        
+        
+         // Привязка фильтров к гриду
+        GridFilters.AddControlFilter('Organizations', 'jqxComboBox', 'ControlContactsGrid', 'Form_id', 'numericfilter', 0, 'EQUAL', true);
+        GridFilters.AddControlFilter('Employee', 'jqxComboBox', 'ControlContactsGrid', 'cnt.empl_id', 'numericfilter', 0, 'EQUAL', true);
+        GridFilters.AddControlFilter('Address', 'jqxComboBox', 'ControlContactsGrid', 'og.Address_id', 'numericfilter', 0, 'EQUAL', true);
+        
+
+        $("#ControlContactsGrid").on('rowselect', function (event) {
+            var Temp = $('#ControlContactsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowData = Temp;
+            } else {CurrentRowData = null;}
+            
+//            console.log(CurrentRowData);
+            
+            if (CurrentRowData !== null) {
+                if (CurrentRowData.date !== null) $("#date").jqxDateTimeInput('val', CurrentRowData.date);
+                if (CurrentRowData.text !== null) $("#textField").jqxTextArea('val', CurrentRowData.text);
+                if (CurrentRowData.rslt_name !== null) $("#rslt_name").jqxInput('val', CurrentRowData.rslt_name);
+                if (CurrentRowData.note !== null) $("#note").jqxTextArea('val', CurrentRowData.note);
+                if (CurrentRowData.drsn_name !== null) $("#drsn_name").jqxInput('val', CurrentRowData.drsn_name);
+                if (CurrentRowData.next_date !== null) $("#next_date").jqxDateTimeInput('val', CurrentRowData.next_date);
+                if (CurrentRowData.debt !== null) $("#debt").jqxInput('val', CurrentRowData.debt);
+                if (CurrentRowData.cntp_name !== null) $("#Type").jqxInput('val', CurrentRowData.cntp_name);
+                if (CurrentRowData.contact !== null) $("#Contact").jqxInput('val', CurrentRowData.contact);
+            }
+        });
+
+
+
+        
+        $('#EditDialogControlContacts').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '770', width: '840'}));
+        
+        $('#EditDialogControlContacts').jqxWindow({initContent: function() {
+            $("#btnOkControlContacts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#btnCancelControlContacts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        }});
+
+        $("#btnCancelControlContacts").on('click', function () {
+            $('#EditDialogControlContacts').jqxWindow('close');
+        });
+        
+        var SendForm = function() {
+            var Data = $('#Contacts').serialize();
+                
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Contacts/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#EditDialogControlContacts').jqxWindow('close');
+                        $("#ControlContactsGrid").jqxGrid('updatebounddata');
+                        $("#ControlContactsGrid").jqxGrid('selectrow', 0);
+                    } else {
+                        $('#BodyDialogControlContacts').html(Res);
+                    }
+
+                }
+            });
+        };
+
+        $("#btnOkControlContacts").on('click', function () {
+            SendForm();
+        });
+            
+        
+        $("#NewControlContacts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#MoreInfoControlContacts").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
+        $("#ReloadControlContacts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        
+        
+        var LoadFormInsert = function() {
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Contacts/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: {
+                    ObjectGr_id: CurrentRowData.ObjectGr_id
+                },
+                success: function(Res) {
+                    $('#BodyDialogControlContacts').html(Res);
+                }
+            });
+        };
+        
+        $('#ControlContactsGrid').on('rowdoubleclick', function () { 
+            $("#MoreInfoControlContacts").click();
+        });
+        
+        
+        $("#NewControlContacts").on('click', function () 
+        {
+            LoadFormInsert();
+            $('#EditDialogControlContacts').jqxWindow('open');
+        });
+        
+        $("#MoreInfoControlContacts").on('click', function ()
+        {
+            window.open('/index.php?r=Objectsgroup/Index&ObjectGr_id=' + CurrentRowData.ObjectGr_id);
+        });
+           
+        
+        
+        $("#ReloadControlContacts").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=ControlContacts/Index",
+                success: function(){
+                    $("#ControlContactsGrid").jqxGrid('updatebounddata');
+                    $("#ControlContactsGrid").jqxGrid('selectrow', 0);
+                }
+            });
+        });
+        
+        
     });
     
-    Aliton.Links.push({
-        Out: "CmbObjects",
-        In: "ControlContactsGrid",
-        TypeControl: "Grid",
-        Condition: "og.ObjectGr_id = :Value",
-        Field: "ObjectGr_id",
-        Name: "Filter2",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "edDebtStart",
-        In: "ControlContactsGrid",
-        TypeControl: "Grid",
-        Condition: "isnull(o.debt, 0) >= :Value",
-        Name: "Filter3",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "edDebtEnd",
-        In: "ControlContactsGrid",
-        TypeControl: "Grid",
-        Condition: "isnull(o.debt, 0) <= :Value",
-        Name: "Filter4",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "CmbEmpl",
-        In: "ControlContactsGrid",
-        TypeControl: "Grid",
-        Condition: "cnt.empl_id = :Value",
-        Field: "Employee_id",
-        Name: "Filter5",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "edDateStart",
-        In: "ControlContactsGrid",
-        TypeControl: "Grid",
-        Condition: "dbo.truncdate(cnt.next_date) >= ':Value'",
-        Name: "Filter6",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "edDateEnd",
-        In: "ControlContactsGrid",
-        TypeControl: "Grid",
-        Condition: "dbo.truncdate(cnt.next_date) <= ':Value'",
-        Name: "Filter7",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "ControlContactsGrid",
-        In: "LastContactGrid",
-        TypeControl: "Grid",
-        Condition: "c.ObjectGr_id = :Value",
-        Field: "ObjectGr_id",
-        Name: "Filter8",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "LastContactGrid",
-        In: "edDateLastContact",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "date",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "LastContactGrid",
-        In: "edTypeLastContact",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "cntp_name",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "LastContactGrid",
-        In: "edInfoLastContact",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "contact",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "LastContactGrid",
-        In: "edTextLastContact",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "text",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "LastContactGrid",
-        In: "edResultLastContact",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "rslt_name",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "ControlContactsGrid",
-        In: "edDebt",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "debt",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "LastContactGrid",
-        In: "edDebtReason",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "drsn_name",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "LastContactGrid",
-        In: "edNextDate",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "next_date",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "LastContactGrid",
-        In: "edNote",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "note",
-        Name: "Filter9",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
+        
 </script>
 
 <?php $this->setPageTitle('Контроль контактов'); ?>
 
-<?php
-    $this->breadcrumbs=array(
-            'Справочники'=>array('/reference/index'),
-            'Контроль контактов'=>array('index'),
-    );
-?>
+<div class="row">
+    <div class="row-column" style="margin-top: 5px;">Организация: </div><div class="row-column"><div id="Organizations"></div></div>
+    <div class="row-column" style="margin-top: 5px; margin-left: 50px;">Адрес: </div><div class="row-column"><div id="Address"></div></div>
+</div>
 
-<div style="float: left; margin-top: 16px;">
-    <div style="float: left;">
-        <div style="float: left; width: 90px;">Организация</div>
-        <div style="float: left; margin-left: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbClients',
-                    'Stretch' => true,
-                    'Key' => 'ControlContacts_Index_CmbClients',
-                    'ModelName' => 'OrganizationsV',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 350,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'Form_id',
-                    'FieldName' => 'FullName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "p.FullName like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'FullName' => array(
-                            'Name' => 'Клиент',
-                            'FieldName' => 'FullName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div style="float: left; width: 40px; margin-left: 16px">Адрес</div>
-        <div style="float: left; margin-left: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbObjects',
-                    'Stretch' => true,
-                    'Key' => 'ControlContacts_Index_CmbObjectsGrid',
-                    'ModelName' => 'ListObjects',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 400,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'Object_id',
-                    'FieldName' => 'Addr',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Condition' => "a.Addr like ':Value%'",
-                    ),
-                    'Columns' => array(
-                        'Addr' => array(
-                            'Name' => 'Адрес',
-                            'FieldName' => 'Addr',
-                            'Width' => 300,
-                            'Filter' => array(
-                                'Condition' => "a.Addr like ':Value%'",
-                            ),
+<div class="row">
+    <div class="row-column" style="margin-top: 5px;">Долг: </div>
+    <div class="row-column" style="margin-top: 5px;">с </div><div class="row-column"><div id='DebtMin'></div></div>
+    <div class="row-column" style="margin-top: 5px;">по </div><div class="row-column"><div id='DebtMax'></div></div>
+    <div class="row-column" style="margin-top: 5px; margin-left: 105px;">Исполнитель: </div><div class="row-column"><div id="Employee"></div></div>
+</div>
 
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="clear: both"></div>
-    <div style="float: left; margin-top: 6px">
-        <div style="float: left; width: 90px;">Долг с</div>
-        <div style="float: left; margin-left: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edDebtStart',
-                        'Width' => 100,
-                        'Type' => 'String',
-                        'Value' => 0,
-                ));
-            ?>
-        </div>
-        <div style="float: left; width: 10px; margin-left: 16px;">по</div>
-        <div style="float: left; margin-left: 16px;">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edDebtEnd',
-                        'Width' => 100,
-                        'Type' => 'String',
-                        'Value' => 9999999,
-                ));
-            ?>
-        </div>
-        <div style="float: left; width: 90px; margin-left: 124px">Исполнитель</div>
-        <div style="float: left; margin-left: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbEmpl',
-                    'Stretch' => true,
-                    'Key' => 'ControlContacts_Index_CmbEmplGrid',
-                    'ModelName' => 'Employees',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 200,
-                    'PopupWidth' => 350,
-                    'KeyField' => 'Employee_id',
-                    'FieldName' => 'ShortName',
-                    'KeyValue' => Yii::app()->user->Employee_id,
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Condition' => "e.EmployeeName like ':Value%'",
-                    ),
-                    'Columns' => array(
-                        'EmployeeName' => array(
-                            'Name' => 'ФИО',
-                            'FieldName' => 'EmployeeName',
-                            'Width' => 300,
-                            'Filter' => array(
-                                'Condition' => "e.EmployeeName like ':Value%'",
-                            ),
+<div class="row" style="margin-bottom: 20px;">
+    <div class="row-column" style="margin-top: 5px;">Дата запланированного контакта: </div>
+    <div class="row-column" style="margin-top: 5px;">с </div><div class="row-column"><div id='BeginDate'></div></div>
+    <div class="row-column" style="margin-top: 5px;">по </div><div class="row-column"><div id='EndDate'></div></div>
+</div>
 
-                        ),
-                    ),
-                ));
-            ?>
+
+<div id="ControlContactsGrid" class="jqxGridAliton"></div>
+        
+
+<div class="row" style="padding: 0 10px 5px 10px; border: 1px solid #ddd; background-color: #eee;">
+    <div class="row" style="margin: 0; padding: 0;"><div class="row-column" style="margin: 0 0 5px 0;">Последний контакт</div></div>
+    <div class="row" style="margin: 0;">
+        <div class="row" style="margin-top: 5px;">
+            <div class="row-column" style="margin-top: 3px;">Дата: </div><div class="row-column"><div id='date'/></div></div>
+            <div class="row-column">Тип: <input readonly type="text" id='Type'/></div>
+            <div class="row-column">Контактное лицо: <input readonly type="text" id='Contact'/></div>
         </div>
-    </div>
-    <div style="clear: both"></div>
-    <div style="float: left; margin-top: 6px">
-        <div style="float: left; margin-right: 6px">Дата запланированного контакта с</div>
-        <div style="float: left; margin-right: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-                        'id' => 'edDateStart',
-                        'Width' => 130,
-                        'Name' => '',
-                        'Value' => date('d.m.Y'),
-                ));
-            ?>
+        <div class="row-column">
+            <div class="row"><div class="row-column">Содержание: <textarea readonly id="textField"></textarea></div></div>
+            <div class="row"><div class="row-column">Результат: <input readonly id="rslt_name" type="text"></div></div>
+        </div>   
+
+        <div class="row">
+            <div class="row-column">Долг: <br><input readonly id="debt" type="text"></div>
+            <div class="row-column">Причина долга: <br><input readonly id="drsn_name" type="text"></div>
+            <div class="row-column">Дата согласованной оплаты: <div id='next_date'></div></div>
         </div>
-        <div style="float: left; margin-right: 6px">по</div>
-        <div style="float: left; margin-right: 6px">
-                <?php
-                $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-                        'id' => 'edDateEnd',
-                        'Width' => 130,
-                        'Name' => '',
-                        'Value' => date('d.m.Y'),
-                ));
-                ?>
+        <div class="row" style="margin-top: 5px;">
+            <div class="row-column">Примечание: <textarea readonly id="note"></textarea></div>
         </div>
     </div>
 </div>
 
-<div style="clear: both"></div>
-<div style="margin-top: 16px">
-    <?php
-        $this->widget('application.extensions.alitonwidgets.gridajax.algridajax', array(
-            'id' => 'ControlContactsGrid',
-            'Stretch' => true,
-            'Key' => 'ControlContacts_Index_ControlContactsGrid',
-            'ModelName' => 'ControlContacts',
-            'ShowFilters' => true,
-            'Height' => 230,
-            'Width' => 500,
-            'OnDblClick' => '$("#ObjectInfo").albutton("BtnClick");',
-            'Columns' => array(
-                'NextDate' => array(
-                    'Name' => 'Заплонированная дата конткта',
-                    'FieldName' => 'next_date',
-                    'Width' => 130,
-                    'Format' => 'd.m.Y H:i',
-                    'Filter' => array(
-                        'Condition' => "cnt.next_date = ':Value'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'cnt.next_date desc',
-                        'Down' => 'cnt.next_date',
-                    ),
-                ),
-                'Date' => array(
-                    'Name' => 'Дата',
-                    'FieldName' => 'date',
-                    'Width' => 130,
-                    'Format' => 'd.m.Y H:i',
-                    'Filter' => array(
-                        'Condition' => "cnt.date = ':Value'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'cnt.date desc',
-                        'Down' => 'cnt.date',
-                    ),
-                ),
-                'Type' => array(
-                    'Name' => 'Тип контакта',
-                    'FieldName' => 'contactname',
-                    'Width' => 130,
-                    'Filter' => array(
-                        'Condition' => "ct.contactname = ':Value'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'ct.contactname desc',
-                        'Down' => 'ct.contactname',
-                    ),
-                ),
-                'ContactInfo' => array(
-                    'Name' => 'Контактное лицо',
-                    'FieldName' => 'next_contact',
-                    'Width' => 180,
-                    'Filter' => array(
-                        'Condition' => "ci.contact like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'ci.contact desc',
-                        'Down' => 'ci.contact',
-                    ),
-                ),
-                'FullName' => array(
-                    'Name' => 'Организация',
-                    'FieldName' => 'FullName',
-                    'Width' => 180,
-                    'Filter' => array(
-                        'Condition' => "o.FullName like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'o.FullName desc',
-                        'Down' => 'o.FullName',
-                    ),
-                ),
-                'Addr' => array(
-                    'Name' => 'Адрес',
-                    'FieldName' => 'Addr',
-                    'Width' => 260,
-                    'Filter' => array(
-                        'Condition' => "a.Addr like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'a.Addr desc',
-                        'Down' => 'a.Addr',
-                    ),
-                ),
-                'Debt' => array(
-                    'Name' => 'Долг',
-                    'FieldName' => 'debt',
-                    'Width' => 120,
-                    'Filter' => array(
-                        'Condition' => "o.debt = :Value",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'o.debt desc',
-                        'Down' => 'o.debt',
-                    ),
-                ),
-                'Empl' => array(
-                    'Name' => 'Исполнитель',
-                    'FieldName' => 'empl_name',
-                    'Width' => 140,
-                    'Filter' => array(
-                        'Condition' => "e.empl_name like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'e.empl_name desc',
-                        'Down' => 'e.empl_name',
-                    ),
-                ),
-            ),
-        ));
-    ?>
-</div>
-<div style="clear: both"></div>
-<div style="margin-top: 16px">
-    <?php
-        $this->widget('application.extensions.alitonwidgets.gridajax.algridajax', array(
-            'id' => 'LastContactGrid',
-            'Stretch' => true,
-            'Key' => 'ControlContacts_Index_LastContactGrid',
-            'ModelName' => 'Contacts',
-            'ShowFilters' => true,
-            'Height' => 230,
-            'Width' => 500,
-            'Visible' => false,
-            //'OnDblClick' => '$("#EditSection").albutton("BtnClick");',
-            'Filters' => array(
-                array(
-                    'Type' => 'Internal',
-                    'Control' => 'Form',
-                    'Condition' => 'c.cont_id = (select top 1 c2.cont_id from contacts c2 where c2.objectgr_id = c.objectgr_id and c2.deldate is null order by c2.date desc)', 
-                    'Value' => '',
-                    'Name' => 'Form1',
-                ),
-            ),
-            'Columns' => array(
-                'Date' => array(
-                    'Name' => 'Дата конткта',
-                    'FieldName' => 'date',
-                    'Width' => 130,
-                    'Format' => 'd.m.Y H:i',
-                    'Filter' => array(
-                        'Condition' => "c.date = ':Value'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 'c.date desc',
-                        'Down' => 'c.date',
-                    ),
-                ),
-            ),
-        ));
-        ?>
-</div>
-<div style="clear: both"></div>
-<div style="margin-top: 6px">Последний контакт</div>
-<div style="float: left; margin-top: 6px">
-    <div style="float: left; margin-right: 6px">Дата</div>
-    <div style="float: left; margin-right: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-                    'id' => 'edDateLastContact',
-                    'Width' => 130,
-                    'Name' => '',
-                    'ReadOnly' => true,
-            ));
-        ?>
-    </div>
-    <div style="float: left; margin-right: 26px">Тип</div>
-    <div style="float: left; margin-right: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edTypeLastContact',
-                    'Width' => 180,
-                    'Name' => '',
-                    'ReadOnly' => true,
-            ));
-        ?>
-    </div>
-    <div style="float: left; margin-right: 26px">Контактное лицо</div>
-    <div style="float: left; margin-right: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edInfoLastContact',
-                    'Width' => 230,
-                    'Name' => '',
-                    'ReadOnly' => true,
-            ));
-        ?>
+
+<div class="row" style="max-width: 1065px; margin: 0;">
+    <div class="row">
+        <div class="row-column"><input type="button" value="Дополнительно" id='MoreInfoControlContacts' /></div>
+        <div class="row-column"><input type="button" value="Новый контакт" id='NewControlContacts' /></div>
+        <div class="row-column"><input type="button" value="Обновить" id='ReloadControlContacts' /></div>
     </div>
 </div>
-<div style="clear: both"></div>
-<div style="float: left; margin-top: 6px">
-    <div style="float: left; margin-right: 26px">Содержание</div>
-    <div style="clear: both"></div>
-    <div style="float: left; margin-right: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-                    'id' => 'edTextLastContact',
-                    'Width' => 430,
-                    'Height' => 100,
-                    'Name' => '',
-                    'ReadOnly' => true,
-            ));
-        ?>
+
+
+<div id="EditDialogControlContacts">
+    <div id="DialogHeaderControlContacts">
+        <span id="HeaderTextControlContacts">Вставка\Редактирование записи</span>
     </div>
-    <div style="clear: both"></div>
-    <div style="float: left; margin-right: 26px; margin-top: 6px">Результат</div>
-    <div style="float: left; margin-right: 6px; margin-top: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edResultLastContact',
-                    'Width' => 342,
-                    'Name' => '',
-                    'ReadOnly' => true,
-            ));
-        ?>
-    </div>
-</div>
-<div style="float: left; margin-top: 6px">
-    <div style="float: left;">
-        <div style="float: left; margin-right: 26px">Долг</div>
-        <div style="clear: both"></div>
-        <div style="float: left; margin-right: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edDebt',
-                        'Width' => 130,
-                        'Name' => '',
-                        'ReadOnly' => true,
-                ));
-            ?>
+    <div id="DialogContentControlContacts" style="padding: 20px 30px 10px; background-color: #F2F2F2;" >
+        <div id="BodyDialogControlContacts"></div>
+        <div id="BottomDialogControlContacts">
+            <div class="row">
+                <div class="row-column"><input type="button" value="Сохранить" id='btnOkControlContacts' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancelControlContacts' /></div>
+            </div>
         </div>
-    </div>
-    <div style="float: left;">
-        <div style="float: left; margin-right: 26px">Причина долга</div>
-        <div style="clear: both"></div>
-        <div style="float: left; margin-right: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edDebtReason',
-                        'Width' => 230,
-                        'Name' => '',
-                        'ReadOnly' => true,
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="float: left;">
-        <div style="float: left; margin-right: 26px">Дата согласованной оплаты</div>
-        <div style="clear: both"></div>
-        <div style="float: left; margin-right: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edatedit.aldateedit', array(
-                        'id' => 'edNextDate',
-                        'Width' => 130,
-                        'Name' => '',
-                        'ReadOnly' => true,
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="clear: both"></div>
-    <div style="float: left;">
-        <div style="float: left; margin-right: 26px">Примечание</div>
-        <div style="clear: both"></div>
-        <div style="float: left; margin-right: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-                        'id' => 'edNote',
-                        'Width' => 500,
-                        'Height' => 88,
-                        'Name' => '',
-                        'ReadOnly' => true,
-                ));
-            ?>
-        </div>
-    </div>
-</div>
-<div style="clear: both"></div>
-<div style="float: left; margin-top: 6px">
-    <div style="float: left; margin-left: 0px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'ObjectInfo',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Дополнительно',
-                'Href' => Yii::app()->createUrl('Objectsgroup/index'),
-                'Params' => array(
-                        array(
-                                'ParamName' => 'ObjectGr_id',
-                                'NameControl' => 'ControlContactsGrid',
-                                'TypeControl' => 'Grid',
-                                'FieldControl' => 'ObjectGr_id',
-                        ),
-                ),
-            ));
-        ?>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'Refresh',
-                'Width' => 124,
-                'Height' => 30,
-                'Type' => 'None',
-                'Text' => 'Обновить',
-                'OnAfterClick' => '$("#ControlContactsGrid").algridajax("Load");',
-            ));
-        ?>
     </div>
 </div>

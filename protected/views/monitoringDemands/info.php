@@ -19,12 +19,12 @@
         
 
         $("#mndm_id2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#Date2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { showCalendarButton: false, readonly: true }));
+        $("#Date2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
         $("#Prior2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
-        $("#Deadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { showCalendarButton: false, readonly: true }));
-        $("#WishDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { showCalendarButton: false, readonly: true }));
-        $("#DateAccept").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { showCalendarButton: false, readonly: true }));
-        $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { showCalendarButton: false, readonly: true }));
+        $("#Deadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
+        $("#WishDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
+        $("#DateAccept").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
+        $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
         $("#Description2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 590 }));
         
         

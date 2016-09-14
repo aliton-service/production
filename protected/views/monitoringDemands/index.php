@@ -29,90 +29,9 @@
         $("#Number").jqxNumberInput('val', null);
         
         
-        
         $('#jqxTabsMonitoringDemands').jqxTabs({ width: '100%', height: 490 });
         
-//        var filtergroup = new $.jqx.filter();
-//        var filtervalue = 10; // Each cell value is compared with the filter's value.
-//        // filtertype - numericfilter, stringfilter, datefilter or booelanfilter. 
-//        // condition
-//        // possible conditions for string filter: 'EMPTY', 'NOT_EMPTY', 'CONTAINS', 'CONTAINS_CASE_SENSITIVE',
-//        // 'DOES_NOT_CONTAIN', 'DOES_NOT_CONTAIN_CASE_SENSITIVE', 'STARTS_WITH', 'STARTS_WITH_CASE_SENSITIVE',
-//        // 'ENDS_WITH', 'ENDS_WITH_CASE_SENSITIVE', 'EQUAL', 'EQUAL_CASE_SENSITIVE', 'NULL', 'NOT_NULL'
-//        // possible conditions for numeric filter: 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'
-//        
-//        // possible conditions for date filter: 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'                         
-//        var filter = filtergroup.createfilter(filtertype, filtervalue, condition);
-//        var filter2 = filtergroup.createfilter(filtertype, filtervalue2, condition2);
-//        // To create a custom filter, you need to call the createfilter function and pass a custom callback function as a fourth parameter.
-//        // If the callback's name is 'customfilter', the Grid will pass 3 params to this function - filter's value, current cell value to evaluate and the condition.                        
-//        // operator - 0 for "and" and 1 for "or"
-//        filtergroup.addfilter(operator, filter);
-//        filtergroup.addfilter(operator, filter2);
-//        // datafield is the bound field.
-//        // adds a filter to the grid.
-//        $('#grid').jqxGrid('addfilter', datafield, filtergroup);
-//        // to add and apply the filter, use this:
-//        $('#jqxGrid').jqxGrid('addfilter', datafield, filtergroup, true);
-        
-        
-       
-//        
-//        var addfilter = function (args = [], dataField, filtertype, filter_or_operator)
-//        {                
-//                var filtergroup = new $.jqx.filter();
-//                var newFilter;
-//                for(var i = 0; i < args.length; i++)
-//                {
-////                    console.log(args[i].value);
-//                    if(args[i].value !== 0 && args[i].value !== ''){
-//
-//                        newFilter = filtergroup.createfilter(filtertype, args[i].value, args[i].filtercondition);
-//                        filtergroup.addfilter(filter_or_operator, newFilter);
-//                    }
-//                }
-//            $("#MonitoringDemandsGrid").jqxGrid('addfilter', dataField, filtergroup);
-//            $("#MonitoringDemandsGrid").jqxGrid('applyfilters');
-//        }
-//        
-//                
-//        var changeDateFormat = function (strDate = '') {
-//            if(strDate !== '') {
-//                var newDateVal = strDate[3] + strDate[4] + '.' + strDate[0] + strDate[1] + '.'+ strDate[6] + strDate[7] + strDate[8] + strDate[9];
-//                return newDateVal;
-//            } else {
-//                return strDate;
-//            }
-//        };
-//        
-//        
-//        var getFieldsVal = function () {
-//            var beginDateVal = $("#BeginDate").val();
-//            var newBeginDateVal = changeDateFormat(beginDateVal);
-//            
-//            var endDateVal = $("#EndDate").val();
-//            var newEndDateVal = changeDateFormat(endDateVal);
-//            
-//            var args = [
-//                { value: newBeginDateVal, filtercondition: 'GREATER_THAN_OR_EQUAL' },
-//                { value: newEndDateVal, filtercondition: 'LESS_THAN_OR_EQUAL' },
-//            ];
-//            addfilter(args, 'Date', 'datefilter', 0);
-//        };
-//        
-//        $('#BeginDate').on('valueChanged', function () {
-//            getFieldsVal();
-//        });
-//        
-//        
-//        $('#EndDate').on('valueChanged', function () {
-//            getFieldsVal();
-//        });
-//        
- 
-        
-        
-        
+
         $("#btnPrint").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#btnAcceptEmployeeName").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#btnCancelAcceptance").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));

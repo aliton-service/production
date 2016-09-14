@@ -1,189 +1,66 @@
-<?php
-/**
- *
- * @var ReplaceMasterController $this
- */
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        /* Текущая выбранная строка данных */
+        var CurrentRowData;
+        
+        var ReplaceMaster = {
+            Employee_id: '<?php // echo $model->Employee_id; ?>',
+        };
 
-$this->title = 'Мастера';
-
-if(isset($msg)) {
-	?>
-	<h3><?php echo $msg; ?></h3>
-	<?php
-}
-
-$form=$this->beginWidget('CActiveForm', array(
-	'id'=>'rmaster-form',
-	'htmlOptions'=>array(
-		'class'=>'form-inline'
-	),
-	'enableAjaxValidation' => true,
-	'enableClientValidation' => true,
-));
-
-echo $form->labelEx($model,'date');
-$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-	'id' => 'date',
-	'Name' => 'ReplaceMaster[date]',
-	'Value' => DateTimeManager::YiiDateToAliton($model->date),
-	'Width'=>300,
-));
-echo $form->error($model,'date');
-
-echo $form->labelEx($model, 'FromEmpl');
-$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-	'id' => 'fromempl',
-	'Stretch' => true,
-	'ModelName' => 'Employees',
-	'Height' => 300,
-	'Width' => 300,
-	'KeyField' => 'Employee_id',
-	'KeyValue' => $model->FromEmpl,
-	'FieldName' => 'EmployeeName',
-	'Name' => 'ReplaceMaster[FromEmpl]',
-	'Type' => array(
-		'Mode' => 'Filter',
-		'Condition' => 'e.EmployeeName like \':Value%\'',
-	),
-	'Columns' => array(
-		'group_name' => array(
-			'Name' => 'Мастер',
-			'FieldName' => 'EmployeeName',
-			'Width' => 300,
-		),
-	),
-	'OnAfterChange'=>'getCountDataMaster("fromempl")'
-));
-echo $form->error($model, 'FromEmpl');
-?>
-
-<div class="master-count" rel="fromempl">
-	<div class="field count-object">
-		<div class="pull-left"><label>Кол-во объектов</label></div>
-<!--		<input disabled class="count-object">-->
-		<div class="pull-left">
-			<?php
-			$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-				'id' => 'count1',
-				'Width' => 120,
-				'Type' => 'String',
-				'ReadOnly'=>true,
-				//	'Mode' => "Auto",
-			));
-			?>
-		</div>
-		<div class="clearfix"></div>
-	</div>
-	<div class="field count-contract">
-		<div class="pull-left"><label>Кол-во договоров</label></div>
-		<div class="pull-left">
-		<?php
-			$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-				'id' => 'count2',
-				'Width' => 120,
-				'Type' => 'String',
-				'ReadOnly'=>true,
-				//	'Mode' => "Auto",
-			));
-			?>
-			</div>
-<!--		<input disabled class="count-contract">-->
-	</div>
-</div>
-<div class="clearfix"></div>
-<?php
-
-echo $form->labelEx($model, 'ToEmpl');
-$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-	'id' => 'toempl',
-	'Stretch' => true,
-	'ModelName' => 'Employees',
-	'Height' => 300,
-	'Width' => 300,
-	'KeyField' => 'Employee_id',
-	'KeyValue' => $model->ToEmpl,
-	'FieldName' => 'EmployeeName',
-	'Name' => 'ReplaceMaster[ToEmpl]',
-	'Type' => array(
-		'Mode' => 'Filter',
-		'Condition' => 'e.EmployeeName like \':Value%\'',
-	),
-	'Columns' => array(
-		'group_name' => array(
-			'Name' => 'Мастер',
-			'FieldName' => 'EmployeeName',
-			'Width' => 300,
-		),
-	),
-	'OnAfterChange'=>'getCountDataMaster("toempl")'
-));
-echo $form->error($model, 'ToEmpl');
-?>
-
-<div class="master-count" rel="toempl">
-	<div class="field count-object">
-		<div class="pull-left"><label>Кол-во объектов</label></div>
-		<!--		<input disabled class="count-object">-->
-		<div class="pull-left">
-			<?php
-			$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-				'id' => 'count3',
-				'Width' => 120,
-				'Type' => 'String',
-				'ReadOnly'=>true,
-				//	'Mode' => "Auto",
-			));
-			?>
-		</div>
-		<div class="clearfix"></div>
-	</div>
-	<div class="field count-contract">
-		<div class="pull-left"><label>Кол-во договоров</label></div>
-		<div class="pull-left">
-			<?php
-			$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-				'id' => 'count4',
-				'Width' => 120,
-				'Type' => 'String',
-				'ReadOnly'=>true,
-				//	'Mode' => "Auto",
-			));
-			?>
-		</div>
-		<!--		<input disabled class="count-contract">-->
-	</div>
-</div>
-<div class="clearfix"></div>
-<?php
-	$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-		'id' => 'save-pricemonitoring',
-		'Height' => 30,
-		'Text' => 'Сохранить',
-		'Type' => 'Form',
-		'FormName'=>'rmaster-form'
-	));
-?>
-<!--<input type="submit" style="margin-top: 7px;margin-left: 5px" value="Сохранить">-->
-
-<?php $this->endWidget(); ?>
-
-
-<script>
-	function getCountDataMaster(from) {
-		var target = from
-		if(!alcomboboxajaxSettings[target].CurrentRow)  return false
-		$.ajax({
-			url: '/?r=replaceMaster/count&id='+alcomboboxajaxSettings[target].CurrentRow['Employee_id'],
-			dataType: 'json',
-			success: function(r){
-				if(r.status != 'ok') {
-					alert('error')
-					return false
-				}
-
-				$('.master-count[rel="'+target+'"] .count-object input').val(r.data[0].object)
-				$('.master-count[rel="'+target+'"] .count-contract input').val(r.data[0].contract)
-			}
-		})
-	}
+        var DataEmpl = new $.jqx.dataAdapter(Sources.SourceListEmployees);
+        
+        $("#DateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
+        
+        $("#FromEmpl").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "ShortName", valueMember: "Employee_id", width: 233 }));
+        $("#FromObjectCount").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
+        $("#FromContrsCount").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
+        
+        $("#ToEmpl").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "ShortName", valueMember: "Employee_id", width: 233 }));
+        $("#ToObjectCount").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
+        $("#ToContrsCount").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
+        
+        $("#btnReplaceMaster").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        
+    });
+    
+        
 </script>
+
+<?php $this->setPageTitle('Перевод мастеров'); ?>
+
+<div class="row" style="margin-left: 10px;">
+    <div class="row">
+        <div class="row-column">Дата начала работы: </div><div class="row-column"><div id='DateStart' name="ReplaceMaster[date]"></div></div>
+    </div>
+
+    <div class="row" style="padding: 10px; width: 350px; border: 1px solid #ddd; background-color: #F2F2F2;">
+        <div class="row-column" style="margin: 0 0 15px 5px; width: 100%;">Мастер С которого переводим объекты</div>
+        <div class="row">
+            <div class="row-column" style="margin-top: 4px;">Имя: </div><div class="row-column"><div id='FromEmpl' name="ReplaceMaster[FromEmpl]"></div><?php // echo $form->error($model, 'FromEmpl'); ?></div>
+        </div>
+        <div class="row">
+            <div class="row-column">Кол-во объектов на мастере: <input readonly id='FromObjectCount' type="text" style="margin-left: 8px;"></div>
+        </div>
+        <div class="row">
+            <div class="row-column">Кол-во договоров на мастере: <input readonly id='FromContrsCount' type="text" ></div>
+        </div>
+    </div>
+    
+    <div class="row" style="padding: 10px; width: 350px; border: 1px solid #ddd; background-color: #F2F2F2;">
+        <div class="row-column" style="margin: 0 0 15px 5px; width: 100%;">Мастер НА которого переводим объекты</div>
+        <div class="row">
+            <div class="row-column" style="margin-top: 4px;">Имя: </div><div class="row-column"><div id='ToEmpl' name="ReplaceMaster[ToEmpl]"></div><?php // echo $form->error($model, 'FromEmpl'); ?></div>
+        </div>
+        <div class="row">
+            <div class="row-column">Кол-во объектов на мастере: <input readonly id='ToObjectCount' type="text" style="margin-left: 8px;"></div>
+        </div>
+        <div class="row">
+            <div class="row-column">Кол-во договоров на мастере: <input readonly id='ToContrsCount' type="text" ></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row-column"><input type="button" value="Перевести" id='btnReplaceMaster' /></div>
+    </div>
+</div>
