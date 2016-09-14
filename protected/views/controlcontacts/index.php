@@ -8,14 +8,14 @@
             Employee_id: '<?php echo $model->Employee_id; ?>',
         };
 
-        var DataOrganizations = new $.jqx.dataAdapter(Sources.SourceOrganizationsVMin);
+        //var DataOrganizations = new $.jqx.dataAdapter(Sources.SourceOrganizationsVMin);
         var DataAddress = new $.jqx.dataAdapter(Sources.SourceListAddresses);
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
 
-        $("#Organizations").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrganizations, displayMember: "FormName", valueMember: "Form_id", width: 350 }));
+        //$("#Organizations").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrganizations, displayMember: "FormName", valueMember: "Form_id", width: 350 }));
         $("#Address").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddress, displayMember: "Addr", valueMember: "Address_id", width: 380 }));
         $("#Employee").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 200 }));
-        
+        $("#Employee").jqxComboBox('selectItem', ControlContacts.Employee_id);
         $("#DebtMin").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { min: 0, decimalDigits: 0 }));
         $("#DebtMax").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { min: 0, decimalDigits: 0 }));
         
@@ -68,6 +68,7 @@
         
         var AddFilters = function (args = [], ID, dataField, filterType, operator)
         {                
+                
                 var filtergroup = new $.jqx.filter();
                 var newFilter;
                 for(var i = 0; i < args.length; i++)
@@ -93,7 +94,8 @@
                 { value: debtMinValue, filtercondition: 'GREATER_THAN_OR_EQUAL' },
                 { value: debtMaxValue, filtercondition: 'LESS_THAN_OR_EQUAL' },
             ];
-            AddFilters(data, 'ControlContactsGrid', 'c.debt', 'numericfilter', 0);
+            AddFilters(data, 'ControlContactsGrid', 'og.debt', 'numericfilter', 0);
+            
         }); 
         
         $('#DebtMax').on('change', function (event)
@@ -105,7 +107,8 @@
                 { value: debtMinValue, filtercondition: 'GREATER_THAN_OR_EQUAL' },
                 { value: debtMaxValue, filtercondition: 'LESS_THAN_OR_EQUAL' },
             ];
-            AddFilters(data, 'ControlContactsGrid', 'c.debt', 'numericfilter', 0);
+            AddFilters(data, 'ControlContactsGrid', 'og.debt', 'numericfilter', 0);
+            
         }); 
         
         var changeDateFormat = function (date = null) {
@@ -123,6 +126,7 @@
         
         
         $('#BeginDate').on('valueChanged', function () {
+            
             var beginDateVal = $("#BeginDate").jqxDateTimeInput('getDate'); 
             var NewBeginDateVal = changeDateFormat(beginDateVal);
             
@@ -134,9 +138,11 @@
                 { value: NewEndDateVal, filtercondition: 'DATE_LESS_THAN_OR_EQUAL' },
             ];
             AddFilters(data, 'ControlContactsGrid', 'next_date', 'datefilter', 0);
+            
         });
         
         $('#EndDate').on('valueChanged', function () {
+            
             var beginDateVal = $("#BeginDate").jqxDateTimeInput('getDate'); 
             var NewBeginDateVal = changeDateFormat(beginDateVal);
             
@@ -148,6 +154,7 @@
                 { value: NewEndDateVal, filtercondition: 'DATE_LESS_THAN_OR_EQUAL' },
             ];
             AddFilters(data, 'ControlContactsGrid', 'next_date', 'datefilter', 0);
+            
         });
         
         
@@ -160,13 +167,13 @@
                 $("#ControlContactsGrid").jqxGrid('updatebounddata', 'sort');
             }
         }));
+
+        var DefaultFilterEmpl = GridFilters.CreateFilterAndFilterGroup('numericfilter', 1, ControlContacts.Employee_id, 'EQUAL');
         
         $("#ControlContactsGrid").on('bindingcomplete', function(){
-            $("#Employee").jqxComboBox('selectItem', ControlContacts.Employee_id);
-            
-            $('#ControlContactsGrid').jqxGrid('selectrow', 0);
+            $("#ControlContactsGrid").jqxGrid('selectrow', 0);
         });
-                    
+        
         $("#ControlContactsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -177,20 +184,21 @@
                 height: '400',
                 source: ControlContactsDataAdapter,
                 columns: [
-                    { text: 'Запланированная дата', dataField: 'next_date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 170 },
-                    { text: 'Тип контакта', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 140 },
-                    { text: 'Контактное лицо', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
-                    { text: 'Организация', dataField: 'FullName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 220 },
-                    { text: 'Form_id', dataField: 'Form_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
-                    { text: 'Адрес', dataField: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
-                    { text: 'Address_id', dataField: 'og.Address_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
-                    { text: 'Долг', dataField: 'debt', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80 },
-                    { text: 'c.debt', dataField: 'c.debt', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80, hidden: true },
-                    { text: 'Исполнитель', dataField: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
-                    { text: 'empl_id', dataField: 'cnt.empl_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
+                    { text: 'Запланированная дата', datafield: 'next_date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 170 },
+                    { text: 'Тип контакта', datafield: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 140 },
+                    { text: 'Контактное лицо', datafield: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Организация', datafield: 'FullName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 220 },
+                    { text: 'Form_id', datafield: 'Form_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
+                    { text: 'Адрес', datafield: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Address_id', datafield: 'og.Address_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
+                    { text: 'Долг', datafield: 'debt', filtercondition: 'STARTS_WITH', width: 80, cellsformat: 'f2' },
+                    { text: 'og.debt', datafield: 'og.debt', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80, hidden: true },
+                    { text: 'Исполнитель', datafield: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150},
+                    { text: 'empl_id', datafield: 'cnt.empl_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true, filter: DefaultFilterEmpl},
                 ]
             })
         );
+        
         
         
          // Привязка фильтров к гриду
@@ -198,8 +206,10 @@
         GridFilters.AddControlFilter('Employee', 'jqxComboBox', 'ControlContactsGrid', 'cnt.empl_id', 'numericfilter', 0, 'EQUAL', true);
         GridFilters.AddControlFilter('Address', 'jqxComboBox', 'ControlContactsGrid', 'og.Address_id', 'numericfilter', 0, 'EQUAL', true);
         
+        
 
         $("#ControlContactsGrid").on('rowselect', function (event) {
+            
             var Temp = $('#ControlContactsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowData = Temp;
@@ -218,9 +228,10 @@
                 if (CurrentRowData.cntp_name !== null) $("#Type").jqxInput('val', CurrentRowData.cntp_name);
                 if (CurrentRowData.contact !== null) $("#Contact").jqxInput('val', CurrentRowData.contact);
             }
+            
         });
 
-
+        
 
         
         $('#EditDialogControlContacts').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '770', width: '840'}));
@@ -233,6 +244,8 @@
         $("#btnCancelControlContacts").on('click', function () {
             $('#EditDialogControlContacts').jqxWindow('close');
         });
+        
+        
         
         var SendForm = function() {
             var Data = $('#Contacts').serialize();
@@ -250,10 +263,12 @@
                     } else {
                         $('#BodyDialogControlContacts').html(Res);
                     }
-
+                    
                 }
             });
         };
+
+        
 
         $("#btnOkControlContacts").on('click', function () {
             SendForm();
@@ -263,6 +278,7 @@
         $("#NewControlContacts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#MoreInfoControlContacts").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
         $("#ReloadControlContacts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
         
         
         
@@ -276,6 +292,7 @@
                 },
                 success: function(Res) {
                     $('#BodyDialogControlContacts').html(Res);
+                    
                 }
             });
         };
@@ -283,6 +300,8 @@
         $('#ControlContactsGrid').on('rowdoubleclick', function () { 
             $("#MoreInfoControlContacts").click();
         });
+        
+        
         
         
         $("#NewControlContacts").on('click', function () 
@@ -306,9 +325,12 @@
                 success: function(){
                     $("#ControlContactsGrid").jqxGrid('updatebounddata');
                     $("#ControlContactsGrid").jqxGrid('selectrow', 0);
+                    
                 }
             });
+            
         });
+        
         
         
     });

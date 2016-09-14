@@ -2124,7 +2124,7 @@ Sources.SourceControlContacts =
         { name: 'rslt_name',  type: 'string' },
         { name: 'drsn_name',  type: 'string' },
         { name: 'cntp_name',  type: 'string' },
-        { name: 'debt',  type: 'int' },
+        { name: 'debt',  type: 'float' },
         { name: 'last_cont',  type: 'date' },
     ],
     id: 'id',
