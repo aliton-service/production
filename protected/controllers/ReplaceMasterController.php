@@ -45,19 +45,14 @@ class ReplaceMasterController extends Controller
                 $model->EmplChange = Yii::app()->user->Employee_id;
                 if ($model->validate()) {
                     $model->callProc($model->REPLACE_MASTER);
-                    if ($this->isAjax()) {
-                        die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Мастера успешно переведены'))));
-                    } else {
-                        $this->render('index',array('model'=>$model,'msg'=>'Мастера успешно переведены'));
-                        return false;
-                    }
                 }
-            } else {
-                $this->title = 'Перевод мастеров';
-                $this->render('index',array(
-                    'model' => $model
-                ));
             }
+            
+            $this->title = 'Перевод мастеров';
+            $this->render('index',array(
+                'model' => $model
+            ));
+            
 	}
 
 
@@ -69,9 +64,10 @@ class ReplaceMasterController extends Controller
 		$data_count = $model->getMasterCount($id);
                 
 //                print_r($data_count);
-                print_r($data_count[0]['object']);
+//                print_r($data_count[0]['object']);
+
+                echo json_encode($data_count);
                 
-//                echo json_encode($data_count[0]['object']);
 //                echo json_encode($data_count[0]['contract']);
 //                echo json_encode(array('status'=>'ok','data'=>$data_count));
                 return;
