@@ -1,81 +1,75 @@
-<script>
-    
+<script type="text/javascript">
+    $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+        var Children = {
+            Children_id: <?php echo json_encode($model->Children_id); ?>,
+            ChildrenName: <?php echo json_encode($model->ChildrenName); ?>,
+            BirthDay: Aliton.DateConvertToJs('<?php echo $model->BirthDay; ?>')
+        };
+        
+        $("#edChildrenName").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "ФИО", width: 300}));
+        $("#edBirthDay").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Children.BirthDay, formatString: 'dd.MM.yyyy',}));
+        $('#btnSaveChild').jqxButton({ width: 120, height: 30 });
+        $('#btnCancelChild').jqxButton({ width: 120, height: 30 });
+        
+        if (Children.ChildrenName != '') $("#edChildrenName").jqxInput('val', Children.ChildrenName);
+        
+        
+        $('#btnCancelChild').on('click', function(){
+            $('#EmployeesDialog').jqxWindow('close');
+        });
+        
+        $('#btnSaveChild').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('Childrens/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('Childrens/Create')); ?>;
+            
+            $.ajax({
+                url: Url,
+                data: $('#Childrens').serialize(),
+                type: 'POST',
+                success: function(Res) {
+                    if (Res == '1') {
+                        $('#EmployeesDialog').jqxWindow('close');
+                        $('#btnRefreshChildren').click();
+                    }
+                    else
+                        $('#BodyEmployeesDialog').html(Res);
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        });
+        
+        if (Children.ChildrenName != '') $("#edChildrenName").jqxInput('val', Children.ChildrenName);
+
+    });
 </script>
 
-<?php 
+<?php
     $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'Childrens',
 	'htmlOptions'=>array(
 		'class'=>'form-inline'
 		),
-	'enableAjaxValidation'=>false,
     )); 
 ?>
 
-<?php
-    $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-        'id' => 'edChildren_id',
-        'Width' => 100,
-        'Type' => 'String',
-        'Name' => 'Childrens[Children_id]',
-        'Value' => $model->Children_id,
-        'ReadOnly' => true,
-        'Visible' => false,
-    ));
-?>
-
-<?php
-    $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-        'id' => 'edEmployee_id',
-        'Width' => 100,
-        'Type' => 'String',
-        'Name' => 'Childrens[Employee_id]',
-        'Value' => $model->Employee_id,
-        'ReadOnly' => true,
-        'Visible' => false,
-    ));
-?>
-
-<div style="float: left; width: 200px">ФИО Ребенка</div>
-<div style="float: left; ">
-<?php
-    $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-            'id' => 'edChildrenName',
-            'Width' => 280,
-            'Type' => 'String',
-            'Value' => $model->ChildrenName,
-            'Name' => 'Childrens[ChildrenName]',
-    ));
-?>
+<input type="hidden" name="Childrens[Children_id]" value="<?php echo $model->Children_id; ?>"/>
+<input type="hidden" name="Childrens[Employee_id]" value="<?php echo $model->Employee_id; ?>"/>
+<?php echo $form->error($model, 'Employee_id'); ?>
+<div class="row">
+    <div class="row-column">ФИО:</div>
+    <div class="row-column"><input type="text" name="Childrens[ChildrenName]" id="edChildrenName"/><?php echo $form->error($model, 'ChildrenName'); ?></div>
 </div>
-<div><?php echo $form->error($model, 'ChildrenName'); ?></div>
-<div style="clear: both"></div>
-<div style="float: left; width: 200px; margin-top: 6px">Дата рождения</div>
-<div style="float: left; margin-top: 6px">
-<?php
-    $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-            'id' => 'edBirthDay',
-            'Width' => 120,
-            'Value' => DateTimeManager::YiiDateToAliton($model->BirthDay),
-            'Name' => 'Childrens[BirthDay]',
-    ));
-?>
+<div class="row">
+    <div class="row-column">Дата рождения:</div>
+    <div class="row-column"><div name="Childrens[BirthDay]" id="edBirthDay"></div><?php echo $form->error($model, 'BirthDay'); ?></div>
 </div>
-<div><?php echo $form->error($model, 'BirthDay'); ?></div>
-<div style="clear: both"></div>
-<div style="float: left; margin-top: 6px;">
-    <div style="float: left;">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'SaveChildren',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Сохранить',
-                'FormName' => 'Childrens',
-                'Type' => 'Form',
-            ));
-        ?>
-    </div> 
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnSaveChild'/></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelChild'/></div>
 </div>
 <?php $this->endWidget(); ?>
 

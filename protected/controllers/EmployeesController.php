@@ -20,35 +20,20 @@ class EmployeesController extends Controller
         return array(
             array('allow',  
                 'actions'=>array('index','view','infoGeneral'),
-                'roles'=>array(
-                    'ViewEmployees',
-
-                ),
+                'roles'=>array('ViewEmployees'),
             ),
             array('allow', 
                 'actions'=>array('create'),
-                'roles'=>array(
-
-                    'CreateEmployees',
-
-                ),
+                'roles'=>array('CreateEmployees'),
             ),
             array('allow', 
                 'actions'=>array('update'),
-                'roles'=>array(
-
-                    'UpdateEmployees',
-
-                ),
+                'roles'=>array('UpdateEmployees'),
             ),
    
             array('allow', 
                 'actions'=>array('delete'),
-                'roles'=>array(
-
-                    'DeleteEmployees',
-
-                ),
+                'roles'=>array('DeleteEmployees'),
 
             ),
             array('deny',  
@@ -66,97 +51,62 @@ class EmployeesController extends Controller
 
     public function actionCreate()
     {
-        $model = new Employees;
-
+        $model = new Employees();
+        
         if (isset($_POST['Employees'])) {
             $model->attributes = $_POST['Employees'];
-            $model->EmplCreate = Yii::app()->user->Employee_id;
             if ($model->validate()) {
-                $model->insert();
-                if ($this->isAjax()) {
-                    die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о сотруднике успешно создана'))));
-                } else {
-                    $this->redirect('/?r=Employees');
-                }
+                $model->Insert();
+                echo '1';
+                return;
             }
         }
-        if ($this->isAjax()) {
-            $this->renderPartial('create', array('model' => $model), false, true);
-        } else {
-            $this->render('create', array('model' => $model));
-        }
-
+        
+        $this->renderPartial('_form', array(
+            'model' => $model,
+        ));
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model=new Employees;
-        if ($id == null)
-            throw new CHttpException(404, 'Не выбран сотрудник.');
+        $model = new Employees();
+        if (isset($_POST['Employee_id']))
+            $model->getModelPk($_POST['Employee_id']);
 
-
-//                $model=$this->loadModel($id);
-//
-//
-//                if (!Yii::app()->LockManager->LockRecord('Employees', $model->tableSchema->primaryKey, $id))
-//                    throw new CHttpException(404, 'Запись заблокирована другим пользователем');
-
-        if($id && (int)$id > 0 && isset($_POST['Employees'])) {
+        if (isset($_POST['Employees'])) {
+            $model->getModelPk($_POST['Employees']['Employee_id']);
             $model->attributes = $_POST['Employees'];
-            $model->Employee_id = (int)$id;
-            $model->EmplChange = Yii::app()->user->Employee_id;
             if ($model->validate()) {
-                $model->update();
-                if ($this->isAjax()) {
-                    die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о сотруднике успешно изменена'))));
-                } else {
-                    $this->redirect('/?r=Employees');
-                }
+                $model->Update();
+                echo '1';
+                return;
             }
-        } else {
-            $model->getModelPk($id);
         }
-        if($this->isAjax()) {
-            $this->renderPartial('update', array('model'=>$model), false, true);
-        } else {
-            $this->render('update', array('model'=>$model));
-        }
+
+        $this->renderPartial('_form', array(
+            'model' => $model,
+        ));
         
     }
 
   
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $model=new Employees;
-
-        $model->Employee_id = $id;
-        $model->EmplDel = Yii::app()->user->Employee_id;
-        $model->delete();
-        if($this->isAjax()) {
-            die(json_encode(array('status'=>'ok','data'=>array('msg'=>'Запись о группе оборудований успешно удалена'))));
+        if (isset($_POST['Employee_id'])) {
+            $model = new Employees();
+            $model->getModelPk($_POST['Employee_id']);
+            $model->Delete();
         }
-        else {
-            $this->redirect('/?r=Employees');
-        }
-
+        else
+            throw new Exception('РќРµ РЅР°Р№РґРµРЅ ID Р·Р°РїРёСЃРё.');
+    
     }
 
   
     public function actionIndex()
     {
+        $this->title = 'РЎРѕС‚СЂСѓРґРЅРёРєРё';
         $this->render('index');
-
     }
-
-    public function actionInfoGeneral($id=false) {
-        $model = new Employees();
-        $this->renderPartial("general", array('model'=>$model), false, true);
-    }
-
-
-
-//    public function actionIndex(){
-//        $this->renderPartial("index", null, false, true);
-//    }
 }
 

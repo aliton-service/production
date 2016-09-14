@@ -301,6 +301,7 @@ Sources.SourceStreets =
     datafields: [
         { name: 'Street_id' },
         { name: 'StreetName' },
+        { name: 'Region_id', type: 'int' },
     ],
     id: 'Street_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Streets',
@@ -1568,6 +1569,26 @@ Sources.SourceJuridicalsMin =
     }
 };
 
+Sources.SourceJuridicalsMin =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Jrdc_Id',  type: 'int' },
+        { name: 'JuridicalPerson',  type: 'string' },
+    ],
+    id: 'Jrdc_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=JuridicalsMin',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 
 
 Sources.SourceContractTypes =
@@ -1906,6 +1927,161 @@ Sources.SourceMonitoringDemandDetails =
     root: 'Rows',
     cache: false,
     async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceEmployees =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Employee_id', type: 'int'},
+        {name: 'EmployeeName', type: 'string'},
+        {name: 'ShortName', type: 'string'},
+        {name: 'Address', type: 'string'},
+        {name: 'Addr', type: 'string'},
+        {name: 'Birthday', type: 'date'},
+        {name: 'PositionName', type: 'string'},
+        {name: 'DepName', type: 'string'},
+        {name: 'SectionName', type: 'string'},
+        {name: 'Territ_Name', type: 'string'},
+        {name: 'DateStart', type: 'date'},
+        {name: 'DateEnd', type: 'date'},
+        {name: 'JuridicalPerson', type: 'string'},
+        {name: 'DateBegin', type: 'date'},
+        {name: 'DateTrial', type: 'date'},
+        {name: 'BypassList', type: 'date'},
+        {name: 'CerDateIn', type: 'date'},
+        {name: 'CerDateOut', type: 'date'},
+        {name: 'Note', type: 'string'},
+        {name: 'Tel_home', type: 'string'},
+        {name: 'Tel_work', type: 'string'},
+        {name: 'Tel_other', type: 'string'},
+        {name: 'WorkEmail', type: 'string'},
+        {name: 'Email', type: 'string'},
+        {name: 'Information', type: 'string'},
+        {name: 'Documents', type: 'string'},
+        
+        
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=Employees',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourcePositions =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Position_id',  type: 'int' },
+        { name: 'PositionName',  type: 'string' },
+    ],
+    id: 'Position_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Positions',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceSections =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Section_id',  type: 'int' },
+        { name: 'SectionName',  type: 'string' },
+    ],
+    id: 'Position_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Sections',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDepartments =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Dep_id',  type: 'int' },
+        { name: 'DepName',  type: 'string' },
+    ],
+    id: 'Position_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Departments',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceChildrens =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Children_id',  type: 'int' },
+        { name: 'Employee_id',  type: 'int' },
+        { name: 'ChildrenName',  type: 'string' },
+        { name: 'BirthDay',  type: 'date' },
+        { name: 'DateCreate',  type: 'date' },
+        { name: 'Age',  type: 'string' },
+    ],
+    id: 'Children_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Childrens',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceInstructings =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Instructing_id',  type: 'int' },
+        { name: 'Employee_id',  type: 'int' },
+        { name: 'UserExec',  type: 'int' },
+        { name: 'EmployeeName',  type: 'string' },
+        { name: 'Name',  type: 'string' },
+        { name: 'Date',  type: 'date' },
+        { name: 'Note',  type: 'string' },
+    ],
+    id: 'Instructing_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Instructings',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {

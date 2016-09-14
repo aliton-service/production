@@ -11,6 +11,7 @@ class Instructings extends MainFormModel
 	public $UserChange = null;
 	public $Date = null;
 	public $UserExec = null;
+        public $EmployeeName;
 	public $Note = null;
 	public $DelDate = null;
 	public $EmplCreate = null;
@@ -63,12 +64,7 @@ class Instructings extends MainFormModel
 	{
 
 		return array(
-			array('Date, UserExec', 'required'),
-			array('Employee_id, UserExec', 'numerical', 'integerOnly'=>true),
-			array('Name', 'length', 'max'=>250),
-			array('UserCreate, UserChange', 'length', 'max'=>50),
-			array('Note', 'length', 'max'=>150),
-			array('DelDate', 'safe'),
+			array('Date, UserExec, Name', 'required'),
 			array('Instructing_id, Employee_id, Name, DateCreate, UserCreate, DateChange, UserChange, Date, UserExec, Note, DelDate', 'safe'),
 		);
 	}

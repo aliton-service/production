@@ -7,11 +7,15 @@ class Employees extends MainFormModel
     public $Alias;
     public $RemoteAlias;
     public $Position_id;
+    public $PositionName;
     public $Dep_id;
+    public $DepName;
     public $Section_id;
+    public $SectionName;
     public $DateStart;
     public $DateEnd;
     public $Address;
+    public $Addr;
     public $Tel_home;
     public $Tel_work;
     public $Birthday;
@@ -19,6 +23,7 @@ class Employees extends MainFormModel
     public $Note;
     public $upsize_ts;
     public $Territ_Id;
+    public $Territ_Name;
     public $DateCreate;
     public $DateChange;
     public $UserCreate2;
@@ -26,6 +31,7 @@ class Employees extends MainFormModel
     public $DelDate;
     public $DateBegin;
     public $Jrdc_id;
+    public $JuridicalPerson;
     public $Tel_other;
     public $Dataend_trial_period;
     public $Date_motivation;

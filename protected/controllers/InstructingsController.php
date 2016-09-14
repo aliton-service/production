@@ -66,79 +66,52 @@ class InstructingsController extends Controller
 
 	public function actionCreate()
 	{
-		$model = new Instructings;
+            $model = new Instructings();
+            if (isset($_POST['Employee_id']))
+                $model->Employee_id = $_POST['Employee_id'];
 
-		if (isset($_POST['Instructings'])) {
-			$model->attributes = $_POST['Instructings'];
-			$model->EmplCreate = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->insert();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись об инструктаже успешно создана'))));
-				} else {
-					$this->redirect('/?r=Instructings');
-				}
-			}
-		}
-		if ($this->isAjax()) {
-			$this->renderPartial('create', array('model' => $model), false, true);
-		} else {
-			$this->render('create', array('model' => $model));
-		}
+            if (isset($_POST['Instructings'])) {
+                $model->attributes = $_POST['Instructings'];
+                if ($model->validate()) {
+                    $model->Insert();
+                    echo '1';
+                    return;
+                }
+            }
 
+            $this->renderPartial('_form', array(
+                'model' => $model,
+            ));
 	}
 
-	public function actionUpdate($id)
-	{
-		$model=new Instructings;
-		if ($id == null)
-			throw new CHttpException(404, 'Не выбрана запись.');
+	public function actionUpdate()
+        {
+            $model = new Instructings();
+            if (isset($_POST['Instructing_id']))
+                $model->getModelPk($_POST['Instructing_id']);
 
+            if (isset($_POST['Instructings'])) {
+                $model->getModelPk($_POST['Instructings']['Instructing_id']);
+                $model->attributes = $_POST['Instructings'];
+                if ($model->validate()) {
+                    $model->Update();
+                    echo '1';
+                    return;
+                }
+            }
 
-//                $model=$this->loadModel($id);
-//
-//
-//                if (!Yii::app()->LockManager->LockRecord('Instructings', $model->tableSchema->primaryKey, $id))
-//                    throw new CHttpException(404, 'Запись заблокирована другим пользователем');
-
-		if($id && (int)$id > 0 && isset($_POST['Instructings'])) {
-			$model->attributes = $_POST['Instructings'];
-			$model->Instructing_id = (int)$id;
-			$model->EmplChange = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->update();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись об инструктаже успешно изменена'))));
-				} else {
-					$this->redirect('/?r=Instructings');
-				}
-			}
-		} else {
-			$model->getModelPk($id);
-		}
-		if($this->isAjax()) {
-			$this->renderPartial('update', array('model'=>$model), false, true);
-		} else {
-			$this->render('update', array('model'=>$model));
-		}
-
+            $this->renderPartial('_form', array(
+                'model' => $model,
+            ));
 	}
 
 
-	public function actionDelete($id)
+	public function actionDelete()
 	{
-		$model=new Instructings;
-
-		$model->Instructing_id = $id;
-		$model->EmplDel = Yii::app()->user->Employee_id;
-		$model->delete();
-		if($this->isAjax()) {
-			die(json_encode(array('status'=>'ok','data'=>array('msg'=>'Запись об инструктаже успешно удалена'))));
-		}
-		else {
-			$this->redirect('/?r=Instructings');
-		}
-
+            $model = new Instructings();
+            $model->getmodelPk($_POST['Instructing_id']);
+            $model->delete();
+            echo '1';
 	}
 
 

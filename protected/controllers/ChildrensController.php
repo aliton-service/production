@@ -37,68 +37,47 @@ class ChildrensController extends Controller
         );
     }
 
-    public function actionCreate($Ajax = false, $Employee_id = null)
+    public function actionCreate()
     {
-        $this->title = 'Создание новой должности';
+        
         $model = new Childrens();
-        $model->Employee_id = $Employee_id;
-        $model->setScenario('Insert');
-
-        if(isset($_POST['Childrens'])) {
-            $model->attributes=$_POST['Childrens'];
-            $model->EmplCreate = Yii::app()->user->Employee_id;
-
+        if (isset($_POST['Employee_id']))
+            $model->Employee_id = $_POST['Employee_id'];
+        
+        if (isset($_POST['Childrens'])) {
+            $model->attributes = $_POST['Childrens'];
             if ($model->validate()) {
-                $model->insert();
-                //$this->redirect(Yii::app()->createUrl('Childrens/index'));
-            }    
+                $model->Insert();
+                echo '1';
+                return;
+            }
         }
         
-        if ($Ajax)
-            $this->renderPartial('create',array(
-                'model'=>$model,
-                'ajax'=>$Ajax,
-            ), false, true);
-        else
-            $this->render('create',array(
-                    'model'=>$model,
-                    'ajax'=>$Ajax,
-            ));
+        $this->renderPartial('_form', array(
+            'model' => $model,
+        ));
     }
 
 
-    public function actionUpdate($Children_id)
+    public function actionUpdate()
     {
-        $this->title = 'Редактирование должности';
-
         $model = new Childrens();
-        $model->setScenario('Update');
-        
-        
-        if ($Children_id == null)
-                throw new CHttpException(404, 'Не выбрана запись.');
+        if (isset($_POST['Children_id']))
+            $model->getModelPk($_POST['Children_id']);
 
-        if(isset($_POST['Childrens']))
-        {
-            $model->attributes=$_POST['Childrens'];
-
-            $model->EmplChange = Yii::app()->user->Employee_id;
-
+        if (isset($_POST['Childrens'])) {
+            $model->getModelPk($_POST['Childrens']['Children_id']);
+            $model->attributes = $_POST['Childrens'];
             if ($model->validate()) {
-                $model->update();
+                $model->Update();
+                echo '1';
+                return;
             }
         }
-        else
-        {
-            $model->getmodelPk($Children_id);
-            $this->title .= ' ' . $model->ChildrenName;
-        }
 
-        $this->render('update', array(
-                'model'=>$model,
-                'ajax'=>false,
-            )
-        );
+        $this->renderPartial('_form', array(
+            'model' => $model,
+        ));
     }
 
     public function actionDelete($Children_id)

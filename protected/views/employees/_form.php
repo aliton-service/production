@@ -1,575 +1,274 @@
-<?php
-/**
- *
- * @var EmployeesController $this
- * @var \Employees $model
- */
-
-
-$form=$this->beginWidget('CActiveForm', array(
-	'id'=>'equips-form',
-	'htmlOptions'=>array(
-		'class'=>'form-inline'
-	),
-	'enableAjaxValidation' => true,
-	'enableClientValidation' => true,
-));
-?>
-<div class="field">
-	<?php
-	echo $form->labelEx($model, 'EmployeeName');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'EmployeeName',
-		'Width' => 300,
-		'Type' => 'String',
-		'Value' => $model->EmployeeName,
-		'Name' => 'Employees[EmployeeName]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'EmployeeName');
-	?>
-</div>
-<?php
-
-
-?><div class="field pull-left"><?php
-	echo $form->labelEx($model, 'Position_id');
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'position',
-		'Stretch' => true,
-		'ModelName' => 'Positions',
-		'Height' => 300,
-		'Width' => 300,
-		'KeyField' => 'Position_id',
-		'KeyValue' => $model->Position_id,
-		'FieldName' => 'PositionName',
-		'Name' => 'Employees[Position_id]',
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => 'p.PositionName like \':Value%\'',
-		),
-		'Columns' => array(
-			'group_name' => array(
-				'Name' => 'Должность',
-				'FieldName' => 'PositionName',
-				'Width' => 300,
-
-			),
-		),
-	));
-	echo $form->error($model, 'Position_id');
-
-
-	echo $form->labelEx($model,'DateStart');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'DateStart',
-		'Name' => 'Employees[DateStart]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->DateStart),
-		'Width'=>300,
-	));
-	echo $form->error($model,'DateStart');
-
-	echo $form->labelEx($model, 'Jrdc_id');
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'Jrdc',
-		'Stretch' => true,
-		'ModelName' => 'Juridicals',
-		'Height' => 300,
-		'Width' => 300,
-		'KeyField' => 'Jrdc_Id',
-		'KeyValue' => $model->Jrdc_id,
-		'FieldName' => 'JuridicalPerson',
-		'Name' => 'Employees[Jrdc_id]',
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => 'jur.JuridicalPerson like \':Value%\'',
-		),
-		'Columns' => array(
-			'group_name' => array(
-				'Name' => 'Юр. лицо',
-				'FieldName' => 'JuridicalPerson',
-				'Width' => 300,
-			),
-		),
-	));
-	echo $form->error($model, 'Jrdc_id');
-
-	echo $form->labelEx($model,'DateBegin');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'DateBegin',
-		'Name' => 'Employees[DateBegin]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->DateBegin),
-		'Width'=>300,
-	));
-	echo $form->error($model,'DateBegin');
-?></div><?php
-
-
-?><div class="field pull-left"><?php
-
-	echo $form->labelEx($model,'DateEnd');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'DateEnd',
-		'Name' => 'Employees[DateEnd]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->DateEnd),
-		'Width'=>300,
-	));
-	echo $form->error($model,'DateEnd');
-
-
-	echo $form->labelEx($model,'Birthday');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'Birthday',
-		'Name' => 'Employees[Birthday]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->Birthday),
-		'Width'=>300,
-	));
-	echo $form->error($model,'Birthday');
-
-
-	echo $form->labelEx($model,'CerDateIn');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'CerDateIn',
-		'Name' => 'Employees[CerDateIn]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->CerDateIn),
-		'Width'=>300,
-	));
-	echo $form->error($model,'CerDateIn');
-
-	echo $form->labelEx($model,'CerDateOut');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'CerDateOut',
-		'Name' => 'Employees[CerDateOut]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->CerDateOut),
-		'Width'=>300,
-	));
-	echo $form->error($model,'CerDateOut');
-?></div><div class="clearfix"></div><?php
-
-
-?>
-<div class="field">
-	<?php
-	echo $form->labelEx($model, 'Section_id');
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'section',
-		'Stretch' => true,
-		'ModelName' => 'Sections',
-		'Height' => 300,
-		'Width' => 300,
-		'KeyField' => 'Section_id',
-		'KeyValue' => $model->Section_id,
-		'FieldName' => 'SectionName',
-		'Name' => 'Employees[Section_id]',
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => 's.SectionName like \':Value%\'',
-		),
-		'Columns' => array(
-			'group_name' => array(
-				'Name' => 'Служба',
-				'FieldName' => 'SectionName',
-				'Width' => 300,
-			),
-		),
-	));
-	echo $form->error($model, 'Section_id');
-
-
-	echo $form->labelEx($model, 'Dep_id');
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'Departments',
-		'Stretch' => true,
-		'ModelName' => 'Departments',
-		'Height' => 300,
-		'Width' => 300,
-		'KeyField' => 'Dep_id',
-		'KeyValue' => $model->Dep_id,
-		'FieldName' => 'DepName',
-		'Name' => 'Employees[Dep_id]',
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => 'dp.DepName like \':Value%\'',
-		),
-		'Columns' => array(
-			'group_name' => array(
-				'Name' => 'Отдел',
-				'FieldName' => 'DepName',
-				'Width' => 300,
-			),
-		),
-	));
-	echo $form->error($model, 'Dep_id');
-	?>
-</div>
-
-<div class="field pull-left">
-
-<?php
-
-
-	echo $form->labelEx($model, 'Territ_Id');
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'Territory',
-		'Stretch' => true,
-		'ModelName' => 'Territory',
-		'Height' => 300,
-		'Width' => 300,
-		'KeyField' => 'Territ_Id',
-		'KeyValue' => $model->Territ_Id,
-		'FieldName' => 'Territ_Name',
-		'Name' => 'Employees[Territ_Id]',
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => 't.Territ_Name like \':Value%\'',
-		),
-		'Columns' => array(
-			'group_name' => array(
-				'Name' => 'Отдел',
-				'FieldName' => 'Territ_Name',
-				'Width' => 300,
-			),
-		),
-	));
-	echo $form->error($model, 'Territ_Id');
-
-?>
-</div>
-
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Tel_home');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Tel_home',
-		'Width' => 300,
-		'Type' => 'String',
-		'Value' => $model->Tel_home,
-		'Name' => 'Employees[Tel_home]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Tel_home');
-	?>
-</div>
-<div class="clearfix"></div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Tel_other');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Tel_other',
-		'Width' => 300,
-		'Type' => 'String',
-		'Value' => $model->Tel_other,
-		'Name' => 'Employees[Tel_other]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Tel_other');
-	?>
-</div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Tel_work');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Tel_work',
-		'Width' => 300,
-		'Type' => 'String',
-		'Value' => $model->Tel_work,
-		'Name' => 'Employees[Tel_work]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Tel_work');
-	?>
-</div>
-<div class="clearfix"></div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'WorkEmail');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'WorkEmail',
-		'Width' => 300,
-		'Type' => 'String',
-		'Value' => $model->WorkEmail,
-		'Name' => 'Employees[WorkEmail]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'WorkEmail');
-	?>
-</div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Email');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Email',
-		'Width' => 300,
-		'Type' => 'String',
-		'Value' => $model->Tel_home,
-		'Name' => 'Employees[Email]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Email');
-	?>
-</div>
-
-<div class="clearfix"></div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'DateTrial');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'DateTrial',
-		'Name' => 'Employees[DateTrial]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->DateTrial),
-		'Width'=>300,
-	));
-	echo $form->error($model, 'DateTrial');
-	?>
-</div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Address');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Address',
-		'Width' => 300,
-		'Type' => 'String',
-		'Value' => $model->Address,
-		'Name' => 'Employees[Address]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Address');
-	?>
-</div>
-
-<div class="clearfix"></div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Prior_result');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'Prior_result',
-		'Name' => 'Employees[Prior_result]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->Prior_result),
-		'Width'=>197,
-	));
-	echo $form->error($model, 'Prior_result');
-	?>
-</div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'BypassList');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'BypassList',
-		'Name' => 'Employees[BypassList]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->BypassList),
-		'Width'=>197,
-	));
-	echo $form->error($model, 'BypassList');
-	?>
-</div>
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Date_motivation');
-	$this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-		'id' => 'Date_motivation',
-		'Name' => 'Employees[Date_motivation]',
-		'Value' => DateTimeManager::YiiDateToAliton($model->Date_motivation),
-		'Width'=>197,
-	));
-	echo $form->error($model, 'Date_motivation');
-	?>
-</div>
-<div class="clearfix"></div>
-
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Region_id');
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'Region_id',
-		'Stretch' => true,
-		'ModelName' => 'Regions',
-		'Height' => 300,
-		'Width' => 120,
-		'KeyField' => 'Region_id',
-		'KeyValue' => $model->Region_id,
-		'FieldName' => 'RegionName',
-		'Name' => 'Employees[Region_id]',
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => 'r.RegionName like \':Value%\'',
-		),
-		'Columns' => array(
-			'group_name' => array(
-				'Name' => 'Регион',
-				'FieldName' => 'RegionName',
-				'Width' => 300,
-			),
-		),
-	));
-	echo $form->error($model, 'Territ_Id');
-	?>
-</div>
-
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Area_id');
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'Area_id',
-		'Stretch' => true,
-		'ModelName' => 'Areas',
-		'Height' => 300,
-		'Width' => 120,
-		'KeyField' => 'Area_id',
-		'KeyValue' => $model->Area_id,
-		'FieldName' => 'AreaName',
-		'Name' => 'Employees[Area_id]',
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => 'a.AreaName like \':Value%\'',
-		),
-		'Columns' => array(
-			'group_name' => array(
-				'Name' => 'Район',
-				'FieldName' => 'AreaName',
-				'Width' => 300,
-			),
-		),
-	));
-	echo $form->error($model, 'Area_id');
-	?>
-</div>
-
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Street_id');
-	$this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-		'id' => 'Street_id',
-		'Stretch' => true,
-		'ModelName' => 'Streets',
-		'Height' => 300,
-		'Width' => 140,
-		'KeyField' => 'Street_id',
-		'KeyValue' => $model->Street_id,
-		'FieldName' => 'StreetName',
-		'Name' => 'Employees[Street_id]',
-		'Type' => array(
-			'Mode' => 'Filter',
-			'Condition' => 'st.StreetName like \':Value%\'',
-		),
-		'Columns' => array(
-			'group_name' => array(
-				'Name' => 'Улица',
-				'FieldName' => 'StreetName',
-				'Width' => 300,
-			),
-		),
-	));
-	echo $form->error($model, 'Street_id');
-	?>
-</div>
-
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'House');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'House',
-		'Width' => 60,
-		'Type' => 'String',
-		'Value' => $model->House,
-		'Name' => 'Employees[House]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'House');
-	?>
-</div>
-
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Corp');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Corp',
-		'Width' => 50,
-		'Type' => 'String',
-		'Value' => $model->Corp,
-		'Name' => 'Employees[Corp]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Corp');
-	?>
-</div>
-
-<div class="field pull-left">
-	<?php
-	echo $form->labelEx($model, 'Apartment');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Apartment',
-		'Width' => 70,
-		'Type' => 'String',
-		'Value' => $model->Apartment,
-		'Name' => 'Employees[Apartment]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Apartment');
-	?>
-</div>
-<div class="clearfix"></div>
-
-<div class="field">
-	<?php
-	echo $form->labelEx($model, 'Documents');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Documents',
-		'Width' => 610,
-		'Type' => 'String',
-		'Value' => $model->Documents,
-		'Name' => 'Employees[Documents]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Documents');
-	?>
-</div>
-
-
-<div class="field">
-	<?php
-	echo $form->labelEx($model, 'Note');
-	$this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-		'id' => 'Note',
-		'Width' => 610,
-		'Type' => 'String',
-		'Value' => $model->Note,
-		'Name' => 'Employees[Note]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Note');
-	?>
-</div>
-
-
-<div class="field">
-	<?php
-	echo $form->labelEx($model, 'Information');
-	$this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-		'id' => 'Information',
-		'Width' => 610,
-		'Type' => 'String',
-		'Value' => $model->Information,
-		'Name' => 'Employees[Information]',
-		//'Mode' => "Auto",
-	));
-	echo $form->error($model, 'Information');
-	?>
-</div>
-
-<input type="submit" style="margin-top: 7px;margin-left: 5px" value="Сохранить">
-
-<?php $this->endWidget(); ?>
-
-
-<script>
-	Aliton.Links = [{
-		Out: "Region_id",
-		In: "Street_id",
-		TypeControl: "Combobox",
-		Condition: "st.Region_id = :Value",
-		Field: "Region_id",
-		Name: "TestCombobox4_Filter1",
-		TypeFilter: "Internal",
-		TypeLink: "Filter",
-	}];
+<script type="text/javascript">
+    $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+        var Employee = {
+            Employee_id: <?php echo json_encode($model->Employee_id); ?>,
+            EmployeeName: <?php echo json_encode($model->EmployeeName); ?>,
+            Position_id: <?php echo json_encode($model->Position_id); ?>,
+            DateEnd: Aliton.DateConvertToJs('<?php echo $model->DateEnd; ?>'),
+            DateStart: Aliton.DateConvertToJs('<?php echo $model->DateStart; ?>'),
+            Birthday: Aliton.DateConvertToJs('<?php echo $model->Birthday; ?>'),
+            CerDateIn: Aliton.DateConvertToJs('<?php echo $model->CerDateIn; ?>'),
+            CerDateOut: Aliton.DateConvertToJs('<?php echo $model->CerDateOut; ?>'),
+            DateBegin: Aliton.DateConvertToJs('<?php echo $model->DateBegin; ?>'),
+            Jrdc_id: <?php echo json_encode($model->Jrdc_id); ?>,
+            Section_id: <?php echo json_encode($model->Section_id); ?>,
+            Dep_id: <?php echo json_encode($model->Dep_id); ?>,
+            Territ_Id: <?php echo json_encode($model->Territ_Id); ?>,
+            Region_id: <?php echo json_encode($model->Region_id); ?>,
+            Tel_home: <?php echo json_encode($model->Tel_home); ?>,
+            Tel_other: <?php echo json_encode($model->Tel_other); ?>,
+            Tel_work: <?php echo json_encode($model->Tel_work); ?>,
+            WorkEmail: <?php echo json_encode($model->WorkEmail); ?>,
+            Email: <?php echo json_encode($model->Email); ?>,
+            DateTrial: Aliton.DateConvertToJs('<?php echo $model->DateTrial; ?>'),
+            Address: <?php echo json_encode($model->Address); ?>,
+            Prior_result: Aliton.DateConvertToJs('<?php echo $model->Prior_result; ?>'),
+            BypassList: Aliton.DateConvertToJs('<?php echo $model->BypassList; ?>'),
+            Date_motivation: Aliton.DateConvertToJs('<?php echo $model->Date_motivation; ?>'),
+            Area_id: <?php echo json_encode($model->Area_id); ?>,
+            Street_id: <?php echo json_encode($model->Street_id); ?>,
+            House: <?php echo json_encode($model->House); ?>,
+            Corp: <?php echo json_encode($model->Corp); ?>,
+            Apartment: <?php echo json_encode($model->Apartment); ?>,
+            Documents: <?php echo json_encode($model->Documents); ?>,
+            Note: <?php echo json_encode($model->Note); ?>,
+            Information: <?php echo json_encode($model->Information); ?>,
+        };
+        
+        var DataPositions = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePositions));
+        var DataJuridiclas = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceJuridicalsMin));
+        var DataSections = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSections));
+        var DataDepartments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDepartments));
+        var DataTerritory = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceTerritory, {async: false}));
+        var DataRegions = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListRegionsMin));
+        var DataAreas = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAreas));
+        var DataStreets = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}), {
+            beforeLoadComplete: function (records) {
+                var value = Employee.Region_id;
+                var filteredRecords = new Array();
+                for (var i = 0; i < records.length; i++) {
+                    if (records[i].Region_id == parseInt(value)) 
+                        filteredRecords.push(records[i]);
+                }
+                return filteredRecords;
+            }
+        });
+        
+        $("#edEmployeeName").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "ФИО", width: 400}));
+        $("#edPosition").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPositions, width: '290', height: '25px', displayMember: "PositionName", valueMember: "Position_id"}));
+        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.DateEnd, formatString: 'dd.MM.yyyy',}));
+        $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.DateStart, formatString: 'dd.MM.yyyy',}));
+        $("#edBirthday").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.Birthday, formatString: 'dd.MM.yyyy',}));
+        $("#edJuridicalPerson").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridiclas, width: '290', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"}));
+        $("#edCerDateIn").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.CerDateIn, formatString: 'dd.MM.yyyy',}));
+        $("#edDateBegin").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.DateBegin, formatString: 'dd.MM.yyyy',}));
+        $("#edCerDateOut").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.CerDateOut, formatString: 'dd.MM.yyyy',}));
+        $("#edSection").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSections, width: '180', height: '25px', displayMember: "SectionName", valueMember: "Section_id"}));
+        $("#edDepartment").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataDepartments, width: '180', height: '25px', displayMember: "DepName", valueMember: "Dep_id"}));
+        $("#edTerrit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataTerritory, width: '180', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id"}));
+        $("#edTelHomeEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Дом. тел.", width: 200}));
+        $("#edTelOtherEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Другие тел.", width: 200}));
+        $("#edTelWorkEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Рабочий тел.", width: 200}));
+        $("#edWorkEmailEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Рабочий E-mail", width: 200}));
+        $("#edEmailEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Личный E-mail", width: 200}));
+        $("#edDateTrial").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.DateTrial, formatString: 'dd.MM.yyyy',}));
+        $("#edAddressEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 335}));
+        $("#edPriorResult").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.Prior_result, formatString: 'dd.MM.yyyy',}));
+        $("#edBypassList").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.BypassList, formatString: 'dd.MM.yyyy',}));
+        $("#edDate_motivation").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.Date_motivation, formatString: 'dd.MM.yyyy',}));
+        $("#edRegion").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataRegions, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"}));
+        $("#edArea").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAreas, width: '100', height: '25px', displayMember: "AreaName", valueMember: "Area_id"}));
+        $("#edStreet").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataStreets, width: '180', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}));
+        $("#edHouse").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Дом", width: 80}));
+        $("#edCorp").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Корпус", width: 80}));
+        $("#edApartment").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Помещение", width: 80}));
+        $('#edNoteEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 230, minLength: 1}));
+        $('#edDocumentsEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 580, minLength: 1}));
+        $('#edInformationEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 230, minLength: 1}));
+        $('#btnSaveEmpl').jqxButton({ width: 120, height: 30 });
+        $('#btnCancelEmpl').jqxButton({ width: 120, height: 30 });
+        
+        if (Employee.EmployeeName != '') $("#edEmployeeName").jqxInput('val', Employee.EmployeeName);
+        if (Employee.Position_id != '') $("#edPosition").jqxComboBox('val', Employee.Position_id);
+        if (Employee.Jrdc_id != '') $("#edJuridicalPerson").jqxComboBox('val', Employee.Jrdc_id);
+        if (Employee.Section_id != '') $("#edSection").jqxComboBox('val', Employee.Section_id);
+        if (Employee.Dep_id != '') $("#edDepartment").jqxComboBox('val', Employee.Dep_id);
+        if (Employee.Territ_Id != '') $("#edTerrit").jqxComboBox('val', Employee.Territ_Id);
+        if (Employee.Tel_home != '') $("#edTelHomeEdit").jqxInput('val', Employee.Tel_home);
+        if (Employee.Tel_other != '') $("#edTelOtherEdit").jqxInput('val', Employee.Tel_other);
+        if (Employee.Tel_work != '') $("#edTelWorkEdit").jqxInput('val', Employee.Tel_work);
+        if (Employee.WorkEmail != '') $("#edWorkEmailEdit").jqxInput('val', Employee.WorkEmail);
+        if (Employee.Email != '') $("#edEmailEdit").jqxInput('val', Employee.Email);
+        if (Employee.Address != '') $("#edAddressEdit").jqxInput('val', Employee.Address);
+        if (Employee.Region_id != '') $("#edRegion").jqxComboBox('val', Employee.Region_id);
+        if (Employee.Area_id != '') $("#edArea").jqxComboBox('val', Employee.Area_id);
+        if (Employee.Street_id != '') $("#edStreet").jqxComboBox('val', Employee.Street_id);
+        if (Employee.House != '') $("#edHouse").jqxInput('val', Employee.House);
+        if (Employee.Corp != '') $("#edCorp").jqxInput('val', Employee.Corp);
+        if (Employee.Apartment != '') $("#edApartment").jqxInput('val', Employee.Apartment);
+        if (Employee.Documents != '') $("#edDocumentsEdit").jqxTextArea('val', Employee.Documents);
+        if (Employee.Note != '') $("#edNoteEdit").jqxTextArea('val', Employee.Note);
+        if (Employee.Information != '') $("#edInformationEdit").jqxTextArea('val', Employee.Information);
+        
+        $("#edRegion").bind('select', function(event)
+        {
+            if (event.args) {
+                $("#edStreet").jqxComboBox({ disabled: false, selectedIndex: -1});		
+                if (event.args.item !== null) {
+                    var value = event.args.item.value;
+                    //Sources.SourceSystemTypes.data = {DSystem_id: value};
+                    DataStreets = new $.jqx.dataAdapter(Sources.SourceStreets, {
+                        beforeLoadComplete: function (records) {
+                            var filteredRecords = new Array();
+                            for (var i = 0; i < records.length; i++) {
+                                if (records[i].Region_id == value)
+                                    filteredRecords.push(records[i]);
+                            }
+                            return filteredRecords;
+                        }
+                    });
+                    $("#edStreet").jqxComboBox({source: DataStreets, autoDropDownHeight: false});
+                    $("#edStreet").jqxComboBox('selectIndex', 0);
+                }
+            }
+        }); 
+        $('#btnCancelEmpl').on('click', function(){
+            $('#EmployeesDialog').jqxWindow('close');
+        });
+        $('#btnSaveEmpl').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('Employees/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('Employees/Create')); ?>;
+            
+            $.ajax({
+                url: Url,
+                data: $('#Employees').serialize(),
+                type: 'POST',
+                success: function(Res) {
+                    if (Res == '1') {
+                        $('#EmployeesDialog').jqxWindow('close');
+                        $('#btnRefreshEmpl').click();
+                    }
+                    else
+                        $('#BodyEmployeesDialog').html(Res);
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        });
+        
+    });
 </script>
+
+<?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'Employees',
+        'htmlOptions'=>array(
+            'class'=>'form-inline'
+        ),
+    )); 
+?>
+
+<input type="hidden" name="Employees[Employee_id]" value="<?php echo $model->Employee_id; ?>"/>
+
+<div class="row">
+    <div class="row-column">Сотрудник (ФИО):</div>
+    <div class="row-column"><input type="text" name="Employees[EmployeeName]" id="edEmployeeName"/><?php echo $form->error($model, 'EmployeeName'); ?></div>
+</div>
+<div class="row">
+    <div class="row-column">Должность:</div>
+    <div class="row-column"><div name="Employees[Position_id]" id="edPosition"></div></div>
+    <div class="row-column" style="float: right;"><div name="Employees[DateEnd]" id="edDateEnd"></div></div>
+    <div class="row-column" style="float: right;">Дата увольнения:</div>
+</div>
+<div class="row">
+    <div class="row-column">Дата приема:</div>
+    <div class="row-column"><div name="Employees[DateStart]" id="edDateStart"></div></div>
+    <div class="row-column" style="float: right;"><div name="Employees[Birthday]" id="edBirthday"></div></div>
+    <div class="row-column" style="float: right;">Дата рождения:</div>
+</div>
+<div class="row">
+    <div class="row-column">Юр. лицо:</div>
+    <div class="row-column"><div name="Employees[Jrdc_id]" id="edJuridicalPerson"></div></div>
+    <div class="row-column" style="float: right;"><div name="Employees[CerDateIn]" id="edCerDateIn"></div></div>
+    <div class="row-column" style="float: right;">Дата выдачи удост.:</div>
+</div>
+<div class="row">
+    <div class="row-column">Дата приема на постоянную работу:</div>
+    <div class="row-column"><div name="Employees[DateBegin]" id="edDateBegin"></div></div>
+    <div class="row-column" style="float: right;"><div name="Employees[CerDateOut]" id="edCerDateOut"></div></div>
+    <div class="row-column" style="float: right;">Дата сдачи удост.:</div>
+</div>    
+<div class="row">
+    <div class="row-column">Служба:</div>
+    <div class="row-column"><div name="Employees[Section_id]" id="edSection"></div></div>
+    <div class="row-column">Отдел:</div>
+    <div class="row-column"><div name="Employees[Dep_id]" id="edDepartment"></div></div>
+</div>
+<div class="row">
+    <div class="row-column">Участок:</div>
+    <div class="row-column"><div name="Employees[Territ_Id]" id="edTerrit"></div></div>
+    <div class="row-column">Дом. тел.:</div>
+    <div class="row-column"><input type="text" name="Employees[Tel_home]" id="edTelHomeEdit"/></div>
+</div>
+<div class="row">
+    <div class="row-column">Другие тел.:</div>
+    <div class="row-column"><input name="Employees[Tel_other]" id="edTelOtherEdit" /></div>
+    <div class="row-column">Раб. тел.:</div>
+    <div class="row-column"><input name="Employees[Tel_work]" id="edTelWorkEdit" /></div>
+</div>
+<div class="row">
+    <div class="row-column">Раб. E-mail:</div>
+    <div class="row-column"><input name="Employees[WorkEmail]" id="edWorkEmailEdit" /></div>
+    <div class="row-column">Личный E-mail:</div>
+    <div class="row-column"><input name="Employees[Email]" id="edEmailEdit" /></div>
+</div>
+<div class="row">
+    <div class="row-column">Дата окон. исп. срока:</div>
+    <div class="row-column"><div name="Employees[DateTrial]" id="edDateTrial"></div></div>
+    <div class="row-column">Адрес</div>
+    <div class="row-column"><input name="Employees[Address]" id="edAddressEdit" /></div>
+</div>
+<div class="row">
+    <div class="row-column" style="width: 220px;">Предварительные итоги</div>
+    <div class="row-column" style="width: 220px;">Подписание обходного листа</div>
+    <div class="row-column" style="width: 220px; float: right;">Система мотивации</div>
+</div>
+<div class="row" style="margin: 0px;">
+    <div class="row-column" style="width: 220px;"><div name="Employees[Prior_result]" id="edPriorResult"></div></div>
+    <div class="row-column" style="width: 220px;"><div name="Employees[BypassList]" id="edBypassList"></div></div>
+    <div class="row-column" style="width: 220px; float: right;"><div name="Employees[Date_motivation]" id="edDate_motivation"></div></div>
+</div> 
+<div class="row" style="margin: 0px;">
+    <div class="row-column" style="width: 100px;">Регион</div>
+    <div class="row-column" style="width: 100px;">Район</div>
+    <div class="row-column" style="width: 180px;">Улица</div>
+    <div class="row-column" style="width: 80px;">Дом</div>
+    <div class="row-column" style="width: 80px;">Корпус</div>
+    <div class="row-column" style="width: 80px;">Помещение</div>
+</div>
+<div class="row" style="margin: 0px;">
+    <div class="row-column" style="width: 100px;"><div name="Employees[Region_id]" id="edRegion"></div></div>
+    <div class="row-column" style="width: 100px;"><div name="Employees[Area_id]" id="edArea"></div></div>
+    <div class="row-column" style="width: 180px;"><div name="Employees[Street_id]" id="edStreet"></div></div>
+    <div class="row-column" style="width: 80px;"><input name="Employees[House]" id="edHouse" /></div>
+    <div class="row-column" style="width: 80px;"><input name="Employees[Corp]" id="edCorp" /></div>
+    <div class="row-column" style="width: 80px;"><input name="Employees[Apartment]" id="edApartment" /></div>
+</div>
+<div class="row">
+    <div class="row-column" style="width: 100px;">Документы:</div>
+    <div class="row-column"><textarea id="edDocumentsEdit" name="Employees[Documents]"></textarea></div>
+</div> 
+<div class="row" style="margin: 0px;">
+    <div class="row-column" style="width: 100px;">Примечание:</div>
+    <div class="row-column"><textarea id="edNoteEdit" name="Employees[Note]"></textarea></div>
+    <div class="row-column" style="width: 100px;">Информация:</div>
+    <div class="row-column"><textarea id="edInformationEdit" name="Employees[Information]"></textarea></div>
+</div>
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnSaveEmpl'/></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelEmpl'/></div>
+</div>
+<?php $this->endWidget(); ?>

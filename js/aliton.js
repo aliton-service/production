@@ -16,6 +16,31 @@ Aliton.ListGrids = [];
 Aliton.Links = [];
 Aliton.Objects = [];
 
+Aliton.ShowErrorMessage = function(Msg, ErrorText) {
+    if (Msg == undefined)
+        Msg = '';
+    if (ErrorText == undefined)
+        ErrorText = '';
+    
+    $('#MainDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {
+        height: '160px',
+        width: '400px',
+        position: 'center',
+        modalZIndex: 19000,
+        zIndex: 99999,
+        title: 'Внимание! Ошибка.',
+        initContent: function(){
+            $('#BodyMainDialog').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 70, width: '100%', minLength: 1}));
+            $('#BodyMainDialog').jqxTextArea('val', Msg + '\nТекст ошибки:\n' + ErrorText);
+            $('#MainDialogBtnClose').jqxButton({ width: 120, height: 30 });
+            $('#MainDialogBtnClose').on('click', function(){
+                $('#MainDialog').jqxWindow('close');
+            });
+        }
+    }));
+    $('#MainDialog').jqxWindow('open');
+}
+
 Aliton.DateConvertToJs = function(DateStr) {
     var Result = null;
     // Дата приводим к формату ГГГГ-ММ-ДД ЧЧ:ММ
@@ -780,3 +805,9 @@ function WHDocuments() {
         $.ajax(sender)
     }
 }
+
+
+Aliton.Message = [];
+Aliton.Message['ERROR_LOAD_PAGE'] = 'Внимание! Произошла ошибка, не удалось загрузить страницу. Попробуйте повторить попытку позже или обратитесь к администратору БД.';
+Aliton.Message['ERROR_EDIT'] = 'Произошла ошибка добавления\\редактирования.';
+Aliton.Message['ERROR_DEL'] = 'Произошла ошибка удаления записи.';
