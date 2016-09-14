@@ -66,8 +66,91 @@
 //        // to add and apply the filter, use this:
 //        $('#jqxGrid').jqxGrid('addfilter', datafield, filtergroup, true);
         
-        
+        var AddFilters = function (args = [], ID, dataField, filterType, operator)
+        {                
+                var filtergroup = new $.jqx.filter();
+                var newFilter;
+                for(var i = 0; i < args.length; i++)
+                {
+//                    console.log(args[i].value);
+                    if(args[i].value !== null && args[i].value !== '' && args[i].value !== 0){
 
+                        newFilter = filtergroup.createfilter(filterType, args[i].value, args[i].filtercondition);
+                        filtergroup.addfilter(operator, newFilter);
+                    }
+                }
+            $('#' + ID).jqxGrid('addfilter', dataField, filtergroup);
+            $('#' + ID).jqxGrid('applyfilters');
+        }
+
+        
+        $('#DebtMin').on('change', function (event)
+        {
+            var debtMinValue = event.args.value;
+            var debtMaxValue = $('#DebtMax').val();
+            
+            var data = [
+                { value: debtMinValue, filtercondition: 'GREATER_THAN_OR_EQUAL' },
+                { value: debtMaxValue, filtercondition: 'LESS_THAN_OR_EQUAL' },
+            ];
+            AddFilters(data, 'ControlContactsGrid', 'c.debt', 'numericfilter', 0);
+        }); 
+        
+        $('#DebtMax').on('change', function (event)
+        {
+            var debtMaxValue = event.args.value;
+            var debtMinValue = $('#DebtMin').val();
+            
+            var data = [
+                { value: debtMinValue, filtercondition: 'GREATER_THAN_OR_EQUAL' },
+                { value: debtMaxValue, filtercondition: 'LESS_THAN_OR_EQUAL' },
+            ];
+            AddFilters(data, 'ControlContactsGrid', 'c.debt', 'numericfilter', 0);
+        }); 
+        
+        var changeDateFormat = function (date = null) {
+            if (date !== null) {
+                var NewDateVal = new Date(date);
+                var month = NewDateVal.getMonth()+ 1;
+                if(month < 10) {
+                    month = '0' + month;
+                }
+                NewDateVal = NewDateVal.getDate() + "." + month  + "." + NewDateVal.getFullYear();
+                return NewDateVal;
+            }
+            return null;
+        };
+        
+        
+        $('#BeginDate').on('valueChanged', function () {
+            var beginDateVal = $("#BeginDate").jqxDateTimeInput('getDate'); 
+            var NewBeginDateVal = changeDateFormat(beginDateVal);
+            
+            var endDateVal = $("#EndDate").jqxDateTimeInput('getDate'); 
+            var NewEndDateVal = changeDateFormat(endDateVal);
+            
+            var data = [
+                { value: NewBeginDateVal, filtercondition: 'DATE_GREATER_THAN_OR_EQUAL' },
+                { value: NewEndDateVal, filtercondition: 'DATE_LESS_THAN_OR_EQUAL' },
+            ];
+            AddFilters(data, 'ControlContactsGrid', 'next_date', 'datefilter', 0);
+        });
+        
+        $('#EndDate').on('valueChanged', function () {
+            var beginDateVal = $("#BeginDate").jqxDateTimeInput('getDate'); 
+            var NewBeginDateVal = changeDateFormat(beginDateVal);
+            
+            var endDateVal = $("#EndDate").jqxDateTimeInput('getDate'); 
+            var NewEndDateVal = changeDateFormat(endDateVal);
+            
+            var data = [
+                { value: NewBeginDateVal, filtercondition: 'DATE_GREATER_THAN_OR_EQUAL' },
+                { value: NewEndDateVal, filtercondition: 'DATE_LESS_THAN_OR_EQUAL' },
+            ];
+            AddFilters(data, 'ControlContactsGrid', 'next_date', 'datefilter', 0);
+        });
+        
+        
 
         var ControlContactsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceControlContacts, {
             filter: function () {
@@ -79,6 +162,8 @@
         }));
         
         $("#ControlContactsGrid").on('bindingcomplete', function(){
+            $("#Employee").jqxComboBox('selectItem', ControlContacts.Employee_id);
+            
             $('#ControlContactsGrid').jqxGrid('selectrow', 0);
         });
                     
@@ -92,7 +177,7 @@
                 height: '400',
                 source: ControlContactsDataAdapter,
                 columns: [
-                    { text: 'Заплонированная дата', dataField: 'next_date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 170 },
+                    { text: 'Запланированная дата', dataField: 'next_date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 170 },
                     { text: 'Тип контакта', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Контактное лицо', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
                     { text: 'Организация', dataField: 'FullName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 220 },
@@ -112,23 +197,13 @@
         GridFilters.AddControlFilter('Organizations', 'jqxComboBox', 'ControlContactsGrid', 'Form_id', 'numericfilter', 0, 'EQUAL', true);
         GridFilters.AddControlFilter('Employee', 'jqxComboBox', 'ControlContactsGrid', 'cnt.empl_id', 'numericfilter', 0, 'EQUAL', true);
         GridFilters.AddControlFilter('Address', 'jqxComboBox', 'ControlContactsGrid', 'og.Address_id', 'numericfilter', 0, 'EQUAL', true);
-        GridFilters.AddControlFilter('DebtMin', 'jqxNumberInput', 'ControlContactsGrid', 'c.debt', 'numericfilter', 0, 'GREATER_THAN_OR_EQUAL', true);
-        GridFilters.AddControlFilter('DebtMax', 'jqxNumberInput', 'ControlContactsGrid', 'c.debt', 'numericfilter', 0, 'LESS_THAN_OR_EQUAL', true);
         
-        GridFilters.AddControlFilter('BeginDate', 'jqxDateTimeInput', 'ControlContactsGrid', 'next_date', 'datefilter', 0, 'DATE_GREATER_THAN_OR_EQUAL', true);
-        GridFilters.AddControlFilter('EndDate', 'jqxDateTimeInput', 'ControlContactsGrid', 'next_date', 'datefilter', 0, 'DATE_LESS_THAN_OR_EQUAL', true);
-//        
-//        $('#btnReset').on('click', function () {
-//            $("#Date").jqxDateTimeInput('val', null);
-//            $("#Prior").jqxComboBox('clearSelection');
-//            $("#UserCreate").jqxComboBox('clearSelection');
-//            $('#notAcceptedDemands').jqxCheckBox('uncheck');
-//            $('#unfulfilledDemands').jqxCheckBox('uncheck');
-//            $("#BeginDate").jqxDateTimeInput('val', null);
-//            $("#Number").jqxNumberInput('val', null);
-//            $("#EndDate").jqxDateTimeInput('val', null);
-//            $('#ControlContactsGrid').jqxGrid('clearfilters');
-//        });
+//        GridFilters.AddControlFilter('DebtMin', 'jqxNumberInput', 'ControlContactsGrid', 'c.debt', 'numericfilter', 0, 'GREATER_THAN_OR_EQUAL', true);
+//        GridFilters.AddControlFilter('DebtMax', 'jqxNumberInput', 'ControlContactsGrid', 'c.debt', 'numericfilter', 0, 'LESS_THAN_OR_EQUAL', true);
+        
+//        GridFilters.AddControlFilter('BeginDate', 'jqxDateTimeInput', 'ControlContactsGrid', 'next_date', 'datefilter', 0, 'DATE_GREATER_THAN_OR_EQUAL', true);
+//        GridFilters.AddControlFilter('EndDate', 'jqxDateTimeInput', 'ControlContactsGrid', 'next_date', 'datefilter', 0, 'DATE_LESS_THAN_OR_EQUAL', true);
+
         
 
         $("#ControlContactsGrid").on('rowselect', function (event) {
