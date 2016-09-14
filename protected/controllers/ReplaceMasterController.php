@@ -16,36 +16,19 @@ class ReplaceMasterController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions' => array('index', 'view', 'equipAnalog'),
-				'roles' => array(
-					'ViewReplaceMaster',
-
-				),
+				'roles' => array('ViewReplaceMaster'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions' => array('create'),
-				'roles' => array(
-
-					'CreateReplaceMaster',
-
-				),
+				'roles' => array('CreateReplaceMaster'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions' => array('update'),
-				'roles' => array(
-
-					'UpdateReplaceMaster',
-
-				),
+				'roles' => array('UpdateReplaceMaster'),
 			),
-
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions' => array('delete'),
-				'roles' => array(
-
-					'DeleteReplaceMaster',
-
-				),
-
+				'roles' => array('DeleteReplaceMaster'),
 			),
 			array('deny',  // deny all users
 				'users' => array('*'),
@@ -54,27 +37,27 @@ class ReplaceMasterController extends Controller
 	}
 
 	public function actionIndex() {
-		$model = new ReplaceMaster();
-		if (isset($_POST['ReplaceMaster'])) {
-			$model->attributes = $_POST['ReplaceMaster'];
-			$model->EmplChange = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->callProc($model->REPLACE_MASTER);
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Мастера успешно переведены'))));
-				} else {
-					$this->render('index',array('model'=>$model,'msg'=>'Мастера успешно переведены'));
-					return false;
-				}
-			}
-		}
-		if ($this->isAjax()) {
-			$this->renderPartial('index', array('model'=>$model), false, true);
-		} else {
-			$this->render('index',array('model'=>$model));
-		}
-
-//		$this->render('index');
+            
+            $model = new ReplaceMaster();
+            
+            if (isset($_POST['ReplaceMaster'])) {
+                $model->attributes = $_POST['ReplaceMaster'];
+                $model->EmplChange = Yii::app()->user->Employee_id;
+                if ($model->validate()) {
+                    $model->callProc($model->REPLACE_MASTER);
+                    if ($this->isAjax()) {
+                        die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Мастера успешно переведены'))));
+                    } else {
+                        $this->render('index',array('model'=>$model,'msg'=>'Мастера успешно переведены'));
+                        return false;
+                    }
+                }
+            } else {
+                $this->title = 'Контроль контактов';
+                $this->render('index',array(
+                    'model' => $model
+                ));
+            }
 	}
 
 

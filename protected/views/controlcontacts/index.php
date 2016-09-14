@@ -198,13 +198,6 @@
         GridFilters.AddControlFilter('Employee', 'jqxComboBox', 'ControlContactsGrid', 'cnt.empl_id', 'numericfilter', 0, 'EQUAL', true);
         GridFilters.AddControlFilter('Address', 'jqxComboBox', 'ControlContactsGrid', 'og.Address_id', 'numericfilter', 0, 'EQUAL', true);
         
-//        GridFilters.AddControlFilter('DebtMin', 'jqxNumberInput', 'ControlContactsGrid', 'c.debt', 'numericfilter', 0, 'GREATER_THAN_OR_EQUAL', true);
-//        GridFilters.AddControlFilter('DebtMax', 'jqxNumberInput', 'ControlContactsGrid', 'c.debt', 'numericfilter', 0, 'LESS_THAN_OR_EQUAL', true);
-        
-//        GridFilters.AddControlFilter('BeginDate', 'jqxDateTimeInput', 'ControlContactsGrid', 'next_date', 'datefilter', 0, 'DATE_GREATER_THAN_OR_EQUAL', true);
-//        GridFilters.AddControlFilter('EndDate', 'jqxDateTimeInput', 'ControlContactsGrid', 'next_date', 'datefilter', 0, 'DATE_LESS_THAN_OR_EQUAL', true);
-
-        
 
         $("#ControlContactsGrid").on('rowselect', function (event) {
             var Temp = $('#ControlContactsGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -212,7 +205,7 @@
                 CurrentRowData = Temp;
             } else {CurrentRowData = null;}
             
-            console.log(CurrentRowData);
+//            console.log(CurrentRowData);
             
             if (CurrentRowData !== null) {
                 if (CurrentRowData.date !== null) $("#date").jqxDateTimeInput('val', CurrentRowData.date);
