@@ -8,11 +8,11 @@
             Employee_id: '<?php echo $model->Employee_id; ?>',
         };
 
-        //var DataOrganizations = new $.jqx.dataAdapter(Sources.SourceOrganizationsVMin);
+        var DataOrganizations = new $.jqx.dataAdapter(Sources.SourceOrganizationsVMin);
         var DataAddress = new $.jqx.dataAdapter(Sources.SourceListAddresses);
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
 
-        //$("#Organizations").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrganizations, displayMember: "FormName", valueMember: "Form_id", width: 350 }));
+        $("#Organizations").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrganizations, displayMember: "FormName", valueMember: "Form_id", width: 350 }));
         $("#Address").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddress, displayMember: "Addr", valueMember: "Address_id", width: 380 }));
         $("#Employee").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 200 }));
         $("#Employee").jqxComboBox('selectItem', ControlContacts.Employee_id);
