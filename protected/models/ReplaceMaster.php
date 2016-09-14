@@ -31,7 +31,7 @@ class ReplaceMaster extends MainFormModel
 
 	public function rules() {
 		return array(
-			array('FromEmpl,ToEmpl,date','required'),
+			array('FromEmpl, ToEmpl, date','required'),
 		);
 	}
 
@@ -48,27 +48,28 @@ class ReplaceMaster extends MainFormModel
 	public function getMasterCount($id)
 	{
 		$query = "
-		Select
-		  count(t.ContrS_id) as contract,
-		  isnull(sum(t.CountObj), 0) as object
+                    Select
+                      count(t.ContrS_id) as contract,
+                      isnull(sum(t.CountObj), 0) as object
 
-		From (
-			Select
-			  c.ContrS_id,
-			  count(o.Object_id) as CountObj
-			From Contracts_v c left join FullObjects o on (c.ObjectGr_id = o.ObjectGr_id)
-			Where o.DelDate is null
-			  and o.Doorway <> 'Общее'
-			  and dbo.truncdate(getdate()) between c.ContrSDateStart and c.ContrSDateEnd
-			  and isNull(c.DocType_id,4) = 4
-			  and c.Master = {$id}
-			Group by c.ContrS_id
-			) t
-
+                    From (
+                            Select
+                              c.ContrS_id,
+                              count(o.Object_id) as CountObj
+                            From Contracts_v c left join FullObjects o on (c.ObjectGr_id = o.ObjectGr_id)
+                            Where o.DelDate is null
+                              and o.Doorway <> 'Общее'
+                              and dbo.truncdate(getdate()) between c.ContrSDateStart and c.ContrSDateEnd
+                              and isNull(c.DocType_id,4) = 4
+                              and c.Master = {$id}
+                            Group by c.ContrS_id
+                            ) t
 		";
 
 		return Yii::app()->db->createCommand($query)->queryAll();
 
 	}
+        
+        
 
 }

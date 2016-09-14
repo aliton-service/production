@@ -53,7 +53,7 @@ class ReplaceMasterController extends Controller
                     }
                 }
             } else {
-                $this->title = 'Контроль контактов';
+                $this->title = 'Перевод мастеров';
                 $this->render('index',array(
                     'model' => $model
                 ));
@@ -61,9 +61,18 @@ class ReplaceMasterController extends Controller
 	}
 
 
-	public function actionCount($id) {
+	public function actionCount() {
+            if (isset($_POST['id'])) {
+                $id = $_POST['id'];
+                
 		$model = new ReplaceMaster();
 		$data_count = $model->getMasterCount($id);
-		die(json_encode(array('status'=>'ok','data'=>$data_count)));
+                
+//                print_r($data_count);
+//                print_r($data_count[0]['object']);
+                
+                echo json_encode(array('status'=>'ok','data'=>$data_count));
+                return;
+            }
 	}
 }
