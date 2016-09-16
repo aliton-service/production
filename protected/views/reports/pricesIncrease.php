@@ -21,8 +21,9 @@
             'htmlOptions'=>array(
                 'class'=>'form-inline'
                 ),
-            ),
-        ));
+            ));
+        
+    
 ?>        
 
 <div class="row">

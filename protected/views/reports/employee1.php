@@ -28,15 +28,6 @@
             <div class="row-column">Должность</div>
             <div class="row-column"><div id="edPosition" name="Parameters[prmPosition]"></div></div>
         </div>
-        <input name="Parameters[prmMonth]" value="0" />
-        <input name="Parameters[prmJuridical]" value="0" />
-        <input name="Parameters[prmDep]" value="0" />
-        
-        <input name="Parameters[prmDateStart]" value="01.08.2016" />
-        <input name="Parameters[prmDateStart]" value="31.08.2016" />
-        <input name="Parameters[prmDismissalFrom]" value="31.08.2016" />
-        <input name="Parameters[prmDismissalTo]" value="31.08.2016" />
-        <input name="Parameters[prmYears]" value="31.08.2016" />
         <div style="clear: both; margin-top: 10px;"></div>
         
 <?php        
