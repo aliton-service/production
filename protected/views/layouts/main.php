@@ -226,6 +226,31 @@
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Кадры/Сотрудники', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('Employee1Report')
                                     ),
+                                array('label'=>'Объекты', 'url'=>'#', 'items'=>array(
+                                    array('label' => 'Объекты по мастерам', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Объекты по мастерам', 'Render' => 0)),
+                                            'visible'=>true
+                                        ),
+                                    array('label' => 'Объекты по тарифам', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Объекты по тарифам', 'Render' => 0)),
+                                            'visible'=>true
+                                        ),
+                                    array('label' => 'Объекты с тарифами и оборудованием', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Объекты по тарифам (Оборудование)', 'Render' => 0)),
+                                            'visible'=>true
+                                        ),
+                                    array('label' => 'Ушедшие клиенты', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Ушедшие клиенты', 'Render' => 0)),
+                                            'visible'=>true
+                                        ),
+                                    array('label' => 'Контактные лица', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Контактные лица', 'Render' => 0)),
+                                            'visible'=>true
+                                        ),
+                                    array('label' => 'Повышение расценок', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Повышение расценок', 'Render' => 0)),
+                                            'visible'=>true
+                                        ),
                                 )),
                             )),
                             array('label'=>'О программе', 'url'=>array('/site/about')),
