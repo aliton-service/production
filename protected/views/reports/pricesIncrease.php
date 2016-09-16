@@ -21,6 +21,7 @@
             'htmlOptions'=>array(
                 'class'=>'form-inline'
                 ),
+            ),
         ));
 ?>        
 

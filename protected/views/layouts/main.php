@@ -226,6 +226,7 @@
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Кадры/Сотрудники', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('Employee1Report')
                                     ),
+                                )),
                                 array('label'=>'Объекты', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Объекты по мастерам', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Объекты по мастерам', 'Render' => 0)),
