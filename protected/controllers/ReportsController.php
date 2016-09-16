@@ -106,6 +106,18 @@ class ReportsController extends Controller
             return 'demand_report1';
         else if ($ReportName == '/Заявки/Чужие и удаленные заявки СЦ')
             return 'demand_report2';
+        else if ($ReportName == '/Объекты/Объекты по мастерам')
+            return 'objectmaster';
+        else if ($ReportName == '/Объекты/Объекты по тарифам')
+            return 'objectServiceType';
+        else if ($ReportName == '/Объекты/Объекты по тарифам (Оборудование)')
+            return 'objectServiceTypeEquips';
+        else if ($ReportName == '/Объекты/Ушедшие клиенты')
+            return 'departedCustomers';
+        else if ($ReportName == '/Объекты/Контактные лица')
+            return 'contacts';
+        else if ($ReportName == '/Объекты/Повышение расценок')
+            return 'pricesIncrease';
         else
             return 'standart';
     }
