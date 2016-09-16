@@ -50,6 +50,7 @@
                                             array('label'=>'Должности', 'url'=>array('/positions/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPositions')),
                                             array('label'=>'Отделы', 'url'=>array('/departments/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDepartments')),
                                             array('label'=>'Подразделения', 'url'=>array('/sections/index'), 'visible'=>Yii::app()->user->checkAccess('ViewSections')),
+                                            array('label'=>'Праздничные, выходные, рабочие дни', 'url'=>array('/specialdays/index'), 'visible'=>Yii::app()->user->checkAccess('ViewSpecialDays')),
                                             array('label'=>'Структура организации', 'url'=>array('/organizationstructure/index'), 'visible'=>Yii::app()->user->checkAccess('ViewOrganizationStructure')),
                                         )
                                     ),
@@ -218,6 +219,12 @@
                                     array('label' => 'Выданное оборудование (детальный)',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Выданное оборудование (детальный)', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
+                                    ),
+                                )),
+                                array('label'=>'Кадры', 'url'=>'#', 'items'=>array(
+                                    array('label' => 'Сотрудники',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Кадры/Сотрудники', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('Employee1Report')
                                     ),
                                 )),
                             )),

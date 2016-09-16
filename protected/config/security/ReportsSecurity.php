@@ -20,6 +20,13 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        'Employee1Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Сорудники',
+            'bizRule' => null,
+            'data' => null,
+        ),
     );
 ?>
 

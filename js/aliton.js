@@ -16,6 +16,25 @@ Aliton.ListGrids = [];
 Aliton.Links = [];
 Aliton.Objects = [];
 
+Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh) {
+    if (Refresh == true)
+        $(Grid).jqxGrid('updatebounddata');
+    if (Value == undefined) {
+        $(Grid).jqxGrid('selectrow', 0);
+    }
+        
+    var Rows = $(Grid).jqxGrid('getrows');
+    for (var i = 0; i < Rows.length; i++) {
+        var TmpVal = $(Grid).jqxGrid('getcellvalue', i, FieldName);
+        if (TmpVal == Value) {
+            $(Grid).jqxGrid('selectrow', i);
+            $(Grid).jqxGrid('ensurerowvisible', i);
+            break;
+        }
+    }
+
+};
+
 Aliton.ShowErrorMessage = function(Msg, ErrorText) {
     if (Msg == undefined)
         Msg = '';

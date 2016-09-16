@@ -106,6 +106,8 @@ class ReportsController extends Controller
             return 'demand_report1';
         else if ($ReportName == '/Заявки/Чужие и удаленные заявки СЦ')
             return 'demand_report2';
+        else if ($ReportName == '/Кадры/Сотрудники')
+            return 'employee1';
         else
             return 'standart';
     }

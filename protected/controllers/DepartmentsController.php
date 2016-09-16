@@ -39,67 +39,81 @@ class DepartmentsController extends Controller
 
     public function actionCreate()
     {
-        $this->title = 'Создание нового отдела';
         $model = new Departments();
-        $model->setScenario('Insert');
-
-        if(isset($_POST['Departments'])) {
-            $model->attributes=$_POST['Departments'];
-            $model->EmplCreate = Yii::app()->user->Employee_id;
-
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        if (isset($_POST['Departments'])) {
+            $model->attributes = $_POST['Departments'];
             if ($model->validate()) {
-                $model->insert();
-                $this->redirect(Yii::app()->createUrl('Departments/index'));
-            }    
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $Res['Dep_id'];
+                echo json_encode($ObjectResult);
+                return;
+            } 
         }
-
-        $this->render('create',array(
-                'model'=>$model,
-        ));
+        
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
     }
 
 
-    public function actionUpdate($Dep_id)
+    public function actionUpdate()
     {
-        $this->title = 'Редактирование должности';
-
         $model = new Departments();
-        $model->setScenario('Update');
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        if (isset($_POST['Dep_id']))
+            $model->getModelPk($_POST['Dep_id']);
 
-        if ($Dep_id == null)
-                throw new CHttpException(404, 'Не выбрана запись.');
-
-        if(isset($_POST['Departments']))
-        {
-            $model->attributes=$_POST['Departments'];
-
-            $model->EmplChange = Yii::app()->user->Employee_id;
-
+        if (isset($_POST['Departments'])) {
+            $model->getModelPk($_POST['Departments']['Dep_id']);
+            $model->attributes = $_POST['Departments'];
             if ($model->validate()) {
-                $model->update();
+                $model->Update();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->Dep_id;
+                echo json_encode($ObjectResult);
+                return;
             }
         }
-        else
-        {
-            $model->getmodelPk($Dep_id);
-            $this->title .= ' ' . $model->DepName;
-        }
 
-        $this->render('update', array(
-                'model'=>$model,
-            )
-        );
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
     }
 
-    public function actionDelete($Dep_id)
+    public function actionDelete()
     {
-        $model = new Departments();
-        $model->getmodelPk($Dep_id);
-        $model->delete();
-
-        $this->redirect($this->createUrl('Departments/Index'));
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Dep_id'])) {
+            $model = new Departments();
+            $model->getModelPk($_POST['Dep_id']);
+            if ($model->validate()) {
+                $model->delete();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->Dep_id;
+                echo json_encode($ObjectResult);
+                return;
+            }
+        }
+        echo json_encode($ObjectResult);
     }
-
+    
     public function actionIndex()
     {
         $this->title = 'Просмотр отделов';

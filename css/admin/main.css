@@ -1049,3 +1049,7 @@ ul.filter .field {
 .jqxGridAliton {
     -moz-user-select: none;
 }
+
+.jqx-input {
+    autocomplete: off;
+}

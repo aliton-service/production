@@ -2139,3 +2139,28 @@ Sources.SourceControlContacts =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+
+Sources.SourceSpecialDays =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'sday_id',  type: 'int' },
+        { name: 'date',  type: 'date' },
+        { name: 'datp_id',  type: 'int' },
+        { name: 'minutes',  type: 'int' },
+        { name: 'datp_name',  type: 'string' },
+        
+    ],
+    id: 'sday_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SpecialDays',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

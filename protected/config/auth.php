@@ -91,6 +91,8 @@ return array_merge(
     include(dirname(__FILE__).'/security/SectionsSecurity.php'),
     /* Кадры - дети */
     include(dirname(__FILE__).'/security/ChildrensSecurity.php'),
+    /* Кадры - праздники */
+    include(dirname(__FILE__).'/security/SpecialDaysSecurity.php'),
 
     /* Кадры -> сотрудники */
     include(dirname(__FILE__).'/security/EmployeesSecurity.php'),
@@ -292,6 +294,7 @@ return array_merge(
                 'AdminSuppliers',
                 'AdminServiceTypes',
                 'AdminPositions',
+                'AdminSpecialDays',
                 'AdminDepartments',
                 'AdminSections',
                 'AdminChildrens',
@@ -340,6 +343,7 @@ return array_merge(
                 'Demand1Report',
                 'Demand2Report',
                 'WHDocuments1Report',
+                'Employee1Report'
                 ),
         ),
         
@@ -357,6 +361,8 @@ return array_merge(
                 'AdminEmployees',
                 'AdminInstructings',
                 'AdminOrganizationStructure',
+                
+                'Employee1Report',
                 ),
         ),
         

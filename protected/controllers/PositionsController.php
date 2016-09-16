@@ -8,7 +8,7 @@ class PositionsController extends Controller
     public function filters()
     {
         return array(
-                'accessControl', // perform access control for CRUD operations
+                'accessControl', 
         );
     }
 
@@ -39,65 +39,79 @@ class PositionsController extends Controller
 
     public function actionCreate()
     {
-        $this->title = 'Создание новой должности';
         $model = new Positions();
-        $model->setScenario('Insert');
-
-        if(isset($_POST['Positions'])) {
-            $model->attributes=$_POST['Positions'];
-            $model->EmplCreate = Yii::app()->user->Employee_id;
-
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        if (isset($_POST['Positions'])) {
+            $model->attributes = $_POST['Positions'];
             if ($model->validate()) {
-                $model->insert();
-                $this->redirect(Yii::app()->createUrl('Positions/index'));
-            }    
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $Res['Position_id'];
+                echo json_encode($ObjectResult);
+                return;
+            } 
         }
-
-        $this->render('create',array(
-                'model'=>$model,
-        ));
+        
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
     }
 
 
-    public function actionUpdate($Position_id)
+    public function actionUpdate()
     {
-        $this->title = 'Редактирование должности';
-
         $model = new Positions();
-        $model->setScenario('Update');
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        if (isset($_POST['Position_id']))
+            $model->getModelPk($_POST['Position_id']);
 
-        if ($Position_id == null)
-                throw new CHttpException(404, 'Не выбрана запись.');
-
-        if(isset($_POST['Positions']))
-        {
-            $model->attributes=$_POST['Positions'];
-
-            $model->EmplChange = Yii::app()->user->Employee_id;
-
+        if (isset($_POST['Positions'])) {
+            $model->getModelPk($_POST['Positions']['Position_id']);
+            $model->attributes = $_POST['Positions'];
             if ($model->validate()) {
-                $model->update();
+                $model->Update();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->Position_id;
+                echo json_encode($ObjectResult);
+                return;
             }
         }
-        else
-        {
-            $model->getmodelPk($Position_id);
-            $this->title .= ' ' . $model->PositionName;
-        }
 
-        $this->render('update', array(
-                'model'=>$model,
-            )
-        );
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
     }
 
-    public function actionDelete($Position_id)
+    public function actionDelete()
     {
-        $model = new Positions();
-        $model->getmodelPk($Position_id);
-        $model->delete();
-
-        $this->redirect($this->createUrl('Positions/Index'));
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Position_id'])) {
+            $model = new Positions();
+            $model->getModelPk($_POST['Position_id']);
+            if ($model->validate()) {
+                $model->delete();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->Position_id;
+                echo json_encode($ObjectResult);
+                return;
+            }
+        }
+        echo json_encode($ObjectResult);
     }
 
     public function actionIndex()
