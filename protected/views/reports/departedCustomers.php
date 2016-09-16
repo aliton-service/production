@@ -28,10 +28,9 @@
 ?>        
 
 <div class="row">
-    <div class="row" style="padding: 10px; width: 450px; border: 1px solid #ddd; background-color: #F2F2F2;">
+    <div class="row" style="padding: 10px; width: 400px; border: 1px solid #ddd; background-color: #F2F2F2;">
         <div class="row" style="margin: 0 0 15px 0; width: 100%;">Клиенты с которыми был расторгнут договор за период:</div>
         <div class="row">
-            <div class="row-column" style="margin-top: 2px;">За период </div>
             <div class="row-column" style="margin-top: 2px;">с </div><div class="row-column"><div id='DateStart' name="Parameters[DateStart]"></div></div>
             <div class="row-column" style="margin-top: 2px;">по </div><div class="row-column"><div id='DateEnd' name="Parameters[DateEnd]"></div></div>
         </div>

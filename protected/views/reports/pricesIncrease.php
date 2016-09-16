@@ -20,7 +20,7 @@
             'id' => 'Parameters',
             'htmlOptions'=>array(
                 'class'=>'form-inline'
-                ),
+            ),
         ));
 ?>        
 
