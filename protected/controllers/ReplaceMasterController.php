@@ -45,25 +45,32 @@ class ReplaceMasterController extends Controller
                 $model->EmplChange = Yii::app()->user->Employee_id;
                 if ($model->validate()) {
                     $model->callProc($model->REPLACE_MASTER);
-                    if ($this->isAjax()) {
-                        die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Мастера успешно переведены'))));
-                    } else {
-                        $this->render('index',array('model'=>$model,'msg'=>'Мастера успешно переведены'));
-                        return false;
-                    }
                 }
-            } else {
-                $this->title = 'Контроль контактов';
-                $this->render('index',array(
-                    'model' => $model
-                ));
             }
+            
+            $this->title = 'Перевод мастеров';
+            $this->render('index',array(
+                'model' => $model
+            ));
+            
 	}
 
 
-	public function actionCount($id) {
+	public function actionCount() {
+            if (isset($_POST['id'])) {
+                $id = $_POST['id'];
+                
 		$model = new ReplaceMaster();
 		$data_count = $model->getMasterCount($id);
-		die(json_encode(array('status'=>'ok','data'=>$data_count)));
+                
+//                print_r($data_count);
+//                print_r($data_count[0]['object']);
+
+                echo json_encode($data_count);
+                
+//                echo json_encode($data_count[0]['contract']);
+//                echo json_encode(array('status'=>'ok','data'=>$data_count));
+                return;
+            }
 	}
 }
