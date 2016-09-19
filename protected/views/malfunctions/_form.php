@@ -1,100 +1,75 @@
-<?php
-/* @var $this MalfunctionsController */
-/* @var $model Malfunctions */
-/* @var $form CActiveForm */
+<script type="text/javascript">
+    $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+        var Malfunction = {
+            Malfunction_id: <?php echo json_encode($model->Malfunction_id); ?>,
+            Malfunction: <?php echo json_encode($model->Malfunction); ?>
+        };
+        
+        $('#Malfunctions').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        $("#edMalfunction").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300} ));
+        $('#btnSaveMalfunction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnCancelMalfunction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnCancelMalfunction').on('click', function(){
+            $('#MalfunctionsDialog').jqxWindow('close');
+        });
+        
+        $('#btnSaveMalfunction').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('Malfunctions/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('Malfunctions/Create')); ?>;
+            
+            $.ajax({
+                url: Url,
+                data: $('#Malfunctions').serialize(),
+                type: 'POST',
+                success: function(Res) {
+                    var Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        Aliton.SelectRowById('Malfunction_id', Res.id, '#MalfunctionsGrid', true);
+                        $('#MalfunctionsDialog').jqxWindow('close');
+                    }
+                    else {
+                        $('#BodyMalfunctionsDialog').html(Res.html);
+                    };
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        });
+        
+        if (Malfunction.Malfunction != '') $("#edMalfunction").jqxInput('val', Malfunction.Malfunction);
+    });
+</script>        
+
+<?php 
+    $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'Malfunctions',
+	'htmlOptions'=>array(
+		'class'=>'form-inline'
+		),
+    )); 
 ?>
 
-<div class="form">
-
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'malfunctions-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>true,
-)); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Malfunction'); ?>
-		<?php echo $form->textField($model,'Malfunction',array('size'=>60,'maxlength'=>150)); ?>
-		<?php echo $form->error($model,'Malfunction'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'EquipType_id'); ?>
-		<?php echo $form->textField($model,'EquipType_id'); ?>
-		<?php echo $form->error($model,'EquipType_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'DateCreate'); ?>
-		<?php echo $form->textField($model,'DateCreate'); ?>
-		<?php echo $form->error($model,'DateCreate'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'EmplCreate'); ?>
-		<?php echo $form->textField($model,'EmplCreate',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'EmplCreate'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'DateChange'); ?>
-		<?php echo $form->textField($model,'DateChange'); ?>
-		<?php echo $form->error($model,'DateChange'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'EmplChange'); ?>
-		<?php echo $form->textField($model,'EmplChange',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'EmplChange'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'DelDate'); ?>
-		<?php echo $form->textField($model,'DelDate'); ?>
-		<?php echo $form->error($model,'DelDate'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Sort'); ?>
-		<?php echo $form->textField($model,'Sort'); ?>
-		<?php echo $form->error($model,'Sort'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'EmplDel'); ?>
-		<?php echo $form->textField($model,'EmplDel',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'EmplDel'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Lock'); ?>
-		<?php echo $form->checkBox($model,'Lock'); ?>
-		<?php echo $form->error($model,'Lock'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'EmplLock'); ?>
-		<?php echo $form->textField($model,'EmplLock'); ?>
-		<?php echo $form->error($model,'EmplLock'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'DateLock'); ?>
-		<?php echo $form->textField($model,'DateLock'); ?>
-		<?php echo $form->error($model,'DateLock'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
-
+<input type="hidden" name="Malfunctions[Malfunction_id]" value="<?php echo $model->Malfunction_id; ?>"/>
+<div class="row">
+    <div class="row-column">Неисправность:</div>
+    <div class="row-column"><input type="text" name="Malfunctions[Malfunction]" autocomplete="off" id="edMalfunction"/><?php echo $form->error($model, 'Malfunction'); ?></div>
+</div>
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnSaveMalfunction'/></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelMalfunction'/></div>
+</div>
 <?php $this->endWidget(); ?>
 
-</div><!-- form -->
+
+

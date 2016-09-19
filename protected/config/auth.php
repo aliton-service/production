@@ -52,6 +52,7 @@ return array_merge(
     include(dirname(__FILE__).'/security/EquipsRateSecurity.php'),
     include(dirname(__FILE__).'/security/EquipSubgroupsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipTypesSecurity.php'),
+    include(dirname(__FILE__).'/security/MalfunctionsSecurity.php'),
     include(dirname(__FILE__).'/security/referenceSecurity.php'),
     include(dirname(__FILE__).'/security/ContactsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipForMDDetailsSecurity.php'),
@@ -340,6 +341,8 @@ return array_merge(
                 'AdminMonitoringDemandDetails',
                 'AdminEquipForMDDetails',
                 'AdminEquipTypes',
+                'AdminMalfunctions',
+                'AdminDemandTypes',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

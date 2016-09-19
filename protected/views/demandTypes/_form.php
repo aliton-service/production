@@ -1,109 +1,98 @@
-<?php
-/* @var $this DemandTypesController */
-/* @var $model DemandTypes */
-/* @var $form CActiveForm */
-?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+        var DemandType = {
+            DemandType_id: <?php echo json_encode($model->DemandType_id); ?>,
+            DemandType: <?php echo json_encode($model->DemandType); ?>,
+            deliveryDemand: <?php echo json_encode($model->dd); ?>,
+            demand: <?php echo json_encode($model->d); ?>,
+            internalDemand: <?php echo json_encode($model->id); ?>,
+        };
 
-<div class="form">
+console.log(DemandType.deliveryDemand);
+        
+        $("#deliveryDemand").jqxCheckBox({ width: 170, height: 25});
+        $("#demand").jqxCheckBox({ width: 120, height: 25});
+        $("#internalDemand").jqxCheckBox({ width: 170, height: 25});
+        
+        if (DemandType.deliveryDemand !== '') $("#deliveryDemand").jqxCheckBox({checked: Boolean(Number(DemandType.deliveryDemand))});
+        if (DemandType.demand !== '') $("#demand").jqxCheckBox({checked: Boolean(Number(DemandType.demand))});
+        if (DemandType.internalDemand !== '') $("#internalDemand").jqxCheckBox({checked: Boolean(Number(DemandType.internalDemand))});
+        
+        $('#DemandTypes').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        $("#edDemandType").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300} ));
+        $('#btnSaveDemandType').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnCancelDemandType').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnCancelDemandType').on('click', function(){
+            $('#DemandTypesDialog').jqxWindow('close');
+        });
+        
+        $('#btnSaveDemandType').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('DemandTypes/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('DemandTypes/Create')); ?>;
+            
+            $.ajax({
+                url: Url,
+                data: $('#DemandTypes').serialize(),
+                type: 'POST',
+                success: function(Res) {
+                    var Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        Aliton.SelectRowById('DemandType_id', Res.id, '#DemandTypesGrid', true);
+                        $('#DemandTypesDialog').jqxWindow('close');
+                    }
+                    else {
+                        $('#BodyDemandTypesDialog').html(Res.html);
+                    };
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        });
+        
+        if (DemandType.DemandType != '') $("#edDemandType").jqxInput('val', DemandType.DemandType);
+    });
+</script>        
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'demand-types-form',
+<?php 
+    $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'DemandTypes',
 	'htmlOptions'=>array(
 		'class'=>'form-inline'
 		),
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>true,
-)); ?>
+    )); 
+?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+<input type="hidden" name="DemandTypes[DemandType_id]" value="<?php echo $model->DemandType_id; ?>"/>
+<div class="row">
+    <div class="row-column">Тип заявки:</div>
+    <div class="row-column"><input type="text" name="DemandTypes[DemandType]" autocomplete="off" id="edDemandType"/><?php echo $form->error($model, 'DemandType'); ?></div>
+</div>
 
-	<?php echo $form->errorSummary($model); ?>
+<div class="row">
+    <div class="row-column"><div name="DemandTypes[dd]" id='deliveryDemand'>Заявка на доставку</div></div>
+    <div class="row-column"><div name="DemandTypes[d]" id='demand'>Заявка</div></div>
+</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'DemandType'); ?>
-		<?php echo $form->textField($model,'DemandType',array('class'=>'form-control','size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'DemandType'); ?>
-	</div>
+<div class="row">
+    <div class="row-column"><div name="DemandTypes[id]" id='internalDemand'>Внутренняя заявка</div></div>
+</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'Visible'); ?>
-		<?php echo $form->checkBox($model,'Visible'); ?>
-		<?php echo $form->error($model,'Visible'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Sort'); ?>
-		<?php echo $form->textField($model,'Sort'); ?>
-		<?php echo $form->error($model,'Sort'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'dd'); ?>
-		<?php echo $form->checkBox($model,'dd'); ?>
-		<?php echo $form->error($model,'dd'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'id'); ?>
-		<?php echo $form->checkBox($model,'id'); ?>
-		<?php echo $form->error($model,'id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'d'); ?>
-		<?php echo $form->checkBox($model,'d'); ?>
-		<?php echo $form->error($model,'d'); ?>
-	</div>
-
-	<!-- <div class="row">
-		<?php echo $form->labelEx($model,'Lock'); ?>
-		<?php echo $form->checkBox($model,'Lock'); ?>
-		<?php echo $form->error($model,'Lock'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'EmplLock'); ?>
-		<?php echo $form->textField($model,'EmplLock'); ?>
-		<?php echo $form->error($model,'EmplLock'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'DateLock'); ?>
-		<?php echo $form->textField($model,'DateLock'); ?>
-		<?php echo $form->error($model,'DateLock'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'EmplChange'); ?>
-		<?php echo $form->textField($model,'EmplChange'); ?>
-		<?php echo $form->error($model,'EmplChange'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'DateChange'); ?>
-		<?php echo $form->textField($model,'DateChange'); ?>
-		<?php echo $form->error($model,'DateChange'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'EmplDel'); ?>
-		<?php echo $form->textField($model,'EmplDel'); ?>
-		<?php echo $form->error($model,'EmplDel'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'DelDate'); ?>
-		<?php echo $form->textField($model,'DelDate'); ?>
-		<?php echo $form->error($model,'DelDate'); ?>
-	</div> -->
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class'=>'btn btn-primary')); ?>
-	</div>
-
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnSaveDemandType'/></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelDemandType'/></div>
+</div>
 <?php $this->endWidget(); ?>
 
-</div><!-- form -->
+
+

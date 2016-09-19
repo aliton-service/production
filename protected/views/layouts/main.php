@@ -129,7 +129,9 @@
                                     ),
                                     ),
                                     array('label'=>'Заявки', 'url'=>'#', 'items'=>array(
-                                        array('label'=>'Тип оборудования', 'url'=>array('/EquipTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewEquipTypes')),
+                                        array('label'=>'Типы оборудования', 'url'=>array('/EquipTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewEquipTypes')),
+                                        array('label'=>'Неисправность', 'url'=>array('/Malfunctions/index'), 'visible'=>Yii::app()->user->checkAccess('ViewMalfunctions')),
+                                        array('label'=>'Типы заявок', 'url'=>array('/DemandTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDemandTypes')),
                                     ),
                                     ),
 

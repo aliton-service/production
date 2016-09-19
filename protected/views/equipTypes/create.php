@@ -2,7 +2,7 @@
 
 $this->breadcrumbs=array(
 	'Справочники'=>array('/reference/index'),
-	'Тип оборудования'=>array('index'),
+	'Типы оборудования'=>array('index'),
 	'Создать',
 );
 

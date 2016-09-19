@@ -35,7 +35,7 @@
                 height: '500',
                 source: EquipTypesDataAdapter,
                 columns: [
-                    { text: 'Тип', datafield: 'EquipType', filtercondition: 'CONTAINS', width: 320},    
+                    { text: 'Тип оборудования', datafield: 'EquipType', filtercondition: 'CONTAINS', width: 320},    
                 ]
 
         }));
@@ -115,12 +115,12 @@
     });
 </script>
 
-<?php $this->setPageTitle('Тип оборудования'); ?>
+<?php $this->setPageTitle('Типы оборудования'); ?>
 
 <?php
     $this->breadcrumbs=array(
             'Заявки'=>array('/demands&status[nofinish]=on'),
-            'Тип оборудования'=>array('index'),
+            'Типы оборудования'=>array('index'),
     );
 ?>
 

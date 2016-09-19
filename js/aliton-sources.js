@@ -2169,8 +2169,8 @@ Sources.SourceEquipTypesList =
 {
     datatype: "json",
     datafields: [
-        { name: 'EquipType_id' },
-        { name: 'EquipType' },
+        { name: 'EquipType_id',  type: 'int' },
+        { name: 'EquipType',  type: 'string' },
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipTypes',
@@ -2180,6 +2180,47 @@ Sources.SourceEquipTypesList =
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-            Sources.SourceEquipTypes.totalrecords = data[0].TotalRows;
+            this.totalrecords = data[0].TotalRows;
+        }
+};
+
+Sources.SourceMalfunctions =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Malfunction_id',  type: 'int' },
+        { name: 'Malfunction',  type: 'string' },
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Malfunctions',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+            this.totalrecords = data[0].TotalRows;
+        }
+};
+
+Sources.SourceDemandTypesList =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'DemandType_id',  type: 'int' },
+        { name: 'DemandType',  type: 'string' },
+        { name: 'dd',  type: 'bool' },
+        { name: 'd',  type: 'bool' },
+        { name: 'id',  type: 'bool' },
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DemandTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+            this.totalrecords = data[0].TotalRows;
         }
 };
