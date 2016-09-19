@@ -41,6 +41,49 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        'ContactsReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Контактные лица',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'ObjectsMasterReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты по мастерам',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'ObjectServiceTypeReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты по тарифам',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'ObjectServiceTypeEquipsReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты по тарифам (Оборудование)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'PricesIncreaseReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Повышение расценок',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'DepartedCustomersReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Ушедшие клиенты',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
     );
 ?>
 

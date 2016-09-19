@@ -3,7 +3,7 @@
         /* Текущая выбранная строка данных */
         var CurrentRowData;
         
-        var MalfunctionsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMalfunctions));
+        var MalfunctionsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMalfunctionsOld));
 
         $('#btnAddMalfunction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnEditMalfunction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));

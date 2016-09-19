@@ -2184,7 +2184,7 @@ Sources.SourceEquipTypesList =
         }
 };
 
-Sources.SourceMalfunctions =
+Sources.SourceMalfunctionsOld =
 {
     datatype: "json",
     datafields: [

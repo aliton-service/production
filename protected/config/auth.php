@@ -350,6 +350,12 @@ return array_merge(
                 'Employee1Report',
                 'Employee2Report',
                 'Employee3Report',
+                'ContactsReport',
+                'ObjectsMasterReport',
+                'ObjectServiceTypeReport',
+                'ObjectServiceTypeEquipsReport',
+                'PricesIncreaseReport',
+                'DepartedCustomersReport',
                 ),
         ),
         
