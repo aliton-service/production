@@ -2172,7 +2172,7 @@ Sources.SourceEquipTypesList =
         { name: 'EquipType_id',  type: 'int' },
         { name: 'EquipType',  type: 'string' },
     ],
-    id: 'id',
+    id: 'EquipType_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipTypes',
     root: 'Rows',
     cache: false,
@@ -2191,9 +2191,10 @@ Sources.SourceMalfunctions =
         { name: 'Malfunction_id',  type: 'int' },
         { name: 'Malfunction',  type: 'string' },
     ],
-    id: 'id',
+    id: 'Malfunction_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Malfunctions',
     root: 'Rows',
+    
     cache: false,
     async: false,
     pagenum: 0,
@@ -2213,13 +2214,14 @@ Sources.SourceDemandTypesList =
         { name: 'd',  type: 'bool' },
         { name: 'id',  type: 'bool' },
     ],
-    id: 'id',
+    id: 'DemandType_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DemandTypes',
     root: 'Rows',
+    type: 'POST',
     cache: false,
     async: false,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
             this.totalrecords = data[0].TotalRows;
         }
