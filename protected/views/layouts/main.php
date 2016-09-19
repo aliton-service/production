@@ -226,6 +226,14 @@
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Кадры/Сотрудники', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('Employee1Report')
                                     ),
+                                    array('label' => 'Сотрудники (детальный)',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Кадры/Сотрудники (детальный)', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('Employee2Report')
+                                    ),
+                                    array('label' => 'Дни рождения',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Кадры/Дни рождения', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('Employee3Report')
+                                    ),
                                 )),
                                 array('label'=>'Объекты', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Объекты по мастерам', 

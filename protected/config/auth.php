@@ -343,7 +343,9 @@ return array_merge(
                 'Demand1Report',
                 'Demand2Report',
                 'WHDocuments1Report',
-                'Employee1Report'
+                'Employee1Report',
+                'Employee2Report',
+                'Employee3Report',
                 ),
         ),
         

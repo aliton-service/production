@@ -27,6 +27,20 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        'Employee2Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Сорудники (детальный)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'Employee3Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Дни рождения',
+            'bizRule' => null,
+            'data' => null,
+        ),
     );
 ?>
 

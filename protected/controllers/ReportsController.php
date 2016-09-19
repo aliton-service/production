@@ -108,6 +108,10 @@ class ReportsController extends Controller
             return 'demand_report2';
         else if ($ReportName == '/Кадры/Сотрудники')
             return 'employee1';
+        else if ($ReportName == '/Кадры/Сотрудники (детальный)')
+            return 'employee1';
+        else if ($ReportName == '/Кадры/Дни рождения')
+            return 'employee2';
         else if ($ReportName == '/Объекты/Объекты по мастерам')
             return 'objectmaster';
         else if ($ReportName == '/Объекты/Объекты по тарифам')
