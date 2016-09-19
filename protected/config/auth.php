@@ -347,7 +347,13 @@ return array_merge(
                 'Demand1Report',
                 'Demand2Report',
                 'WHDocuments1Report',
-                'Employee1Report'
+                'Employee1Report',
+                'ContactsReport',
+                'ObjectsMasterReport',
+                'ObjectServiceTypeReport',
+                'ObjectServiceTypeEquipsReport',
+                'PricesIncreaseReport',
+                'DepartedCustomersReport',
                 ),
         ),
         
