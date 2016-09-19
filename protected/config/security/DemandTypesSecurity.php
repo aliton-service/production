@@ -1,13 +1,13 @@
 <?php
 return array(
 	
-         /** Роли для таблицы Streets (улицы) **/
+ /** Роли для таблицы DemandTypes (типы улиц) **/
         'ManagerDemandTypes' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'ManagerDemandTypes',
             'bizRule' => null,
             'data' => null,
-            'defaultIndex' => 'demandTypes/index',
+            'defaultIndex' => 'DemandTypes/index',
              'children' => array(
                 'ViewDemandTypes',
                 'CreateDemandTypes',
@@ -20,7 +20,7 @@ return array(
             'description' => 'AdminDemandTypes',
             'bizRule' => null,
             'data' => null,
-            'defaultIndex' => 'demandTypes/index',
+            'defaultIndex' => 'DemandTypes/index',
             'children' => array(
                 'ViewDemandTypes',
                 'CreateDemandTypes',
@@ -34,7 +34,7 @@ return array(
             'description' => 'UserDemandTypes',
             'bizRule' => null,
             'data' => null,
-            'defaultIndex' => 'demandTypes/index',
+            'defaultIndex' => 'DemandTypes/index',
             'children' => array(
                 'ViewDemandTypes'
                 ),
@@ -67,4 +67,5 @@ return array(
             'bizRule' => null,
             'data' => null,
         ),
+
 );

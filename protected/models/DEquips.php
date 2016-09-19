@@ -22,7 +22,8 @@ class DEquips extends MainFormModel
                         d.EquipType_id,
                         isNull(et.EquipType, '(Пусто)') as EquipType,
                         d.Sort";
-        $From = "\nFrom DEquips d left join EquipTypes et on (d.EquipType_id = et.EquipType_id)";
+        $From = "\nFrom DEquips d "
+                . "left join EquipTypes et on (d.EquipType_id = et.EquipType_id)";
         $Order = "\nOrder by d.Sort";
 
         $this->Query->setSelect($Select);

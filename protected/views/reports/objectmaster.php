@@ -4,7 +4,7 @@
     $(document).ready(function(){
         if (Ajax == '') {
             var DataEmpl = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-            $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "ShortName", valueMember: "Employee_id", width:300 }));
+            $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "ShortName", valueMember: "Employee_id", width:200 }));
         }
     });
 </script>    

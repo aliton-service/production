@@ -126,10 +126,12 @@
                                         array('label'=>'EquipsHistory', 'url'=>array('/equipsHistory/index'), 'visible'=>Yii::app()->user->checkAccess('ViewEquipsHistory')),
                                         array('label'=>'EquipsRate', 'url'=>array('/equipsRate/index'), 'visible'=>Yii::app()->user->checkAccess('View')),
                                         //array('label'=>'Подгруппы ТМЦ', 'url'=>array('/equipSubgroups/index'), 'visible'=>Yii::app()->user->checkAccess('ViewEquipSubgroups')),
-                                        array('label'=>'EquipTypes', 'url'=>array('/equipTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewEquipTypes')),
-
-
-
+                                    ),
+                                    ),
+                                    array('label'=>'Заявки', 'url'=>'#', 'items'=>array(
+                                        array('label'=>'Типы оборудования', 'url'=>array('/EquipTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewEquipTypes')),
+                                        array('label'=>'Неисправность', 'url'=>array('/Malfunctions/index'), 'visible'=>Yii::app()->user->checkAccess('ViewMalfunctions')),
+                                        array('label'=>'Типы заявок', 'url'=>array('/DemandTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDemandTypes')),
                                     ),
                                     ),
 
