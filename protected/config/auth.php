@@ -339,6 +339,7 @@ return array_merge(
                 'AdminMonitoringDemands',
                 'AdminMonitoringDemandDetails',
                 'AdminEquipForMDDetails',
+                'AdminEquipTypes',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

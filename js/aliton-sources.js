@@ -2164,3 +2164,22 @@ Sources.SourceSpecialDays =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceEquipTypesList =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'EquipType_id' },
+        { name: 'EquipType' },
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+            Sources.SourceEquipTypes.totalrecords = data[0].TotalRows;
+        }
+};
