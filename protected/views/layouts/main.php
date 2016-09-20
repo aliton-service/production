@@ -148,6 +148,8 @@
                                 )
                             )
                             ),
+                            
+                            
                             array('label'=>'Ремонт', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewRepairs'), 'items'=>array(
                                 array('label'=>'Формы', 'url'=>'#', 'items'=>array(
                                     array('label'=>'Форма для менеджера по ремонту', 'url'=>array('/repair')),
@@ -216,6 +218,10 @@
                                     array('label' => 'Чужие и удаленные заявки СЦ', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Чужие и удаленные заявки СЦ', 'Render' => 0)),
                                             'visible'=>Yii::app()->user->checkAccess('Demand2Report')
+                                        ),
+                                    array('label' => 'Заявки по объектам', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки по объектам', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsObjectsReport')
                                         ),
                                 )),
                                 array('label'=>'Склад', 'url'=>'#', 'items'=>array(

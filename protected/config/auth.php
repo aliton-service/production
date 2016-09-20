@@ -360,6 +360,7 @@ return array_merge(
                 'PricesIncreaseReport',
                 'DepartedCustomersReport',
                 'AdminDemandsExecTime',
+                'DemandsObjectsReport',
                 ),
         ),
         
