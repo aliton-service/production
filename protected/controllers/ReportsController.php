@@ -124,6 +124,8 @@ class ReportsController extends Controller
             return 'contacts';
         else if ($ReportName == '/Объекты/Повышение расценок')
             return 'pricesIncrease';
+        else if ($ReportName == '/Заявки/Заявки по объектам')
+            return 'demandsObjects';
         else
             return 'standart';
     }

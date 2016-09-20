@@ -84,6 +84,13 @@
             'data' => null,
         ),
         
+        'DemandsObjectsReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки по объектам',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
     );
 ?>
 

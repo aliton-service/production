@@ -356,6 +356,7 @@ return array_merge(
                 'ObjectServiceTypeEquipsReport',
                 'PricesIncreaseReport',
                 'DepartedCustomersReport',
+                'DemandsObjectsReport',
                 ),
         ),
         
