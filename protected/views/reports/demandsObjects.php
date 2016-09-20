@@ -123,8 +123,8 @@
         <div class="row-column" id="AllExecPeriod" name="Parameters[prmAllExecPeriod]"></div>
         <div class="row" style="margin: 0 0 15px 0; width: 100%;">Дата выполнения заявки за период:</div>
         <div class="row">
-            <div class="row-column" style="margin-top: 2px;">с </div><div class="row-column"><div id='DateExecStart' name="Parameters[prmDateStart]"></div></div>
-            <div class="row-column" style="margin-top: 2px;">по </div><div class="row-column"><div id='DateExecEnd' name="Parameters[prmDateEnd]"></div></div>
+            <div class="row-column" style="margin-top: 2px;">с </div><div class="row-column"><div id='DateExecStart' name="Parameters[prmDateExecStart]"></div></div>
+            <div class="row-column" style="margin-top: 2px;">по </div><div class="row-column"><div id='DateExecEnd' name="Parameters[prmDateExecEnd]"></div></div>
         </div>
     </div>
 
