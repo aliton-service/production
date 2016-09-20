@@ -83,6 +83,25 @@ Sources.SourceListEmployees =
     }
 };
 
+Sources.SourceDemandTypeList =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'DemandType_id', type: 'int' },
+        { name: 'DemandType', type: 'string' },
+    ],
+    id: 'DemandType_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DemandTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+            this.totalrecords = data[0].TotalRows;
+        }
+};
+
 Sources.SourceDemandTypes =
 {
     datatype: "json",
@@ -100,6 +119,25 @@ Sources.SourceDemandTypes =
     pagesize: 300,
     beforeprocessing: function (data) {
             Sources.SourceDemandTypes.totalrecords = data[0].TotalRows;
+        }
+};
+
+Sources.SourceSystemTypeList =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'SystemType_Id' },
+        { name: 'SystemTypeName' },
+    ],
+    id: 'SystemType_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SystemTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+            this.totalrecords = data[0].TotalRows;
         }
 };
 
@@ -2225,4 +2263,44 @@ Sources.SourceDemandTypesList =
     beforeprocessing: function (data) {
             this.totalrecords = data[0].TotalRows;
         }
+};
+
+Sources.SourceDemandsExecTime =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'DType_id',  type: 'int' },
+        { name: 'DemandType_id',  type: 'int' },
+        { name: 'DemandType',  type: 'string' },
+        { name: 'DSystem_id',  type: 'int' },
+        { name: 'SystemType_id',  type: 'int' },
+        { name: 'SystemTypeName',  type: 'string' },
+        { name: 'DEquip_id',  type: 'int' },
+        { name: 'EquipType_id',  type: 'int' },
+        { name: 'EquipType',  type: 'string' },
+        { name: 'DMalfunction_id',  type: 'int' },
+        { name: 'Malfunction_id',  type: 'int' },
+        { name: 'Malfunction',  type: 'string' },
+        { name: 'DPrior_id',  type: 'int' },
+        { name: 'DemandPrior_id',  type: 'int' },
+        { name: 'DemandPrior',  type: 'string' },
+        { name: 'Demandet_id',  type: 'int' },
+        { name: 'ExceedDays',  type: 'int' },
+        { name: 'ExceedType',  type: 'int' },
+        { name: 'ExceedTypeName',  type: 'string' },
+        { name: 'DayOff',  type: 'bool' },
+        { name: 'VipDayOff',  type: 'bool' },
+        { name: 'VipExceedDays',  type: 'int' },
+    ],
+    id: 'DPrior_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DemandsExecTime',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
 };

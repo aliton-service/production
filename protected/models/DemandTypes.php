@@ -33,7 +33,7 @@ class DemandTypes extends MainFormModel
                         dt.DelDate";
         $From = "\nFrom DemandTypes dt";
         $Where = "\nWhere dt.DelDate is null";
-        $Order = "\nOrder by dt.DemandType";
+        $Order = "\nOrder by dt.Sort, dt.DemandType";
 
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);

@@ -43,7 +43,7 @@ class SystemTypes extends MainFormModel
 		$select = "Select st.* ";
 		$from = "From SystemTypes st ";
 		$where = "Where st.DelDate Is Null ";
-		$order = "Order By st.SystemTypeName ";
+		$order = "Order By st.Sort, st.SystemTypeName ";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);

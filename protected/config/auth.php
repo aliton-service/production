@@ -53,6 +53,9 @@ return array_merge(
     include(dirname(__FILE__).'/security/EquipSubgroupsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipTypesSecurity.php'),
     include(dirname(__FILE__).'/security/MalfunctionsSecurity.php'),
+    // Приоритеты заявок
+    include(dirname(__FILE__).'/security/DemandsExecTimeSecurity.php'),
+        
     include(dirname(__FILE__).'/security/referenceSecurity.php'),
     include(dirname(__FILE__).'/security/ContactsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipForMDDetailsSecurity.php'),
@@ -356,6 +359,7 @@ return array_merge(
                 'ObjectServiceTypeEquipsReport',
                 'PricesIncreaseReport',
                 'DepartedCustomersReport',
+                'AdminDemandsExecTime',
                 ),
         ),
         

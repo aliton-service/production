@@ -132,6 +132,7 @@
                                         array('label'=>'Типы оборудования', 'url'=>array('/EquipTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewEquipTypes')),
                                         array('label'=>'Неисправность', 'url'=>array('/Malfunctions/index'), 'visible'=>Yii::app()->user->checkAccess('ViewMalfunctions')),
                                         array('label'=>'Типы заявок', 'url'=>array('/DemandTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDemandTypes')),
+                                        array('label'=>'Приоритеты заявок', 'url'=>array('/DemandsExecTime/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDemandsExecTime')),
                                     ),
                                     ),
 
