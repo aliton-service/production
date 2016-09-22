@@ -110,19 +110,23 @@
         <div class="row-column"><div id='Territory' name="Parameters[prmTerrit1]"></div></div>
     </div>
 
-    <div class="row" style="padding: 10px; width: 700px; border: 1px solid #ddd; background-color: #F2F2F2;">
-        <div class="row-column" id="AllPeriod" name="Parameters[prmAllPeriod]"></div>
-        <div class="row" style="margin: 0 0 15px 0; width: 100%;">Дата регистрации заявки за период:</div>
+    <div class="row" style="padding: 10px; width: 350px; border: 1px solid #ddd; background-color: #F2F2F2;">
         <div class="row">
+            <div class="row-column" id="AllPeriod" name="Parameters[prmAllPeriod]"></div>
+            <div class="row-column" style="margin-top: 2px;">Учитывать дату регистрации заявки за период:</div>
+        </div>
+        <div class="row" style="margin-left: 35px;">
             <div class="row-column" style="margin-top: 2px;">с </div><div class="row-column"><div id='DateStart' name="Parameters[prmDateStart]"></div></div>
             <div class="row-column" style="margin-top: 2px;">по </div><div class="row-column"><div id='DateEnd' name="Parameters[prmDateEnd]"></div></div>
         </div>
     </div>
 
-    <div class="row" style="padding: 10px; width: 300px; border: 1px solid #ddd; background-color: #F2F2F2;">
-        <div class="row-column" id="AllExecPeriod" name="Parameters[prmAllExecPeriod]"></div>
-        <div class="row" style="margin: 0 0 15px 0; width: 100%;">Дата выполнения заявки за период:</div>
+    <div class="row" style="padding: 10px; width: 350px; border: 1px solid #ddd; background-color: #F2F2F2;">
         <div class="row">
+            <div class="row-column" id="AllExecPeriod" name="Parameters[prmAllExecPeriod]"></div>
+            <div class="row-column" style="margin-top: 2px;">Учитывать дату выполнения заявки за период:</div>
+        </div>
+        <div class="row" style="margin-left: 35px;">
             <div class="row-column" style="margin-top: 2px;">с </div><div class="row-column"><div id='DateExecStart' name="Parameters[prmDateStart]"></div></div>
             <div class="row-column" style="margin-top: 2px;">по </div><div class="row-column"><div id='DateExecEnd' name="Parameters[prmDateEnd]"></div></div>
         </div>
@@ -137,8 +141,4 @@
     
     echo '<div id="res_cont">' . $ResultHtml . '</div>';
 ?>
-
-
-
-
 

@@ -361,6 +361,11 @@ return array_merge(
                 'DepartedCustomersReport',
                 'AdminDemandsExecTime',
                 'DemandsObjectsReport',
+                'DemandsMastersReport',
+                'DemandsListDetailsReport',
+                'DemandsListReport',
+                'DemandsListBrokenDeadlinesReport',
+                'DemandsListBrokenDeadlinesDetailsReport',
                 ),
         ),
         

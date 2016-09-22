@@ -125,7 +125,17 @@ class ReportsController extends Controller
         else if ($ReportName == '/Объекты/Повышение расценок')
             return 'pricesIncrease';
         else if ($ReportName == '/Заявки/Заявки по объектам')
-            return 'demandsObjects';
+            return 'demandsReportForm';
+        else if ($ReportName == '/Заявки/Заявки по мастерам')
+            return 'demandsReportForm';
+        else if ($ReportName == '/Заявки/Заявки (общий отчет)')
+            return 'demandsReportForm';
+        else if ($ReportName == '/Заявки/Заявки (общий отчет) без хода работ')
+            return 'demandsReportForm';
+        else if ($ReportName == '/Заявки/Нарушение сроков выполнения')
+            return 'demandsReportForm';
+        else if ($ReportName == '/Заявки/Нарушение сроков выполнения (детальный)')
+            return 'demandsReportForm';
         else
             return 'standart';
     }

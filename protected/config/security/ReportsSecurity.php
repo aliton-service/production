@@ -91,6 +91,41 @@
             'data' => null,
         ),
         
+        'DemandsMastersReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки по мастерам',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'DemandsListDetailsReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки (общий отчет)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'DemandsListReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки (общий отчет) без хода работ',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'DemandsListBrokenDeadlinesReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Нарушение сроков выполнения',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'DemandsListBrokenDeadlinesDetailsReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Нарушение сроков выполнения (детальный)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
     );
 ?>
 

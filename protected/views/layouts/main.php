@@ -223,6 +223,26 @@
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки по объектам', 'Render' => 0)),
                                             'visible'=>Yii::app()->user->checkAccess('DemandsObjectsReport')
                                         ),
+                                    array('label' => 'Заявки по мастерам', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки по мастерам', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsMastersReport')
+                                        ),
+                                    array('label' => 'Заявки (общий отчет)', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки (общий отчет)', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsListDetailsReport')
+                                        ),
+                                    array('label' => 'Заявки (общий отчет) без хода работ', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки (общий отчет) без хода работ', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsListReport')
+                                        ),
+                                    array('label' => 'Нарушение сроков выполнения', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Нарушение сроков выполнения', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsListBrokenDeadlinesReport')
+                                        ),
+                                    array('label' => 'Нарушение сроков выполнения (детальный)', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Нарушение сроков выполнения (детальный)', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsListBrokenDeadlinesDetailsReport')
+                                        ),
                                 )),
                                 array('label'=>'Склад', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Выданное оборудование (детальный)',
