@@ -46,7 +46,7 @@
             var NewDate = new Date(Year, Month, 1);
             $('#DateStart').jqxDateTimeInput('val', NewDate);
             $('#DateExecStart').jqxDateTimeInput('val', NewDate);
-            
+            $("#Exec").jqxComboBox('val', 1);
         }
     });
 </script>    
@@ -77,37 +77,37 @@
     
     <div class="row">
         <div class="row-column">Тип заявки: </div>
-        <div class="row-column"><div id='DemandType' name="Parameters[prmDemandType]"></div></div>
+        <div class="row-column"><div id='DemandType' name="Parameters2[prmDemandType]"></div></div>
     </div>
     
     <div class="row">
         <div class="row-column">Тип системы: </div>
-        <div class="row-column"><div id='SystemType' name="Parameters[prmSystemType]"></div></div>
+        <div class="row-column"><div id='SystemType' name="Parameters2[prmSystemType]"></div></div>
     </div>
     
     <div class="row">
         <div class="row-column">Тип оборудования: </div>
-        <div class="row-column"><div id='EquipType' name="Parameters[prmEquipType]"></div></div>
+        <div class="row-column"><div id='EquipType' name="Parameters2[prmEquipType]"></div></div>
     </div>
     
     <div class="row">
         <div class="row-column">Неисправность: </div>
-        <div class="row-column"><div id='Malfunction' name="Parameters[prmMalfunction]"></div></div>
+        <div class="row-column"><div id='Malfunction' name="Parameters2[prmMalfunction]"></div></div>
     </div>
     
     <div class="row">
         <div class="row-column">Тариф: </div>
-        <div class="row-column"><div id='ServiceType' name="Parameters[prmServiceType]"></div></div>
+        <div class="row-column"><div id='ServiceType' name="Parameters2[prmServiceType]"></div></div>
     </div>
     
     <div class="row">
         <div class="row-column">Выполнение: </div>
-        <div class="row-column"><div id='Exec' name="Parameters[prmExec]"></div></div>
+        <div class="row-column"><div id='Exec' name="Parameters2[prmExec]"></div></div>
     </div>
 
     <div class="row">
         <div class="row-column">Участок: </div>
-        <div class="row-column"><div id='Territory' name="Parameters[prmTerrit1]"></div></div>
+        <div class="row-column"><div id='Territory' name="Parameters2[prmTerrit1]"></div></div>
     </div>
 
     <div class="row" style="padding: 10px; width: 350px; border: 1px solid #ddd; background-color: #F2F2F2;">
@@ -123,12 +123,12 @@
 
     <div class="row" style="padding: 10px; width: 350px; border: 1px solid #ddd; background-color: #F2F2F2;">
         <div class="row">
-            <div class="row-column" id="AllExecPeriod" name="Parameters[prmAllExecPeriod]"></div>
+            <div class="row-column" id="AllExecPeriod" name="Parameters2[prmAllExecPeriod]"></div>
             <div class="row-column" style="margin-top: 2px;">Учитывать дату выполнения заявки за период:</div>
         </div>
         <div class="row" style="margin-left: 35px;">
-            <div class="row-column" style="margin-top: 2px;">с </div><div class="row-column"><div id='DateExecStart' name="Parameters[prmDateStart]"></div></div>
-            <div class="row-column" style="margin-top: 2px;">по </div><div class="row-column"><div id='DateExecEnd' name="Parameters[prmDateEnd]"></div></div>
+            <div class="row-column" style="margin-top: 2px;">с </div><div class="row-column"><div id='DateExecStart' name="Parameters2[prmDateExecStart]"></div></div>
+            <div class="row-column" style="margin-top: 2px;">по </div><div class="row-column"><div id='DateExecEnd' name="Parameters2[prmDateExecEnd]"></div></div>
         </div>
     </div>
 
