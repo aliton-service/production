@@ -135,6 +135,10 @@
                                         array('label'=>'Приоритеты заявок', 'url'=>array('/DemandsExecTime/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDemandsExecTime')),
                                     ),
                                     ),
+                                    array('label'=>'Заявки на доставку', 'url'=>'#', 'items'=>array(
+                                        array('label'=>'Виды заявок на доставку', 'url'=>array('/DeliveryTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDeliveryTypes')),
+                                    ),
+                                    ),
 
 
                                 ),

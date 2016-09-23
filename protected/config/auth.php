@@ -53,6 +53,7 @@ return array_merge(
     include(dirname(__FILE__).'/security/EquipSubgroupsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipTypesSecurity.php'),
     include(dirname(__FILE__).'/security/MalfunctionsSecurity.php'),
+    include(dirname(__FILE__).'/security/DeliveryTypesSecurity.php'),
     // Приоритеты заявок
     include(dirname(__FILE__).'/security/DemandsExecTimeSecurity.php'),
         
@@ -346,6 +347,7 @@ return array_merge(
                 'AdminEquipTypes',
                 'AdminMalfunctions',
                 'AdminDemandTypes',
+                'AdminDeliveryTypes',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
