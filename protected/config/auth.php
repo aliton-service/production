@@ -364,8 +364,11 @@ return array_merge(
                 'DemandsMastersReport',
                 'DemandsListDetailsReport',
                 'DemandsListReport',
-                'DemandsListBrokenDeadlinesReport',
-                'DemandsListBrokenDeadlinesDetailsReport',
+                'DemandsBrokenDeadlinesReport',
+                'DemandsBrokenDeadlinesDetailsReport',
+                'DemandsSubmittedTooLateReport',
+                'DemandsForUpgradesReport',
+                'DemandsUniversalReport',
                 ),
         ),
         

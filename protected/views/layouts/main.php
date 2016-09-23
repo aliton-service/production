@@ -237,11 +237,23 @@
                                         ),
                                     array('label' => 'Нарушение сроков выполнения', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Нарушение сроков выполнения', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsListBrokenDeadlinesReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsBrokenDeadlinesReport')
                                         ),
                                     array('label' => 'Нарушение сроков выполнения (детальный)', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Нарушение сроков выполнения (детальный)', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsListBrokenDeadlinesDetailsReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsBrokenDeadlinesDetailsReport')
+                                        ),
+                                    array('label' => 'Заявки, переданные не вовремя', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки переданные не вовремя', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsSubmittedTooLateReport')
+                                        ),
+                                    array('label' => 'Отчет по модернизациям', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Отчет по модернизациям', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsForUpgradesReport')
+                                        ),
+                                    array('label' => 'Универсальный отчет', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Универсальный отчет', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsUniversalReport')
                                         ),
                                 )),
                                 array('label'=>'Склад', 'url'=>'#', 'items'=>array(

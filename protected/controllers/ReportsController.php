@@ -127,15 +127,21 @@ class ReportsController extends Controller
         else if ($ReportName == '/Заявки/Заявки по объектам')
             return 'demandsReportForm';
         else if ($ReportName == '/Заявки/Заявки по мастерам')
-            return 'demandsReportForm';
+            return 'demandsReportFormMaster';
         else if ($ReportName == '/Заявки/Заявки (общий отчет)')
-            return 'demandsReportForm';
+            return 'demandsReportFormList';
         else if ($ReportName == '/Заявки/Заявки (общий отчет) без хода работ')
-            return 'demandsReportForm';
+            return 'demandsReportFormList';
         else if ($ReportName == '/Заявки/Нарушение сроков выполнения')
-            return 'demandsReportForm';
+            return 'demandsReportFormBrokenDeadlines';
         else if ($ReportName == '/Заявки/Нарушение сроков выполнения (детальный)')
-            return 'demandsReportForm';
+            return 'demandsReportFormBrokenDeadlines';
+        else if ($ReportName == '/Заявки/Заявки переданные не вовремя')
+            return 'DemandsSubmittedTooLate';
+        else if ($ReportName == '/Заявки/Отчет по модернизациям')
+            return 'DemandsForUpgrades';
+        else if ($ReportName == '/Заявки/Универсальный отчет')
+            return 'DemandsUniversalReport';
         else
             return 'standart';
     }
