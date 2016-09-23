@@ -366,6 +366,10 @@ return array_merge(
                 'DemandsListReport',
                 'DemandsListBrokenDeadlinesReport',
                 'DemandsListBrokenDeadlinesDetailsReport',
+                'Debt1Report',
+                'Debt2Report',
+                'Contract1Report',
+                'ObjectsSystemsReport',
                 ),
         ),
         

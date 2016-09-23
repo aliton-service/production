@@ -136,6 +136,12 @@ class ReportsController extends Controller
             return 'demandsReportForm';
         else if ($ReportName == '/Заявки/Нарушение сроков выполнения (детальный)')
             return 'demandsReportForm';
+        else if ($ReportName == '/Дебиторка/Причина долга')
+            return 'debt';
+        else if ($ReportName == '/Договора/Список договоров обслуживания')
+            return 'contract1';
+        else if ($ReportName == '/Объекты/Установленные системы')
+            return 'objsystems';
         else
             return 'standart';
     }

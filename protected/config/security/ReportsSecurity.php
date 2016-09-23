@@ -125,7 +125,30 @@
             'bizRule' => null,
             'data' => null,
         ),
-        
+        'Debt1Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Дебиторка',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'Debt2Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Дебиторка',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'Contract1Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Список договоров на обслуживании',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'ObjectsSystemsReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Установленные системы на объектах',
+            'bizRule' => null,
+            'data' => null,
+        ),
     );
 ?>
 

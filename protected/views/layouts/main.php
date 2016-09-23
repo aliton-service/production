@@ -188,10 +188,6 @@
                                 )
                             )
                             ),
-                            array('label'=>'Дебиторка', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewRepDebtReasons'), 'items'=>array(
-                                array('label'=>'Причина долга', 'url'=>array('/RepDebtReasons'), 'visible'=>Yii::app()->user->checkAccess('ViewRepDebtReasons')),
-                            )
-                            ),
                             array('label'=>'Графики', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewEvents'), 'items'=>array(
                                 array('label'=>'Графики', 'url'=>array('/events')),
                             ),
@@ -244,6 +240,16 @@
                                             'visible'=>Yii::app()->user->checkAccess('DemandsListBrokenDeadlinesDetailsReport')
                                         ),
                                 )),
+                                array('label'=>'Дебиторка', 'url'=>'#', 'items'=>array(
+                                    array('label' => 'Дебиторка',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Дебиторка/Дебиторка', 'Render' => 1)),
+                                        'visible'=>Yii::app()->user->checkAccess('Debt1Report')
+                                    ),
+                                    array('label' => 'Причина долга',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Дебиторка/Причина долга', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('Debt2Report')
+                                    ),
+                                )),
                                 array('label'=>'Склад', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Выданное оборудование (детальный)',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Выданное оборудование (детальный)', 'Render' => 0)),
@@ -288,6 +294,16 @@
                                     array('label' => 'Повышение расценок', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Повышение расценок', 'Render' => 0)),
                                             'visible'=>true
+                                        ),
+                                    array('label' => 'Установленные системы на объектах', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Установленные системы', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('ObjectsSystemsReport')
+                                        ),
+                                )),
+                                array('label'=>'Договора', 'url'=>'#', 'items'=>array(
+                                    array('label' => 'Список договоров обслуживания', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Договора/Список договоров обслуживания', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('Contract1Report')
                                         ),
                                 )),
                             )),
