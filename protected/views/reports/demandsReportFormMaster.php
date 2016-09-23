@@ -12,11 +12,8 @@
             
             var DataServiceType = new $.jqx.dataAdapter(Sources.SourceServiceTypes);
             var DataTerritory = new $.jqx.dataAdapter(Sources.SourceTerritory);
-            var DataExec = [
-                {id: 1, name: 'Все'},
-                {id: 2, name: 'Непереданные'},
-                {id: 3, name: 'Невыполненные'},
-            ];
+            var DataPriors = new $.jqx.dataAdapter(Sources.SourceDemandPriors);
+
             
             $("#Address").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddresses, displayMember: "Addr", valueMember: "Address_id", width: 400 }));
             $("#Master").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "ShortName", valueMember: "Employee_id", width: 200 }));
@@ -24,7 +21,7 @@
             $("#SystemType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemType, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width: 280 }));
             $("#EquipType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEquipType, displayMember: "EquipType", valueMember: "EquipType_id", width: 280 }));
             $("#Malfunction").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataMalfunction, displayMember: "Malfunction", valueMember: "Malfunction_id", width: 280 }));
-            $("#Exec").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataExec, displayMember: "name", valueMember: "id", width: 280, autoDropDownHeight:true }));
+            $("#DemandPrior").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPriors, displayMember: "DemandPrior", valueMember: "DemandPrior_id", width: 280 }));
             
             $("#ServiceType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataServiceType, displayMember: "ServiceType", valueMember: "ServiceType_id", width: 280 }));
             $("#Territory").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataTerritory, displayMember: "Territ_Name", valueMember: "Territ_Id", width: 200 }));
@@ -46,7 +43,6 @@
             var NewDate = new Date(Year, Month, 1);
             $('#DateStart').jqxDateTimeInput('val', NewDate);
             $('#DateExecStart').jqxDateTimeInput('val', NewDate);
-            $("#Exec").jqxComboBox('val', 1);
         }
     });
 </script>    
@@ -101,8 +97,8 @@
     </div>
     
     <div class="row">
-        <div class="row-column">Выполнение: </div>
-        <div class="row-column"><div id='Exec' name="Parameters[prmExec]"></div></div>
+        <div class="row-column">Приоритет: </div>
+        <div class="row-column"><div id='DemandPrior' name="Parameters[prmDemandPrior]"></div></div>
     </div>
 
     <div class="row">
@@ -142,3 +138,6 @@
     echo '<div id="res_cont">' . $ResultHtml . '</div>';
 ?>
 
+
+
+    

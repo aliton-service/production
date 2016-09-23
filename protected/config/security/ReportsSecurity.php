@@ -112,14 +112,14 @@
             'data' => null,
         ),
         
-        'DemandsListBrokenDeadlinesReport' => array(
+        'DemandsBrokenDeadlinesReport' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Нарушение сроков выполнения',
             'bizRule' => null,
             'data' => null,
         ),
         
-        'DemandsListBrokenDeadlinesDetailsReport' => array(
+        'DemandsBrokenDeadlinesDetailsReport' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Нарушение сроков выполнения (детальный)',
             'bizRule' => null,
@@ -149,6 +149,28 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        'DemandsSubmittedTooLateReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки, переданные не вовремя',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'DemandsForUpgradesReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Отчет по модернизациям',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'DemandsUniversalReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Универсальный отчет',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
     );
 ?>
 
