@@ -142,7 +142,6 @@ class ReportsController extends Controller
             return 'contract1';
         else if ($ReportName == '/Объекты/Установленные системы')
             return 'objsystems';
-            return 'demandsReportFormBrokenDeadlines';
         else if ($ReportName == '/Заявки/Заявки переданные не вовремя')
             return 'DemandsSubmittedTooLate';
         else if ($ReportName == '/Заявки/Отчет по модернизациям')
