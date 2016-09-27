@@ -2304,3 +2304,26 @@ Sources.SourceDemandsExecTime =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceInventories =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'invn_id',  type: 'int' },
+        { name: 'date',  type: 'date' },
+        { name: 'closed',  type: 'bool' },
+        { name: 'strg_id',  type: 'int' },
+        { name: 'storage',  type: 'string' },
+    ],
+    id: 'invn_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Inventories',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
