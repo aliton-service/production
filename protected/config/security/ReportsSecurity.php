@@ -205,6 +205,21 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        'DeliveryDemandsReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки на доставку',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'DeliveryDemandsBrokenDeadlinesReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Нарушение сроков выполнения',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
     );
 ?>
 

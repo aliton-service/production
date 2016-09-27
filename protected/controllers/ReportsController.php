@@ -156,6 +156,10 @@ class ReportsController extends Controller
             return 'formobjects';
         else if ($ReportName == '/Контакты/Контакты')
             return 'contacts2';
+        else if ($ReportName == '/Заявки на доставку/Заявки на доставку')
+            return 'DeliveryDemands';
+        else if ($ReportName == '/Заявки на доставку/Нарушение сроков выполнения')
+            return 'DeliveryDemandsBrokenDeadlines';
         else
             return 'standart';
     }

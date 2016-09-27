@@ -135,6 +135,10 @@
                                         array('label'=>'Приоритеты заявок', 'url'=>array('/DemandsExecTime/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDemandsExecTime')),
                                     ),
                                     ),
+                                    array('label'=>'Заявки на доставку', 'url'=>'#', 'items'=>array(
+                                        array('label'=>'Виды заявок на доставку', 'url'=>array('/DeliveryTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDeliveryTypes')),
+                                    ),
+                                    ),
 
 
                                 ),
@@ -264,6 +268,16 @@
                                     array('label' => 'Причина долга',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Дебиторка/Причина долга', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('Debt2Report')
+                                    ),
+                                )),
+                                array('label'=>'Заявки на доставку', 'url'=>'#', 'items'=>array(
+                                    array('label' => 'Заявки на доставку',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки на доставку/Заявки на доставку', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('DeliveryDemandsReport')
+                                    ),
+                                    array('label' => 'Нарушение сроков выполнения',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки на доставку/Нарушение сроков выполнения', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('DeliveryDemandsBrokenDeadlinesReport')
                                     ),
                                 )),
                                 array('label'=>'Склад', 'url'=>'#', 'items'=>array(
