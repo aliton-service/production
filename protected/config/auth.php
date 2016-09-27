@@ -179,6 +179,9 @@ return array_merge(
     include(dirname(__FILE__).'/security/MonitoringDemandsSecurity.php'),
     include(dirname(__FILE__).'/security/MonitoringDemandDetailsSecurity.php'),
         
+    /* Остатки на складе */
+    include(dirname(__FILE__).'/security/InventoriesSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -349,6 +352,7 @@ return array_merge(
                 'AdminDemandTypes',
                 'AdminWHDocuments',
                 'AdminDeliveryTypes',
+                'AdminInventories',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

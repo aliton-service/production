@@ -47,18 +47,32 @@ class Inventories extends MainFormModel
 	public $quant = null;
 	public $quant_used = null;
 
-	public $KeyFiled = 'i.invn_id';
-	public $PrimaryKey = 'invn_id';
-
-	public $select = null;
-	public $from = null;
-	public $where = null;
-	public $order = null;
-
 	function __construct($scenario = '') {
-		parent::__construct($scenario);
+            parent::__construct($scenario);
 
-	}
+            $this->SP_INSERT_NAME = 'INSERT_Inventories';
+            $this->SP_UPDATE_NAME = 'UPDATE_Inventories';
+            $this->SP_DELETE_NAME = 'DELETE_Inventories';
+
+            $Select = "\nSelect 
+                            i.invn_id, 
+                            i.date, 
+                            i.closed, 
+                            i.strg_id,
+                            isnull(s.storage, 'Все') storage";
+            $From = "\nFrom Inventories i "
+                    . "left join Storages s on (i.strg_id = s.storage_id)";
+            $Where = "\nWhere i.DelDate is null";
+            $Order = "\nOrder by i.date desc";
+
+            $this->Query->setSelect($Select);
+            $this->Query->setFrom($From);
+            $this->Query->setWhere($Where);
+            $this->Query->setOrder($Order);
+
+            $this->KeyFiled = 'i.invn_id';
+            $this->PrimaryKey = 'invn_id';
+        }
 	/**
 	 * @return string the associated database table name
 	 */
