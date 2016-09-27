@@ -371,6 +371,8 @@ return array_merge(
                 'DemandsSubmittedTooLateReport',
                 'DemandsForUpgradesReport',
                 'DemandsUniversalReport',
+                'DeliveryDemandsReport',
+                'DeliveryDemandsBrokenDeadlinesReport',
                 ),
         ),
         

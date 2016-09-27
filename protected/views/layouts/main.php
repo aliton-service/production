@@ -260,6 +260,16 @@
                                             'visible'=>Yii::app()->user->checkAccess('DemandsUniversalReport')
                                         ),
                                 )),
+                                array('label'=>'Заявки на доставку', 'url'=>'#', 'items'=>array(
+                                    array('label' => 'Заявки на доставку',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки на доставку/Заявки на доставку', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('DeliveryDemandsReport')
+                                    ),
+                                    array('label' => 'Нарушение сроков выполнения',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки на доставку/Нарушение сроков выполнения', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('DeliveryDemandsBrokenDeadlinesReport')
+                                    ),
+                                )),
                                 array('label'=>'Склад', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Выданное оборудование (детальный)',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Выданное оборудование (детальный)', 'Render' => 0)),

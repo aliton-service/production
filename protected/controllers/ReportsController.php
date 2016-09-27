@@ -142,6 +142,10 @@ class ReportsController extends Controller
             return 'DemandsForUpgrades';
         else if ($ReportName == '/Заявки/Универсальный отчет')
             return 'DemandsUniversalReport';
+        else if ($ReportName == '/Заявки на доставку/Заявки на доставку')
+            return 'DeliveryDemands';
+        else if ($ReportName == '/Заявки на доставку/Нарушение сроков выполнения')
+            return 'DeliveryDemandsBrokenDeadlines';
         else
             return 'standart';
     }
