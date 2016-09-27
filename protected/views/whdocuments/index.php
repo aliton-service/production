@@ -26,6 +26,24 @@
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
+                    var DataWHDocumentsAll = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsAllSource));
+                    $("#Grid1").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            height: 200,
+                            width: '100%',
+                            showfilterrow: true,
+                            autoshowfiltericon: true,
+                            source: DataWHDocumentsAll,
+                            pagesize: 200,
+                            virtualmode: true,
+                            columns:
+                                [
+                                    { text: 'Обсл.\Мотаж', datafield: 'wrtp_gr', width: 130 },
+                                    { text: 'Тип документа', datafield: 'dctp_name', width: 200 },
+                                    { text: 'Номер', datafield: 'number', width: 120 },
+                                    { text: 'Дата', filtertype: 'date', datafield: 'date', filtercondition: 'DATE_EQUAL', cellsformat: 'dd.MM.yyyy', width: 100 },
+                                ],
+                            }));
                 break;
             }
         };
@@ -114,7 +132,7 @@
     </ul>
     <div style="overflow: hidden;">
         <div style="padding: 10px;">
-            
+            <div id="Grid1"></div>
         </div>
     </div>
     <div style="overflow: hidden;">

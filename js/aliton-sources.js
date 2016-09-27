@@ -2304,3 +2304,37 @@ Sources.SourceDemandsExecTime =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.WHDocumentsAllSource =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'docm_id', type: 'int'},
+        { name: 'objc_id', type: 'int'},
+        { name: 'dctp_id', type: 'int'},
+        { name: 'dctp_name', type: 'string'},
+        { name: 'number', type: 'string'},
+        { name: 'date', type: 'date'},
+        { name: 'date_create', type: 'date'},
+        { name: 'note', type: 'string'},
+        { name: 'actn_code', type: 'int'},
+        { name: 'actn_name', type: 'string'},
+        { name: 'ac_date', type: 'date'},
+        { name: 'Source', type: 'string'},
+        { name: 'Destination', type: 'string'},
+        { name: 'achs_id', type: 'int'},
+        { name: 'wrtp_name', type: 'string'},
+        { name: 'wrtp_gr', type: 'string'},
+        { name: 'strg_id', type: 'int'},
+        { name: 'storage', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsAll',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
