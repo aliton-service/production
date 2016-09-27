@@ -346,6 +346,7 @@ return array_merge(
                 'AdminEquipTypes',
                 'AdminMalfunctions',
                 'AdminDemandTypes',
+                'AdminWHDocuments',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
@@ -375,6 +376,12 @@ return array_merge(
                 'DemandsSubmittedTooLateReport',
                 'DemandsForUpgradesReport',
                 'DemandsUniversalReport',
+                'ObjectEquipsReport',
+                'ObjectEquipsReport2',
+                'Equips1',
+                'DemandsDateMaster',
+                'FormObjects',
+                'Contacts2',
                 ),
         ),
         

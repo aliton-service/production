@@ -163,14 +163,48 @@
             'bizRule' => null,
             'data' => null,
         ),
-        
         'DemandsUniversalReport' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Универсальный отчет',
             'bizRule' => null,
             'data' => null,
         ),
-        
+        'ObjectEquipsReport' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Оборудование на объектах',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'ObjectEquipsReport2' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Оборудование на объектах (по оборудованию)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'Equips1' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Оборудование с аналогами',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsDateMaster' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки для передачи мастеру',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'FormObjects' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты по организациям',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'Contacts2' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Отчет по контактам',
+            'bizRule' => null,
+            'data' => null,
+        ),
     );
 ?>
 

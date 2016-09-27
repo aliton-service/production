@@ -148,6 +148,14 @@ class ReportsController extends Controller
             return 'DemandsForUpgrades';
         else if ($ReportName == '/Заявки/Универсальный отчет')
             return 'DemandsUniversalReport';
+        else if ($ReportName == '/Объекты/Оборудование на объектах')
+            return 'objectequips';
+        else if ($ReportName == '/Объекты/Оборудование на объектах (по оборудованию)')
+            return 'objectequips';
+        else if ($ReportName == '/Объекты/Объекты по организациям')
+            return 'formobjects';
+        else if ($ReportName == '/Контакты/Контакты')
+            return 'contacts2';
         else
             return 'standart';
     }
