@@ -350,13 +350,10 @@ class MainFormModel extends CFormModel
     public function GetAttributeNameFilters($FiledName) {
         $Result = $FiledName;
         $AttributeFilters = $this->attributeFilters();
-        $Attributes = $this->attributeNames();
         
-        for ($i = 0; $i < count($Attributes); ++$i) {
-            if (isset($AttributeFilters[$Attributes[$i]]))
-                $this->$Attributes[$i] = $AttributeFilters[$Attributes[$i]];
-        }
-        
+        if (isset($AttributeFilters[$FiledName])) 
+            $Result = $AttributeFilters[$FiledName];
+
         return $Result; 
     }
 
