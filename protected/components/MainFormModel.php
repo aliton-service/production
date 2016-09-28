@@ -343,6 +343,22 @@ class MainFormModel extends CFormModel
         return $query->queryScalar();
     }
 
+    public function attributeFilters() {
+        return array();
+    }
+    
+    public function GetAttributeNameFilters($FiledName) {
+        $Result = $FiledName;
+        $AttributeFilters = $this->attributeFilters();
+        $Attributes = $this->attributeNames();
+        
+        for ($i = 0; $i < count($Attributes); ++$i) {
+            if (isset($AttributeFilters[$Attributes[$i]]))
+                $this->$Attributes[$i] = $AttributeFilters[$Attributes[$i]];
+        }
+        
+        return $Result; 
+    }
 
 
 }

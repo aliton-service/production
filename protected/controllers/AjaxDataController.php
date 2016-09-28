@@ -19,6 +19,7 @@ class AjaxDataController extends Controller
             $Result = $model->Find(array());
         
         $CountRow = $model->getCountAllRow();
+                
         
         $Data = array();
         
@@ -222,6 +223,19 @@ class AjaxDataController extends Controller
         
         
         $Result = $Model->FindAjax($pagenum, $pagesize, $Sort, $InternalFilters, array());
+        
+//        if ($ModelName = 'WHDocumentsDoc1') {
+//            for ($i = 0; $i < count($Result['Data']); $i++) {
+//                $tmp = $Result['Data'][$i];
+//                
+//                foreach ($tmp as $key => $value) {
+//                    if ($key == 'date') {
+//                        $tmp['d.date'] = $value;
+//                    }
+//                }
+//                $Result['Data'][$i] = $tmp;
+//            }
+//        }
         
         $CountRow = $Result['Details']['Count'];
         

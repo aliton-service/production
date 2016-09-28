@@ -16,7 +16,7 @@ class WHDocumentsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'view'),
+                    'actions'=>array('index', 'view', 'GetWhNotes'),
                     'roles'=>array('WHDocumentsView'),
             ),
             array('allow', 
@@ -118,6 +118,22 @@ class WHDocumentsController extends Controller
     {
         $this->title = 'Склад - реестр документов';
         $this->render('index');
+    }
+    
+    public function actionGetWhNotes() {
+        $Result = array(
+            'result' => 0,
+            'text' => '',
+        );
+        
+        if (isset($_POST['Docm_id'])) {
+            $Query = new SQLQuery();
+            $Query->setSelect('Select dbo.get_wh_notes(' . $_POST['Docm_id'] . ') notes');
+            $Res = $Query->QueryRow();
+            $Result['result'] = 1;
+            $Result['text'] = $Res['notes'];
+        }
+        echo json_encode($Result);
     }
 }
 

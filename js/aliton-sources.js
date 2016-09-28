@@ -2360,3 +2360,43 @@ Sources.WHDocumentsAllSource =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.WHDocumentsDoc1Source =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'docm_id', type: 'int'},
+        { name: 'objc_id', type: 'int'},
+        { name: 'dctp_id', type: 'int'},
+        { name: 'dctp_name', type: 'string'},
+        { name: 'dckn_id', type: 'int'},
+        { name: 'dckn_name', type: 'string'},
+        { name: 'number', type: 'string'},
+        { name: 'date', type: 'date'},
+        { name: 'd.date', type: 'date'},
+        { name: 'date_create', type: 'date'},
+        { name: 'note', type: 'string'},
+        { name: 'splr_name', type: 'string'},
+        { name: 'ac_date', type: 'date'},
+        { name: 'strm_name', type: 'string'},
+        { name: 'achs_id', type: 'int'},
+        { name: 'wrtp_name', type: 'string'},
+        { name: 'summa', type: 'float'},
+        { name: 'c_date', type: 'date'},
+        { name: 'c_name', type: 'string'},
+        { name: 'c_confirmname', type: 'string'},
+        { name: 'strg_id', type: 'int'},
+        { name: 'storage', type: 'string'},
+        { name: 'jrdc_id', type: 'int'},
+        { name: 'JuridicalPerson', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsDoc1',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
