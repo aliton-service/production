@@ -179,8 +179,11 @@ return array_merge(
     include(dirname(__FILE__).'/security/MonitoringDemandsSecurity.php'),
     include(dirname(__FILE__).'/security/MonitoringDemandDetailsSecurity.php'),
         
-    /* Остатки на складе */
+    /* Реестр остатков на складе */
     include(dirname(__FILE__).'/security/InventoriesSecurity.php'),
+        
+    /* Остатки на складе */
+    include(dirname(__FILE__).'/security/InventoryDetailsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -353,6 +356,7 @@ return array_merge(
                 'AdminWHDocuments',
                 'AdminDeliveryTypes',
                 'AdminInventories',
+                'AdminInventoryDetails',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
