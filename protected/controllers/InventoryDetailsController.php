@@ -1,6 +1,6 @@
 <?php
 
-class InventoriesController extends Controller
+class InventoryDetailsController extends Controller
 {
     public $layout = '//layouts/column2';
     public $title = '';
@@ -17,23 +17,19 @@ class InventoriesController extends Controller
         return array(
             array('allow',
                     'actions'=>array('index', 'view'),
-                    'roles'=>array('ViewInventories'),
+                    'roles'=>array('ViewInventoryDetails'),
             ),
             array('allow', 
                     'actions'=>array('create'),
-                    'roles'=>array('CreateInventories'),
+                    'roles'=>array('CreateInventoryDetails'),
             ),
             array('allow', 
                     'actions'=>array('update'),
-                    'roles'=>array('UpdateInventories'),
+                    'roles'=>array('UpdateInventoryDetails'),
             ),
             array('allow', 
                     'actions'=>array('delete'),
-                    'roles'=>array('DeleteInventories'),
-            ),
-            array('allow',
-                    'actions'=>array('accept'),
-                    'roles'=>array('AcceptInventories'),
+                    'roles'=>array('DeleteInventoryDetails'),
             ),
             array('deny',  // deny all users
                     'users'=>array('*'),
@@ -43,18 +39,18 @@ class InventoriesController extends Controller
 
     public function actionCreate()
     {
-        $model = new Inventories();
+        $model = new InventoryDetails();
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
-        if (isset($_POST['Inventories'])) {
-            $model->attributes = $_POST['Inventories'];
+        if (isset($_POST['InventoryDetails'])) {
+            $model->attributes = $_POST['InventoryDetails'];
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['invn_id'];
+                $ObjectResult['id'] = $Res['indt_id'];
                 echo json_encode($ObjectResult);
                 return;
             } 
@@ -69,22 +65,24 @@ class InventoriesController extends Controller
 
     public function actionUpdate()
     {
-        $model = new Inventories();
+        $model = new InventoryDetails();
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
-        if (isset($_POST['invn_id']))
-            $model->getModelPk($_POST['invn_id']);
+        if (isset($_POST['indt_id']))
+            $model->getModelPk($_POST['indt_id']);
 
-        if (isset($_POST['Inventories'])) {
-            $model->getModelPk($_POST['Inventories']['invn_id']);
-            $model->attributes = $_POST['Inventories'];
+        if (isset($_POST['InventoryDetails'])) {
+            $model->getModelPk($_POST['InventoryDetails']['indt_id']);
+            $model->attributes = $_POST['InventoryDetails'];
+            $model->EmplChange = Yii::app()->user->Employee_id;
+            
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->invn_id;
+                $ObjectResult['id'] = $model->indt_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -104,13 +102,13 @@ class InventoriesController extends Controller
                 'html' => '',
             );
         
-        if (isset($_POST['invn_id'])) {
-            $model = new Inventories();
-            $model->getModelPk($_POST['invn_id']);
+        if (isset($_POST['indt_id'])) {
+            $model = new InventoryDetails();
+            $model->getModelPk($_POST['indt_id']);
             if ($model->validate()) {
                 $model->delete();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->invn_id;
+                $ObjectResult['id'] = $model->indt_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -120,25 +118,18 @@ class InventoriesController extends Controller
 
     public function actionIndex()
     {
-        $this->title = 'Реестр остатков по складу';
-        $this->render('index');
-    }
-    
-    public function actionAccept() 
-    {
-        if (isset($_POST['invn_id'])) {
-            $model = new Inventories();
-            $model->getModelPk($_POST['invn_id']);
+        if (isset($_GET['date'])) {
+            $date = $_GET['date'];
+            $this->title = 'Остатки по складу на ' . $date;
+        }
+        
+        if (isset($_GET['invn_id']))
+        {
+            $invn_id = $_GET['invn_id'];
             
-            if ($model->closed == false || $model->closed == null) {
-                $sp = new StoredProc();
-                $sp->ProcedureName = 'inventory_close';
-                $sp->ParametersRefresh();
-                $sp->Parameters[0]['Value'] = $_POST['invn_id'];
-                $sp->CheckParam = true;
-                $sp->Execute();
-            }
+            $this->render('index', array(
+                'invn_id' => $invn_id
+            ));
         }
     }
 }
-

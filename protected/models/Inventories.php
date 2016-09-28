@@ -89,13 +89,10 @@ class Inventories extends MainFormModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('date, hldr_id', 'required'),
-			array('hldr_id, mstr_id, wrtp_id, strg_id, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
+			array('invn_id', 'required'),
+			array('invn_id, hldr_id, mstr_id, wrtp_id, strg_id, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
 			array('user_create, user_change', 'length', 'max'=>50),
-			array('closed, DelDate, date_create, date_change', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('invn_id, date, hldr_id, closed, DelDate, user_create, date_create, user_change, date_change, mstr_id, wrtp_id, strg_id, EmplCreate, EmplChange, EmplDel', 'safe', 'on'=>'search'),
+			array('invn_id, date, hldr_id, closed, DelDate, user_create, date_create, user_change, date_change, mstr_id, wrtp_id, strg_id, EmplCreate, EmplChange, EmplDel', 'safe'),
 		);
 	}
 
@@ -171,25 +168,25 @@ class Inventories extends MainFormModel
 	public function getInventories($id) {
 		$id = (int)$id;
 		$this->select = "
-		select id.indt_id,
-       id.invn_id,
-       id.eqip_id,
-       eq.EquipName,
-       eq.UnitMeasurement_id,
-       um.NameUnitMeasurement,
-       id.quant,
-       id.quant_used
+                    select id.indt_id,
+                        id.invn_id,
+                        id.eqip_id,
+                        eq.EquipName,
+                        eq.UnitMeasurement_id,
+                        um.NameUnitMeasurement,
+                        id.quant,
+                        id.quant_used
 		";
 		$this->from = "
-		from InventoryDetails id inner join Equips eq on (id.eqip_id = eq.Equip_id)
-       left join UnitMeasurement um on (eq.UnitMeasurement_id = um.UnitMeasurement_id)
+                    from InventoryDetails id inner join Equips eq on (id.eqip_id = eq.Equip_id)
+                        left join UnitMeasurement um on (eq.UnitMeasurement_id = um.UnitMeasurement_id)
 		";
 		$this->where = "
-		where id.invn_id = {$id}
-		and id.DelDate is Null
+                    where id.invn_id = {$id}
+                        and id.DelDate is Null
 		";
 		$this->order = "
-		Order by eq.EquipName
+                    Order by eq.EquipName
 		";
 
 		$this->Query->setSelect($this->select);

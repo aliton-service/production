@@ -1,12 +1,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
-        var Malfunction = {
-            Malfunction_id: <?php echo json_encode($model->Malfunction_id); ?>,
-            Malfunction: <?php echo json_encode($model->Malfunction); ?>
-        };
         
-        $('#Malfunctions').on('keyup keypress', function(e) {
+        var DataStorages = new $.jqx.dataAdapter(Sources.SourceStoragesList);
+        
+        $('#Inventories').on('keyup keypress', function(e) {
             var keyCode = e.keyCode || e.which;
             if (keyCode === 13) { 
                 e.preventDefault();
@@ -14,31 +12,33 @@
             }
         });
         
-        $("#edMalfunction").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300} ));
-        $('#btnSaveMalfunction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnCancelMalfunction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $("#edInventory").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataStorages, displayMember: "storage", valueMember: "storage_id", width: 150, autoDropDownHeight: true }));
+        $("#DateTime").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 180, formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true }));
+
+        $('#btnSaveInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnCancelInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
-        $('#btnCancelMalfunction').on('click', function(){
-            $('#MalfunctionsDialog').jqxWindow('close');
+        $('#btnCancelInventory').on('click', function(){
+            $('#InventoriesDialog').jqxWindow('close');
         });
         
-        $('#btnSaveMalfunction').on('click', function(){
-            var Url = <?php echo json_encode(Yii::app()->createUrl('Malfunctions/Update')); ?>;
+        $('#btnSaveInventory').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('Inventories/Update')); ?>;
             if (StateInsert)
-                Url = <?php echo json_encode(Yii::app()->createUrl('Malfunctions/Create')); ?>;
+                Url = <?php echo json_encode(Yii::app()->createUrl('Inventories/Create')); ?>;
             
             $.ajax({
                 url: Url,
-                data: $('#Malfunctions').serialize(),
+                data: $('#Inventories').serialize(),
                 type: 'POST',
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('Malfunction_id', Res.id, '#MalfunctionsGrid', true);
-                        $('#MalfunctionsDialog').jqxWindow('close');
+                        Aliton.SelectRowById('invn_id', Res.id, '#InventoriesGrid', true);
+                        $('#InventoriesDialog').jqxWindow('close');
                     }
                     else {
-                        $('#BodyMalfunctionsDialog').html(Res.html);
+                        $('#BodyInventoriesDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {
@@ -47,27 +47,31 @@
             });
         });
         
-        if (Malfunction.Malfunction != '') $("#edMalfunction").jqxInput('val', Malfunction.Malfunction);
     });
 </script>        
 
 <?php 
     $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'Malfunctions',
+	'id'=>'Inventories',
 	'htmlOptions'=>array(
 		'class'=>'form-inline'
 		),
     )); 
 ?>
 
-<input type="hidden" name="Malfunctions[Malfunction_id]" value="<?php echo $model->Malfunction_id; ?>"/>
 <div class="row">
-    <div class="row-column">Неисправность:</div>
-    <div class="row-column"><input type="text" name="Malfunctions[Malfunction]" autocomplete="off" id="edMalfunction"/><?php echo $form->error($model, 'Malfunction'); ?></div>
+    <div class="row-column" style="margin-top: 2px;">Склад: </div>
+    <div class="row-column"><div id='edInventory' name="Inventories[storage]"></div></div>
 </div>
+
 <div class="row">
-    <div class="row-column"><input type="button" value="Сохранить" id='btnSaveMalfunction'/></div>
-    <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelMalfunction'/></div>
+    <div class="row-column" style="margin-top: 2px;">На дату </div>
+    <div class="row-column"><div id='DateTime' name="Inventories[date]"></div></div>
+</div>
+
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnSaveInventory'/></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelInventory'/></div>
 </div>
 <?php $this->endWidget(); ?>
 

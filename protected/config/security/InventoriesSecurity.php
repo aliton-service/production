@@ -1,7 +1,7 @@
 <?php
 return array(
 	
- /** Роли для таблицы Inventories (типы улиц) **/
+ /** Роли для таблицы Inventories (Реестр остатков на складе) **/
         'ManagerInventories' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'ManagerInventories',
@@ -26,6 +26,7 @@ return array(
                 'CreateInventories',
                 'UpdateInventories',
                 'DeleteInventories',
+                'AcceptInventories',
                 ),
         ),
 
@@ -64,6 +65,13 @@ return array(
         'DeleteInventories' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'DeleteInventories',
+            'bizRule' => null,
+            'data' => null,
+        ),
+
+        'AcceptInventories' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'AcceptInventories',
             'bizRule' => null,
             'data' => null,
         ),

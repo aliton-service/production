@@ -2305,28 +2305,6 @@ Sources.SourceDemandsExecTime =
     }
 };
 
-Sources.SourceInventories =
-{
-    datatype: "json",
-    datafields: [
-        { name: 'invn_id',  type: 'int' },
-        { name: 'date',  type: 'date' },
-        { name: 'closed',  type: 'bool' },
-        { name: 'strg_id',  type: 'int' },
-        { name: 'storage',  type: 'string' },
-    ],
-    id: 'invn_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Inventories',
-    type: 'POST',
-    root: 'Rows',
-    cache: false,
-    async: false,
-    pagenum: 0,
-    pagesize: 200,
-    beforeprocessing: function (data) {
-        this.totalrecords = data[0].TotalRows;
-    }
-};
 Sources.WHDocumentsAllSource =
 {
     datatype: "json",
@@ -2354,6 +2332,75 @@ Sources.WHDocumentsAllSource =
     url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsAll',
     root: 'Rows',
     cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceInventories =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'invn_id',  type: 'int' },
+        { name: 'date',  type: 'date' },
+        { name: 'closed',  type: 'bool' },
+        { name: 'strg_id',  type: 'int' },
+        { name: 'storage',  type: 'string' },
+    ],
+    id: 'invn_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Inventories',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceStoragesList =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'storage_id', type: 'int'},
+        { name: 'storage', type: 'string'},
+    ],
+    id: 'storage_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=StoragesList',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceInventoryDetails =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'indt_id', type: 'int'},
+        { name: 'invn_id', type: 'int'},
+        { name: 'eqip_id', type: 'int'},
+        { name: 'EquipName', type: 'string'},
+        { name: 'UnitMeasurement_id', type: 'int'},
+        { name: 'NameUnitMeasurement', type: 'string'},
+        { name: 'quant', type: 'int'},
+        { name: 'quant_used', type: 'int'},
+    ],
+    id: 'storage_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InventoryDetails',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
