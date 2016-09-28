@@ -76,7 +76,8 @@ class AjaxDataController extends Controller
                     // get the filter's condition.
                     $filtercondition = $_GET["filtercondition" . $i];
                     // get the filter's column.
-                    $filterdatafield = $_GET["filterdatafield" . $i];
+                    $filterdatafield =  $_GET["filterdatafield" . $i];
+                    $filterdatafield = $Model->GetAttributeNameFilters($filterdatafield);
                     // get the filter's operator.
                     $filteroperator = $_GET["filteroperator" . $i];
 			
@@ -223,19 +224,6 @@ class AjaxDataController extends Controller
         
         
         $Result = $Model->FindAjax($pagenum, $pagesize, $Sort, $InternalFilters, array());
-        
-//        if ($ModelName = 'WHDocumentsDoc1') {
-//            for ($i = 0; $i < count($Result['Data']); $i++) {
-//                $tmp = $Result['Data'][$i];
-//                
-//                foreach ($tmp as $key => $value) {
-//                    if ($key == 'date') {
-//                        $tmp['d.date'] = $value;
-//                    }
-//                }
-//                $Result['Data'][$i] = $tmp;
-//            }
-//        }
         
         $CountRow = $Result['Details']['Count'];
         
