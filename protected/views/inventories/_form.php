@@ -54,8 +54,8 @@
     $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'Inventories',
 	'htmlOptions'=>array(
-		'class'=>'form-inline'
-		),
+            'class'=>'form-inline'
+        ),
     )); 
 ?>
 
