@@ -28,7 +28,6 @@
         
         var invn_id;
         var eqip_idx = 0;
-        var progBarValuePercent = 0;
         var progBarValueTotal = 0;
         
         var insertInventoryDetails = function() {
@@ -49,9 +48,8 @@
                       eqip_idx++; 
                       if(!breakInsert && eqip_idx < DataEquips.records.length) {
                             insertInventoryDetails();
+                            progBarValueTotal = ((eqip_idx + 1) / DataEquips.records.length) * 100;;
                             $("#jqxProgressBarInventory").jqxProgressBar({ value: progBarValueTotal });
-                            progBarValueTotal += progBarValuePercent;
-                            console.log('progBarValueTotal = ' + progBarValueTotal);
                       } 
                       else if (breakInsert) {
                             $("#InventoriesGrid").jqxGrid('updatebounddata');
@@ -75,8 +73,6 @@
         
         $('#btnSaveInventory').on('click', function()
         {
-            $("#jqxProgressBarInventory").jqxProgressBar({ width: 250, height: 30, value: 0, showText: true });
-            
             var Url = <?php echo json_encode(Yii::app()->createUrl('Inventories/Update')); ?>;
             if (StateInsert)
                 Url = <?php echo json_encode(Yii::app()->createUrl('Inventories/Create')); ?>;
@@ -89,8 +85,6 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         DataEquips.dataBind();
-                        progBarValuePercent = (1 / DataEquips.records.length) * 100;
-                        console.log('progBarValuePercent = ' + progBarValuePercent);
                         invn_id = Res.id;
                         insertInventoryDetails();
                     }
@@ -105,7 +99,7 @@
         });
         
         
-
+        $("#jqxProgressBarInventory").jqxProgressBar({ width: 250, height: 30, value: 0, showText: true, max: 100, animationDuration: 0 });
     });
 </script>        
 
@@ -134,7 +128,11 @@
 </div>
 
 <div class="row">
-    <div style='margin-top: 10px; overflow: hidden;' id='jqxProgressBarInventory'>
+    <div class="row-column">*Рассчет может занять более 25 минут.</div>
+</div>
+
+<div class="row">
+    <div style='margin-top: 10px; overflow: hidden;' id='jqxProgressBarInventory'></div>
 </div>
 
 <?php $this->endWidget(); ?>

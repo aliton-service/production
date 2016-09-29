@@ -11,7 +11,7 @@
         $('#btnPrintInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnAcceptInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnDelInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#InventoriesDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '200px', width: '400', position: 'center'}));
+        $('#InventoriesDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 320, width: 310, position: 'center'}));
         
         var CheckButton = function() {
             $('#btnEditInventory').jqxButton({disabled: !(CurrentRowData != undefined)})
@@ -46,7 +46,6 @@
         }));
         
         $('#btnAddInventory').on('click', function(){
-            $('#InventoriesDialog').jqxWindow({width: 370, height: 260, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Inventories/Create')) ?>,
                 type: 'POST',
