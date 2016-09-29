@@ -21,7 +21,7 @@
             $("#DateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
             $("#DateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
             
-            $("#AllPeriod").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings));
+            $("#AllPeriod").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { checked: true }));
             
              
             var NewDate = new Date();

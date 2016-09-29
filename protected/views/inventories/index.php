@@ -98,6 +98,7 @@
                     },
                     success: function(Res) {
                         $("#InventoriesGrid").jqxGrid('updatebounddata');
+                        $('#InventoriesGrid').jqxGrid('selectrow', 0);
                     },
                     error: function(Res) {
                         Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
