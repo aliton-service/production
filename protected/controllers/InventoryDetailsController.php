@@ -120,7 +120,7 @@ class InventoryDetailsController extends Controller
     {
         if (isset($_GET['date'])) {
             $date = $_GET['date'];
-            $this->title = 'Остатки по складу на ' . $date;
+            $this->title = 'Остатки на складе на ' . $date;
         }
         
         if (isset($_GET['invn_id']))

@@ -64,8 +64,6 @@ class InventoryDetails extends MainFormModel
 	public function rules()
 	{
             return array(
-                array('indt_id, invn_id', 'required'),
-                array('indt_id, invn_id, eqip_id, quant, UnitMeasurement_id', 'numerical', 'integerOnly'=>true),
                 array('indt_id, invn_id, eqip_id, quant, quant_used', 'safe'),
             );
 	}

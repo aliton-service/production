@@ -50,7 +50,7 @@ class Inventories extends MainFormModel
 	function __construct($scenario = '') {
             parent::__construct($scenario);
 
-            $this->SP_INSERT_NAME = 'INSERT_Inventories';
+            $this->SP_INSERT_NAME = 'INSERT_wh_inventory';
             $this->SP_UPDATE_NAME = 'UPDATE_Inventories';
             $this->SP_DELETE_NAME = 'DELETE_Inventories';
 
@@ -89,7 +89,7 @@ class Inventories extends MainFormModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('invn_id', 'required'),
+			array('date, strg_id', 'required'),
 			array('invn_id, hldr_id, mstr_id, wrtp_id, strg_id, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
 			array('user_create, user_change', 'length', 'max'=>50),
 			array('invn_id, date, hldr_id, closed, DelDate, user_create, date_create, user_change, date_change, mstr_id, wrtp_id, strg_id, EmplCreate, EmplChange, EmplDel', 'safe'),
@@ -115,7 +115,7 @@ class Inventories extends MainFormModel
 			'date_change' => 'Date Change',
 			'mstr_id' => 'Mstr',
 			'wrtp_id' => 'Wrtp',
-			'strg_id' => 'Strg',
+			'strg_id' => 'Склад',
 			'EmplCreate' => 'Empl Create',
 			'EmplChange' => 'Empl Change',
 			'EmplDel' => 'Empl Del',

@@ -11,7 +11,7 @@
         $('#btnPrintInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnAcceptInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnDelInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#InventoriesDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '200px', width: '400', position: 'center'}));
+        $('#InventoriesDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 320, width: 310, position: 'center'}));
         
         var CheckButton = function() {
             $('#btnEditInventory').jqxButton({disabled: !(CurrentRowData != undefined)})
@@ -46,7 +46,6 @@
         }));
         
         $('#btnAddInventory').on('click', function(){
-            $('#InventoriesDialog').jqxWindow({width: 400, height: 180, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Inventories/Create')) ?>,
                 type: 'POST',
@@ -98,14 +97,7 @@
                         invn_id: CurrentRowData.invn_id
                     },
                     success: function(Res) {
-                        Res = JSON.parse(Res);
-                        if (Res.result == 1) {
-                            var RowIndex = $('#InventoriesGrid').jqxGrid('getselectedrowindex');
-                            var Text = $('#InventoriesGrid').jqxGrid('getcelltext', RowIndex + 1, "invn_id");
-                            Aliton.SelectRowById('invn_id', Text, '#InventoriesGrid', true);
-                            RowIndex = $('#InventoriesGrid').jqxGrid('getselectedrowindex');
-                            var S = $('#InventoriesGrid').jqxGrid('getrowdata', RowIndex);
-                        }
+                        $("#InventoriesGrid").jqxGrid('updatebounddata');
                     },
                     error: function(Res) {
                         Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -120,16 +112,28 @@
             Aliton.SelectRowById('invn_id', Val, '#InventoriesGrid', true);
         });
         
+        $('#btnPrintInventory').on('click', function(){
+            var invDate = CurrentRowData.date
+            var invDateStr = ('0' + invDate.getDate()).slice(-2) + '.' + ('0' + (invDate.getMonth() + 1)).slice(-2) + '.' + invDate.getFullYear() 
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Склад/Остатки на складе',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[prmDate]=' + invDateStr);
+        });
+        
         $('#InventoriesGrid').jqxGrid('selectrow', 0);
+        
+      
     });
 </script>
 
-<?php $this->setPageTitle('Реестр остатков по складу'); ?>
+<?php $this->setPageTitle('Реестр остатков на складе'); ?>
 
 <?php
     $this->breadcrumbs=array(
         'Склад'=>array('#'),
-        'Реестр остатков по складу'=>array('index'),
+        'Реестр остатков на складе'=>array('index'),
     );
 ?>
 
@@ -146,7 +150,8 @@
     <div class="row-column"><input type="button" value="Удалить" id='btnDelInventory'/></div>
     <div class="row-column"><input type="button" value="Обновить" id='btnRefreshInventory'/></div>
     <div class="row-column"><input type="button" value="Печатать" id='btnPrintInventory'/></div>
-</div>    
+</div>   
+
 
 <div id="InventoriesDialog" style="display: none;">
     <div id="InventoriesDialogHeader">
