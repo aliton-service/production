@@ -113,12 +113,12 @@
     });
 </script>
 
-<?php $this->setPageTitle('Остатки по складу'); ?>
+<?php $this->setPageTitle('Остатки на складе'); ?>
 
 <?php
     $this->breadcrumbs=array(
         'Склад'=>array('#'),
-        'Остатки по складу'=>array('index'),
+        'Остатки на складе'=>array('index'),
     );
 ?>
 

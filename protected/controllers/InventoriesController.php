@@ -71,10 +71,10 @@ class InventoriesController extends Controller
     {
         $model = new Inventories();
         $ObjectResult = array(
-                'result' => 0,
-                'id' => 0,
-                'html' => '',
-            );
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
         if (isset($_POST['invn_id']))
             $model->getModelPk($_POST['invn_id']);
 
@@ -98,29 +98,18 @@ class InventoriesController extends Controller
 
     public function actionDelete()
     {
-        $ObjectResult = array(
-                'result' => 0,
-                'id' => 0,
-                'html' => '',
-            );
-        
         if (isset($_POST['invn_id'])) {
             $model = new Inventories();
             $model->getModelPk($_POST['invn_id']);
-            if ($model->validate()) {
-                $model->delete();
-                $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->invn_id;
-                echo json_encode($ObjectResult);
-                return;
-            }
+            $model->delete();
+            echo 1;
+            return;
         }
-        echo json_encode($ObjectResult);
     }
 
     public function actionIndex()
     {
-        $this->title = 'Реестр остатков по складу';
+        $this->title = 'Реестр остатков на складе';
         $this->render('index');
     }
     
