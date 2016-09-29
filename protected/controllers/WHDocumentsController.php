@@ -16,7 +16,7 @@ class WHDocumentsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'view', 'GetWhNotes'),
+                    'actions'=>array('index', 'View', 'GetWhNotes'),
                     'roles'=>array('WHDocumentsView'),
             ),
             array('allow', 
@@ -118,6 +118,12 @@ class WHDocumentsController extends Controller
     {
         $this->title = 'Склад - реестр документов';
         $this->render('index');
+    }
+    
+    public function actionView() {
+        
+        $this->title = 'Склад - просмотр документа';
+        $this->render('view');
     }
     
     public function actionGetWhNotes() {

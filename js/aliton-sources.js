@@ -88,7 +88,7 @@ Sources.SourceDemandTypeList =
     datatype: "json",
     datafields: [
         { name: 'DemandType_id', type: 'int' },
-        { name: 'DemandType', type: 'string' },
+        { name: 'DemandType', type: 'string' }
     ],
     id: 'DemandType_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DemandTypes',
@@ -108,7 +108,7 @@ Sources.SourceDemandTypes =
     datafields: [
         { name: 'DType_id' },
         { name: 'DemandType_id' },
-        { name: 'DemandType' },
+        { name: 'DemandType' }
     ],
     id: 'DType_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DTypes',
@@ -2379,6 +2379,229 @@ Sources.WHDocumentsDoc1Source =
     }
 };
 
+Sources.WHDocumentsDoc2Source =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'docm_id', type: 'int'},
+        { name: 'objc_id', type: 'int'},
+        { name: 'dctp_id', type: 'int'},
+        { name: 'dctp_name', type: 'string'},
+        { name: 'dckn_id', type: 'int'},
+        { name: 'dckn_name', type: 'string'},
+        { name: 'number', type: 'string'},
+        { name: 'date', type: 'date'},
+        { name: 'date_create', type: 'date'},
+        { name: 'note', type: 'string'},
+        { name: 'Address', type: 'string'},
+        { name: 'rtrs_name', type: 'string'},
+        { name: 'ac_date', type: 'date'},
+        { name: 'strm_name', type: 'string'},
+        { name: 'mstr_name', type: 'string'},
+        { name: 'achs_id', type: 'int'},
+        { name: 'wrtp_name', type: 'string'},
+        { name: 'strg_id', type: 'int'},
+        { name: 'storage', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsDoc2',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.WHDocumentsDoc3Source =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'docm_id', type: 'int'},
+        { name: 'objc_id', type: 'int'},
+        { name: 'dctp_id', type: 'int'},
+        { name: 'dctp_name', type: 'string'},
+        { name: 'number', type: 'string'},
+        { name: 'date', type: 'date'},
+        { name: 'date_create', type: 'date'},
+        { name: 'note', type: 'string'},
+        { name: 'splr_name', type: 'string'},
+        { name: 'ac_date', type: 'date'},
+        { name: 'strm_name', type: 'string'},
+        { name: 'achs_id', type: 'int'},
+        { name: 'wrtp_name', type: 'string'},
+        { name: 'strg_id', type: 'int'},
+        { name: 'storage', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsDoc3',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.WHDocumentsDoc4Source =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'docm_id', type: 'int'},
+        { name: 'dctp_id', type: 'int'},
+        { name: 'objc_id', type: 'int'},
+        { name: 'dctp_name', type: 'string'},
+        { name: 'number', type: 'string'},
+        { name: 'date', type: 'date'},
+        { name: 'date_create', type: 'date'},
+        { name: 'prty_name', type: 'string'},
+        { name: 'wrtp_name', type: 'string'},
+        { name: 'Address', type: 'string'},
+        { name: 'best_date', type: 'date'},
+        { name: 'deadline', type: 'date'},
+        { name: 'date_ready', type: 'date'},
+        { name: 'ac_date', type: 'date'},
+        { name: 'dmnd_empl_name', type: 'string'},
+        { name: 'dmnd_empl_id', type: 'int'},
+        { name: 'prms_empl_name', type: 'string'},
+        { name: 'empl_name', type: 'string'},
+        { name: 'empl_id', type: 'int'},
+        { name: 'ReceiptNumber', type: 'string'},
+        { name: 'ReceiptDate', type: 'date'},
+        { name: 'strm_name', type: 'string'},
+        { name: 'mstr_name', type: 'string'},
+        { name: 'rcrs_name', type: 'string'},
+        { name: 'StatusFull', type: 'string'},
+        { name: 'status', type: 'int'},
+        { name: 'date_promise', type: 'date'},
+        { name: 'achs_id', type: 'int'},
+        { name: 'c_date', type: 'date'},
+        { name: 'c_name', type: 'string'},
+        { name: 'c_confirmname', type: 'string'},
+        { name: 'overday', type: 'int'},
+        { name: 'date_prchs', type: 'date'},
+        { name: 'empl_prchs', type: 'int'},
+        { name: 'name_prchs', type: 'string'},
+        { name: 'state_prchs', type: 'string'},
+        { name: 'strg_id', type: 'int'},
+        { name: 'storage', type: 'string'},
+        { name: 'control', type: 'bool'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsDoc4',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.WHDocumentsDoc8Source =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'invn_id',  type: 'int' },
+        { name: 'docm_id', type: 'int' },
+        { name: 'objc_id', type: 'int' },
+        { name: 'dctp_id', type: 'int' },
+        { name: 'dctp_name', type: 'string' },
+        { name: 'number', type: 'string' }, 
+        { name: 'date', type: 'date' },
+        { name: 'date_create', type: 'date' },
+        { name: 'note', type: 'string' },
+        { name: 'rtrs_name', type: 'string' },
+        { name: 'ac_date', type: 'date' },
+        { name: 'strm_name', type: 'string' },
+        { name: 'achs_id', type: 'int' },
+        { name: 'wrtp_name', type: 'string' },
+        { name: 'strg_id', type: 'int' },
+        { name: 'storage', type: 'string' },
+        { name: 'in_strg_id', type: 'int' },
+        { name: 'in_storage', type: 'string' },
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsDoc8',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.WHDocumentsDoc7Source =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'docm_id', type: 'int' },
+        { name: 'dctp_id', type: 'int' },
+        { name: 'objc_id', type: 'int' },
+        { name: 'dctp_name', type: 'string' },
+        { name: 'number', type: 'string' },
+        { name: 'date', type: 'date' },
+        { name: 'date_create', type: 'date' },
+        { name: 'note', type: 'string' },
+        { name: 'Address', type: 'string' },
+        { name: 'rtrs_name', type: 'string' },
+        { name: 'ac_date', type: 'date' },
+        { name: 'strm_name', type: 'string' },
+        { name: 'mstr_name', type: 'string' },
+        { name: 'achs_id', type: 'int' },
+        { name: 'wrtp_name', type: 'string' },
+        { name: 'overday', type: 'int' },
+        { name: 'strg_id', type: 'int' },
+        { name: 'storage', type: 'string' },
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsDoc7',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.WHDocumentsDoc9Source =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'docm_id', type: 'int' },
+        { name: 'docm_id', type: 'int' },
+        { name: 'dctp_id', type: 'int' },
+        { name: 'dctp_name', type: 'string' },
+        { name: 'number', type: 'string' },
+        { name: 'status', type: 'string' },
+        { name: 'date', type: 'date' },
+        { name: 'date_create', type: 'date' },
+        { name: 'note', type: 'string' },
+        { name: 'address', type: 'string' },
+        { name: 'ac_date', type: 'date' },
+        { name: 'dmnd_empl_name', type: 'string' },
+        { name: 'dmnd_empl_id', type: 'int' },
+        { name: 'empl_name', type: 'string' },
+        { name: 'empl_id', type: 'int' },
+        { name: 'strm_id', type: 'int' },
+        { name: 'strm_name', type: 'string' },
+        { name: 'achs_id', type: 'int' },
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsDoc9',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 Sources.SourceInventories =
 {
     datatype: "json",
@@ -2447,3 +2670,5 @@ Sources.SourceInventoryDetails =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+

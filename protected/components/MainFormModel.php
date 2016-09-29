@@ -356,6 +356,20 @@ class MainFormModel extends CFormModel
 
         return $Result; 
     }
+    
+    public function attributeSotrs() {
+        return array();
+    }
+    
+    public function GetAttributeNameSorts($FiledName) {
+        $Result = $FiledName;
+        $AttributeSorts = $this->attributeSotrs();
+        
+        if (isset($AttributeSorts[$FiledName])) 
+            $Result = $AttributeSorts[$FiledName];
+
+        return $Result; 
+    }
 
 
 }
