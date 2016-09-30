@@ -2719,19 +2719,19 @@ Sources.SourcePriceMarkupDetails =
     }
 };
 
-Sources.SourceEquipGroups =
+Sources.SourceEquipGroupsListMin =
 {
     datatype: "json",
     datafields: [
         { name: 'grp_id', type: 'int'},
         { name: 'name', type: 'string'},
     ],
-    id: 'grp_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipGroups',
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=EquipGroupsListMin',
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
@@ -2747,12 +2747,12 @@ Sources.SourceSuppliersListMin =
         {name: 'Supplier_id', type: 'int'},
         {name: 'NameSupplier', type: 'string'},
     ],
-    id: 'Supplier_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SuppliersListMin',
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=SuppliersListMin',
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {

@@ -1,6 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+        var StateCopy = <?php if (Yii::app()->controller->action->id == 'Copy') echo 'true'; else echo 'false'; ?>;
         
         var PriceMarkups = {
             date_start: Aliton.DateConvertToJs('<?php echo $model->date_start; ?>'),
@@ -29,6 +30,8 @@
             var Url = <?php echo json_encode(Yii::app()->createUrl('PriceMarkups/Update')); ?>;
             if (StateInsert)
                 Url = <?php echo json_encode(Yii::app()->createUrl('PriceMarkups/Create')); ?>;
+            if (StateCopy)
+                Url = <?php echo json_encode(Yii::app()->createUrl('PriceMarkups/Copy')); ?>;
             
             $.ajax({
                 url: Url,
