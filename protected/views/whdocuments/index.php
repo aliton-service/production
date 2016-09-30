@@ -221,11 +221,13 @@
                 MasterFilterGroup.addfilter(1, FilterMaster);
             }
             
-            
+            var Docm_id = 0;
             
             var TabIndex = $('#edTabs').jqxTabs('selectedItem');
             switch (TabIndex) {
                 case 0:
+                    Docm_id = CurrentRowDataAll.docm_id;
+                    console.log(Docm_id);
                     /* Фильт номер */
                     $('#GridAll').jqxGrid('removefilter', 'number', false);
                     if ($("#edNumber").val() != '') $("#GridAll").jqxGrid('addfilter', 'number', NumberFilterGroup);
@@ -239,9 +241,9 @@
                     $('#GridAll').jqxGrid('removefilter', 'ac_date', false);
                     if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#GridAll").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
                     
-                    
                     DisabledControls();
                     $("#GridAll").jqxGrid({source: DataWHDocumentsAll});
+                    //Aliton.SelectRowById('docm_id', Docm_id, '#GridAll', false);
                     break;
                 case 1:
                     /* Фильт номер */
