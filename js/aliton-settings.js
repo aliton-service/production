@@ -83,6 +83,12 @@ var PasswordInputDefaultSettings = {
 /* Настройки по умолчанию для кнопок */
 var ButtonDefaultSettings = {
     width: 120,
+    height: 30,
+    imgPosition: "left"
+};
+
+var DropDownButtonDefaultSettings = {
+    width: 120,
     height: 30
 };
 

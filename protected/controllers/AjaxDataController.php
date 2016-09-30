@@ -211,6 +211,7 @@ class AjaxDataController extends Controller
             
         if (isset($_GET['sortdatafield'])) {
             $sortfield = $_GET['sortdatafield'];
+            $sortfield = $Model->GetAttributeNameSorts($sortfield);
             $sortorder = $_GET['sortorder'];
 	
             if ($sortfield != NULL) {

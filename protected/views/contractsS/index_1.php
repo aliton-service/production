@@ -57,7 +57,7 @@
         
         
         
-        $("#dropDownBtnContracts").jqxDropDownButton($.extend(true, {}, ButtonDefaultSettings, { autoOpen: true, width: 210, height: 28 }));
+        $("#dropDownBtnContracts").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: true, width: 210, height: 28 }));
         $("#jqxTreeContracts").jqxTree({ width: 210 });
         $("#MoreInformContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
         $("#ReloadContracts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
