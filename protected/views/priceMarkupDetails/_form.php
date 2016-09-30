@@ -32,8 +32,8 @@
         $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, symbol: "", min: 0, decimalDigits: 0 }));
         $("#MarkupLow").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, symbol: "", min: 0, decimalDigits: 0 }));
         $("#MarkupHigh").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, symbol: "", min: 0, decimalDigits: 0 }));
-
-        $('#btnSavePriceMarkupDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnSavePriceMarkupDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
         $('#btnCancelPriceMarkupDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#btnCancelPriceMarkupDetails').on('click', function(){
@@ -65,18 +65,22 @@
             });
         });
         
+        var CheckButtonDetailsForm = function() {
+            $('#btnSavePriceMarkupDetails').jqxButton({ disabled: false });
+        };
+        
         $("#Groups").on('bindingComplete', function(){
             if (PriceMarkupDetails.grp_id !== null) $("#Groups").jqxComboBox('val', PriceMarkupDetails.grp_id);
         });
-        
         $("#Suppliers").on('bindingComplete', function(){
             if (PriceMarkupDetails.splr_id != '') $("#Suppliers").jqxComboBox('val', PriceMarkupDetails.splr_id);
         });
+        $("#Equips").on('bindingComplete', function(){
+            if (PriceMarkupDetails.eqip_id != '') $("#Equips").jqxComboBox('val', PriceMarkupDetails.eqip_id);
+            CheckButtonDetailsForm();
+        });
         
-        
-        if (PriceMarkupDetails.eqip_id != '') $("#Equips").jqxComboBox('val', PriceMarkupDetails.eqip_id);
         if (PriceMarkupDetails.Price !== null) $("#Price").jqxNumberInput('val', PriceMarkupDetails.Price);
-        
         if (PriceMarkupDetails.MarkupLow !== null) $("#MarkupLow").jqxNumberInput('val', PriceMarkupDetails.MarkupLow);
         if (PriceMarkupDetails.MarkupHigh !== null) $("#MarkupHigh").jqxNumberInput('val', PriceMarkupDetails.MarkupHigh);
     });
