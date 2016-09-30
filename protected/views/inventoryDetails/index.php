@@ -17,16 +17,14 @@
         });
         
 
-        $('#btnEditInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnPrintInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnRefreshInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-//        $('#btnDelInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnEditInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnPrintInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnRefreshInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#InventoryDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '200px', width: '400', position: 'center'}));
         
         var CheckButton = function() {
             $('#btnEditInventoryDetails').jqxButton({disabled: !(CurrentRowData != undefined)})
-//            $('#btnDelInventoryDetails').jqxButton({disabled: !(CurrentRowData != undefined)})
         }
         
         $("#InventoryDetailsGrid").on('rowselect', function (event) {
@@ -75,33 +73,6 @@
                 }
             });
         });
-
-        
-        $('#btnDelInventoryDetails').on('click', function(){
-            if (CurrentRowData != undefined) {
-                $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('InventoryDetails/Delete')) ?>,
-                    type: 'POST',
-                    async: false,
-                    data: {
-                        indt_id: CurrentRowData.indt_id
-                    },
-                    success: function(Res) {
-                        Res = JSON.parse(Res);
-                        if (Res.result == 1) {
-                            var RowIndex = $('#InventoryDetailsGrid').jqxGrid('getselectedrowindex');
-                            var Text = $('#InventoryDetailsGrid').jqxGrid('getcelltext', RowIndex + 1, "invn_id");
-                            Aliton.SelectRowById('invn_id', Text, '#InventoryDetailsGrid', true);
-                            RowIndex = $('#InventoryDetailsGrid').jqxGrid('getselectedrowindex');
-                            var S = $('#InventoryDetailsGrid').jqxGrid('getrowdata', RowIndex);
-                        }
-                    },
-                    error: function(Res) {
-                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                    }
-                });
-            }
-        });
         
         $('#btnRefreshInventoryDetails').on('click', function(){
             var RowIndex = $('#InventoryDetailsGrid').jqxGrid('getselectedrowindex');
@@ -130,7 +101,6 @@
     <div class="row-column"><input type="button" value="Изменить" id='btnEditInventoryDetails'/></div>
     <div class="row-column"><input type="button" value="Обновить" id='btnRefreshInventoryDetails'/></div>
     <div class="row-column"><input type="button" value="Печатать" id='btnPrintInventoryDetails'/></div>
-    <!--<div class="row-column"><input type="button" value="Удалить" id='btnDelInventoryDetails'/></div>-->
 </div>    
 
 <div id="InventoryDetailsDialog" style="display: none;">

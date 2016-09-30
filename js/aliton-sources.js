@@ -2655,7 +2655,7 @@ Sources.SourceInventoryDetails =
         { name: 'quant', type: 'int'},
         { name: 'quant_used', type: 'int'},
     ],
-    id: 'storage_id',
+    id: 'indt_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InventoryDetails',
     type: 'POST',
     root: 'Rows',
@@ -2669,3 +2669,93 @@ Sources.SourceInventoryDetails =
 };
 
 
+Sources.SourcePriceMarkups =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'mrkp_id', type: 'int'},
+        { name: 'date_start', type: 'date'},
+        { name: 'date_end', type: 'date'},
+    ],
+    id: 'mrkp_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PriceMarkups',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourcePriceMarkupDetails =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'mrdt_id', type: 'int'},
+        { name: 'mrkp_id', type: 'int'},
+        { name: 'eqip_id', type: 'int'},
+        { name: 'splr_id', type: 'int'},
+        { name: 'grp_id', type: 'int'},
+        { name: 'EquipName', type: 'string'},
+        { name: 'NameSupplier', type: 'string'},
+        { name: 'grp_name', type: 'string'},
+        { name: 'Price', type: 'int'},
+        { name: 'MarkupLow', type: 'int'},
+        { name: 'MarkupHigh', type: 'int'},
+    ],
+    id: 'mrdt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PriceMarkupDetails',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceEquipGroups =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'grp_id', type: 'int'},
+        { name: 'name', type: 'string'},
+    ],
+    id: 'grp_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipGroups',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceSuppliersListMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Supplier_id', type: 'int'},
+        {name: 'NameSupplier', type: 'string'},
+    ],
+    id: 'Supplier_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SuppliersListMin',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
