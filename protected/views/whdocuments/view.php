@@ -26,7 +26,26 @@
         $("#btnOperation").jqxDropDownButton('setContent', '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 5px;">Выберите</div>');
         $("#btnPrintClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, disabled: false, imgSrc: "/images/5.png" }));
         $("#btnPrint").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/5.png" }));
+        $("#edQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
+        $("#edUsedQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
+        $("#btnReserv").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, width: 150}));
+        $("#edReserv").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
+        $("#edReady").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
+        $("#edMinReserv").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
+        $("#edPurchase").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
         
+        $("#btnAddDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/6.png"}));
+        $("#btnEditDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/4.png"}));
+        $("#btnRefreshDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false}));
+        $("#btnHistoryDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false}));
+        $("#btnInfoDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false}));
+        $("#btnDelDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/7.png"}));
+        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees));
+        DataEmployees.dataBind();
+        $("#edStoreman").jqxComboBox({ source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#edMaster").jqxComboBox({ source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#btnAction").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/8.png", width: 130}));
+        $("#btnPurchase").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, width: 180}));
         var CurrentRowDetails;
         
         var DataDetails = new $.jqx.dataAdapter($.extend(true, {}, Sources.DocmAchsDetailsSource), {
@@ -37,6 +56,7 @@
                         return data;
                     },
         });
+        
         
         $("#GridDetails").on('rowselect', function (event) {
             CurrentRowDetails = $('#GridDetails').jqxGrid('getrowdata', event.args.rowindex);
@@ -58,7 +78,7 @@
                 width: '100%',
                 source: DataDetails,
                 showstatusbar: true,
-                statusbarheight: 25,
+                statusbarheight: 29,
                 showaggregates: true,
                 showfilterrow: false,
                 autoshowfiltericon: true,
@@ -71,7 +91,12 @@
                         { text: 'Кол-во', datafield: 'docm_quant', width: 120, cellsformat: 'f2' },
                         { text: 'Факт кол-во', datafield: 'fact_quant', width: 120, cellsformat: 'f2' },
                         { text: 'Цена', datafield: 'price', width: 120, cellsformat: 'f2' },
-                        { text: 'Сумма', datafield: 'sum', width: 180, cellsformat: 'f2', aggregates: ['sum'] },
+                        { text: 'Сумма', datafield: 'sum', width: 180, cellsformat: 'f2', aggregates: [{ 'Сумма':
+                            function (aggregatedValue, currentValue) {
+                                return aggregatedValue + currentValue;
+                            }
+                          }]
+                        },
                         { text: 'Б\\У', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'used', width: 50 },
                         { text: 'В производство', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'ToProduction', width: 100 },
                         { text: 'Серийные номера', datafield: 'SN', width: 150 },
@@ -195,3 +220,42 @@
 <div class="row" style="padding: 6px 2px 3px 0px">
     <div id="GridDetails"></div>
 </div>
+<div class="row" style="padding: 6px 2px 3px 0px">
+    <div class="row-column">В наличие на складе: новое:</div>
+    <div class="row-column"><div id="edQuant" readonly="readonly"></div></div>
+    <div class="row-column">Б\У:</div>
+    <div class="row-column"><div id="edUsedQuant" readonly="readonly"></div></div>
+    <div class="row-column"><input type="button" value="Зарезервировано" id='btnReserv' /></div>
+    <div class="row-column"><div id="edReserv" readonly="readonly"></div></div>
+    <div class="row-column">Готово к выдаче:</div>
+    <div class="row-column"><div id="edReady" readonly="readonly"></div></div>
+    <div class="row-column">Мин. резерв:</div>
+    <div class="row-column"><div id="edMinReserv" readonly="readonly"></div></div>
+    <div class="row-column">Закупить:</div>
+    <div class="row-column"><div id="edPurchase" readonly="readonly"></div></div>
+</div>
+<div class="row" style="padding: 6px 2px 3px 0px">
+    <div class="row-column"><input type="button" value="Добавить" id='btnAddDetails' /></div>
+    <div class="row-column"><input type="button" value="Изменить" id='btnEditDetails' /></div>
+    <div class="row-column"><input type="button" value="Обновить" id='btnRefreshDetails' /></div>
+    <div class="row-column"><input type="button" value="История оборудования" id='btnHistoryDetails' /></div>
+    <div class="row-column"><input type="button" value="Наличие" id='btnInfoDetails' /></div>
+    <div class="row-column" style="float: right"><input type="button" value="Удалить" id='btnDelDetails' /></div>
+</div>
+<div class="row" style="padding: 6px 2px 3px 0px">
+    <div class="row-column">
+        <div>
+            <div class="row-column" style="width: 100px;">Кладовщик</div>
+            <div class="row-column"><div id="edStoreman"></div></div>
+        </div>
+        <div style="clear: both"></div>
+        <div style="margin-top: 6px">
+            <div class="row-column" style="width: 100px;">Мастер</div>
+            <div class="row-column"><div id="edMaster"></div></div>    
+        </div>
+    </div>
+    <div class="row-column">
+        <div class="row-column"><input type="button" value="Подтвердить" id='btnAction' /></div>
+        <div class="row-column"><input type="button" value="Требуется закупка" id='btnPurchase' /></div>
+    </div>
+</div>    
