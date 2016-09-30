@@ -51,13 +51,11 @@ class PriceMarkupsController extends Controller
             );
         if (isset($_POST['PriceMarkups'])) {
             $model->attributes = $_POST['PriceMarkups'];
-            if ($model->validate()) {
-                $Res = $model->Insert();
-                $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['mrkp_id'];
-                echo json_encode($ObjectResult);
-                return;
-            } 
+            $Res = $model->Insert();
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $Res['mrkp_id'];
+            echo json_encode($ObjectResult);
+            return;
         }
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
@@ -82,13 +80,11 @@ class PriceMarkupsController extends Controller
             $model->getModelPk($_POST['PriceMarkups']['mrkp_id']);
             $model->attributes = $_POST['PriceMarkups'];
             
-            if ($model->validate()) {
-                $model->Update();
-                $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->mrkp_id;
-                echo json_encode($ObjectResult);
-                return;
-            }
+            $model->Update();
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $model->mrkp_id;
+            echo json_encode($ObjectResult);
+            return;
         }
 
         $ObjectResult['html'] = $this->renderPartial('_form', array(
@@ -112,13 +108,19 @@ class PriceMarkupsController extends Controller
             $model->getModelPk($_POST['PriceMarkups']['mrkp_id']);
             $model->attributes = $_POST['PriceMarkups'];
             
-            if ($model->validate()) {
-                $model->Copy();
-                $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->mrkp_id;
-                echo json_encode($ObjectResult);
-                return;
-            }
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'COPY_PriceMarkups';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $model->mrkp_id;
+            $sp->Parameters[1]['Value'] = $model->date_start;
+            $sp->Parameters[2]['Value'] = $model->date_end;
+            $sp->CheckParam = true;
+            $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $model->mrkp_id;
+            echo json_encode($ObjectResult);
+            return;
         }
 
         $ObjectResult['html'] = $this->renderPartial('_form', array(

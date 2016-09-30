@@ -6,7 +6,6 @@
             mrdt_id: '<?php echo $model->mrdt_id; ?>',
             mrkp_id: '<?php echo $model->mrkp_id; ?>',
             eqip_id: '<?php echo $model->eqip_id; ?>',
-            eqip_id: '<?php echo $model->eqip_id; ?>',
             splr_id: '<?php echo $model->splr_id; ?>',
             grp_id: '<?php echo $model->grp_id; ?>',
             Price: '<?php echo $model->Price; ?>',
@@ -22,7 +21,7 @@
             }
         });
         
-        var GroupsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEquipGroups));
+        var GroupsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEquipGroupsListMin));
         var SuppliersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliersListMin));
         var EquipsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin));
         
@@ -66,9 +65,16 @@
             });
         });
         
-        if (PriceMarkupDetails.grp_id !== null) $("#Groups").jqxComboBox('val', PriceMarkupDetails.grp_id);
-        if (PriceMarkupDetails.splr_id !== null) $("#Suppliers").jqxComboBox('val', PriceMarkupDetails.splr_id);
-        if (PriceMarkupDetails.eqip_id !== null) $("#Equips").jqxComboBox('val', PriceMarkupDetails.eqip_id);
+        $("#Groups").on('bindingComplete', function(){
+            if (PriceMarkupDetails.grp_id !== null) $("#Groups").jqxComboBox('val', PriceMarkupDetails.grp_id);
+        });
+        
+        $("#Suppliers").on('bindingComplete', function(){
+            if (PriceMarkupDetails.splr_id != '') $("#Suppliers").jqxComboBox('val', PriceMarkupDetails.splr_id);
+        });
+        
+        
+        if (PriceMarkupDetails.eqip_id != '') $("#Equips").jqxComboBox('val', PriceMarkupDetails.eqip_id);
         if (PriceMarkupDetails.Price !== null) $("#Price").jqxNumberInput('val', PriceMarkupDetails.Price);
         
         if (PriceMarkupDetails.MarkupLow !== null) $("#MarkupLow").jqxNumberInput('val', PriceMarkupDetails.MarkupLow);

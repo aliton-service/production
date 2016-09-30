@@ -104,6 +104,8 @@
         }));
         
         $('#btnNewPriceMarkups').on('click', function(){
+            $('#PriceMarkupsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '170px', width: '320', position: 'center'}));
+            
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('PriceMarkups/Create')) ?>,
                 type: 'POST',
@@ -123,6 +125,8 @@
         });
         
         $('#btnEditPriceMarkups').on('click', function(){
+            $('#PriceMarkupsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '170px', width: '320', position: 'center'}));
+            
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('PriceMarkups/Update')) ?>,
                 type: 'POST',
@@ -142,6 +146,8 @@
         });
         
         $('#btnCopyPriceMarkups').on('click', function(){
+            $('#PriceMarkupsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '170px', width: '320', position: 'center'}));
+            
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('PriceMarkups/Copy')) ?>,
                 type: 'POST',

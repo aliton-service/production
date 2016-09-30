@@ -7,15 +7,12 @@ class PriceMarkups extends MainFormModel
 	public $date_start = null;
 	public $date_end = null;
         
-	public $SP_COPY_NAME;
-
 	function __construct($scenario = '') {
             parent::__construct($scenario);
 
             $this->SP_INSERT_NAME = 'INSERT_PriceMarkups';
             $this->SP_UPDATE_NAME = 'UPDATE_PriceMarkups';
             $this->SP_DELETE_NAME = 'DELETE_PriceMarkups';
-            $this->SP_COPY_NAME = 'COPY_PriceMarkups';
 
             $Select = "\nSelect
                             p.mrkp_id, 
