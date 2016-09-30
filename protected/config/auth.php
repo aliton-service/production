@@ -185,6 +185,12 @@ return array_merge(
     /* Остатки на складе */
     include(dirname(__FILE__).'/security/InventoryDetailsSecurity.php'),
         
+    /* Наценки */
+    include(dirname(__FILE__).'/security/PriceMarkupsSecurity.php'),
+        
+    /* Наценки */
+    include(dirname(__FILE__).'/security/PriceMarkupDetailsSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -357,6 +363,8 @@ return array_merge(
                 'AdminDeliveryTypes',
                 'AdminInventories',
                 'AdminInventoryDetails',
+                'AdminPriceMarkups',
+                'AdminPriceMarkupDetails',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

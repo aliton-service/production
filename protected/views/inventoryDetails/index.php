@@ -17,9 +17,9 @@
         });
         
 
-        $('#btnEditInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnPrintInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnRefreshInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnEditInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnPrintInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnRefreshInventoryDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#InventoryDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '200px', width: '400', position: 'center'}));
         

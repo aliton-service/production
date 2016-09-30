@@ -5,12 +5,12 @@
         
         var InventoriesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInventories));
 
-        $('#btnAddInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnEditInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnRefreshInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnPrintInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnAcceptInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnDelInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnAddInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnEditInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnRefreshInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnPrintInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnAcceptInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnDelInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#InventoriesDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 320, width: 310, position: 'center'}));
         
         var CheckButton = function() {
