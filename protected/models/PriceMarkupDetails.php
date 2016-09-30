@@ -69,6 +69,7 @@ class PriceMarkupDetails extends MainFormModel
 	public function rules()
 	{
             return array(
+                array('mrkp_id', 'required'),
                 array('mrdt_id, mrkp_id, eqip_id, EquipName, splr_id, NameSupplier, grp_id, grp_name, Price, MarkupLow, MarkupHigh', 'safe'),
             );
 	}
