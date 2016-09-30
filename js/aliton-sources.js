@@ -686,7 +686,7 @@ Sources.SourceListEquipsMin =
     cache: false,
     async: false,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }

@@ -107,7 +107,6 @@ class PriceMarkupsController extends Controller
         if (isset($_POST['PriceMarkups'])) {
             $model->getModelPk($_POST['PriceMarkups']['mrkp_id']);
             $model->attributes = $_POST['PriceMarkups'];
-            
             $sp = new StoredProc();
             $sp->ProcedureName = 'COPY_PriceMarkups';
             $sp->ParametersRefresh();

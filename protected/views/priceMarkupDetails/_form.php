@@ -23,7 +23,7 @@
         
         var GroupsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEquipGroupsListMin));
         var SuppliersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliersListMin));
-        var EquipsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin));
+        var EquipsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
         
         $("#Groups").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: GroupsDataAdapter, displayMember: "name", valueMember: "grp_id", width: 220 }));
         $("#Suppliers").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: SuppliersDataAdapter, displayMember: "NameSupplier", valueMember: "Supplier_id", width: 300 }));
