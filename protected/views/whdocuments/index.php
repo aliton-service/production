@@ -7,6 +7,7 @@
         var CurrentRowDataDoc3;
         var CurrentRowDataDoc8;
         var CurrentRowDataDoc7;
+        var CurrentRowDataDoc9;
         
         var DateStart = new Date();
         var DateEnd = new Date();
@@ -121,6 +122,27 @@
         $("#edAcDateNull").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '75'}));
         $('#btnRefresh').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnInfo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnInfo').on('click', function(){
+            var TabIndex = $('#edTabs').jqxTabs('selectedItem');
+            var Docm_id = 0;
+            switch (TabIndex) {
+                case 0: Docm_id = CurrentRowDataAll.docm_id; break;
+                case 1: Docm_id = CurrentRowDataDoc1.docm_id; break;
+                case 2: Docm_id = CurrentRowDataDoc2.docm_id; break;
+                case 3: Docm_id = CurrentRowDataDoc3.docm_id; break;
+                case 4: Docm_id = CurrentRowDataDoc4.docm_id; break;
+                case 5: Docm_id = CurrentRowDataDoc8.docm_id; break;
+                case 6: Docm_id = CurrentRowDataDoc7.docm_id; break;
+                case 7: Docm_id = CurrentRowDataDoc9.docm_id; break;
+            };
+            
+            if (Docm_id > 0) {
+//                $('#edDocm_id').val(Docm_id);
+//                $('#MyForm').submit();
+                window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Docm_id);
+            }
+        });
         
         $('#btnRefresh').on('click', function(){
             Find();
@@ -464,7 +486,6 @@
                     
                     $("#Grid1").on('rowselect', function (event) {
                         CurrentRowDataDoc1 = $('#Grid1').jqxGrid('getrowdata', event.args.rowindex);
-                        
                         if (CurrentRowDataDoc1 != undefined) {
                             $("#edNotes1").jqxTextArea('val', GetNotes(CurrentRowDataDoc1.docm_id));
                             $('#btnInfo').jqxButton({disabled: false});
@@ -792,11 +813,11 @@
                     $("#edNotes7").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
                     
                     $("#Grid7").on('rowselect', function (event) {
-                        CurrentRowDataDoc7 = $('#Grid7').jqxGrid('getrowdata', event.args.rowindex);
+                        CurrentRowDataDoc9 = $('#Grid7').jqxGrid('getrowdata', event.args.rowindex);
                         
-                        if (CurrentRowDataDoc7 != undefined) {
+                        if (CurrentRowDataDoc9 != undefined) {
                             
-                            $("#edNotes7").jqxTextArea('val', GetNotes(CurrentRowDataDoc7.docm_id));
+                            $("#edNotes7").jqxTextArea('val', GetNotes(CurrentRowDataDoc9.docm_id));
                             $('#btnInfo').jqxButton({disabled: false});
                         }
                         
@@ -839,7 +860,7 @@
             }
         };
                     
-        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 7 });
+        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 1 });
         
         
     });
@@ -1014,3 +1035,7 @@
 <div class="row">
     <div class="row-column"><input type="button" value="Обновить" id='btnRefresh' /></div>
 </div>
+
+<form id="MyForm" action="<?php echo Yii::app()->createUrl('WHDocuments/View'); ?>" target="_blank" method="POST">
+    <input type="hidden" id="edDocm_id" name="Docm_id"/>
+</form>

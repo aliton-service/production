@@ -23,6 +23,7 @@ class DocmAchsDetails extends MainFormModel
     public $discontinued;
     public $SN;
     public $color;
+    public $no_price_list;
 
     function __construct($scenario='') {
         parent::__construct($scenario);
@@ -52,7 +53,8 @@ class DocmAchsDetails extends MainFormModel
                         d.date_create,
                         d.discontinued,
                         d.SN,
-                        d.color";
+                        d.color,
+                        d.no_price_list";
         $From = "\nFrom DocmAchsDetails_v d";
         $Order = "\nOrder by d.docm_id";
 

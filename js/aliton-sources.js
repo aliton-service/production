@@ -1237,47 +1237,6 @@ Sources.SourceDebtReasons =
     }
 };
 
-/*
- * 
- *  public $dldm_id;
-    public $date;
-    public $user_sender;
-    public $objc_id;
-    public $dltp_id;
-    public $mstr_id;
-    public $prty_id;
-    public $bestdate;
-    public $deadline;
-    public $plandate;
-    public $text;
-    public $phonenumber;
-    public $empl_dlvr_id;
-    public $date_logist;
-    public $user_logist;
-    public $note;
-    public $date_delivery;
-    public $rep_delivery;
-    public $Contacts;
-    public $dlrs_id;
-    public $date_promise;
-    public $prtp_id;
-    public $prdoc_id;
-    public $calc_id;
-    public $docm_id;
-    public $dmnd_id;
-    public $repr_id;
-    public $Lock;
-    public $EmplLock;
-    public $DateLock;
-    public $EmplCreate;
-    public $DateCreate;
-    public $EmplChange;
-    public $DateChange;
-    public $EmplDel;
-    public $DelDate;
-*/
- 
-
 Sources.DeliveryDemandsSource =
 {
     datatype: "json",
@@ -2593,6 +2552,44 @@ Sources.WHDocumentsDoc9Source =
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=WHDocumentsDoc9',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.DocmAchsDetailsSource =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'dadt_id', type: 'int' },
+        { name: 'docm_id', type: 'int' },
+        { name: 'eqip_id', type: 'int' },
+        { name: 'achs_id', type: 'int' },
+        { name: 'EquipName', type: 'string' },
+        { name: 'UnitMeasurement_Id', type: 'int' },
+        { name: 'NameUnitMeasurement', type: 'string' },
+        { name: 'docm_quant', type: 'float' },
+        { name: 'fact_quant', type: 'float' },
+        { name: 'quant', type: 'float' },
+        { name: 'used', type: 'bool' },
+        { name: 'ToProduction', type: 'bool' },
+        { name: 'price', type: 'float' }, 
+        { name: 'sum', type: 'float' },
+        { name: 'Emplchange', type: 'int' },
+        { name: 'date_change', type: 'date' },
+        { name: 'Emplcreate', type: 'int' },
+        { name: 'date_create', type: 'date' },
+        { name: 'discontinued', type: 'string' },
+        { name: 'SN', type: 'string' },
+        { name: 'color', type: 'bool' },
+        { name: 'no_price_list', type: 'bool' },
+    ],
+    id: 'dadt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DocmAchsDetails',
     root: 'Rows',
     cache: false,
     pagenum: 0,

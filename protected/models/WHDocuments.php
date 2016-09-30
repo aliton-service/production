@@ -134,8 +134,8 @@ class WHDocuments extends MainFormModel
 
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
-        $this->Query->setWhere($Where);
-        $this->Query->setOrder($Order);
+        //$this->Query->setWhere($Where);
+        //$this->Query->setOrder($Order);
         
         $this->KeyFiled = 'd.docm_id';
         $this->PrimaryKey = 'docm_id';
@@ -210,23 +210,64 @@ class WHDocuments extends MainFormModel
     {
         return array(
             'docm_id' => '',
-            'objc_id' => '',
             'dctp_id' => '',
-            'dctp_name' => '',
-            'number' => '', 
             'date' => '',
-            'date_create' => '',
+            'dctp_name' => '',
+            'dckn_id' => '',
+            'dckn_name' => '',
+            'number' => '',
             'note' => '',
-            'actn_code' => '',
-            'actn_name' => '',
-            'ac_date' => '',
-            'Source' => '',
-            'Destination' => '',
-            'achs_id' => '',
+            'splr_id' => '',
+            'splr_name' => '',
+            'objc_id' => '',
+            'Address' => '',
+            'rtrs_id' => '',
+            'rtrs_name' => '',
+            'in_docm_id' => '',
+            'in_number' => '',
+            'in_date' => '',
+            'wrtp_id' => '',
             'wrtp_name' => '',
-            'wrtp_gr' => '',
+            'prty_id' => '',
+            'prty_name' => '',
+            'rcrs_id' => '',
+            'rcrs_name' => '',
+            'best_date' => '',
+            'deadline' => '',
+            'dmnd_empl_id' => '',
+            'dmnd_empl_name' => '',
+            'prms_empl_id' => '',
+            'prms_empl_name' => '',
+            'achs_id' => '',
+            'status' => '',
+            'empl_id' => '',
+            'empl_name' => '',
+            'ReceiptNumber' => '',
+            'ReceiptDate' => '',
+            'dlrs_id' => '',
+            'date_promise' => '',
+            'date_change' => '',
+            'Emplchange' => '',
+            'EmplChangeName' => '',
+            'jrdc_id' => '',
+            'JuridicalPerson' => '',
+            'prtp_id' => '',
+            'prdoc_id' => '',
+            'date_prchs' => '',
+            'Emplcreate' => '',
+            'state_prchs' => '',
+            'calc_id' => '',
+            'repr_id' => '',
+            'demand_id' => '',
+            'dmnd_id' => '',
+            'notes' => '',
+            'date_ready' => '',
+            'plan_date' => '',
             'strg_id' => '',
             'storage' => '',
+            'in_strg_id' => '',
+            'in_storage' => '',
+            'control' => '',
         );
     }
 }

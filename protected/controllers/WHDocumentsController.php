@@ -121,9 +121,52 @@ class WHDocumentsController extends Controller
     }
     
     public function actionView() {
-        
         $this->title = 'Склад - просмотр документа';
-        $this->render('view');
+        $Docm_id = 0;
+        if (isset($_POST['Docm_id']))
+            $Docm_id = $_POST['Docm_id'];
+        if (isset($_GET['Docm_id']))
+            $Docm_id = $_GET['Docm_id'];
+        
+        if ($Docm_id != 0) {
+            $model = new WHDocuments();
+            $model->getModelPk($Docm_id);
+            
+            switch ($model->dctp_id) {
+                case 1:
+                    $this->title = 'Накладная на приход №' . $model->number;
+                    $this->setPageTitle('Накладная на приход №' . $model->number);
+                    break;
+                case 2:
+                    $this->title = 'Накладная на возврат №' . $model->number;
+                    $this->setPageTitle('Накладная на возврат №' . $model->number);
+                    break;
+                case 3:
+                    $this->title = 'Накладная на возврат поставщику №' . $model->number;
+                    $this->setPageTitle('Накладная на возврат поставщику №' . $model->number);
+                    break;
+                case 4:
+                    $this->title = 'Требование на выдачу №' . $model->number;
+                    $this->setPageTitle('Требование на выдачу №' . $model->number);
+                    break;
+                case 7:
+                    $this->title = 'Перемещение из ПРЦ на СКЛАД №' . $model->number;
+                    $this->setPageTitle('Перемещение из ПРЦ на СКЛАД №' . $model->number);
+                    break;
+                case 8:
+                    $this->title = 'Перемещение с склада на склад №' . $model->number;
+                    $this->setPageTitle('Перемещение с склада на склад №' . $model->number);
+                    break;
+                case 9:
+                    $this->title = 'Накладная на возврат мастеру №' . $model->number;
+                    $this->setPageTitle('Накладная на возврат мастеру №' . $model->number);
+                    break;
+            }
+        }
+        
+        $this->render('view', array(
+            'model' => $model,
+        ));
     }
     
     public function actionGetWhNotes() {
