@@ -94,13 +94,24 @@ class PriceListController extends Controller
 
     public function actionDelete()
     {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
         if (isset($_POST['prlt_id'])) {
             $model = new PriceList();
             $model->getModelPk($_POST['prlt_id']);
-            $model->delete();
-            echo 1;
-            return;
+            if ($model->validate()) {
+                $model->Delete();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->prlt_id;
+                echo json_encode($ObjectResult);
+                return;
+            }
         }
+        echo json_encode($ObjectResult);
     }
 
     public function actionIndex()

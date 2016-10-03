@@ -54,6 +54,8 @@
         });
 
         $('#btnDelPriceList').on('click', function(){
+            console.log(CurrentRowData.prlt_id);
+            
             if (CurrentRowData != undefined) {
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('PriceList/Delete')) ?>,
@@ -95,12 +97,12 @@
     });
 </script>
 
-<?php $this->setPageTitle('Реестр остатков на складе'); ?>
+<?php $this->setPageTitle('Прайс-лист'); ?>
 
 <?php
     $this->breadcrumbs=array(
         'Склад'=>array('#'),
-        'Реестр остатков на складе'=>array('index'),
+        'Прайс-лист'=>array('index'),
     );
 ?>
 

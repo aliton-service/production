@@ -45,23 +45,25 @@
                     console.log('Res = ' + Res);
                     if (Res.result == 1) {
                         
-                      eqip_idx++; 
-                      if(!breakInsert && eqip_idx < DataEquips.records.length) {
+                        eqip_idx++; 
+                        if(!breakInsert && eqip_idx < DataEquips.records.length) {
                             insertPriceListDetails();
                             progBarValueTotal = ((eqip_idx + 1) / DataEquips.records.length) * 100;;
                             $("#jqxProgressBarPriceList").jqxProgressBar({ value: progBarValueTotal });
-                      } 
-                      else if (breakInsert) {
+                        } 
+                        else if (breakInsert) {
                             $("#PriceListGrid").jqxGrid('updatebounddata');
                             $("#PriceListGrid").jqxGrid('selectrow', 0);
                             $('#btnDelPriceList').click();
-                      } 
-                      else {
-                          $('#PriceListDialog').jqxWindow('close');
-                      }
+                        } 
+                        else {
+                            $('#PriceListDialog').jqxWindow('close');
+                            $("#PriceListGrid").jqxGrid('updatebounddata');
+                            $('#PriceListGrid').jqxGrid('selectrow', 0);
+                        }
                     }
                     else {
-                        $('#BodyPriceListDialog').html(Res.html);
+                      $('#BodyPriceListDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {
@@ -127,7 +129,7 @@
 </div>
 
 <div class="row">
-    <div class="row-column">*Рассчет может занять более 5 минут.</div>
+    <div class="row-column">*Рассчет может занять более 20 минут.</div>
 </div>
 
 <div class="row" style="margin: 0;">
