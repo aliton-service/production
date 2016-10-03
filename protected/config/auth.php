@@ -188,8 +188,12 @@ return array_merge(
     /* Наценки */
     include(dirname(__FILE__).'/security/PriceMarkupsSecurity.php'),
         
-    /* Наценки */
+    /* Наценки Details */
     include(dirname(__FILE__).'/security/PriceMarkupDetailsSecurity.php'),
+        
+    /* Прайс-лист */
+    include(dirname(__FILE__).'/security/PriceListSecurity.php'),
+    include(dirname(__FILE__).'/security/PriceListDetailsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -365,6 +369,8 @@ return array_merge(
                 'AdminInventoryDetails',
                 'AdminPriceMarkups',
                 'AdminPriceMarkupDetails',
+                'AdminPriceList',
+                'AdminPriceListDetails',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
