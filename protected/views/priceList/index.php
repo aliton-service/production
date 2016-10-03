@@ -82,13 +82,13 @@
         });
         
         $('#btnPrintPriceList').on('click', function(){
-            var invDate = CurrentRowData.date
-            var invDateStr = ('0' + invDate.getDate()).slice(-2) + '.' + ('0' + (invDate.getMonth() + 1)).slice(-2) + '.' + invDate.getFullYear() 
+//            var invDate = CurrentRowData.date
+//            var invDateStr = ('0' + invDate.getDate()).slice(-2) + '.' + ('0' + (invDate.getMonth() + 1)).slice(-2) + '.' + invDate.getFullYear() 
             window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
-                'ReportName' => '/Склад/Остатки на складе',
+                'ReportName' => '/Склад/Прайс-лист',
                 'Ajax' => false,
                 'Render' => true,
-            ))); ?> + '&Parameters[prmDate]=' + invDateStr);
+            ))); ?> + '&Parameters[prltId]=' + CurrentRowData.prlt_id);
         });
         
         $('#PriceListGrid').jqxGrid('selectrow', 0);
@@ -112,7 +112,7 @@
 </div>
 <div class="row">
     <div class="row-column"><input type="button" value="Рассчитать" id='btnAddPriceList'/></div>
-    <div class="row-column"><input type="button" value="Печатать" id='btnPrintPriceList'/></div>
+    <div class="row-column"><input type="button" value="Просмотр" id='btnPrintPriceList'/></div>
 </div>    
 <div class="row">
     <div class="row-column"><input type="button" value="Удалить" id='btnDelPriceList'/></div>
