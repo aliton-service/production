@@ -12,10 +12,12 @@ class WHDocumentsDoc1 extends MainFormModel
     public $date;
     public $date_create;
     public $note;
+    public $splr_id;
     public $splr_name;
     public $ac_date;
     public $strm_name ;
     public $achs_id;
+    public $wrtp_id;
     public $wrtp_name;
     public $summa;
     public $c_date;
@@ -29,9 +31,9 @@ class WHDocumentsDoc1 extends MainFormModel
     function __construct($scenario = '') {
         parent::__construct($scenario);
 
-        $this->SP_INSERT_NAME = '';
-        $this->SP_UPDATE_NAME = '';
-        $this->SP_DELETE_NAME = '';
+        $this->SP_INSERT_NAME = 'INSERT_WHDocuments';
+        $this->SP_UPDATE_NAME = 'UPDATE_WHDocuments';
+        $this->SP_DELETE_NAME = 'DELETE_WHDocuments';
 
         $Select = "\nSelect 
                         d.docm_id,
@@ -44,10 +46,12 @@ class WHDocumentsDoc1 extends MainFormModel
                         d.date,
                         d.date_create,
                         d.note,
+                        d.splr_id,
                         d.splr_name,
                         a.ac_date,
                         dbo.FIO(strm_name) strm_name ,
                         a.achs_id,
+                        d.wrtp_id,
                         d.wrtp_name,
                         dbo.get_docmachsdetails_sum(d.docm_id) as summa,
                         ac.date as c_date,
@@ -74,6 +78,7 @@ class WHDocumentsDoc1 extends MainFormModel
     public function rules()
     {
         return array(
+            array('number, date, splr_id, dckn_id, wrtp_id, strg_id', 'required'),
             array('docm_id,
                     objc_id,
                     dctp_id,
@@ -84,10 +89,12 @@ class WHDocumentsDoc1 extends MainFormModel
                     date,
                     date_create,
                     note,
+                    splr_id,
                     splr_name,
                     ac_date,
                     strm_name ,
                     achs_id,
+                    wrtp_id,
                     wrtp_name,
                     summa,
                     c_date,
@@ -107,22 +114,24 @@ class WHDocumentsDoc1 extends MainFormModel
             'objc_id' => '',
             'dctp_id' => '',
             'dctp_name' => '',
-            'dckn_id' => '',
+            'dckn_id' => 'Вид документа',
             'dckn_name' => '',
-            'number' => '',
-            'date' => '',
+            'number' => 'Номер',
+            'date' => 'Дата',
             'date_create' => '',
             'note' => '',
+            'splr_id' => 'Поставщик',
             'splr_name' => '',
             'ac_date' => '',
             'strm_name ' => '',
             'achs_id' => '',
+            'wrtp_id' => 'Вид работ',
             'wrtp_name' => '',
             'summa' => '',
             'c_date' => '',
             'c_name' => '',
             'c_confirmname' => '',
-            'strg_id' => '',
+            'strg_id' => 'Склад',
             'storage' => '',
             'jrdc_id' => '',
             'JuridicalPerson' => '',

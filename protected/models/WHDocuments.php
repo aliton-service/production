@@ -66,7 +66,7 @@ class WHDocuments extends MainFormModel
         parent::__construct($scenario);
 
         $this->SP_INSERT_NAME = '';
-        $this->SP_UPDATE_NAME = '';
+        $this->SP_UPDATE_NAME = 'UPDATE_WHDocuments';
         $this->SP_DELETE_NAME = '';
 
         $Select = "\nSelect Top 1  

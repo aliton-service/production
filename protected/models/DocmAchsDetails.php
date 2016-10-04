@@ -63,8 +63,8 @@ class DocmAchsDetails extends MainFormModel
         $this->Query->setOrder($Order);
 
         // Инициализация первичного ключа
-        $this->KeyFiled = 'd.docm_id';
-        $this->PrimaryKey = 'docm_id';
+        $this->KeyFiled = 'd.dadt_id';
+        $this->PrimaryKey = 'dadt_id';
         
     }
 

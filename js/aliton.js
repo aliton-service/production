@@ -16,6 +16,15 @@ Aliton.ListGrids = [];
 Aliton.Links = [];
 Aliton.Objects = [];
 
+Aliton.FindArray = function(Array, FieldName, FieldValue) {
+    for (var i = 0; i < Array.length; i++) {
+        var Tmp = Array[i];
+        if (Tmp[FieldName] == FieldValue)
+            return Array[i];
+    }
+    return null;
+};
+
 Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh) {
     if (Refresh == true)
         $(Grid).jqxGrid('updatebounddata');
@@ -32,7 +41,38 @@ Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh) {
             break;
         }
     }
+    
+};
 
+Aliton.SelectRowByIdVirtual = function(FieldName, Value, Grid, Refresh) {
+    var idx = -1;
+    var Rows = $(Grid).jqxGrid('getrows');
+    for (var i = 0; i < Rows.length; i++) {
+        var TmpVal = $(Grid).jqxGrid('getcellvalue', i, FieldName);
+        if (TmpVal == Value) {
+            idx = i;
+        }
+    } 
+    if (idx == -1) {
+        var PI = $(Grid).jqxGrid('getpaginginformation');
+        idx = PI.pagesize*PI.pagenum; 
+    }
+    
+    $(Grid).jqxGrid('selectrow', idx);
+    $(Grid).jqxGrid('ensurerowvisible', idx);
+};
+
+Aliton.GetRowById = function(FieldName, Value, Grid, Refresh) {
+    var Rows = $(Grid).jqxGrid('getrows');
+    for (var i = 0; i < Rows.length; i++) {
+        var TmpVal = $(Grid).jqxGrid('getcellvalue', i, FieldName);
+        if (TmpVal == Value) {
+            return i;
+        }
+    } 
+    
+    var PI = $(Grid).jqxGrid('getpaginginformation');
+    return PI.pagesize*PI.pagenum;  
 };
 
 Aliton.ShowErrorMessage = function(Msg, ErrorText) {

@@ -16,7 +16,7 @@ class WHDocumentsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'View', 'GetWhNotes'),
+                    'actions'=>array('index', 'View', 'GetWhNotes', 'GetModel'),
                     'roles'=>array('WHDocumentsView'),
             ),
             array('allow', 
@@ -24,8 +24,8 @@ class WHDocumentsController extends Controller
                     'roles'=>array('CreateWHDcouments'),
             ),
             array('allow', 
-                    'actions'=>array('update'),
-                    'roles'=>array('UpdateWHDcouments'),
+                    'actions'=>array('Update', 'AddNote'),
+                    'roles'=>array('UpdateWHDocuments'),
             ),
             array('allow', 
                     'actions'=>array('delete'),
@@ -35,6 +35,19 @@ class WHDocumentsController extends Controller
                     'users'=>array('*'),
             ),
         );
+    }
+    
+    public function actionGetModel()
+    {
+        $model = array();
+        if (isset($_POST['Dctp_id'])) {
+            if (isset($_POST['Docm_id'])) {
+                $model = new WHDocuments();
+                $model->getModelPk($_POST['Docm_id']);
+            }
+        }
+        
+        echo json_encode($model);
     }
 
     public function actionCreate()
@@ -65,30 +78,80 @@ class WHDocumentsController extends Controller
 
     public function actionUpdate()
     {
-        $model = new WHDcouments();
+        if (isset($_POST['Dctp_id'])) {
+            switch ($_POST['Dctp_id']) {
+                case 1: $model = new WHDocumentsDoc1(); break;
+                case 2: $model = new WHDocumentsDoc2(); break;
+                case 3: $model = new WHDocumentsDoc3(); break;
+                case 4: $model = new WHDocumentsDoc4(); break;
+                case 7: $model = new WHDocumentsDoc7(); break;
+                case 8: $model = new WHDocumentsDoc8(); break;
+                case 9: $model = new WHDocumentsDoc9(); break;
+                default: $model = new WHDocuments(); break;
+            }
+        }
+        
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
-        if (isset($_POST['Section_id']))
-            $model->getModelPk($_POST['Section_id']);
+        
+        if (isset($_POST['Docm_id']))
+            $model->getModelPk($_POST['Docm_id']);
 
-        if (isset($_POST['WHDcouments'])) {
-            $model->getModelPk($_POST['WHDcouments']['Section_id']);
-            $model->attributes = $_POST['WHDcouments'];
+        if (isset($_POST['WHDocuments'])) {
+            $model->getModelPk($_POST['WHDocuments']['docm_id']);
+            $model->attributes = $_POST['WHDocuments'];
             if ($model->validate()) {
-                $model->Update();
+                $modelUpd = new WHDocuments();
+                $modelUpd->attributes = $model->attributes;
+                $modelUpd->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->Section_id;
+                $ObjectResult['id'] = $modelUpd->docm_id;
                 echo json_encode($ObjectResult);
                 return;
             }
         }
 
-        $ObjectResult['html'] = $this->renderPartial('_form', array(
-            'model' => $model,
-        ), true);
+        switch ($model->dctp_id) {
+            case 1:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc1', array(
+                    'model' => $model,
+                ), true);
+            break;
+            default:
+                $ObjectResult['html'] = $this->renderPartial('_form', array(
+                    'model' => $model,
+                ), true);
+            break;
+        };
+        
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionAddNote() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Note'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'INSERT_WHNot';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Note']['docm_id'];
+            $sp->Parameters[1]['Value'] = $_POST['Note']['note'];
+            $sp->Parameters[2]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $_POST['Note']['docm_id'];
+            echo json_encode($ObjectResult);
+            return;
+        }
         echo json_encode($ObjectResult);
     }
 

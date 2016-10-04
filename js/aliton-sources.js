@@ -2746,6 +2746,7 @@ Sources.SourceSuppliersListMin =
     datafields: [
         {name: 'Supplier_id', type: 'int'},
         {name: 'NameSupplier', type: 'string'},
+        {name: 'FullName', type: 'string'},
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=SuppliersListMin',
@@ -2753,6 +2754,47 @@ Sources.SourceSuppliersListMin =
     root: 'Rows',
     cache: false,
     async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceWorkTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'wrtp_id', type: 'int'},
+        {name: 'name', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WorkTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceWHDocKinds =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dckn_id', type: 'int'},
+        {name: 'name', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHDocKinds',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {

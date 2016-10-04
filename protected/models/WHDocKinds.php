@@ -31,7 +31,7 @@ class WHDocKinds extends MainFormModel
         $this->SP_UPDATE_NAME = '';
         $this->SP_DELETE_NAME = '';
 
-        $Select = "Select 
+        $Select = "\nSelect 
                         k.dckn_id,
                         k.name,
                         k.DateCreate,
@@ -40,8 +40,8 @@ class WHDocKinds extends MainFormModel
                         k.EmplChange,
                         k.DelDate
                   ";
-        $From = "From WHDocKinds k";
-        $Order = "Order by k.name";
+        $From = "\nFrom WHDocKinds k";
+        $Order = "\nOrder by k.name";
 
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);

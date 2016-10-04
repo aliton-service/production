@@ -1,4 +1,6 @@
 <script type="text/javascript">
+    var WHDoc = {};
+    
     $(document).ready(function () {
         var WHDocuments = {
             Docm_id: <?php echo json_encode($model->docm_id); ?>,
@@ -8,16 +10,50 @@
             Date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
             Address: <?php echo json_encode($model->Address); ?>,
             Storage: <?php echo json_encode($model->storage); ?>,
+            Strg_id: <?php echo json_encode($model->strg_id); ?>,
             Supplier: <?php echo json_encode($model->splr_name); ?>,
             DocKind: <?php echo json_encode($model->dckn_name); ?>,
             Jrdc: <?php echo json_encode($model->JuridicalPerson); ?>,
             Notes: <?php echo json_encode($model->notes); ?>,
+            Achs_id: <?php echo json_encode($model->achs_id); ?>,
+            Status: <?php echo json_encode($model->status); ?>
+        };
+        
+        WHDoc.Refresh = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/GetModel'))?>,
+                type: 'POST',
+                data: {
+                    Dctp_id: WHDocuments.Dctp_id,
+                    Docm_id: WHDocuments.Docm_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    WHDocuments.Docm_id = Res.docm_id;
+                    WHDocuments.Dctp_id = Res.dctp_id;
+                    WHDocuments.Number = Res.number;
+                    WHDocuments.WorkType = Res.wrtp_name;
+                    WHDocuments.Date =  Aliton.DateConvertToJs(Res.date);
+                    WHDocuments.Address =  Res.Address;
+                    WHDocuments.Storage =  Res.storage;
+                    WHDocuments.Supplier =  Res.splr_name;
+                    WHDocuments.DocKind =  Res.dckn_name;
+                    WHDocuments.Jrdc =  Res.JuridicalPerson;
+                    WHDocuments.Notes =  Res.notes;
+                    WHDocuments.Achs_id =  Res.achs_id;
+                    SetValueControls(parseInt(WHDocuments.Dctp_id));
+                    SetStateButtons();
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
         };
         
         $('#edNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 50, width: '100%', minLength: 1}));
         $("#edMsg").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '100%'}));
         $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/4.png" }));
-        $("#btnOperation").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: true, width: 140, height: 28 }));
+        $("#btnOperation").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: false, width: 140, height: 28 }));
         $('#jqxTreeOperation').on('select', function (event) {
                 var args = event.args;
                 var item = $('#jqxTreeOperation').jqxTree('getItem', args.element);
@@ -51,25 +87,71 @@
         var DataDetails = new $.jqx.dataAdapter($.extend(true, {}, Sources.DocmAchsDetailsSource), {
             formatData: function (data) {
                         $.extend(data, {
-                            Filters: ["d.Docm_id = " + WHDocuments.Docm_id],
+                            Filters: ["d.Docm_id = " + WHDocuments.Docm_id]
                         });
                         return data;
                     },
+            beforeSend(jqXHR, settings) {
+                        DisabledDetailsControls();
+                    },
         });
         
+        var DisabledDetailsControls = function() {
+            $('#btnAddDetails').jqxButton({disabled: true});
+            $('#btnEditDetails').jqxButton({disabled: true});
+            $('#btnRefreshDetails').jqxButton({disabled: true});
+            $('#btnHistoryDetails').jqxButton({disabled: true});
+            $('#btnInfoDetails').jqxButton({disabled: true});
+            $('#btnDelDetails').jqxButton({disabled: true});
+        };
+        
+        var SetStateDetailsButtons = function() {
+            $('#btnAddDetails').jqxButton({disabled: (WHDocuments.Achs_id !== null || WHDocuments.Status === 'Готово к выдаче')});
+            $('#btnEditDetails').jqxButton({disabled: (WHDocuments.Achs_id !== null || CurrentRowDetails == undefined || WHDocuments.Status === 'Готово к выдаче')});
+            $('#btnRefreshDetails').jqxButton({disabled: false});
+            $('#btnHistoryDetails').jqxButton({disabled: (CurrentRowDetails == undefined)});
+            $('#btnInfoDetails').jqxButton({disabled: (CurrentRowDetails == undefined)});
+            $('#btnDelDetails').jqxButton({disabled: (WHDocuments.Achs_id !== null || CurrentRowDetails == undefined || WHDocuments.Status === 'Готово к выдаче')});
+        };
+        
+        var SetInvInfo = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Equips/GetInvInfo')); ?>,
+                type: 'POST',
+                data: {
+                    Equip_id: CurrentRowDetails.eqip_id,
+                    Strg_id: WHDocuments.Strg_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result = 1) {
+                        $("#edQuant").jqxNumberInput('val', Res.inv_quant);
+                        $("#edUsedQuant").jqxNumberInput('val', Res.inv_quant_used);
+                        $("#edReserv").jqxNumberInput('val', Res.res_quant);
+                        $("#edReady").jqxNumberInput('val', Res.ready_quant);
+                        $("#edMinReserv").jqxNumberInput('val', Res.min_quant)
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        };
         
         $("#GridDetails").on('rowselect', function (event) {
             CurrentRowDetails = $('#GridDetails').jqxGrid('getrowdata', event.args.rowindex);
-            if (CurrentRowDetails != undefined) {
-//                $("#edNotes1").jqxTextArea('val', GetNotes(CurrentRowDetails.docm_id));
-//                $('#btnInfo').jqxButton({disabled: false});
-            }
-
-//            $('#btnRefresh').jqxButton({disabled: false});
+            SetStateDetailsButtons();
+            SetInvInfo();
         });
                     
         $("#GridDetails").on("bindingcomplete", function (event) {
-            $("#GridDetails").jqxGrid('selectrow', 0);
+            if (CurrentRowDetails != undefined) {
+                Aliton.SelectRowById('dadt_id', CurrentRowDetails.dadt_id, '#GridDetails', false);
+            }
+            else {
+                $('#GridDetails').jqxGrid('selectrow', 0);
+                $('#GridDetails').jqxGrid('ensurerowvisible', 0);
+            }
         });
                     
         $("#GridDetails").jqxGrid(
@@ -104,7 +186,19 @@
                     ],
                 }));
                     
-        
+        var SetValueControls = function(Dctp_id) {
+            switch (Dctp_id) {
+                case 1:
+                    if (WHDocuments.WorkType != '') $("#edWorkType1").jqxInput('val', WHDocuments.WorkType);
+                    if (WHDocuments.Storage != '') $("#edStorage1").jqxInput('val', WHDocuments.Storage);
+                    if (WHDocuments.Supplier != '') $("#edSupplier1").jqxInput('val', WHDocuments.Supplier);
+                    if (WHDocuments.DocKind != '') $("#edDocKind1").jqxInput('val', WHDocuments.DocKind);
+                    if (WHDocuments.Number != '') $("#edNumber1").jqxInput('val', WHDocuments.Number);
+                    if (WHDocuments.Jrdc != '') $("#edJrdc1").jqxInput('val', WHDocuments.Jrdc);
+                    if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
+                    break;
+            };
+        };
         
         var initWidgets = function (tab) {
             switch (tab) {
@@ -116,13 +210,8 @@
                     $("#edNumber1").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
                     $("#edDate1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edJrdc1").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 356}));
+                    SetValueControls(1);
                     
-                    if (WHDocuments.WorkType != '') $("#edWorkType1").jqxInput('val', WHDocuments.WorkType);
-                    if (WHDocuments.Storage != '') $("#edStorage1").jqxInput('val', WHDocuments.Storage);
-                    if (WHDocuments.Supplier != '') $("#edSupplier1").jqxInput('val', WHDocuments.Supplier);
-                    if (WHDocuments.DocKind != '') $("#edDocKind1").jqxInput('val', WHDocuments.DocKind);
-                    if (WHDocuments.Number != '') $("#edNumber1").jqxInput('val', WHDocuments.Number);
-                    if (WHDocuments.Jrdc != '') $("#edJrdc1").jqxInput('val', WHDocuments.Jrdc);
                 break;
             };
         };
@@ -136,7 +225,99 @@
         
         if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);       
         
+        var SetStateButtons = function() {
+            var TabIndex = $('#edTabs').jqxTabs('val');
+            switch (TabIndex) {
+                case 0:
+                    $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                break;
+            };
+        };
         
+        $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '600px', width: '800', position: 'center'}));
+        
+        $("#btnEdit").on('click', function(){
+            if (WHDocuments.Docm_id !== null) {
+                $('#WHDocumentsDialog').jqxWindow({width: 600, height: 400, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Update')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Docm_id: WHDocuments.Docm_id,
+                        Dctp_id: WHDocuments.Dctp_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyWHDocumentsDialog").html(Res.html);
+                        $('#WHDocumentsDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        WHDocuments.AddNote = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/AddNote')); ?>,
+                type: 'POST',
+                data: {
+                    Note: {
+                        docm_id: WHDocuments.Docm_id,
+                        note: $('#edMsg').val()
+                    }
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result = 1) {
+                        WHDoc.Refresh();
+                    }
+                        
+                },
+                error: function(Res){
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        };
+        
+        $("#edMsg").on('keyup', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                WHDocuments.AddNote();
+                $('#edMsg').val('');
+                return false;
+            }
+        });
+        
+        // Добавление оборудования
+        
+        $("#btnAddDetails").on('click', function(){
+            if (WHDocuments.Docm_id !== null) {
+                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Create')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Docm_id: WHDocuments.Docm_id,
+                        Dctp_id: WHDocuments.Dctp_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyWHDocumentsDialog").html(Res.html);
+                        $('#WHDocumentsDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        
+        SetStateButtons();
     });
 </script>    
 
@@ -178,7 +359,7 @@
                 <div class="row-column"><input type="text" id="edSupplier1" readonly="readonly" /></div>
             </div>
             <div class="row">
-                <div class="row-column" style="width: 100px">Поставшик</div>
+                <div class="row-column" style="width: 100px">Вид документа</div>
                 <div class="row-column"><input type="text" id="edDocKind1" readonly="readonly" /></div>
             </div>
             <div class="row">
@@ -258,4 +439,13 @@
         <div class="row-column"><input type="button" value="Подтвердить" id='btnAction' /></div>
         <div class="row-column"><input type="button" value="Требуется закупка" id='btnPurchase' /></div>
     </div>
-</div>    
+</div>
+
+<div id="WHDocumentsDialog" style="display: none;">
+    <div id="WHDocumentsDialogHeader">
+        <span id="WHDocumentsHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogWHDocumentsContent">
+        <div style="" id="BodyWHDocumentsDialog"></div>
+    </div>
+</div>

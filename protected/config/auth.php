@@ -67,6 +67,7 @@ return array_merge(
         
     include(dirname(__FILE__).'/security/ObjectsSecurity.php'),
     include(dirname(__FILE__).'/security/WHDocumentsSecurity.php'),
+    include(dirname(__FILE__).'/security/DocmAchsDetailsSecurity.php'),
     /* Заявки на доставку */
     include(dirname(__FILE__).'/security/DeliveryDemandsSecurity.php'),
     include(dirname(__FILE__).'/security/DemandsSecurity.php'),
@@ -365,6 +366,7 @@ return array_merge(
                 'AdminInventoryDetails',
                 'AdminPriceMarkups',
                 'AdminPriceMarkupDetails',
+                'AdminDocmAchsDetails',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

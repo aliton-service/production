@@ -52,7 +52,7 @@ class EquipsController extends Controller
 				),
 			),
                         array('allow', 
-				'actions' => array('EquipInfo'),
+				'actions' => array('EquipInfo', 'GetInvInfo'),
 				'users' => array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -93,6 +93,43 @@ class EquipsController extends Controller
                 $Info['Check'] = 1;
             }
             echo json_encode($Info);
+        }
+        
+        public function actionGetInvInfo() {
+            $Result = array(
+                'result' => 0,
+                'inv_quant' => 0,
+                'inv_quant_used' => 0,
+                'res_quant' => 0,
+                'ready_quant' => 0,
+                'min_quant' => 0,
+            );
+            if (isset($_POST['Equip_id']) && isset($_POST['Strg_id'])) {
+                $Query = new SQLQuery();
+                $Query->setSelect("\ndeclare
+                                        \n@date datetime,
+                                        \n@eqip_id int,
+                                        \n@strg_id int
+
+                                        \nset @eqip_id = " . $_POST['Equip_id'] . "
+                                        \nset @strg_id = " . $_POST['Strg_id'] . "
+                                        \nset @date = getdate()
+                                    \nSelect
+                                        \nisnull(dbo.get_wh_inventory(@eqip_id, @date, 0, @strg_id), 0) inv_quant,
+                                        \nisnull(dbo.get_wh_inventory(@eqip_id, @date, 1, @strg_id), 0) inv_quant_used,
+                                        \nisnull(dbo.get_wh_reserv(@eqip_id, @date, @strg_id), 0) res_quant,
+                                        \nisnull(dbo.get_wh_ready(@eqip_id, @date, @strg_id), 0) ready_quant,
+                                        \nisnull(dbo.get_reserv(@eqip_id, @date), 0) min_quant");
+                $Res = $Query->QueryRow();
+                $Result['result'] = 1;
+                $Result['inv_quant'] = $Res['inv_quant'];
+                $Result['inv_quant_used'] = $Res['inv_quant_used'];
+                $Result['res_quant'] = $Res['res_quant'];
+                $Result['ready_quant'] = $Res['ready_quant'];
+                $Result['min_quant'] = $Res['min_quant'];
+            }
+            
+            echo json_encode($Result);
         }
         
 	public function actionView($id)

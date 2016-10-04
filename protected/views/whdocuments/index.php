@@ -5,6 +5,7 @@
         var CurrentRowDataDoc1;
         var CurrentRowDataDoc2;
         var CurrentRowDataDoc3;
+        var CurrentRowDataDoc4;
         var CurrentRowDataDoc8;
         var CurrentRowDataDoc7;
         var CurrentRowDataDoc9;
@@ -138,8 +139,6 @@
             };
             
             if (Docm_id > 0) {
-//                $('#edDocm_id').val(Docm_id);
-//                $('#MyForm').submit();
                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Docm_id);
             }
         });
@@ -226,8 +225,9 @@
             var TabIndex = $('#edTabs').jqxTabs('selectedItem');
             switch (TabIndex) {
                 case 0:
-                    Docm_id = CurrentRowDataAll.docm_id;
-                    console.log(Docm_id);
+                    if (CurrentRowDataAll != undefined)
+                        Docm_id = CurrentRowDataAll.docm_id;
+                    
                     /* Фильт номер */
                     $('#GridAll').jqxGrid('removefilter', 'number', false);
                     if ($("#edNumber").val() != '') $("#GridAll").jqxGrid('addfilter', 'number', NumberFilterGroup);
@@ -243,7 +243,9 @@
                     
                     DisabledControls();
                     $("#GridAll").jqxGrid({source: DataWHDocumentsAll});
-                    //Aliton.SelectRowById('docm_id', Docm_id, '#GridAll', false);
+                    
+                    if (Docm_id > 0)
+                        Aliton.SelectRowById('docm_id', Docm_id, '#GridAll', false);
                     break;
                 case 1:
                     /* Фильт номер */
@@ -439,7 +441,6 @@
                     
                     $("#GridAll").on('rowselect', function (event) {
                         CurrentRowDataAll = $('#GridAll').jqxGrid('getrowdata', event.args.rowindex);
-                        
                         if (CurrentRowDataAll != undefined) {
                             $("#edNotesAll").jqxTextArea('val', GetNotes(CurrentRowDataAll.docm_id));
                             $('#btnInfo').jqxButton({disabled: false});
@@ -449,7 +450,14 @@
                     });
                     
                     $("#GridAll").on("bindingcomplete", function (event) {
-                        $("#GridAll").jqxGrid('selectrow', 0);
+                        if (CurrentRowDataAll != undefined) 
+                            Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataAll.docm_id, '#GridAll', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('docm_id', null, '#GridAll', false);
+                    });
+                    
+                    $('#GridAll').on('rowdoubleclick', function (event) { 
+                        $('#btnInfo').click();
                     });
                     
                     $("#GridAll").jqxGrid(
@@ -497,7 +505,14 @@
                     });
                     
                     $("#Grid1").on("bindingcomplete", function (event) {
-                        $("#Grid1").jqxGrid('selectrow', 0);
+                        if (CurrentRowDataDoc1 != undefined) 
+                            Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc1.docm_id, '#Grid1', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('docm_id', null, '#Grid1', false);
+                    });
+                    
+                    $('#Grid1').on('rowdoubleclick', function (event) { 
+                        $('#btnInfo').click();
                     });
                     
                     $("#Grid1").jqxGrid(
@@ -551,7 +566,14 @@
                     });
                     
                     $("#Grid2").on("bindingcomplete", function (event) {
-                        $("#Grid2").jqxGrid('selectrow', 0);
+                        if (CurrentRowDataDoc2 != undefined) 
+                            Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc2.docm_id, '#Grid2', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('docm_id', null, '#Grid2', false);
+                    });
+                    
+                    $('#Grid2').on('rowdoubleclick', function (event) { 
+                        $('#btnInfo').click();
                     });
                     
                     $("#Grid2").jqxGrid(
@@ -599,7 +621,14 @@
                     });
                     
                     $("#Grid3").on("bindingcomplete", function (event) {
-                        $("#Grid3").jqxGrid('selectrow', 0);
+                        if (CurrentRowDataDoc3 != undefined) 
+                            Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc3.docm_id, '#Grid3', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('docm_id', null, '#Grid3', false);
+                    });
+                    
+                    $('#Grid3').on('rowdoubleclick', function (event) { 
+                        $('#btnInfo').click();
                     });
                     
                     $("#Grid3").jqxGrid(
@@ -645,7 +674,14 @@
                     });
                     
                     $("#Grid4").on("bindingcomplete", function (event) {
-                        $("#Grid4").jqxGrid('selectrow', 0);
+                        if (CurrentRowDataDoc4 != undefined) 
+                            Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc4.docm_id, '#Grid4', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('docm_id', null, '#Grid4', false);
+                    });
+                    
+                    $('#Grid4').on('rowdoubleclick', function (event) { 
+                        $('#btnInfo').click();
                     });
                     
                     var statusrenderer = function (row, datafield, value) {
@@ -736,7 +772,14 @@
                     });
                     
                     $("#Grid5").on("bindingcomplete", function (event) {
-                        $("#Grid5").jqxGrid('selectrow', 0);
+                        if (CurrentRowDataDoc8 != undefined) 
+                            Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc8.docm_id, '#Grid5', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('docm_id', null, '#Grid5', false);
+                    });
+                    
+                    $('#Grid5').on('rowdoubleclick', function (event) { 
+                        $('#btnInfo').click();
                     });
                     
                     $("#Grid5").jqxGrid(
@@ -781,7 +824,14 @@
                     });
                     
                     $("#Grid6").on("bindingcomplete", function (event) {
-                        $("#Grid6").jqxGrid('selectrow', 0);
+                        if (CurrentRowDataDoc7 != undefined) 
+                            Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc7.docm_id, '#Grid6', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('docm_id', null, '#Grid6', false);
+                    });
+                    
+                    $('#Grid6').on('rowdoubleclick', function (event) { 
+                        $('#btnInfo').click();
                     });
                     
                     $("#Grid6").jqxGrid(
@@ -827,7 +877,14 @@
                     });
                     
                     $("#Grid7").on("bindingcomplete", function (event) {
-                        $("#Grid7").jqxGrid('selectrow', 0);
+                        if (CurrentRowDataDoc9 != undefined) 
+                            Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc9.docm_id, '#Grid7', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('docm_id', null, '#Grid7', false);
+                    });
+                    
+                    $('#Grid7').on('rowdoubleclick', function (event) { 
+                        $('#btnInfo').click();
                     });
                     
                     $("#Grid7").jqxGrid(
@@ -862,7 +919,7 @@
             }
         };
                     
-        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 1 });
+        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 0 });
         
         
     });
@@ -1038,6 +1095,3 @@
     <div class="row-column"><input type="button" value="Обновить" id='btnRefresh' /></div>
 </div>
 
-<form id="MyForm" action="<?php echo Yii::app()->createUrl('WHDocuments/View'); ?>" target="_blank" method="POST">
-    <input type="hidden" id="edDocm_id" name="Docm_id"/>
-</form>
