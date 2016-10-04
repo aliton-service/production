@@ -1,7 +1,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
         
-        var DataEquips = new $.jqx.dataAdapter(Sources.SourceListEquipsMin);
+//        var DataEquips = new $.jqx.dataAdapter(Sources.SourceListEquipsMin);
+        var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {}), {
+            formatData: function (data) {
+                $.extend(data, {
+                    Filters: ["e.Equip_id = " + 14727],
+                });
+                return data;
+            },
+        });
         
         $('#PriceList').on('keyup keypress', function(e) {
             var keyCode = e.keyCode || e.which;
@@ -42,7 +50,6 @@
                 success: function(Res) {
                     
                     var Res = JSON.parse(Res);
-                    console.log('Res = ' + Res);
                     if (Res.result == 1) {
                         
                         eqip_idx++; 
@@ -85,8 +92,8 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         DataEquips.dataBind();
+                        console.log(DataEquips);
                         prlt_id = Res.id;
-                        console.log('Res.id = ' + Res.id);
                         insertPriceListDetails();
                     }
                     else {
