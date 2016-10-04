@@ -19,7 +19,7 @@
         $("#PriceListGrid").on('rowselect', function (event) {
             CurrentRowData = $('#PriceListGrid').jqxGrid('getrowdata', event.args.rowindex);
             CheckButton();
-            console.log(CurrentRowData.prlt_id);
+//            console.log(CurrentRowData.prlt_id);
         });
         
         $("#PriceListGrid").jqxGrid(
@@ -29,7 +29,7 @@
                 sortable: true,
                 showfilterrow: true,
                 width: '100%',
-                height: '300',
+                height: '500',
                 source: PriceListDataAdapter,
                 columns: [
                     { text: 'Дата', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 150 },
@@ -54,7 +54,7 @@
         });
 
         $('#btnDelPriceList').on('click', function(){
-            console.log(CurrentRowData.prlt_id);
+//            console.log(CurrentRowData.prlt_id);
             
             if (CurrentRowData != undefined) {
                 $.ajax({

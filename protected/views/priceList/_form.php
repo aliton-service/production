@@ -1,15 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         
-//        var DataEquips = new $.jqx.dataAdapter(Sources.SourceListEquipsMin);
-        var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {}), {
-            formatData: function (data) {
-                $.extend(data, {
-                    Filters: ["e.Equip_id = " + 14727],
-                });
-                return data;
-            },
-        });
+        var DataEquips = new $.jqx.dataAdapter(Sources.SourceListEquipsMin);
         
         $('#PriceList').on('keyup keypress', function(e) {
             var keyCode = e.keyCode || e.which;
@@ -92,7 +84,7 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         DataEquips.dataBind();
-                        console.log(DataEquips);
+//                        console.log(DataEquips);
                         prlt_id = Res.id;
                         insertPriceListDetails();
                     }
