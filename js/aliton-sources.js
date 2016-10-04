@@ -678,6 +678,8 @@ Sources.SourceListEquipsMin =
         {name: 'Equip_id', type: 'int'},
         {name: 'EquipName', type: 'string'},
         {name: 'NameUM', type: 'string'},
+        {name: 'discontinued', type: 'date'}
+        
     ],
     id: 'Equip_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipsListAll',
@@ -2739,7 +2741,6 @@ Sources.SourceEquipGroupsListMin =
     }
 };
 
-
 Sources.SourceSuppliersListMin =
 {
     datatype: "json",
@@ -2791,6 +2792,26 @@ Sources.SourceWHDocKinds =
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHDocKinds',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+Sources.SourcePriceList =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'prlt_id', type: 'int'},
+        {name: 'date', type: 'date'},
+        {name: 'note', type: 'string'},
+    ],
+    id: 'prlt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PriceList',
     type: 'POST',
     root: 'Rows',
     cache: false,

@@ -182,6 +182,7 @@
                                 array('label'=>'Наценки', 'url'=>array('/PriceMarkups/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPriceMarkups')),
                                 array('label'=>'Заявки на мониторинг', 'url'=>array('/MonitoringDemands/index'), 'visible'=>Yii::app()->user->checkAccess('ViewMonitoringDemands')),
                                 array('label'=>'Мониторинг цен', 'url'=>array('/priceMonitoring/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPriceMonitoring')),
+                                array('label'=>'Прайс-лист', 'url'=>array('/PriceList/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPriceList')),
                             )
                             ),
 

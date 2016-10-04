@@ -37,15 +37,20 @@
         $("#edEquip").on('bindingComplete', function(event){
             if (DocmAchsDetail.eqip_id != '') $("#edEquip").jqxComboBox('val', DocmAchsDetail.eqip_id);
             $("#btnSaveDocmAchsDetail").jqxButton({disabled: false});
-            
-        
         });
-        $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '300', height: '25px', displayMember: "EquipName", valueMember: "Equip_id"}));
+        
+        var EquipRenderer = function(index, label, value) {
+            var DataRecord = DataEquips.records[index];
+            var table = '<table><tbody><tr><td>' + DataRecord.EquipName + '</td><td>' + DataRecord.discontinued + '</td></tr></tbody></table>';
+            return table;
+        };
+        
+        $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '300', height: '25px', displayMember: "EquipName", valueMember: "Equip_id" /*, renderer: EquipRenderer */}));
         $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
         $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px'}));
         $("#edFactQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px'}));
-        $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: true}));
+        $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
         $("#edUsedEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '50px'}));
         $("#edToProductionEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '130px'}));
         $("#edNoPriceListEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '150px'}));
@@ -69,7 +74,7 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('dadt_id', Res.id, '#DetailsGrid', true);
+                        Aliton.SelectRowById('dadt_id', Res.id, '#GridDetails', true);
                         $('#WHDocumentsDialog').jqxWindow('close');
                     }
                     else {
@@ -131,7 +136,7 @@
     <div class="row-column">
         <div><div class="row-column">Количество</div></div>
         <div style="clear: both"></div>
-        <div><div class="row-column"><div type="text" id="edQuantEdit" name="DocmAchsDetails[quant]"></div><?php echo $form->error($model, 'quant'); ?></div></div>
+        <div><div class="row-column"><div type="text" id="edQuantEdit" name="DocmAchsDetails[docm_quant]"></div><?php echo $form->error($model, 'docm_quant'); ?></div></div>
     </div>
     <div class="row-column" style="float: right">
         <div><div class="row-column">Цена</div></div>

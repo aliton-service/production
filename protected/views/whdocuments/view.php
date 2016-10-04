@@ -84,7 +84,7 @@
         $("#btnPurchase").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, width: 180}));
         var CurrentRowDetails;
         
-        var DataDetails = new $.jqx.dataAdapter($.extend(true, {}, Sources.DocmAchsDetailsSource), {
+        var DataDetails = new $.jqx.dataAdapter($.extend(true, {}, Sources.DocmAchsDetailsSource), { async: false,
             formatData: function (data) {
                         $.extend(data, {
                             Filters: ["d.Docm_id = " + WHDocuments.Docm_id]

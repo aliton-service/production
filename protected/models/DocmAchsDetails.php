@@ -71,6 +71,7 @@ class DocmAchsDetails extends MainFormModel
     public function rules()
     {
         return array(
+            array('eqip_id, docm_quant', 'required'),
             array(' dadt_id,
                     docm_id,
                     eqip_id,
@@ -91,7 +92,8 @@ class DocmAchsDetails extends MainFormModel
                     date_create,
                     discontinued,
                     SN,
-                    color', 'safe'),
+                    color,
+                    no_price_list', 'safe'),
         );
     }
 
@@ -100,12 +102,13 @@ class DocmAchsDetails extends MainFormModel
         return array(
             'dadt_id' => 'dadt_id',
             'docm_id' => 'docm_id',
-            'eqip_id' => 'eqip_id',
+            'eqip_id' => 'Оборудование',
             'achs_id' => 'achs_id',
+            'no_price_list' => 'no_price_list',
             'EquipName' => 'EquipName',
             'UnitMeasurement_Id' => 'UnitMeasurement_Id',
             'NameUnitMeasurement' => 'NameUnitMeasurement',
-            'docm_quant' => 'docm_quant',
+            'docm_quant' => 'Кол-во',
             'fact_quant' => 'fact_quant',
             'quant' => 'quant',
             'used' => 'used',

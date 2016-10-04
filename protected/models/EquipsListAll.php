@@ -5,6 +5,7 @@ class EquipsListAll extends MainFormModel
     public $Equip_id;
     public $EquipName;
     public $NameUM;
+    public $discontinued;
     
     public function rules() {
         return array(
@@ -23,6 +24,7 @@ class EquipsListAll extends MainFormModel
         $Select =   "Select
                         e.Equip_id,
                         e.EquipName,
+                        e.discontinued,
                         um.NameUnitMeasurement NameUM";
         $From = "
                 From Equips e
