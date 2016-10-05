@@ -42,13 +42,9 @@ class PriceListDetails extends MainFormModel
      */
     public function rules()
     {
-            // NOTE: you should only define rules for those attributes that
-            // will receive user inputs.
-            return array(
-//			array('date, strg_id', 'required'),
-//                    array('prlt_id', 'numerical', 'integerOnly'=>true),
-//                    array('prlt_id, date, note', 'safe'),
-            );
+        return array(
+                array('prlt_id, pldt_id, eqip_id', 'safe'),
+        );
     }
 
 
@@ -58,11 +54,11 @@ class PriceListDetails extends MainFormModel
      */
     public function attributeLabels()
     {
-//        return array(
-//            'prlt_id' => 'Invn',
-//            'date' => 'Date',
-//            'note' => 'note',
-//        );
+        return array(
+            'prlt_id' => 'prlt_id',
+            'pldt_id' => 'pldt_id',
+            'eqip_id' => 'eqip_id',
+        );
     }
 
 }

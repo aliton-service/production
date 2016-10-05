@@ -2,6 +2,7 @@
     var WHDoc = {};
     
     $(document).ready(function () {
+        WHDoc.Employee_id = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
         var WHDocuments = {
             Docm_id: <?php echo json_encode($model->docm_id); ?>,
             Dctp_id: <?php echo json_encode($model->dctp_id); ?>,
@@ -16,7 +17,9 @@
             Jrdc: <?php echo json_encode($model->JuridicalPerson); ?>,
             Notes: <?php echo json_encode($model->notes); ?>,
             Achs_id: <?php echo json_encode($model->achs_id); ?>,
-            Status: <?php echo json_encode($model->status); ?>
+            Status: <?php echo json_encode($model->status); ?>,
+            ActionCode: <?php echo json_encode($ActionCode); ?>,
+            Objc_id: <?php echo json_encode($model->objc_id); ?>
         };
         
         WHDoc.Refresh = function() {
@@ -35,6 +38,7 @@
                     WHDocuments.WorkType = Res.wrtp_name;
                     WHDocuments.Date =  Aliton.DateConvertToJs(Res.date);
                     WHDocuments.Address =  Res.Address;
+                    WHDocuments.Strg_id = Res.strg_id;
                     WHDocuments.Storage =  Res.storage;
                     WHDocuments.Supplier =  Res.splr_name;
                     WHDocuments.DocKind =  Res.dckn_name;
@@ -42,6 +46,7 @@
                     WHDocuments.Notes =  Res.notes;
                     WHDocuments.Achs_id =  Res.achs_id;
                     SetValueControls(parseInt(WHDocuments.Dctp_id));
+                    $("#btnRefreshDetails").click();
                     SetStateButtons();
                 },
                 error: function(Res) {
@@ -73,13 +78,16 @@
         $("#btnAddDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/6.png"}));
         $("#btnEditDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/4.png"}));
         $("#btnRefreshDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false}));
-        $("#btnHistoryDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false}));
+        $("#btnHistoryDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, width: 180}));
         $("#btnInfoDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false}));
         $("#btnDelDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/7.png"}));
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees));
         DataEmployees.dataBind();
         $("#edStoreman").jqxComboBox({ source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
-        $("#edMaster").jqxComboBox({ source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#edStoreman").jqxComboBox('val', WHDoc.Employee_id);
+        $("#edMaster").jqxComboBox({ source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id", disabled: true});
+        var DataDelayReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDelayReasonsLogistik));
+        $("#edDelayReason").jqxComboBox({ source: DataDelayReasons, width: '200', height: '25px', displayMember: "name", valueMember: "dlrs_id", disabled: true});
         $("#btnAction").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/8.png", width: 130}));
         $("#btnPurchase").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, width: 180}));
         var CurrentRowDetails;
@@ -103,39 +111,42 @@
             $('#btnHistoryDetails').jqxButton({disabled: true});
             $('#btnInfoDetails').jqxButton({disabled: true});
             $('#btnDelDetails').jqxButton({disabled: true});
+            $("#btnReserv").jqxButton({disabled: true});
         };
         
         var SetStateDetailsButtons = function() {
             $('#btnAddDetails').jqxButton({disabled: (WHDocuments.Achs_id !== null || WHDocuments.Status === 'Готово к выдаче')});
             $('#btnEditDetails').jqxButton({disabled: (WHDocuments.Achs_id !== null || CurrentRowDetails == undefined || WHDocuments.Status === 'Готово к выдаче')});
             $('#btnRefreshDetails').jqxButton({disabled: false});
-            $('#btnHistoryDetails').jqxButton({disabled: (CurrentRowDetails == undefined)});
+            $('#btnReserv').jqxButton({disabled: (CurrentRowDetails == undefined)});
+            $('#btnHistoryDetails').jqxButton({disabled: false});
             $('#btnInfoDetails').jqxButton({disabled: (CurrentRowDetails == undefined)});
             $('#btnDelDetails').jqxButton({disabled: (WHDocuments.Achs_id !== null || CurrentRowDetails == undefined || WHDocuments.Status === 'Готово к выдаче')});
         };
         
         var SetInvInfo = function() {
-            $.ajax({
-                url: <?php echo json_encode(Yii::app()->createUrl('Equips/GetInvInfo')); ?>,
-                type: 'POST',
-                data: {
-                    Equip_id: CurrentRowDetails.eqip_id,
-                    Strg_id: WHDocuments.Strg_id
-                },
-                success: function(Res) {
-                    Res = JSON.parse(Res);
-                    if (Res.result = 1) {
-                        $("#edQuant").jqxNumberInput('val', Res.inv_quant);
-                        $("#edUsedQuant").jqxNumberInput('val', Res.inv_quant_used);
-                        $("#edReserv").jqxNumberInput('val', Res.res_quant);
-                        $("#edReady").jqxNumberInput('val', Res.ready_quant);
-                        $("#edMinReserv").jqxNumberInput('val', Res.min_quant)
+            if (CurrentRowDetails != undefined) 
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Equips/GetInvInfo')); ?>,
+                    type: 'POST',
+                    data: {
+                        Equip_id: CurrentRowDetails.eqip_id,
+                        Strg_id: WHDocuments.Strg_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result = 1) {
+                            $("#edQuant").jqxNumberInput('val', Res.inv_quant);
+                            $("#edUsedQuant").jqxNumberInput('val', Res.inv_quant_used);
+                            $("#edReserv").jqxNumberInput('val', Res.res_quant);
+                            $("#edReady").jqxNumberInput('val', Res.ready_quant);
+                            $("#edMinReserv").jqxNumberInput('val', Res.min_quant)
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                     }
-                },
-                error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                }
-            });
+                });
         };
         
         $("#GridDetails").on('rowselect', function (event) {
@@ -230,6 +241,9 @@
             switch (TabIndex) {
                 case 0:
                     $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#btnPurchase").jqxComboBox({disabled: false});
                 break;
             };
         };
@@ -292,7 +306,6 @@
         });
         
         // Добавление оборудования
-        
         $("#btnAddDetails").on('click', function(){
             if (WHDocuments.Docm_id !== null) {
                 $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
@@ -316,6 +329,193 @@
             }
         });
         
+        $("#btnEditDetails").on('click', function(){
+            if (WHDocuments.Docm_id !== null) {
+                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Update')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Dadt_id: CurrentRowDetails.dadt_id,
+                        Docm_id: WHDocuments.Docm_id,
+                        Dctp_id: WHDocuments.Dctp_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyWHDocumentsDialog").html(Res.html);
+                        $('#WHDocumentsDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $("#btnRefreshDetails").on('click', function() {
+            if (CurrentRowDetails != undefined)
+                Aliton.SelectRowById('dadt_id', CurrentRowDetails.dadt_id, '#GridDetails', true);
+            else
+                Aliton.SelectRowById('dadt_id', null, '#GridDetails', true);
+            
+        });
+        
+        $("#btnHistoryDetails").on('click', function(){
+            if (WHDocuments.Docm_id !== null) {
+                $('#WHDocumentsDialog').jqxWindow({width: 840, height: 320, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/AuditEquips')) ?>,
+                    type: 'GET',
+                    async: false,
+                    data: {
+                        Docm_id: WHDocuments.Docm_id,
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyWHDocumentsDialog").html(Res.html);
+                        $('#WHDocumentsDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $("#btnInfoDetails").on('click', function(){
+            if (CurrentRowDetails !== undefined) {
+                $('#WHDocumentsDialog').jqxWindow({width: 840, height: 300, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Equips/Inventory')) ?>,
+                    type: 'GET',
+                    async: false,
+                    data: {
+                        Equip_id: CurrentRowDetails.eqip_id,
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyWHDocumentsDialog").html(Res.html);
+                        $('#WHDocumentsDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $("#btnReserv").on('click', function(){
+            if (CurrentRowDetails !== undefined) {
+                $('#WHDocumentsDialog').jqxWindow({width: 840, height: 300, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Equips/Reserve')) ?>,
+                    type: 'GET',
+                    async: false,
+                    data: {
+                        Equip_id: CurrentRowDetails.eqip_id,
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyWHDocumentsDialog").html(Res.html);
+                        $('#WHDocumentsDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $("#btnDelDetails").on('click', function(){
+            if (WHDocuments.Docm_id !== null && CurrentRowDetails !== undefined) {
+                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Delete')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Dadt_id: CurrentRowDetails.dadt_id,
+                        Docm_id: WHDocuments.Docm_id,
+                        Dctp_id: WHDocuments.Dctp_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result === 1) {
+                            CurrentRowDetails = undefined;
+                            $("#btnRefreshDetails").click();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        var isNull = function(v1, v2) {
+            if (v1 == null)
+                return v2;
+            else
+                return v1;
+        }
+        
+        $("#btnAction").on('click', function(){
+            if (WHDocuments.Docm_id !== null) {
+                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Action')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        ActionHistory: {
+                            Dctp_id: isNull(WHDocuments.Dctp_id, ''),
+                            Dlrs_id: $('#edDelayReason').val(),
+                            Docm_id: isNull(WHDocuments.Docm_id, ''),
+                            ActnCode: isNull(WHDocuments.ActionCode, ''),
+                            Strm_id: $('#edStoreman').val(),
+                            Splr_id: isNull(WHDocuments.Splr_id, ''),
+                            Mstr_id: $('#edMaster').val(),
+                            Objc_id: isNull(WHDocuments.Objc_id, ''),
+                            Empl_To_id: $('#edMaster').val(),
+                            Wrtp_id: isNull(WHDocuments.Wrtp_id, '')
+                        }
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result === 1) {
+                            WHDoc.Refresh();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $("#btnPurchase").on('click', function(){
+            if (WHDocuments.Docm_id !== null) {
+                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Purchase')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Docm_id: isNull(WHDocuments.Docm_id, ''),
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result === 1) {
+                            WHDoc.Refresh();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
         
         SetStateButtons();
     });
@@ -436,8 +636,15 @@
         </div>
     </div>
     <div class="row-column">
-        <div class="row-column"><input type="button" value="Подтвердить" id='btnAction' /></div>
-        <div class="row-column"><input type="button" value="Требуется закупка" id='btnPurchase' /></div>
+        <div>
+            <div class="row-column"><input type="button" value="Подтвердить" id='btnAction' /></div>
+            <div class="row-column"><input type="button" value="Требуется закупка" id='btnPurchase' /></div>
+        </div>
+        <div style="clear: both"></div>
+        <div style="margin-top: 6px">
+            <div class="row-column" style="width: 150px;">Причина просрочки</div>
+            <div class="row-column"><div id="edDelayReason"></div></div>    
+        </div>
     </div>
 </div>
 

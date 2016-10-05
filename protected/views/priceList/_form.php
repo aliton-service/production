@@ -5,7 +5,7 @@
         var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {}), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["e.Equip_id = " + 14727],
+                    Filters: ["(c.ForPrice = 1 or c.ForCostCalc = 1 or e.ctgr_id is Null)"],
                 });
                 return data;
             },

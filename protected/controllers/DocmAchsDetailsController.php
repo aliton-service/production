@@ -75,8 +75,8 @@ class DocmAchsDetailsController extends Controller
                 'id' => 0,
                 'html' => '',
             );
-        if (isset($_POST['dadt_id']))
-            $model->getModelPk($_POST['dadt_id']);
+        if (isset($_POST['Dadt_id']))
+            $model->getModelPk($_POST['Dadt_id']);
 
         if (isset($_POST['DocmAchsDetails'])) {
             $model->getModelPk($_POST['DocmAchsDetails']['dadt_id']);
@@ -104,15 +104,18 @@ class DocmAchsDetailsController extends Controller
                 'html' => '',
             );
         
-        if (isset($_POST['dadt_id'])) {
+        if (isset($_POST['Dadt_id'])) {
             $model = new DocmAchsDetails();
-            $model->getModelPk($_POST['dadt_id']);
+            $model->getModelPk($_POST['Dadt_id']);
             if ($model->validate()) {
                 $model->delete();
                 $ObjectResult['result'] = 1;
                 $ObjectResult['id'] = $model->dadt_id;
                 echo json_encode($ObjectResult);
                 return;
+            }
+            else {
+                $ObjectResult['result'] = 2;
             }
         }
         echo json_encode($ObjectResult);
@@ -122,6 +125,12 @@ class DocmAchsDetailsController extends Controller
     {
         $this->title = 'Просмотр подразделений';
         $this->render('index');
+    }
+    
+    public function actionHistory() {
+        if (isset($_POST['Dadt_id'])) {
+            
+        }
     }
 }
 

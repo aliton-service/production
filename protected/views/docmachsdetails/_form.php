@@ -147,7 +147,7 @@
 <div class="row">
     <div class="row-column"><div id="edUsedEdit" name="DocmAchsDetails[used]">Б\У</div><?php echo $form->error($model, 'price'); ?></div>
     <div class="row-column"><div id="edToProductionEdit" name="DocmAchsDetails[ToProduction]">В производство</div><?php echo $form->error($model, 'ToProduction'); ?></div>
-    <div class="row-column"><div id="edNoPriceListEdit" name="DocmAchsDetails[no_price_lits]">Не учитывать цену</div><?php echo $form->error($model, 'no_price_lits'); ?></div>
+    <div class="row-column"><div id="edNoPriceListEdit" name="DocmAchsDetails[no_price_list]">Не учитывать цену</div><?php echo $form->error($model, 'no_price_list'); ?></div>
     <div style="float: right">
         <div class="row-column">Факт. кол-во:</div>
         <div class="row-column"><div type="text" id="edFactQuantEdit" name="DocmAchsDetails[fact_quant]"></div><?php echo $form->error($model, 'price'); ?></div>

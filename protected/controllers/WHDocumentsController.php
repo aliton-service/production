@@ -31,6 +31,18 @@ class WHDocumentsController extends Controller
                     'actions'=>array('delete'),
                     'roles'=>array('DeleteWHDcouments'),
             ),
+            array('allow', 
+                    'actions'=>array('AuditEquips'),
+                    'roles'=>array('AuditEquipsWHDocuments'),
+            ),
+            array('allow', 
+                    'actions'=>array('Action'),
+                    'users'=>array('*'),
+            ),
+            array('allow', 
+                    'actions'=>array('Purchase'),
+                    'roles'=>array('PurchaseWHDocuments'),
+            ),
             array('deny',  // deny all users
                     'users'=>array('*'),
             ),
@@ -185,6 +197,7 @@ class WHDocumentsController extends Controller
     
     public function actionView() {
         $this->title = 'Склад - просмотр документа';
+        $ActionCode = 0;        
         $Docm_id = 0;
         if (isset($_POST['Docm_id']))
             $Docm_id = $_POST['Docm_id'];
@@ -199,36 +212,44 @@ class WHDocumentsController extends Controller
                 case 1:
                     $this->title = 'Накладная на приход №' . $model->number;
                     $this->setPageTitle('Накладная на приход №' . $model->number);
+                    $ActionCode = 201;
                     break;
                 case 2:
                     $this->title = 'Накладная на возврат №' . $model->number;
                     $this->setPageTitle('Накладная на возврат №' . $model->number);
+                    $ActionCode = 301;
                     break;
                 case 3:
                     $this->title = 'Накладная на возврат поставщику №' . $model->number;
                     $this->setPageTitle('Накладная на возврат поставщику №' . $model->number);
+                    $ActionCode = 102;
                     break;
                 case 4:
                     $this->title = 'Требование на выдачу №' . $model->number;
                     $this->setPageTitle('Требование на выдачу №' . $model->number);
+                    $ActionCode = 103;
                     break;
                 case 7:
                     $this->title = 'Перемещение из ПРЦ на СКЛАД №' . $model->number;
                     $this->setPageTitle('Перемещение из ПРЦ на СКЛАД №' . $model->number);
+                    $ActionCode = 501;
                     break;
                 case 8:
                     $this->title = 'Перемещение с склада на склад №' . $model->number;
                     $this->setPageTitle('Перемещение с склада на склад №' . $model->number);
+                    $ActionCode = 101;
                     break;
                 case 9:
                     $this->title = 'Накладная на возврат мастеру №' . $model->number;
                     $this->setPageTitle('Накладная на возврат мастеру №' . $model->number);
+                    $ActionCode = 603;
                     break;
             }
         }
         
         $this->render('view', array(
             'model' => $model,
+            'ActionCode' => $ActionCode,
         ));
     }
     
@@ -246,6 +267,96 @@ class WHDocumentsController extends Controller
             $Result['text'] = $Res['notes'];
         }
         echo json_encode($Result);
+    }
+    
+    public function actionAuditEquips() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_GET['Docm_id'])) {
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $_GET['Docm_id'];
+            $ObjectResult['html'] = $this->renderPartial('equipsaudit', array(
+                    'Docm_id' => $_GET['Docm_id'],
+                ), true);
+            echo json_encode($ObjectResult);
+        }
+    }
+    
+    private function SetEmptyNull($Value) {
+        if ($Value === '')
+            return null;
+        else return $Value;
+    }
+    
+    public function actionAction() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['ActionHistory'])) {
+            $Type = (int)$_POST['ActionHistory']['Dctp_id'];
+            switch ($Type) {
+                case 1: 
+                    if (!Yii::app()->user->checkAccess('Action1WHDocuments'))
+                        throw new Exception('У вас недостаточно прав для данной перации');
+                break;
+            }
+                        
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'INSERT_ActionHistory';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = null;
+            $sp->Parameters[1]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['Dlrs_id']);
+            $sp->Parameters[2]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['Docm_id']);
+            $sp->Parameters[3]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['ActnCode']);
+            $sp->Parameters[4]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['Strm_id']);
+            $sp->Parameters[5]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['Splr_id']);
+            $sp->Parameters[6]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['Mstr_id']);
+            $sp->Parameters[7]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['Objc_id']);
+            $sp->Parameters[8]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['Empl_To_id']);
+            $sp->Parameters[9]['Value'] = $this->SetEmptyNull($_POST['ActionHistory']['Wrtp_id']);
+            $sp->Parameters[10]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $Res['achs_id'];
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionPurchase() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Docm_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'in_purchase';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Docm_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
     }
 }
 

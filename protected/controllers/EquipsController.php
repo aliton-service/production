@@ -52,7 +52,7 @@ class EquipsController extends Controller
 				),
 			),
                         array('allow', 
-				'actions' => array('EquipInfo', 'GetInvInfo'),
+				'actions' => array('EquipInfo', 'GetInvInfo', 'Inventory', 'Reserve'),
 				'users' => array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -234,26 +234,11 @@ class EquipsController extends Controller
 //			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-	/**
-	 * Lists all models.
-	 */
 	public function actionIndex()
 	{
 		$this->render('index');
-//
-//		$model = new Equips('search');
-//		$model->unsetAttributes();  // clear any default values
-//		if (isset($_GET['Equips']))
-//			$model->attributes = $_GET['Equips'];
-//
-//		$this->render('index', array(
-//			'model' => $model,
-//		));
 	}
 
-	/**
-	 * Manages all models.
-	 */
 	public function actionAdmin()
 	{
 		$model = new Equips('search');
@@ -265,34 +250,6 @@ class EquipsController extends Controller
 			'model' => $model,
 		));
 	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Equips the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model = Equips::model()->findByPk($id);
-		if ($model === null)
-			throw new CHttpException(404, 'The requested page does not exist.');
-		return $model;
-	}
-
-	/**
-	 * Performs the AJAX validation.
-	 * @param Equips $model the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if (isset($_POST['ajax']) && $_POST['ajax'] === 'equips-form') {
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
-
 
 	public function actionEquipAnalog($id, $ajax = false)
 	{
@@ -323,6 +280,44 @@ class EquipsController extends Controller
 
 		$this->render('merge', array('model'=>$model));
 	}
+        
+        public function actionInventory() {
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+            if (isset($_GET['Equip_id'])) {
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $_GET['Equip_id'];
+                $ObjectResult['html'] = $this->renderPartial('equipinventory', array(
+                        'Equip_id' => $_GET['Equip_id'],
+                    ), true);
+                
+            }
+            
+            echo json_encode($ObjectResult);
+        }
+        
+        public function actionReserve() {
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+            if (isset($_GET['Equip_id'])) {
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $_GET['Equip_id'];
+                $ObjectResult['html'] = $this->renderPartial('equipreserve', array(
+                        'Equip_id' => $_GET['Equip_id'],
+                    ), true);
+                
+            }
+            
+            echo json_encode($ObjectResult);
+        }
 
 }
 

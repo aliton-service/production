@@ -48,13 +48,16 @@ class PriceListDetailsController extends Controller
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
+                'mas' => array()
             );
+        
         if (isset($_POST['PriceListDetails'])) {
             $model->attributes = $_POST['PriceListDetails'];
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = 0;
+                $ObjectResult['mas'] = $Res;
+                //$ObjectResult['id'] = $Res['pldt_id'];
                 echo json_encode($ObjectResult);
                 return;
             } 

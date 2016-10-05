@@ -38,10 +38,10 @@ Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh) {
         if (TmpVal == Value) {
             $(Grid).jqxGrid('selectrow', i);
             $(Grid).jqxGrid('ensurerowvisible', i);
-            break;
+            return;
+            
         }
     }
-    
 };
 
 Aliton.SelectRowByIdVirtual = function(FieldName, Value, Grid, Refresh) {

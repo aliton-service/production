@@ -27,7 +27,7 @@ class EquipsListAll extends MainFormModel
                         e.discontinued,
                         um.NameUnitMeasurement NameUM";
         $From = "
-                From Equips e
+                From Equips e left join Categories c on (e.ctgr_id = c.ctgr_id)  
                 left join UnitMeasurement um on (e.UnitMeasurement_Id = um.UnitMeasurement_Id)
             ";
         $Where = "\nWhere e.DelDate is null";
