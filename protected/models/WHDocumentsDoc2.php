@@ -11,11 +11,13 @@ class WHDocumentsDoc2 extends MainFormModel
     public $date_create;
     public $note;
     public $Address;
+    public $rtrs_id;
     public $rtrs_name;
     public $ac_date;
     public $strm_name;
     public $mstr_name;
     public $achs_id;
+    public $wrtp_id;
     public $wrtp_name;
     public $strg_id;
     public $storage;
@@ -37,11 +39,13 @@ class WHDocumentsDoc2 extends MainFormModel
                         d.date_create,
                         d.note,
                         d.Address,
+                        d.rtrs_id,
                         d.rtrs_name,
                         a.ac_date,
                         dbo.FIO(a.strm_name) strm_name,
                         dbo.FIO(a.mstr_name) mstr_name,
                         a.achs_id,
+                        d.wrtp_id,
                         d.wrtp_name,
                         d.strg_id,
                         d.storage";

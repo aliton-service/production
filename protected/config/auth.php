@@ -195,6 +195,9 @@ return array_merge(
     /* Прайс-лист */
     include(dirname(__FILE__).'/security/PriceListSecurity.php'),
     include(dirname(__FILE__).'/security/PriceListDetailsSecurity.php'),
+    
+    /* Серийники */
+    include(dirname(__FILE__).'/security/SerialNumbersSecurity.php'),
         
     array(    
         'guest' => array(
@@ -373,6 +376,7 @@ return array_merge(
                 'AdminDocmAchsDetails',
                 'AdminPriceList',
                 'AdminPriceListDetails',
+                'AdminSerialNumbers',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

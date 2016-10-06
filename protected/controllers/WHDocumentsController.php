@@ -20,23 +20,23 @@ class WHDocumentsController extends Controller
                     'roles'=>array('WHDocumentsView'),
             ),
             array('allow', 
-                    'actions'=>array('create'),
-                    'roles'=>array('CreateWHDcouments'),
+                    'actions'=>array('Create'),
+                    'roles'=>array('CreateWHDocuments'),
             ),
             array('allow', 
                     'actions'=>array('Update', 'AddNote'),
                     'roles'=>array('UpdateWHDocuments'),
             ),
             array('allow', 
-                    'actions'=>array('delete'),
-                    'roles'=>array('DeleteWHDcouments'),
+                    'actions'=>array('Delete'),
+                    'roles'=>array('DeleteWHDocuments'),
             ),
             array('allow', 
                     'actions'=>array('AuditEquips'),
                     'roles'=>array('AuditEquipsWHDocuments'),
             ),
             array('allow', 
-                    'actions'=>array('Action'),
+                    'actions'=>array('Action', 'ConfirmCancel', 'Confirm'),
                     'users'=>array('*'),
             ),
             array('allow', 
@@ -64,26 +64,57 @@ class WHDocumentsController extends Controller
 
     public function actionCreate()
     {
-        $model = new WHDcouments();
+        if (isset($_POST['Dctp_id'])) {
+            switch ($_POST['Dctp_id']) {
+                case 1: $model = new WHDocumentsDoc1(); break;
+                case 2: $model = new WHDocumentsDoc2(); break;
+                case 3: $model = new WHDocumentsDoc3(); break;
+                case 4: $model = new WHDocumentsDoc4(); break;
+                case 7: $model = new WHDocumentsDoc7(); break;
+                case 8: $model = new WHDocumentsDoc8(); break;
+                case 9: $model = new WHDocumentsDoc9(); break;
+                default: $model = new WHDocuments(); break;
+            }
+            $model->dctp_id = $_POST['Dctp_id'];
+        }
+        
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
-        if (isset($_POST['WHDcouments'])) {
-            $model->attributes = $_POST['WHDcouments'];
+        
+        if (isset($_POST['WHDocuments'])) {
+            $model->attributes = $_POST['WHDocuments'];
             if ($model->validate()) {
-                $Res = $model->Insert();
+                $modelUpd = new WHDocuments();
+                $modelUpd->attributes = $model->attributes;
+                $Result =  $modelUpd->Insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['Section_id'];
+                $ObjectResult['id'] = $Result['docm_id'];
                 echo json_encode($ObjectResult);
                 return;
-            } 
+            }
         }
+
+        switch ($model->dctp_id) {
+            case 1:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc1', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 2:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc2', array(
+                    'model' => $model,
+                ), true);
+            break;
+            default:
+                $ObjectResult['html'] = $this->renderPartial('_form', array(
+                    'model' => $model,
+                ), true);
+            break;
+        };
         
-        $ObjectResult['html'] = $this->renderPartial('_form', array(
-            'model' => $model,
-        ), true);
         echo json_encode($ObjectResult);
     }
 
@@ -132,6 +163,11 @@ class WHDocumentsController extends Controller
                     'model' => $model,
                 ), true);
             break;
+            case 2:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc2', array(
+                    'model' => $model,
+                ), true);
+            break;
             default:
                 $ObjectResult['html'] = $this->renderPartial('_form', array(
                     'model' => $model,
@@ -175,17 +211,16 @@ class WHDocumentsController extends Controller
                 'html' => '',
             );
         
-        if (isset($_POST['Section_id'])) {
-            $model = new WHDcouments();
-            $model->getModelPk($_POST['Section_id']);
-            if ($model->validate()) {
-                $model->delete();
-                $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->Section_id;
-                echo json_encode($ObjectResult);
-                return;
-            }
+        if (isset($_POST['Docm_id'])) {
+            $model = new WHDocuments();
+            $model->getModelPk($_POST['Docm_id']);
+            $model->delete();
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $model->docm_id;
+            echo json_encode($ObjectResult);
+            return;
         }
+        
         echo json_encode($ObjectResult);
     }
 
@@ -304,7 +339,7 @@ class WHDocumentsController extends Controller
             switch ($Type) {
                 case 1: 
                     if (!Yii::app()->user->checkAccess('Action1WHDocuments'))
-                        throw new Exception('У вас недостаточно прав для данной перации');
+                        throw new Exception('У вас недостаточно прав для данной операции');
                 break;
             }
                         
@@ -346,6 +381,60 @@ class WHDocumentsController extends Controller
             $sp->ProcedureName = 'in_purchase';
             $sp->ParametersRefresh();
             $sp->Parameters[0]['Value'] = $_POST['Docm_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionConfirmCancel() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Achs_id']) && isset($_POST['Dctp_id'])) {
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $_POST['Achs_id'];
+            $ObjectResult['html'] = $this->renderPartial('confirm', array(
+                    'Achs_id' => $_POST['Achs_id'],
+                    'Dctp_id' => $_POST['Dctp_id'], 
+                ), true);
+            
+        }
+        
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionConfirm() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['ConfirmCancels'])) {
+            $Type = (int)$_POST['ConfirmCancels']['Dctp_id'];
+            
+            switch ($Type) {
+                case 1: 
+                    if (!Yii::app()->user->checkAccess('Confirm1WHDocuments'))
+                        throw new Exception('У вас недостаточно прав для данной операции');
+                break;
+            }
+            
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'UNDO_WHAction';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['ConfirmCancels']['Achs_id'];
             $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
             $sp->CheckParam = true;
             $Res = $sp->Execute();

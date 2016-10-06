@@ -28,7 +28,7 @@ class DeliveryController extends Controller
                         'roles'=>array('UndoExecDeliveryDemands'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                        'actions'=>array('Insert'),
+                        'actions'=>array('Insert', 'Create'),
                         'roles'=>array('InsertDeliveryDemands'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -65,6 +65,34 @@ class DeliveryController extends Controller
         else {
             echo 'Заявка н найдена';
         }
+    }
+    
+    public function actionCreate() {
+        $model = new DeliveryDemands();
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Params'])) 
+            $model->attributes = $_POST['Params'];
+        
+        if (isset($_POST['DeliveryDemands'])) {
+            $model->attributes = $_POST['DeliveryDemands'];
+            if ($model->validate()) {
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $Res['dldm_id'];
+                echo json_encode($ObjectResult);
+                return;
+            } 
+        }
+        
+        $ObjectResult['html'] = $this->renderPartial('_form2', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
     }
     
     public function actionInsert() {

@@ -49,7 +49,7 @@
         $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
         $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px'}));
-        $("#edFactQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px'}));
+        $("#edFactQuantEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
         $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
         $("#edUsedEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '50px'}));
         $("#edToProductionEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '130px'}));
@@ -93,12 +93,12 @@
             $("#edSumEdit").jqxNumberInput('val', Quant*Price);
         };
         
-        if (DocmAchsDetail.docm_quant != '') $("#edQuantEdit").jqxNumberInput('val', DocmAchsDetail.docm_quant);
+        if (DocmAchsDetail.docm_quant != null) $("#edQuantEdit").jqxNumberInput('val', DocmAchsDetail.docm_quant);
         if (DocmAchsDetail.price != '') $("#edPriceEdit").jqxNumberInput('val', DocmAchsDetail.price);
         if (DocmAchsDetail.used != '') $("#edUsedEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.used)));
         if (DocmAchsDetail.ToProduction != '') $("#edToProductionEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.ToProduction)));
         if (DocmAchsDetail.no_price_list != '') $("#edNoPriceListEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.no_price_list)));
-        if (DocmAchsDetail.fact_quant != '') $("#edFactQuantEdit").jqxNumberInput('val', DocmAchsDetail.fact_quant);
+        if (DocmAchsDetail.fact_quant != '') $("#edFactQuantEdit").jqxInput('val', DocmAchsDetail.fact_quant);
         if (DocmAchsDetail.sum != '') $("#edSumEdit").jqxNumberInput('val', DocmAchsDetail.sum);
         
         $('#edQuantEdit').on('valueChanged', function (event) {
@@ -110,7 +110,7 @@
     });
 </script>        
 
-<?php 
+<?php
     $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'DocmAchsDetails',
 	'htmlOptions'=>array(
@@ -150,7 +150,7 @@
     <div class="row-column"><div id="edNoPriceListEdit" name="DocmAchsDetails[no_price_list]">Не учитывать цену</div><?php echo $form->error($model, 'no_price_list'); ?></div>
     <div style="float: right">
         <div class="row-column">Факт. кол-во:</div>
-        <div class="row-column"><div type="text" id="edFactQuantEdit" name="DocmAchsDetails[fact_quant]"></div><?php echo $form->error($model, 'price'); ?></div>
+        <div class="row-column"><input style="text-align: right" type="text" id="edFactQuantEdit" name="DocmAchsDetails[fact_quant]" /><?php echo $form->error($model, 'fact_quant'); ?></div>
     </div>
 </div>
 <div class="row">

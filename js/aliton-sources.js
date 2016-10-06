@@ -2355,11 +2355,13 @@ Sources.WHDocumentsDoc2Source =
         { name: 'date_create', type: 'date'},
         { name: 'note', type: 'string'},
         { name: 'Address', type: 'string'},
+        { name: 'rtrs_id', type: 'int'},
         { name: 'rtrs_name', type: 'string'},
         { name: 'ac_date', type: 'date'},
         { name: 'strm_name', type: 'string'},
         { name: 'mstr_name', type: 'string'},
         { name: 'achs_id', type: 'int'},
+        { name: 'wrtp_id', type: 'int'},
         { name: 'wrtp_name', type: 'string'},
         { name: 'strg_id', type: 'int'},
         { name: 'storage', type: 'string'}
@@ -2914,6 +2916,26 @@ Sources.SourcePriceList =
     ],
     id: 'prlt_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PriceList',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceConfirmCancels =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ConfirmCancel_id', type: 'int'},
+        {name: 'ConfirmCancelName', type: 'string'},
+    ],
+    id: 'prlt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ConfirmCancels',
     type: 'POST',
     root: 'Rows',
     cache: false,

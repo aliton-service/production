@@ -57,7 +57,7 @@
         $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
         $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.Date, formatString: 'dd.MM.yyyy'}));
         $("#edJrdcEdit").jqxComboBox({ source: DataJuridicals, width: '300', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
-        $('#edNoteEdit').jqxTextArea({ disabled: true, placeHolder: '', height: 50, width: '100%', minLength: 1});
+        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '100%', minLength: 1});
         
         $('#btnSaveWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCancelWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -81,7 +81,12 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        WHDoc.Refresh();
+                        if (!StateInsert) WHDoc.Refresh();
+                        if (StateInsert) {
+                            WHReestr.Docm_id = Res.id;
+                            $('#Grid1').jqxGrid('updatebounddata');
+                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                        }
                         $('#WHDocumentsDialog').jqxWindow('close');
                     }
                     else {

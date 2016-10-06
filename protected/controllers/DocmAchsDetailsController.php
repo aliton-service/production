@@ -51,6 +51,9 @@ class DocmAchsDetailsController extends Controller
             );
         if (isset($_POST['DocmAchsDetails'])) {
             $model->attributes = $_POST['DocmAchsDetails'];
+            if ($model->fact_quant == '0.00')
+                $model->fact_quant = null;
+            
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;

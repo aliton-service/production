@@ -82,14 +82,14 @@ Aliton.ShowErrorMessage = function(Msg, ErrorText) {
         ErrorText = '';
     
     $('#MainDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {
-        height: '160px',
-        width: '400px',
+        height: '260px',
+        width: '600px',
         position: 'center',
         modalZIndex: 19000,
         zIndex: 99999,
         title: 'Внимание! Ошибка.',
         initContent: function(){
-            $('#BodyMainDialog').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 70, width: '100%', minLength: 1}));
+            $('#BodyMainDialog').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 170, width: '100%', minLength: 1}));
             $('#BodyMainDialog').jqxTextArea('val', Msg + '\nТекст ошибки:\n' + ErrorText);
             $('#MainDialogBtnClose').jqxButton({ width: 120, height: 30 });
             $('#MainDialogBtnClose').on('click', function(){

@@ -31,6 +31,7 @@
                 'AuditEquipsWHDocuments',
                 'Action1WHDocuments',
                 'PurchaseWHDocuments',
+                'Confirm1WHDocuments',
             ),
         ),
 
@@ -92,6 +93,14 @@
         'PurchaseWHDocuments' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'PurchaseWHDocuments',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        // Отмена подтверждения Накладная на приход
+        'Confirm1WHDocuments' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Confirm1WHDocuments',
             'bizRule' => null,
             'data' => null,
         ),
