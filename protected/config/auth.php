@@ -195,6 +195,12 @@ return array_merge(
     include(dirname(__FILE__).'/security/PriceListSecurity.php'),
     include(dirname(__FILE__).'/security/PriceListDetailsSecurity.php'),
         
+    /* Коммерческие предложения и сметы */
+    include(dirname(__FILE__).'/security/ObjectsGroupCostCalculationsSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalculationDetailsSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalcEquipsSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalcWorksSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -371,6 +377,10 @@ return array_merge(
                 'AdminPriceMarkupDetails',
                 'AdminPriceList',
                 'AdminPriceListDetails',
+                'AdminObjectsGroupCostCalculations',
+                'AdminCostCalculationDetails',
+                'AdminCostCalcEquips',
+                'AdminCostCalcWorks',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

@@ -36,15 +36,15 @@
             })
         );
         
-        $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '520px', width: '390'}));
+        $('#EditDialogOGSystems').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '520px', width: '390'}));
         
-        $('#EditDialog').jqxWindow({initContent: function() {
-            $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#EditDialogOGSystems').jqxWindow({initContent: function() {
+            $("#btnOkOGSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#btnCancelOGSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         }});
 
-        $("#btnCancel").on('click', function () {
-            $('#EditDialog').jqxWindow('close');
+        $("#btnCancelOGSystems").on('click', function () {
+            $('#EditDialogOGSystems').jqxWindow('close');
         });
         
         SendForm = function(Mode, Form) {
@@ -66,18 +66,18 @@
                 data: Data,
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
-                        $('#EditDialog').jqxWindow('close');
+                        $('#EditDialogOGSystems').jqxWindow('close');
                         $("#ObjectsGroupSystemsGrid").jqxGrid('updatebounddata');
                         $("#ObjectsGroupSystemsGrid").jqxGrid('selectrow', 0);
                     } else {
-                        $('#BodyDialog').html(Res);
+                        $('#BodyDialogOGSystems').html(Res);
                     }
 
                 }
             });
         }
 
-        $("#btnOk").on('click', function () {
+        $("#btnOkOGSystems").on('click', function () {
             SendForm(Mode);
         });
             
@@ -102,7 +102,7 @@
                     ObjectGr_id: ObjectGr_id
                 },
                 success: function(Res) {
-                    $('#BodyDialog').html(Res);
+                    $('#BodyDialogOGSystems').html(Res);
                 }
             });
         }
@@ -116,7 +116,7 @@
                     ObjectsGroupSystem_id: ObjectsGroupSystem_id
                 },
                 success: function(Res) {
-                    $('#BodyDialog').html(Res);
+                    $('#BodyDialogOGSystems').html(Res);
                 }
             });
         }
@@ -125,21 +125,20 @@
             $("#EditObjectsGroupSystem").click();
         });
         
-        console.log('OGSystems.ObjectGr_id = ');
-        console.log(OGSystems.ObjectGr_id);
+//        console.log('OGSystems.ObjectGr_id = ' + OGSystems.ObjectGr_id);
         
         $("#NewObjectsGroupSystem").on('click', function () 
         {
             Mode = 'Insert';
             LoadFormInsert(OGSystems.ObjectGr_id);
-            $('#EditDialog').jqxWindow('open');
+            $('#EditDialogOGSystems').jqxWindow('open');
         });
         
         $("#EditObjectsGroupSystem").on('click', function ()
         {
             Mode = 'Edit';
             LoadFormUpdate(CurrentRowData.ObjectsGroupSystem_id);
-            $('#EditDialog').jqxWindow('open');
+            $('#EditDialogOGSystems').jqxWindow('open');
         });
            
         $("#DelObjectsGroupSystem").on('click', function ()
@@ -172,16 +171,16 @@
 </div>
 
 
-    <div id="EditDialog">
-    <div id="DialogHeader">
-        <span id="HeaderText">Вставка\Редактирование записи</span>
+    <div id="EditDialogOGSystems">
+    <div id="DialogHeaderOGSystems">
+        <span id="HeaderTextOGSystems">Вставка\Редактирование записи</span>
     </div>
-    <div style="padding: 10px;" id="DialogContent">
-        <div id="BodyDialog"></div>
-        <div id="BottomDialog">
+    <div style="padding: 10px;" id="DialogContentOGSystems">
+        <div id="BodyDialogOGSystems"></div>
+        <div id="BottomDialogOGSystems">
             <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel' /></div>
+                <div class="row-column"><input type="button" value="Сохранить" id='btnOkOGSystems' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancelOGSystems' /></div>
             </div>
         </div>
     </div>

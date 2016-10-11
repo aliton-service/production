@@ -15,14 +15,14 @@
             var DataCompetitors = new $.jqx.dataAdapter(Sources.SourceCompetitors);
             
             
-            $("#SystemType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemTypes, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width:300 }));
-            $("#Availability").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemAvailabilitys, displayMember: "availability", valueMember: "code_id", width:200, autoDropDownHeight: true }));;
-            $("#count").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+            $("#SystemType2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemTypes, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width:300 }));
+            $("#Availability2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemAvailabilitys, displayMember: "availability", valueMember: "code_id", width:200, autoDropDownHeight: true }));;
+            $("#count2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
     
-            $("#Competitors").jqxComboBox({source: DataCompetitors, displayMember: "Competitor", valueMember: "cmtr_id", multiSelect: true, width: 340, height: 25 });
+            $("#Competitors2").jqxComboBox({source: DataCompetitors, displayMember: "Competitor", valueMember: "cmtr_id", multiSelect: true, width: 340, height: 25 });
             
-            $("#Competitors").on('change', function () {
-                var items = $("#Competitors").jqxComboBox('getSelectedItems');
+            $("#Competitors2").on('change', function () {
+                var items = $("#Competitors2").jqxComboBox('getSelectedItems');
                 var selectedItems = "Selected Items: ";
                 $.each(items, function (index) {
                     selectedItems += this.label;
@@ -30,11 +30,11 @@
                         selectedItems += ", ";
                     }
                 });
-                $("#log").text(selectedItems);
+                $("#log2").text(selectedItems);
             });
             
-            $("#Condition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
-            $("#Desc").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
+            $("#Condition2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
+            $("#Desc2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
 
 //            var DataSystemCompetitors = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSystemCompetitors, {}), {
 //                formatData: function (data) {
@@ -57,12 +57,12 @@
 //            };
 //            find(DataSystemCompetitors);
             
-            if (OGSystems.SystemType_Id != '') $("#SystemType").jqxComboBox('val', OGSystems.SystemType_Id);
-            if (OGSystems.Availability != '') $("#Availability").jqxComboBox('val', OGSystems.Availability);
-            if (OGSystems.count != '') $("#count").jqxNumberInput('val', OGSystems.count);
+            if (OGSystems.SystemType_Id != '') $("#SystemType2").jqxComboBox('val', OGSystems.SystemType_Id);
+            if (OGSystems.Availability != '') $("#Availability2").jqxComboBox('val', OGSystems.Availability);
+            if (OGSystems.count != '') $("#count2").jqxNumberInput('val', OGSystems.count);
 //            if (OGSystems.Competitors != '') $("#Competitors").jqxComboBox('val', OGSystems.Competitors);
-            if (OGSystems.Condition != '') $("#Condition").jqxTextArea('val', OGSystems.Condition);
-            if (OGSystems.Desc != '') $("#Desc").jqxTextArea('val', OGSystems.Desc);
+            if (OGSystems.Condition != '') $("#Condition2").jqxTextArea('val', OGSystems.Condition);
+            if (OGSystems.Desc != '') $("#Desc2").jqxTextArea('val', OGSystems.Desc);
             
             
         });
@@ -76,16 +76,16 @@
     )); 
 ?>
 
-<div class="row"><div class="row-column">Тип системы: <div id='SystemType' name="ObjectsGroupSystems[Sttp_id]"></div><?php echo $form->error($model, 'Sttp_id'); ?></div></div>  
+<div class="row"><div class="row-column">Тип системы: <div id='SystemType2' name="ObjectsGroupSystems[Sttp_id]"></div><?php echo $form->error($model, 'Sttp_id'); ?></div></div>  
 <div class="row">
     <input type="hidden" name="ObjectsGroupSystems[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>">
     <input type="hidden" name="ObjectsGroupSystems[ObjectsGroupSystem_id]" value="<?php echo $model->ObjectsGroupSystem_id; ?>">
-    <div class="row-column">Наличие: <div id='Availability' name="ObjectsGroupSystems[Availability_id]"></div><?php echo $form->error($model, 'Availability_id'); ?></div>  
-    <div class="row-column">Кол-во систем: <div id="count" name="ObjectsGroupSystems[count]" type="text"><?php echo $form->error($model, 'count'); ?></div></div>
-    <div class="row-column" style="margin-top: 20px;">Обслуживающие организации: <br><div id="Competitors"></div></div>
-    <div id="log" style="margin-top: 10px; font-size: 13px; font-family: Verdana;" name="ObjectsGroupSystems[Competitors]"></div>
-    <div class="row-column" style="margin-top: 20px;">Условия: <textarea id="Condition" name="ObjectsGroupSystems[Condition]"></textarea></div>
-    <div class="row-column" style="margin-top: 20px;">Примечание: <textarea id="Desc" name="ObjectsGroupSystems[Desc]"></textarea></div>
+    <div class="row-column">Наличие: <div id='Availability2' name="ObjectsGroupSystems[Availability_id]"></div><?php echo $form->error($model, 'Availability_id'); ?></div>  
+    <div class="row-column">Кол-во систем: <div id="count2" name="ObjectsGroupSystems[count]" type="text"><?php echo $form->error($model, 'count'); ?></div></div>
+    <div class="row-column" style="margin-top: 20px;">Обслуживающие организации: <br><div id="Competitors2"></div></div>
+    <div id="log2" style="margin-top: 10px; font-size: 13px; font-family: Verdana;" name="ObjectsGroupSystems[Competitors]"></div>
+    <div class="row-column" style="margin-top: 20px;">Условия: <textarea id="Condition2" name="ObjectsGroupSystems[Condition]"></textarea></div>
+    <div class="row-column" style="margin-top: 20px;">Примечание: <textarea id="Desc2" name="ObjectsGroupSystems[Desc]"></textarea></div>
 </div>  
 
 <?php $this->endWidget(); ?>

@@ -74,8 +74,8 @@
         $("#year_construction").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
         $("#ClientGroup").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataClientGroup, width: 160, displayMember: "ClientGroup", valueMember: "clgr_id" }));
         $("#DoorwayList").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 830 }));
-        $("#Journal").jqxDateTimeInput({ width: '110px', height: '25px', formatString: 'dd-MM-yyyy' });
-        $("#AreaSize").jqxNumberInput({ width: '120px', height: '25px', inputMode: 'simple'});
+        $("#Journal").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '110px', formatString: 'dd.MM.yyyy' }));
+        $("#AreaSize").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: '120px', height: '25px', inputMode: 'simple'}));
         $("#ClientName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 320 }));
         $("#Telephone").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 383 }));
         $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 385 }));

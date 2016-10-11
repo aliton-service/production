@@ -2779,3 +2779,144 @@ Sources.SourcePriceList =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceObjectsGroupCostCalculations =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'calc_id', type: 'int'},
+        {name: 'cgrp_id', type: 'int'},
+        {name: 'number', type: 'int'},
+        {name: 'group_name', type: 'string'},
+        {name: 'CostGroupName', type: 'string'},
+        {name: 'date', type: 'date'},
+        {name: 'type', type: 'int'},
+        {name: 'CostCalcType', type: 'string'},
+        {name: 'count_type0', type: 'int'},
+        {name: 'count_type1', type: 'int'},
+        {name: 'EmployeeName', type: 'string'},
+        {name: 'cnt_date', type: 'date'},
+        {name: 'cntp_name', type: 'int'},
+        {name: 'FIO', type: 'string'},
+        {name: 'Note', type: 'string'},
+        {name: 'date_annul', type: 'date'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'date_ready', type: 'date'},
+        {name: 'Executor', type: 'int'},
+    ],
+    id: 'calc_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectsGroupCostCalculations',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceCostCalcEquips =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'cceq_id', type: 'int'},
+        {name: 'calc_id', type: 'int'},
+        {name: 'eqip_id', type: 'int'},
+        {name: 'eqip_name', type: 'string'},
+        {name: 'quant', type: 'int'},
+        {name: 'price', type: 'float'},
+        {name: 'sum_price', type: 'float'},
+        {name: 'price_low', type: 'float'},
+        {name: 'sum_low', type: 'float'},
+        {name: 'work_price', type: 'float'},
+        {name: 'work_sum', type: 'float'},
+        {name: 'note', type: 'string'},
+        {name: 'um_name', type: 'string'},
+        {name: 'mntr', type: 'int'},
+    ],
+    id: 'cceq_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=CostCalcEquips',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceCostCalcWorks =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ccwr_id', type: 'int'},
+        {name: 'calc_id', type: 'int'},
+        {name: 'cceq_id', type: 'int'},
+        {name: 'cwdt_id', type: 'int'},
+        {name: 'cw_name', type: 'string'},
+        {name: 'cwrt_name', type: 'string'},
+        {name: 'note', type: 'string'},
+        {name: 'quant', type: 'int'},
+        {name: 'price', type: 'float'},
+        {name: 'price_low', type: 'float'},
+        {name: 'sum_low', type: 'float'},
+        {name: 'sum_high', type: 'float'},
+        {name: 'koef', type: 'float'},
+    ],
+    id: 'ccwr_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=CostCalcWorks',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceCalcWorkTypeDetails =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'cwdt_id', type: 'int'},
+        {name: 'name', type: 'string'},
+        {name: 'Price', type: 'float'},
+    ],
+    id: 'cwdt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=CalcWorkTypeDetails',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceCalcWorkTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'cwdt_id', type: 'int'},
+        {name: 'price', type: 'float'},
+    ],
+    id: 'cwdt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=CalcWorkTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

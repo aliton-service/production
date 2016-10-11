@@ -163,7 +163,8 @@
                     $('#content4').html(data);
                 if (index == 4)
                     $('#content5').html(data);
-                    
+                if (index == 5)
+                    $('#content6').html(data);
             });
         };
         
@@ -185,16 +186,20 @@
                 case 4:
                     loadPage('<?php echo Yii::app()->createUrl('Contacts/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 4);
                     break;
+                case 5:
+                    loadPage('<?php echo Yii::app()->createUrl('ObjectsGroupCostCalculations/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 5);
+                    break;
             }
         };
         $('#jqxTabs').jqxTabs({ width: '100%', height: 860,  initTabContent: initWidgets });
-//        $('#jqxTabs').jqxTabs({ selectedItem: 3 });
+        $('#jqxTabs').jqxTabs({ selectedItem: 5 });
         
 
         
     });
 </script>
     
+<?php $this->setPageTitle('Карточка объекта'); ?>
 
 <?php
 
@@ -241,6 +246,13 @@ $this->breadcrumbs=array(
                 <div style="height: 15px; margin-top: 3px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
                         Контакты
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Коммерческие предложения и сметы
                     </div>
                 </div>
             </li>
@@ -325,24 +337,23 @@ $this->breadcrumbs=array(
         </div>
         
         <div id='content2' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%">
-                
-            </div>
+            <div style="width: 100%; height: 100%"></div>
         </div>
+        
         <div id='content3' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%">
-                
-            </div>
+            <div style="width: 100%; height: 100%"></div>
         </div>
+        
         <div id='content4' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%">
-                
-            </div>
+            <div style="width: 100%; height: 100%"></div>
         </div>
+        
         <div id='content5' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%">
-                
-            </div>
+            <div style="width: 100%; height: 100%"></div>
+        </div>
+        
+        <div id='content6' style="overflow: hidden; margin-left: 10px;">
+            <div style="width: 100%; height: 100%"></div>
         </div>
     </div>
 </div>

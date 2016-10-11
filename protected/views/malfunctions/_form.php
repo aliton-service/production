@@ -55,8 +55,8 @@
     $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'Malfunctions',
 	'htmlOptions'=>array(
-		'class'=>'form-inline'
-		),
+            'class'=>'form-inline'
+        ),
     )); 
 ?>
 

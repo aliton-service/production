@@ -20,14 +20,14 @@ class EquipsListAll extends MainFormModel
         $this->SP_UPDATE_NAME = 'UPDATE_Equips';
         $this->SP_DELETE_NAME = 'DELETE_Equips';
         
-        $Select =   "Select
-                        e.Equip_id,
-                        e.EquipName,
-                        um.NameUnitMeasurement NameUM";
-        $From = "
-                From Equips e
-                left join UnitMeasurement um on (e.UnitMeasurement_Id = um.UnitMeasurement_Id)
-            ";
+        $Select = "\nSelect
+                    e.Equip_id,
+                    e.EquipName,
+                    um.NameUnitMeasurement NameUM";
+        
+        $From = "\nFrom Equips e
+                    left join UnitMeasurement um on (e.UnitMeasurement_Id = um.UnitMeasurement_Id)";
+        
         $Where = "\nWhere e.DelDate is null";
         $Order = "\nOrder by e.EquipName";
         

@@ -168,8 +168,8 @@
                     console.log(Res);
                     $('#btnAcceptEmployeeName').jqxButton({disabled: true });
                     $('#btnCancelAcceptance').jqxButton({disabled: false });
-                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
+                    $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+                    $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });
@@ -184,8 +184,8 @@
                     console.log(Res);
                     $('#btnAcceptEmployeeName').jqxButton({disabled: false });
                     $('#btnCancelAcceptance').jqxButton({disabled: true });
-                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
+                    $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+                    $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
                 }
             });
         });

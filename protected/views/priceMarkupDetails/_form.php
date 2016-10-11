@@ -29,12 +29,12 @@
         $("#Suppliers").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: SuppliersDataAdapter, displayMember: "NameSupplier", valueMember: "Supplier_id", width: 300 }));
         $("#Equips").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: EquipsDataAdapter, displayMember: "EquipName", valueMember: "Equip_id", width: 400 }));
         
-        $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, symbol: "", min: 0, decimalDigits: 0 }));
+        $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, symbol: "", min: 0, decimalDigits: 2 }));
         $("#MarkupLow").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, symbol: "", min: 0, decimalDigits: 0 }));
         $("#MarkupHigh").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, symbol: "", min: 0, decimalDigits: 0 }));
         
-        $('#btnSavePriceMarkupDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
-        $('#btnCancelPriceMarkupDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnSavePriceMarkupDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        $('#btnCancelPriceMarkupDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnCancelPriceMarkupDetails').on('click', function(){
             $('#PriceMarkupsDialog').jqxWindow('close');
