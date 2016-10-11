@@ -12,6 +12,8 @@ class WHDocumentsDoc2 extends MainFormModel
     public $note;
     public $Address;
     public $rtrs_id;
+    public $in_docm_id;
+    public $in_number;
     public $rtrs_name;
     public $ac_date;
     public $strm_name;
@@ -34,7 +36,7 @@ class WHDocumentsDoc2 extends MainFormModel
                         d.objc_id,
                         d.dctp_id,
                         d.dctp_name,
-                        d.number, 
+                        d.number,
                         d.date,
                         d.date_create,
                         d.note,
@@ -48,7 +50,8 @@ class WHDocumentsDoc2 extends MainFormModel
                         d.wrtp_id,
                         d.wrtp_name,
                         d.strg_id,
-                        d.storage";
+                        d.storage,
+                        d.in_docm_id";
         $From = "\nFrom WHDocuments_NonTreb_v d left join ActionHistory_v a on (d.achs_id = a.achs_id)";
         $Where = "\nWhere d.dctp_id = 2";
         $Order = "\nOrder by a.ac_date";
@@ -65,6 +68,7 @@ class WHDocumentsDoc2 extends MainFormModel
     public function rules()
     {
         return array(
+            array('date, wrtp_id, strg_id', 'required'),
             array('docm_id,
                     objc_id,
                     dctp_id,
@@ -74,11 +78,14 @@ class WHDocumentsDoc2 extends MainFormModel
                     date_create,
                     note,
                     Address,
+                    rtrs_id,
                     rtrs_name,
                     ac_date,
                     strm_name,
                     mstr_name,
                     achs_id,
+                    wrtp_id,
+                    in_docm_id,
                     wrtp_name,
                     strg_id,
                     storage,', 'safe'),
@@ -97,12 +104,15 @@ class WHDocumentsDoc2 extends MainFormModel
             'date_create' => '',
             'note' => '',
             'Address' => '',
+            'rtrs_id' => '',
             'rtrs_name' => '',
             'ac_date' => '',
             'strm_name' => '',
             'mstr_name' => '',
             'achs_id' => '',
             'wrtp_name' => '',
+            'wrtp_id' => '',
+            'in_docm_id' => '',
             'strg_id' => '',
             'storage' => '',
         );

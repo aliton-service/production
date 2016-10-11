@@ -45,6 +45,11 @@ class SerialNumbersController extends Controller
                 'id' => 0,
                 'html' => '',
             );
+        
+        if (isset($_POST['dadt_id'])) {
+            $model->dadt_id = $_POST['dadt_id'];
+        }
+        
         if (isset($_POST['SerialNumbers'])) {
             $model->attributes = $_POST['SerialNumbers'];
             if ($model->validate()) {
@@ -116,8 +121,21 @@ class SerialNumbersController extends Controller
 
     public function actionIndex()
     {
-        $this->title = 'Просмотр подразделений';
-        $this->render('index');
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['dadt_id'])) {
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            $ObjectResult['html'] = $this->renderPartial('index', array(
+                'dadt_id' => $_POST['dadt_id'],
+            ), true);
+            
+        }
+        echo json_encode($ObjectResult);
     }
 }
 

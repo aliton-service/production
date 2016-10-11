@@ -102,6 +102,7 @@ Aliton.ShowErrorMessage = function(Msg, ErrorText) {
 
 Aliton.DateConvertToJs = function(DateStr) {
     var Result = null;
+    if (DateStr === null) return null;
     // Дата приводим к формату ГГГГ-ММ-ДД ЧЧ:ММ
     if (DateStr === '' || DateStr.length <  10) return null;
     DateStr = DateStr.slice(0, 16);

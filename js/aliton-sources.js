@@ -2422,6 +2422,7 @@ Sources.WHDocumentsDoc4Source =
         { name: 'prty_name', type: 'string'},
         { name: 'wrtp_name', type: 'string'},
         { name: 'Address', type: 'string'},
+        { name: 'AddressForFind', type: 'string'},
         { name: 'best_date', type: 'date'},
         { name: 'deadline', type: 'date'},
         { name: 'date_ready', type: 'date'},
@@ -2934,7 +2935,7 @@ Sources.SourceConfirmCancels =
         {name: 'ConfirmCancel_id', type: 'int'},
         {name: 'ConfirmCancelName', type: 'string'},
     ],
-    id: 'prlt_id',
+    id: 'ConfirmCancel_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ConfirmCancels',
     type: 'POST',
     root: 'Rows',
@@ -2942,6 +2943,69 @@ Sources.SourceConfirmCancels =
     async: false,
     pagenum: 0,
     pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceSerialNumbers =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'srnm_id', type: 'int'},
+        {name: 'dadt_id', type: 'int'},
+        {name: 'SN', type: 'string'},
+    ],
+    id: 'srnm_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SerialNumbers',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceWHDocumentsMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'docm_id', type: 'int'},
+        {name: 'number', type: 'string'},
+        {name: 'date', type: 'date'},
+        {name: 'doc', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHDocumentsMin',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceReturnReasons =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'rtrs_id', type: 'int'},
+        {name: 'name', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ReturnReasons',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }

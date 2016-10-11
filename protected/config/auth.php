@@ -81,7 +81,7 @@ return array_merge(
     /* Оборудование в актах списания */
     include(dirname(__FILE__).'/security/ActEquipsSecurity.php'),
     /* Поиск требований */
-    include(dirname(__FILE__).'/security/WHDocumentsFindTrebSecurity.php'),
+    include(dirname(__FILE__).'/security/WHDocumentsFindSecurity.php'),
     /* Мониторинг цен */
     include(dirname(__FILE__).'/security/PriceMonitoring.php'),
     /* Категории ТМЦ */

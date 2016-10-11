@@ -5,6 +5,8 @@ class SerialNumbers extends MainFormModel
     public $srnm_id;
     public $dadt_id;
     public $SN;
+    public $EmplCreate;
+    public $EmplChange;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -19,9 +21,11 @@ class SerialNumbers extends MainFormModel
                         s.SN";
         $From = "\nFrom SerialNumbers s";
         $Order = "\nOrder by s.SN";
+        $Where = "\nWhere s.EmplDel is Null";
 
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
+        $this->Query->setWhere($Where);
         $this->Query->setOrder($Order);
         
         $this->KeyFiled = 's.srnm_id';

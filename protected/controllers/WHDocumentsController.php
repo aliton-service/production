@@ -164,6 +164,9 @@ class WHDocumentsController extends Controller
                 ), true);
             break;
             case 2:
+                if (isset($_POST['InNumber']))
+                    $model->in_number = $_POST['InNumber'];
+                
                 $ObjectResult['html'] = $this->renderPartial('_formDoc2', array(
                     'model' => $model,
                 ), true);

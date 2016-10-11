@@ -1,6 +1,6 @@
 <?php
 
-class WHDocumentsFindTrebController extends Controller
+class WHDocumentsFindController extends Controller
 {
     public $layout='//layouts/column2';
     public $title = 'Поиск требований';
@@ -17,7 +17,7 @@ class WHDocumentsFindTrebController extends Controller
     {
         return array(
             array('allow',  
-                'actions'=>array('index'),
+                'actions'=>array('FindTreb'),
                 'roles'=>array('FindTreb'),
             ),
             array('deny',  // deny all users
@@ -31,6 +31,31 @@ class WHDocumentsFindTrebController extends Controller
             'objc_id' => $objc_id,
             'docm_id' => $docm_id,
         ));
+    }
+    
+    public function actionFindTreb() {
+        
+        $Object_id = 0;
+        if ($_POST['Object_id']) {
+            $Object_id = $_POST['Object_id'];
+        }
+        $Address = '';
+        if ($_POST['Address']) {
+            $Address = $_POST['Address'];
+        }
+        
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        $ObjectResult['html'] = $this->renderPartial('findtreb', array(
+                'Object_id' => $Object_id,
+                'Address' => $Address,
+            ), true);
+        
+        echo json_encode($ObjectResult);
     }
 }
 

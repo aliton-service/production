@@ -50,6 +50,9 @@
                     WHDocuments.Jrdc =  Res.JuridicalPerson;
                     WHDocuments.Notes =  Res.notes;
                     WHDocuments.Achs_id =  Res.achs_id;
+                    WHDocuments.InNumber = Res.in_number;
+                    WHDocuments.ReturnReason = Res.rtrs_name;
+                    WHDocuments.InDate = Aliton.DateConvertToJs(Res.in_date),
                     SetValueControls(parseInt(WHDocuments.Dctp_id));
                     $("#btnRefreshDetails").click();
                     SetStateButtons();
@@ -207,8 +210,10 @@
                         { text: 'В производство', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'ToProduction', width: 100 },
                         { text: 'Серийные номера', datafield: 'SN', width: 150,
                             cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
-                                
-                                return '<div style=\'float: left; width: 120px\'>' + value + '</div><button onclick=\'SN.Add();\' style=\'float: right; margin-top: 4px;\'>...</button>';
+                                return '<div style=\'float: left; width: 80%\'>' + value + '</div>\n\
+                                            <div style=\'float: left; width: 20%\'>\n\
+                                                <button onclick=\'SN.Add();\' style=\'float: right; margin-top: 4px;\'>...</button>\n\
+                                            </div>';
                             }   
                         },
                         { text: 'Без прайса', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'no_price_list', width: 100 },
@@ -225,6 +230,7 @@
                     if (WHDocuments.Number != '') $("#edNumber1").jqxInput('val', WHDocuments.Number);
                     if (WHDocuments.Jrdc != '') $("#edJrdc1").jqxInput('val', WHDocuments.Jrdc);
                     if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
+                    if (WHDocuments.Date != null ) $("#edDate1").jqxDateTimeInput('val', WHDocuments.Date);
                     break;
                 case 2:
                     if (WHDocuments.WorkType != '') $("#edWorkType2").jqxInput('val', WHDocuments.WorkType);
@@ -234,6 +240,19 @@
                     if (WHDocuments.ReturnReason != '') $("#edReturnReason2").jqxInput('val', WHDocuments.ReturnReason);
                     if (WHDocuments.InNumber != '') $("#edInNumber2").jqxInput('val', WHDocuments.InNumber);
                     if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
+                    if (WHDocuments.InDate != null ) $("#edInDate2").jqxDateTimeInput('val', WHDocuments.InDate);
+                    if (WHDocuments.Date != null ) $("#edDate2").jqxDateTimeInput('val', WHDocuments.Date);
+                    break;
+                case 3:
+                    if (WHDocuments.WorkType != '') $("#edWorkType3").jqxInput('val', WHDocuments.WorkType);
+                    if (WHDocuments.Storage != '') $("#edStorage3").jqxInput('val', WHDocuments.Storage);
+                    if (WHDocuments.Supplier != '') $("#edSupplier3").jqxInput('val', WHDocuments.Supplier);
+                    if (WHDocuments.Number != '') $("#edNumber3").jqxInput('val', WHDocuments.Number);
+                    if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
+                    if (WHDocuments.Date != null ) $("#edDate1").jqxDateTimeInput('val', WHDocuments.Date);
+                    if (WHDocuments.ReturnReason != '') $("#edReturnReason3").jqxInput('val', WHDocuments.ReturnReason);
+                    if (WHDocuments.InNumber != '') $("#edInNumber3").jqxInput('val', WHDocuments.InNumber);
+                    if (WHDocuments.Date != null ) $("#edDate3").jqxDateTimeInput('val', WHDocuments.Date);
                     break;
             };
         };
@@ -262,6 +281,18 @@
                     $("#edInDate2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     SetValueControls(2);
                 break;
+                case 2:
+                    $("#edWorkType3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edStorage3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edSupplier3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 400}));
+                    $("#edNumber3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
+                    $("#edDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edReturnReason3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 250}));
+                    $("#edInNumber3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
+                    $("#edInDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    SetValueControls(3);
+                    
+                break;
             };
         };
         
@@ -272,16 +303,19 @@
         switch(parseInt(WHDocuments.Dctp_id)) {
             case 1: DefaultTabIndex = 0; break;
             case 2: DefaultTabIndex = 1; break;
+            case 3: DefaultTabIndex = 2; break;
         }
         
         $('#edTabs').jqxTabs({ width: '100%', height: 250, initTabContent: initWidgets, selectedItem: DefaultTabIndex });
         
         $("#edTabs .jqx-tabs-title:eq(0)").css("display", "none");
         $("#edTabs .jqx-tabs-title:eq(1)").css("display", "none");
+        $("#edTabs .jqx-tabs-title:eq(2)").css("display", "none");
         
         switch(parseInt(WHDocuments.Dctp_id)) {
             case 1: $("#edTabs .jqx-tabs-title:eq(0)").css("display", "block"); break;
             case 2: $("#edTabs .jqx-tabs-title:eq(1)").css("display", "block"); break;
+            case 3: $("#edTabs .jqx-tabs-title:eq(2)").css("display", "block"); break;
         }
         
         if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);       
@@ -305,7 +339,18 @@
                     $("#btnPurchase").jqxButton({disabled: true});
                     $("#btnPrint").jqxButton({disabled: false});
                     $("#btnPrintClient").jqxButton({disabled: true});
-                    
+                    $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                break;
+                case 2:
+                    $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#btnPurchase").jqxButton({disabled: true});
+                    $("#btnPrint").jqxButton({disabled: false});
+                    $("#btnPrintClient").jqxButton({disabled: true});
+                    $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
                 break;
             };
         };
@@ -322,7 +367,8 @@
                     async: false,
                     data: {
                         Docm_id: WHDocuments.Docm_id,
-                        Dctp_id: WHDocuments.Dctp_id
+                        Dctp_id: WHDocuments.Dctp_id,
+                        InNumber: WHDocuments.InNumber
                     },
                     success: function(Res) {
                         Res = JSON.parse(Res);
@@ -535,6 +581,29 @@
         
         $("#btnAction").on('click', function(){
             if ($("#btnAction").jqxButton('disabled')) return;
+            
+            
+            
+            switch(parseInt(WHDocuments.Dctp_id)) {
+                case 1:
+                    if ($('#edStoreman').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите кладовщика', 'Для подтверждения документа, требуется выбрать кладовщика.');
+                        return; 
+                    }
+                break;
+                case 2:
+                    if ($('#edStoreman').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите кладовщика', 'Для подтверждения документа, требуется выбрать кладовщика.');
+                        return; 
+                    }
+                    if ($('#edMaster').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите мастера', 'Для подтверждения документа, требуется выбрать мастера.');
+                        return; 
+                    }
+                    
+                break;
+            };
+            
             if (WHDocuments.Docm_id !== null) {
                 $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
                 $.ajax({
@@ -651,7 +720,25 @@
         });
         
         SN.Add = function() {
-            console.log(CurrentRowDetails.dadt_id);
+            if (CurrentRowDetails !== undefined) {
+                $('#WHDocumentsDialog').jqxWindow({width: 600, height: 440, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('SerialNumbers/Index')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        dadt_id: CurrentRowDetails.dadt_id,
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyWHDocumentsDialog").html(Res.html);
+                        $('#WHDocumentsDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
         };
         
         SetStateButtons();
@@ -685,6 +772,11 @@
         <li style="margin-left: 20px;">
             <div style="height: 20px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладная на возврат</div>
+            </div>
+        </li>
+        <li style="margin-left: 20px;">
+            <div style="height: 20px; margin-top: 5px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладная на возврат поставщику</div>
             </div>
         </li>
     </ul>
@@ -743,6 +835,36 @@
                 <div class="row-column"><input type="text" id="edInNumber2" readonly="readonly" /></div>
                 <div class="row-column">Дата</div>
                 <div class="row-column"><div id="edInDate2"></div></div>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+        <div style="padding: 10px;">
+            <div class="row">
+                <div class="row-column" style="width: 100px">Вид работ</div>
+                <div class="row-column"><input type="text" id="edWorkType3" readonly="readonly" /></div>
+                <div class="row-column">Склад</div>
+                <div class="row-column"><input type="text" id="edStorage3" readonly="readonly" /></div>
+            </div>  
+            <div class="row">
+                <div class="row-column" style="width: 100px">Поставшик</div>
+                <div class="row-column"><input type="text" id="edSupplier3" readonly="readonly" /></div>
+            </div>
+            <div class="row">
+                <div class="row-column" style="width: 100px">Номер</div>
+                <div class="row-column"><input type="text" id="edNumber3" readonly="readonly" /></div>
+                <div class="row-column">Дата</div>
+                <div class="row-column"><div id="edDate3"></div></div>
+            </div>
+            <div class="row">
+                <div class="row-column" style="width: 150px">Причина возврата</div>
+                <div class="row-column"><input type="text" id="edReturnReason3" readonly="readonly" /></div>
+            </div>
+            <div class="row">
+                <div class="row-column" style="width: 150px">Требование Номер</div>
+                <div class="row-column"><input type="text" id="edInNumber3" readonly="readonly" /></div>
+                <div class="row-column">Дата</div>
+                <div class="row-column"><div id="edInDate3"></div></div>
             </div>
         </div>
     </div>

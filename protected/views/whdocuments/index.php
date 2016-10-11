@@ -128,10 +128,10 @@
         $('#btnCreate').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, imgSrc: '/images/6.png' }));
         $('#btnDel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, height: 30, imgSrc: '/images/7.png' }));
         $('#btnUndo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, height: 30, imgSrc: '/images/3.png' }));
+        $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings));
         
-        $('#edTabs').on('selected', function (event) 
-        { 
-            var SelectedTab = event.args.item;
+        var SelectTab = function() {
+            var SelectedTab = $('#edTabs').jqxTabs('selectedItem');
             switch (SelectedTab) {
                 case 0: Dctp_id = 0; break;
                 case 1: Dctp_id = 1; break;
@@ -143,6 +143,11 @@
                 case 7: Dctp_id = 9; break;
             };
             SetStateButton();
+        };
+        
+        $('#edTabs').on('selected', function (event) 
+        { 
+            SelectTab();
         });
         
         $('#btnInfo').on('click', function(){
@@ -976,10 +981,14 @@
             }
         };
                     
-        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 0 });
+        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 2 });
+        SelectTab();
         
         $("#btnCreate").on('click', function(){
-            $('#WHDocumentsDialog').jqxWindow({width: 600, height: 400, position: 'center'});
+            if (Dctp_id == 1)
+                $('#WHDocumentsDialog').jqxWindow({width: 600, height: 400, position: 'center', isModal: true});
+            if (Dctp_id == 2)
+                $('#WHDocumentsDialog').jqxWindow({width: 600, height: 360, position: 'center', isModal: true});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
                 type: 'POST',
