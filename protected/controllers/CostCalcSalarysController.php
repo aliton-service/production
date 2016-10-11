@@ -1,6 +1,6 @@
 <?php
 
-class CostCalcWorksController extends Controller
+class CostCalcSalarysController extends Controller
 {
     public $layout = '//layouts/column2';
     public $title = '';
@@ -17,19 +17,19 @@ class CostCalcWorksController extends Controller
         return array(
             array('allow',
                 'actions'=>array('index', 'view'),
-                'roles'=>array('ViewCostCalcWorks'),
+                'roles'=>array('ViewCostCalcSalarys'),
             ),
             array('allow', 
                 'actions'=>array('create'),
-                'roles'=>array('CreateCostCalcWorks'),
+                'roles'=>array('CreateCostCalcSalarys'),
             ),
             array('allow', 
                 'actions'=>array('update'),
-                'roles'=>array('UpdateCostCalcWorks'),
+                'roles'=>array('UpdateCostCalcSalarys'),
             ),
             array('allow', 
                 'actions'=>array('delete'),
-                'roles'=>array('DeleteCostCalcWorks'),
+                'roles'=>array('DeleteCostCalcSalarys'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
@@ -39,34 +39,24 @@ class CostCalcWorksController extends Controller
 
     public function actionCreate()
     {
-        $model = new CostCalcWorks();
+        $model = new CostCalcSalarys();
         
         if (isset($_POST['calc_id'])) {
             $model->calc_id = $_POST['calc_id'];
         }
-        
-        if (isset($_POST['cceq_id'])) {
-            $model->cceq_id = $_POST['cceq_id'];
-        }
-        
-        $eqip_name = '';
-        
-        if (isset($_POST['eqip_name'])) {
-            $eqip_name = $_POST['eqip_name'];
-        }
-        
+                
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
             'html' => '',
         );
         
-        if (isset($_POST['CostCalcWorks'])) {
-            $model->attributes = $_POST['CostCalcWorks'];
+        if (isset($_POST['CostCalcSalarys'])) {
+            $model->attributes = $_POST['CostCalcSalarys'];
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['ccwr_id'];
+                $ObjectResult['id'] = $Res['ccsl_id'];
                 echo json_encode($ObjectResult);
                 return;
             } 
@@ -82,22 +72,22 @@ class CostCalcWorksController extends Controller
 
     public function actionUpdate()
     {
-        $model = new CostCalcWorks();
+        $model = new CostCalcSalarys();
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
             'html' => '',
         );
-        if (isset($_POST['ccwr_id']))
-            $model->getModelPk($_POST['ccwr_id']);
+        if (isset($_POST['ccsl_id']))
+            $model->getModelPk($_POST['ccsl_id']);
 
-        if (isset($_POST['CostCalcWorks'])) {
-            $model->getModelPk($_POST['CostCalcWorks']['ccwr_id']);
-            $model->attributes = $_POST['CostCalcWorks'];
+        if (isset($_POST['CostCalcSalarys'])) {
+            $model->getModelPk($_POST['CostCalcSalarys']['ccsl_id']);
+            $model->attributes = $_POST['CostCalcSalarys'];
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->ccwr_id;
+                $ObjectResult['id'] = $model->ccsl_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -117,12 +107,12 @@ class CostCalcWorksController extends Controller
             'html' => '',
         );
         
-        if (isset($_POST['ccwr_id'])) {
-            $model = new CostCalcWorks();
-            $model->getModelPk($_POST['ccwr_id']);
+        if (isset($_POST['ccsl_id'])) {
+            $model = new CostCalcSalarys();
+            $model->getModelPk($_POST['ccsl_id']);
             $model->Delete();
             $ObjectResult['result'] = 1;
-            $ObjectResult['id'] = $model->ccwr_id;
+            $ObjectResult['id'] = $model->ccsl_id;
             echo json_encode($ObjectResult);
             return;
         }
@@ -137,14 +127,14 @@ class CostCalcWorksController extends Controller
             'html' => '',
         );
         
-        if (isset($_GET['ccwr_id']))
+        if (isset($_GET['ccsl_id']))
         {
-            $model = new CostCalcWorks();
-            $model->getModelPk($_GET['ccwr_id']);
+            $model = new CostCalcSalarys();
+            $model->getModelPk($_GET['ccsl_id']);
             $this->title = $model->CostCalcType;
             
             $ObjectResult['result'] = 1;
-            $ObjectResult['id'] = $model->ccwr_id;
+            $ObjectResult['id'] = $model->ccsl_id;
             
             $ObjectResult['html'] = $this->render('index', array(
                 'model' => $model,

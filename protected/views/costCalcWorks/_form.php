@@ -4,15 +4,16 @@
         var CostCalcWork = {
             ccwr_id: '<?php echo $model->ccwr_id; ?>',
             calc_id: '<?php echo $model->calc_id; ?>',
+            cceq_id: '<?php echo $model->cceq_id; ?>',
             cwdt_id: '<?php echo $model->cwdt_id; ?>',
             koef: '<?php echo $model->koef; ?>',
             price: '<?php echo $model->price; ?>',
             price_low: '<?php echo $model->price_low; ?>',
             quant: '<?php echo $model->quant; ?>',
             note: '<?php echo $model->note; ?>',
+            cw_name: '<?php echo $model->cw_name; ?>',
+            eqip_name: '<?php echo $eqip_name; ?>',
         };
-
-        var EquipsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
         
         $('#CostCalcWorks').on('keyup keypress', function(e) {
             var keyCode = e.keyCode || e.which;
@@ -43,7 +44,8 @@
         $("#KoefCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, min: 0, decimalDigits: 1, readOnly: true }));
         $("#PriceCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2 }));
         $("#PriceLowCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 0 }));
-        $("#EquipsCCW").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: EquipsDataAdapter, displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'contains', width: 600 }));
+        $("#EquipsCCW").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 600 }));
+        $("#cw_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 600 }));
         $("#NoteCCW").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 90 }));
         
         $('#btnSaveCostCalcWork').jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -98,6 +100,7 @@
         if (CostCalcWork.price != '') $("#PriceCCW").jqxNumberInput('val', CostCalcWork.price);
         if (CostCalcWork.price_low != '') $("#PriceLowCCW").jqxNumberInput('val', CostCalcWork.price_low);
         if (CostCalcWork.note != '') $("#NoteCCW").jqxTextArea('val', CostCalcWork.note);
+        if (CostCalcWork.eqip_name != '') $("#EquipsCCW").jqxInput('val', CostCalcWork.eqip_name);
         
         
         $('#CСWorkTypeDetails').on('select', function (event) 
@@ -140,6 +143,7 @@
 
 <input type="hidden" name="CostCalcWorks[ccwr_id]" value="<?php echo $model->ccwr_id; ?>"/>
 <input type="hidden" name="CostCalcWorks[calc_id]" value="<?php echo $model->calc_id; ?>"/>
+<input type="hidden" name="CostCalcWorks[cceq_id]" value="<?php echo $model->cceq_id; ?>"/>
 
 <div class="row" style="margin-top: 5px;">
     <div class="row-column" style="margin-top: 2px;">Добавить несколько позиций: </div>
@@ -147,18 +151,22 @@
 </div>
 
 <div class="row">
-    <div class="row-column">Вид работ: <div id="CСWorkTypeDetails" name="CostCalcWorks[cwdt_id]"></div><?php echo $form->error($model, 'cwdt_id'); ?></div>
+    <div class="row-column">Доп. наимен.: <input type="text" id="cw_name" name="CostCalcWorks[cw_name]"></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Коэффициент: <div id="KoefCCW" name="CostCalcWorks[koef]"></div></div>
+    <div class="row-column">Вид работ: <div id="CСWorkTypeDetails" name="CostCalcWorks[cwdt_id]"></div></div>
+</div>
+
+<div class="row">
+    <div class="row-column">Коэффициент: <div id="KoefCCW"></div></div>
     <div class="row-column" style="margin-left: 10px;">Цена: <div id="PriceCCW" name="CostCalcWorks[price]"></div><?php echo $form->error($model, 'price'); ?></div>
     <div class="row-column" style="margin-left: 10px;">Себестоимость: <div id="PriceLowCCW" name="CostCalcWorks[price_low]"></div></div>
     <div class="row-column" style="margin-left: 10px;">Количество: <div id="QuantCCW" name="CostCalcWorks[quant]"></div><?php echo $form->error($model, 'quant'); ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Оборудование: <div id="EquipsCCW" name="CostCalcWorks[eqip_id]"></div><?php echo $form->error($model, 'eqip_id'); ?></div>
+    <div class="row-column">Оборудование: <input readonly type="text" id="EquipsCCW"></div>
 </div>
 
 <div class="row" style="margin-top: 0;">

@@ -1,7 +1,7 @@
 <?php
 return array(
 	
- /** Роли для таблицы CostCalcWorks (Коммерческие предложения и сметы -- Оборудование) **/
+ /** Роли для таблицы CostCalcWorks (Коммерческие предложения и сметы -- Работы) **/
         'ManagerCostCalcWorks' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'ManagerCostCalcWorks',

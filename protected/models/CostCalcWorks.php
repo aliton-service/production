@@ -8,6 +8,7 @@ class CostCalcWorks extends MainFormModel
     public $cwdt_id = null;
     public $cw_name = null;
     public $cwrt_name = null;
+    public $EquipName = null;
     public $quant = null;
     public $price = null;
     public $price_low = null;
@@ -30,6 +31,7 @@ class CostCalcWorks extends MainFormModel
                         t.cwdt_id,
                         t.cw_name,
                         t.cwrt_name,
+                        t.EquipName,
                         t.quant,
                         t.note,
                         t.price,
@@ -42,7 +44,7 @@ class CostCalcWorks extends MainFormModel
         
 //        $Where = "\nWhere cc.DelDate is null";
         
-        $Order = "\nOrder by  case when t.cceq_id is null then 1 else 0 end, t.cceq_id, t.cwrt_name";
+        $Order = "\nOrder by case when t.cceq_id is null then 1 else 0 end, t.cceq_id, t.cwrt_name";
 
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
@@ -66,7 +68,7 @@ class CostCalcWorks extends MainFormModel
     public function rules()
     {
         return array(
-            array('calc_id, cwdt_id, quant, price', 'required'),
+            array('calc_id, quant, price', 'required'),
             array('ccwr_id, cceq_id, calc_id, cwdt_id, quant', 'numerical', 'integerOnly'=>true),
             array('ccwr_id, cceq_id, calc_id, cwdt_id, cw_name, cwrt_name, quant, price, price_low, note, sum_low, koef, sum_high', 'safe'),
         );
@@ -85,6 +87,7 @@ class CostCalcWorks extends MainFormModel
             'cwdt_id' => 'Вид работ',
             'cw_name' => 'cw_name',
             'cwrt_name' => 'cwrt_name',
+            'EquipName' => 'EquipName',
             'quant' => 'quant',
             'price' => 'price',
             'price_low' => 'price_low',

@@ -54,19 +54,13 @@ class CostCalcEquipsController extends Controller
         if (isset($_POST['CostCalcEquips'])) {
             $model->attributes = $_POST['CostCalcEquips'];
             if ($model->validate()) {
-//                $model->Insert();
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
                 $ObjectResult['id'] = $Res['cceq_id'];
                 echo json_encode($ObjectResult);
-//                echo 1;
                 return;
             } 
         }
-        
-//        $this->renderPartial('_form', array(
-//            'model' => $model
-//        ));
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,

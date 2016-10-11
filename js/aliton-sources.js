@@ -2859,6 +2859,7 @@ Sources.SourceCostCalcWorks =
         {name: 'cwdt_id', type: 'int'},
         {name: 'cw_name', type: 'string'},
         {name: 'cwrt_name', type: 'string'},
+        {name: 'EquipName', type: 'string'},
         {name: 'note', type: 'string'},
         {name: 'quant', type: 'int'},
         {name: 'price', type: 'float'},
@@ -2910,6 +2911,28 @@ Sources.SourceCalcWorkTypes =
     ],
     id: 'cwdt_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=CalcWorkTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourcePriceListDetails =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'pldt_id', type: 'int'},
+        {name: 'eqip_id', type: 'int'},
+        {name: 'price_high', type: 'float'},
+        {name: 'price_low', type: 'float'},
+    ],
+    id: 'cwdt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=PriceListDetails',
     type: 'POST',
     root: 'Rows',
     cache: false,

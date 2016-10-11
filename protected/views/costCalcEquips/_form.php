@@ -100,7 +100,8 @@
                 var item = args.item;
                 if(item) {
                     var value = item.value;
-                    if(value) {
+                    if(value) 
+                    {
                         var UnitMeasurementDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {}), {
                             formatData: function (data) {
                                 $.extend(data, {
@@ -110,8 +111,24 @@
                             },
                         });
                         UnitMeasurementDataAdapter.dataBind();
-                        var nameUM = UnitMeasurementDataAdapter.records[0].NameUM
+                        var nameUM = UnitMeasurementDataAdapter.records[0].NameUM;
                         $("#UnitMeasurementCCE").jqxInput('val', nameUM);
+                        
+                        var PriceListDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePriceListDetails, {}), {
+                            formatData: function (data) {
+                                $.extend(data, {
+                                    Filters: ["p.eqip_id = " + value],
+                                });
+                                return data;
+                            },
+                        });
+                        PriceListDetailsDataAdapter.dataBind();
+                        var PriceLowCCE = PriceListDetailsDataAdapter;
+                        console.log(PriceLowCCE);
+                        var PriceLowCCE = PriceListDetailsDataAdapter.records[0].price_low;
+                        $("#PriceLowCCE").jqxNumberInput('val', PriceLowCCE);
+                        var PriceCCE = PriceListDetailsDataAdapter.records[0].price_high;
+                        $("#PriceCCE").jqxNumberInput('val', PriceCCE);
                     }
                 }
             }

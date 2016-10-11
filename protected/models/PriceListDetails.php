@@ -3,11 +3,9 @@
 class PriceListDetails extends MainFormModel
 {
     public $pldt_id = null;
-    public $prlt_id = null;
     public $eqip_id = null;
-    public $price = null;
-    public $last_date = null;
-    public $last_date_mntr = null;
+    public $price_high = null;
+    public $price_low = null;
 
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -16,18 +14,25 @@ class PriceListDetails extends MainFormModel
         $this->SP_UPDATE_NAME = 'UPDATE_PriceListDetails';
         $this->SP_DELETE_NAME = 'DELETE_PriceListDetails';
 
-//        $Select = "\nSelect ";
-//        $From = "\nFrom ";
-//        $Where = "\nWhere pl.DelDate is null";
+        $Select = "\nSelect  
+                        p.pldt_id,
+                        p.eqip_id,
+                        p.price_high,
+                        p.price_low";
+        
+        $From = "\nFrom PriceListDetails_v p";
+        
+        $Where = "\nWhere p.prlt_id = dbo.get_price_list(getdate())";
+        
 //        $Order = "\nOrder by ";
-//
-//        $this->Query->setSelect($Select);
-//        $this->Query->setFrom($From);
-//        $this->Query->setWhere($Where);
+
+        $this->Query->setSelect($Select);
+        $this->Query->setFrom($From);
+        $this->Query->setWhere($Where);
 //        $this->Query->setOrder($Order);
-//
-//        $this->KeyFiled = 'pl.prlt_id';
-//        $this->PrimaryKey = 'prlt_id';
+
+        $this->KeyFiled = 'p.pldt_id';
+        $this->PrimaryKey = 'pldt_id';
     }
     /**
      * @return string the associated database table name
@@ -45,9 +50,9 @@ class PriceListDetails extends MainFormModel
             // NOTE: you should only define rules for those attributes that
             // will receive user inputs.
             return array(
-//			array('date, strg_id', 'required'),
-//                    array('prlt_id', 'numerical', 'integerOnly'=>true),
-//                    array('prlt_id, date, note', 'safe'),
+                    array('pldt_id', 'required'),
+                    array('pldt_id', 'eqip_id', 'integerOnly'=>true),
+                    array('pldt_id, eqip_id, price_high, price_low', 'safe'),
             );
     }
 
@@ -58,11 +63,12 @@ class PriceListDetails extends MainFormModel
      */
     public function attributeLabels()
     {
-//        return array(
-//            'prlt_id' => 'Invn',
-//            'date' => 'Date',
-//            'note' => 'note',
-//        );
+        return array(
+            'pldt_id' => 'pldt_id',
+            'eqip_id' => 'eqip_id',
+            'price_high' => 'price_high',
+            'price_low' => 'price_low',
+        );
     }
 
 }
