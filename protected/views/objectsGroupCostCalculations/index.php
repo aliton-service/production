@@ -79,16 +79,21 @@
 //            console.log('data.groupcolumn.datafield = ' + data.groupcolumn.datafield);
 //            console.log(data);
             
-            if (data.groupcolumn.datafield == 'number') 
-            {
-                var number = OGCostCalculationsDataAdapter.formatNumber(group, data.groupcolumn.cellsformat);
-                var text = data.groupcolumn.text + ': ' + number;
-                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + '</span>';
-            } 
-            else if (data.groupcolumn.datafield == 'group_name')
-            {
-                var group_name = OGCostCalculationsDataAdapter.formatNumber(group, data.groupcolumn.cellsformat);
-                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + group_name + '</span>';
+//            if (data.groupcolumn.datafield == 'number') 
+//            {
+//                var number = OGCostCalculationsDataAdapter.formatNumber(group, data.groupcolumn.cellsformat);
+//                var text = data.groupcolumn.text + ': ' + number;
+//                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + '</span>';
+//            } 
+//            else if (data.groupcolumn.datafield == 'group_name')
+//            {
+//                var group_name = OGCostCalculationsDataAdapter.formatNumber(group, data.groupcolumn.cellsformat);
+//                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + group_name + '</span>';
+//            }
+
+            if (data.subItems.length > 0) {
+                var groupname = data.subItems[0]['group_name'];
+                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + ' (' + groupname + ')</span>';
             }
         };
             
@@ -100,7 +105,7 @@
                 showfilterrow: false,
                 groupable: true,
                 pageable: true,
-                groupsrenderer: groupsrenderer,
+                        groupsrenderer: groupsrenderer,
                 width: '100%',
                 height: '500',
                 source: OGCostCalculationsDataAdapter,
@@ -121,7 +126,8 @@
                     { text: '', align: 'center', name: 'Group1' },
                     { text: 'Отправлено заказчику', align: 'center', name: 'Sent' },
                 ],
-                groups: ['number', 'group_name']
+                //groups: ['number', 'group_name']
+                groups: ['number']
         }));
         
         $("#OGCostCalculationsGrid").jqxGrid('expandallgroups');
