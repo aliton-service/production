@@ -404,7 +404,7 @@
                 height: '200',
                 source: CostCalcSalarysDataAdapter,
                 columns: [
-                    { text: 'Вид работ', datafield: 'cwrt_name', columngroup: 'Salarys', filtercondition: 'CONTAINS', width: 250},
+                    { text: 'Сотрудник', datafield: 'EmployeeName', columngroup: 'Salarys', filtercondition: 'CONTAINS', width: 250},
                 ]
             })
         );
