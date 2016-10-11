@@ -199,6 +199,13 @@ return array_merge(
     /* Серийники */
     include(dirname(__FILE__).'/security/SerialNumbersSecurity.php'),
         
+    /* Коммерческие предложения и сметы */
+    include(dirname(__FILE__).'/security/ObjectsGroupCostCalculationsSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalculationDetailsSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalcEquipsSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalcWorksSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalcSalarysSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -377,6 +384,11 @@ return array_merge(
                 'AdminPriceList',
                 'AdminPriceListDetails',
                 'AdminSerialNumbers',
+                'AdminObjectsGroupCostCalculations',
+                'AdminCostCalculationDetails',
+                'AdminCostCalcEquips',
+                'AdminCostCalcWorks',
+                'AdminCostCalcSalarys',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

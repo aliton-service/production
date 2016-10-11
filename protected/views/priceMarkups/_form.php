@@ -19,8 +19,8 @@
         $("#date_start").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 117, formatString: 'dd.MM.yyyy', value: new Date() }));
         $("#date_end").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 117, formatString: 'dd.MM.yyyy', value: new Date('2999/12/31') }));
 
-        $('#btnSavePriceMarkups').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnCancelPriceMarkups').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnSavePriceMarkups').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnCancelPriceMarkups').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnCancelPriceMarkups').on('click', function(){
             $('#PriceMarkupsDialog').jqxWindow('close');

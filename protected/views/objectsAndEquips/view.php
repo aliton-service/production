@@ -11,15 +11,15 @@
         var EquipCommonCurrentRow = {};
         
         var DataObjects = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceObjects, {}), {
-                        formatData: function (data) {
-                            $.extend(data, {
-                                Filters: ["o.ObjectGr_id = " + House.ObjectGr_id, "o.Doorway <> 'Общее'"],
-                            });
-                            return data;
-                        },
-                    });
+            formatData: function (data) {
+                $.extend(data, {
+                    Filters: ["o.ObjectGr_id = " + House.ObjectGr_id, "o.Doorway <> 'Общее'"],
+                });
+                return data;
+            },
+        });
         
-        $('#edObjectNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: 'Примечаие', height: 180, width: '300px', minLength: 1 }));
+        $('#edObjectNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 180, width: '300px', minLength: 1 }));
         $('#btnAddObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnEditObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnDelObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -94,7 +94,9 @@
                     if (Res === '1') {
                         $('#EditObjectEquipDialog').jqxWindow('close');
                         $("#ObjectEquipsGrid").jqxGrid('updatebounddata');
+                        $('#ObjectEquipsGrid').jqxGrid('selectrow', 0);
                         $("#CommonEquipsGrid").jqxGrid('updatebounddata');
+                        $('#CommonEquipsGrid').jqxGrid('selectrow', 0);
                     }
                 }
             });
@@ -165,13 +167,13 @@
         
         LoadObjectEquips = function() {
             var DataObjectEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceObjectEquips, {}), {
-                        formatData: function (data) {
-                            $.extend(data, {
-                                Filters: ["o.Object_id = " + ObjectCorrentRow.Object_id],
-                            });
-                            return data;
-                        },
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["o.Object_id = " + ObjectCorrentRow.Object_id],
                     });
+                    return data;
+                },
+            });
             DataObjectEquips.dataBind();
             $("#ObjectEquipsGrid").jqxGrid({source: DataObjectEquips});
         };
@@ -206,11 +208,11 @@
                             virtualmode: false,
                             columns:
                                 [
-                                    { text: 'Оборудование', datafield: 'EquipName', width: 160 },
-                                    { text: 'Количество', datafield: 'EquipQuant', width: 60 },
-                                    { text: 'Описание оборудования', datafield: 'StockNumber', width: 100 },
+                                    { text: 'Оборудование', datafield: 'EquipName', width: 200 },
+                                    { text: 'Кол-во', datafield: 'EquipQuant', width: 60 },
+                                    { text: 'Описание оборудования', datafield: 'StockNumber', width: 150 },
                                     { text: 'Дата установки', cellsformat: 'dd.MM.yyyy', datafield: 'DateInstall', width: 100 },
-                                    { text: 'Дата постановки на обслуживание', cellsformat: 'dd.MM.yyyy', datafield: 'DateService', width: 100 },
+                                    { text: 'Дата постановки на обслуживание', cellsformat: 'dd.MM.yyyy', datafield: 'DateService', width: 140 },
                                     { text: 'Местоположение', datafield: 'Location', width: 100 },
                                 ],
                             }));
@@ -229,6 +231,10 @@
                         Mode = 'Update';
                         LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>', {Code: EquipCurrentRow.Code}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
                         $('#EditObjectEquipDialog').jqxWindow('open');
+                    });
+                    
+                    $('#ObjectEquipsGrid').on('rowdoubleclick', function (event) { 
+                        $("#btnEditEquip").click();
                     });
                     
                     $('#btnDelEquip').on('click', function(){
@@ -262,15 +268,16 @@
                             source: DataCommonEquips,
                             virtualmode: false,
                             columns:
-                                [
-                                    { text: 'Оборудование', datafield: 'EquipName', width: 160 },
-                                    { text: 'Количество', datafield: 'EquipQuant', width: 60 },
-                                    { text: 'Описание оборудования', datafield: 'StockNumber', width: 100 },
-                                    { text: 'Дата установки', cellsformat: 'dd.MM.yyyy', datafield: 'DateInstall', width: 100 },
-                                    { text: 'Дата постановки на обслуживание', cellsformat: 'dd.MM.yyyy', datafield: 'DateService', width: 100 },
-                                    { text: 'Местоположение', datafield: 'Location', width: 100 },
-                                ],
-                            }));
+                            [
+                                { text: 'Оборудование', datafield: 'EquipName', width: 200 },
+                                { text: 'Кол-во', datafield: 'EquipQuant', width: 60 },
+                                { text: 'Описание оборудования', datafield: 'StockNumber', width: 150 },
+                                { text: 'Дата установки', cellsformat: 'dd.MM.yyyy', datafield: 'DateInstall', width: 100 },
+                                { text: 'Дата постановки на обслуживание', cellsformat: 'dd.MM.yyyy', datafield: 'DateService', width: 140 },
+                                { text: 'Местоположение', datafield: 'Location', width: 100 },
+                            ],
+                        })
+                    );
                     
                     $('#btnAddCommonEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnEditCommonEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -286,6 +293,10 @@
                         Mode = 'Update';
                         LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>', {Code: EquipCommonCurrentRow.Code}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
                         $('#EditObjectEquipDialog').jqxWindow('open');
+                    });
+                    
+                    $('#CommonEquipsGrid').on('rowdoubleclick', function (event) { 
+                        $("#btnEditCommonEquip").click();
                     });
                     
                     $('#btnDelCommonEquip').on('click', function(){
@@ -306,7 +317,7 @@
         $("#ObjectsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: 200,
-                width: '600px',
+                width: '650px',
                 showfilterrow: false,
                 autoshowfiltericon: true,
                 source: DataObjects,
@@ -314,19 +325,21 @@
                 pagesize:200,
                 virtualmode: false,
                 columns:
-                    [
-                        { text: 'Число квартир', datafield: 'ObjectTypeName', width: 60 },
-                        { text: 'Подъезд', datafield: 'Doorway', width: 100},
-                        { text: 'Тип', datafield: 'ComplexityName', width: 100},
-                        { text: 'Условия', datafield: 'Condition', width: 100},
-                        { text: 'Мастер ключ', datafield: 'MasterKey', width: 100},
-                        { text: 'Код', datafield: 'Code', width: 100},
-                        { text: 'Сигнал ОДС', datafield: 'Signal', width: 100},
-                        { text: 'Тип связи', datafield: 'ConnectionType', width: 100},
-                    ],
-                }));
+                [
+                    { text: 'Число квартир', datafield: 'ObjectTypeName', width: 60 },
+                    { text: 'Подъезд', datafield: 'Doorway', width: 70},
+                    { text: 'Тип', datafield: 'ComplexityName', width: 40},
+                    { text: 'Условия', datafield: 'Condition', width: 100},
+                    { text: 'Мастер ключ', datafield: 'MasterKey', width: 100},
+                    { text: 'Код', datafield: 'Code', width: 100},
+                    { text: 'Сигнал ОДС', datafield: 'Signal', width: 90},
+                    { text: 'Тип связи', datafield: 'ConnectionType', width: 90},
+                ],
+            }));
         
-        
+        $('#ObjectsGrid').on('rowdoubleclick', function (event) { 
+            $("#btnEditObject").click();
+        });
         
         $("#ObjectsGrid").on('rowselect', function(event){
             ObjectCorrentRow = $('#ObjectsGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -347,8 +360,8 @@
         <div id="ObjectsGrid" class="jqxGridAliton"></div>
     </div>
     <div class="row-column">
-        <div>Примечание</div>
-        <div><textarea id="edObjectNote"></textarea></div>
+        Примечание:
+        <textarea id="edObjectNote"></textarea>
     </div>
 </div>
 <div class="row">
@@ -380,7 +393,7 @@
                     <div class="row">
                             <div id="ObjectEquipsGrid" class="jqxGridAliton"></div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 3px;">
                         <div class="row-column"><input type="button" value="Добавить" id='btnAddEquip' /></div>
                         <div class="row-column"><input type="button" value="Изменить" id='btnEditEquip' /></div>
                         <div class="row-column"><input type="button" value="Удалить" id='btnDelEquip' /></div>
@@ -392,7 +405,7 @@
                     <div class="row">
                             <div id="CommonEquipsGrid" class="jqxGridAliton"></div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 3px;">
                         <div class="row-column"><input type="button" value="Добавить" id='btnAddCommonEquip' /></div>
                         <div class="row-column"><input type="button" value="Изменить" id='btnEditCommonEquip' /></div>
                         <div class="row-column"><input type="button" value="Удалить" id='btnDelCommonEquip' /></div>

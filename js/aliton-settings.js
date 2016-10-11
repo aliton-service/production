@@ -130,6 +130,10 @@ var RadioButtonDefaultSettings = {
     height: 22
 };
 
+var ToggleButtonDefaultSettings = {
+    width: 200
+};
+
 
 
 var GridFilters = {};

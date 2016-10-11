@@ -22,8 +22,8 @@
         $("#DateTime").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true, value: new Date() }));
         $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
         
-        $('#btnSavePriceList').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnCancelPriceList').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnSavePriceList').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnCancelPriceList').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         var breakInsert = false;
         
@@ -92,7 +92,7 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         DataEquips.dataBind();
-                        console.log(DataEquips);
+//                        console.log(DataEquips);
                         prlt_id = Res.id;
                         insertPriceListDetails();
                     }
