@@ -3173,3 +3173,27 @@ Sources.SourcePriceListDetails =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceCostCalcSalarys =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ccsl_id', type: 'int'},
+        {name: 'calc_id', type: 'int'},
+        {name: 'empl_id', type: 'int'},
+        {name: 'price', type: 'float'},
+        {name: 'date_accept', type: 'date'},
+        {name: 'EmployeeName', type: 'string'},
+    ],
+    id: 'ccsl_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=CostCalcSalarys',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

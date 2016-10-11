@@ -386,7 +386,7 @@
         var CostCalcSalarysDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCostCalcSalarys), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["t.calc_id = " + CostCalcDetails.calc_id],
+                    Filters: ["c.calc_id = " + CostCalcDetails.calc_id],
                 });
                 return data;
             },
@@ -404,7 +404,9 @@
                 height: '200',
                 source: CostCalcSalarysDataAdapter,
                 columns: [
-                    { text: 'Сотрудник', datafield: 'EmployeeName', columngroup: 'Salarys', filtercondition: 'CONTAINS', width: 250},
+                    { text: 'Сотрудник', datafield: 'EmployeeName', filtercondition: 'CONTAINS', width: 300},
+                    { text: 'Сумма', datafield: 'price', filtercondition: 'CONTAINS', width: 100},
+                    { text: 'Утвержден', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
                 ]
             })
         );
