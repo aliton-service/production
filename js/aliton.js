@@ -16,6 +16,15 @@ Aliton.ListGrids = [];
 Aliton.Links = [];
 Aliton.Objects = [];
 
+Aliton.FindArray = function(Array, FieldName, FieldValue) {
+    for (var i = 0; i < Array.length; i++) {
+        var Tmp = Array[i];
+        if (Tmp[FieldName] == FieldValue)
+            return Array[i];
+    }
+    return null;
+};
+
 Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh) {
     if (Refresh == true)
         $(Grid).jqxGrid('updatebounddata');
@@ -29,10 +38,41 @@ Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh) {
         if (TmpVal == Value) {
             $(Grid).jqxGrid('selectrow', i);
             $(Grid).jqxGrid('ensurerowvisible', i);
-            break;
+            return;
+            
         }
     }
+};
 
+Aliton.SelectRowByIdVirtual = function(FieldName, Value, Grid, Refresh) {
+    var idx = -1;
+    var Rows = $(Grid).jqxGrid('getrows');
+    for (var i = 0; i < Rows.length; i++) {
+        var TmpVal = $(Grid).jqxGrid('getcellvalue', i, FieldName);
+        if (TmpVal == Value) {
+            idx = i;
+        }
+    } 
+    if (idx == -1) {
+        var PI = $(Grid).jqxGrid('getpaginginformation');
+        idx = PI.pagesize*PI.pagenum; 
+    }
+    
+    $(Grid).jqxGrid('selectrow', idx);
+    $(Grid).jqxGrid('ensurerowvisible', idx);
+};
+
+Aliton.GetRowById = function(FieldName, Value, Grid, Refresh) {
+    var Rows = $(Grid).jqxGrid('getrows');
+    for (var i = 0; i < Rows.length; i++) {
+        var TmpVal = $(Grid).jqxGrid('getcellvalue', i, FieldName);
+        if (TmpVal == Value) {
+            return i;
+        }
+    } 
+    
+    var PI = $(Grid).jqxGrid('getpaginginformation');
+    return PI.pagesize*PI.pagenum;  
 };
 
 Aliton.ShowErrorMessage = function(Msg, ErrorText) {
@@ -42,14 +82,14 @@ Aliton.ShowErrorMessage = function(Msg, ErrorText) {
         ErrorText = '';
     
     $('#MainDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {
-        height: '160px',
-        width: '400px',
+        height: '260px',
+        width: '600px',
         position: 'center',
         modalZIndex: 19000,
         zIndex: 99999,
         title: 'Внимание! Ошибка.',
         initContent: function(){
-            $('#BodyMainDialog').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 70, width: '100%', minLength: 1}));
+            $('#BodyMainDialog').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 170, width: '100%', minLength: 1}));
             $('#BodyMainDialog').jqxTextArea('val', Msg + '\nТекст ошибки:\n' + ErrorText);
             $('#MainDialogBtnClose').jqxButton({ width: 120, height: 30 });
             $('#MainDialogBtnClose').on('click', function(){
@@ -62,6 +102,7 @@ Aliton.ShowErrorMessage = function(Msg, ErrorText) {
 
 Aliton.DateConvertToJs = function(DateStr) {
     var Result = null;
+    if (DateStr === null) return null;
     // Дата приводим к формату ГГГГ-ММ-ДД ЧЧ:ММ
     if (DateStr === '' || DateStr.length <  10) return null;
     DateStr = DateStr.slice(0, 16);

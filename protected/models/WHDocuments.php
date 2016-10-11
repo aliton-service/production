@@ -65,9 +65,9 @@ class WHDocuments extends MainFormModel
     function __construct($scenario = '') {
         parent::__construct($scenario);
 
-        $this->SP_INSERT_NAME = '';
-        $this->SP_UPDATE_NAME = '';
-        $this->SP_DELETE_NAME = '';
+        $this->SP_INSERT_NAME = 'INSERT_WHDocuments';
+        $this->SP_UPDATE_NAME = 'UPDATE_WHDocuments';
+        $this->SP_DELETE_NAME = 'DELETE_WHDocuments';
 
         $Select = "\nSelect Top 1  
                         d.docm_id,

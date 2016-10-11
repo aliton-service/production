@@ -5,6 +5,7 @@ class EquipsListAll extends MainFormModel
     public $Equip_id;
     public $EquipName;
     public $NameUM;
+    public $discontinued;
     
     public function rules() {
         return array(

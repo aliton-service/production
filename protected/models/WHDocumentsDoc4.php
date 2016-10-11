@@ -12,6 +12,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $prty_name;
     public $wrtp_name;
     public $Address;
+    public $AddressForFind;
     public $best_date;
     public $deadline;
     public $date_ready;
@@ -60,6 +61,7 @@ class WHDocumentsDoc4 extends MainFormModel
                         d.prty_name,
                         d.wrtp_name,
                         d.Address,
+                        d.Address as AddressForFind,
                         d.best_date,
                         d.deadline,
                         d.date_ready,
@@ -116,6 +118,7 @@ class WHDocumentsDoc4 extends MainFormModel
                     prty_name,
                     wrtp_name,
                     Address,
+                    AddressForFind,
                     best_date,
                     deadline,
                     date_ready,
@@ -161,6 +164,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'prty_name' => '',
             'wrtp_name' => '',
             'Address' => '',
+            'AddressForFind' => '',
             'best_date' => '',
             'deadline' => '',
             'date_ready' => '',
@@ -203,6 +207,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'c_name' => 'ac.EmployeeName',
             'c_confirmname' => 'ac.ConfirmCancelName',
             'dmnd_empl_name' => 'd.dmnd_empl_id',
+            'AddressForFind' => 'd.objc_id',
         );
         
         
@@ -216,6 +221,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'c_date' => 'ac.date',
             'c_name' => 'ac.EmployeeName',
             'c_confirmname' => 'ac.ConfirmCancelName',
+            'AddressForFind' => 'd.Address',
         );
     }
     

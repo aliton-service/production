@@ -9,4 +9,8 @@
     font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
 }
 
+.row-column:last-child {
+    margin-right: 0px;
+}
+
 

@@ -4,6 +4,7 @@ class SuppliersListMin extends MainFormModel
 {
 	public $Supplier_id = null;
 	public $NameSupplier = null;
+        public $FullName = null;
 
 	function __construct($scenario = '') {
 
@@ -15,7 +16,8 @@ class SuppliersListMin extends MainFormModel
 
             $select = "\nSelect
                             Supplier_id,
-                            NameSupplier";
+                            NameSupplier,
+                            FullName";
 
             $from = "\nFrom Suppliers";
 

@@ -358,4 +358,6 @@ class Equips extends MainFormModel
 		$query->bindParam(':equip_id', $id);
 		return $query->queryRow();
 	}
+        
+        
 }

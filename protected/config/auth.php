@@ -67,6 +67,7 @@ return array_merge(
         
     include(dirname(__FILE__).'/security/ObjectsSecurity.php'),
     include(dirname(__FILE__).'/security/WHDocumentsSecurity.php'),
+    include(dirname(__FILE__).'/security/DocmAchsDetailsSecurity.php'),
     /* Заявки на доставку */
     include(dirname(__FILE__).'/security/DeliveryDemandsSecurity.php'),
     include(dirname(__FILE__).'/security/DemandsSecurity.php'),
@@ -80,7 +81,7 @@ return array_merge(
     /* Оборудование в актах списания */
     include(dirname(__FILE__).'/security/ActEquipsSecurity.php'),
     /* Поиск требований */
-    include(dirname(__FILE__).'/security/WHDocumentsFindTrebSecurity.php'),
+    include(dirname(__FILE__).'/security/WHDocumentsFindSecurity.php'),
     /* Мониторинг цен */
     include(dirname(__FILE__).'/security/PriceMonitoring.php'),
     /* Категории ТМЦ */
@@ -194,6 +195,9 @@ return array_merge(
     /* Прайс-лист */
     include(dirname(__FILE__).'/security/PriceListSecurity.php'),
     include(dirname(__FILE__).'/security/PriceListDetailsSecurity.php'),
+    
+    /* Серийники */
+    include(dirname(__FILE__).'/security/SerialNumbersSecurity.php'),
         
     /* Коммерческие предложения и сметы */
     include(dirname(__FILE__).'/security/ObjectsGroupCostCalculationsSecurity.php'),
@@ -376,8 +380,10 @@ return array_merge(
                 'AdminInventoryDetails',
                 'AdminPriceMarkups',
                 'AdminPriceMarkupDetails',
+                'AdminDocmAchsDetails',
                 'AdminPriceList',
                 'AdminPriceListDetails',
+                'AdminSerialNumbers',
                 'AdminObjectsGroupCostCalculations',
                 'AdminCostCalculationDetails',
                 'AdminCostCalcEquips',

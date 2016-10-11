@@ -1,9 +1,10 @@
 <?php
 
-class DocmAchsDetails extends MainFormModel
+class DocmAchsDetailsReserv extends MainFormModel
 {
     public $dadt_id;
     public $docm_id;
+    public $number;
     public $eqip_id;
     public $achs_id;
     public $EquipName;
@@ -28,42 +29,43 @@ class DocmAchsDetails extends MainFormModel
     function __construct($scenario='') {
         parent::__construct($scenario);
 
-        $this->SP_INSERT_NAME = 'INSERT_DocmAchsDetails';
-        $this->SP_UPDATE_NAME = 'UPDATE_DocmAchsDetails';
-        $this->SP_DELETE_NAME = 'DELETE_DocmAchsDetails';
+        $this->SP_INSERT_NAME = '';
+        $this->SP_UPDATE_NAME = '';
+        $this->SP_DELETE_NAME = '';
         
-        $Select = "\nSelect"
-                . "     d.dadt_id,
-                        d.docm_id,
-                        d.eqip_id,
-                        d.achs_id,
-                        d.EquipName,
-                        d.UnitMeasurement_Id,
-                        d.NameUnitMeasurement,
-                        d.docm_quant,
-                        d.fact_quant,
-                        isnull(d.fact_quant, d.docm_quant) as quant,
-                        d.used,
-                        d.ToProduction,
-                        d.price, 
-                        d.sum,
-                        d.Emplchange,
-                        d.date_change,
-                        d.Emplcreate,
-                        d.date_create,
-                        d.discontinued,
-                        d.SN,
-                        d.color,
-                        d.no_price_list";
-        $From = "\nFrom DocmAchsDetails_v d";
-        $Order = "\nOrder by d.docm_id";
+        $Select = "\nSelect
+                        dt.dadt_id,
+                        dt.docm_id,
+                        d.number,
+                        dt.eqip_id,
+                        dt.achs_id,
+                        dt.EquipName,
+                        dt.UnitMeasurement_Id,
+                        dt.NameUnitMeasurement,
+                        dt.docm_quant,
+                        dt.fact_quant,
+                        isnull(dt.docm_quant, 0) as quant,
+                        dt.used,
+                        dt.ToProduction,
+                        dt.price, 
+                        dt.sum,
+                        dt.Emplchange,
+                        dt.date_change,
+                        dt.Emplcreate,
+                        dt.date_create,
+                        dt.discontinued,
+                        dt.SN,
+                        dt.color,
+                        dt.no_price_list";
+        $From = "\nFrom DocmAchsDetails_v dt inner join WHDocuments d on (dt.Docm_id = d.Docm_id)";
+        $Where = "\nWhere d.Dctp_id = 4 and d.Achs_id is Null";
 
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
-        $this->Query->setOrder($Order);
+        $this->Query->setWhere($Where);
 
         // Инициализация первичного ключа
-        $this->KeyFiled = 'd.dadt_id';
+        $this->KeyFiled = 'dt.dadt_id';
         $this->PrimaryKey = 'dadt_id';
         
     }
@@ -124,18 +126,6 @@ class DocmAchsDetails extends MainFormModel
             'color' => 'color',
         );
     }
-	
-    public function deleteCount($id, $empl_id) {
-
-        $Command = Yii::app()->db->createCommand(''
-        . "UPDATE DocmAchsDetails SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE dadt_id = {$id}
-        ");
-
-        return $Command->queryAll();
-    }
-
-    public static function model($className=__CLASS__)
-    {
-            return parent::model($className);
-    }
 }
+
+

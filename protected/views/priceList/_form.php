@@ -1,7 +1,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
         
-        var DataEquips = new $.jqx.dataAdapter(Sources.SourceListEquipsMin);
+//        var DataEquips = new $.jqx.dataAdapter(Sources.SourceListEquipsMin);
+        var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {}), {
+            formatData: function (data) {
+                $.extend(data, {
+                    Filters: ["(c.ForPrice = 1 or c.ForCostCalc = 1 or e.ctgr_id is Null)"],
+                });
+                return data;
+            },
+        });
         
         $('#PriceList').on('keyup keypress', function(e) {
             var keyCode = e.keyCode || e.which;

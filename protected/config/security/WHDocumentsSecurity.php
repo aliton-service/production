@@ -11,6 +11,9 @@
                 'WHDocumentsView',
                 'CreateWHDocuments',
                 'UpdateWHDocuments',
+                'AuditEquipsWHDocuments',
+                'Action1WHDocuments',
+                'PurchaseWHDocuments',
             ),
         ),
 
@@ -25,6 +28,10 @@
                 'CreateWHDocuments',
                 'UpdateWHDocuments',
                 'DeleteWHDocuments',
+                'AuditEquipsWHDocuments',
+                'Action1WHDocuments',
+                'PurchaseWHDocuments',
+                'Confirm1WHDocuments',
             ),
         ),
 
@@ -63,6 +70,37 @@
         'DeleteWHDocuments' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'DeleteWHDocuments',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'AuditEquipsWHDocuments' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'AuditEquipsWHDocuments',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        // Подтверждение Накладной на приход
+        'Action1WHDocuments' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Action1WHDocuments',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        // Требуется закупка
+        'PurchaseWHDocuments' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'PurchaseWHDocuments',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        // Отмена подтверждения Накладная на приход
+        'Confirm1WHDocuments' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Confirm1WHDocuments',
             'bizRule' => null,
             'data' => null,
         ),

@@ -678,6 +678,8 @@ Sources.SourceListEquipsMin =
         {name: 'Equip_id', type: 'int'},
         {name: 'EquipName', type: 'string'},
         {name: 'NameUM', type: 'string'},
+        {name: 'discontinued', type: 'date'}
+        
     ],
     id: 'Equip_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipsListAll',
@@ -2353,11 +2355,13 @@ Sources.WHDocumentsDoc2Source =
         { name: 'date_create', type: 'date'},
         { name: 'note', type: 'string'},
         { name: 'Address', type: 'string'},
+        { name: 'rtrs_id', type: 'int'},
         { name: 'rtrs_name', type: 'string'},
         { name: 'ac_date', type: 'date'},
         { name: 'strm_name', type: 'string'},
         { name: 'mstr_name', type: 'string'},
         { name: 'achs_id', type: 'int'},
+        { name: 'wrtp_id', type: 'int'},
         { name: 'wrtp_name', type: 'string'},
         { name: 'strg_id', type: 'int'},
         { name: 'storage', type: 'string'}
@@ -2418,6 +2422,7 @@ Sources.WHDocumentsDoc4Source =
         { name: 'prty_name', type: 'string'},
         { name: 'wrtp_name', type: 'string'},
         { name: 'Address', type: 'string'},
+        { name: 'AddressForFind', type: 'string'},
         { name: 'best_date', type: 'date'},
         { name: 'deadline', type: 'date'},
         { name: 'date_ready', type: 'date'},
@@ -2599,6 +2604,108 @@ Sources.DocmAchsDetailsSource =
     }
 };
 
+Sources.DocmAchsDetailsAuditSource =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'History_id', type: 'int' },
+        { name: 'Action', type: 'int' },
+        { name: 'ActionName', type: 'string' },
+        { name: 'ActionDate', type: 'date' },
+        { name: 'ActionEmpl', type: 'string' },
+        { name: 'Docm_id', type: 'int' },
+        { name: 'Dadt_id', type: 'int' },
+        { name: 'Eqip_id', type: 'int' },
+        { name: 'EquipName', type: 'string' },
+        { name: 'docm_quant', type: 'float' },
+        { name: 'fact_quant', type: 'float' },
+        { name: 'used', type: 'bool' },
+        { name: 'price', type: 'float' },
+        { name: 'sum', type: 'float' },
+        { name: 'ToProduction', type: 'bool' },
+        { name: 'no_price_list', type: 'bool' },
+        { name: 'old_eqip_id', type: 'int' },
+        { name: 'OldEquipName', type: 'string' },
+        { name: 'old_docm_quant', type: 'float' },
+        { name: 'old_fact_quant', type: 'float' },
+        { name: 'old_used', type: 'bool' },
+        { name: 'old_price', type: 'float' },
+        { name: 'old_sum', type: 'float' },
+        { name: 'old_ToProduction', type: 'bool' },
+        { name: 'old_no_price_list', type: 'bool' }
+    ],
+    id: 'dadt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DocmAchsDetailsAudit',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.DocmAchsDetailsReservSource =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'dadt_id', type: 'int' },
+        { name: 'docm_id', type: 'int' },
+        { name: 'number', type: 'string' },
+        { name: 'eqip_id', type: 'int' },
+        { name: 'achs_id', type: 'int' },
+        { name: 'EquipName', type: 'string' },
+        { name: 'UnitMeasurement_Id', type: 'int' },
+        { name: 'NameUnitMeasurement', type: 'string' },
+        { name: 'docm_quant', type: 'float' },
+        { name: 'fact_quant', type: 'float' },
+        { name: 'quant', type: 'float' },
+        { name: 'used', type: 'bool' },
+        { name: 'ToProduction', type: 'bool' },
+        { name: 'price', type: 'float' }, 
+        { name: 'sum', type: 'float' },
+        { name: 'Emplchange', type: 'int' },
+        { name: 'date_change', type: 'date' },
+        { name: 'Emplcreate', type: 'int' },
+        { name: 'date_create', type: 'date' },
+        { name: 'discontinued', type: 'string' },
+        { name: 'SN', type: 'string' },
+        { name: 'color', type: 'bool' },
+        { name: 'no_price_list', type: 'bool' },
+    ],
+    id: 'dadt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DocmAchsDetailsReserv',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.InventoryEquipsSource =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Equip_id', type: 'int' },
+        { name: 'EquipName', type: 'string' },
+        { name: 'Storage_id', type: 'int' },
+        { name: 'Storage', type: 'string' },
+        { name: 'quant', type: 'float' },
+        { name: 'quant_used', type: 'float' }
+    ],
+    id: 'dadt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InventoryEquips',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 Sources.SourceInventories =
 {
     datatype: "json",
@@ -2745,6 +2852,7 @@ Sources.SourceSuppliersListMin =
     datafields: [
         {name: 'Supplier_id', type: 'int'},
         {name: 'NameSupplier', type: 'string'},
+        {name: 'FullName', type: 'string'},
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=SuppliersListMin',
@@ -2753,12 +2861,52 @@ Sources.SourceSuppliersListMin =
     cache: false,
     async: true,
     pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceWorkTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'wrtp_id', type: 'int'},
+        {name: 'name', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WorkTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }
 };
 
+Sources.SourceWHDocKinds =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dckn_id', type: 'int'},
+        {name: 'name', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHDocKinds',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
 Sources.SourcePriceList =
 {
     datatype: "json",
@@ -2780,6 +2928,88 @@ Sources.SourcePriceList =
     }
 };
 
+Sources.SourceConfirmCancels =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ConfirmCancel_id', type: 'int'},
+        {name: 'ConfirmCancelName', type: 'string'},
+    ],
+    id: 'ConfirmCancel_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ConfirmCancels',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceSerialNumbers =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'srnm_id', type: 'int'},
+        {name: 'dadt_id', type: 'int'},
+        {name: 'SN', type: 'string'},
+    ],
+    id: 'srnm_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SerialNumbers',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceWHDocumentsMin =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'docm_id', type: 'int'},
+        {name: 'number', type: 'string'},
+        {name: 'date', type: 'date'},
+        {name: 'doc', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHDocumentsMin',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceReturnReasons =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'rtrs_id', type: 'int'},
+        {name: 'name', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ReturnReasons',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
 Sources.SourceObjectsGroupCostCalculations =
 {
     datatype: "json",
