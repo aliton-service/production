@@ -52,7 +52,7 @@
         
         
         $('#jqxTabsCostCalcDetails').jqxTabs({ width: '99%', height: 290 });
-        $('#jqxTabsCostCalcDetails').jqxTabs({ selectedItem: 3 }); 
+        $('#jqxTabsCostCalcDetails').jqxTabs({ selectedItem: 2 }); 
         
 
 
@@ -188,7 +188,7 @@
                 },
                 success: function(Res) {
                     var RowIndex = $('#CostCalcEquipsGrid').jqxGrid('getselectedrowindex');
-                    var Val = $('#CostCalcEquipsGrid').jqxGrid('getcellvalue', RowIndex, "prlt_id");
+                    var Val = $('#CostCalcEquipsGrid').jqxGrid('getcellvalue', RowIndex, "cceq_id");
                     Aliton.SelectRowById('cceq_id', Val, '#CostCalcEquipsGrid', true);
                 },
                 error: function(Res) {
@@ -199,7 +199,7 @@
         
         $('#RefreshCostCalcEquips').on('click', function(){
             var RowIndex = $('#CostCalcEquipsGrid').jqxGrid('getselectedrowindex');
-            var Val = $('#CostCalcEquipsGrid').jqxGrid('getcellvalue', RowIndex, "prlt_id");
+            var Val = $('#CostCalcEquipsGrid').jqxGrid('getcellvalue', RowIndex, "cceq_id");
             Aliton.SelectRowById('cceq_id', Val, '#CostCalcEquipsGrid', true);
         });
         
@@ -290,11 +290,16 @@
         
         $('#AddCostCalcWorks').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#EditCostCalcWorks').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
-        $('#RefreshCostCalcWorks').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#RefreshCostCalcWorks').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        $('#btnPrintCostCalcWorks').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 140 }));
+        $('#btnPrintForUsCostCalcWorks').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#DelCostCalcWorks').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         
         var CheckButtonCCW = function() {
             $('#EditCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
+            $('#RefreshCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
+            $('#btnPrintCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
+            $('#btnPrintForUsCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
             $('#DelCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
         };
         
@@ -358,7 +363,7 @@
                 },
                 success: function(Res) {
                     var RowIndex = $('#CostCalcWorksGrid').jqxGrid('getselectedrowindex');
-                    var Val = $('#CostCalcWorksGrid').jqxGrid('getcellvalue', RowIndex, "prlt_id");
+                    var Val = $('#CostCalcWorksGrid').jqxGrid('getcellvalue', RowIndex, "cceq_id");
                     Aliton.SelectRowById('cceq_id', Val, '#CostCalcWorksGrid', true);
                 },
                 error: function(Res) {
@@ -369,12 +374,154 @@
         
         $('#RefreshCostCalcWorks').on('click', function(){
             var RowIndex = $('#CostCalcWorksGrid').jqxGrid('getselectedrowindex');
-            var Val = $('#CostCalcWorksGrid').jqxGrid('getcellvalue', RowIndex, "prlt_id");
+            var Val = $('#CostCalcWorksGrid').jqxGrid('getcellvalue', RowIndex, "cceq_id");
             Aliton.SelectRowById('cceq_id', Val, '#CostCalcWorksGrid', true);
         });
         
+        $('#btnPrintCostCalcWorks').on('click', function(){
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Сметы/Смета - оборудование',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[p_calc_id]=' + CostCalcDetails.calc_id);
+        });
+        
+        $('#btnPrintForUsCostCalcWorks').on('click', function(){
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Сметы/Смета - оборудование (Для нас)',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[calc_id]=' + CostCalcDetails.calc_id);
+        });
         
         $('#CostCalcWorksGrid').jqxGrid('selectrow', 0);
+        
+        
+        
+        
+        
+        
+        
+        
+        /* Текущая выбранная строка данных */
+        var CurrentRowDataCCD;
+        
+        var CostCalcDocumentsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCostCalcDocuments), {
+            data: {
+                calc_id: CostCalcDetails.calc_id
+            },
+        });
+        
+        $("#CostCalcDocumentsGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                sortable: true,
+                showfilterrow: false,
+                width: '99%',
+                height: '200',
+                source: CostCalcDocumentsDataAdapter,
+                columns: [
+                    { text: 'Наименование', datafield: 'DocName',  filtercondition: 'CONTAINS', width: 250},
+                    { text: 'Номер', datafield: 'DocNumber',  filtercondition: 'CONTAINS', width: 80},
+                    { text: 'Дата док-та', datafield: 'DocDate', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
+                    { text: 'Сумма', datafield: 'DocSum', filtercondition: 'CONTAINS', width: 80 },
+                    { text: 'Статус', datafield: 'DocState', filtercondition: 'CONTAINS', width: 90 },
+                ]
+            })
+        );
+        
+        $('#AddCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#EditCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        $('#RefreshCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        $('#DelCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        
+        var CheckButtonCCD = function() {
+            $('#EditCostCalcDocuments').jqxButton({disabled: !(CurrentRowDataCCD != undefined)})
+            $('#RefreshCostCalcDocuments').jqxButton({disabled: !(CurrentRowDataCCD != undefined)})
+            $('#DelCostCalcDocuments').jqxButton({disabled: !(CurrentRowDataCCD != undefined)})
+        };
+        
+        $("#CostCalcDocumentsGrid").on('rowselect', function (event) {
+            CurrentRowDataCCD = $('#CostCalcDocumentsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            CheckButtonCCD();
+        });
+        
+        $('#AddCostCalcDocuments').on('click', function(){
+            $('#CostCalcDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 640, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('CostCalcDocuments/Create')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    calc_id: CostCalcDetails.calc_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyCostCalcDetailsDialog").html(Res.html);
+                    $('#CostCalcDetailsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        $('#CostCalcDocumentsGrid').on('rowdoubleclick', function (event) { 
+            $("#EditCostCalcDocuments").click();
+        });
+        
+        $('#EditCostCalcDocuments').on('click', function(){
+            $('#CostCalcDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 640, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('CostCalcDocuments/Update')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    ccwr_id: CurrentRowDataCCD.ccwr_id,
+                    calc_id: CostCalcDetails.calc_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyCostCalcDetailsDialog").html(Res.html);
+                    $('#CostCalcDetailsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        $('#DelCostCalcDocuments').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('CostCalcDocuments/Delete')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    ccwr_id: CurrentRowDataCCD.ccwr_id,
+                },
+                success: function(Res) {
+                    var RowIndex = $('#CostCalcDocumentsGrid').jqxGrid('getselectedrowindex');
+                    var Val = $('#CostCalcDocumentsGrid').jqxGrid('getcellvalue', RowIndex, "cceq_id");
+                    Aliton.SelectRowById('cceq_id', Val, '#CostCalcDocumentsGrid', true);
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        $('#RefreshCostCalcDocuments').on('click', function(){
+            var RowIndex = $('#CostCalcDocumentsGrid').jqxGrid('getselectedrowindex');
+            var Val = $('#CostCalcDocumentsGrid').jqxGrid('getcellvalue', RowIndex, "cceq_id");
+            Aliton.SelectRowById('cceq_id', Val, '#CostCalcDocumentsGrid', true);
+        });
+        
+        
+        $('#CostCalcDocumentsGrid').jqxGrid('selectrow', 0);
+        
+        
+        
         
         
         
@@ -397,8 +544,6 @@
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
                 sortable: true,
-                showstatusbar: true,
-                showaggregates: true,
                 showfilterrow: false,
                 width: '99%',
                 height: '200',
@@ -406,7 +551,7 @@
                 columns: [
                     { text: 'Сотрудник', datafield: 'EmployeeName', filtercondition: 'CONTAINS', width: 300},
                     { text: 'Сумма', datafield: 'price', filtercondition: 'CONTAINS', width: 100},
-                    { text: 'Утвержден', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Утвержден', dataField: 'date_accept', columntype: 'date', cellsformat: 'dd.MM.yyyy H:mm', filtercondition: 'STARTS_WITH', width: 140 },
                 ]
             })
         );
@@ -414,20 +559,31 @@
         $('#AddCostCalcSalarys').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#EditCostCalcSalarys').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         $('#RefreshCostCalcSalarys').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#AcceptCostCalcSalarys').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#DelCostCalcSalarys').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         
         var CheckButtonCCS = function() {
             $('#EditCostCalcSalarys').jqxButton({disabled: !(CurrentRowDataCCS != undefined)})
             $('#DelCostCalcSalarys').jqxButton({disabled: !(CurrentRowDataCCS != undefined)})
         };
+        var CheckButtonAcceptCCS = function() {
+            if (CurrentRowDataCCS != undefined && CurrentRowDataCCS.date_accept != undefined) {
+                $('#AcceptCostCalcSalarys').jqxButton({disabled: false})
+                $('#EditCostCalcSalarys').jqxButton({disabled: false})
+            } else {
+                $('#AcceptCostCalcSalarys').jqxButton({disabled: true})
+                $('#EditCostCalcSalarys').jqxButton({disabled: true})
+            }
+        };
         
         $("#CostCalcSalarysGrid").on('rowselect', function (event) {
             CurrentRowDataCCS = $('#CostCalcSalarysGrid').jqxGrid('getrowdata', event.args.rowindex);
             CheckButtonCCS();
+            CheckButtonAcceptCCS();
         });
         
         $('#AddCostCalcSalarys').on('click', function(){
-            $('#CostCalcDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 640, position: 'center'}));
+            $('#CostCalcDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 180, width: 500, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('CostCalcSalarys/Create')) ?>,
                 type: 'POST',
@@ -451,13 +607,13 @@
         });
         
         $('#EditCostCalcSalarys').on('click', function(){
-            $('#CostCalcDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 640, position: 'center'}));
+            $('#CostCalcDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 180, width: 500, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('CostCalcSalarys/Update')) ?>,
                 type: 'POST',
                 async: false,
                 data: {
-                    ccwr_id: CurrentRowDataCCS.ccwr_id,
+                    ccsl_id: CurrentRowDataCCS.ccsl_id,
                     calc_id: CostCalcDetails.calc_id,
                 },
                 success: function(Res) {
@@ -477,12 +633,12 @@
                 type: 'POST',
                 async: false,
                 data: {
-                    ccwr_id: CurrentRowDataCCS.ccwr_id,
+                    ccsl_id: CurrentRowDataCCS.ccsl_id,
                 },
                 success: function(Res) {
                     var RowIndex = $('#CostCalcSalarysGrid').jqxGrid('getselectedrowindex');
-                    var Val = $('#CostCalcSalarysGrid').jqxGrid('getcellvalue', RowIndex, "prlt_id");
-                    Aliton.SelectRowById('cceq_id', Val, '#CostCalcSalarysGrid', true);
+                    var Val = $('#CostCalcSalarysGrid').jqxGrid('getcellvalue', RowIndex, "ccsl_id");
+                    Aliton.SelectRowById('ccsl_id', Val, '#CostCalcSalarysGrid', true);
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -492,8 +648,27 @@
         
         $('#RefreshCostCalcSalarys').on('click', function(){
             var RowIndex = $('#CostCalcSalarysGrid').jqxGrid('getselectedrowindex');
-            var Val = $('#CostCalcSalarysGrid').jqxGrid('getcellvalue', RowIndex, "prlt_id");
-            Aliton.SelectRowById('cceq_id', Val, '#CostCalcSalarysGrid', true);
+            var Val = $('#CostCalcSalarysGrid').jqxGrid('getcellvalue', RowIndex, "ccsl_id");
+            Aliton.SelectRowById('ccsl_id', Val, '#CostCalcSalarysGrid', true);
+        });
+        
+        $('#AcceptCostCalcSalarys').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('CostCalcSalarys/Accept')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    ccsl_id: CurrentRowDataCCS.ccsl_id,
+                },
+                success: function(Res) {
+                    var RowIndex = $('#CostCalcSalarysGrid').jqxGrid('getselectedrowindex');
+                    var Val = $('#CostCalcSalarysGrid').jqxGrid('getcellvalue', RowIndex, "ccsl_id");
+                    Aliton.SelectRowById('ccsl_id', Val, '#CostCalcSalarysGrid', true);
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
         });
         
         
@@ -601,7 +776,7 @@
                     <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcEquips' /></div>
                     <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcEquips'/></div>
                     <div class="row-column"><input type="button" value="Работа" id='AddWorkCostCalcEquips'/></div>
-                    <div class="row-column"><input type="button" value="Удалить" id='DelCostCalcEquips' /></div>
+                    <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcEquips' /></div>
                 </div>
             </div>
         </div>
@@ -613,15 +788,24 @@
                     <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcWorks' /></div>
                     <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcWorks' /></div>
                     <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcWorks'/></div>
-                    <div class="row-column"><input type="button" value="Удалить" id='DelCostCalcWorks' /></div>
+                    <div class="row-column"><input type="button" value="Для заказчика" id='btnPrintCostCalcWorks'/></div>
+                    <div class="row-column"><input type="button" value="Для нас" id='btnPrintForUsCostCalcWorks'/></div>
+                    <div class="row-column" style="margin-left: 480px;"><input type="button" value="Удалить" id='DelCostCalcWorks' /></div>
                 </div>
             </div>
         </div>
         
-        <div id='' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-            
+        <div id='contentCostCalcDocuments' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+            <div style="margin-top: 5px;">
+                <div id="CostCalcDocumentsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+                <div class="row" style="margin-top: 3px; padding-left: 0;">
+                    <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcDocuments' /></div>
+                    <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcDocuments' /></div>
+                    <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcDocuments'/></div>
+                    <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcDocuments' /></div>
+                </div>
+            </div>
         </div>
-        
         
         <div id='contentCostCalcSalarys' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
             <div style="margin-top: 5px;">
@@ -630,7 +814,8 @@
                     <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcSalarys' /></div>
                     <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcSalarys' /></div>
                     <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcSalarys'/></div>
-                    <div class="row-column"><input type="button" value="Удалить" id='DelCostCalcSalarys' /></div>
+                    <div class="row-column"><input type="button" value="Подтвердить" id='AcceptCostCalcSalarys'/></div>
+                    <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcSalarys' /></div>
                 </div>
             </div>
         </div>

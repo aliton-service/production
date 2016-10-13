@@ -205,6 +205,7 @@ return array_merge(
     include(dirname(__FILE__).'/security/CostCalcEquipsSecurity.php'),
     include(dirname(__FILE__).'/security/CostCalcWorksSecurity.php'),
     include(dirname(__FILE__).'/security/CostCalcSalarysSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalcDocumentsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -389,6 +390,7 @@ return array_merge(
                 'AdminCostCalcEquips',
                 'AdminCostCalcWorks',
                 'AdminCostCalcSalarys',
+                'AdminCostCalcDocuments',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

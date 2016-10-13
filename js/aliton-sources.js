@@ -3197,3 +3197,27 @@ Sources.SourceCostCalcSalarys =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceCostCalcDocuments =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Docid', type: 'int'},
+        {name: 'DocName', type: 'string'},
+        {name: 'DocNumber', type: 'int'},
+        {name: 'DocDate', type: 'date'},
+        {name: 'DocSum', type: 'float'},
+        {name: 'DocState', type: 'string'},
+    ],
+    id: 'Docid',
+    url: '/index.php?r=CostCalcDocuments/Index',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

@@ -31,6 +31,10 @@ class CostCalcSalarysController extends Controller
                 'actions'=>array('delete'),
                 'roles'=>array('DeleteCostCalcSalarys'),
             ),
+            array('allow',
+                'actions'=>array('accept'),
+                'roles'=>array('AcceptCostCalcSalarys'),
+            ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
@@ -64,7 +68,6 @@ class CostCalcSalarysController extends Controller
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
-            'eqip_name' => $eqip_name,
         ), true);
         echo json_encode($ObjectResult);
     }
@@ -78,9 +81,9 @@ class CostCalcSalarysController extends Controller
             'id' => 0,
             'html' => '',
         );
-        if (isset($_POST['ccsl_id']))
+        if (isset($_POST['ccsl_id'])) 
             $model->getModelPk($_POST['ccsl_id']);
-
+        
         if (isset($_POST['CostCalcSalarys'])) {
             $model->getModelPk($_POST['CostCalcSalarys']['ccsl_id']);
             $model->attributes = $_POST['CostCalcSalarys'];
@@ -143,5 +146,22 @@ class CostCalcSalarysController extends Controller
         }
     }
     
+    
+    public function actionAccept() 
+    {
+        if (isset($_POST['ccsl_id'])) {
+            $model = new CostCalcSalarys();
+            $model->getModelPk($_POST['ccsl_id']);
+            
+            if ($model->date_accept == false || $model->date_accept == null) {
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'ACCEPT_CostCalcSalarys';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $_POST['ccsl_id'];
+                $sp->CheckParam = true;
+                $sp->Execute();
+            }
+        }
+    }
 }
 
