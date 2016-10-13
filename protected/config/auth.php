@@ -225,6 +225,7 @@ return array_merge(
                 'ManagerWhActs',
                 'AdminActEquips',
                 'FindTreb',
+                'FindWHDoc1',
             ),
         ),
         
@@ -297,6 +298,8 @@ return array_merge(
                 'AdminEvents',
                 'AdminEventOffers',
                 'AdministartorDispatchers',
+                'AdminSystemComplexitys',
+                'AdminSystemStatements',
             ),
         ),
 

@@ -20,6 +20,11 @@ class WHDocumentsFindController extends Controller
                 'actions'=>array('FindTreb'),
                 'roles'=>array('FindTreb'),
             ),
+            array('allow',  
+                'actions'=>array('FindWHDoc1'),
+                'roles'=>array('FindWHDoc1'),
+            ),
+            
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
@@ -53,6 +58,26 @@ class WHDocumentsFindController extends Controller
         $ObjectResult['html'] = $this->renderPartial('findtreb', array(
                 'Object_id' => $Object_id,
                 'Address' => $Address,
+            ), true);
+        
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionFindWHDoc1() {
+        
+        $Supplier_id = 0;
+        if ($_POST['Supplier_id']) {
+            $Supplier_id = $_POST['Supplier_id'];
+        }
+        
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        $ObjectResult['html'] = $this->renderPartial('finddoc1', array(
+                'Supplier_id' => $Supplier_id,
             ), true);
         
         echo json_encode($ObjectResult);

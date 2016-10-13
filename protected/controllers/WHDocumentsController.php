@@ -108,6 +108,16 @@ class WHDocumentsController extends Controller
                     'model' => $model,
                 ), true);
             break;
+            case 3:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc3', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 4:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc4', array(
+                    'model' => $model,
+                ), true);
+            break;
             default:
                 $ObjectResult['html'] = $this->renderPartial('_form', array(
                     'model' => $model,
@@ -168,6 +178,19 @@ class WHDocumentsController extends Controller
                     $model->in_number = $_POST['InNumber'];
                 
                 $ObjectResult['html'] = $this->renderPartial('_formDoc2', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 3:
+                if (isset($_POST['InNumber']))
+                    $model->in_number = $_POST['InNumber'];
+                
+                $ObjectResult['html'] = $this->renderPartial('_formDoc3', array(
+                    'model' => $model,
+                ), true);
+            break;            
+            case 4:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc4', array(
                     'model' => $model,
                 ), true);
             break;

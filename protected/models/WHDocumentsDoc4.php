@@ -9,7 +9,9 @@ class WHDocumentsDoc4 extends MainFormModel
     public $number;
     public $date;
     public $date_create;
+    public $prty_id;
     public $prty_name;
+    public $wrtp_id;
     public $wrtp_name;
     public $Address;
     public $AddressForFind;
@@ -42,6 +44,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $strg_id;
     public $storage;
     public $control;
+    public $note;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -58,7 +61,9 @@ class WHDocumentsDoc4 extends MainFormModel
                         d.number,
                         d.date,
                         d.date_create,
+                        d.prty_id,
                         d.prty_name,
+                        d.wrtp_id,
                         d.wrtp_name,
                         d.Address,
                         d.Address as AddressForFind,
@@ -90,7 +95,8 @@ class WHDocumentsDoc4 extends MainFormModel
                         d.state_prchs,
                         d.strg_id,
                         d.storage,
-                        d.control";
+                        d.control,
+                        d.note";
         $From = "\nFrom WHDocuments_Treb_v d left join ActionHistory_v a on (d.achs_id = a.achs_id)
                         left join ActionConfirm_v ac on (ac.docm_id = d.docm_id)";
         $Where = "\nWhere d.dctp_id = 4";
@@ -115,7 +121,9 @@ class WHDocumentsDoc4 extends MainFormModel
                     number,
                     date,
                     date_create,
+                    prty_id,
                     prty_name,
+                    wrtp_id,
                     wrtp_name,
                     Address,
                     AddressForFind,
@@ -147,7 +155,8 @@ class WHDocumentsDoc4 extends MainFormModel
                     state_prchs,
                     strg_id,
                     storage,
-                    control', 'safe'),
+                    control,
+                    note', 'safe'),
         );
     }
     
@@ -161,7 +170,9 @@ class WHDocumentsDoc4 extends MainFormModel
             'number' => '',
             'date' => '',
             'date_create' => '',
+            'prty_id' => '',
             'prty_name' => '',
+            'wrtp_id' => '',
             'wrtp_name' => '',
             'Address' => '',
             'AddressForFind' => '',
@@ -194,6 +205,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'strg_id' => '',
             'storage' => '',
             'control' => '',
+            'note' => '',
         );
     }
     
