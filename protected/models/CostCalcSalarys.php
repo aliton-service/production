@@ -24,7 +24,8 @@ class CostCalcSalarys extends MainFormModel
                         c.date_accept,
                         e.EmployeeName";
         
-        $From = "\nFrom CostCalcSalarys c left join Employees_ForObj_v e on (c.empl_id = e.Employee_id)";
+        $From = "\nFrom CostCalcSalarys c
+                    left join Employees_ForObj_v e on (c.empl_id = e.Employee_id)";
         
         $Where = "\nWhere c.delDate is null";
         

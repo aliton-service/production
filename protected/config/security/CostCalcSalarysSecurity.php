@@ -26,6 +26,7 @@ return array(
                 'CreateCostCalcSalarys',
                 'UpdateCostCalcSalarys',
                 'DeleteCostCalcSalarys',
+                'AcceptCostCalcSalarys',
                 ),
         ),
 
@@ -64,6 +65,13 @@ return array(
         'DeleteCostCalcSalarys' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'DeleteCostCalcSalarys',
+            'bizRule' => null,
+            'data' => null,
+        ),
+
+        'AcceptCostCalcSalarys' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'AcceptCostCalcSalarys',
             'bizRule' => null,
             'data' => null,
         ),

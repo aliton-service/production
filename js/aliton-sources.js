@@ -3174,6 +3174,54 @@ Sources.SourcePriceListDetails =
     }
 };
 
+Sources.SourceCostCalcSalarys =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ccsl_id', type: 'int'},
+        {name: 'calc_id', type: 'int'},
+        {name: 'empl_id', type: 'int'},
+        {name: 'price', type: 'float'},
+        {name: 'date_accept', type: 'date'},
+        {name: 'EmployeeName', type: 'string'},
+    ],
+    id: 'ccsl_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=CostCalcSalarys',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceCostCalcDocuments =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Docid', type: 'int'},
+        {name: 'DocName', type: 'string'},
+        {name: 'DocNumber', type: 'int'},
+        {name: 'DocDate', type: 'date'},
+        {name: 'DocSum', type: 'float'},
+        {name: 'DocState', type: 'string'},
+    ],
+    id: 'Docid',
+    url: '/index.php?r=CostCalcDocuments/Index',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 Sources.SourceReceiptReasons =
 {
     datatype: "json",

@@ -114,8 +114,8 @@
         });
         
         $('#btnPrintInventory').on('click', function(){
-            var invDate = CurrentRowData.date
-            var invDateStr = ('0' + invDate.getDate()).slice(-2) + '.' + ('0' + (invDate.getMonth() + 1)).slice(-2) + '.' + invDate.getFullYear() 
+            var invDate = CurrentRowData.date;
+            var invDateStr = ('0' + invDate.getDate()).slice(-2) + '.' + ('0' + (invDate.getMonth() + 1)).slice(-2) + '.' + invDate.getFullYear();
             window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
                 'ReportName' => '/Склад/Остатки на складе',
                 'Ajax' => false,
