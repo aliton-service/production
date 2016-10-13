@@ -17,6 +17,14 @@ class WHDocumentsDoc3 extends MainFormModel
     public $wrtp_name;
     public $strg_id;
     public $storage;
+    public $in_number;
+    public $in_date;
+    public $wrtp_id;
+    public $rtrs_id;
+    public $rtrs_name;
+    public $in_docm_id;
+    public $splr_id;
+    
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -38,9 +46,13 @@ class WHDocumentsDoc3 extends MainFormModel
                         a.ac_date,
                         dbo.FIO(strm_name) strm_name,
                         a.achs_id,
+                        d.wrtp_id,
                         d.wrtp_name,
                         d.strg_id,
-                        d.storage";
+                        d.storage,
+                        d.rtrs_id,
+                        d.in_docm_id,
+                        d.splr_id";
         $From = "\nFrom WHDocuments_NonTreb_v d left join ActionHistory_v a on (d.achs_id = a.achs_id)";
         $Where = "\nWhere d.dctp_id = 3";
         $Order = "\nOrder by a.ac_date";
@@ -57,6 +69,7 @@ class WHDocumentsDoc3 extends MainFormModel
     public function rules()
     {
         return array(
+            array('number, date, splr_id, in_docm_id, wrtp_id, strg_id', 'required'),
             array('docm_id,
                     objc_id,
                     dctp_id,
@@ -71,7 +84,14 @@ class WHDocumentsDoc3 extends MainFormModel
                     achs_id,
                     wrtp_name,
                     strg_id,
-                    storage,', 'safe'),
+                    storage,
+                    in_number,
+                    in_date,
+                    wrtp_id,
+                    rtrs_id,
+                    rtrs_name,
+                    in_docm_id,
+                    splr_id', 'safe'),
         );
     }
     
@@ -82,8 +102,8 @@ class WHDocumentsDoc3 extends MainFormModel
             'objc_id' => '',
             'dctp_id' => '',
             'dctp_name' => '',
-            'number' => '', 
-            'date' => '',
+            'number' => 'Номер', 
+            'date' => 'Дата',
             'date_create' => '',
             'note' => '',
             'splr_name' => '',
@@ -91,8 +111,15 @@ class WHDocumentsDoc3 extends MainFormModel
             'strm_name' => '',
             'achs_id' => '',
             'wrtp_name' => '',
-            'strg_id' => '',
+            'strg_id' => 'Склад',
             'storage' => '',
+            'in_number' => '',
+            'in_date' => '',
+            'wrtp_id' => 'Вид работ',
+            'rtrs_id' => '',
+            'rtrs_name' => '',
+            'in_docm_id' => 'Документ',
+            'splr_id' => 'Поставщик',
         );
     }
     

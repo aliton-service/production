@@ -482,6 +482,22 @@
                     $('#btnUndo').jqxButton({disabled: (CurrentRowDataDoc2 == undefined || Achs_id == null)});
                     $('#btnRefresh').jqxButton({disabled: false});
                 break;
+                case 3:
+                    $('#btnCreate').jqxButton({disabled: false});
+                    if (CurrentRowDataDoc3 != undefined)
+                        Achs_id = CurrentRowDataDoc3.achs_id; 
+                    $('#btnDel').jqxButton({disabled: (CurrentRowDataDoc3 == undefined || Achs_id != null)});
+                    $('#btnUndo').jqxButton({disabled: (CurrentRowDataDoc3 == undefined || Achs_id == null)});
+                    $('#btnRefresh').jqxButton({disabled: false});
+                break;
+                case 4:
+                    $('#btnCreate').jqxButton({disabled: false});
+                    if (CurrentRowDataDoc4 != undefined)
+                        Achs_id = CurrentRowDataDoc3.achs_id; 
+                    $('#btnDel').jqxButton({disabled: (CurrentRowDataDoc4 == undefined || Achs_id != null)});
+                    $('#btnUndo').jqxButton({disabled: (CurrentRowDataDoc4 == undefined || Achs_id == null)});
+                    $('#btnRefresh').jqxButton({disabled: false});
+                break;
             }
             
         };
@@ -679,10 +695,15 @@
                             $('#btnInfo').jqxButton({disabled: false});
                         }
                         
-                        $('#btnRefresh').jqxButton({disabled: false});
+                        SetStateButton();
                     });
                     
                     $("#Grid3").on("bindingcomplete", function (event) {
+                        if (WHReestr.Docm_id > 0) {
+                            Aliton.SelectRowByIdVirtual('docm_id', WHReestr.Docm_id, '#Grid3', false);
+                            Docm_id = 0;
+                            return;
+                        }
                         if (CurrentRowDataDoc3 != undefined) 
                             Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc3.docm_id, '#Grid3', false);
                         else
@@ -732,10 +753,15 @@
                             $('#btnInfo').jqxButton({disabled: false});
                         }
                         
-                        $('#btnRefresh').jqxButton({disabled: false});
+                        SetStateButton();
                     });
                     
                     $("#Grid4").on("bindingcomplete", function (event) {
+                        if (WHReestr.Docm_id > 0) {
+                            Aliton.SelectRowByIdVirtual('docm_id', WHReestr.Docm_id, '#Grid4', false);
+                            Docm_id = 0;
+                            return;
+                        }
                         if (CurrentRowDataDoc4 != undefined) 
                             Aliton.SelectRowByIdVirtual('docm_id', CurrentRowDataDoc4.docm_id, '#Grid4', false);
                         else
@@ -981,13 +1007,17 @@
             }
         };
                     
-        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 2 });
+        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 3 });
         SelectTab();
         
         $("#btnCreate").on('click', function(){
             if (Dctp_id == 1)
                 $('#WHDocumentsDialog').jqxWindow({width: 600, height: 400, position: 'center', isModal: true});
             if (Dctp_id == 2)
+                $('#WHDocumentsDialog').jqxWindow({width: 600, height: 360, position: 'center', isModal: true});
+            if (Dctp_id == 3)
+                $('#WHDocumentsDialog').jqxWindow({width: 600, height: 360, position: 'center', isModal: true});
+            if (Dctp_id == 4)
                 $('#WHDocumentsDialog').jqxWindow({width: 600, height: 360, position: 'center', isModal: true});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
@@ -1022,9 +1052,21 @@
                     Idx = $('#Grid1').jqxGrid('selectedrowindex');
                     NextDocm_id = $('#Grid1').jqxGrid('getcellvalue', (Idx + 1), 'docm_id');
                     break;
-                case 2: Docm_id = CurrentRowDataDoc2.docm_id; break;
-                case 3: Docm_id = CurrentRowDataDoc3.docm_id; break;
-                case 4: Docm_id = CurrentRowDataDoc4.docm_id; break;
+                case 2: 
+                    Docm_id = CurrentRowDataDoc2.docm_id;
+                    Idx = $('#Grid2').jqxGrid('selectedrowindex');
+                    NextDocm_id = $('#Grid2').jqxGrid('getcellvalue', (Idx + 1), 'docm_id');
+                    break;
+                case 3:
+                    Docm_id = CurrentRowDataDoc3.docm_id;
+                    Idx = $('#Grid3').jqxGrid('selectedrowindex');
+                    NextDocm_id = $('#Grid3').jqxGrid('getcellvalue', (Idx + 1), 'docm_id');
+                    break;
+                case 4:
+                    Docm_id = CurrentRowDataDoc4.docm_id;
+                    Idx = $('#Grid4').jqxGrid('selectedrowindex');
+                    NextDocm_id = $('#Grid4').jqxGrid('getcellvalue', (Idx + 1), 'docm_id');
+                    break;
                 case 5: Docm_id = CurrentRowDataDoc8.docm_id; break;
                 case 6: Docm_id = CurrentRowDataDoc7.docm_id; break;
                 case 7: Docm_id = CurrentRowDataDoc9.docm_id; break;

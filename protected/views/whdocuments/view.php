@@ -10,7 +10,11 @@
             InNumber: <?php echo json_encode($model->in_number); ?>,
             WorkType: <?php echo json_encode($model->wrtp_name); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
+            BestDate: Aliton.DateConvertToJs('<?php echo $model->best_date; ?>'),
+            PromiseDate: Aliton.DateConvertToJs('<?php echo $model->date_promise; ?>'),
             InDate: Aliton.DateConvertToJs('<?php echo $model->in_date; ?>'),
+            Deadline: Aliton.DateConvertToJs('<?php echo $model->deadline; ?>'),
+            ReceiptDate: Aliton.DateConvertToJs('<?php echo $model->ReceiptDate; ?>'),
             Address: <?php echo json_encode($model->Address); ?>,
             Storage: <?php echo json_encode($model->storage); ?>,
             Strg_id: <?php echo json_encode($model->strg_id); ?>,
@@ -24,7 +28,15 @@
             Objc_id: <?php echo json_encode($model->objc_id); ?>,
             Dmnd_id: <?php echo json_encode($model->dmnd_id); ?>,
             Demand_id: <?php echo json_encode($model->demand_id); ?>,
-            ReturnReason: <?php echo json_encode($model->rtrs_name); ?>
+            ReturnReason: <?php echo json_encode($model->rtrs_name); ?>,
+            PriorName: <?php echo json_encode($model->prty_name); ?>,
+            RcrsName: <?php echo json_encode($model->rcrs_name); ?>,
+            ReceiptNumber: <?php echo json_encode($model->ReceiptNumber); ?>,
+            DmndEmplName: <?php echo json_encode($model->dmnd_empl_name); ?>,
+            PromiseEmplName: <?php echo json_encode($model->prms_empl_name); ?>,
+            CreateEmplName: <?php echo json_encode($model->empl_name); ?>,
+            EmplChangeName: <?php echo json_encode($model->EmplChangeName); ?>,
+            DateChange: Aliton.DateConvertToJs('<?php echo $model->date_change; ?>'),
         };
         
         WHDoc.Refresh = function() {
@@ -53,6 +65,16 @@
                     WHDocuments.InNumber = Res.in_number;
                     WHDocuments.ReturnReason = Res.rtrs_name;
                     WHDocuments.InDate = Aliton.DateConvertToJs(Res.in_date),
+                    WHDocuments.PriorName = Res.prty_name;
+                    WHDocuments.RcrsName = Res.rcrs_name;
+                    WHDocuments.ReceiptNumber = Res.ReceiptNumber;
+                    WHDocuments.DmndEmplName = Res.dmnd_empl_name;
+                    WHDocuments.PromiseEmplName = Res.prms_empl_name;
+                    WHDocuments.CreateEmplName = Res.empl_name;
+                    WHDocuments.EmplChangeName = Res.EmplChangeName;
+                    WHDocuments.DateChange = Aliton.DateConvertToJs(Res.date_change);
+                    WHDocuments.BestDate = Aliton.DateConvertToJs(Res.best_date);
+                    WHDocuments.PromiseDate = Aliton.DateConvertToJs(Res.date_promise);
                     SetValueControls(parseInt(WHDocuments.Dctp_id));
                     $("#btnRefreshDetails").click();
                     SetStateButtons();
@@ -254,6 +276,26 @@
                     if (WHDocuments.InNumber != '') $("#edInNumber3").jqxInput('val', WHDocuments.InNumber);
                     if (WHDocuments.Date != null ) $("#edDate3").jqxDateTimeInput('val', WHDocuments.Date);
                     break;
+                case 4:
+                    if (WHDocuments.Number != '') $("#edNumber4").jqxInput('val', WHDocuments.Number);
+                    if (WHDocuments.Date != null ) $("#edDate4").jqxDateTimeInput('val', WHDocuments.Date);
+                    if (WHDocuments.WorkType != '') $("#edWorkType4").jqxInput('val', WHDocuments.WorkType);
+                    if (WHDocuments.PriorName != '') $("#edPrior4").jqxInput('val', WHDocuments.PriorName);
+                    if (WHDocuments.Storage != '') $("#edStorage4").jqxInput('val', WHDocuments.Storage);
+                    if (WHDocuments.BestDate != null ) $("#edBestDate4").jqxDateTimeInput('val', WHDocuments.BestDate);
+                    if (WHDocuments.Deadline != null ) $("#edDeadline4").jqxDateTimeInput('val', WHDocuments.Deadline);
+                    if (WHDocuments.PromiseDate != null ) $("#edPromiseDate4").jqxDateTimeInput('val', WHDocuments.PromiseDate);
+                    if (WHDocuments.Address != '') $("#edAddress4").jqxInput('val', WHDocuments.Address);
+                    if (WHDocuments.RcrsName != '') $("#edRcrsName4").jqxInput('val', WHDocuments.RcrsName);
+                    if (WHDocuments.ReceiptDate != null ) $("#edReceiptDate4").jqxDateTimeInput('val', WHDocuments.ReceiptDate);
+                    if (WHDocuments.ReceiptNumber != '') $("#edReceiptNumber4").jqxInput('val', WHDocuments.ReceiptNumber);
+                    if (WHDocuments.DmndEmplName != '') $("#edDmndEmplName4").jqxInput('val', WHDocuments.DmndEmplName);
+                    if (WHDocuments.PromiseEmplName != '') $("#edPromiseEmplName4").jqxInput('val', WHDocuments.PromiseEmplName);
+                    if (WHDocuments.CreateEmplName != '') $("#edCreateEmplName4").jqxInput('val', WHDocuments.CreateEmplName);
+                    if (WHDocuments.EmplChangeName != '') $("#edEmplChangeName4").jqxInput('val', WHDocuments.EmplChangeName);
+                    if (WHDocuments.DateChange != '') $("#edLastChangeDate4").jqxDateTimeInput('val', WHDocuments.DateChange);
+                    
+                    break;
             };
         };
         
@@ -291,7 +333,26 @@
                     $("#edInNumber3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
                     $("#edInDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     SetValueControls(3);
-                    
+                break;
+                case 3:
+                    $("#edNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
+                    $("#edDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edWorkType4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edPrior4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edStorage4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edBestDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edDeadline4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edPromiseDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edAddress4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edRcrsName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 140}));
+                    $("#edReceiptDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edReceiptNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100}));
+                    $("#edDmndEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
+                    $("#edPromiseEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
+                    $("#edCreateEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
+                    $("#edEmplChangeName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edLastChangeDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    SetValueControls(4);
                 break;
             };
         };
@@ -304,18 +365,22 @@
             case 1: DefaultTabIndex = 0; break;
             case 2: DefaultTabIndex = 1; break;
             case 3: DefaultTabIndex = 2; break;
+            case 4: DefaultTabIndex = 3; break;
         }
         
         $('#edTabs').jqxTabs({ width: '100%', height: 250, initTabContent: initWidgets, selectedItem: DefaultTabIndex });
-        
+        if (DefaultTabIndex == 3)
+            $('#edTabs').jqxTabs({ height: 280});
         $("#edTabs .jqx-tabs-title:eq(0)").css("display", "none");
         $("#edTabs .jqx-tabs-title:eq(1)").css("display", "none");
         $("#edTabs .jqx-tabs-title:eq(2)").css("display", "none");
+        $("#edTabs .jqx-tabs-title:eq(3)").css("display", "none");
         
         switch(parseInt(WHDocuments.Dctp_id)) {
             case 1: $("#edTabs .jqx-tabs-title:eq(0)").css("display", "block"); break;
             case 2: $("#edTabs .jqx-tabs-title:eq(1)").css("display", "block"); break;
             case 3: $("#edTabs .jqx-tabs-title:eq(2)").css("display", "block"); break;
+            case 4: $("#edTabs .jqx-tabs-title:eq(3)").css("display", "block"); break;
         }
         
         if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);       
@@ -351,6 +416,15 @@
                     $("#btnPrintClient").jqxButton({disabled: true});
                     $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
                     $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                case 3:
+                    $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#btnPurchase").jqxButton({disabled: true});
+                    $("#btnPrint").jqxButton({disabled: false});
+                    $("#btnPrintClient").jqxButton({disabled: true});
+                    $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edDelayReason").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
                 break;
             };
         };
@@ -360,7 +434,10 @@
         $("#btnEdit").on('click', function(){
             if ($("#btnEdit").jqxButton('disabled')) return;
             if (WHDocuments.Docm_id !== null) {
-                $('#WHDocumentsDialog').jqxWindow({width: 600, height: 400, position: 'center'});
+                if (WHDocuments.Dctp_id == 4)
+                    $('#WHDocumentsDialog').jqxWindow({width: 700, height: 400, position: 'center'});
+                else
+                    $('#WHDocumentsDialog').jqxWindow({width: 600, height: 400, position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Update')) ?>,
                     type: 'POST',
@@ -602,6 +679,22 @@
                     }
                     
                 break;
+                case 3:
+                    if ($('#edStoreman').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите кладовщика', 'Для подтверждения документа, требуется выбрать кладовщика.');
+                        return; 
+                    }
+                break;
+                case 4:
+                    if ($('#edStoreman').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите кладовщика', 'Для подтверждения документа, требуется выбрать кладовщика.');
+                        return; 
+                    }
+                    if ($('#edMaster').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите мастера', 'Для подтверждения документа, требуется выбрать мастера.');
+                        return; 
+                    }
+                break;
             };
             
             if (WHDocuments.Docm_id !== null) {
@@ -708,6 +801,16 @@
                         'ReportName' => '/Склад/Накладная на приход от поставщика'
                     ))); ?>;
                 break;
+                case 2:
+                    url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                        'ReportName' => '/Склад/Накладная на возврат'
+                    ))); ?>;
+                break;
+                case 3:
+                    url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                        'ReportName' => '/Склад/Накладная на возврат поставщику'
+                    ))); ?>;
+                break;
             }
             
             if (url != '') {
@@ -777,6 +880,11 @@
         <li style="margin-left: 20px;">
             <div style="height: 20px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладная на возврат поставщику</div>
+            </div>
+        </li>
+        <li style="margin-left: 20px;">
+            <div style="height: 20px; margin-top: 5px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Требование на выдачу</div>
             </div>
         </li>
     </ul>
@@ -866,6 +974,64 @@
                 <div class="row-column">Дата</div>
                 <div class="row-column"><div id="edInDate3"></div></div>
             </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+        <div style="padding: 10px;">
+            <div class="row">
+                <div class="row-column" style="width: 100px">Номер</div>
+                <div class="row-column"><input type="text" id="edNumber4" readonly="readonly" /></div>
+                <div class="row-column">Дата</div>
+                <div class="row-column"><div id="edDate4"></div></div>
+                <div class="row-column"><b><?php echo $model->status; ?></b></div>
+                <div class="row-column"><b><?php echo $model->state_prchs; ?></b></div>
+            </div>
+            <div class="row">
+                <div class="row-column" style="width: 100px">Вид работ</div>
+                <div class="row-column"><input type="text" id="edWorkType4" readonly="readonly" /></div>
+                <div class="row-column" style="width: 100px">Срочность</div>
+                <div class="row-column"><input type="text" id="edPrior4" readonly="readonly" /></div>
+                <div class="row-column">Склад</div>
+                <div class="row-column"><input type="text" id="edStorage4" readonly="readonly" /></div>
+            </div>
+            <div class="row">
+                <div><div class="row-column">Дата получения</div></div>
+                <div style="clear: both"></div>
+                <div>
+                    <div class="row-column" style="width: 100px">Желаемая</div>
+                    <div class="row-column"><div id="edBestDate4"></div></div>
+                    <div class="row-column">Предельная</div>
+                    <div class="row-column"><div id="edDeadline4"></div></div>
+                    <div class="row-column">Обещанная</div>
+                    <div class="row-column"><div id="edPromiseDate4"></div></div>
+                </div>
+            </div>
+            <div class="row">
+                
+                    
+                        <div class="row-column" style="width: 100px">Адрес объекта</div>
+                        <div class="row-column"><input type="text" id="edAddress4" readonly="readonly" /></div>
+                        <div class="row-column" style="width: 100px">Основание</div>
+                        <div class="row-column"><input type="text" id="edRcrsName4" readonly="readonly" /></div>
+                        <div class="row-column">Дата</div>
+                        <div class="row-column"><div id="edReceiptDate4"></div></div>
+                        <div class="row-column">Номер</div>
+                        <div class="row-column"><input type="text" id="edReceiptNumber4" readonly="readonly" /></div>
+            </div>
+            <div class="row">
+                        <div class="row-column">Затребовал</div>
+                        <div class="row-column"><input type="text" id="edDmndEmplName4" readonly="readonly" /></div>
+                        <div class="row-column">Разрешил</div>
+                        <div class="row-column"><input type="text" id="edPromiseEmplName4" readonly="readonly" /></div>
+                        <div class="row-column">Выписал</div>
+                        <div class="row-column"><input type="text" id="edCreateEmplName4" readonly="readonly" /></div>
+            </div>        
+            <div class="row">
+                <div class="row-column">Последний изменивший</div>
+                <div class="row-column"><input type="text" id="edEmplChangeName4" readonly="readonly" /></div>
+                <div class="row-column">Дата посл. изменения</div>
+                <div class="row-column"><div id="edLastChangeDate4"></div></div>
+            </div>    
         </div>
     </div>
 </div>
