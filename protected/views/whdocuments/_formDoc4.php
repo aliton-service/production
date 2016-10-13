@@ -6,15 +6,21 @@
             Docm_id: <?php echo json_encode($model->docm_id); ?>,
             Dctp_id: <?php echo json_encode($model->dctp_id); ?>,
             Objc_id: <?php echo json_encode($model->objc_id); ?>,
+            Address: <?php echo json_encode($model->Address); ?>,
             Number: <?php echo json_encode($model->number); ?>,
             WorkType: <?php echo json_encode($model->wrtp_name); ?>,
             Wrtp_id: <?php echo json_encode($model->wrtp_id); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
+            BestDate: Aliton.DateConvertToJs('<?php echo $model->best_date; ?>'),
+            Deadline: Aliton.DateConvertToJs('<?php echo $model->deadline; ?>'),
             Storage: <?php echo json_encode($model->storage); ?>,
             Strg_id: <?php echo json_encode($model->strg_id); ?>,
             Achs_id: <?php echo json_encode($model->achs_id); ?>,
             Note: <?php echo json_encode($model->note); ?>,
             Prior_id: <?php echo json_encode($model->prty_id); ?>,
+            Rcrs_id: <?php echo json_encode($model->rcrs_id); ?>,
+            ReceiptDate: Aliton.DateConvertToJs('<?php echo $model->ReceiptDate; ?>'),
+            ReceiptNumber: <?php echo json_encode($model->ReceiptNumber); ?>,
             
         };
         
@@ -27,6 +33,7 @@
         });
         var AddressBinding = true;
         var InDocmBinding = false;
+        
         // Инициализация источников данных
         var DataWorkTypes = new $.jqx.dataAdapter(Sources.SourceWorkTypes);
         var DataStorages = new $.jqx.dataAdapter(Sources.SourceStoragesList);
@@ -40,24 +47,23 @@
                 return data;
             },
         });
-         
-        
-        
-        
+        var DataReceiptReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReceiptReasons)); 
         
         $('#FindTrebsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings));
         $('#btnCancelWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnSaveWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true}));
-        
         $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
         $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.Date, formatString: 'dd.MM.yyyy'}));
         $("#edWorkTypeEdit").jqxComboBox({ source: DataWorkTypes, width: '200', height: '25px', displayMember: "name", valueMember: "wrtp_id"});
         $("#edStorageEdit").jqxComboBox({ source: DataStorages, width: '150', height: '25px', displayMember: "storage", valueMember: "storage_id"});
-        $("#edPriorEdit").jqxComboBox({ source: DataPrior, width: '200', height: '25px', displayMember: "DemandPrior", valueMember: "DemandPrior_id"});
-        
-        
-        
+        $("#edPriorEdit").jqxComboBox({ source: DataPrior, width: '130', height: '25px', displayMember: "DemandPrior", valueMember: "DemandPrior_id"});
+        $("#edBestDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.BestDate, formatString: 'dd.MM.yyyy'}));
+        $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.Deadline, formatString: 'dd.MM.yyyy'}));
+        $("#edAddressEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 550} ));
         $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '100%', minLength: 1});
+        $("#edReceiptReasonEdit").jqxComboBox({ source: DataReceiptReasons, width: '200', height: '25px', displayMember: "name", valueMember: "rcrs_id"});
+        $("#edReceiptDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.ReceiptDate, formatString: 'dd.MM.yyyy'}));
+        $("#edReceiptNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
         
         $('#btnCancelWHDocuments').on('click', function(){
             $('#WHDocumentsDialog').jqxWindow('close');
@@ -100,6 +106,10 @@
         if (WHDocuments.Strg_id !== null) $("#edStorageEdit").jqxComboBox('val', WHDocuments.Strg_id);
         if (WHDocuments.Number !== null) $("#edNumberEdit").jqxInput('val', WHDocuments.Number);
         if (WHDocuments.Note !== null) $("#edNoteEdit").jqxTextArea('val', WHDocuments.Note);
+        if (WHDocuments.Address !== null) $("#edAddressEdit").jqxInput('val', WHDocuments.Address);
+        if (WHDocuments.Rcrs_id !== null) $("#edReceiptReasonEdit").jqxComboBox('val', WHDocuments.Rcrs_id);
+        if (WHDocuments.ReceiptDate !== null) $("#edReceiptDateEdit").jqxDateTimeInput('val', WHDocuments.ReceiptDate);
+        if (WHDocuments.ReceiptNumber !== null) $("#edReceiptNumberEdit").jqxInput('val', WHDocuments.ReceiptNumber);
         
         
         $('#btnFindTreb').on('click', function(){
@@ -143,7 +153,7 @@
 
 <div class="row">
     <div class="row-column" style="width: 100px">Номер</div>
-    <div class="row-column"><input id="edNumberEdit" name="WHDocuments[number]" /><?php echo $form->error($model, 'number'); ?></div>
+    <div class="row-column"><input id="edNumberEdit" readonly="readonly" name="WHDocuments[number]" /><?php echo $form->error($model, 'number'); ?></div>
     <div class="row-column">Дата</div>
     <div class="row-column"><div id="edDateEdit" name="WHDocuments[date]"></div><?php echo $form->error($model, 'date'); ?></div>
     <div class="row-column"><b><?php echo $model->status; ?></b></div>
@@ -154,9 +164,38 @@
     <div class="row-column"><div id="edWorkTypeEdit" name="WHDocuments[wrtp_id]"></div><?php echo $form->error($model, 'wrtp_id'); ?></div>
     <div class="row-column" style="">Склад</div>
     <div class="row-column"><div id="edStorageEdit" name="WHDocuments[strg_id]"></div><?php echo $form->error($model, 'strg_id'); ?></div>
-    <div class="row-column" style="">Срочность</div>
-    <div class="row-column"><div id="edPriorEdit" name="WHDocuments[prty_id]"></div><?php echo $form->error($model, 'prty_id'); ?></div>
+    
 </div>
+<div class="row" style="border: 1px solid #e0e0e0; background-color: #e0e0e0">
+    <div >
+        <div><div class="row-column">Дата получения</div></div>
+        <div style="clear: both"></div>
+        <div>
+            <div class="row-column" style="">Срочность</div>
+            <div class="row-column"><div id="edPriorEdit" name="WHDocuments[prty_id]"></div><?php echo $form->error($model, 'prty_id'); ?></div>
+            <div class="row-column">Желаемая</div>
+            <div class="row-column"><div id="edBestDateEdit" name="WHDocuments[best_date]"></div><?php echo $form->error($model, 'best_date'); ?></div>
+            <div class="row-column" style="float: right">
+                <div class="row-column">Предельная</div>
+                <div class="row-column"><div id="edDeadlineEdit" name="WHDocuments[deadline]"></div><?php echo $form->error($model, 'deadline'); ?></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <input type="hidden" name="WHDocuments[objc_id]" value="<?php echo $model->objc_id; ?>"/>
+    <div class="row-column" style="width: 100px">Адрес объекта</div>
+    <div class="row-column" ><input id="edAddressEdit" readonly="readonly" /><?php echo $form->error($model, 'objc_id'); ?></div>
+</div>
+<div class="row">
+    <div class="row-column" style="width: 100px">Основание</div>
+    <div class="row-column"><div id="edReceiptReasonEdit" name="WHDocuments[rcrs_id]"></div><?php echo $form->error($model, 'rcrs_id'); ?></div>
+    <div class="row-column">Дата</div>
+    <div class="row-column"><div id="edReceiptDateEdit" name="WHDocuments[ReceiptDate]"></div><?php echo $form->error($model, 'ReceiptDate'); ?></div>
+    <div class="row-column">Номер</div>
+    <div class="row-column"><div id="edReceiptNumberEdit" name="WHDocuments[ReceiptNumber]"></div><?php echo $form->error($model, 'ReceiptNumber'); ?></div>
+</div>
+    
 
 
 

@@ -435,7 +435,7 @@
             if ($("#btnEdit").jqxButton('disabled')) return;
             if (WHDocuments.Docm_id !== null) {
                 if (WHDocuments.Dctp_id == 4)
-                    $('#WHDocumentsDialog').jqxWindow({width: 700, height: 400, position: 'center'});
+                    $('#WHDocumentsDialog').jqxWindow({width: 690, height: 400, position: 'center'});
                 else
                     $('#WHDocumentsDialog').jqxWindow({width: 600, height: 400, position: 'center'});
                 $.ajax({
@@ -446,6 +446,7 @@
                         Docm_id: WHDocuments.Docm_id,
                         Dctp_id: WHDocuments.Dctp_id,
                         InNumber: WHDocuments.InNumber
+                        
                     },
                     success: function(Res) {
                         Res = JSON.parse(Res);

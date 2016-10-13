@@ -28,6 +28,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $ReceiptDate;
     public $strm_name;
     public $mstr_name;
+    public $rcrs_id;
     public $rcrs_name;
     public $StatusFull;
     public $status;
@@ -80,6 +81,7 @@ class WHDocumentsDoc4 extends MainFormModel
                         d.ReceiptDate,
                         dbo.FIO(a.strm_name) as strm_name,
                         dbo.FIO(a.empl_to_name) as mstr_name,
+                        d.rcrs_id,
                         d.rcrs_name,
                         d.StatusFull,
                         d.status,
@@ -189,6 +191,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'ReceiptDate' => '',
             'strm_name' => '',
             'mstr_name' => '',
+            'rcrs_id' => '',
             'rcrs_name' => '',
             'StatusFull' => '',
             'status' => '',

@@ -3173,3 +3173,23 @@ Sources.SourcePriceListDetails =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceReceiptReasons =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'rcrs_id', type: 'int'},
+        {name: 'name', type: 'string'},
+    ],
+    id: 'cwdt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ReceiptReasons',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
