@@ -14,7 +14,7 @@
         var Dctp_id;
         var DateStart = new Date();
         var DateEnd = new Date();
-        DateStart.setMonth(DateStart.getMonth() - 9);
+        DateStart.setMonth(DateStart.getMonth() - 1);
         
         var DataSuppliers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListSuppliersMin));
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees));
