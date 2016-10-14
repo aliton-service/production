@@ -61,6 +61,7 @@ class WHDocumentsDoc8 extends MainFormModel
     public function rules()
     {
         return array(
+            array('strg_id, in_strg_id, date', 'required'),
             array('docm_id,
                     objc_id,
                     dctp_id,
@@ -89,7 +90,7 @@ class WHDocumentsDoc8 extends MainFormModel
             'dctp_id' => '',
             'dctp_name' => '',
             'number' => '', 
-            'date' => '',
+            'date' => 'Дата',
             'date_create' => '',
             'note' => '',
             'rtrs_name' => '',
@@ -97,9 +98,9 @@ class WHDocumentsDoc8 extends MainFormModel
             'strm_name' => '',
             'achs_id' => '',
             'wrtp_name' => '',
-            'strg_id' => '',
+            'strg_id' => 'Склад источник',
             'storage' => '',
-            'in_strg_id' => '',
+            'in_strg_id' => 'Склад приемник',
             'in_storage' => '',
         );
     }

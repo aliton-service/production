@@ -89,6 +89,9 @@ class WHDocumentsController extends Controller
             if ($model->validate()) {
                 $modelUpd = new WHDocuments();
                 $modelUpd->attributes = $model->attributes;
+                if ((int)$model->dctp_id == 4) {
+                    $modelUpd->SP_INSERT_NAME = 'INSERT_Treb';
+                }
                 $Result =  $modelUpd->Insert();
                 $ObjectResult['result'] = 1;
                 $ObjectResult['id'] = $Result['docm_id'];
@@ -114,7 +117,24 @@ class WHDocumentsController extends Controller
                 ), true);
             break;
             case 4:
+                $model->objc_id = 7337;
+                $model->Address = 'ЗИП ул., д.нет , СПб';
                 $ObjectResult['html'] = $this->renderPartial('_formDoc4', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 8:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc8', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 7:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc7', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 9:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc9', array(
                     'model' => $model,
                 ), true);
             break;
@@ -159,6 +179,9 @@ class WHDocumentsController extends Controller
             if ($model->validate()) {
                 $modelUpd = new WHDocuments();
                 $modelUpd->attributes = $model->attributes;
+                if ((int)$model->dctp_id == 4) {
+                    $modelUpd->SP_UPDATE_NAME = 'UPDATE_Treb';
+                }
                 $modelUpd->Update();
                 $ObjectResult['result'] = 1;
                 $ObjectResult['id'] = $modelUpd->docm_id;
@@ -191,6 +214,21 @@ class WHDocumentsController extends Controller
             break;            
             case 4:
                 $ObjectResult['html'] = $this->renderPartial('_formDoc4', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 8:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc8', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 7:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc7', array(
+                    'model' => $model,
+                ), true);
+            break;
+            case 9:
+                $ObjectResult['html'] = $this->renderPartial('_formDoc9', array(
                     'model' => $model,
                 ), true);
             break;

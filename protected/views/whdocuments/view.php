@@ -18,6 +18,8 @@
             Address: <?php echo json_encode($model->Address); ?>,
             Storage: <?php echo json_encode($model->storage); ?>,
             Strg_id: <?php echo json_encode($model->strg_id); ?>,
+            InStorage: <?php echo json_encode($model->in_storage); ?>,
+            InStrg_id: <?php echo json_encode($model->in_strg_id); ?>,
             Supplier: <?php echo json_encode($model->splr_name); ?>,
             DocKind: <?php echo json_encode($model->dckn_name); ?>,
             Jrdc: <?php echo json_encode($model->JuridicalPerson); ?>,
@@ -56,7 +58,9 @@
                     WHDocuments.Date =  Aliton.DateConvertToJs(Res.date);
                     WHDocuments.Address =  Res.Address;
                     WHDocuments.Strg_id = Res.strg_id;
+                    WHDocuments.InStrg_id = Res.in_strg_id;
                     WHDocuments.Storage =  Res.storage;
+                    WHDocuments.InStorage =  Res.in_storage;
                     WHDocuments.Supplier =  Res.splr_name;
                     WHDocuments.DocKind =  Res.dckn_name;
                     WHDocuments.Jrdc =  Res.JuridicalPerson;
@@ -294,8 +298,30 @@
                     if (WHDocuments.CreateEmplName != '') $("#edCreateEmplName4").jqxInput('val', WHDocuments.CreateEmplName);
                     if (WHDocuments.EmplChangeName != '') $("#edEmplChangeName4").jqxInput('val', WHDocuments.EmplChangeName);
                     if (WHDocuments.DateChange != '') $("#edLastChangeDate4").jqxDateTimeInput('val', WHDocuments.DateChange);
-                    
+                    if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
                     break;
+                case 8:
+                    if (WHDocuments.Storage != '') $("#edStorage8").jqxInput('val', WHDocuments.Storage);
+                    if (WHDocuments.InStorage != '') $("#edInStorage8").jqxInput('val', WHDocuments.InStorage);
+                    if (WHDocuments.Number != '') $("#edNumber8").jqxInput('val', WHDocuments.Number);
+                    if (WHDocuments.Date != null ) $("#edDate8").jqxDateTimeInput('val', WHDocuments.Date);
+                    if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
+                break;
+                case 7:
+                    if (WHDocuments.Storage != '') $("#edStorage7").jqxInput('val', WHDocuments.Storage);
+                    if (WHDocuments.Number != '') $("#edNumber7").jqxInput('val', WHDocuments.Number);
+                    if (WHDocuments.Date != null ) $("#edDate7").jqxDateTimeInput('val', WHDocuments.Date);
+                    if (WHDocuments.Address != '') $("#edAddress7").jqxInput('val', WHDocuments.Address);
+                    if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
+                break;
+                case 9:
+                    if (WHDocuments.Number != '') $("#edNumber9").jqxInput('val', WHDocuments.Number);
+                    if (WHDocuments.Date != null ) $("#edDate9").jqxDateTimeInput('val', WHDocuments.Date);
+                    if (WHDocuments.Storage != '') $("#edStorage9").jqxInput('val', WHDocuments.Storage);
+                    if (WHDocuments.DmndEmplName != '') $("#edDmndEmplName9").jqxInput('val', WHDocuments.DmndEmplName);
+                    if (WHDocuments.CreateEmplName != '') $("#edCreateEmplName9").jqxInput('val', WHDocuments.CreateEmplName);
+                    if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
+                break;
             };
         };
         
@@ -340,19 +366,41 @@
                     $("#edWorkType4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
                     $("#edPrior4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
                     $("#edStorage4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-                    $("#edBestDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-                    $("#edDeadline4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-                    $("#edPromiseDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edBestDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edDeadline4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edPromiseDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.DatePromise , readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edAddress4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
                     $("#edRcrsName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 140}));
-                    $("#edReceiptDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edReceiptDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.ReceiptDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edReceiptNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100}));
                     $("#edDmndEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
                     $("#edPromiseEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
                     $("#edCreateEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
                     $("#edEmplChangeName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-                    $("#edLastChangeDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edLastChangeDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', value: WHDocuments.DateChange, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     SetValueControls(4);
+                break;
+                case 4:
+                    $("#edStorage8").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edInStorage8").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edNumber8").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
+                    $("#edDate8").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    SetValueControls(8);
+                break;
+                case 5:
+                    $("#edStorage7").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edNumber7").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
+                    $("#edDate7").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edAddress7").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 350}));
+                    SetValueControls(7);
+                break;
+                case 6:
+                    $("#edNumber9").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
+                    $("#edDate9").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edStorage9").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edDmndEmplName9").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edCreateEmplName9").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    SetValueControls(9);
                 break;
             };
         };
@@ -366,6 +414,9 @@
             case 2: DefaultTabIndex = 1; break;
             case 3: DefaultTabIndex = 2; break;
             case 4: DefaultTabIndex = 3; break;
+            case 8: DefaultTabIndex = 4; break;
+            case 7: DefaultTabIndex = 5; break;
+            case 9: DefaultTabIndex = 6; break;
         }
         
         $('#edTabs').jqxTabs({ width: '100%', height: 250, initTabContent: initWidgets, selectedItem: DefaultTabIndex });
@@ -375,12 +426,18 @@
         $("#edTabs .jqx-tabs-title:eq(1)").css("display", "none");
         $("#edTabs .jqx-tabs-title:eq(2)").css("display", "none");
         $("#edTabs .jqx-tabs-title:eq(3)").css("display", "none");
+        $("#edTabs .jqx-tabs-title:eq(4)").css("display", "none");
+        $("#edTabs .jqx-tabs-title:eq(5)").css("display", "none");
+        $("#edTabs .jqx-tabs-title:eq(6)").css("display", "none");
         
         switch(parseInt(WHDocuments.Dctp_id)) {
             case 1: $("#edTabs .jqx-tabs-title:eq(0)").css("display", "block"); break;
             case 2: $("#edTabs .jqx-tabs-title:eq(1)").css("display", "block"); break;
             case 3: $("#edTabs .jqx-tabs-title:eq(2)").css("display", "block"); break;
             case 4: $("#edTabs .jqx-tabs-title:eq(3)").css("display", "block"); break;
+            case 8: $("#edTabs .jqx-tabs-title:eq(4)").css("display", "block"); break;
+            case 7: $("#edTabs .jqx-tabs-title:eq(5)").css("display", "block"); break;
+            case 9: $("#edTabs .jqx-tabs-title:eq(6)").css("display", "block"); break;
         }
         
         if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);       
@@ -426,6 +483,36 @@
                     $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
                     $("#edDelayReason").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
                 break;
+                case 4:
+                    $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#btnPurchase").jqxButton({disabled: true});
+                    $("#btnPrint").jqxButton({disabled: false});
+                    $("#btnPrintClient").jqxButton({disabled: true});
+                    $("#edMaster").jqxComboBox({disabled: true});
+                    $("#edDelayReason").jqxComboBox({disabled: true});
+                break;
+                case 5:
+                    $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#btnPurchase").jqxButton({disabled: true});
+                    $("#btnPrint").jqxButton({disabled: false});
+                    $("#btnPrintClient").jqxButton({disabled: true});
+                    $("#edMaster").jqxComboBox({disabled: true});
+                    $("#edDelayReason").jqxComboBox({disabled: true});
+                break;
+                case 6:
+                    $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#btnPurchase").jqxButton({disabled: true});
+                    $("#btnPrint").jqxButton({disabled: false});
+                    $("#btnPrintClient").jqxButton({disabled: true});
+                    $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
+                    $("#edDelayReason").jqxComboBox({disabled: true});
+                break;
             };
         };
         
@@ -435,7 +522,13 @@
             if ($("#btnEdit").jqxButton('disabled')) return;
             if (WHDocuments.Docm_id !== null) {
                 if (WHDocuments.Dctp_id == 4)
-                    $('#WHDocumentsDialog').jqxWindow({width: 700, height: 400, position: 'center'});
+                    $('#WHDocumentsDialog').jqxWindow({width: 700, height: 460, position: 'center'});
+                else if (WHDocuments.Dctp_id == 8)
+                    $('#WHDocumentsDialog').jqxWindow({width: 600, height: 270, position: 'center'});
+                else if (WHDocuments.Dctp_id == 7)
+                    $('#WHDocumentsDialog').jqxWindow({width: 600, height: 270, position: 'center'});
+                else if (WHDocuments.Dctp_id == 9)
+                    $('#WHDocumentsDialog').jqxWindow({width: 600, height: 300, position: 'center'});
                 else
                     $('#WHDocumentsDialog').jqxWindow({width: 600, height: 400, position: 'center'});
                 $.ajax({
@@ -446,6 +539,7 @@
                         Docm_id: WHDocuments.Docm_id,
                         Dctp_id: WHDocuments.Dctp_id,
                         InNumber: WHDocuments.InNumber
+                        
                     },
                     success: function(Res) {
                         Res = JSON.parse(Res);
@@ -695,6 +789,30 @@
                         return; 
                     }
                 break;
+                case 8:
+                    
+                    if ($('#edStoreman').val() == '') {
+                        
+                        Aliton.ShowErrorMessage('Выберите кладовщика', 'Для подтверждения документа, требуется выбрать кладовщика.');
+                        return; 
+                    }
+                break;
+                case 7:
+                    if ($('#edStoreman').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите кладовщика', 'Для подтверждения документа, требуется выбрать кладовщика.');
+                        return; 
+                    }
+                break;
+                case 9:
+                    if ($('#edStoreman').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите кладовщика', 'Для подтверждения документа, требуется выбрать кладовщика.');
+                        return; 
+                    }
+                    if ($('#edMaster').val() == '') {
+                        Aliton.ShowErrorMessage('Выберите мастера', 'Для подтверждения документа, требуется выбрать мастера.');
+                        return; 
+                    }
+                break;
             };
             
             if (WHDocuments.Docm_id !== null) {
@@ -811,6 +929,26 @@
                         'ReportName' => '/Склад/Накладная на возврат поставщику'
                     ))); ?>;
                 break;
+                case 4:
+                    url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                        'ReportName' => '/Склад/Требование на выдачу'
+                    ))); ?>;
+                break;
+                case 8:
+                    url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                        'ReportName' => '/Склад/Накладная на перемещение'
+                    ))); ?>;
+                break;
+                case 7:
+                    url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                        'ReportName' => '/Склад/Накладная из ПРЦ'
+                    ))); ?>;
+                break;
+                case 9:
+                    url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                        'ReportName' => '/Склад/Накладная на возврат мастеру'
+                    ))); ?>;
+                break;
             }
             
             if (url != '') {
@@ -885,6 +1023,21 @@
         <li style="margin-left: 20px;">
             <div style="height: 20px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Требование на выдачу</div>
+            </div>
+        </li>
+        <li style="margin-left: 20px;">
+            <div style="height: 20px; margin-top: 5px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение с склада на склад</div>
+            </div>
+        </li>
+        <li style="margin-left: 20px;">
+            <div style="height: 20px; margin-top: 5px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение из ПРЦ на СКЛАД</div>
+            </div>
+        </li>
+        <li style="margin-left: 20px;">
+            <div style="height: 20px; margin-top: 5px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Наклданая во возврат мастеру</div>
             </div>
         </li>
     </ul>
@@ -1032,6 +1185,64 @@
                 <div class="row-column">Дата посл. изменения</div>
                 <div class="row-column"><div id="edLastChangeDate4"></div></div>
             </div>    
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+        <div style="padding: 10px;">
+            <div class="row">
+                <div class="row-column" style="width: 110px;">Склад источник</div>
+                <div class="row-column"><input type="text" id="edStorage8" readonly="readonly" /></div>
+            </div>
+            <div class="row" >
+                <div class="row-column" style="width: 110px;">Склад приемник</div>
+                <div class="row-column"><input type="text" id="edInStorage8" readonly="readonly" /></div>
+            </div>
+            <div class="row">
+                <div class="row-column" style="width: 110px">Номер</div>
+                <div class="row-column"><input type="text" id="edNumber8" readonly="readonly" /></div>
+                <div class="row-column">Дата</div>
+                <div class="row-column"><div id="edDate8"></div></div>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+        <div style="padding: 10px;">
+            <div class="row">
+                <div class="row-column" style="width: 110px">Номер</div>
+                <div class="row-column"><input type="text" id="edNumber7" readonly="readonly" /></div>
+                <div class="row-column">Дата</div>
+                <div class="row-column"><div id="edDate7"></div></div>
+            </div>
+            <div class="row">
+                <div class="row-column" style="width: 110px;">Склад источник</div>
+                <div class="row-column"><input type="text" id="edStorage7" readonly="readonly" /></div>
+            </div>
+            <div class="row">
+                <div class="row-column" style="width: 110px">Адрес объекта</div>
+                <div class="row-column"><input type="text" id="edAddress7" readonly="readonly" /></div>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: hidden;">
+        <div style="padding: 10px;">
+            <div class="row">
+                <div class="row-column" style="width: 110px">Номер</div>
+                <div class="row-column"><input type="text" id="edNumber9" readonly="readonly" /></div>
+                <div class="row-column">Дата</div>
+                <div class="row-column"><div id="edDate9"></div></div>
+            </div>
+            <div class="row">
+                <div class="row-column" style="width: 110px;">Склад источник</div>
+                <div class="row-column"><input type="text" id="edStorage9" readonly="readonly" /></div>
+            </div>
+            <div class="row">
+                <div class="row-column">Мастер</div>
+                <div class="row-column"><input type="text" id="edDmndEmplName9" readonly="readonly" /></div>
+            </div>
+            <div class="row">
+                <div class="row-column">Создал</div>
+                <div class="row-column"><input type="text" id="edCreateEmplName9" readonly="readonly" /></div>
+            </div>
         </div>
     </div>
 </div>
