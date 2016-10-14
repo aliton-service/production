@@ -493,7 +493,7 @@
                 case 4:
                     $('#btnCreate').jqxButton({disabled: false});
                     if (CurrentRowDataDoc4 != undefined)
-                        Achs_id = CurrentRowDataDoc3.achs_id; 
+                        Achs_id = CurrentRowDataDoc4.achs_id; 
                     $('#btnDel').jqxButton({disabled: (CurrentRowDataDoc4 == undefined || Achs_id != null)});
                     $('#btnUndo').jqxButton({disabled: (CurrentRowDataDoc4 == undefined || Achs_id == null)});
                     $('#btnRefresh').jqxButton({disabled: false});
@@ -1045,7 +1045,7 @@
             }
         };
                     
-        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 3 });
+        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 4 });
         SelectTab();
         
         $("#btnCreate").on('click', function(){

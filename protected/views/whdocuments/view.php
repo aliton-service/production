@@ -946,7 +946,7 @@
                 break;
                 case 9:
                     url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
-                        'ReportName' => '/Склад/Накладная из ПРЦ'
+                        'ReportName' => '/Склад/Накладная на возврат мастеру'
                     ))); ?>;
                 break;
             }
