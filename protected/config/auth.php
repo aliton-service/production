@@ -302,6 +302,18 @@ return array_merge(
                 'AdminSystemStatements',
             ),
         ),
+        
+        'SeniorEconomist' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Старший экономист',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'AdminSystemComplexitys',
+                'AdminSystemStatements',
+            ),
+        ),
 
         'Administrator' => array(
             'type' => CAuthItem::TYPE_ROLE,
