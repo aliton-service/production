@@ -13,28 +13,84 @@
             Demand_id: '<?php echo $model->Demand_id; ?>',
             sum_materials_low: '<?php echo $model->sum_materials_low; ?>',
             date_ready: Aliton.DateConvertToJs('<?php echo $model->date_ready; ?>'),
-            spec_condt: '<?php echo $model->spec_condt; ?>',
-            note: '<?php echo $model->note; ?>',
+            spec_condt: <?php echo json_encode($model->spec_condt); ?>,
+            note: <?php echo json_encode($model->note); ?>,
             EmplAgreed: '<?php echo $model->EmplAgreed; ?>',
-//            CostCalcType: '<?php // echo $model->CostCalcType; ?>',
         };
         
-        $("#DateCC").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalcDetails.date, formatString: 'dd.MM.yyyy', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 90}));
-        $("#group_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
-        $("#workname").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
+        $("#DateCCDetails").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalcDetails.date, formatString: 'dd.MM.yyyy H:mm', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 130}));
+        $("#group_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 210 }));
+        $("#workname").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
-        $("#jrdc_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
+        $("#jrdc_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
         $("#RegistrationName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 160 }));
-        $("#best_date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalcDetails.best_date, formatString: 'dd.MM.yyyy', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 90}));
-        $("#Demand_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 87 }));
-        $("#sum_materials_low").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
-        $("#date_ready").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalcDetails.date_ready, formatString: 'dd.MM.yyyy', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 90}));
+        $("#best_date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalcDetails.best_date, formatString: 'dd.MM.yyyy H:mm', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 130}));
+        $("#Demand_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 75 }));
+        $("#sum_materials_low").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 87 }));
+        $("#date_ready").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalcDetails.date_ready, formatString: 'dd.MM.yyyy H:mm', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 130}));
         
-        $("#spec_condt").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 500, height: 55 }));
-        $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 500, height: 55 }));
+        $("#spec_condt").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 550, height: 55 }));
+        $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 550, height: 55 }));
         $("#EmplAgreed").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
         
         $('#btnEditCostCalcDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnAcceptCostCalcDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 250 }));
+        $('#btnCancelAcceptCostCalcDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        $('#btnEditCostCalcDetails').on('click', function(){
+            $('#CostCalcDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 730, width: 635, position: 'center' }));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('CostCalculationDetails/Update')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    calc_id: CostCalcDetails.calc_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyCostCalcDetailsDialog").html(Res.html);
+                    $('#CostCalcDetailsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        $('#btnAcceptCostCalcDetails').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('CostCalculationDetails/Accept')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    calc_id: CostCalcDetails.calc_id,
+                },
+                success: function(Res) {
+                    
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        
+        $('#btnCancelAcceptCostCalcDetails').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('CostCalculationDetails/Cancelaccept')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    calc_id: CostCalcDetails.calc_id,
+                },
+                success: function(Res) {
+                    
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         
         if (CostCalcDetails.group_name !== '') $("#group_name").jqxInput('val', CostCalcDetails.group_name);
         if (CostCalcDetails.workname !== '') $("#workname").jqxInput('val', CostCalcDetails.workname);
@@ -51,13 +107,13 @@
         
         
         
-        $('#jqxTabsCostCalcDetails').jqxTabs({ width: '99%', height: 290 });
-        $('#jqxTabsCostCalcDetails').jqxTabs({ selectedItem: 2 }); 
+        $('#jqxTabsCostCalcDetails').jqxTabs({ width: '99%', height: 287 });
+//        $('#jqxTabsCostCalcDetails').jqxTabs({ selectedItem: 2 }); 
         
 
 
 
-        
+        /* Оборудование и расходные материалы */
         
         /* Текущая выбранная строка данных */
         var CurrentRowDataCCE;
@@ -233,7 +289,7 @@
         
         
         
-        
+        /* Перечень работ */
         
         /* Текущая выбранная строка данных */
         var CurrentRowDataCCW;
@@ -401,7 +457,7 @@
         
         
         
-        
+        /* Документы */
         
         /* Текущая выбранная строка данных */
         var CurrentRowDataCCD;
@@ -422,22 +478,29 @@
                 height: '200',
                 source: CostCalcDocumentsDataAdapter,
                 columns: [
-                    { text: 'Наименование', datafield: 'DocName',  filtercondition: 'CONTAINS', width: 250},
-                    { text: 'Номер', datafield: 'DocNumber',  filtercondition: 'CONTAINS', width: 80},
-                    { text: 'Дата док-та', datafield: 'DocDate', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
-                    { text: 'Сумма', datafield: 'DocSum', filtercondition: 'CONTAINS', width: 80 },
+                    { text: 'Наименование', datafield: 'DocName',  filtercondition: 'CONTAINS', width: 190},
+                    { text: 'Номер', datafield: 'DocNumber',  filtercondition: 'CONTAINS', width: 70},
+                    { text: 'Дата док-та', datafield: 'DocDate', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Сумма', datafield: 'DocSum', filtercondition: 'CONTAINS', width: 70 },
                     { text: 'Статус', datafield: 'DocState', filtercondition: 'CONTAINS', width: 90 },
+                    { text: 'Дата статуса', datafield: 'DocDateState', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Вид работ', datafield: 'DocWrtpName', filtercondition: 'CONTAINS', width: 120 },
+                    { text: 'Приоритет', datafield: 'DocPrior', filtercondition: 'CONTAINS', width: 90 },
+                    { text: 'Предельная дата', datafield: 'DocDeadline', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Дата принятия', datafield: 'DocAccept', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Создал', datafield: 'DocUserCreate', filtercondition: 'CONTAINS', width: 180 },
+                    { text: 'Юр. лицо', datafield: 'DocJuridicalPerson', filtercondition: 'CONTAINS', width: 180 },
                 ]
             })
         );
         
         $('#AddCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $('#EditCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        $('#MoreInfoCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         $('#RefreshCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         $('#DelCostCalcDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         
         var CheckButtonCCD = function() {
-            $('#EditCostCalcDocuments').jqxButton({disabled: !(CurrentRowDataCCD != undefined)})
+            $('#MoreInfoCostCalcDocuments').jqxButton({disabled: !(CurrentRowDataCCD != undefined)})
             $('#RefreshCostCalcDocuments').jqxButton({disabled: !(CurrentRowDataCCD != undefined)})
             $('#DelCostCalcDocuments').jqxButton({disabled: !(CurrentRowDataCCD != undefined)})
         };
@@ -468,10 +531,10 @@
         });
         
         $('#CostCalcDocumentsGrid').on('rowdoubleclick', function (event) { 
-            $("#EditCostCalcDocuments").click();
+            $("#MoreInfoCostCalcDocuments").click();
         });
         
-        $('#EditCostCalcDocuments').on('click', function(){
+        $('#MoreInfoCostCalcDocuments').on('click', function(){
             $('#CostCalcDetailsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 640, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('CostCalcDocuments/Update')) ?>,
@@ -525,7 +588,7 @@
         
         
         
-        
+        /* Заработная плата */
         
         /* Текущая выбранная строка данных */
         var CurrentRowDataCCS;
@@ -696,133 +759,138 @@
     );
 ?>
 
-<div class="row-column" style="margin: 0;">
-    <div class="row">
-        <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id='DateCC'></div></div>
-        <div class="row-column">Наименование: <input readonly id='group_name' type="text"></div>
+<div style="margin: 0; padding: 0; background-color: #F2F2F2;">
+    <div class="row-column" style="margin: 0;">
+        <div class="row">
+            <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id='DateCCDetails'></div></div>
+            <div class="row-column">Наименование: <input readonly id='group_name' type="text"></div>
+        </div>
+
+        <div class="row">
+            <div class="row-column">Вид работ: <input readonly id='workname' type="text"></div>
+            <div class="row-column">Сотрудник: <input readonly id='empl_name' type="text"></div>
+        </div>
+
+        <div class="row">
+            <div class="row-column">Юр. лицо: <input readonly id='jrdc_name' type="text"></div>
+            <div class="row-column"><input readonly id='RegistrationName' type="text"></div>
+        </div>
+
+        <div class="row">
+            <div class="row-column" style="margin-top: 2px;">Желаемая дата получения: </div><div class="row-column"><div id='best_date'></div></div>
+            <div class="row-column">Номер заявки: <input readonly id='Demand_id' type="text"></div>
+        </div>
+
+        <div class="row">
+            <div class="row-column">Расходные материалы: <input readonly id='sum_materials_low' type="text"></div>
+            <div class="row-column" style="margin-top: 2px;">Дата согл. с рук.: </div><div class="row-column"><div id='date_ready'></div></div>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="row-column">Вид работ: <input readonly id='workname' type="text"></div>
-        <div class="row-column">Сотрудник: <input readonly id='empl_name' type="text"></div>
-    </div>
+    <div class="row" style="margin: 0; padding-top: 10px;"><div class="row-column">Техническое задание: <textarea readonly id="spec_condt"></textarea></div></div>
+    <div class="row" style="margin: 0;"><div class="row-column">Примечание: <textarea readonly id="note"></textarea></div></div>
+    <div class="row"><div class="row-column">Согласовал: <input readonly id='EmplAgreed' type="text"></div></div>
 
     <div class="row">
-        <div class="row-column">Юр. лицо: <input readonly id='jrdc_name' type="text"></div>
-        <div class="row-column"><input readonly id='RegistrationName' type="text"></div>
+        <div class="row-column"><input type="button" value="Изменить" id='btnEditCostCalcDetails'/></div>
+        <div class="row-column"><input type="button" value="Согласовано с руководителем" id='btnAcceptCostCalcDetails'/></div>
+        <div class="row-column"><input type="button" value="Отмена согл." id='btnCancelAcceptCostCalcDetails'/></div>
+    </div>   
+
+
+
+
+    <div id='jqxWidgetCostCalcDetails' style="margin-top: 5px;">
+        <div id='jqxTabsCostCalcDetails'>
+            <ul>
+                <li>
+                    <div style="height: 15px; margin-top: 3px;">
+                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                            Оборудование и расходные материалы
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div style="height: 15px; margin-top: 3px;">
+                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                            Перечень работ
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div style="height: 15px; margin-top: 3px;">
+                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                            Документы
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div style="height: 15px; margin-top: 3px;">
+                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                            Заработная плата
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+
+            <div id='contentCostCalcEquips' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+                <div style="margin-top: 5px;">
+                    <div id="CostCalcEquipsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+                    <div class="row" style="margin-top: 3px; padding-left: 0;">
+                        <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcEquips' /></div>
+                        <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcEquips' /></div>
+                        <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcEquips'/></div>
+                        <div class="row-column"><input type="button" value="Работа" id='AddWorkCostCalcEquips'/></div>
+                        <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcEquips' /></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id='contentCostCalcWorks' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+                <div style="margin-top: 5px;">
+                    <div id="CostCalcWorksGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+                    <div class="row" style="margin-top: 3px; padding-left: 0;">
+                        <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcWorks' /></div>
+                        <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcWorks' /></div>
+                        <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcWorks'/></div>
+                        <div class="row-column"><input type="button" value="Для заказчика" id='btnPrintCostCalcWorks'/></div>
+                        <div class="row-column"><input type="button" value="Для нас" id='btnPrintForUsCostCalcWorks'/></div>
+                        <div class="row-column" style="margin-left: 480px;"><input type="button" value="Удалить" id='DelCostCalcWorks' /></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id='contentCostCalcDocuments' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+                <div style="margin-top: 5px;">
+                    <div id="CostCalcDocumentsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+                    <div class="row" style="margin-top: 3px; padding-left: 0;">
+                        <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcDocuments' /></div>
+                        <div class="row-column"><input type="button" value="Инфо" id='MoreInfoCostCalcDocuments' /></div>
+                        <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcDocuments'/></div>
+                        <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcDocuments' /></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id='contentCostCalcSalarys' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+                <div style="margin-top: 5px;">
+                    <div id="CostCalcSalarysGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+                    <div class="row" style="margin-top: 3px; padding-left: 0;">
+                        <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcSalarys' /></div>
+                        <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcSalarys' /></div>
+                        <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcSalarys'/></div>
+                        <div class="row-column"><input type="button" value="Подтвердить" id='AcceptCostCalcSalarys'/></div>
+                        <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcSalarys' /></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="row">
-        <div class="row-column" style="margin-top: 2px;">Желаемая дата получения: </div><div class="row-column"><div id='best_date'></div></div>
-        <div class="row-column">Номер заявки: <input readonly id='Demand_id' type="text"></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Расходные материалы: <input readonly id='sum_materials_low' type="text"></div>
-        <div class="row-column" style="margin-top: 2px;">Дата согл. с рук.: </div><div class="row-column"><div id='date_ready'></div></div>
-    </div>
+
 </div>
-
-<div class="row" style="margin-top: 7px;"><div class="row-column">Техническое задание: <textarea readonly id="spec_condt"></textarea></div></div>
-<div class="row" style="margin-top: 0;"><div class="row-column">Примечание: <textarea readonly id="note"></textarea></div></div>
-<div class="row"><div class="row-column">Согласовал: <input readonly id='EmplAgreed' type="text"></div></div>
-
-<div class="row">
-    <div class="row-column"><input type="button" value="Изменить" id='btnEditCostCalcDetails'/></div>
-</div>   
-
-
-
-
-<div id='jqxWidgetCostCalcDetails' style="margin-top: 5px;">
-    <div id='jqxTabsCostCalcDetails'>
-        <ul>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Оборудование и расходные материалы
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Перечень работ
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Документы
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Заработная плата
-                    </div>
-                </div>
-            </li>
-        </ul>
-        
-        
-        <div id='contentCostCalcEquips' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-            <div style="margin-top: 5px;">
-                <div id="CostCalcEquipsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                <div class="row" style="margin-top: 3px; padding-left: 0;">
-                    <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcEquips' /></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcEquips' /></div>
-                    <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcEquips'/></div>
-                    <div class="row-column"><input type="button" value="Работа" id='AddWorkCostCalcEquips'/></div>
-                    <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcEquips' /></div>
-                </div>
-            </div>
-        </div>
-        
-        <div id='contentCostCalcWorks' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-            <div style="margin-top: 5px;">
-                <div id="CostCalcWorksGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                <div class="row" style="margin-top: 3px; padding-left: 0;">
-                    <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcWorks' /></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcWorks' /></div>
-                    <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcWorks'/></div>
-                    <div class="row-column"><input type="button" value="Для заказчика" id='btnPrintCostCalcWorks'/></div>
-                    <div class="row-column"><input type="button" value="Для нас" id='btnPrintForUsCostCalcWorks'/></div>
-                    <div class="row-column" style="margin-left: 480px;"><input type="button" value="Удалить" id='DelCostCalcWorks' /></div>
-                </div>
-            </div>
-        </div>
-        
-        <div id='contentCostCalcDocuments' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-            <div style="margin-top: 5px;">
-                <div id="CostCalcDocumentsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                <div class="row" style="margin-top: 3px; padding-left: 0;">
-                    <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcDocuments' /></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcDocuments' /></div>
-                    <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcDocuments'/></div>
-                    <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcDocuments' /></div>
-                </div>
-            </div>
-        </div>
-        
-        <div id='contentCostCalcSalarys' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-            <div style="margin-top: 5px;">
-                <div id="CostCalcSalarysGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                <div class="row" style="margin-top: 3px; padding-left: 0;">
-                    <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcSalarys' /></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcSalarys' /></div>
-                    <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcSalarys'/></div>
-                    <div class="row-column"><input type="button" value="Подтвердить" id='AcceptCostCalcSalarys'/></div>
-                    <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcSalarys' /></div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-</div>
-
 
 
 
@@ -830,7 +898,7 @@
     <div id="CostCalcDetailsDialogHeader">
         <span id="CostCalcDetailsHeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="padding: 10px;" id="DialogCostCalcDetailsContent">
+    <div style="padding: 10px; background-color: #F2F2F2;" id="DialogCostCalcDetailsContent">
         <div style="" id="BodyCostCalcDetailsDialog"></div>
     </div>
 </div>

@@ -3208,9 +3208,77 @@ Sources.SourceCostCalcDocuments =
         {name: 'DocDate', type: 'date'},
         {name: 'DocSum', type: 'float'},
         {name: 'DocState', type: 'string'},
+        {name: 'DocDateState', type: 'date'},
+        {name: 'DocWrtpName', type: 'string'},
+        {name: 'DocPrior', type: 'string'},
+        {name: 'DocDeadline', type: 'date'},
+        {name: 'DocAccept', type: 'date'},
+        {name: 'DocUserCreate', type: 'string'},
+        {name: 'DocJuridicalPerson', type: 'string'},
     ],
     id: 'Docid',
     url: '/index.php?r=CostCalcDocuments/Index',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceRegistrations =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Registration_id', type: 'int'},
+        {name: 'RegistrationName', type: 'string'},
+    ],
+    id: 'Registration_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Registrations',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceCostCalcWorkTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ccwt_id', type: 'int'},
+        {name: 'ccwt_name', type: 'string'},
+    ],
+    id: 'ccwt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=CostCalcWorkTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceContactInfoForCostCalc =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'info_id', type: 'int'},
+        {name: 'ObjectGr_id', type: 'int'},
+        {name: 'FIO', type: 'string'},
+    ],
+    id: 'info_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContactInfoForCostCalc',
     type: 'POST',
     root: 'Rows',
     cache: false,

@@ -1,6 +1,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+        
         var CostCalcSalary = {
             ccsl_id: '<?php echo $model->ccsl_id; ?>',
             empl_id: '<?php echo $model->empl_id; ?>',

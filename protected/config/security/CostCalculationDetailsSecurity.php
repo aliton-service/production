@@ -26,6 +26,8 @@ return array(
                 'CreateCostCalculationDetails',
                 'UpdateCostCalculationDetails',
                 'DeleteCostCalculationDetails',
+                'AcceptCostCalculationDetails',
+                'CancelacceptCostCalculationDetails',
                 ),
         ),
 
@@ -64,6 +66,20 @@ return array(
         'DeleteCostCalculationDetails' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'DeleteCostCalculationDetails',
+            'bizRule' => null,
+            'data' => null,
+        ),
+
+        'AcceptCostCalculationDetails' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'AcceptCostCalculationDetails',
+            'bizRule' => null,
+            'data' => null,
+        ),
+
+        'CancelacceptCostCalculationDetails' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'CancelacceptCostCalculationDetails',
             'bizRule' => null,
             'data' => null,
         ),

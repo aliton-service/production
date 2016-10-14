@@ -58,6 +58,7 @@
         
         
         $('#btnRefreshOGCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnCopyOGCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnEditOGCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnDelOGCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
@@ -76,21 +77,6 @@
         
         var groupsrenderer = function (text, group, expanded, data) 
         {
-//            console.log('data.groupcolumn.datafield = ' + data.groupcolumn.datafield);
-//            console.log(data);
-            
-//            if (data.groupcolumn.datafield == 'number') 
-//            {
-//                var number = OGCostCalculationsDataAdapter.formatNumber(group, data.groupcolumn.cellsformat);
-//                var text = data.groupcolumn.text + ': ' + number;
-//                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + '</span>';
-//            } 
-//            else if (data.groupcolumn.datafield == 'group_name')
-//            {
-//                var group_name = OGCostCalculationsDataAdapter.formatNumber(group, data.groupcolumn.cellsformat);
-//                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + group_name + '</span>';
-//            }
-
             if (data.subItems.length > 0) {
                 var groupname = data.subItems[0]['group_name'];
                 return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + ' (' + groupname + ')</span>';
@@ -126,7 +112,6 @@
                     { text: '', align: 'center', name: 'Group1' },
                     { text: 'Отправлено заказчику', align: 'center', name: 'Sent' },
                 ],
-                //groups: ['number', 'group_name']
                 groups: ['number']
         }));
         
@@ -200,8 +185,9 @@
         </div>
     </div>
     <div class="row-column"><input type="button" value="Изменить" id='btnEditOGCostCalculations'/></div>
-    <div class="row-column"><input type="button" value="Удалить" id='btnDelOGCostCalculations'/></div>
+    <div class="row-column"><input type="button" value="Копировать" id='btnCopyOGCostCalculations'/></div>
     <div class="row-column"><input type="button" value="Обновить" id='btnRefreshOGCostCalculations'/></div>
+    <div class="row-column" style="margin-left: 300px;"><input type="button" value="Удалить" id='btnDelOGCostCalculations'/></div>
 </div>   
 
 

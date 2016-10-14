@@ -14,6 +14,7 @@ class CostCalculationDetails extends MainFormModel
     public $info_id = null;
     public $best_date = null;
     public $note = null;
+    public $jrdc_id = null;
     public $jrdc_name = null;
     public $koef_indirect = null;
     public $discount = null;
@@ -47,13 +48,14 @@ class CostCalculationDetails extends MainFormModel
     public $ccwt_id = null;
     public $ccwt_proc = null;
     public $repr_id = null;
+    public $EmplChange = null;
 
     function __construct($scenario = '') {
         parent::__construct($scenario);
 
-        $this->SP_INSERT_NAME = 'INSERT_CostCalculationDetails';
-        $this->SP_UPDATE_NAME = 'UPDATE_CostCalculationDetails';
-        $this->SP_DELETE_NAME = 'DELETE_CostCalculationDetails';
+        $this->SP_INSERT_NAME = 'INSERT_CostCalculations';
+        $this->SP_UPDATE_NAME = 'UPDATE_CostCalculations';
+        $this->SP_DELETE_NAME = 'DELETE_CostCalculations';
 
         $Select = "\nSelect
                         cc.calc_id,
@@ -68,7 +70,8 @@ class CostCalculationDetails extends MainFormModel
                         cc.info_id,
                         cc.best_date,
                         cc.note,
-                        cc.jrdc_id, j.JuridicalPerson jrdc_name,
+                        cc.jrdc_id, 
+                        j.JuridicalPerson jrdc_name,
                         cc.koef_indirect,
                         cc.discount,
                         cc.date_annul,
@@ -141,9 +144,9 @@ class CostCalculationDetails extends MainFormModel
     public function rules()
     {
         return array(
-//			array('date, strg_id', 'required'),
-            array('calc_id, cgrp_id', 'numerical', 'integerOnly'=>true),
-            array('calc_id, cgrp_id', 'safe'),
+            array('date, regs_id, empl_id', 'required'),
+            array('calc_id, cgrp_id, regs_id, PaymentType_id, ObjectGr_id, info_id, empl_id, jrdc_id, Demand_id', 'numerical', 'integerOnly'=>true),
+            array('calc_id, date, regs_id, group_name, ccwt_id, PaymentType_id, ObjectGr_id, info_id, empl_id, jrdc_id, Demand_id, ContrNumS, ContrDateS, spec_condt, note', 'safe'),
         );
     }
 
@@ -165,6 +168,7 @@ class CostCalculationDetails extends MainFormModel
             'info_id' => 'info_id',
             'best_date' => 'best_date',
             'note' => 'note',
+            'jrdc_id' => 'jrdc_id',
             'jrdc_name' => 'jrdc_name',
             'koef_indirect' => 'koef_indirect',
             'discount' => 'discount',

@@ -1,6 +1,6 @@
 <?php
 
-class CostCalculationDetailsController extends Controller
+class TotalCostController extends Controller
 {
     public $layout = '//layouts/column2';
     public $title = '';
@@ -17,27 +17,27 @@ class CostCalculationDetailsController extends Controller
         return array(
             array('allow',
                 'actions'=>array('index', 'view'),
-                'roles'=>array('ViewCostCalculationDetails'),
+                'roles'=>array('ViewTotalCost'),
             ),
             array('allow', 
                 'actions'=>array('create'),
-                'roles'=>array('CreateCostCalculationDetails'),
+                'roles'=>array('CreateTotalCost'),
             ),
             array('allow', 
                 'actions'=>array('update'),
-                'roles'=>array('UpdateCostCalculationDetails'),
+                'roles'=>array('UpdateTotalCost'),
             ),
             array('allow', 
                 'actions'=>array('delete'),
-                'roles'=>array('DeleteCostCalculationDetails'),
+                'roles'=>array('DeleteTotalCost'),
             ),
             array('allow',
                 'actions'=>array('accept'),
-                'roles'=>array('AcceptCostCalculationDetails'),
+                'roles'=>array('AcceptTotalCost'),
             ),
             array('allow',
                 'actions'=>array('cancelaccept'),
-                'roles'=>array('CancelacceptCostCalculationDetails'),
+                'roles'=>array('CancelacceptTotalCost'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
@@ -47,7 +47,7 @@ class CostCalculationDetailsController extends Controller
 
     public function actionCreate()
     {
-        $model = new CostCalculationDetails();
+        $model = new TotalCost();
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
@@ -73,7 +73,7 @@ class CostCalculationDetailsController extends Controller
 
     public function actionUpdate()
     {
-        $model = new CostCalculationDetails();
+        $model = new TotalCost();
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
@@ -110,7 +110,7 @@ class CostCalculationDetailsController extends Controller
         );
         
         if (isset($_POST['calc_id'])) {
-            $model = new CostCalculationDetails();
+            $model = new TotalCost();
             $model->getModelPk($_POST['calc_id']);
             if ($model->validate()) {
                 $model->Delete();
@@ -133,7 +133,7 @@ class CostCalculationDetailsController extends Controller
         
         if (isset($_GET['calc_id']))
         {
-            $model = new CostCalculationDetails();
+            $model = new TotalCost();
             $model->getModelPk($_GET['calc_id']);
             $this->title = $model->CostCalcType;
             
@@ -151,7 +151,7 @@ class CostCalculationDetailsController extends Controller
     public function actionAccept() 
     {
         if (isset($_POST['calc_id'])) {
-            $model = new CostCalculationDetails();
+            $model = new TotalCost();
             $model->getModelPk($_POST['calc_id']);
             
             if ($model->date_ready == false || $model->date_ready == null) {
@@ -169,7 +169,7 @@ class CostCalculationDetailsController extends Controller
     public function actionCancelaccept() 
     {
         if (isset($_POST['calc_id'])) {
-            $model = new CostCalculationDetails();
+            $model = new TotalCost();
             $model->getModelPk($_POST['calc_id']);
             
             if ($model->date_ready !== false || $model->date_ready !== null) {

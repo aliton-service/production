@@ -24,9 +24,11 @@ class JuridicalsMin extends MainFormModel
                             jur.Jrdc_Id,
                             jur.JuridicalPerson ";
             $from = "From Juridicals jur";
-
+            $Order = "\nOrder by jur.JuridicalPerson";
+            
             $this->Query->setSelect($select);
             $this->Query->setFrom($from);
+            $this->Query->setOrder($Order);
 
             // Инициализация первичного ключа
             $this->KeyFiled = 'jur.Jrdc_Id';

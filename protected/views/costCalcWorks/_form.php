@@ -1,6 +1,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+        
         var CostCalcWork = {
             ccwr_id: '<?php echo $model->ccwr_id; ?>',
             calc_id: '<?php echo $model->calc_id; ?>',
@@ -108,10 +110,8 @@
             var args = event.args;
             if (args) {
                 var item = args.item;
-                console.log(item);
                 if(item) {
                     var value = item.value;
-                    console.log('value = '+ value);
                     if(value) {
                         var CalcWorkTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCalcWorkTypeDetails), {
                             formatData: function (data) {
