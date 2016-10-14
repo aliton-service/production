@@ -19,6 +19,8 @@ class WHDocumentsDoc9 extends MainFormModel
     public $strm_id;
     public $strm_name;
     public $achs_id;
+    public $strg_id;
+    public $storage;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -44,7 +46,9 @@ class WHDocumentsDoc9 extends MainFormModel
                         d.empl_id,
                         a.strm_id,
                         dbo.FIO(a.strm_name) as strm_name,
-                        a.achs_id";
+                        a.achs_id,
+                        isnull(d.strg_id, 1) as strg_id,
+                        isnull(d.storage, '') as storage";
         $From = "\nFrom WHDocuments_v d left join ActionHistory_v a on (d.achs_id = a.achs_id)";
         $Where = "\nWhere d.dctp_id = 9";
         $Order = "\nOrder by a.ac_date";
@@ -61,6 +65,7 @@ class WHDocumentsDoc9 extends MainFormModel
     public function rules()
     {
         return array(
+            array('dmnd_empl_id, strg_id, date, empl_id', 'required'),
             array('docm_id,
                     dctp_id,
                     dctp_name,
@@ -77,7 +82,9 @@ class WHDocumentsDoc9 extends MainFormModel
                     empl_id,
                     strm_id,
                     strm_name,
-                    achs_id,', 'safe'),
+                    achs_id,
+                    strg_id,
+                    storage', 'safe'),
         );
     }
     
@@ -89,18 +96,20 @@ class WHDocumentsDoc9 extends MainFormModel
             'dctp_name' => '',
             'number' => '',
             'status' => '',
-            'date' => '',
+            'date' => 'Дата',
             'date_create' => '',
             'note' => '',
             'address' => '',
             'ac_date' => '',
             'dmnd_empl_name' => '',
-            'dmnd_empl_id' => '',
+            'dmnd_empl_id' => 'Мастер',
             'empl_name' => '',
-            'empl_id' => '',
+            'empl_id' => 'Создал',
             'strm_id' => '',
             'strm_name' => '',
             'achs_id' => '',
+            'strg_id' => 'Склад',
+            'storage' => '',
         );
     }
     

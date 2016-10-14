@@ -40,7 +40,7 @@ class WHDocuments extends MainFormModel
     public $dlrs_id;
     public $date_promise;
     public $date_change;
-    public $Emplchange;
+    public $EmplChange;
     public $EmplChangeName;
     public $jrdc_id;
     public $JuridicalPerson;
@@ -108,7 +108,7 @@ class WHDocuments extends MainFormModel
                         d.dlrs_id,
                         d.date_promise,
                         d.date_change,
-                        d.Emplchange,
+                        d.EmplChange,
                         dbo.FIO_N(d.EmplChange) as EmplChangeName,
                         d.jrdc_id,
                         d.JuridicalPerson,
@@ -124,8 +124,8 @@ class WHDocuments extends MainFormModel
                         dbo.get_wh_notes(d.docm_id) notes,
                         d.date_ready,
                         d.plan_date,
-                        d.strg_id,
-                        d.storage,
+                        isnull(d.strg_id, 1) as strg_id,
+                        isnull(d.storage, 'Главный склад') as storage,
                         d.in_strg_id,
                         d.in_storage,
                         d.control";
@@ -182,7 +182,7 @@ class WHDocuments extends MainFormModel
                     dlrs_id,
                     date_promise,
                     date_change,
-                    Emplchange,
+                    EmplChange,
                     EmplChangeName,
                     jrdc_id,
                     JuridicalPerson,
@@ -247,7 +247,7 @@ class WHDocuments extends MainFormModel
             'dlrs_id' => '',
             'date_promise' => '',
             'date_change' => '',
-            'Emplchange' => '',
+            'EmplChange' => '',
             'EmplChangeName' => '',
             'jrdc_id' => '',
             'JuridicalPerson' => '',

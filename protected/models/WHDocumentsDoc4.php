@@ -21,6 +21,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $ac_date;
     public $dmnd_empl_name;
     public $dmnd_empl_id;
+    public $prms_empl_id;
     public $prms_empl_name;
     public $empl_name;
     public $empl_id;
@@ -46,12 +47,13 @@ class WHDocumentsDoc4 extends MainFormModel
     public $storage;
     public $control;
     public $note;
+    public $plan_date;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
 
-        $this->SP_INSERT_NAME = '';
-        $this->SP_UPDATE_NAME = '';
+        $this->SP_INSERT_NAME = 'INSERT_Treb';
+        $this->SP_UPDATE_NAME = 'UPDATE_Treb';
         $this->SP_DELETE_NAME = '';
 
         $Select = "\nSelect 
@@ -74,6 +76,7 @@ class WHDocumentsDoc4 extends MainFormModel
                         a.ac_date,
                         d.dmnd_empl_name,
                         d.dmnd_empl_id,
+                        d.prms_empl_id,
                         d.prms_empl_name,
                         d.empl_name,
                         d.empl_id,
@@ -98,7 +101,8 @@ class WHDocumentsDoc4 extends MainFormModel
                         d.strg_id,
                         d.storage,
                         d.control,
-                        d.note";
+                        d.note,
+                        d.plan_date";
         $From = "\nFrom WHDocuments_Treb_v d left join ActionHistory_v a on (d.achs_id = a.achs_id)
                         left join ActionConfirm_v ac on (ac.docm_id = d.docm_id)";
         $Where = "\nWhere d.dctp_id = 4";
@@ -116,6 +120,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public function rules()
     {
         return array(
+            array('date, prty_id, strg_id, dmnd_empl_id, empl_id, prms_empl_id, wrtp_id, objc_id', 'required'),
             array('docm_id,
                     dctp_id,
                     objc_id,
@@ -158,7 +163,8 @@ class WHDocumentsDoc4 extends MainFormModel
                     strg_id,
                     storage,
                     control,
-                    note', 'safe'),
+                    note,
+                    plan_date', 'safe'),
         );
     }
     
@@ -167,14 +173,14 @@ class WHDocumentsDoc4 extends MainFormModel
         return array(
             'docm_id' => '',
             'dctp_id' => '',
-            'objc_id' => '',
+            'objc_id' => 'Адрес',
             'dctp_name' => '',
             'number' => '',
-            'date' => '',
+            'date' => 'Дата',
             'date_create' => '',
-            'prty_id' => '',
+            'prty_id' => 'Приоритет',
             'prty_name' => '',
-            'wrtp_id' => '',
+            'wrtp_id' => 'Вид работы',
             'wrtp_name' => '',
             'Address' => '',
             'AddressForFind' => '',
@@ -182,11 +188,12 @@ class WHDocumentsDoc4 extends MainFormModel
             'deadline' => '',
             'date_ready' => '',
             'ac_date' => '',
-            'dmnd_empl_name' => '',
-            'dmnd_empl_id' => '',
+            'dmnd_empl_name' => 'Затребовал',
+            'dmnd_empl_id' => 'Затребовал',
+            'prms_empl_id' => 'Разрешил',
             'prms_empl_name' => '',
             'empl_name' => '',
-            'empl_id' => '',
+            'empl_id' => 'Выписал',
             'ReceiptNumber' => '',
             'ReceiptDate' => '',
             'strm_name' => '',
@@ -205,10 +212,11 @@ class WHDocumentsDoc4 extends MainFormModel
             'empl_prchs' => '',
             'name_prchs' => '',
             'state_prchs' => '',
-            'strg_id' => '',
+            'strg_id' => 'Склад',
             'storage' => '',
             'control' => '',
             'note' => '',
+            'plan_date' => '',
         );
     }
     

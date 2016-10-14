@@ -21,7 +21,11 @@
             Rcrs_id: <?php echo json_encode($model->rcrs_id); ?>,
             ReceiptDate: Aliton.DateConvertToJs('<?php echo $model->ReceiptDate; ?>'),
             ReceiptNumber: <?php echo json_encode($model->ReceiptNumber); ?>,
-            
+            PrmsEmpl_id: <?php echo json_encode($model->prms_empl_id); ?>,
+            DatePromise: Aliton.DateConvertToJs('<?php echo $model->date_promise; ?>'),
+            DatePlan: Aliton.DateConvertToJs('<?php echo $model->plan_date; ?>'),
+            EmplCreate: <?php echo json_encode($model->empl_id); ?>,
+            DmndEmpl_id: <?php echo json_encode($model->dmnd_empl_id); ?>,
         };
         
         $('#WHDocuments').on('keyup keypress', function(e) {
@@ -31,8 +35,7 @@
                 return false;
             }
         });
-        var AddressBinding = true;
-        var InDocmBinding = false;
+        
         
         // Инициализация источников данных
         var DataWorkTypes = new $.jqx.dataAdapter(Sources.SourceWorkTypes);
@@ -48,10 +51,12 @@
             },
         });
         var DataReceiptReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReceiptReasons)); 
-        
+        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees)); 
+        DataEmployees.dataBind();
+        var EmplRecords  = DataEmployees.records;
         $('#FindTrebsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings));
         $('#btnCancelWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnSaveWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true}));
+        $('#btnSaveWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: false}));
         $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
         $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.Date, formatString: 'dd.MM.yyyy'}));
         $("#edWorkTypeEdit").jqxComboBox({ source: DataWorkTypes, width: '200', height: '25px', displayMember: "name", valueMember: "wrtp_id"});
@@ -63,7 +68,12 @@
         $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '100%', minLength: 1});
         $("#edReceiptReasonEdit").jqxComboBox({ source: DataReceiptReasons, width: '200', height: '25px', displayMember: "name", valueMember: "rcrs_id"});
         $("#edReceiptDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.ReceiptDate, formatString: 'dd.MM.yyyy'}));
-        $("#edReceiptNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
+        $("#edReceiptNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100} ));
+        $("#edDemandEmplEdit").jqxComboBox({ source: EmplRecords, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#edPromiseEmplEdit").jqxComboBox({ source: EmplRecords, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#edCreateEmplEdit").jqxComboBox({ source: EmplRecords, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#edPromiseDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.DatePromise, formatString: 'dd.MM.yyyy'}));
+        $("#edPlanDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.DatePlan, formatString: 'dd.MM.yyyy'}));
         
         $('#btnCancelWHDocuments').on('click', function(){
             $('#WHDocumentsDialog').jqxWindow('close');
@@ -87,7 +97,7 @@
                         if (!StateInsert) WHDoc.Refresh();
                         if (StateInsert) {
                             WHReestr.Docm_id = Res.id;
-                            $('#Grid3').jqxGrid('updatebounddata');
+                            $('#Grid4').jqxGrid('updatebounddata');
                             window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
                         }
                         $('#WHDocumentsDialog').jqxWindow('close');
@@ -102,6 +112,7 @@
             });
         });
         
+        if (WHDocuments.Prior_id !== null) $("#edPriorEdit").jqxComboBox('val', WHDocuments.Prior_id);
         if (WHDocuments.Wrtp_id !== null) $("#edWorkTypeEdit").jqxComboBox('val', WHDocuments.Wrtp_id);
         if (WHDocuments.Strg_id !== null) $("#edStorageEdit").jqxComboBox('val', WHDocuments.Strg_id);
         if (WHDocuments.Number !== null) $("#edNumberEdit").jqxInput('val', WHDocuments.Number);
@@ -110,32 +121,13 @@
         if (WHDocuments.Rcrs_id !== null) $("#edReceiptReasonEdit").jqxComboBox('val', WHDocuments.Rcrs_id);
         if (WHDocuments.ReceiptDate !== null) $("#edReceiptDateEdit").jqxDateTimeInput('val', WHDocuments.ReceiptDate);
         if (WHDocuments.ReceiptNumber !== null) $("#edReceiptNumberEdit").jqxInput('val', WHDocuments.ReceiptNumber);
+        if (WHDocuments.DmndEmpl_id !== null) $("#edDemandEmplEdit").jqxComboBox('val', WHDocuments.DmndEmpl_id);
+        if (WHDocuments.PrmsEmpl_id !== null) $("#edPromiseEmplEdit").jqxComboBox('val', WHDocuments.PrmsEmpl_id);
+        if (WHDocuments.EmplCreate !== null) $("#edCreateEmplEdit").jqxComboBox('val', WHDocuments.EmplCreate);
+        if (WHDocuments.DatePromise !== null) $("#edPromiseDateEdit").jqxDateTimeInput('val', WHDocuments.DatePromise);
+        if (WHDocuments.DatePlan !== null) $("#edPlanDateEdit").jqxDateTimeInput('val', WHDocuments.DatePlan);
         
         
-        $('#btnFindTreb').on('click', function(){
-            $('#FindTrebsDialog').jqxWindow({width: 900, height: 740, position: 'center'});
-            var Item = $("#edSupplierEdit").jqxComboBox('getSelectedItem'); 
-            if (Item == undefined) return;
-            var Supplier_id = Item.value;
-            
-            if (Supplier_id == '') return;
-            $.ajax({
-                url: <?php echo json_encode(Yii::app()->createUrl('WHDocumentsFind/FindWHDoc1')) ?>,
-                type: 'POST',
-                async: false,
-                data: {
-                    Supplier_id: Supplier_id,
-                },
-                success: function(Res) {
-                    Res = JSON.parse(Res);
-                    $("#BodyFindTrebsDialog").html(Res.html);
-                    $('#FindTrebsDialog').jqxWindow('open');
-                },
-                error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                }
-            });
-        });
     });
 </script>    
 
@@ -193,11 +185,40 @@
     <div class="row-column">Дата</div>
     <div class="row-column"><div id="edReceiptDateEdit" name="WHDocuments[ReceiptDate]"></div><?php echo $form->error($model, 'ReceiptDate'); ?></div>
     <div class="row-column">Номер</div>
-    <div class="row-column"><div id="edReceiptNumberEdit" name="WHDocuments[ReceiptNumber]"></div><?php echo $form->error($model, 'ReceiptNumber'); ?></div>
+    <div class="row-column"><input id="edReceiptNumberEdit" name="WHDocuments[ReceiptNumber]" /><?php echo $form->error($model, 'ReceiptNumber'); ?></div>
 </div>
     
-
-
+<div class="row">
+    <div style="float: left">
+        <div><div class="row-column">Затребовал</div></div>
+        <div style="clear: both"></div>
+        <div><div class="row-column"><div id="edDemandEmplEdit" name="WHDocuments[dmnd_empl_id]"></div><?php echo $form->error($model, 'dmnd_empl_id'); ?></div></div>
+    </div>
+    <div style="float: right">
+        <div><div class="row-column">Разрешил</div></div>
+        <div style="clear: both"></div>
+        <div><div class="row-column"><div id="edPromiseEmplEdit" name="WHDocuments[prms_empl_id]"></div><?php echo $form->error($model, 'prms_empl_id'); ?></div></div>
+    </div>
+</div>
+<div class="row">
+    <div style="float: left">
+        <div><div class="row-column">Требование выписал</div></div>
+        <div style="clear: both"></div>
+        <div><div class="row-column"><div id="edCreateEmplEdit" name="WHDocuments[empl_id]"></div><?php echo $form->error($model, 'empl_id'); ?></div></div>
+    </div>
+    <div style="float: right">
+        <div class="row-column">
+            <div><div class="row-column">Обещанная дата</div></div>
+            <div style="clear: both"></div>
+            <div><div class="row-column"><div id="edPromiseDateEdit" name="WHDocuments[date_promise]"></div><?php echo $form->error($model, 'date_promise'); ?></div></div>
+        </div>
+        <div class="row-column">
+            <div><div class="row-column">План. дата возврата</div></div>
+            <div style="clear: both"></div>
+            <div><div class="row-column"><div id="edPlanDateEdit" name="WHDocuments[plan_date]"></div><?php echo $form->error($model, 'plan_date'); ?></div></div>
+        </div>
+    </div>
+</div>
 
 
 
