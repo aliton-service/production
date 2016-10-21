@@ -3,9 +3,8 @@
 
     <div id="content">
 
-        <div id='text'>
-            <?php echo $content; ?>
-        </div>
+        <?php echo $content; ?>
+        
                 <!--
 		<div id="sidebar">
 	            <?php

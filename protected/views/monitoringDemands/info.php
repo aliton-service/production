@@ -105,7 +105,7 @@
                 showfilterrow: false,
                 virtualmode: false,
                 width: '99%',
-                height: '300',
+                height: '97%',
                 source: MonitoringDemandDetailsDataAdapter,
                 columns: [
                     { text: 'equip_id', dataField: 'equip_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80, hidden: true },
@@ -388,10 +388,8 @@
     <div style="margin-left: 310px;" class="row-column"><input type="button" value="Печатать" id='btnPrint'/></div>
 </div>
 
-<div id='' style="overflow: hidden; width: 100%; height: 100%">
-    <div class="row">
-        <div id="MonitoringDemandDetailsGrid" class="jqxGridAliton"></div>
-    </div>
+<div style="overflow: hidden; width: 100%; height: 200px">
+    <div id="MonitoringDemandDetailsGrid" class="jqxGridAliton"></div>
 </div>
 
 <div class="row">

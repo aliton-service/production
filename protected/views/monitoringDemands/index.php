@@ -4,38 +4,13 @@
         /* Текущая выбранная строка данных */
         var CurrentRowData;
         
-        var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-        var DataPriors = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDemandPriors, {}), {
-            formatData: function (data) {
-                $.extend(data, {
-                    Filters: ["dp.for_md = 1"],
-                });
-                return data;
-            },
-        });
-        
-        $("#UserCreate").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 200, placeHolder: "Заявку подал" }));
-        $("#notAcceptedDemands").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 170, height: 30 }));
-        $("#unfulfilledDemands").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 180, height: 30 }));
-        
-        $("#BeginDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
-        $("#EndDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
-        
-        $("#Number").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#Date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', value: null }));
-        $("#Prior").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPriors, displayMember: "DemandPrior", valueMember: "DemandPrior_id", width: 220, autoDropDownHeight: true }));
-        $("#btnReset").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180 }));
-        
-        $("#Number").jqxNumberInput('val', null);
-        
-        
-        $('#jqxTabsMonitoringDemands').jqxTabs({ width: '100%', height: 490 });
+        $('#jqxTabsMonitoringDemands').jqxTabs({ width: '100%', height: '100%' });
         
 
         $("#btnPrint").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#btnAcceptEmployeeName").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#btnCancelAcceptance").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
-        $("#Description").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 1045, height: 55 }));
+        $("#Description").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 940, height: 55 }));
         
         
         var MonitoringDemandsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemands, {
@@ -60,7 +35,7 @@
                 showfilterrow: false,
                 virtualmode: true,
                 width: '99.8%',
-                height: '440',
+                height: '98%',
                 source: MonitoringDemandsDataAdapter,
                 columns: [
                     { text: 'Номер', dataField: 'mndm_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
@@ -90,18 +65,6 @@
         GridFilters.AddControlFilter('BeginDate', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 0, 'DATE_GREATER_THAN_OR_EQUAL', true);
         GridFilters.AddControlFilter('EndDate', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 0, 'DATE_LESS_THAN_OR_EQUAL', true);
         
-        $('#btnReset').on('click', function () {
-            $("#Date").jqxDateTimeInput('val', null);
-            $("#Prior").jqxComboBox('clearSelection');
-            $("#UserCreate").jqxComboBox('clearSelection');
-            $('#notAcceptedDemands').jqxCheckBox('uncheck');
-            $('#unfulfilledDemands').jqxCheckBox('uncheck');
-            $("#BeginDate").jqxDateTimeInput('val', null);
-            $("#Number").jqxNumberInput('val', null);
-            $("#EndDate").jqxDateTimeInput('val', null);
-            $('#MonitoringDemandsGrid').jqxGrid('clearfilters');
-        });
-        
 
         $("#MonitoringDemandsGrid").on('rowselect', function (event) {
             var Temp = $('#MonitoringDemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -109,7 +72,7 @@
                 CurrentRowData = Temp;
             } else {CurrentRowData = null;}
             
-            console.log(CurrentRowData);
+//            console.log(CurrentRowData);
             if (CurrentRowData !== null && CurrentRowData.Description !== null) {
                 $("#Description").jqxTextArea('val', CurrentRowData.Description);
             } else {
@@ -117,17 +80,6 @@
             }
             
             var args = event.args;
-            var rowBoundIndex = args.rowindex;
-            var pagesize = getPageSize();
-            $('#rowNum').html('Запись ' + (rowBoundIndex + 1) + ' из ' + pagesize);
-                
-            if(rowBoundIndex === 0) {
-                $('#btnPrevious').jqxButton({disabled: true });
-                $('#btnStart').jqxButton({disabled: true });
-            } else {
-                $('#btnPrevious').jqxButton({disabled: false });
-                $('#btnStart').jqxButton({disabled: false });
-            }
             
             if (CurrentRowData !== null) {
                 var MonitoringDemandDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceMonitoringDemandDetails, {}), {
@@ -165,7 +117,7 @@
                 async: false,
                 data: { mndm_id: CurrentRowData.mndm_id },
                 success: function(Res) {
-                    console.log(Res);
+//                    console.log(Res);
                     $('#btnAcceptEmployeeName').jqxButton({disabled: true });
                     $('#btnCancelAcceptance').jqxButton({disabled: false });
                     $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
@@ -181,7 +133,7 @@
                 async: false,
                 data: { mndm_id: CurrentRowData.mndm_id },
                 success: function(Res) {
-                    console.log(Res);
+//                    console.log(Res);
                     $('#btnAcceptEmployeeName').jqxButton({disabled: false });
                     $('#btnCancelAcceptance').jqxButton({disabled: true });
                     $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
@@ -189,59 +141,6 @@
                 }
             });
         });
-        
-        $("#btnStart").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 80 }));
-        $("#btnPrevious").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 80 }));
-        $("#btnNext").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 80 }));
-        $("#btnEnd").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 80 }));
-        
-        var getPageSize = function () {
-            var paginginformation = $('#MonitoringDemandsGrid').jqxGrid('getpaginginformation');
-            var pagesize = paginginformation.pagesize;
-            return pagesize;
-        };
-        
-        $('#rowNum').html('Запись 1 из ' + getPageSize());
-        
-        $('#btnStart').on('click', function () { 
-            $('#MonitoringDemandsGrid').jqxGrid('selectrow', 0);
-            var pagesize = getPageSize();
-            $('#rowNum').html('Запись 1 из ' + pagesize);
-            $('#btnPrevious').jqxButton({disabled: true });
-            $('#btnStart').jqxButton({disabled: true });
-        });
-        
-        $('#btnPrevious').on('click', function () { 
-            var rowindex = $('#MonitoringDemandsGrid').jqxGrid('getselectedrowindex');
-            if(rowindex > 0) {
-                $('#MonitoringDemandsGrid').jqxGrid('selectrow', rowindex - 1);
-                var pagesize = getPageSize();
-                $('#rowNum').html('Запись ' + (rowindex) + ' из ' + pagesize);
-            } else {
-                $('#btnPrevious').jqxButton({disabled: true });
-                $('#btnStart').jqxButton({disabled: true });
-            }
-        });
-        
-        $('#btnNext').on('click', function () { 
-            var rowindex = $('#MonitoringDemandsGrid').jqxGrid('getselectedrowindex');
-            $('#MonitoringDemandsGrid').jqxGrid('selectrow', rowindex + 1);
-            var pagesize = getPageSize();
-            $('#rowNum').html('Запись ' + (rowindex + 2) + ' из ' + pagesize);
-            $('#btnPrevious').jqxButton({disabled: false });
-            $('#btnStart').jqxButton({disabled: false });
-        });
-        
-        $('#btnEnd').on('click', function () {
-            var pagesize = getPageSize();
-            $('#MonitoringDemandsGrid').jqxGrid('selectrow', pagesize - 1);
-            var rowindex = $('#MonitoringDemandsGrid').jqxGrid('getselectedrowindex');
-            $('#rowNum').html('Запись ' + rowindex + ' из ' + (pagesize - 1));
-            $('#btnPrevious').jqxButton({disabled: false });
-            $('#btnStart').jqxButton({disabled: false });
-        });
-        
-        
         
         
         $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '640'}));
@@ -350,7 +249,7 @@
                 showfilterrow: false,
                 virtualmode: false,
                 width: '99.8%',
-                height: '440',
+                height: '98%',
                 columns: [
                     { text: 'Наименование', dataField: 'EquipName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
                     { text: 'Ед.изм.', dataField: 'NameUnitMeasurement', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
@@ -359,112 +258,97 @@
                 ]
             })
         );
-    
         
+        
+        
+        
+        var headerHeight1 = 60 + 10 + 30 + 10 + 10;
+//        var tabsHeight1 = $('.tabs-wrapper').outerHeight();
+//        console.log('tabsHeight1 = ' + tabsHeight1);
+
+        var resizeTabs = function() {
+            var windowHeight1 = $(window).outerHeight();
+            var buttonsHeight = $('.buttons').outerHeight();
+            var marginHeight = 15 + 20 + 40;
+            
+//            console.log('windowHeight1 = ' + windowHeight1);
+//            console.log('tabsHeight1 = ' + tabsHeight1);
+//            console.log('buttonsHeight = ' + buttonsHeight);
+//            console.log('marginHeight = ' + marginHeight);
+            
+            var newTabsHeight1 = windowHeight1 - buttonsHeight - marginHeight - headerHeight1;
+            $('.tabs-wrapper').outerHeight(newTabsHeight1);
+
+//            console.log('newTabsHeight1 = ' + newTabsHeight1);
+        };
+
+        $(window).resize(function() {
+            resizeTabs();
+        });
+        resizeTabs();
+        
+        $(".filter-btn__wrapper").on("click", function () {
+            $("#ReloadMonitoringDemands").click();
+        });
+
     });
-    
         
 </script>
 
 <?php $this->setPageTitle('Заявки на мониторинг'); ?>
 
-<div class="row" style="margin: 5px 0 10px 0; padding: 0;">
-    <div class="row-column">
-        <div class="row" style="margin: 0; padding: 0 10px 5px 10px; border: 1px solid #ddd; background-color: #eee;">
-            <div class="row-column" style="margin: 0;"><div id="UserCreate" style="margin: 5px 0 0 0;"></div></div>
-        </div>
-        <div class="row" style="margin: 10px 0 0 0; padding: 0 10px 5px 10px; border: 1px solid #ddd; background-color: #eee;">
-            <div class="row" style="margin: 0;"><div class="row-column" style="margin: 0 0 5px 0;">Показывать только:</div></div>
-            <div class="row" style="margin: 0; padding: 0;">
-                <div class="row-column"><div id='notAcceptedDemands'>Непринятые заявки</div></div>
+
+    <div class="tabs-wrapper" style="height: 185px">
+        <div id='jqxTabsMonitoringDemands'>
+            <ul>
+                <li>
+                    <div style="height: 15px; margin-top: 3px;">
+                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                            Реестр заявок на мониторинг
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div style="height: 15px; margin-top: 3px;">
+                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                            Позиции мониторинга
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+
+            <div id='' style="overflow: hidden; width: 100%;">
+                <div class="row" style="margin: 5px; padding: 0;">
+                    <div id="MonitoringDemandsGrid" class="jqxGridAliton"></div>
+                </div>
             </div>
-            <div class="row" style="margin: 0; padding: 0;">
-                <div class="row-column"><div id='unfulfilledDemands'>Невыполненные заявки</div></div>
+
+
+            <div id='' style="overflow: hidden; width: 100%;">
+                <div class="row" style="margin: 5px; padding: 0;">
+                    <div id="MonitoringDemandDetailsGrid" class="jqxGridAliton"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row-column">
-        <div class="row" style="margin: 0;padding: 0 10px 5px 10px; border: 1px solid #ddd; background-color: #eee;">
-            <div class="row" style="margin: 0; padding: 0;"><div class="row-column" style="margin: 0 0 5px 0;">Отбор по параметрам:</div></div>
-            <div class="row" style="margin: 0;">
-                <div class="row-column" style="text-align: center;">Номер <div id="Number"></div></div>
-                <div class="row-column" style="text-align: center;">Дата <div id="Date"></div></div>
-                <div class="row-column" style="text-align: center;">Приоритет <div id="Prior"></div></div>
-            </div>
-            <div class="row" style="margin: 5px 0 0 0;">
-                <div class="row-column" style="margin-top: 2px;">За период </div>
-                <div class="row-column" style="margin-top: 2px;">с </div><div class="row-column"><div id='BeginDate'></div></div>
-                <div class="row-column" style="margin-top: 2px;">по </div><div class="row-column"><div id='EndDate'></div></div>
-            </div>
-        </div>
-    </div>
-    <div class="row-column">
-        <div class="row" style="margin: 0;">
-            <div class="row-column" style="padding: 0; margin: 0; font-weight: bold" id="rowNum"></div>
-        </div>
-        <div class="row" style="margin-top: 5px;">
-            <div class="row-column" style="padding: 0; margin: 0;"><input type="button" value="|<" id='btnStart' /></div>
-            <div class="row-column" style="padding: 0; margin: 0;"><input type="button" value="<" id='btnPrevious' /></div>
-            <div class="row-column" style="padding: 0; margin: 0;"><input type="button" value=">" id='btnNext' /></div>
-            <div class="row-column" style="padding: 0; margin: 0;"><input type="button" value=">|" id='btnEnd' /></div>
-        </div>
+
+    <div class="row buttons" style=" height: 185px; max-width: 953px; margin: 0; padding: 0;">
+        <div class="row"><div class="row-column">Примечание: <textarea readonly="" type="text" id="Description" name="MonitoringDemands[Description]"></textarea></div></div>
+
         <div class="row">
-            <div class="row-column" style="padding: 0;"><input type="button" value="Сбросить все фильтры" id='btnReset' /></div>
+            <div class="row-column"><input type="button" value="Дополнительно" id='MoreInfoMonitoringDemands' /></div>
+            <div class="row-column"><input type="button" value="Новая заявка" id='NewMonitoringDemands' /></div>
+            <div class="row-column"><input type="button" value="Принять" id='btnAcceptEmployeeName'/></div>
+            <div class="row-column" style="margin-left: 150px;"><input type="button" value="Печатать" id='btnPrint'/></div>
+            <div class="row-column" style="float: right;"><input type="button" value="Удалить" id='DelMonitoringDemands' /></div>
+        </div>
+
+        <div class="row">
+            <div class="row-column"><input type="button" value="Обновить" id='ReloadMonitoringDemands' /></div>
+            <div class="row-column" style="float: right;"><input type="button" value="Отменить принятие" id='btnCancelAcceptance' /></div>
         </div>
     </div>
-</div>
-
-
-<div id='jqxTabsMonitoringDemands'>
-    <ul>
-        <li>
-            <div style="height: 15px; margin-top: 3px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                    Реестр заявок на мониторинг
-                </div>
-            </div>
-        </li>
-        <li>
-            <div style="height: 15px; margin-top: 3px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                    Позиции мониторинга
-                </div>
-            </div>
-        </li>
-    </ul>
-
-
-    <div id='' style="overflow: hidden; width: 100%;">
-        <div class="row" style="margin: 5px; padding: 0;">
-            <div id="MonitoringDemandsGrid" class="jqxGridAliton"></div>
-        </div>
-    </div>
-
-
-    <div id='' style="overflow: hidden; width: 100%;">
-        <div class="row" style="margin: 5px; padding: 0;">
-            <div id="MonitoringDemandDetailsGrid" class="jqxGridAliton"></div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row"><div class="row-column">Примечание: <textarea readonly="" type="text" id="Description" name="MonitoringDemands[Description]"></textarea></div></div>
-
-<div class="row" style="max-width: 1065px; margin: 0;">
-    <div class="row">
-        <div class="row-column"><input type="button" value="Дополнительно" id='MoreInfoMonitoringDemands' /></div>
-        <div class="row-column"><input type="button" value="Новая заявка" id='NewMonitoringDemands' /></div>
-        <div class="row-column"><input type="button" value="Принять" id='btnAcceptEmployeeName'/></div>
-        <div class="row-column" style="margin-left: 150px;"><input type="button" value="Печатать" id='btnPrint'/></div>
-        <div class="row-column" style="float: right;"><input type="button" value="Удалить" id='DelMonitoringDemands' /></div>
-    </div>
-
-    <div class="row">
-        <div class="row-column"><input type="button" value="Обновить" id='ReloadMonitoringDemands' /></div>
-        <div class="row-column" style="float: right;"><input type="button" value="Отменить принятие" id='btnCancelAcceptance' /></div>
-    </div>
-</div>
 
 
 <div id="EditDialog">
