@@ -197,7 +197,9 @@ input, textarea {
 
 
 
-
+.main-menu {
+    display: none;
+}
 
 
 
@@ -242,7 +244,7 @@ input, textarea {
     position: absolute;
     top: 0;
     left: 100%;
-    z-index: 500;
+    z-index: 5000;
     display: none;
     margin: 0;
     padding: 0;
@@ -253,7 +255,7 @@ input, textarea {
     position: absolute;
     /*top: -30px;*/
     left: 100%;
-    z-index: 500;
+    z-index: 5000;
     display: none;
     margin-top: -35px;
     padding: 0;
@@ -775,7 +777,8 @@ hr {
     padding-top: 13px;
 }
 
-/*
+
+
 #addition-demand hr {
     margin: 0;
     padding: 3px 0;
@@ -1262,4 +1265,4 @@ ul.filter .field {
     autocomplete: off;
 }
 
-*/
+
