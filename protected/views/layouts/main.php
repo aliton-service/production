@@ -478,6 +478,7 @@
             $(".menu-btn").on("click", function () {
                 $(".main-menu").toggle(100, function(){});
             });
+            $(".main-menu").toggle(100, function(){});
 
             var contentHeight = $('#page-content').outerHeight();
             var filtersHeight = $('.page-content__filters').outerHeight();
