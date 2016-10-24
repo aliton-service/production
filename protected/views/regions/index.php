@@ -69,7 +69,7 @@
     );
 ?>
 
-<div class="row">
+<div class="row" style="margin: 0;">
     <div id="RegionsGrid" class="jqxGridAliton"></div>
 </div>
 

@@ -51,16 +51,23 @@
 }
 .page-header__logo{
     display: inline-block;
-    border: 0px solid;
-    height: 40px;
+    height: 34px;
+    width: 250px;
+    background-size: auto 100%;
+    background-position: center;
+}
+
+.page-header__logo a{
+    display: block;
+    height: 34px;
     width: 250px;
 }
 
 .logo{
     border: 0px solid;
-    background-image: url('/images/logos/logo.png');
+    background-image: url('/images/logos/big-logo.png');
     background-repeat: no-repeat;
-    background-size: auto 100%;
+/*    background-size: auto 100%;*/
     text-align: center;
 }
 
@@ -180,11 +187,17 @@
 
 .page-header__logout{
     height: 60px;
-    width: 22px;
-    padding: 0 25px;
+    width: 72px;
+    /*padding: 0 25px;*/
     background-image: url('/images/logout.png');
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.page-header__logout a{
+    display: block;
+    height: 60px;
+    width: 72px;
 }
 
 

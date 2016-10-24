@@ -6,7 +6,7 @@ class MonitoringDemandsController extends Controller
     
     public $title = '';
     public $action_url = '';
-    public $filters = null;
+    public $gridFilters = null;
     
     /**
      * @return array action filters
@@ -81,7 +81,7 @@ class MonitoringDemandsController extends Controller
         }
 
         else {
-            $this->filters = '_filters';
+            $this->gridFilters = '_filters';
             $this->title = 'Заявки на мониторинг';
             $this->render('index', array(
                 'model' => $model

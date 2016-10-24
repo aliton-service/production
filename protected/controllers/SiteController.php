@@ -2,6 +2,7 @@
 
 class SiteController extends Controller
 {
+    public $title = '';
 	/**
 	 * Declares class-based actions.
 	 */
@@ -34,6 +35,7 @@ class SiteController extends Controller
             else if ($RoleName == 'PersonalManger')
                 $this->redirect(Yii::app()->createUrl('Employees/index'));
             else
+                $this->title = 'Приветствие';
                 $this->render('index');
             
 	}
@@ -138,6 +140,8 @@ class SiteController extends Controller
                     return 0;
                 }
             }
+            
+            $this->title = 'Авторизация';
 		
             $this->render('login',array(
                 'model'=>$model,

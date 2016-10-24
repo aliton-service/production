@@ -1056,7 +1056,7 @@
             if (Dctp_id == 3)
                 $('#WHDocumentsDialog').jqxWindow({width: 600, height: 360, position: 'center', isModal: true});
             if (Dctp_id == 4)
-                $('#WHDocumentsDialog').jqxWindow({width: 700, height: 460, position: 'center', isModal: true});
+                $('#WHDocumentsDialog').jqxWindow({width: 800, height: 480, position: 'center', isModal: true});
             if (Dctp_id == 8)
                 $('#WHDocumentsDialog').jqxWindow({width: 600, height: 270, position: 'center', isModal: true});
             if (Dctp_id == 7)
