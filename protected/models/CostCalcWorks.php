@@ -68,12 +68,18 @@ class CostCalcWorks extends MainFormModel
     public function rules()
     {
         return array(
-            array('calc_id, quant, price', 'required'),
-            array('ccwr_id, cceq_id, calc_id, cwdt_id, quant', 'numerical', 'integerOnly'=>true),
+            array('cwdt_id', 'cwdt_validate'),
+            array('quant', 'numerical', 'min' => 1),
+            array('quant', 'required'),
             array('ccwr_id, cceq_id, calc_id, cwdt_id, cw_name, cwrt_name, quant, price, price_low, note, sum_low, koef, sum_high', 'safe'),
         );
     }
 
+    public function cwdt_validate($attribute, array $params = array()) {
+        if (($this->cwdt_id === '') && ($this->cw_name === '')) {
+            $this->addError($attribute, 'Заполните поле работ');
+        }
+    }
 
     /**
      * @return array customized attribute labels (name=>label)

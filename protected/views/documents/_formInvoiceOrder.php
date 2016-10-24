@@ -14,7 +14,14 @@
             SpecialCondition: <?php echo json_encode($model->SpecialCondition); ?>,
             ContactInfo: '<?php echo $model->Info; ?>',
             Note: <?php echo json_encode($model->Note); ?>,
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
+
+        if (Document.DialogId == '' || Document.DialogId == null) {
+            Document.DialogId = 'NewContractDialog';
+            Document.BodyDialogId = 'NewContractBodyDialog';
+        }
             
         var DataJuridical = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
         var DataPaymentTypes = new $.jqx.dataAdapter(Sources.SourcePaymentTypes);
@@ -40,7 +47,45 @@
         $("#ContactInfo6").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "FIO", valueMember: "Info_id", width:360, autoDropDownHeight: true }));
         
         $("#Note6").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 770 }));
+        $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
+        $("#NewContractBtnCancel").on('click', function () {
+            $('#' + Document.DialogId).jqxWindow('close');
+        });
+        
+        
+        var SendFormContract = function(Form) {
+            var Data;
+            if (Form == undefined)
+                Data = $('#Documents').serialize();
+            else Data = Form;
+            Data = Data + "&DocType_Name=" + "Счет" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#' + Document.DialogId).jqxWindow('close');
+                        if (Document.DialogId == 'NewContractDialog') {
+                            $("#ContractsGrid").jqxGrid('updatebounddata');
+                            $("#ContractsGrid").jqxGrid('selectrow', 0);
+                        }
+                        if (Document.DialogId == 'CostCalculationsDialog')
+                            $('#RefreshCostCalcDocuments').click();
+                        
+                    } else {
+                        $('#' + Document.BodyDialogId).html(Res);
+                    }
+                }
+            });
+        }
+
+        $("#NewContractBtnOk").on('click', function () {
+            SendFormContract();
+        });
         
         if (Document.ContrNumS != '') $("#ContrNumS6").jqxInput('val', Document.ContrNumS);
         if (Document.JuridicalPerson != '') $("#JuridicalPerson6").jqxComboBox('val', Document.JuridicalPerson);
@@ -98,6 +143,11 @@
 
 <div class="row">
     <div class="row-column">Примечание: <textarea id="Note6" name="Documents[Note]"></textarea></div>
+</div>
+
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

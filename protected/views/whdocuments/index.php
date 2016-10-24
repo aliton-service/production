@@ -25,7 +25,7 @@
                         sort: function () {
                             $("#GridAll").jqxGrid('updatebounddata', 'sort');
                         },
-                        beforeSend(jqXHR, settings) {
+                        beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
                         
@@ -37,7 +37,7 @@
                         sort: function () {
                             $("#Grid1").jqxGrid('updatebounddata', 'sort');
                         },
-                        beforeSend(jqXHR, settings) {
+                        beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
                         
@@ -49,7 +49,7 @@
                         sort: function () {
                             $("#Grid2").jqxGrid('updatebounddata', 'sort');
                         },
-                        beforeSend(jqXHR, settings) {
+                        beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
                         
@@ -61,7 +61,7 @@
                         sort: function () {
                             $("#Grid3").jqxGrid('updatebounddata', 'sort');
                         },
-                        beforeSend(jqXHR, settings) {
+                        beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
                         
@@ -73,7 +73,7 @@
                         sort: function () {
                             $("#Grid4").jqxGrid('updatebounddata', 'sort');
                         },
-                        beforeSend(jqXHR, settings) {
+                        beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
                     }));
@@ -84,7 +84,7 @@
                         sort: function () {
                             $("#Grid5").jqxGrid('updatebounddata', 'sort');
                         },
-                        beforeSend(jqXHR, settings) {
+                        beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
                     }));
@@ -95,7 +95,7 @@
                         sort: function () {
                             $("#Grid6").jqxGrid('updatebounddata', 'sort');
                         },
-                        beforeSend(jqXHR, settings) {
+                        beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
                     }));
@@ -106,7 +106,7 @@
                         sort: function () {
                             $("#Grid7").jqxGrid('updatebounddata', 'sort');
                         },
-                        beforeSend(jqXHR, settings) {
+                        beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
                     }));            

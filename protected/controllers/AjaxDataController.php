@@ -222,6 +222,7 @@ class AjaxDataController extends Controller
 		}
             }
 	}
+            
         
         
         $Result = $Model->FindAjax($pagenum, $pagesize, $Sort, $InternalFilters, array());

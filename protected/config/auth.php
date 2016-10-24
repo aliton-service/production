@@ -201,7 +201,7 @@ return array_merge(
         
     /* Коммерческие предложения и сметы */
     include(dirname(__FILE__).'/security/ObjectsGroupCostCalculationsSecurity.php'),
-    include(dirname(__FILE__).'/security/CostCalculationDetailsSecurity.php'),
+    include(dirname(__FILE__).'/security/CostCalculationsSecurity.php'),
     include(dirname(__FILE__).'/security/CostCalcEquipsSecurity.php'),
     include(dirname(__FILE__).'/security/CostCalcWorksSecurity.php'),
     include(dirname(__FILE__).'/security/CostCalcSalarysSecurity.php'),
@@ -401,7 +401,7 @@ return array_merge(
                 'AdminPriceListDetails',
                 'AdminSerialNumbers',
                 'AdminObjectsGroupCostCalculations',
-                'AdminCostCalculationDetails',
+                'AdminCostCalculations',
                 'AdminCostCalcEquips',
                 'AdminCostCalcWorks',
                 'AdminCostCalcSalarys',

@@ -247,38 +247,9 @@
         $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '640'}));
         
         $('#EditDialog').jqxWindow({initContent: function() {
-            $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         }});
 
-        $("#btnCancel").on('click', function () {
-            $('#EditDialog').jqxWindow('close');
-        });
-        
-        var SendForm = function() {
-            var Data = $('#MonitoringDemands').serialize();
-                
-            $.ajax({
-                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Insert');?>",
-                type: 'POST',
-                async: false,
-                data: Data,
-                success: function(Res) {
-                    if (Res == '1' || Res == 1) {
-                        $('#EditDialog').jqxWindow('close');
-                        $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-                        $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
-                    } else {
-                        $('#BodyDialog').html(Res);
-                    }
 
-                }
-            });
-        };
-
-        $("#btnOk").on('click', function () {
-            SendForm();
-        });
             
         
         $("#NewMonitoringDemands").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -473,11 +444,12 @@
     </div>
     <div style="padding: 10px;" id="DialogContent">
         <div id="BodyDialog"></div>
+        <!--
         <div id="BottomDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>
                 <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel' /></div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

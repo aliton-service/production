@@ -1,27 +1,59 @@
 <script type="text/javascript">
     $(document).ready(function () {
         /* Текущая выбранная строка данных */
-        var CurrentRowData;
-        
-        var OGCostCalculations = {
+        var CurrentCostCalcRowData;
+        var Calc_id = null;
+        var CostCalculations = {
             ObjectGr_id: '<?php echo $ObjectGr_id; ?>',
         };
         
-        var OGCostCalculationsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceObjectsGroupCostCalculations), {
+        var CostCalculationsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceObjectsGroupCostCalculations), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["c.ObjectGr_id = " + OGCostCalculations.ObjectGr_id],
+                    Filters: ["c.ObjectGr_id = " + CostCalculations.ObjectGr_id],
                 });
                 return data;
             },
+            beforeSend(jqXHR, settings) {
+                DisabledCostCalcControls();
+            },
         });
+        
+        var DisabledCostCalcControls = function() {
+            $('#dropDownBtnCostCalculations').jqxButton({disabled: true});
+            $('#btnRefreshCostCalculations').jqxButton({disabled: true});
+            $('#btnEditCostCalculations').jqxButton({disabled: true});
+            $('#btnAnnulCostCalculations').jqxButton({disabled: true});
+            $('#btnCopyCostCalculations').jqxButton({disabled: true});
+        };
 
-        $("#NoteCostCalculations").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 1000 }));
+        $("#NoteCostCalculations").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%' }));
         
-        $("#dropDownBtnCostCalculations").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: true, width: 240, height: 28 }));
-        $("#jqxTreeCostCalculations").jqxTree({ width: 240 });
+        $("#dropDownBtnCostCalculations").on('open', function(){
+            $('#btnAddKP').jqxButton({disabled: true});
+            $('#btnAddSmeta').jqxButton({disabled: true});
+            $('#btnAddDopSmeta').jqxButton({disabled: true});
+            if (CurrentCostCalcRowData != undefined) {
+                if (CurrentCostCalcRowData.count_type0 == 0)
+                    $('#btnAddKP').jqxButton({disabled: false});
+                if (CurrentCostCalcRowData.count_type0 == 1 && CurrentCostCalcRowData.count_type1 == 0) 
+                    $('#btnAddSmeta').jqxButton({disabled: false});
+                if (CurrentCostCalcRowData.count_type0 == 1 && CurrentCostCalcRowData.count_type1 == 1) 
+                    $('#btnAddDopSmeta').jqxButton({disabled: false});
+            }
+        });
         
-        var dropDownBtnCostCalculations = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 5px;">Создать</div>';
+        $("#dropDownBtnCostCalculations").jqxDropDownButton({initContent: function(){
+                $('#btnAddKP').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: '242px', disabled: true}));
+                $('#btnAddSmeta').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: '242px', disabled: true}));
+                $('#btnAddDopSmeta').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: '242px', disabled: true}));
+            }
+        });
+       
+        
+        $("#dropDownBtnCostCalculations").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: false, width: 240, height: 22 }));
+        
+        var dropDownBtnCostCalculations = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 2px;">Создать</div>';
         $("#dropDownBtnCostCalculations").jqxDropDownButton('setContent', dropDownBtnCostCalculations);
         
         var createNewCostCalculations = function (DocType_Name) {
@@ -30,16 +62,16 @@
                 type: 'POST',
                 async: false,
                 data: { 
-                    ObjectGr_id: OGCostCalculations.ObjectGr_id
+                    ObjectGr_id: CostCalculations.ObjectGr_id
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
                         if (Res.result == 1) {
-                            var RowIndex = $('#OGCostCalculationsGrid').jqxGrid('getselectedrowindex');
-                            var Text = $('#OGCostCalculationsGrid').jqxGrid('getcelltext', RowIndex + 1, "Malfunction_id");
-                            Aliton.SelectRowById('calc_id', Text, '#OGCostCalculationsGrid', true);
-                            RowIndex = $('#OGCostCalculationsGrid').jqxGrid('getselectedrowindex');
-                            var S = $('#OGCostCalculationsGrid').jqxGrid('getrowdata', RowIndex);
+                            var RowIndex = $('#CostCalculationsGrid').jqxGrid('getselectedrowindex');
+                            var Text = $('#CostCalculationsGrid').jqxGrid('getcelltext', RowIndex + 1, "Malfunction_id");
+                            Aliton.SelectRowById('calc_id', Text, '#CostCalculationsGrid', true);
+                            RowIndex = $('#CostCalculationsGrid').jqxGrid('getselectedrowindex');
+                            var S = $('#CostCalculationsGrid').jqxGrid('getrowdata', RowIndex);
                         }
                 },
                 error: function(Res) {
@@ -47,32 +79,30 @@
                 }
             });
         };
-
         
-        $('#jqxTreeCostCalculations').on('select', function (event) {
-            var args = event.args;
-            var item = $('#jqxTreeCostCalculations').jqxTree('getItem', args.element);
-            createNewCostCalculations(item.label);
-            $("#jqxTreeCostCalculations").jqxTree('selectItem', null);
-        });
+        $('#btnRefreshCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {imgSrc: '/images/11.png'}));
+        $('#btnCopyCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, imgSrc: '/images/10.png'}));
+        $('#btnEditCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {imgSrc: '/images/4.png'}));
+        $('#btnAnnulCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160, imgSrc: '/images/3.png'}));
         
-        
-        $('#btnRefreshOGCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $('#btnCopyOGCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $('#btnEditOGCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $('#btnDelOGCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        
-        $('#OGCostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 500, position: 'center'}));
+        $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 500, position: 'center'}));
         
         var CheckButton = function() {
-            $('#btnDelOGCostCalculations').jqxButton({disabled: !(CurrentRowData != undefined)})
+            $('#dropDownBtnCostCalculations').jqxButton({disabled: !(CurrentCostCalcRowData != undefined)});
+            $('#btnRefreshCostCalculations').jqxButton({disabled: false});
+            $('#btnEditCostCalculations').jqxButton({disabled: !(CurrentCostCalcRowData != undefined)});
+            $('#btnAnnulCostCalculations').jqxButton({disabled: !(CurrentCostCalcRowData != undefined)});
+            if (CurrentCostCalcRowData != undefined)
+                $('#btnCopyCostCalculations').jqxButton({disabled: !(CurrentCostCalcRowData.count_type0 == 0 && CurrentCostCalcRowData.count_type1 == 0)});
+            else $('#btnCopyCostCalculations').jqxButton({disabled: true});
         };
         
-        $("#OGCostCalculationsGrid").on('rowselect', function (event) {
-            CurrentRowData = $('#OGCostCalculationsGrid').jqxGrid('getrowdata', event.args.rowindex);
+        $("#CostCalculationsGrid").on('rowselect', function (event) {
+            CurrentCostCalcRowData = $('#CostCalculationsGrid').jqxGrid('getrowdata', event.args.rowindex);
             CheckButton();
-//            console.log(CurrentRowData.calc_id);
-            if (CurrentRowData !== null && CurrentRowData.Note !== null) $("#NoteCostCalculations").jqxTextArea('val', CurrentRowData.Note);
+            if (CurrentCostCalcRowData !== undefined)
+                if (CurrentCostCalcRowData.Note !== null)
+                    $("#NoteCostCalculations").jqxTextArea('val', CurrentCostCalcRowData.Note);
         });
         
         var groupsrenderer = function (text, group, expanded, data) 
@@ -82,31 +112,46 @@
                 return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + ' (' + groupname + ')</span>';
             }
         };
-            
-        $("#OGCostCalculationsGrid").jqxGrid(
+        
+        var CellClass = function (row, columnfield, value) {
+            var StyleClass = '';
+            var RowData = $("#CostCalculationsGrid").jqxGrid('getrowdata', row);
+            if (RowData != undefined) {
+                if (RowData.type == 1 || RowData.type == 2)
+                    StyleClass = 'CellSmet';
+                if (RowData.date_annul != null)
+                    StyleClass = StyleClass + ' CellAnnul';
+            }
+            return StyleClass;
+        }
+        
+        $("#CostCalculationsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
                 sortable: true,
                 showfilterrow: false,
                 groupable: true,
-                pageable: true,
-                        groupsrenderer: groupsrenderer,
+                pageable: false,
+                showstatusbar: true,
+                statusbarheight: 25,
+                groupsrenderer: groupsrenderer,
                 width: '100%',
                 height: '500',
-                source: OGCostCalculationsDataAdapter,
+                showgroupsheader: false,
+                source: CostCalculationsDataAdapter,
                 columns: [
                     { text: 'Группа', datafield: 'group_name', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 70, hidden: true },
-                    { text: 'Вариант', datafield: 'number', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 70, hidden: true },
-                    { text: 'Номер', datafield: 'calc_id', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 70 },
-                    { text: 'Тип', datafield: 'CostCalcType', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 220 },
-                    { text: 'Дата', dataField: 'date', columngroup: 'Group1', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
-                    { text: 'Дата готовности', dataField: 'date_ready', columngroup: 'Group1', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
-                    { text: 'Создал', datafield: 'EmployeeName', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 100 },
-                    { text: '№ заявки', datafield: 'Demand_id', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 80 },
-                    { text: 'Дата', dataField: 'cnt_date', columngroup: 'Sent', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
-                    { text: 'Способ', datafield: 'cntp_name', columngroup: 'Sent', filtercondition: 'CONTAINS', width: 150 },
-                    { text: 'Контакное лицо', datafield: 'FIO', columngroup: 'Sent', filtercondition: 'CONTAINS', width: 250 },
+                    { text: 'Вариант', datafield: 'number', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 70, hidden: true, cellclassname: CellClass },
+                    { text: 'Номер', datafield: 'calc_id', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 70, cellclassname: CellClass},
+                    { text: 'Тип', datafield: 'CostCalcType', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 220, cellclassname: CellClass},
+                    { text: 'Дата', dataField: 'date', columngroup: 'Group1', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140, cellclassname: CellClass},
+                    { text: 'Дата готовности', dataField: 'date_ready', columngroup: 'Group1', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140, cellclassname: CellClass},
+                    { text: 'Создал', datafield: 'EmployeeName', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 100, cellclassname: CellClass },
+                    { text: '№ заявки', datafield: 'Demand_id', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 80, cellclassname: CellClass },
+                    { text: 'Дата', dataField: 'cnt_date', columngroup: 'Sent', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140, cellclassname: CellClass },
+                    { text: 'Способ', datafield: 'cntp_name', columngroup: 'Sent', filtercondition: 'CONTAINS', width: 150, cellclassname: CellClass },
+                    { text: 'Контакное лицо', datafield: 'FIO', columngroup: 'Sent', filtercondition: 'CONTAINS', width: 250, cellclassname: CellClass },
                 ],
                 columngroups: [
                     { text: '', align: 'center', name: 'Group1' },
@@ -115,24 +160,20 @@
                 groups: ['number']
         }));
         
-        $("#OGCostCalculationsGrid").jqxGrid('expandallgroups');
-        $("#OGCostCalculationsGrid").jqxGrid('showgroupsheader', false);
-        
+        $("#CostCalculationsGrid").jqxGrid('expandallgroups');
 
-        $('#btnDelOGCostCalculations').on('click', function(){
-//            console.log(CurrentRowData.prlt_id);
-            
-            if (CurrentRowData != undefined) {
+        $('#btnAnnulCostCalculations').on('click', function(){
+            if ($('#btnAnnulCostCalculations').jqxButton('disabled')) return;
+            if (CurrentCostCalcRowData != undefined) {
                 $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('OGCostCalculations/Delete')) ?>,
+                    url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Annul')) ?>,
                     type: 'POST',
                     async: false,
                     data: {
-                        prlt_id: CurrentRowData.prlt_id
+                        calc_id: CurrentCostCalcRowData.calc_id
                     },
                     success: function(Res) {
-                        $("#OGCostCalculationsGrid").jqxGrid('updatebounddata');
-                        $('#OGCostCalculationsGrid').jqxGrid('selectrow', 0);
+                        $('#btnRefreshCostCalculations').click();
                     },
                     error: function(Res) {
                         Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -141,61 +182,134 @@
             }
         });
         
-        $('#btnRefreshOGCostCalculations').on('click', function(){
-            var RowIndex = $('#OGCostCalculationsGrid').jqxGrid('getselectedrowindex');
-            var Val = $('#OGCostCalculationsGrid').jqxGrid('getcellvalue', RowIndex, "prlt_id");
-            Aliton.SelectRowById('prlt_id', Val, '#OGCostCalculationsGrid', true);
+        $('#btnRefreshCostCalculations').on('click', function(){
+            if ($('#btnRefreshCostCalculations').jqxButton('disabled')) return;
+        
+            if (Calc_id == null) {
+                var RowIndex = $('#CostCalculationsGrid').jqxGrid('getselectedrowindex');
+                var Val = $('#CostCalculationsGrid').jqxGrid('getcellvalue', RowIndex, "calc_id");
+            } else {
+                var Val = Calc_id;
+            }
+            
+            $('#CostCalculationsGrid').jqxGrid('updatebounddata', 'data');
+            $('#CostCalculationsGrid').jqxGrid('expandallgroups');
+            var GroupCount = 0;
+            var GroupName = null;
+            var Index = 0;
+            var Rows = $('#CostCalculationsGrid').jqxGrid('getrows');
+            for (var i = 0; i < Rows.length; i++) {
+                var TmpVal = $('#CostCalculationsGrid').jqxGrid('getcellvalue', i, 'calc_id');
+                var TmpGroup = $('#CostCalculationsGrid').jqxGrid('getcellvalue', i, 'number');
+                if (GroupName != TmpGroup) {
+                    GroupCount++;
+                    GroupName = TmpGroup;
+                }
+                if (TmpVal == Val) {
+                    Index = i;
+                    break;
+                }
+            }
+                
+            $('#CostCalculationsGrid').jqxGrid('selectrow', Index);
+            $('#CostCalculationsGrid').jqxGrid('ensurerowvisible', (Index + GroupCount));
+            Calc_id = null;
         });
         
-        $("#OGCostCalculationsGrid").on('rowdoubleclick', function(){
-            if (CurrentRowData !== null && CurrentRowData.calc_id !== null) {
-                $('#btnEditOGCostCalculations').click();
+        $("#CostCalculationsGrid").on('rowdoubleclick', function(){
+            if (CurrentCostCalcRowData !== null && CurrentCostCalcRowData.calc_id !== null) {
+                $('#btnEditCostCalculations').click();
             }
         });
         
-        $('#btnEditOGCostCalculations').on('click', function(){
-            window.open('/index.php?r=CostCalculationDetails/Index&calc_id=' + CurrentRowData.calc_id);
+        $('#btnEditCostCalculations').on('click', function(){
+            window.open('/index.php?r=CostCalculations/Index&calc_id=' + CurrentCostCalcRowData.calc_id);
         });
         
-        $('#OGCostCalculationsGrid').jqxGrid('selectrow', 0);
+        $('#btnCopyCostCalculations').on('click', function() {
+            if ($('#btnCopyCostCalculations').jqxButton('disabled')) return;
+            if (CurrentCostCalcRowData != undefined) {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Copy')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        cgrp_id: CurrentCostCalcRowData.cgrp_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result == 1) {
+                            Calc_id = Res.id;
+                            $('#btnRefreshCostCalculations').click();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $('#CostCalculationsGrid').jqxGrid('selectrow', 0);
         
     });
 </script>
 
+<style>
+    .CellAnnul {
+        text-decoration: line-through;
+    }
+    
+    .CellSmet {
+        color: white;
+        background-color: #409A40;
+    }
+    
+    .CellSmet:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .CellSmet:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+        color: black;
+        background-color: #40EE40;
+    }
+    .jqx-grid-group-cell {
+        border-width:0 1px 1px 0;
+    }
+</style>
+
 <div class="row">
-    <div id="OGCostCalculationsGrid" class="jqxGridAliton"></div>
+    <div id="CostCalculationsGrid" class="jqxGridAliton"></div>
 </div>
 
 <div class="row" style="margin: 0;">
-    <div class="row-column">Примечание: <textarea readonly id="NoteCostCalculations"></textarea></div>
+    <div class="row-column">Примечание:</div>
+</div>
+<div class="row" style="margin: 0;">
+    <textarea readonly id="NoteCostCalculations"></textarea>
 </div>
 
 <div class="row">
     <div class="row-column">
         <div id='jqxWidget'>
             <div style='float: left;' id="dropDownBtnCostCalculations">
-                <div style="border: none;" id='jqxTreeCostCalculations'>
-                    <ul>
-                        <li><div style="width: 200px; height: 20px;">Коммерческое предложение</div></li>
-                        <li><div style="width: 200px; height: 20px;">Смета</div></li>
-                        <li><div style="width: 200px; height: 20px;">Доп. смета</div></li>
-                    </ul>
-                </div>
+                <!-- <div style="border: none;" id='jqxTreeCostCalculations'> -->
+                <div style="padding: 2px"><input type="button" id="btnAddKP" value="Коммерческое предложение"/></div>
+                <div style="clear: both"></div>
+                <div style="padding: 2px"><input type="button" id="btnAddSmeta" value="Смета"/></div>
+                <div style="clear: both"></div>
+                <div style="padding: 2px"><input type="button" id="btnAddDopSmeta" value="Доп. смета"/></div>
             </div>
         </div>
     </div>
-    <div class="row-column"><input type="button" value="Изменить" id='btnEditOGCostCalculations'/></div>
-    <div class="row-column"><input type="button" value="Копировать" id='btnCopyOGCostCalculations'/></div>
-    <div class="row-column"><input type="button" value="Обновить" id='btnRefreshOGCostCalculations'/></div>
-    <div class="row-column" style="margin-left: 300px;"><input type="button" value="Удалить" id='btnDelOGCostCalculations'/></div>
+    <div class="row-column"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>
+    <div class="row-column"><input type="button" value="Копировать" id='btnCopyCostCalculations'/></div>
+    <div class="row-column"><input type="button" value="Обновить" id='btnRefreshCostCalculations'/></div>
+    <div class="row-column" style="margin-left: 300px;"><input type="button" value="Аннулировать" id='btnAnnulCostCalculations'/></div>
 </div>   
 
 
-<div id="OGCostCalculationsDialog" style="display: none;">
-    <div id="OGCostCalculationsDialogHeader">
-        <span id="OGCostCalculationsHeaderText">Вставка\Редактирование записи</span>
+<div id="CostCalculationsDialog" style="display: none;">
+    <div id="CostCalculationsDialogHeader">
+        <span id="CostCalculationsHeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="padding: 10px 20px;" id="DialogOGCostCalculationsContent">
-        <div style="" id="BodyOGCostCalculationsDialog"></div>
+    <div style="padding: 10px 20px;" id="DialogCostCalculationsContent">
+        <div style="" id="BodyCostCalculationsDialog"></div>
     </div>
 </div>

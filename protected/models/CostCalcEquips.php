@@ -64,9 +64,9 @@ class CostCalcEquips extends MainFormModel
     public function rules()
     {
         return array(
-            array('calc_id, eqip_id, quant, price, price_low', 'required'),
-            array('cceq_id, calc_id, eqip_id, quant', 'numerical', 'integerOnly'=>true),
-            array('cceq_id, calc_id, eqip_id, quant, price, price_low, note', 'safe'),
+            array('calc_id, eqip_id, quant', 'required'),
+            array('quant', 'numerical', 'min' => 1),
+            array('cceq_id, calc_id, eqip_id, eqip_name, quant, price, sum_price, price_low, sum_low, note, um_name, mntr', 'safe'),
         );
     }
 
@@ -79,9 +79,9 @@ class CostCalcEquips extends MainFormModel
         return array(
             'cceq_id' => 'cceq_id',
             'calc_id' => 'calc_id',
-            'eqip_id' => 'eqip_id',
+            'eqip_id' => 'Оборудование',
             'eqip_name' => 'eqip_name',
-            'quant' => 'quant',
+            'quant' => 'Кол-во',
             'price' => 'price',
             'sum_price' => 'sum_price',
             'price_low' => 'price_low',

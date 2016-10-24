@@ -3,7 +3,7 @@
         var DeliveryDemands = {
             Dldm_id: <?php echo json_encode($model->dldm_id); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
-            Objc_id: Aliton.DateConvertToJs('<?php echo $model->objc_id; ?>'),
+            Objc_id: <?php echo json_encode($model->objc_id); ?>,
             Dltp_id: <?php echo json_encode($model->dltp_id); ?>,
             Prty_id: <?php echo json_encode($model->prty_id); ?>,
             Dlrs_id: <?php echo json_encode($model->dlrs_id); ?>,
@@ -29,7 +29,14 @@
             Sender: <?php echo json_encode($model->user_sender_name); ?>,
             Logist: <?php echo json_encode($model->user_logist_name); ?>,
             Contacts: <?php echo json_encode($model->Contacts); ?>,
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
+
+        if (DeliveryDemands.DialogId == '' || DeliveryDemands.DialogId == null) {
+            DeliveryDemands.DialogId = 'EditDeliveryDemandDialog';
+            DeliveryDemands.BodyDialogId = 'BodyDeliveryDemDialog';
+        }
         
         var StateInsert = <?php echo json_encode((Yii::app()->controller->action->id == 'Insert')); ?>;
         var Log = <?php echo json_encode(Yii::app()->user->checkAccess('LogDeliveryDemands')); ?>;
@@ -125,6 +132,35 @@
         $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '210', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
         $("#edEditPhoneNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Телефон", width: 200}));
         $("#edEditText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
+        $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
+        $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+
+        $('#btnDeliveryDemCancel').on('click', function(){
+            $('#' + DeliveryDemands.DialogId).jqxWindow('close');
+        });
+
+        $('#btnDeliveryDemOk').on('click', function(){
+            $.ajax({
+                url: '<?php echo Yii::app()->createUrl('Delivery/Insert'); ?>',
+                type: 'POST',
+                data: $('#DeliveryDemands').serialize() + "&DialogId=" + DeliveryDemands.DialogId + "&BodyDialogId=" + DeliveryDemands.BodyDialogId,
+                success: function(Res) {
+                    if (Res == '1') {
+                        
+                        $('#' + DeliveryDemands.DialogId).jqxWindow('close');
+                        if (DeliveryDemands.DialogId == 'EditDeliveryDemandDialog') {
+                            $('#EditDeliveryDemandDialog').jqxWindow('close');
+                            $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
+                        }
+                        if (DeliveryDemands.DialogId == 'CostCalculationsDialog')
+                            $('#RefreshCostCalcDocuments').click();
+                    }
+                    else
+                        $('#' + DeliveryDemands.BodyDialogId).html(Res);
+                }
+            });
+        });
+        
         
         if ((Log) && (!StateInsert)) {
             $("#edEditDeliveryMan").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees.records, width: '210', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
@@ -165,6 +201,8 @@
         ),
     )); 
 ?>
+
+<input type="hidden" name="DeliveryDemands[calc_id]" value="<?php echo $model->calc_id; ?>" />
 
 <div class="row">
     <div class="row-column">
@@ -263,5 +301,10 @@
 
 
 <?php } ?>
+
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnDeliveryDemOk' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnDeliveryDemCancel' /></div>
+</div>
 
 <?php $this->endWidget(); ?>

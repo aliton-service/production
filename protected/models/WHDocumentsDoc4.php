@@ -48,6 +48,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $control;
     public $note;
     public $plan_date;
+    public $calc_id;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -164,7 +165,8 @@ class WHDocumentsDoc4 extends MainFormModel
                     storage,
                     control,
                     note,
-                    plan_date', 'safe'),
+                    plan_date,
+                    calc_id', 'safe'),
         );
     }
     
@@ -217,6 +219,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'control' => '',
             'note' => '',
             'plan_date' => '',
+            'calc_id' => 'calc_id',
         );
     }
     

@@ -28,7 +28,14 @@
             Note: <?php echo json_encode($model->Note); ?>,
             ContrSDateStart: Aliton.DateConvertToJs('<?php echo $model->ContrSDateStart; ?>'),
             ContrSDateEnd: Aliton.DateConvertToJs('<?php echo $model->ContrSDateEnd; ?>'),
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
+
+        if (Document.DialogId == '' || Document.DialogId == null) {
+            Document.DialogId = 'NewContractDialog';
+            Document.BodyDialogId = 'NewContractBodyDialog';
+        }
             
         var DataJuridical = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
         var DataContractTypes = new $.jqx.dataAdapter(Sources.SourceContractTypes);
@@ -70,7 +77,45 @@
         $("#ExecDay5").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Garant5").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Note5").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
+        $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
+        $("#NewContractBtnCancel").on('click', function () {
+            $('#' + Document.DialogId).jqxWindow('close');
+        });
+        
+        
+        var SendFormContract = function(Form) {
+            var Data;
+            if (Form == undefined)
+                Data = $('#Documents').serialize();
+            else Data = Form;
+            Data = Data + "&DocType_Name=" + "Счет" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#' + Document.DialogId).jqxWindow('close');
+                        if (Document.DialogId == '') {
+                            $("#ContractsGrid").jqxGrid('updatebounddata');
+                            $("#ContractsGrid").jqxGrid('selectrow', 0);
+                        }
+                        if (Document.DialogId == 'CostCalculationsDialog')
+                            $('#RefreshCostCalcDocuments').click();
+                        
+                    } else {
+                        $('#' + Document.BodyDialogId).html(Res);
+                    }
+                }
+            });
+        }
+
+        $("#NewContractBtnOk").on('click', function () {
+            SendFormContract();
+        });
         
         if (Document.ContrNumS != '') $("#ContrNumS5").jqxInput('val', Document.ContrNumS);
         if (Document.ContrDateS !== null) $("#ContrDateS5").jqxDateTimeInput('val', Document.ContrDateS);
@@ -113,6 +158,7 @@
 <input type="hidden" name="Documents[ContrS_id]" value="<?php echo $model->ContrS_id; ?>">
 <input type="hidden" name="Documents[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>">
 <input type="hidden" name="Documents[DocType_id]" value="<?php echo $model->DocType_id; ?>">
+<input type="hidden" name="Documents[Calc_id]" value="<?php echo $model->Calc_id; ?>">
 
 <div class="row">
     <div class="row-column">Номер: <input id="ContrNumS5" name="Documents[ContrNumS]" type="text"></div>
@@ -164,6 +210,10 @@
 
 <div class="row">
     <div class="row-column">Примечание: <textarea id="Note5" name="Documents[Note]"></textarea></div>
+</div>
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

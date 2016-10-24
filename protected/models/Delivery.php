@@ -1,46 +1,6 @@
 <?php
 
-/**
- * This is the model class for table "DeliveryDemands".
- *
- * The followings are the available columns in table 'DeliveryDemands':
- * @property integer $dldm_id
- * @property string $date
- * @property string $user_sender
- * @property integer $objc_id
- * @property integer $dltp_id
- * @property integer $mstr_id
- * @property integer $prty_id
- * @property string $bestdate
- * @property string $deadline
- * @property string $plandate
- * @property string $text
- * @property string $phonenumber
- * @property integer $empl_dlvr_id
- * @property string $date_logist
- * @property string $user_logist
- * @property string $note
- * @property string $date_delivery
- * @property string $rep_delivery
- * @property string $Contacts
- * @property integer $dlrs_id
- * @property string $date_promise
- * @property integer $prtp_id
- * @property integer $prdoc_id
- * @property integer $calc_id
- * @property integer $docm_id
- * @property integer $dmnd_id
- * @property integer $repr_id
- * @property boolean $Lock
- * @property integer $EmplLock
- * @property string $DateLock
- * @property integer $EmplCreate
- * @property string $DateCreate
- * @property integer $EmplChange
- * @property string $DateChange
- * @property integer $EmplDel
- * @property string $DelDate 
- */
+
 class Delivery extends MainFormModel
 {
 

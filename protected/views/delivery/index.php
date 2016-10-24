@@ -300,11 +300,13 @@
     </div>
     <div style="/* overflow: hidden; */padding: 10px;" id="DialogDeliveryContent">
         <div style="/*overflow: hidden;*/" id="BodyDeliveryDemDialog"></div>
+<!--
         <div id="BottomDeliveryDemDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnDeliveryDemOk' /></div>
                 <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnDeliveryDemCancel' /></div>
             </div>
         </div>
+-->
     </div>
 </div>

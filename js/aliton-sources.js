@@ -3041,7 +3041,7 @@ Sources.SourceObjectsGroupCostCalculations =
     cache: false,
     async: false,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }
@@ -3203,6 +3203,7 @@ Sources.SourceCostCalcDocuments =
     datatype: "json",
     datafields: [
         {name: 'Docid', type: 'int'},
+        {name: 'DocType_id', type: 'int'},
         {name: 'DocName', type: 'string'},
         {name: 'DocNumber', type: 'int'},
         {name: 'DocDate', type: 'date'},

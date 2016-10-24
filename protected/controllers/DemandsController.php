@@ -21,7 +21,7 @@ class DemandsController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut'),
+                'actions' => array('index', 'view', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut'),
                 'roles' => array(
                     'ViewDemands',
 
@@ -674,7 +674,24 @@ class DemandsController extends Controller
         return;
     }
     
-    
+    public function actionFindDemand() {
+        $Demand_id = 0;
+        if ($_POST['Demand_id']) {
+            $Demand_id = $_POST['Demand_id'];
+        }
+        
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        $ObjectResult['html'] = $this->renderPartial('_find', array(
+                'Demand_id' => $Demand_id,
+            ), true);
+        
+        echo json_encode($ObjectResult);
+    }
         
         
 }
