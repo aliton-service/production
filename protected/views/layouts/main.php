@@ -443,15 +443,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
             
-            console.log(<?php // $empl = new Employees; $empl->getModelPk(Yii::app()->user->Employee_id); print_r($empl); ?>);
-            
             (function(){
                 var date = new Date();
                 var hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
                 var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
                 var time = hours + ':' + minutes;
                 $('.time').html(time);
-                console.log('time = ' + time);
+//                console.log('time = ' + time);
                 window.setTimeout(arguments.callee, 5000);
             })();
 
