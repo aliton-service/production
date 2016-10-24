@@ -39,8 +39,14 @@
             </div>
         </div>
         <div class="page-header__user-name">
-            <div class="user-name"><?php $empl = new Employees; $empl->getModelPk(Yii::app()->user->Employee_id); print_r($empl['EmployeeName'] ); ?></div>
-            <div class="user-position"><?php $empl = new Employees; $empl->getModelPk(Yii::app()->user->Employee_id); print_r($empl['PositionName'] ); ?></div>
+            <div class="user-name"><?php 
+                if (!Yii::app()->user->isGuest) {
+                    $empl = new Employees; $empl->getModelPk(Yii::app()->user->Employee_id); echo($empl['EmployeeName'] );
+                } else {
+                    echo 'Гость';
+                }
+            ?></div>
+            <div class="user-position"><?php if (!Yii::app()->user->isGuest) {$empl = new Employees; $empl->getModelPk(Yii::app()->user->Employee_id); echo($empl['PositionName'] );} ?></div>
         </div>
         <div class="page-header__logout">
             <a href="/index.php?r=site/logout"></a>
@@ -441,9 +447,11 @@
             
             (function(){
                 var date = new Date();
-                var time = date.getHours()+':'+date.getMinutes();
+                var hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+                var time = hours + ':' + minutes;
                 $('.time').html(time);
-//                console.log('time = ' + time);
+                console.log('time = ' + time);
                 window.setTimeout(arguments.callee, 5000);
             })();
 
