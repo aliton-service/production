@@ -6,6 +6,7 @@ class MonitoringDemandsController extends Controller
     
     public $title = '';
     public $action_url = '';
+    public $gridFilters = null;
     
     /**
      * @return array action filters
@@ -71,6 +72,7 @@ class MonitoringDemandsController extends Controller
             $mndm_id = $_GET['mndm_id'];
             
             $model->getModelPk($mndm_id);
+            
             $this->title = 'Заявка на мониторинг';
             
             $this->render('info', array(
@@ -79,6 +81,7 @@ class MonitoringDemandsController extends Controller
         }
 
         else {
+            $this->gridFilters = '_filters';
             $this->title = 'Заявки на мониторинг';
             $this->render('index', array(
                 'model' => $model

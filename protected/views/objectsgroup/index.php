@@ -211,8 +211,8 @@ $this->breadcrumbs=array(
 ?>
 
     
-<div id='jqxWidget' style="background-color: #F2F2F2;">
-    <div id='jqxTabs'>
+<!--<div id='jqxWidget' style="background-color: #F2F2F2;">-->
+    <div id='jqxTabs' style="">
         <ul>
             <li>
                 <div style="height: 15px; margin-top: 3px;">
@@ -356,4 +356,4 @@ $this->breadcrumbs=array(
             <div style="width: 100%; height: 100%"></div>
         </div>
     </div>
-</div>
+<!--</div>-->

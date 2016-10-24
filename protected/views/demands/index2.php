@@ -7,7 +7,7 @@
             var Display = $("#FilterContainer").css('display');
             if (Display == 'none') {
                 $("#FilterContainer").css('display', 'block');
-                $("#GridContainer").css('width', '80%');
+                $("#GridContainer").css('width', '79%');
                 $("#DemandsGrid").jqxGrid('refresh');
             }
             else {
@@ -30,15 +30,15 @@
         }));
         
         // Присваиваем значения по умолчанию для фильтров
-        var DefaultMaster = '<?php echo $Filters['Master']; ?>';
-        var DefaultNoDateMaster = '<?php echo $Filters['NoDateMaster']; ?>';
-        var DefaultObject = '<?php echo $Filters['Object_id']; ?>';
-        var DefaultDateReg = '<?php echo $Filters['DateReg']; ?>';
-        var DefaultStreet = '<?php echo $Filters['Street_id']; ?>';
-        var DefaultHouse = '<?php echo $Filters['House']; ?>';
-        var DefaultNumber = '<?php echo $Filters['Demand_id']; ?>';
-        var DefaultDemandType = '<?php echo $Filters['DemandType_id']; ?>';
-        var DefaultExecutor = '<?php echo $Filters['Executor']; ?>';
+        var DefaultMaster = '<?php echo $Filters2['Master']; ?>';
+        var DefaultNoDateMaster = '<?php echo $Filters2['NoDateMaster']; ?>';
+        var DefaultObject = '<?php echo $Filters2['Object_id']; ?>';
+        var DefaultDateReg = '<?php echo $Filters2['DateReg']; ?>';
+        var DefaultStreet = '<?php echo $Filters2['Street_id']; ?>';
+        var DefaultHouse = '<?php echo $Filters2['House']; ?>';
+        var DefaultNumber = '<?php echo $Filters2['Demand_id']; ?>';
+        var DefaultDemandType = '<?php echo $Filters2['DemandType_id']; ?>';
+        var DefaultExecutor = '<?php echo $Filters2['Executor']; ?>';
         
         // Создаем фильтры
         var DefaultFilterDateExec = GridFilters.CreateFilterAndFilterGroup('stringfilter', 1, 'true', 'NULL');
@@ -263,20 +263,20 @@
 <div><input type="button" value="Фильтры" id='btnShowHideFilter' /></div>
 <div style="clear: both;"></div>
 <div style="float: left; margin-top: 20px; width: 100%">
-    <div id="FilterContainer" style="float: left; display: none; width: 20%; min-height: 400px; max-width: 250px;">
+    <div id="FilterContainer" style="float: left; display: none; width: 21%; min-height: 400px; max-width: 270px;">
         <div>Мастер</div>
-        <div><div id='cmbMaster'><?php echo $Filters['Master']; ?></div></div>
+        <div><div id='cmbMaster'><?php echo $Filters2['Master']; ?></div></div>
         <div id='chbNotDateMaster'>Непереданные</div>
         <div id='chbNotDateExec'>Невыполненные</div>
         <div id='chbNotWorkedOut'>Неотработанные</div>
         <div>Номер</div>
-        <div><input name="Demands[Demand_id]" id="edDemand_id" type="text" value="<?php echo $Filters['Demand_id'];?>"/></div>
+        <div><input name="Demands[Demand_id]" id="edDemand_id" type="text" value="<?php echo $Filters2['Demand_id'];?>"/></div>
         <div>Дата регистрации</div>
         <div><div id='edDate' name="Demands[DateReg]"></div></div>
         <div>Тип заявки</div>
-        <div id='cmbDemandType' name="Demands[DType_id]"><?php echo $Filters['DemandType_id']; ?></div>
+        <div id='cmbDemandType' name="Demands[DType_id]"><?php echo $Filters2['DemandType_id']; ?></div>
         <div>Исполнитель</div>
-        <div><div id='cmbExecutor'><?php echo $Filters['Executor']; ?></div></div>
+        <div><div id='cmbExecutor'><?php echo $Filters2['Executor']; ?></div></div>
         <div>Адрес</div>
         <div><input id="edAddr" type="text" /></div>
         <div>Участок</div>
@@ -284,7 +284,7 @@
         <div>Улица</div>
         <div><div id='cmbStreet'></div></div>
         <div>Дом</div>
-        <div><input name="Demands[Demand_id]" id="edHouse" type="text" value="<?php echo $Filters['House'];?>"/></div>
+        <div><input name="Demands[Demand_id]" id="edHouse" type="text" value="<?php echo $Filters2['House'];?>"/></div>
         <div>Период с</div>
         <div><div id='edDateStart'></div></div>
         <div>по</div>

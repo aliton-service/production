@@ -1,12 +1,13 @@
-<html lang="en">
+<?php /* @var $this Controller */ ?>
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="en">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/admin/block.css">
-    <!-- Подключаем таблицу стилей -->
+    <!-- Подключаем таблицу стилей для шапки -->
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/header.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/admin/main.css">
     <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
     <!--<script type="text/javascript" src="/protected/extensions/alitonwidgets/button/assets/js/albutton.js"></script>-->
     <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
@@ -14,78 +15,45 @@
     <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
     <?php Yii::app()->clientScript->registerPackage('widgets_css'); ?>
     <?php Yii::app()->clientScript->registerPackage('graj'); ?>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <?php //Yii::app()->clientScript->registerPackage('jqwidgets'); ?>
     <script type="text/javascript" src="/js/jqwidgets/localization.js"></script>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
-
 <body>
-    
-    
-    <header id="page-header">
-        <div class="page-header__logo logo"><a href="/index.php?r=site/index"></a></div>
-        <div class="page-header__description">
-            Круглосуточный сервисный центр №1
-        </div>
-        <div class="page-header__time">
-            <div class="clock-icon"></div>
-            <div class="time"></div>
-            <div class="flag"></div>
-            <div class="count">1</div>
-            <div class="arrows">
-                <div class="arrow_up"></div>
-                <div class="arrow_down"></div>
-            </div>
-        </div>
-        <div class="page-header__user-name">
-            <div class="user-name"><?php $empl = new Employees; $empl->getModelPk(Yii::app()->user->Employee_id); print_r($empl['EmployeeName'] ); ?></div>
-            <div class="user-position"><?php $empl = new Employees; $empl->getModelPk(Yii::app()->user->Employee_id); print_r($empl['PositionName'] ); ?></div>
-        </div>
-        <div class="page-header__logout">
-            <a href="/index.php?r=site/logout"></a>
-        </div>
-        
-    </header>
-    <div id='main-content'>
-        
-        <div class="main-content__header">
 
-            <div class="menu-btn">
-                <div class="menu-text">
-                    Меню
-                </div>
-            </div>
-            
-            <div class="search-form">
-                <input type="text" placeholder="ПОИСК...">
-            </div>
-            <div class="search-btn"></div>
-            
-            <div class="filter-btn__wrapper">
-                <input type="button" class="filter-btn" value="Фильтр" />
-            </div>
-        </div>
-        
-        <div class="page-content__wrapper">
-            
+<?php
 
-            <div class="main-menu">
-                    <?php
-                    $this->widget('zii.widgets.CMenu',array(
-                        'activeCssClass'=>'active',
-                        'activateParents'=>true,
+    $fullname = '';
+    
+    if (!Yii::app()->user->isGuest)
+    {
+        $fullname = Yii::app()->user->fullname.' ('.Yii::app()->user->getRole('').')';
+    }
+?>
+     
+<div class="container" id="page">
+    <div id="header">
+        <div id="logo">
+            <div class="toggler-navbar">Меню</div>
+        </div>
+    </div><!-- header -->
+    
+    <div class="content">
+        <div class="nav">
+            <div class="mainmenu">
+                    <?php $this->widget('zii.widgets.CMenu',array(
                         'items'=>array(
                             array('label'=>'Главная', 'url'=>array('/site/index'), 'visible'=>!Yii::app()->user->isGuest),
                             array('label'=>'Кадры', 'url'=>'#', 'visible'=>true, 'visible'=>Yii::app()->user->checkAccess('ManagerEmployees'), 'items'=>array(
-                                    array('label'=>'Сотрудники', 'url'=>array('/employees/index'), 'visible'=>Yii::app()->user->checkAccess('ManagerEmployees')),
-                                    array('label'=>'Должности', 'url'=>array('/positions/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPositions')),
-                                    array('label'=>'Отделы', 'url'=>array('/departments/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDepartments')),
-                                    array('label'=>'Подразделения', 'url'=>array('/sections/index'), 'visible'=>Yii::app()->user->checkAccess('ViewSections')),
-                                    array('label'=>'Праздничные, выходные, рабочие дни', 'url'=>array('/specialdays/index'), 'visible'=>Yii::app()->user->checkAccess('ViewSpecialDays')),
-                                    array('label'=>'Структура организации', 'url'=>array('/organizationstructure/index'), 'visible'=>Yii::app()->user->checkAccess('ViewOrganizationStructure')),
-                                )
-                            ),
+                                            array('label'=>'Сотрудники', 'url'=>array('/employees/index'), 'visible'=>Yii::app()->user->checkAccess('ManagerEmployees')),
+                                            array('label'=>'Должности', 'url'=>array('/positions/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPositions')),
+                                            array('label'=>'Отделы', 'url'=>array('/departments/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDepartments')),
+                                            array('label'=>'Подразделения', 'url'=>array('/sections/index'), 'visible'=>Yii::app()->user->checkAccess('ViewSections')),
+                                            array('label'=>'Праздничные, выходные, рабочие дни', 'url'=>array('/specialdays/index'), 'visible'=>Yii::app()->user->checkAccess('ViewSpecialDays')),
+                                            array('label'=>'Структура организации', 'url'=>array('/organizationstructure/index'), 'visible'=>Yii::app()->user->checkAccess('ViewOrganizationStructure')),
+                                        )
+                                    ),
                             array('label'=>'Объекты', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('UserObjects'), 'items'=>array(
                                 array('label'=>'Список объектов', 'url'=>array('/Object/index'), 'visible'=>Yii::app()->user->checkAccess('UserObjects')),
                                 array('label'=>'Подъезды и оборудование', 'url'=>array('/ObjectsAndEquips/view'), 'visible'=>false),
@@ -184,8 +152,8 @@
                                 )
                             )
                             ),
-
-
+                            
+                            
                             array('label'=>'Ремонт', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewRepairs'), 'items'=>array(
                                 array('label'=>'Формы', 'url'=>'#', 'items'=>array(
                                     array('label'=>'Форма для менеджера по ремонту', 'url'=>array('/repair')),
@@ -194,7 +162,7 @@
                                     array('label'=>'Сопроводительные накладные', 'url'=>array('/RepairSRM/Index')),
                                     array('label'=>'Гарантийные талоны', 'url'=>array('/RepairWarrantys/Index')),
                                     array('label'=>'Акт утилизации', 'url'=>array('/RepairActUtilizations/Index')),
-
+                                    
                                     )
                                 ),
                                 array('label'=>'Справочники', 'url'=>'#', 'items'=>array(
@@ -207,7 +175,7 @@
                                 )
                             )
                             ),
-
+                            
                             array('label'=>'Склад', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('WHDocumentsView'), 'items'=>array(
                                 array('label'=>'Остатки', 'url'=>array('/Inventories/index')),
                                 array('label'=>'Реестр документов', 'url'=>array('/WHDocuments/index')),
@@ -238,9 +206,9 @@
                             array('label' => 'Задачи', 'visible'=>Yii::app()->user->checkAccess('ViewTasks'), 'url' => '#', 'items' => array(
                                 array('label' => 'Список задач', 'url' => array('/tasks')),
                             )),
-
+                            
                             array('label'=>'Авторизация', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-//                            array('label'=>'Выход ('.$fullname.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+                            array('label'=>'Выход ('.$fullname.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                             array('label'=>'Администрирование', 'url'=>array('/admin'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
                             array('label'=>'Тестирование', 'url'=>array('test/index'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
                             array('label'=>'Отправка SMS', 'url'=>array('test/send'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
@@ -368,7 +336,7 @@
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Объекты по организациям', 'Render' => 0)),
                                             'visible'=>Yii::app()->user->checkAccess('FormObjects')
                                         ),
-
+                                    
                                 )),
                                 array('label'=>'Договора', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Список договоров обслуживания', 
@@ -398,117 +366,85 @@
                                 )),
                             )),
                             array('label'=>'О программе', 'url'=>array('/site/about')),
-                        )
-                    ));?>
-                </div>
+                        ),
+                    )); ?>
 
-            
+                </div><!-- mainmenu -->
+            </div>
+
             <div id='page-content'>
                 <?php
-                    if(isset($this->title) && isset($this->breadcrumbs)) {
+                if(isset($this->title) && isset($this->breadcrumbs)) {
                 ?>
-                <div class="page-content__header">
-                    <div class="page-title">
+                <div style="margin:5px 0 10px 15px;border-top: 1px solid black; box-shadow: 0px 2px 4px rgba(0,0,0,0.5)">
+                    <div class="page-header">
                         <h1><?= isset($this->title) ? $this->title : ""?></h1>
                     </div>
+
+                    <?php if(isset($this->breadcrumbs)):?>
+                    <?php $this->widget('zii.widgets.CBreadcrumbs', array(
+                        'links'=>$this->breadcrumbs,
+                    )); ?><!-- breadcrumbs -->
+                     <?php endif?>
+
+                    <div class="clearfix"></div>
+
                 </div>
-                
-                <?php if(isset($this->breadcrumbs) && $this->breadcrumbs != null):?>
-                    <div class="breadcrumbs_wrapper" style="height: 30px; width: 800px;">
-                        <?php $this->widget('zii.widgets.CBreadcrumbs', array(
-                            'links'=>$this->breadcrumbs,
-                        )); ?><!-- breadcrumbs -->
-                    </div> 
-                <?php endif?>
-                
-                
-                <?php } echo $content; ?>
 
-            </div>
-            <div class="page-content__filters">
-                <?php if (isset($this->gridFilters))
-                    $this->renderPartial($this->gridFilters, null, false, true);
-                ?>
-            </div>
+	            <?php } echo $content; ?>
+
         </div>
-        
+<!--	<div class="clear"></div>-->
+
+	<?php 
+            //print_r(PDO::getAvailableDrivers());
+            //echo phpinfo();
+        ?>
     </div>
-    
-    <script type="text/javascript">
-        $(document).ready(function () {
-            
-            console.log(<?php // $empl = new Employees; $empl->getModelPk(Yii::app()->user->Employee_id); print_r($empl); ?>);
-            
-            (function(){
-                var date = new Date();
-                var time = date.getHours()+':'+date.getMinutes();
-                $('.time').html(time);
-//                console.log('time = ' + time);
-                window.setTimeout(arguments.callee, 5000);
-            })();
+<div class="clearfix"></div>
+</div><!-- page -->
 
-            
-            
-            
-            $('.main-menu >ul>li>ul>li').hover(
-                function() {
-                    $(this).parent().prev().addClass('active-li');
-                },
-                function() {
-                    $(this).parent().prev().removeClass('active-li');
-                }
-            );
-            $('.main-menu >ul>li>ul>li>ul>li').hover(
-                function() {
-                    $(this).parent().parent().addClass('active-li');
-                },
-                function() {
-                    $(this).parent().parent().removeClass('active-li');
-                }
-            );
-    
-            $(".menu-btn").on("click", function () {
-                $(".main-menu").toggle(100, function(){});
-            });
+<!-- Диалоговое окно -->
+<div id="MainDialog" style="display: none;">
+    <div id="MainDialogHeader">
+        <span id="MainDialogHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogMainContent">
+        <!-- <div style="" id="BodyMainDialog"></div> -->
+        <textarea id="BodyMainDialog"></textarea>
+        <div style="margin-top: 10px;"><input type="button" value="Закрыть" id='MainDialogBtnClose'/></div>
+    </div>
+</div>
 
-            var contentHeight = $('#page-content').outerHeight();
-            var filtersHeight = $('.page-content__filters').outerHeight();
-            
-//            console.log('contentHeight = ' + contentHeight);
-//            console.log('filtersHeight = ' + filtersHeight);
-            
-            var resize = function() {
-                
-                var documentHeight = $(window).outerHeight();
-                var headerHeight = 60 + 10 + 30 + 10 + 10;
-//                var newContentHeight = $('#page-content').outerHeight();
-//                console.log('documentHeight = ' + documentHeight);
-//                console.log('newContentHeight = ' + newContentHeight);
-//                console.log('-');
 
-                if ((contentHeight + headerHeight) < documentHeight) {
-                    $('#page-content').outerHeight(documentHeight - headerHeight);
-                }
-                if ((filtersHeight + headerHeight) < documentHeight) {
-                    $('.page-content__filters').outerHeight(documentHeight - headerHeight);
-                }
-                
-            };
-
-            window.onresize = function() {
-                resize();
-            };
-            resize();
-            
-            $(".filter-btn__wrapper").on("click", function () {
-                $(".page-content__filters").toggle(100, function(){});
-            });
-            
-            
-            
-            
-        });
-    </script>
-    
 </body>
 </html>
+
+
+<script type="text/javascript">
+    (function ($) {
+
+            //$('#page .nav').css({'min-height':$('body').outerHeight()+'px'})
+            $('body').on('click','.toggler-navbar', function(){
+                //console.log("1");
+                $nav = $('#page .nav')
+                if ($nav.is(':hidden')) {
+                    //console.log("2");
+                    $nav.show(80);
+                    $('#page #page-content').addClass('nav-open').css({'width':'85%'})
+                    $('#sidebar>.portlet').addClass('nav-open')
+                    $(this).addClass('active')
+                }
+                else {
+                    //console.log("3");
+                    $nav.hide(80);
+                    $('#page #page-content').removeClass('nav-open').css({'width':'97%'})
+                    $('#sidebar>.portlet').removeClass('nav-open')
+                    $('.breadcrumbs').css({'left':'13%'})
+                    $(this).removeClass('active')
+                }
+            })
+        
+    })(jQuery)
+
+</script>

@@ -32,7 +32,7 @@
                 showfilterrow: true,
                 virtualmode: false,
                 width: '100%',
-                height: '400',
+                height: '100%',
                 //source: DemDataAdapter,
                 ready: function() {
                     var State = $('#ObjectsGrid').jqxGrid('getstate');
@@ -74,7 +74,9 @@
 
         $("#ObjInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#NewDem").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#ReloadObjects").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#ViewDemands").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140}));
+        
         $("#ViewDemands").on('click', function () {
             $('#OptionsDialog').jqxWindow('open');
         });
@@ -89,6 +91,18 @@
                 Aliton.NewDemand(CurrentRowData['Object_id'], CurrentRowData['ContrS_id']);
             else 
                 $('#ToDayDialog').jqxWindow('open');
+        });
+        
+        $("#ReloadObjects").on('click', function ()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=Object/index",
+                success: function(){
+                    $("#ObjectsGrid").jqxGrid('updatebounddata');
+                    $("#ObjectsGrid").jqxGrid('selectrow', 0);
+                }
+            });
         });
         
         $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 400}));
@@ -184,6 +198,34 @@
         });
         
         
+        
+        var headerHeight1 = 60 + 10 + 30 + 10 + 10;
+//        var tabsHeight1 = $('.tabs-wrapper').outerHeight();
+//        console.log('tabsHeight1 = ' + tabsHeight1);
+
+        var resizeGrid = function() {
+            var windowHeight1 = $(window).outerHeight();
+            var inputsHeight = $('.inputs').outerHeight();
+            var buttonsHeight = $('.buttons').outerHeight();
+            var marginHeight = 100;
+            
+//            console.log('windowHeight1 = ' + windowHeight1);
+//            console.log('tabsHeight1 = ' + tabsHeight1);
+//            console.log('buttonsHeight = ' + buttonsHeight);
+//            console.log('marginHeight = ' + marginHeight);
+            
+            var newGridHeight1 = windowHeight1 - inputsHeight - buttonsHeight - marginHeight - headerHeight1;
+            $('.grid-wrapper').outerHeight(newGridHeight1);
+
+//            console.log('newGridHeight1 = ' + newGridHeight1);
+        };
+
+        $(window).resize(function() {
+            resizeGrid();
+        });
+        resizeGrid();
+        
+        
     });
 </script>    
 
@@ -205,17 +247,20 @@
     }
 </style>
 
-<div class="row">
+<div class="inputs row">
     <div class="row-column">Адрес: <input type="text" id="edAddr"/></div>
     <div class="row-column">Клиент: <input type="text" id="edClient"/></div>
 </div>
-<div class="row">
-<div id="ObjectsGrid" class="jqxGridAliton"></div>
+
+<div class="grid-wrapper row" style="height: 100px;">
+    <div id="ObjectsGrid" class="jqxGridAliton"></div>
 </div>
-<div class="row">
+
+<div class="buttons row">
     <div class="row-column"><input type="button" value="Дополнительно" id='ObjInfo' /></div>
     <div class="row-column"><input type="button" value="Новая заявка" id='NewDem' /></div>
     <div class="row-column"><input type="button" value="Просмотр заявок" id='ViewDemands' /></div>
+    <div class="row-column"><input type="button" value="Обновить" id='ReloadObjects' /></div>
 </div>
 
 

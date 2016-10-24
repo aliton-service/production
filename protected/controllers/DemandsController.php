@@ -11,10 +11,10 @@ class DemandsController extends Controller
 	 */
 	public function filters()
 	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
+            return array(
+                'accessControl', // perform access control for CRUD operations
+                'postOnly + delete', // we only allow deletion via POST request
+            );
 	}
 
     public function accessRules()
@@ -24,41 +24,32 @@ class DemandsController extends Controller
                 'actions' => array('index', 'view', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut'),
                 'roles' => array(
                     'ViewDemands',
-
                 ),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create'),
                 'roles' => array(
-
                     'CreateDemands',
-
                 ),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('update'),
                 'roles' => array(
-
                     'UpdateDemands',
-
                 ),
             ),
        
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('WorkedOut'),
                 'roles' => array(
-
                     'WorkedOut',
-
                 ),
 
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('delete'),
                 'roles' => array(
-
                     'DeleteDemands',
-
                 ),
 
             ),
@@ -81,7 +72,7 @@ class DemandsController extends Controller
 	
         public function GetFilters($Array) {
             
-            $Filters = array(
+            $Filters2 = array(
                 'NoDateMaster' => false,
                 'NoDateExec' => false,
                 'Object_id' => null,
@@ -97,68 +88,69 @@ class DemandsController extends Controller
             
             if (isset($Array['All']))
                 if ($Array['All'] === "true") 
-                    return $Filters;
+                    return $Filters2;
                 
             
             if (isset($Array['NoDateMaster']))
                 if ($Array['NoDateMaster'] === "true")
-                    $Filters['NoDateMaster'] = $Array['NoDateMaster'];
+                    $Filters2['NoDateMaster'] = $Array['NoDateMaster'];
             
             
             if (isset($Array['DemObject'])) {
                 if ($Array['DemObject'] === "true")
-                    $Filters['Object_id'] = $Array['Object_id'];
+                    $Filters2['Object_id'] = $Array['Object_id'];
             }
             
             if (isset($Array['DemObjectGroup'])) {
                 if ($Array['DemObjectGroup'] === "true") {
-                    //$Filters['ObjectGr_id'] = $Array['ObjectGr_id'];
+                    //$Filters2['ObjectGr_id'] = $Array['ObjectGr_id'];
                     if (isset($Array['Street_id']))
                         if ($Array['Street_id'] !== '')
-                            $Filters['Street_id'] = $Array['Street_id'];
+                            $Filters2['Street_id'] = $Array['Street_id'];
             
                     if (isset($Array['House']))
                         if ($Array['House'] !== '')
-                            $Filters['House'] = $Array['House'];
+                            $Filters2['House'] = $Array['House'];
 
                 }
             }
             
             if (isset($Array['Master']))
                 if ($Array['Master'] !== '')
-                    $Filters['Master'] = $Array['Master'];
+                    $Filters2['Master'] = $Array['Master'];
                 
             if (isset($Array['Demand_id']))
                 if ($Array['Demand_id'] !== '')
-                    $Filters['Demand_id'] = $Array['Demand_id'];
+                    $Filters2['Demand_id'] = $Array['Demand_id'];
                 
             if (isset($Array['DateReg']))
                 if ($Array['DateReg'] !== '')
-                    $Filters['DateReg'] = $Array['DateReg'];
+                    $Filters2['DateReg'] = $Array['DateReg'];
             
             if (isset($Array['DemandType_id']))
                 if ($Array['DemandType_id'] !== '')
-                    $Filters['DemandType_id'] = $Array['DemandType_id'];
+                    $Filters2['DemandType_id'] = $Array['DemandType_id'];
                 
             if (isset($Array['Executor']))
                 if ($Array['Executor'] !== '')
-                    $Filters['Executor'] = $Array['Executor'];
+                    $Filters2['Executor'] = $Array['Executor'];
                 
                 
                 
-            return $Filters;
+            return $Filters2;
         }
         
 	public function actionIndex($ajax=false)
 	{
-            $Filters = array();
-            if (isset($_POST['DemFilters']))
-                $Filters = $this->GetFilters($_POST['DemFilters']);
-            else
-                $Filters = $this->GetFilters(array());
-            
+            $Filters2 = array();
+            if (isset($_POST['DemFilters'])) {
+                $Filters2 = $this->GetFilters($_POST['DemFilters']);
+            }
+            else {
+                $Filters2 = $this->GetFilters(array());
+            }
             $this->render('index2', array(
-                'Filters' => $Filters,
+                'Filters2' => $Filters2,
             ));
 	}
 
