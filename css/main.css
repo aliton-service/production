@@ -197,7 +197,9 @@ input, textarea {
 
 
 
-
+.main-menu {
+    display: none;
+}
 
 
 
@@ -775,7 +777,8 @@ hr {
     padding-top: 13px;
 }
 
-/*
+
+
 #addition-demand hr {
     margin: 0;
     padding: 3px 0;
@@ -1262,4 +1265,4 @@ ul.filter .field {
     autocomplete: off;
 }
 
-*/
+
