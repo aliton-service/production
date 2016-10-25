@@ -51,6 +51,7 @@ class UserIdentity extends CUserIdentity
                             $this->_id = $Result[0]["Employee_id"];
                             $this->setState('fullname', $Result[0]["ShortName"]);
                             $this->setState('Employee_id', $Result[0]["Employee_id"]);
+                            $this->setState('Position_id', $Result[0]["Position_id"]);
                             $this->errorCode = self::ERROR_NONE;
                             return $this->errorCode;
                         }

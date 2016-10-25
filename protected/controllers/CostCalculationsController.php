@@ -193,6 +193,8 @@ class CostCalculationsController extends Controller
             'SumWorkHigh' => 0,
             'SumMaterialsLow' => 0,
             'SumMaterialsHigh' => 0,
+            'SumEquipsHighDefault' => 0,
+            'SumPay' => 0,
         );
         
         if (isset($_POST['calc_id'])) {
@@ -247,6 +249,8 @@ class CostCalculationsController extends Controller
             $Result['SumWorkHigh'] = $Res['sum_works_high'];
             $Result['SumMaterialsLow'] = $Res['sum_materials_low'];
             $Result['SumMaterialsHigh'] = $Res['sum_materials_high'];
+            $Result['SumEquipsHighDefault'] = $Res['sum_equips_high_standart'];
+            $Result['SumPay'] = $Res['SumPay'];
             
         }
         
