@@ -3,7 +3,6 @@
 class WHBuhActs extends MainFormModel
 {
     public $docm_id;
-    public $docm_id;
     public $achs_id;
     public $date;
     public $objc_id;
@@ -30,6 +29,7 @@ class WHBuhActs extends MainFormModel
     public $signed_yn;
     public $date_ready;
     public $date_act;
+    public $state;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -66,8 +66,8 @@ class WHBuhActs extends MainFormModel
                         d.signed_yn,
                         d.date_ready,
                         d.date_act,
-                        case when d.achs_id is null then 'Не утвержден' else 'Утвержден' end state";
-        $From = "\nFrom WHDocuments d";
+                        case when d.achs_id is null then 'Не утвержден' else 'Утвержден' end as state";
+        $From = "\nFrom WHBuhActs d";
         
 
         $this->Query->setSelect($Select);
@@ -141,6 +141,7 @@ class WHBuhActs extends MainFormModel
             'rcrs_id' => '',
             'signed_yn' => '',
             'date_ready' => '',
+            'date_act' => '',
             'date_act' => '',
         );
     }

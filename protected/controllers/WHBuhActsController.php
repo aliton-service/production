@@ -118,23 +118,22 @@ class WHBuhActsController extends Controller
     {
         if (isset($_GET['docm_id'])) {
         $model = new WHBuhActs();
-//        $ObjectResult = array(
-//            'result' => 0,
-//            'id' => 0,
-//            'html' => '',
-//        );
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
 
-//        $this->title = 'Бухгалтерский акт';
-        echo 'true1';
+        $this->title = 'Бухгалтерский акт';
 
-//            $model->getModelPk($_GET['docm_id']);
-//
-//            $ObjectResult['result'] = 1;
-//            $ObjectResult['id'] = $model->docm_id;
-//            $ObjectResult['html'] = $this->render('index', array(
-//                'model' => $model,
-//            ));
-//        echo json_encode($ObjectResult);
+            $model->getModelPk($_GET['docm_id']);
+
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $model->docm_id;
+            $ObjectResult['html'] = $this->render('index', array(
+                'model' => $model,
+            ));
+        echo json_encode($ObjectResult);
         }
     }
     

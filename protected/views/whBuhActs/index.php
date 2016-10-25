@@ -4,9 +4,16 @@
         /* Текущая выбранная строка данных */
         var CurrentRowData;
         
+        var WHBuhActs = {
+            number: '<?php echo json_encode($model->number); ?>',
+            date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
+        };
+            
+        $("#numberWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
+        $("#dateWHBA").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '110px', formatString: 'dd.MM.yyyy', readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
         
-        
-        
+        if (WHBuhActs.number !== '') $("#numberWHBA").jqxInput('val', WHBuhActs.number);
+        if (WHBuhActs.date !== '') $("#dateWHBA").jqxInput('val', WHBuhActs.date);
         
         var WHBuhActsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceWHBuhActs));
         
@@ -102,7 +109,10 @@
 
 <?php $this->setPageTitle('Бухгалтерский акт'); ?>
 
-
+<div class="row">
+    <div class="row-column">Номер: <input readonly type="text" id="numberWHBA"></div>
+    <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id="dateWHBA"></div></div>
+</div>
 <div class="row" style="margin: 0;">
     <div id="WHBuhActsGrid" class="jqxGridAliton"></div>
 </div>

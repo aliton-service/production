@@ -3310,3 +3310,24 @@ Sources.SourceContactInfoForCostCalc =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceWHBuhActs =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'docm_id', type: 'int'},
+        {name: 'achs_id', type: 'int'},
+        {name: 'FIO', type: 'string'},
+    ],
+    id: 'docm_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHBuhActs',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
