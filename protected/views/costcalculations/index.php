@@ -552,6 +552,13 @@
                             'Render' => true,
                         ))); ?> + '&Parameters[pCalc_id]=' + CostCalculations.calc_id);
         });
+        $('#btnPrint2CostCalculations').on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                            'ReportName' => '/Сметы/Смета (для нас)',
+                            'Ajax' => false,
+                            'Render' => true,
+                        ))); ?> + '&Parameters[pCalc_id]=' + CostCalculations.calc_id);
+        });
         
         
         $('#btnEditCostCalculations').on('click', function(){
