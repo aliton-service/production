@@ -1,6 +1,6 @@
 <?php
 
-class CostCalculationDetails extends MainFormModel
+class CostCalculations extends MainFormModel
 {
     public $calc_id = null;
     public $cgrp_id = null;
@@ -130,45 +130,78 @@ class CostCalculationDetails extends MainFormModel
         $this->KeyFiled = 'cc.calc_id';
         $this->PrimaryKey = 'calc_id';
     }
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'CostCalculationDetails';
-    }
-
-    /**
-     * @return array validation rules for model attributes.
-     */
     public function rules()
     {
         return array(
-            array('date, regs_id, empl_id', 'required'),
-            array('calc_id, cgrp_id, regs_id, PaymentType_id, ObjectGr_id, info_id, empl_id, jrdc_id, Demand_id', 'numerical', 'integerOnly'=>true),
-            array('calc_id, date, regs_id, group_name, ccwt_id, PaymentType_id, ObjectGr_id, info_id, empl_id, jrdc_id, Demand_id, ContrNumS, ContrDateS, spec_condt, note', 'safe'),
+            array('ObjectGr_id, empl_id, jrdc_id, Demand_id', 'required'),
+            array('Demand_id', 'numerical', 'min' => 1),
+            array('calc_id,
+                    cgrp_id,
+                    ObjectGr_id,
+                    group_name,
+                    Addr,
+                    date,
+                    empl_id,
+                    empl_name,
+                    PaymentType_id,
+                    info_id,
+                    best_date,
+                    note,
+                    jrdc_id,
+                    jrdc_name,
+                    koef_indirect,
+                    discount,
+                    date_annul,
+                    date_ready,
+                    date_agreed,
+                    EmplAgreed,
+                    type,
+                    CostCalcType,
+                    name,
+                    expences,
+                    starting_work,
+                    starting_work_low,
+                    starting_work_high,
+                    total_work,
+                    sum_works_high,
+                    sum_materials_low,
+                    sum_materials_high,
+                    EmplCreate,
+                    wrtp_id,
+                    workname,
+                    spec_condt,
+                    ContrNumS,
+                    ContrDateS,
+                    Demand_id,
+                    used_expences,
+                    regs_id,
+                    RegistrationName,
+                    Object_id,
+                    free_work,
+                    ccwt_id,
+                    ccwt_proc,
+                    repr_id,
+                    EmplChange', 'safe'),
         );
     }
 
 
-    /**
-     * @return array customized attribute labels (name=>label)
-     */
+    
     public function attributeLabels()
     {
         return array(
             'calc_id' => 'calc_id',
             'cgrp_id' => 'cgrp_id',
-            'ObjectGr_id' => 'ObjectGr_id',
+            'ObjectGr_id' => 'Объект',
             'Addr' => 'Addr',
             'date' => 'date',
-            'empl_id' => 'empl_id',
+            'empl_id' => 'Менеджер',
             'empl_name' => 'empl_name',
             'PaymentType_id' => 'PaymentType_id',
             'info_id' => 'info_id',
             'best_date' => 'best_date',
             'note' => 'note',
-            'jrdc_id' => 'jrdc_id',
+            'jrdc_id' => 'Юр. лицо',
             'jrdc_name' => 'jrdc_name',
             'koef_indirect' => 'koef_indirect',
             'discount' => 'discount',
@@ -193,7 +226,7 @@ class CostCalculationDetails extends MainFormModel
             'spec_condt' => 'spec_condt',
             'ContrNumS' => 'ContrNumS',
             'ContrDateS' => 'ContrDateS',
-            'Demand_id' => 'Demand_id',
+            'Demand_id' => 'Заявка',
             'used_expences' => 'used_expences',
             'regs_id' => 'regs_id',
             'RegistrationName' => 'RegistrationName',

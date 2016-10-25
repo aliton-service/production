@@ -78,12 +78,24 @@ class WHDocumentsController extends Controller
             $model->dctp_id = $_POST['Dctp_id'];
         }
         
+        $DialogId = '';
+        $BodyDialogId = '';
+        
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
+        
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+        
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
         
+                
         if (isset($_POST['WHDocuments'])) {
             $model->attributes = $_POST['WHDocuments'];
             if ($model->validate()) {
@@ -104,43 +116,61 @@ class WHDocumentsController extends Controller
             case 1:
                 $ObjectResult['html'] = $this->renderPartial('_formDoc1', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
             case 2:
                 $ObjectResult['html'] = $this->renderPartial('_formDoc2', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
             case 3:
                 $ObjectResult['html'] = $this->renderPartial('_formDoc3', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
             case 4:
-                $model->objc_id = 7337;
-                $model->Address = 'ЗИП ул., д.нет , СПб';
+                if ($model->objc_id == '' || $model->objc_id == null) {
+                    $model->objc_id = 7337;
+                    $model->Address = 'ЗИП ул., д.нет , СПб';
+                }
                 $ObjectResult['html'] = $this->renderPartial('_formDoc4', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
             case 8:
                 $ObjectResult['html'] = $this->renderPartial('_formDoc8', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
             case 7:
                 $ObjectResult['html'] = $this->renderPartial('_formDoc7', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
             case 9:
                 $ObjectResult['html'] = $this->renderPartial('_formDoc9', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
             default:
                 $ObjectResult['html'] = $this->renderPartial('_form', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
         };
@@ -164,11 +194,20 @@ class WHDocumentsController extends Controller
             }
         }
         
+        $DialogId = '';
+        $BodyDialogId = '';
+        
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
+        
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
+        
         
         if (isset($_POST['Docm_id']))
             $model->getModelPk($_POST['Docm_id']);
@@ -215,6 +254,8 @@ class WHDocumentsController extends Controller
             case 4:
                 $ObjectResult['html'] = $this->renderPartial('_formDoc4', array(
                     'model' => $model,
+                    'DialogId' => $DialogId,
+                    'BodyDialogId' => $BodyDialogId,
                 ), true);
             break;
             case 8:

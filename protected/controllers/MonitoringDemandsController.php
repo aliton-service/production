@@ -93,19 +93,24 @@ class MonitoringDemandsController extends Controller
     public function actionInsert() 
     {
         $model = new MonitoringDemands;
+
+        $DialogId = '';
+        $BodyDialogId = '';
+        
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+        
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
+        
         
         if(isset($_POST['MonitoringDemands']))
         {
             $model->attributes = $_POST['MonitoringDemands'];
             
             $Employee_id = Yii::app()->user->Employee_id;
-            $Query = new SQLQuery();
-            $Query->setSelect("Select Alias from Employees where Employee_id = " . $Employee_id);
-            $Result = $Query->QueryRow();
-            $Employee_Alias = $Result['Alias'];
-                
-            $model->User2 = $Employee_Alias;
-            $model->UserCreate2 = Yii::app()->user->Employee_id;
 
             if ($model->validate())
             {
@@ -116,7 +121,9 @@ class MonitoringDemandsController extends Controller
         }
 
         $this->renderPartial('_form', array(
-            'model' => $model
+            'model' => $model,
+            'DialogId' => $DialogId,
+            'BodyDialogId' => $BodyDialogId,
         ));
 
     }
@@ -124,6 +131,14 @@ class MonitoringDemandsController extends Controller
     public function actionUpdate() 
     {
         $model = new MonitoringDemands;
+        
+        $DialogId = '';
+        $BodyDialogId = '';
+        
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
         
         if(isset($_POST['MonitoringDemands']))
         {
@@ -145,7 +160,9 @@ class MonitoringDemandsController extends Controller
         
         $model->getModelPk($mndm_id);
         $this->renderPartial('_form', array(
-            'model' => $model
+            'model' => $model,
+            'DialogId' => $DialogId,
+            'BodyDialogId' => $BodyDialogId,
         ));
     }
     

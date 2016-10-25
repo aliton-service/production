@@ -2,13 +2,14 @@
     $(document).ready(function () {
         
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
-        
+        var First = true;
         var CostCalcEquip = {
-            eqip_id: '<?php echo $model->eqip_id; ?>',
-            quant: '<?php echo $model->quant; ?>',
-            price: '<?php echo $model->price; ?>',
-            price_low: '<?php echo $model->price_low; ?>',
-            note: '<?php echo $model->note; ?>',
+            eqip_id: <?php echo json_encode($model->eqip_id); ?>,
+            eqip_name: <?php echo json_encode($model->eqip_name); ?>,
+            quant: <?php echo json_encode($model->quant); ?>,
+            price: <?php echo json_encode($model->price); ?>,
+            price_low: <?php echo json_encode($model->price_low); ?>,
+            note: <?php echo json_encode($model->note); ?>,
         };
         
         $('#CostCalcEquips').on('keyup keypress', function(e) {
@@ -19,34 +20,65 @@
             }
         });
         
-        var EquipsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
         
-        
-        $("#jqxToggleButtonCCE").jqxToggleButton($.extend(true, {}, ToggleButtonDefaultSettings, { width: '50px', toggled: false }));
+        $("#jqxToggleButtonCCE").jqxToggleButton($.extend(true, {}, ToggleButtonDefaultSettings, { width: '280px', toggled: true }));
 
-        var toggled;
+        var toggled = true;
         
         $("#jqxToggleButtonCCE").on('click', function () {
             toggled = $("#jqxToggleButtonCCE").jqxToggleButton('toggled');
-            if (toggled) {
-                $("#jqxToggleButtonCCE")[0].value = 'вкл.';
-                
-            }
-            else $("#jqxToggleButtonCCE")[0].value = 'выкл.';
+            if (toggled) 
+                $("#jqxToggleButtonCCE")[0].value = 'Добавить еще одну позицию';
+            else $("#jqxToggleButtonCCE")[0].value = 'Не добавлять больше позиций';
         });
-                
-        $("#EquipsCCE").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: EquipsDataAdapter, displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'contains', width: 490 }));
+        
+        var EquipsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}), {
+                formatData: function (data) {
+                    var Value = $('#FilterEquipsCCE').val();
+                    var Filters = [];
+                    Filters[0] = "e.ctgr_id <> 7";
+                    Filters[1] = "e.equipname like '%" + Value + "%'"
+                    $.extend(data, {
+                        Filters: Filters
+                    });
+                    return data;
+                },
+            });
+        
+        
+        $("#FilterEquipsCCE").jqxInput($.extend(true, {}, InputDefaultSettings, { width: '524px'}));
+        
+        if (CostCalcEquip.eqip_name != null) {
+            if (CostCalcEquip.eqip_name.length < 6)
+                $("#FilterEquipsCCE").val(CostCalcEquip.eqip_name.substring(0, CostCalcEquip.eqip_name.length));
+            else
+                $("#FilterEquipsCCE").val(CostCalcEquip.eqip_name.substring(0, 6));
+            
+        }
+        
+        
+        $("#FilterEquipsCCE").on('change', function(e){
+            EquipsDataAdapter.dataBind();
+        });
+        
+        $("#EquipsCCE").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {
+            displayMember: "EquipName",
+            source: EquipsDataAdapter,
+            valueMember: "Equip_id",
+            searchMode: 'startswithignorecase',
+            width: 490,
+        }));
         $("#UnitMeasurementCCE").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 } ));
         $("#QuantCCE").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, min: 0, decimalDigits: 0 }));
         $("#PriceCCE").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2 }));
-        $("#PriceLowCCE").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2 }));
-        $("#NoteCCE").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 560, height: 90 }));
+        $("#PriceLowCCE").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2, readOnly: true, spinButtonsStep: 0 }));
+        $("#NoteCCE").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 90 }));
         
-        $('#btnSaveCostCalcEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnSaveCostCalcEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: true}));
         $('#btnCancelCostCalcEquip').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnCancelCostCalcEquip').on('click', function(){
-            $('#CostCalcDetailsDialog').jqxWindow('close');
+            $('#CostCalculationsDialog').jqxWindow('close');
         });
         
         $('#btnSaveCostCalcEquip').on('click', function(){
@@ -62,19 +94,22 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         Aliton.SelectRowById('cceq_id', Res.id, '#CostCalcEquipsGrid', true);
-                        if (toggled) {
+                        CostCalcDetails.DetailsRefresh();
+                        if (toggled && StateInsert) {
+                            $(".errorMessage").html('');
                             $("#EquipsCCE").jqxComboBox('clearSelection');
+                            $("#EquipsCCE input").val('');
                             $("#UnitMeasurementCCE").jqxInput('val', null);
                             $("#QuantCCE").jqxNumberInput('val', null);
                             $("#PriceCCE").jqxNumberInput('val', null);
                             $("#PriceLowCCE").jqxNumberInput('val', null);
                             $('#NoteCCE').jqxTextArea('val', '');
                         } else {
-                            $('#CostCalcDetailsDialog').jqxWindow('close');
+                            $('#CostCalculationsDialog').jqxWindow('close');
                         }
                     }
                     else {
-                        $('#BodyCostCalcDetailsDialog').html(Res.html);
+                        $('#BodyCostCalculationsDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {
@@ -86,14 +121,15 @@
         $("#EquipsCCE").on('bindingComplete', function(){
             if (CostCalcEquip.eqip_id != '') {
                 $("#EquipsCCE").jqxComboBox('val', CostCalcEquip.eqip_id);
+                First = false;
             }
+            $('#btnSaveCostCalcEquip').jqxButton({disabled: false});
         });
             
         if (CostCalcEquip.quant != '') $("#QuantCCE").jqxNumberInput('val', CostCalcEquip.quant);
         if (CostCalcEquip.price != '') $("#PriceCCE").jqxNumberInput('val', CostCalcEquip.price);
         if (CostCalcEquip.price_low != '') $("#PriceLowCCE").jqxNumberInput('val', CostCalcEquip.price_low);
         if (CostCalcEquip.note != '') $("#NoteCCE").jqxTextArea('val', CostCalcEquip.note);
-        
         
         $('#EquipsCCE').on('select', function (event) 
         {
@@ -104,18 +140,10 @@
                     var value = item.value;
                     if(value) 
                     {
-                        var UnitMeasurementDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {}), {
-                            formatData: function (data) {
-                                $.extend(data, {
-                                    Filters: ["e.Equip_id = " + value],
-                                });
-                                return data;
-                            },
-                        });
-                        UnitMeasurementDataAdapter.dataBind();
-                        var nameUM = UnitMeasurementDataAdapter.records[0].NameUM;
-                        $("#UnitMeasurementCCE").jqxInput('val', nameUM);
-                        
+                        for (var i = 0; i < EquipsDataAdapter.records.length; i++) {
+                            if (EquipsDataAdapter.records[i].Equip_id == value)
+                                $("#UnitMeasurementCCE").jqxInput('val', EquipsDataAdapter.records[i].NameUM);
+                        }
                         var PriceListDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePriceListDetails, {}), {
                             formatData: function (data) {
                                 $.extend(data, {
@@ -125,12 +153,20 @@
                             },
                         });
                         PriceListDetailsDataAdapter.dataBind();
-                        var PriceLowCCE = PriceListDetailsDataAdapter;
-                        console.log(PriceLowCCE);
-                        var PriceLowCCE = PriceListDetailsDataAdapter.records[0].price_low;
-                        $("#PriceLowCCE").jqxNumberInput('val', PriceLowCCE);
-                        var PriceCCE = PriceListDetailsDataAdapter.records[0].price_high;
-                        $("#PriceCCE").jqxNumberInput('val', PriceCCE);
+                        if (PriceListDetailsDataAdapter.records.length > 0) {
+                            var PriceLowCCE = PriceListDetailsDataAdapter.records[0].price_low;
+                            $("#PriceLowCCE").jqxNumberInput('val', PriceLowCCE);
+                            if (!First) {
+                                var PriceCCE = PriceListDetailsDataAdapter.records[0].price_high;
+                                $("#PriceCCE").jqxNumberInput('val', PriceCCE);
+                            }
+                        } else {
+                            if (!First) {
+                                $("#PriceLowCCE").jqxNumberInput('val', null);
+                                $("#PriceCCE").jqxNumberInput('val', null);
+                            }
+                        }
+                            
                     }
                 }
             }
@@ -150,9 +186,12 @@
 <input type="hidden" name="CostCalcEquips[cceq_id]" value="<?php echo $model->cceq_id; ?>"/>
 <input type="hidden" name="CostCalcEquips[calc_id]" value="<?php echo $model->calc_id; ?>"/>
 
-<div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="margin-top: 2px;">Добавить несколько позиций: </div>
-    <div class="row-column"><input type="button" value="выкл." id='jqxToggleButtonCCE' /></div>
+<div class="row" style="margin-top: 0px; padding-top: 0px; border-bottom: 1px solid #e0e0e0;">
+    <div class="row-column"><input type="button" value="Добавить еще одну позицию" id='jqxToggleButtonCCE' /></div>
+</div>
+
+<div class="row" style="margin-top: 4px;">
+    <div class="row-column">Фильтр: <input id="FilterEquipsCCE" /></div>
 </div>
 
 <div class="row">
@@ -167,7 +206,7 @@
 </div>
 
 <div class="row" style="margin-top: 0;">
-    <div class="row-column">Примечание: <textarea id="NoteCCE" name="CostCalcEquips[note]"></textarea></div>
+    <div class="row-column" style="width: 100%">Примечание: <textarea id="NoteCCE" name="CostCalcEquips[note]"></textarea></div>
 </div>
 
 <div class="row">

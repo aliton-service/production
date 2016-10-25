@@ -28,7 +28,14 @@
             Note: <?php echo json_encode($model->Note); ?>,
             ContrSDateStart: Aliton.DateConvertToJs('<?php echo $model->ContrSDateStart; ?>'),
             ContrSDateEnd: Aliton.DateConvertToJs('<?php echo $model->ContrSDateEnd; ?>'),
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
+
+        if (Document.DialogId == '' || Document.DialogId == null) {
+            Document.DialogId = 'NewContractDialog';
+            Document.BodyDialogId = 'NewContractBodyDialog';
+        }
             
         var DataJuridical = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
         var DataContractTypes = new $.jqx.dataAdapter(Sources.SourceContractTypes);
@@ -70,7 +77,45 @@
         $("#ExecDay4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Garant4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Note4").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
+        $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
+        $("#NewContractBtnCancel").on('click', function () {
+            $('#' + Document.DialogId).jqxWindow('close');
+        });
+        
+        
+        var SendFormContract = function(Form) {
+            var Data;
+            if (Form == undefined)
+                Data = $('#Documents').serialize();
+            else Data = Form;
+            Data = Data + "&DocType_Name=" + "Счет" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#' + Document.DialogId).jqxWindow('close');
+                        if (Document.DialogId == 'NewContractDialog') {
+                            $("#ContractsGrid").jqxGrid('updatebounddata');
+                            $("#ContractsGrid").jqxGrid('selectrow', 0);
+                        }
+                        if (Document.DialogId == 'CostCalculationsDialog')
+                            $('#RefreshCostCalcDocuments').click();
+                        
+                    } else {
+                        $('#' + Document.BodyDialogId).html(Res);
+                    }
+                }
+            });
+        }
+
+        $("#NewContractBtnOk").on('click', function () {
+            SendFormContract();
+        });
         
         if (Document.ContrNumS != '') $("#ContrNumS4").jqxInput('val', Document.ContrNumS);
         if (Document.ContrDateS !== null) $("#ContrDateS4").jqxDateTimeInput('val', Document.ContrDateS);
@@ -112,57 +157,62 @@
 <input type="hidden" name="Documents[ContrS_id]" value="<?php echo $model->ContrS_id; ?>">
 <input type="hidden" name="Documents[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>">
 <input type="hidden" name="Documents[DocType_id]" value="<?php echo $model->DocType_id; ?>">
+<input type="hidden" name="Documents[Calc_id]" value="<?php echo $model->Calc_id; ?>">
 
 <div class="row">
-    <div class="row-column">Номер: <input id="ContrNumS4" name="Documents[ContrNumS]" type="text"></div>
-    <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS4"  name="Documents[ContrDateS]" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Дата выполнения работ по акту: </div><div class="row-column"><div id="date_doc4" name="Documents[date_doc]" type="text"></div></div>
+    <div class="row-column">Номер: <input id="ContrNumS4" name="Documents[ContrNumS]" type="text"><?php echo $form->error($model, 'ContrNumS'); ?></div>
+    <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS4"  name="Documents[ContrDateS]" type="text"></div><?php echo $form->error($model, 'ContrDateS'); ?></div>
+    <div class="row-column" style="padding-top: 3px;">Дата выполнения работ по акту: </div><div class="row-column"><div id="date_doc4" name="Documents[date_doc]" type="text"></div><?php echo $form->error($model, 'date_doc'); ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column" style="padding-top: 3px;">Срок действия с: </div><div class="row-column"><div id="ContrSDateStart4" name="Documents[ContrSDateStart]" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd4" name="Documents[ContrSDateEnd]" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Приложение: </div><div class="row-column"><div id="Annex4" name="Documents[Annex]" type="checkbox"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor4" name="Documents[Debtor]" type="checkbox"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Срок действия с: </div><div class="row-column"><div id="ContrSDateStart4" name="Documents[ContrSDateStart]" type="text"></div><?php echo $form->error($model, 'ContrSDateStart'); ?></div>
+    <div class="row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd4" name="Documents[ContrSDateEnd]" type="text"></div><?php echo $form->error($model, 'ContrSDateEnd'); ?></div>
+    <div class="row-column" style="padding-top: 3px;">Приложение: </div><div class="row-column"><div id="Annex4" name="Documents[Annex]" type="checkbox"></div><?php echo $form->error($model, 'Annex'); ?></div>
+    <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor4" name="Documents[Debtor]" type="checkbox"></div><?php echo $form->error($model, 'Debtor'); ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Юр. лицо: </div><div class="row-column"><div id="JuridicalPerson4" name="Documents[Jrdc_id]" type="text"></div></div>
-    <div class="row-column">Тип контракта: </div><div class="row-column"><div id="ContactType4" name="Documents[crtp_id]" type="text"></div></div>
-    <div class="row-column">Менеджер: </div><div class="row-column"><div id="empl4" name="Documents[empl_id]" type="text"></div></div>
+    <div class="row-column">Юр. лицо: </div><div class="row-column"><div id="JuridicalPerson4" name="Documents[Jrdc_id]" type="text"></div><?php echo $form->error($model, 'Jrdc_id'); ?></div>
+    <div class="row-column">Тип контракта: </div><div class="row-column"><div id="ContactType4" name="Documents[crtp_id]" type="text"></div><?php echo $form->error($model, 'crtp_id'); ?></div>
+    <div class="row-column">Менеджер: </div><div class="row-column"><div id="empl4" name="Documents[empl_id]" type="text"></div><?php echo $form->error($model, 'empl_id'); ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Номер договора: <input id="DocNumber4" name="Documents[DocNumber]" type="text"></div>
-    <div class="row-column" style="padding-top: 3px;">Дата договора: </div><div class="row-column"><div id="DocDate4" name="Documents[DocDate]"></div></div>
-    <div class="row-column">Вид оплаты: </div><div class="row-column"><div id="PaymentType4" name="Documents[PaymentType_id]" type="text"></div></div>
+    <div class="row-column">Номер договора: <input id="DocNumber4" name="Documents[DocNumber]" type="text"><?php echo $form->error($model, 'DocNumber'); ?></div>
+    <div class="row-column" style="padding-top: 3px;">Дата договора: </div><div class="row-column"><div id="DocDate4" name="Documents[DocDate]"></div><?php echo $form->error($model, 'DocDate'); ?></div>
+    <div class="row-column">Вид оплаты: </div><div class="row-column"><div id="PaymentType4" name="Documents[PaymentType_id]" type="text"></div><?php echo $form->error($model, 'PaymentType_id'); ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Сумма начислений: </div><div class="row-column"><div id="Price4" name="Documents[Price]" type="text"></div></div>
-    <div class="row-column">Предварительная сумма: </div><div class="row-column"><div id="CalcSum4" name="Documents[CalcSum]" type="text"></div></div>
-    <div class="row-column">Аванс: </div><div class="row-column"><div id="PrePayment4" name="Documents[PrePayment]" type="text"></div></div>
+    <div class="row-column">Сумма начислений: </div><div class="row-column"><div id="Price4" name="Documents[Price]" type="text"></div><?php echo $form->error($model, 'Price'); ?></div>
+    <div class="row-column">Предварительная сумма: </div><div class="row-column"><div id="CalcSum4" name="Documents[CalcSum]" type="text"></div><?php echo $form->error($model, 'CalcSum'); ?></div>
+    <div class="row-column">Аванс: </div><div class="row-column"><div id="PrePayment4" name="Documents[PrePayment]" type="text"></div><?php echo $form->error($model, 'PrePayment'); ?></div>
 </div>
 
 <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
     <div style="overflow: hidden;">
         <div class="row-column" style="margin: 0 0 10px 0; width: 100%; font-weight: 500;">Выполненные работы</div>
-        <div class="row-column">Заявка: <input id="dmnd_id4" name="Documents[dmnd_id]" type="text"></div>
-        <div class="row-column" style="padding-top: 3px;">Дата выполнения работ: </div><div class="row-column"><div id="DateExec4" name="Documents[DateExec]"></div></div>
-        <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_act4" name="Documents[date_act]"></div></div>
-        <div class="row-column" style="padding-top: 10px;">Перечень работ: <textarea id="SpecialCondition4" name="Documents[SpecialCondition]"></textarea></div>
+        <div class="row-column">Заявка: <input id="dmnd_id4" name="Documents[dmnd_id]" type="text"></div><?php echo $form->error($model, 'dmnd_id'); ?>
+        <div class="row-column" style="padding-top: 3px;">Дата выполнения работ: </div><div class="row-column"><div id="DateExec4" name="Documents[DateExec]"></div><?php echo $form->error($model, 'DateExec'); ?></div>
+        <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_act4" name="Documents[date_act]"></div><?php echo $form->error($model, 'date_act'); ?></div>
+        <div class="row-column" style="padding-top: 10px;">Перечень работ: <textarea id="SpecialCondition4" name="Documents[SpecialCondition]"></textarea><?php echo $form->error($model, 'SpecialCondition'); ?></div>
 
-        <div class="row-column" style="padding-top: 10px;">Контактное лицо: <div id="ContactInfo4" name="Documents[Info]" type="text"></div></div>
+        <div class="row-column" style="padding-top: 10px;">Контактное лицо: <div id="ContactInfo4" name="Documents[Info]" type="text"></div><?php echo $form->error($model, 'Info'); ?></div>
 
         <div class="row-column" style="padding-top: 18px; ">
-            <div class="row-column">Срок: </div><div class="row-column"><div id="ExecDay4" name="Documents[ExecDay]" type="text"></div></div>
-            <div class="row-column">Гарантия: </div><div class="row-column"><div id="Garant4" name="Documents[Garant]" type="text"></div></div>
+            <div class="row-column">Срок: </div><div class="row-column"><div id="ExecDay4" name="Documents[ExecDay]" type="text"></div><?php echo $form->error($model, 'ExecDay'); ?></div>
+            <div class="row-column">Гарантия: </div><div class="row-column"><div id="Garant4" name="Documents[Garant]" type="text"></div><?php echo $form->error($model, 'Garant'); ?></div>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="row-column">Примечание: <textarea id="Note4" name="Documents[Note]"></textarea></div>
+    <div class="row-column">Примечание: <textarea id="Note4" name="Documents[Note]"></textarea><?php echo $form->error($model, 'Note'); ?></div>
+</div>
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

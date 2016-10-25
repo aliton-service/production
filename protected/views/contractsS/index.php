@@ -71,41 +71,41 @@
         $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '650px', width: '870'}));
         
         $('#NewContractDialog').jqxWindow({initContent: function() {
-            $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+//            $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+//            $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         }});
         
-        $("#NewContractBtnCancel").on('click', function () {
-            $('#NewContractDialog').jqxWindow('close');
-        });
-        
-        
-        var SendFormContract = function(Form) {
-            var Data;
-            if (Form == undefined)
-                Data = $('#Documents').serialize();
-            else Data = Form;
-                
-            $.ajax({
-                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
-                type: 'POST',
-                async: false,
-                data: Data,
-                success: function(Res) {
-                    if (Res == '1' || Res == 1) {
-                        $('#NewContractDialog').jqxWindow('close');
-                        $("#ContractsGrid").jqxGrid('updatebounddata');
-                        $("#ContractsGrid").jqxGrid('selectrow', 0);
-                    } else {
-                        $('#NewContractBodyDialog').html(Res);
-                    }
-                }
-            });
-        }
-
-        $("#NewContractBtnOk").on('click', function () {
-            SendFormContract();
-        });
+//        $("#NewContractBtnCancel").on('click', function () {
+//            $('#NewContractDialog').jqxWindow('close');
+//        });
+//        
+//        
+//        var SendFormContract = function(Form) {
+//            var Data;
+//            if (Form == undefined)
+//                Data = $('#Documents').serialize();
+//            else Data = Form;
+//                
+//            $.ajax({
+//                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+//                type: 'POST',
+//                async: false,
+//                data: Data,
+//                success: function(Res) {
+//                    if (Res == '1' || Res == 1) {
+//                        $('#NewContractDialog').jqxWindow('close');
+//                        $("#ContractsGrid").jqxGrid('updatebounddata');
+//                        $("#ContractsGrid").jqxGrid('selectrow', 0);
+//                    } else {
+//                        $('#NewContractBodyDialog').html(Res);
+//                    }
+//                }
+//            });
+//        }
+//
+//        $("#NewContractBtnOk").on('click', function () {
+//            SendFormContract();
+//        });
         
         var openCreateWindow = function (DocType_Name) {
             $.ajax({
@@ -1023,12 +1023,14 @@
     </div>
     <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="NewContractDialogContent">
         <div style="overflow: hidden;" id="NewContractBodyDialog"></div>
+        <!--
         <div id="NewContractBottomDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
                 <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
             </div>
         </div>
+        -->
     </div>
 </div>
 

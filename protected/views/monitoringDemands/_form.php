@@ -10,8 +10,17 @@
             DateAccept: Aliton.DateConvertToJs('<?php echo $model->DateAccept; ?>'),
             WishDate: Aliton.DateConvertToJs('<?php echo $model->WishDate; ?>'),
             DateExec: Aliton.DateConvertToJs('<?php echo $model->DateExec; ?>'),
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
 
+
+        if (MonitoringDemands3.DialogId == '' || MonitoringDemands3.DialogId == null) {
+            MonitoringDemands3.DialogId = 'EditDialog';
+            MonitoringDemands3.BodyDialogId = 'BodyDialog';
+        }
+        
+        
         var DataPriors = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDemandPriors, {}), {
             formatData: function (data) {
                 $.extend(data, {
@@ -25,9 +34,40 @@
         $("#Date3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, showCalendarButton: false, value: new Date() }));
         $("#Prior3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPriors, displayMember: "DemandPrior", valueMember: "DemandPrior_id", width: 220, autoDropDownHeight: true }));
         $("#Deadline3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, value: null }));
-        $("#WishDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, showTimeButton: true }));
+        $("#WishDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, showTimeButton: true, value: null }));
         $("#Description3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 590 }));
-        
+        $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#btnCancel").on('click', function () {
+            $('#' + MonitoringDemands3.DialogId).jqxWindow('close');
+        });
+        $("#btnOk").on('click', function () {
+            var Data = $('#MonitoringDemands').serialize();
+                
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        
+                        $('#' + MonitoringDemands3.DialogId).jqxWindow('close');
+                        if (MonitoringDemands3.DialogId == 'EditDialog') {
+                            $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+                            $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
+                        } 
+                        if (MonitoringDemands3.DialogId == 'CostCalculationsDialog') {
+                            $('#RefreshCostCalcDocuments').click();
+                        } 
+                            
+                    } else {
+                        $('#' + MonitoringDemands3.BodyDialogId).html(Res);
+                    }
+
+                }
+            });
+        });
         
         if (MonitoringDemands3.mndm_id !== '') $("#mndm_id3").jqxInput('val', MonitoringDemands3.mndm_id);
         if (MonitoringDemands3.Date !== null) $("#Date3").jqxDateTimeInput('val', MonitoringDemands3.Date);
@@ -101,6 +141,7 @@
     )); 
 ?>
 
+<input  name="MonitoringDemands[Calc_id]" type="hidden" value="<?php echo $model->Calc_id; ?>"/>
 
 
 <div class="row">
@@ -116,6 +157,11 @@
 
 <div class="row">
     <div class="row-column">Примечание: <textarea id="Description3" name="MonitoringDemands[Description]"></textarea></div>
+</div>
+
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

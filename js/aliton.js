@@ -25,11 +25,14 @@ Aliton.FindArray = function(Array, FieldName, FieldValue) {
     return null;
 };
 
-Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh) {
+Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh, Scroll) {
     if (Refresh == true)
         $(Grid).jqxGrid('updatebounddata');
     if (Value == undefined) {
         $(Grid).jqxGrid('selectrow', 0);
+    }
+    if (Scroll == undefined) {
+        Scroll = true;
     }
         
     var Rows = $(Grid).jqxGrid('getrows');
@@ -37,7 +40,8 @@ Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh) {
         var TmpVal = $(Grid).jqxGrid('getcellvalue', i, FieldName);
         if (TmpVal == Value) {
             $(Grid).jqxGrid('selectrow', i);
-            $(Grid).jqxGrid('ensurerowvisible', i);
+            if (Scroll)
+                $(Grid).jqxGrid('ensurerowvisible', i);
             return;
             
         }

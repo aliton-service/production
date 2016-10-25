@@ -131,7 +131,8 @@ var RadioButtonDefaultSettings = {
 };
 
 var ToggleButtonDefaultSettings = {
-    width: 200
+    width: 200,
+    height: 30,
 };
 
 

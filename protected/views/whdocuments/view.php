@@ -128,7 +128,7 @@
         $("#btnPurchase").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, width: 180}));
         var CurrentRowDetails;
         
-        var DataDetails = new $.jqx.dataAdapter($.extend(true, {}, Sources.DocmAchsDetailsSource), { async: false,
+        var DataDetails = new $.jqx.dataAdapter($.extend(true, {}, Sources.DocmAchsDetailsSource), { async: true,
             formatData: function (data) {
                         $.extend(data, {
                             Filters: ["d.Docm_id = " + WHDocuments.Docm_id]
@@ -169,6 +169,7 @@
                         Equip_id: CurrentRowDetails.eqip_id,
                         Strg_id: WHDocuments.Strg_id
                     },
+                    async: true,
                     success: function(Res) {
                         Res = JSON.parse(Res);
                         if (Res.result = 1) {
@@ -420,6 +421,7 @@
         }
         
         $('#edTabs').jqxTabs({ width: '100%', height: 250, initTabContent: initWidgets, selectedItem: DefaultTabIndex });
+        
         if (DefaultTabIndex == 3)
             $('#edTabs').jqxTabs({ height: 280});
         $("#edTabs .jqx-tabs-title:eq(0)").css("display", "none");

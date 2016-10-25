@@ -69,6 +69,18 @@ class DeliveryController extends Controller
     
     public function actionCreate() {
         $model = new DeliveryDemands();
+        
+        $DialogId = '';
+        $BodyDialogId = '';
+
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
+        
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
@@ -91,12 +103,25 @@ class DeliveryController extends Controller
         
         $ObjectResult['html'] = $this->renderPartial('_form2', array(
             'model' => $model,
+            'DialogId' => $DialogId,
+            'BodyDialogId' => $BodyDialogId,
         ), true);
         echo json_encode($ObjectResult);
     }
     
     public function actionInsert() {
         $model = new DeliveryDemands();
+        
+        $DialogId = '';
+        $BodyDialogId = '';
+
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
         
         if (isset($_POST['DeliveryDemands'])) {
             $model->attributes = $_POST['DeliveryDemands'];
@@ -109,6 +134,8 @@ class DeliveryController extends Controller
         
         $this->renderPartial('_form', array(
             'model' => $model,
+            'DialogId' => $DialogId,
+            'BodyDialogId' => $BodyDialogId,
         ));
     }
     

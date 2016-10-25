@@ -6,7 +6,7 @@
         var CostCalcWork = {
             ccwr_id: '<?php echo $model->ccwr_id; ?>',
             calc_id: '<?php echo $model->calc_id; ?>',
-            cceq_id: '<?php echo $model->cceq_id; ?>',
+            cceq_id: <?php echo json_encode($model->cceq_id); ?>,
             cwdt_id: '<?php echo $model->cwdt_id; ?>',
             koef: '<?php echo $model->koef; ?>',
             price: '<?php echo $model->price; ?>',
@@ -25,36 +25,51 @@
             }
         });
         
-        var WorkTypeDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCalcWorkTypeDetails, {async: true}));
+        var WorkTypeDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCalcWorkTypeDetails, {async: true}), {
+            formatData: function (data) {
+                    var Value = $('#edWorkFilter').val();
+                    var Filters = [];
+                    Filters[0] = "cwdt.name like '%" + Value + "%'"
+                    $.extend(data, {
+                        Filters: Filters
+                    });
+                    return data;
+                },
+        });
         
         
-        $("#jqxToggleButtonCCW").jqxToggleButton($.extend(true, {}, ToggleButtonDefaultSettings, { width: '50px', toggled: false }));
+        $("#jqxToggleButtonCCW").jqxToggleButton($.extend(true, {}, ToggleButtonDefaultSettings, { width: '280px', toggled: true }));
 
         var toggled;
         
         $("#jqxToggleButtonCCW").on('click', function () {
             toggled = $("#jqxToggleButtonCCW").jqxToggleButton('toggled');
             if (toggled) {
-                $("#jqxToggleButtonCCW")[0].value = 'вкл.';
+                $("#jqxToggleButtonCCW")[0].value = 'Добавить еще одну позицию';
                 
             }
-            else $("#jqxToggleButtonCCW")[0].value = 'выкл.';
+            else $("#jqxToggleButtonCCW")[0].value = 'Не добавлять больше позиций';
         });
                 
-        $("#CСWorkTypeDetails").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: WorkTypeDetailsDataAdapter, displayMember: "name", valueMember: "cwdt_id", searchMode: 'contains', width: 600 }));
-        $("#QuantCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, min: 0, decimalDigits: 0 }));
-        $("#KoefCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, min: 0, decimalDigits: 1, readOnly: true }));
+        $("#edWorkFilter").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 400 }));
+        $("#edWorkFilter").on('change', function(e){
+            WorkTypeDetailsDataAdapter.dataBind();
+        });
+        $("#CСWorkTypeDetails").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: WorkTypeDetailsDataAdapter, displayMember: "name", valueMember: "cwdt_id", searchMode: 'contains', width: 400 }));
+        $("#QuantCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, min: 0, decimalDigits: 2 }));
+        $("#KoefCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, min: 0, decimalDigits: 2, readOnly: true }));
         $("#PriceCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2 }));
-        $("#PriceLowCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 0 }));
+        $("#PriceLowCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2 }));
         $("#EquipsCCW").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 600 }));
-        $("#cw_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 600 }));
+        $("#cw_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 400 }));
         $("#NoteCCW").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 90 }));
+        $("#EquipQuantCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, min: 0, decimalDigits: 2 }));
         
         $('#btnSaveCostCalcWork').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnCancelCostCalcWork').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnCancelCostCalcWork').on('click', function(){
-            $('#CostCalcDetailsDialog').jqxWindow('close');
+            $('#CostCalculationsDialog').jqxWindow('close');
         });
         
         $('#btnSaveCostCalcWork').on('click', function(){
@@ -70,7 +85,8 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         Aliton.SelectRowById('ccwr_id', Res.id, '#CostCalcWorksGrid', true);
-                        if (toggled) {
+                        CostCalcDetails.DetailsRefresh();
+                        if (toggled && StateInsert) {
                             $("#CСWorkTypeDetails").jqxComboBox('clearSelection');
                             $("#KoefCCW").jqxNumberInput('val', null);
                             $("#QuantCCW").jqxNumberInput('val', null);
@@ -79,11 +95,12 @@
                             $("#EquipsCCE").jqxComboBox('clearSelection');
                             $('#NoteCCW').jqxTextArea('val', '');
                         } else {
-                            $('#CostCalcDetailsDialog').jqxWindow('close');
+                            $('#CostCalculationsDialog').jqxWindow('close');
                         }
                     }
                     else {
-                        $('#BodyCostCalcDetailsDialog').html(Res.html);
+                        $('#BodyCostCalculationsDialog').html(Res.html);
+                        //HideQuant();
                     };
                 },
                 error: function(Res) {
@@ -98,36 +115,44 @@
             }
         });
             
-        if (CostCalcWork.quant != '') $("#QuantCCW").jqxNumberInput('val', CostCalcWork.quant);
+        if (CostCalcWork.quant != '') {
+            $("#QuantCCW").jqxNumberInput('val', CostCalcWork.quant);
+            $("#EquipQuantCCW").jqxNumberInput('val', CostCalcWork.quant);
+        }
         if (CostCalcWork.price != '') $("#PriceCCW").jqxNumberInput('val', CostCalcWork.price);
         if (CostCalcWork.price_low != '') $("#PriceLowCCW").jqxNumberInput('val', CostCalcWork.price_low);
         if (CostCalcWork.note != '') $("#NoteCCW").jqxTextArea('val', CostCalcWork.note);
         if (CostCalcWork.eqip_name != '') $("#EquipsCCW").jqxInput('val', CostCalcWork.eqip_name);
+        if (CostCalcWork.cw_name != '') $("#cw_name").jqxInput('val', CostCalcWork.cw_name);
         
-        
+        var HideQuant = function() {
+            if (CostCalcWork.cceq_id != '' &&  CostCalcWork.cceq_id != null) {
+                $("#QuantCCW").jqxNumberInput({disabled: true});
+                $("#Block1").css('display', 'none');
+            } else {
+                $("#EquipQuantCCW").jqxNumberInput({disabled: true});
+                $("#Block2").css('display', 'none');
+            }
+        }
+        HideQuant();
         $('#CСWorkTypeDetails').on('select', function (event) 
         {
             var args = event.args;
             if (args) {
                 var item = args.item;
-                if(item) {
-                    var value = item.value;
-                    if(value) {
-                        var CalcWorkTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCalcWorkTypeDetails), {
-                            formatData: function (data) {
-                                $.extend(data, {
-                                    Filters: ["cwdt.cwdt_id = " + value],
-                                });
-                                return data;
-                            },
-                        });
-                        CalcWorkTypesDataAdapter.dataBind();
-                        var priceCCW = CalcWorkTypesDataAdapter.records[0].Price;
-                        console.log(priceCCW);
-                        $("#PriceLowCCW").jqxNumberInput('val', priceCCW);
+                var value = item.value;
+                var priceCCW = 0;
+                
+                for (var i = 0; i < WorkTypeDetailsDataAdapter.records.length; i++){
+                    if (WorkTypeDetailsDataAdapter.records[i].cwdt_id == value) {
+                        priceCCW = WorkTypeDetailsDataAdapter.records[i].Price;
+                        break;
                     }
                 }
+                $("#PriceLowCCW").jqxNumberInput('val', priceCCW);
             }
+                
+            
         });
     });
 </script>        
@@ -145,32 +170,59 @@
 <input type="hidden" name="CostCalcWorks[calc_id]" value="<?php echo $model->calc_id; ?>"/>
 <input type="hidden" name="CostCalcWorks[cceq_id]" value="<?php echo $model->cceq_id; ?>"/>
 
-<div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="margin-top: 2px;">Добавить несколько позиций: </div>
-    <div class="row-column"><input type="button" value="выкл." id='jqxToggleButtonCCW' /></div>
+<div class="row" style="margin-top: 0px; padding-top: 0px; border-bottom: 1px solid #e0e0e0;">
+    <div class="row-column"><input type="button" value="Добавить еще одну позицию" id='jqxToggleButtonCCW' /></div>
+</div>
+<div class="row" style="margin-top: 10px;">
+    <div class="row-column" style="width: 110px;">Фильтр</div>
+    <div class="row-column"><input type="text" id="edWorkFilter"></div>
+</div>
+<div class="row">
+    <div class="row-column" style="width: 110px;">Доп. наимен.:</div>
+    <div class="row-column"><input type="text" id="cw_name" name="CostCalcWorks[cw_name]"><?php echo $form->error($model, 'cw_name'); ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Доп. наимен.: <input type="text" id="cw_name" name="CostCalcWorks[cw_name]"></div>
+    <div class="row-column" style="width: 110px;">Вид работ:</div>
+    <div class="row-column"><div id="CСWorkTypeDetails" name="CostCalcWorks[cwdt_id]"></div><?php echo $form->error($model, 'cwdt_id'); ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Вид работ: <div id="CСWorkTypeDetails" name="CostCalcWorks[cwdt_id]"></div></div>
+    <div class="row-column">
+        <div>Коэффициент:</div>
+        <div style="clear: both"></div>
+        <div><div id="KoefCCW"></div></div>
+    </div>
+    <div class="row-column" style="margin-left: 10px;">
+        <div>Цена:</div>
+        <div style="clear: both"></div>
+        <div><div id="PriceCCW" name="CostCalcWorks[price]"></div><?php echo $form->error($model, 'price'); ?></div>
+    </div>
+    <div class="row-column" style="margin-left: 10px;">
+        <div>Себестоимость:</div>
+        <div style="clear: both"></div>
+        <div><div id="PriceLowCCW" name="CostCalcWorks[price_low]"></div><?php echo $form->error($model, 'price_low'); ?></div>
+    </div>
+    <div class="row-column" id="Block1" style="margin-left: 10px;">
+        <div>Количество:</div>
+        <div style="clear: both"></div>
+        <div><div id="QuantCCW" name="CostCalcWorks[quant]"></div><?php echo $form->error($model, 'quant'); ?></div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="row-column">Коэффициент: <div id="KoefCCW"></div></div>
-    <div class="row-column" style="margin-left: 10px;">Цена: <div id="PriceCCW" name="CostCalcWorks[price]"></div><?php echo $form->error($model, 'price'); ?></div>
-    <div class="row-column" style="margin-left: 10px;">Себестоимость: <div id="PriceLowCCW" name="CostCalcWorks[price_low]"></div></div>
-    <div class="row-column" style="margin-left: 10px;">Количество: <div id="QuantCCW" name="CostCalcWorks[quant]"></div><?php echo $form->error($model, 'quant'); ?></div>
-</div>
-
-<div class="row">
-    <div class="row-column">Оборудование: <input readonly type="text" id="EquipsCCW"></div>
+<div class="row" id="Block2">
+    <div>
+        <div class="row-column">Оборудование: <input readonly type="text" id="EquipsCCW"></div>
+    </div>
+    <div style="clear: both"></div>
+    <div style="margin-top: 4px;">
+        <div class="row-column">Количество:</div>
+        <div class="row-column"><div id="EquipQuantCCW" name="CostCalcWorks[quant]"></div><?php echo $form->error($model, 'quant'); ?></div>
+    </div>
 </div>
 
 <div class="row" style="margin-top: 0;">
-    <div class="row-column">Примечание: <textarea id="NoteCCW" name="CostCalcWorks[note]"></textarea></div>
+    <div class="row-column">Примечание: <textarea id="NoteCCW" name="CostCalcWorks[note]"></textarea><?php echo $form->error($model, 'note'); ?></div>
 </div>
 
 <div class="row">

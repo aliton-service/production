@@ -51,7 +51,6 @@ class ObjectsGroupCostCalculations extends MainFormModel
                         c.Demand_id,
                         c.date_ready,
                         c.empl_id as Executor";
-        
         $From = "\nFrom CostCalcGroups ccg inner join CostCalculations c on (c.cgrp_id = ccg.cgrp_id)
                         left join Employees e on (c.Empl_id = e.Employee_id)
                         left join Contacts_v cnt on (c.cont_id = cnt.cont_id)";

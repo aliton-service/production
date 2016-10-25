@@ -26,6 +26,8 @@
             DatePlan: Aliton.DateConvertToJs('<?php echo $model->plan_date; ?>'),
             EmplCreate: <?php echo json_encode($model->empl_id); ?>,
             DmndEmpl_id: <?php echo json_encode($model->dmnd_empl_id); ?>,
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>
         };
         
         $('#WHDocuments').on('keyup keypress', function(e) {
@@ -76,7 +78,10 @@
         $("#edPlanDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.DatePlan, formatString: 'dd.MM.yyyy'}));
         
         $('#btnCancelWHDocuments').on('click', function(){
-            $('#WHDocumentsDialog').jqxWindow('close');
+            if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null)
+                $('#' + WHDocuments.DialogId).jqxWindow('close');
+            else
+                $('#WHDocumentsDialog').jqxWindow('close');
         });
         
         $('#btnSaveWHDocuments').on('click', function(){
@@ -84,7 +89,7 @@
             if (StateInsert)
                 Url = <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')); ?>;
             
-            var Model = $('#WHDocuments').serialize() + '&Dctp_id=' + WHDocuments.Dctp_id;
+            var Model = $('#WHDocuments').serialize() + '&Dctp_id=' + WHDocuments.Dctp_id + '&DialogId=' + WHDocuments.DialogId + '&BodyDialogId=' + WHDocuments.BodyDialogId;
             
             $.ajax({
                 url: Url,
@@ -94,16 +99,31 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        if (!StateInsert) WHDoc.Refresh();
+                        if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null) {
+                            $('#' + WHDocuments.DialogId).jqxWindow('close');
+                            
+                            return;
+                        }
+                        
+                        if (!StateInsert) 
+                            WHDoc.Refresh();
+                        
                         if (StateInsert) {
                             WHReestr.Docm_id = Res.id;
                             $('#Grid4').jqxGrid('updatebounddata');
                             window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
                         }
-                        $('#WHDocumentsDialog').jqxWindow('close');
+                        if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null)
+                            $('#' + WHDocuments.DialogId).jqxWindow('close');
+                        else
+                            $('#WHDocumentsDialog').jqxWindow('close');
                     }
                     else {
-                        $('#BodyWHDocumentsDialog').html(Res.html);
+                        if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null) {
+                            $('#' + WHDocuments.BodyDialogId).html(Res.html);
+                        }
+                        else $('#BodyWHDocumentsDialog').html(Res.html);
+                        
                     };
                 },
                 error: function(Res) {
@@ -142,6 +162,7 @@
 
 <input type="hidden" name="WHDocuments[docm_id]" value="<?php echo $model->docm_id; ?>" />
 <input type="hidden" name="WHDocuments[dctp_id]" value="<?php echo $model->dctp_id; ?>" />
+<input type="hidden" name="WHDocuments[calc_id]" value="<?php echo $model->calc_id; ?>" />
 
 <div class="row">
     <div class="row-column" style="width: 100px">Номер</div>

@@ -29,7 +29,14 @@
             Sender: <?php echo json_encode($model->user_sender_name); ?>,
             Logist: <?php echo json_encode($model->user_logist_name); ?>,
             Contacts: <?php echo json_encode($model->Contacts); ?>,
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
+
+        if (DeliveryDemands.DialogId == '' || DeliveryDemands.DialogId == null) {
+            DeliveryDemands.DialogId = 'EditDeliveryDemandDialog';
+            DeliveryDemands.BodyDialogId = 'BodyDeliveryDemDialog';
+        }
         
         $('#DeliveryDemands').on('keyup keypress', function(e) {
             var keyCode = e.keyCode || e.which;
@@ -148,7 +155,7 @@
             
             $.ajax({
                 url: Url,
-                data: $('#DeliveryDemands').serialize(),
+                data: $('#DeliveryDemands').serialize() + "&DialogId=" + DeliveryDemands.DialogId + "&BodyDialogId=" + DeliveryDemands.BodyDialogId,
                 type: 'POST',
                 success: function(Res) {
                     var Res = JSON.parse(Res);

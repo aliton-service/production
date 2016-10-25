@@ -105,6 +105,7 @@ class CostCalcWorksController extends Controller
 
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
+            'eqip_name' => $model->EquipName,
         ), true);
         echo json_encode($ObjectResult);
     }
