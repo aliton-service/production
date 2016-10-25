@@ -22,7 +22,6 @@
 
 <body>
     
-    
     <header id="page-header">
         <div class="page-header__logo logo"><a href="/index.php?r=site/index"></a></div>
         <div class="page-header__description">

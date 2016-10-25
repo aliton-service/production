@@ -88,8 +88,7 @@
     justify-content: flex-start;
     align-items: center;
     height: 60px;
-    width: 180px;
-    padding: 0 15px;
+    padding: 0 0 0 15px;
     text-transform: uppercase;
     font-size: 30px;
     font-weight: 900;
@@ -142,23 +141,23 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 25px;
-    height: 40px;
-    margin-left: 15px;
+    height: 60px;
 }
 
-.arrow_up{
-    width: 13px;
-    height: 8px;
-    background-image: url('/images/arrow_up.png');
-    background-repeat: no-repeat;
-}
-
+.arrow_up,
 .arrow_down{
     width: 13px;
     height: 8px;
-    background-image: url('/images/arrow_down.png');
+    padding: 10px 20px 10px 15px;
     background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.arrow_up{
+    background-image: url('/images/arrow_up.png');
+}
+.arrow_down{
+    background-image: url('/images/arrow_down.png');
 }
 
 .page-header__user-name{

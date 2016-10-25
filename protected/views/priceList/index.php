@@ -107,7 +107,7 @@
 ?>
 
 
-<div class="row">
+<div class="row" style="margin: 0;">
     <div id="PriceListGrid" class="jqxGridAliton"></div>
 </div>
 <div class="row">
