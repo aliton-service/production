@@ -22,7 +22,6 @@
 
 <body>
     
-    
     <header id="page-header">
         <div class="page-header__logo logo"><a href="/index.php?r=site/index"></a></div>
         <div class="page-header__description">
@@ -439,6 +438,20 @@
         </div>
         
     </div>
+    
+    
+    <!-- Диалоговое окно -->
+    <div id="MainDialog" style="display: none;">
+        <div id="MainDialogHeader">
+            <span id="MainDialogHeaderText">Вставка\Редактирование записи</span>
+        </div>
+        <div style="padding: 10px;" id="DialogMainContent">
+            <!-- <div style="" id="BodyMainDialog"></div> -->
+            <textarea id="BodyMainDialog"></textarea>
+            <div style="margin-top: 10px;"><input type="button" value="Закрыть" id='MainDialogBtnClose'/></div>
+        </div>
+    </div>
+    
     
     <script type="text/javascript">
         $(document).ready(function () {
