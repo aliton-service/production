@@ -32,7 +32,7 @@
                 showfilterrow: true,
                 virtualmode: false,
                 width: '100%',
-                height: '100%',
+                height: 'calc(100% - 12px)',
                 //source: DemDataAdapter,
                 ready: function() {
                     var State = $('#ObjectsGrid').jqxGrid('getstate');
@@ -199,31 +199,25 @@
         
         
         
-        var headerHeight1 = 60 + 10 + 30 + 10 + 10;
-//        var tabsHeight1 = $('.tabs-wrapper').outerHeight();
-//        console.log('tabsHeight1 = ' + tabsHeight1);
-
-        var resizeGrid = function() {
-            var windowHeight1 = $(window).outerHeight();
-            var inputsHeight = $('.inputs').outerHeight();
-            var buttonsHeight = $('.buttons').outerHeight();
-            var marginHeight = 100;
-            
-//            console.log('windowHeight1 = ' + windowHeight1);
-//            console.log('tabsHeight1 = ' + tabsHeight1);
-//            console.log('buttonsHeight = ' + buttonsHeight);
-//            console.log('marginHeight = ' + marginHeight);
-            
-            var newGridHeight1 = windowHeight1 - inputsHeight - buttonsHeight - marginHeight - headerHeight1;
-            $('.grid-wrapper').outerHeight(newGridHeight1);
-
-//            console.log('newGridHeight1 = ' + newGridHeight1);
-        };
-
-        $(window).resize(function() {
-            resizeGrid();
-        });
-        resizeGrid();
+//        var headerHeight1 = 60 + 10 + 30 + 10 + 10;
+//
+//
+//        var resizeGrid = function() {
+//            var windowHeight1 = $(window).outerHeight();
+//            var inputsHeight = $('.inputs').outerHeight();
+//            var buttonsHeight = $('.buttons').outerHeight();
+//            var marginHeight = 100;
+//
+//            
+//            var newGridHeight1 = windowHeight1 - inputsHeight - buttonsHeight - marginHeight - headerHeight1;
+//            $('.grid-wrapper').outerHeight(newGridHeight1);
+//
+//        };
+//
+//        $(window).resize(function() {
+//            resizeGrid();
+//        });
+//        resizeGrid();
         
         
     });
@@ -247,16 +241,17 @@
     }
 </style>
 
-<div class="inputs row">
+
+<div style="float: left; width: 100%; height: 40px;">
     <div class="row-column">Адрес: <input type="text" id="edAddr"/></div>
     <div class="row-column">Клиент: <input type="text" id="edClient"/></div>
 </div>
-
-<div class="grid-wrapper row" style="height: 100px;">
+<div style="clear: both"></div>
+<div style="float: left; width: 100%; height: calc(100% - 70px)">
     <div id="ObjectsGrid" class="jqxGridAliton"></div>
 </div>
-
-<div class="buttons row">
+<div style="clear: both"></div>
+<div style="float: left; width: 100%; height: 30px;">
     <div class="row-column"><input type="button" value="Дополнительно" id='ObjInfo' /></div>
     <div class="row-column"><input type="button" value="Новая заявка" id='NewDem' /></div>
     <div class="row-column"><input type="button" value="Просмотр заявок" id='ViewDemands' /></div>
@@ -264,7 +259,7 @@
 </div>
 
 
-<div id="ToDayDialog">
+<div id="ToDayDialog" style="display: none">
     <div id="customWindowHeader">
         <span id="captureContainer" style="float: left">Внимание! </span>
     </div>
@@ -283,7 +278,7 @@
     </div>
 </div>
 
-<div id="OptionsDialog">
+<div id="OptionsDialog" style="display: none">
     <div id="customWindowHeader">
         <span id="captureContainer" style="float: left">Выберите заявки для просмотра</span>
     </div>

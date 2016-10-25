@@ -57,6 +57,7 @@ body {
 
 #content{
     width: 96%;
+    height: calc(100% - 180px);
     position: relative;
     margin: 0;
     padding: 15px 20px;
