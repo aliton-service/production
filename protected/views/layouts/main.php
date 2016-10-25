@@ -418,13 +418,7 @@
                     </div>
                 </div>
                 
-                <?php if(isset($this->breadcrumbs) && $this->breadcrumbs != null):?>
-                    <div class="breadcrumbs_wrapper" style="height: 30px; width: 800px;">
-                        <?php $this->widget('zii.widgets.CBreadcrumbs', array(
-                            'links'=>$this->breadcrumbs,
-                        )); ?><!-- breadcrumbs -->
-                    </div> 
-                <?php endif?>
+                
                 
                 
                 <?php } echo $content; ?>
@@ -462,12 +456,8 @@
                 var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
                 var time = hours + ':' + minutes;
                 $('.time').html(time);
-//                console.log('time = ' + time);
                 window.setTimeout(arguments.callee, 5000);
             })();
-
-            
-            
             
             $('.main-menu >ul>li>ul>li').hover(
                 function() {
@@ -487,45 +477,12 @@
             );
     
             $(".menu-btn").on("click", function () {
-                $(".main-menu").toggle(100, function(){});
+                $(".main-menu").toggle(100, function(){$(window).resize();});
             });
 
-            var contentHeight = $('#page-content').outerHeight();
-            var filtersHeight = $('.page-content__filters').outerHeight();
-            
-//            console.log('contentHeight = ' + contentHeight);
-//            console.log('filtersHeight = ' + filtersHeight);
-            
-            var resize = function() {
-                
-                var documentHeight = $(window).outerHeight();
-                var headerHeight = 60 + 10 + 30 + 10 + 10;
-//                var newContentHeight = $('#page-content').outerHeight();
-//                console.log('documentHeight = ' + documentHeight);
-//                console.log('newContentHeight = ' + newContentHeight);
-//                console.log('-');
-
-                if ((contentHeight + headerHeight) < documentHeight) {
-                    $('#page-content').outerHeight(documentHeight - headerHeight);
-                }
-                if ((filtersHeight + headerHeight) < documentHeight) {
-                    $('.page-content__filters').outerHeight(documentHeight - headerHeight);
-                }
-                
-            };
-
-            window.onresize = function() {
-                resize();
-            };
-            resize();
-            
             $(".filter-btn__wrapper").on("click", function () {
-                $(".page-content__filters").toggle(100, function(){});
+                $(".page-content__filters").toggle(100, function(){$(window).resize();});
             });
-            
-            
-            
-            
         });
     </script>
     
