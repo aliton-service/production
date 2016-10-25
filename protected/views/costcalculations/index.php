@@ -258,7 +258,7 @@
             
             $('#btnAddDocTreb').on('click', function() {
                 
-                $('#CostCalculationsDialog').jqxWindow({width: 700, height: 460, position: 'center', isModal: true});
+                $('#CostCalculationsDialog').jqxWindow({width: 700, height: 480, position: 'center', isModal: true});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
                     type: 'POST',
@@ -317,7 +317,7 @@
             });
             
             $('#btnAddDocContract1').on('click', function() {
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '520px', width: '870'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '530px', width: '870'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                     type: 'POST',
@@ -354,7 +354,7 @@
                 });
             });
             $('#btnAddDocContract2').on('click', function() {
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '520px', width: '870'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '540px', width: '870'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                     type: 'POST',
@@ -391,7 +391,7 @@
                 });
             });
             $('#btnAddDocDelivery').on('click', function(){
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '400px', width: '740'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '420px', width: '740'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Delivery/Insert');?>",
                     type: 'POST',
@@ -412,7 +412,7 @@
                 });
             });
             $('#btnAddDocContract3').on('click', function() {
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '420px', width: '810'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '440px', width: '810'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                     type: 'POST',
@@ -556,7 +556,7 @@
         
         $('#btnEditCostCalculations').on('click', function(){
             if ($('#btnEditCostCalculations').jqxButton('disabled')) return;
-            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 510, width: 635, position: 'center' }));
+            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 530, width: 635, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Update')) ?>,
                 type: 'POST',
@@ -577,7 +577,7 @@
         
         $('#btnEditDetailsCostCalc').on('click', function(){
             if ($('#btnEditDetailsCostCalc').jqxButton('disabled')) return;
-            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 370, width: 635, position: 'center' }));
+            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 370, width: 680, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/UpdateDetails')) ?>,
                 type: 'POST',
@@ -883,7 +883,7 @@
                     );
             
                     $('#AddCostCalcWorks').on('click', function(){
-                        $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 640, position: 'center'}));
+                        $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 460, width: 640, position: 'center'}));
                         $.ajax({
                             url: <?php echo json_encode(Yii::app()->createUrl('CostCalcWorks/Create')) ?>,
                             type: 'POST',
@@ -976,6 +976,7 @@
                     $("#CostCalcDocumentsGrid").on('rowselect', function (event) {
                         CurrentRowDataCCD = $('#CostCalcDocumentsGrid').jqxGrid('getrowdata', event.args.rowindex);
                         CheckButtonCCD();
+                        console.log(CurrentRowDataCCD);
                     });
                     
                     $('#CostCalcDocumentsGrid').on('rowdoubleclick', function (event) { 
@@ -1031,6 +1032,8 @@
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Documents/Index')); ?> + "&ContrS_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 5)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Delivery/View')); ?> + "&Dldm_id=" + CurrentRowDataCCD.Docid);
+                            if (Type == 6)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Index')); ?> + "&docm_id=" + CurrentRowDataCCD.Docid);
                         }
                     });
 

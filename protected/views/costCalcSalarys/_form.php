@@ -26,7 +26,7 @@
         $('#btnCancelCostCalcSalary').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnCancelCostCalcSalary').on('click', function(){
-            $('#CostCalcDetailsDialog').jqxWindow('close');
+            $('#CostCalculationsDialog').jqxWindow('close');
         });
         
         $('#btnSaveCostCalcSalary').on('click', function(){

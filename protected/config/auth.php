@@ -207,6 +207,10 @@ return array_merge(
     include(dirname(__FILE__).'/security/CostCalcSalarysSecurity.php'),
     include(dirname(__FILE__).'/security/CostCalcDocumentsSecurity.php'),
         
+    /* Бухгалтерский акт */
+    include(dirname(__FILE__).'/security/WHBuhActsSecurity.php'),
+    include(dirname(__FILE__).'/security/WHBuhActsEquipsSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -406,6 +410,8 @@ return array_merge(
                 'AdminCostCalcWorks',
                 'AdminCostCalcSalarys',
                 'AdminCostCalcDocuments',
+                'AdminWHBuhActs',
+                'AdminWHBuhActsEquips',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

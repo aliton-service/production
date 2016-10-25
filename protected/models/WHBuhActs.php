@@ -2,28 +2,34 @@
 
 class WHBuhActs extends MainFormModel
 {
-    public $dadt_id;
     public $docm_id;
-    public $in_number;
-    public $in_date;
+    public $docm_id;
     public $achs_id;
-    public $eqip_id;
-    public $EquipName;
-    public $UnitMeasurement_id;
-    public $NameUnitMeasurement;
-    public $docm_quant;
-    public $fact_quant;
-    public $EmplChange;
-    public $date_change;
-    public $EmplCreate;
-    public $date_create;
-    public $used;
-    public $price;
+    public $date;
+    public $objc_id;
+    public $ObjectGr_id;
+    public $Address;
+    public $org_name;
+    public $wrtp_id;
+    public $wrtp_name;
     public $sum;
-    public $discontinued;
-    public $ToProduction;
-    public $SN;
-    public $no_price_list;
+    public $jbtp_id;
+    public $jbtp_name;
+    public $note;
+    public $work_list;
+    public $info_id;
+    public $FIO;
+    public $jrdc_id;
+    public $JuridicalPerson;
+    public $calc_id;
+    public $ReceiptNumber;
+    public $ReceiptDate;
+    public $rcrs_name;
+    public $number;
+    public $rcrs_id;
+    public $signed_yn;
+    public $date_ready;
+    public $date_act;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -33,29 +39,35 @@ class WHBuhActs extends MainFormModel
         $this->SP_DELETE_NAME = 'DELETE_WHBuhActs';
 
         $Select = "\nSelect 
-                        d.dadt_id,
                         d.docm_id,
-                        d.in_number,
-                        d.in_date,
                         d.achs_id,
-                        d.eqip_id,
-                        d.EquipName,
-                        d.UnitMeasurement_id,
-                        d.NameUnitMeasurement,
-                        d.docm_quant,
-                        d.fact_quant,
-                        d.EmplChange,
-                        d.date_change,
-                        d.EmplCreate,
-                        d.date_create,
-                        d.used,
-                        d.price,
+                        d.date,
+                        d.objc_id,
+                        d.ObjectGr_id,
+                        d.Address,
+                        d.org_name,
+                        d.wrtp_id,
+                        d.wrtp_name,
                         d.sum,
-                        d.discontinued,
-                        d.ToProduction,
-                        d.SN,
-                        d.no_price_list";
-        $From = "\nFrom BuhActEquips_v d";
+                        d.jbtp_id,
+                        d.jbtp_name,
+                        d.note,
+                        d.work_list,
+                        d.info_id,
+                        d.FIO,
+                        d.jrdc_id,
+                        d.JuridicalPerson,
+                        d.calc_id,
+                        d.ReceiptNumber,
+                        d.ReceiptDate,
+                        d.rcrs_name,
+                        d.number,
+                        d.rcrs_id,
+                        d.signed_yn,
+                        d.date_ready,
+                        d.date_act,
+                        case when d.achs_id is null then 'Не утвержден' else 'Утвержден' end state";
+        $From = "\nFrom WHDocuments d";
         
 
         $this->Query->setSelect($Select);
@@ -63,65 +75,73 @@ class WHBuhActs extends MainFormModel
         //$this->Query->setWhere($Where);
         //$this->Query->setOrder($Order);
         
-        $this->KeyFiled = 'd.dadt_id';
-        $this->PrimaryKey = 'dadt_id';
+        $this->KeyFiled = 'd.docm_id';
+        $this->PrimaryKey = 'docm_id';
     }
     
     public function rules()
     {
         return array(
-            array('d.dadt_id,
-                        docm_id,
-                        in_number,
-                        in_date,
-                        achs_id,
-                        eqip_id,
-                        EquipName,
-                        UnitMeasurement_id,
-                        NameUnitMeasurement,
-                        docm_quant,
-                        fact_quant,
-                        EmplChange,
-                        date_change,
-                        EmplCreate,
-                        date_create,
-                        used,
-                        price,
-                        sum,
-                        discontinued,
-                        ToProduction,
-                        SN,
-                        no_price_list', 'safe'),
+            array('achs_id,
+                    date,
+                    objc_id,
+                    ObjectGr_id,
+                    Address,
+                    org_name,
+                    wrtp_id,
+                    wrtp_name,
+                    sum,
+                    jbtp_id,
+                    jbtp_name,
+                    note,
+                    work_list,
+                    info_id,
+                    FIO,
+                    jrdc_id,
+                    JuridicalPerson,
+                    calc_id,
+                    ReceiptNumber,
+                    ReceiptDate,
+                    rcrs_name,
+                    number,
+                    rcrs_id,
+                    signed_yn,
+                    date_ready,
+                    date_act', 'safe'),
         );
     }
     
     public function attributeLabels()
     {
         return array(
-            'dadt_id' => '',
             'docm_id' => '',
-            'dadt_id'=> '',
-            'docm_id'=> '',
-            'in_number'=> '',
-            'in_date'=> '',
-            'achs_id'=> '',
-            'eqip_id'=> '',
-            'EquipName'=> '',
-            'UnitMeasurement_id'=> '',
-            'NameUnitMeasurement'=> '',
-            'docm_quant'=> '',
-            'fact_quant'=> '',
-            'EmplChange'=> '',
-            'date_change'=> '',
-            'EmplCreate'=> '',
-            'date_create'=> '',
-            'used'=> '',
-            'price'=> '',
-            'sum'=> '',
-            'discontinued'=> '',
-            'ToProduction'=> '',
-            'SN'=> '',
-            'no_price_list'=> '',
+            'docm_id' => '',
+            'achs_id' => '',
+            'date' => '',
+            'objc_id' => '',
+            'ObjectGr_id' => '',
+            'Address' => '',
+            'org_name' => '',
+            'wrtp_id' => '',
+            'wrtp_name' => '',
+            'sum' => '',
+            'jbtp_id' => '',
+            'jbtp_name' => '',
+            'note' => '',
+            'work_list' => '',
+            'info_id' => '',
+            'FIO' => '',
+            'jrdc_id' => '',
+            'JuridicalPerson' => '',
+            'calc_id' => '',
+            'ReceiptNumber' => '',
+            'ReceiptDate' => '',
+            'rcrs_name' => '',
+            'number' => '',
+            'rcrs_id' => '',
+            'signed_yn' => '',
+            'date_ready' => '',
+            'date_act' => '',
         );
     }
 }
