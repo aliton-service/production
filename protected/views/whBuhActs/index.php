@@ -45,7 +45,7 @@
         
         if (WHBuhActs.number !== '') $("#numberWHBA").jqxInput('val', WHBuhActs.number);
         if (WHBuhActs.org_name !== '') $("#org_nameWHBA").jqxInput('val', WHBuhActs.org_name);
-        if (WHBuhActs.Address !== '') $("#org_nameWHBA").jqxInput('val', WHBuhActs.Address);
+        if (WHBuhActs.Address !== '') $("#AddressWHBA").jqxInput('val', WHBuhActs.Address);
         if (WHBuhActs.JuridicalPerson !== '') $("#JuridicalPersonWHBA").jqxInput('val', WHBuhActs.JuridicalPerson);
         if (WHBuhActs.rcrs_name !== '') $("#rcrs_nameWHBA").jqxInput('val', WHBuhActs.rcrs_name);
         if (WHBuhActs.ReceiptNumber !== '') $("#ReceiptNumberWHBA").jqxInput('val', WHBuhActs.ReceiptNumber);

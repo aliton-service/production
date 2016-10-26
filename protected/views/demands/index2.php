@@ -181,6 +181,7 @@
     
     #DemandsGrid .jqx-fill-state-pressed {
         background-color: #2e7d58 !important;
+        color: white;
     }
 </style>
 
