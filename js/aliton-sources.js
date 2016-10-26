@@ -3310,3 +3310,30 @@ Sources.SourceContactInfoForCostCalc =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceWHBuhActsEquips =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dadt_id', type: 'int'},
+        {name: 'docm_id', type: 'int'},
+        {name: 'EquipName', type: 'string'},
+        {name: 'NameUnitMeasurement', type: 'string'},
+        {name: 'docm_quant', type: 'int'},
+        {name: 'used', type: 'bool'},
+        {name: 'SN', type: 'string'},
+        {name: 'in_number', type: 'int'},
+        {name: 'in_date', type: 'date'},
+    ],
+    id: 'dadt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHBuhActsEquips',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

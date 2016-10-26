@@ -1,6 +1,6 @@
 <?php
 
-class WHBuhActsController extends Controller
+class WHBuhActsEquipsController extends Controller
 {
     public $layout = '//layouts/column2';
     public $title = '';
@@ -17,19 +17,19 @@ class WHBuhActsController extends Controller
         return array(
             array('allow',
                     'actions'=>array('index', 'view'),
-                    'roles'=>array('ViewWHBuhActs'),
+                    'roles'=>array('ViewWHBuhActsEquips'),
             ),
             array('allow', 
                     'actions'=>array('create'),
-                    'roles'=>array('CreateWHBuhActs'),
+                    'roles'=>array('CreateWHBuhActsEquips'),
             ),
             array('allow', 
                     'actions'=>array('update'),
-                    'roles'=>array('UpdateWHBuhActs'),
+                    'roles'=>array('UpdateWHBuhActsEquips'),
             ),
             array('allow', 
                     'actions'=>array('delete'),
-                    'roles'=>array('DeleteWHBuhActs'),
+                    'roles'=>array('DeleteWHBuhActsEquips'),
             ),
             array('deny',  // deny all users
                     'users'=>array('*'),
@@ -39,18 +39,18 @@ class WHBuhActsController extends Controller
 
     public function actionCreate()
     {
-        $model = new WHBuhActs();
+        $model = new WHBuhActsEquips();
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
             'html' => '',
         );
-        if (isset($_POST['WHBuhActs'])) {
-            $model->attributes = $_POST['WHBuhActs'];
+        if (isset($_POST['WHBuhActsEquips'])) {
+            $model->attributes = $_POST['WHBuhActsEquips'];
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['docm_id'];
+                $ObjectResult['id'] = $Res['dadt_id'];
                 echo json_encode($ObjectResult);
                 return;
             } 
@@ -65,22 +65,22 @@ class WHBuhActsController extends Controller
 
     public function actionUpdate()
     {
-        $model = new WHBuhActs();
+        $model = new WHBuhActsEquips();
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
             'html' => '',
         );
-        if (isset($_POST['docm_id']))
-            $model->getModelPk($_POST['docm_id']);
+        if (isset($_POST['dadt_id']))
+            $model->getModelPk($_POST['dadt_id']);
 
-        if (isset($_POST['WHBuhActs'])) {
-            $model->getModelPk($_POST['WHBuhActs']['docm_id']);
-            $model->attributes = $_POST['WHBuhActs'];
+        if (isset($_POST['WHBuhActsEquips'])) {
+            $model->getModelPk($_POST['WHBuhActsEquips']['dadt_id']);
+            $model->attributes = $_POST['WHBuhActsEquips'];
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->docm_id;
+                $ObjectResult['id'] = $model->dadt_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -100,13 +100,13 @@ class WHBuhActsController extends Controller
             'html' => '',
         );
         
-        if (isset($_POST['docm_id'])) {
-            $model = new WHBuhActs();
-            $model->getModelPk($_POST['docm_id']);
+        if (isset($_POST['dadt_id'])) {
+            $model = new WHBuhActsEquips();
+            $model->getModelPk($_POST['dadt_id']);
             if ($model->validate()) {
                 $model->Delete();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->docm_id;
+                $ObjectResult['id'] = $model->dadt_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -116,17 +116,19 @@ class WHBuhActsController extends Controller
 
     public function actionIndex()
     {
-        if (isset($_GET['docm_id'])) {
-            $model = new WHBuhActs();
+        $model = new WHBuhActsEquips();
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
 
-            $this->title = 'Бухгалтерский акт';
+        $this->title = 'Бухгалтерский акт';
 
-            $model->getModelPk($_GET['docm_id']);
+        if (isset($_POST['dadt_id']))
+            $model->getModelPk($_POST['dadt_id']);
 
-            $this->render('index', array(
-                'model' => $model,
-            ));
-        }
+        echo json_encode($ObjectResult);
     }
     
 }
