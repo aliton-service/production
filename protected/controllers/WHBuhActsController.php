@@ -117,23 +117,15 @@ class WHBuhActsController extends Controller
     public function actionIndex()
     {
         if (isset($_GET['docm_id'])) {
-        $model = new WHBuhActs();
-        $ObjectResult = array(
-            'result' => 0,
-            'id' => 0,
-            'html' => '',
-        );
+            $model = new WHBuhActs();
 
-        $this->title = 'Бухгалтерский акт';
+            $this->title = 'Бухгалтерский акт';
 
             $model->getModelPk($_GET['docm_id']);
 
-            $ObjectResult['result'] = 1;
-            $ObjectResult['id'] = $model->docm_id;
-            $ObjectResult['html'] = $this->render('index', array(
+            $this->render('index', array(
                 'model' => $model,
             ));
-        echo json_encode($ObjectResult);
         }
     }
     

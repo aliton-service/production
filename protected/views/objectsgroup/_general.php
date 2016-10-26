@@ -193,10 +193,10 @@
 <?php
 
     $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'ObjectsGroup',
-            'htmlOptions'=>array(
-                    'class'=>'form-inline',
-                    ),
+        'id' => 'ObjectsGroup',
+        'htmlOptions'=>array(
+            'class'=>'form-inline',
+        ),
      )); 
 
 ?>

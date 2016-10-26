@@ -24,16 +24,16 @@
             ReceiptDate: Aliton.DateConvertToJs('<?php echo $model->ReceiptDate; ?>'),
         };
             
-        $("#numberWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
+        $("#numberWHBA").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120 }));
         $("#org_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
         $("#AddressWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
         $("#JuridicalPersonWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
         $("#rcrs_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
-        $("#ReceiptNumberWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 75 }));
+        $("#ReceiptNumberWHBA").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 75 }));
         $("#wrtp_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
         $("#jbtp_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
         $("#FIO_WHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
-        $("#sumWHBA").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, inputMode: 'simple'}));
+        $("#sumWHBA").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120 }));
         
         $("#signed_ynWHBA").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
         
@@ -43,12 +43,12 @@
         
         $("#work_listWHBA").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 800 }));
         
-        if (WHBuhActs.number !== '') $("#numberWHBA").jqxInput('val', WHBuhActs.number);
+        if (WHBuhActs.number !== '') $("#numberWHBA").jqxNumberInput('val', WHBuhActs.number);
         if (WHBuhActs.org_name !== '') $("#org_nameWHBA").jqxInput('val', WHBuhActs.org_name);
         if (WHBuhActs.Address !== '') $("#org_nameWHBA").jqxInput('val', WHBuhActs.Address);
         if (WHBuhActs.JuridicalPerson !== '') $("#JuridicalPersonWHBA").jqxInput('val', WHBuhActs.JuridicalPerson);
         if (WHBuhActs.rcrs_name !== '') $("#rcrs_nameWHBA").jqxInput('val', WHBuhActs.rcrs_name);
-        if (WHBuhActs.ReceiptNumber !== '') $("#ReceiptNumberWHBA").jqxInput('val', WHBuhActs.ReceiptNumber);
+        if (WHBuhActs.ReceiptNumber !== '') $("#ReceiptNumberWHBA").jqxNumberInput('val', WHBuhActs.ReceiptNumber);
         if (WHBuhActs.wrtp_name !== '') $("#wrtp_nameWHBA").jqxInput('val', WHBuhActs.wrtp_name);
         if (WHBuhActs.jbtp_name !== '' && WHBuhActs.jbtp_name !== 'null') $("#jbtp_nameWHBA").jqxInput('val', WHBuhActs.jbtp_name);
         if (WHBuhActs.FIO !== '' && WHBuhActs.FIO !== 'null') $("#FIO_WHBA").jqxInput('val', WHBuhActs.FIO);
@@ -221,46 +221,46 @@
 <?php $this->setPageTitle('Бухгалтерский акт'); ?>
 
 <div class="row">
-    <div class="row-column">Номер: <input readonly type="text" id="numberWHBA"></div>
+    <div class="row-column">Номер: <input type="text" id="numberWHBA"></div>
     <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id="dateWHBA"></div></div>
     <div class="row-column" style="margin: 2px 0 0 20px; font-weight: 500;"><?php echo $model->state; ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Клиент: <input readonly type="text" id="org_nameWHBA"></div>
+    <div class="row-column">Клиент: <input type="text" id="org_nameWHBA"></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Адрес: <input readonly type="text" id="AddressWHBA"></div>
+    <div class="row-column">Адрес: <input type="text" id="AddressWHBA"></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Юр.лицо: <input readonly type="text" id="JuridicalPersonWHBA"></div>
+    <div class="row-column">Юр.лицо: <input type="text" id="JuridicalPersonWHBA"></div>
     <div class="row-column" style="margin-top: 2px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_actWHBA"></div></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Основание: <input readonly type="text" id="rcrs_nameWHBA"></div>
+    <div class="row-column">Основание: <input type="text" id="rcrs_nameWHBA"></div>
     <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id="ReceiptDateWHBA"></div></div>
-    <div class="row-column">Номер: <input readonly type="text" id="ReceiptNumberWHBA"></div>
+    <div class="row-column">Номер: <input type="text" id="ReceiptNumberWHBA"></div>
 </div>
 
 <div class="row" style="padding-bottom: 5px; border: 1px solid #ddd;">
     <div style="font-size: 1em; margin: 0 10px 0 5px;">Выполненные работы:</div>
 
     <div class="row">
-        <div class="row-column">Тип работ: <input readonly type="text" id="wrtp_nameWHBA"></div>
-        <div class="row-column">Вид работ: <input readonly type="text" id="jbtp_nameWHBA"></div>
+        <div class="row-column">Тип работ: <input type="text" id="wrtp_nameWHBA"></div>
+        <div class="row-column">Вид работ: <input type="text" id="jbtp_nameWHBA"></div>
     </div>
 
     <div class="row">
-        <div class="row-column">Перечень работ: <textarea readonly type="text" id="work_listWHBA"></textarea></div>
+        <div class="row-column">Перечень работ: <textarea type="text" id="work_listWHBA"></textarea></div>
     </div>
 
     <div class="row">
         <div class="row-column"><div id="signed_ynWHBA"></div></div>
         <div class="row-column" style="margin-top: 2px;">Подписан</div>
-        <div class="row-column"><input readonly type="text" id="FIO_WHBA"></div>
+        <div class="row-column"><input type="text" id="FIO_WHBA"></div>
         <div class="row-column" style="margin-top: 2px;">Сумма: </div><div class="row-column"><div id="sumWHBA"></div></div>
     </div>
 
