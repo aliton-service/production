@@ -22,7 +22,7 @@
         };
             
         $("#numberWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
-        $("#org_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
+        $("#org_nameWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
         $("#AddressWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
         $("#JuridicalPersonWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
         $("#rcrs_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
@@ -41,8 +41,8 @@
         $("#work_listWHBA").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 800 }));
         
         if (WHBuhActs.number !== '') $("#numberWHBA2").jqxInput('val', WHBuhActs.number);
-        if (WHBuhActs.org_name !== '') $("#org_nameWHBA").jqxInput('val', WHBuhActs.org_name);
-        if (WHBuhActs.Address !== '') $("#org_nameWHBA").jqxInput('val', WHBuhActs.Address);
+        if (WHBuhActs.org_name !== '') $("#org_nameWHBA2").jqxInput('val', WHBuhActs.org_name);
+        if (WHBuhActs.Address !== '') $("#AddressWHBA").jqxInput('val', WHBuhActs.Address);
         if (WHBuhActs.JuridicalPerson !== '') $("#JuridicalPersonWHBA").jqxInput('val', WHBuhActs.JuridicalPerson);
         if (WHBuhActs.rcrs_name !== '') $("#rcrs_nameWHBA").jqxInput('val', WHBuhActs.rcrs_name);
         if (WHBuhActs.ReceiptNumber !== '') $("#ReceiptNumberWHBA").jqxNumberInput('val', WHBuhActs.ReceiptNumber);
@@ -73,7 +73,7 @@
 </div>
 
 <div class="row">
-    <div class="row-column">Клиент: <input type="text" id="org_nameWHBA"></div>
+    <div class="row-column">Клиент: <input type="text" id="org_nameWHBA2"></div>
 </div>
 
 <div class="row">
