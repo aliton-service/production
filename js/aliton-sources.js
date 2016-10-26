@@ -77,7 +77,7 @@ Sources.SourceListEmployees =
     cache: false,
     async: false,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }
@@ -116,9 +116,9 @@ Sources.SourceDemandTypes =
     cache: false,
     async: false,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
-            Sources.SourceDemandTypes.totalrecords = data[0].TotalRows;
+            this.totalrecords = data[0].TotalRows;
         }
 };
 
@@ -330,7 +330,7 @@ Sources.SourceTerritory =
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
-            Sources.SourceTerritory.totalrecords = data[0].TotalRows;
+            this.totalrecords = data[0].TotalRows;
         }
 };
 
@@ -348,9 +348,9 @@ Sources.SourceStreets =
     cache: false,
     async: true,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
-            Sources.SourceStreets.totalrecords = data[0].TotalRows;
+            this.totalrecords = data[0].TotalRows;
         }
 };
 

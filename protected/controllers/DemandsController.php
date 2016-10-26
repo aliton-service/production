@@ -5,6 +5,7 @@ class DemandsController extends Controller
     public $layout='//layouts/column2';
     public $defaultAction  = 'index';
     public $gridFilters = null;
+    public $filterDefaultValues = null;
     
 	public $title = 'Заявки';
 	/**
@@ -144,13 +145,19 @@ class DemandsController extends Controller
 	public function actionIndex($ajax=false)
 	{
             $Filters2 = array();
+            
             $this->gridFilters = '_filters';
+            
+            
             if (isset($_POST['DemFilters'])) {
                 $Filters2 = $this->GetFilters($_POST['DemFilters']);
             }
             else {
                 $Filters2 = $this->GetFilters(array());
             }
+            
+            $this->filterDefaultValues = $Filters2;
+            
             $this->render('index2', array(
                 'Filters2' => $Filters2,
             ));

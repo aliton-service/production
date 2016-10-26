@@ -154,6 +154,13 @@
                     $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '350', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"});
                     $("#cmbExecutor").jqxComboBox({ source: DataListEmployees, width: '200', height: '25px', displayMember: 'ShortName', valueMember: 'Employee_id'});
                     
+                    $("#edNumber").on('keyup keypress', function(e) {
+                        var keyCode = e.keyCode || e.which;
+                        if (keyCode === 13) { 
+                            $("#OptionsDialogYes").click();
+                        }
+                    });
+                    
                     $("#OptionsDialogYes").jqxButton($.extend(true, {}, ButtonDefaultSettings));
                     $("#OptionsDialogCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
                     
@@ -196,6 +203,8 @@
             $("#cmbExecutor input").val('');
             
         });
+        
+        
         
         
         

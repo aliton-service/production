@@ -1,29 +1,62 @@
 <script type="text/javascript">
     
     $(document).ready(function () {
-       
-        
         var CurrentRowData;
         
-        var DemandsAdapter = new $.jqx.dataAdapter($.extend(true, Sources.DemandsSource, {
-            filter: function () {
-                $("#DemandsGrid").jqxGrid('updatebounddata', 'filter');
+        var DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceExecutorReports, {}), {
+            formatData: function (data) {
+                var Filter = ["ex.Demand_id = -1"];
+                if (CurrentRowData != undefined)
+                    Filter = ["ex.Demand_id = " + CurrentRowData.Demand_id];
+                $.extend(data, {
+                    Filters: Filter,
+                });
+                return data;
             },
-            sort: function () {
-                $("#DemandsGrid").jqxGrid('updatebounddata', 'sort');
+        });
+        
+        var initWidgets = function (tab) {
+            switch (tab) {
+                case 0:
+                    $("#edContact").jqxInput({height: 25, width: 400, minLength: 1});
+                    $('#edDemandText').jqxTextArea({ placeHolder: 'Текст заявки', height: 90, width: '100%', minLength: 1 });
+                    break;
+                case 1:
+                    $("#ProgressGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            height: 'calc(100% - 10px)',
+                            width: '100%',
+                            source: DataExecutorReports,
+                            sortable: false,
+                            autorowheight: true,
+                            virtualmode: false,
+                            pageable: true,
+                            showfilterrow: false,
+                            filterable: false,
+                            columns:
+                            [
+                                { text: 'Дата сообщения', datafield: 'date', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 100 },
+                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 150, cellsformat: 'dd.MM.yyyy' },
+                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' },
+                                { text: 'Действие', filtertype: 'range', datafield: 'report', width: 250 },
+                                { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 150 },
+                                { text: '№ Заявки', datafield: 'demand_id', width: 100},
+                            ]
+                    }));
+                    break;
             }
-        }));
+        };
         
-//        // Инициализация источников данных
-//        var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-//        var DataDemandTypes = new $.jqx.dataAdapter(Sources.SourceDemandTypes);
-//        var DataStreets = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}));
-//        var DataTerritory = new $.jqx.dataAdapter(Sources.SourceTerritory);
+        $('#Tabs').on('selected', function (event) { 
+            var selectedTab = event.args.item;
+            if (selectedTab == 1)
+                $("#ProgressGrid").jqxGrid('updatebounddata');
+        }); 
         
-        // Все остальные
-        $('#Tabs').jqxTabs({ width: '100%', height: 320});
-        $("#edContact").jqxInput({height: 25, width: 400, minLength: 1});
-        $('#edDemandText').jqxTextArea({ placeHolder: 'Текст заявки', height: 90, width: '100%', minLength: 1 });
+        $('#Tabs').jqxTabs({ width: '100%', height: '100%', initTabContent: initWidgets});
+        
+        
         $('#btnDemView').jqxButton({ width: 120, height: 30 });
         // Инициализация гридов - Реестр заявок и ход работы
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
@@ -45,25 +78,38 @@
                 return '<span class="backlight_red" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
         }
         
+        $("#DemandsGrid").on('rowselect', function (event) {
+            CurrentRowData = $('#DemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (CurrentRowData != undefined) {
+                var SelectedTab = $('#Tabs').jqxTabs('selectedItem');
+                switch (SelectedTab) {
+                    case 0:
+                        $("#edContact").jqxInput('val', CurrentRowData.Contacts);
+                        $("#edDemandText").jqxTextArea('val', CurrentRowData.DemandText);
+                    break;
+                    case 1:
+                        $("#ProgressGrid").jqxGrid('updatebounddata');
+                    break;
+                }
+            }
+        });
+
+        $("#DemandsGrid").on('bindingcomplete', function(){
+            if (CurrentRowData != undefined) 
+                Aliton.SelectRowByIdVirtual('Demand_id', CurrentRowData.Demand_id, '#DemandsGrid', false);
+            else Aliton.SelectRowByIdVirtual('Demand_id', null, '#DemandsGrid', false);
+            
+        });
+        
         $("#DemandsGrid").jqxGrid(
-            $.extend(true, {}, GridDefaultSettings, GridsSettings['DemandsGrid'], {
-                height: 400,
+            $.extend(true, {}, GridDefaultSettings, {
+                height: 'calc(100% - 12px)',
                 width: '100%',
                 showfilterrow: false,
                 autoshowfiltericon: true,
-                //source: DemandsAdapter,
                 pagesizeoptions: ['10', '200', '500', '1000'],
-                pagesize:200,
+                pagesize: 200,
                 virtualmode: true,
-                ready: function() {
-                    
-                    var State = $('#DemandsGrid').jqxGrid('getstate');
-                    var Columns = GridState.LoadGridSettings('DemandsGrid', 'DemandsIndex_DemandsGrid');
-                    $.extend(true, State.columns, Columns);
-                    $('#DemandsGrid').jqxGrid('loadstate', State);    
-                    //$('#DemandsGrid').jqxGrid({source: DemandsAdapter});
-
-                },
                 columns:
                     [
                         { text: 'Зарегистрировал', datafield: 'UCreateName', width: 150, cellsrenderer: cellsrenderer },
@@ -81,7 +127,6 @@
                         { text: 'Неисправность', datafield: 'Malfunction', width: 120, cellsrenderer: cellsrenderer },
                         { text: 'Приоритет', datafield: 'DemandPrior', width: 120, cellsrenderer: cellsrenderer },
                         { text: 'Мастер', datafield: 'MasterName', width: 120, cellsrenderer: cellsrenderer },
-                        { text: 'Мастер', datafield: 'Master', width: 120, hidden: true }, // 15
                         { text: 'Запл. дата выпол.', filtertype: 'date', datafield: 'PlanDateExec', cellsformat: 'dd.MM.yyyy HH:mm', width: 150, cellsrenderer: cellsrenderer},
                         { text: 'Исполнитель', datafield: 'ExecutorsName', width: 120, cellsrenderer: cellsrenderer },
                         { text: 'Тип обслуживания', datafield: 'ServiceType', width: 120, cellsrenderer: cellsrenderer }, 
@@ -93,6 +138,7 @@
                         { text: 'Изменил', datafield: 'UChangeName', width: 120, cellsrenderer: cellsrenderer },
                         { text: 'Результат', datafield: 'ResultName', width: 120, cellsrenderer: cellsrenderer }, // 25
                         { text: 'Исполнители', datafield: 'OtherName', width: 120, hidden: true },
+                        { text: 'Отработка', filtertype: 'date', datafield: 'WorkedOut', width: 150, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer },
                         { text: 'Object_id', datafield: 'Object_id', width: 120, hidden: true },
                         { text: 'Territ_id', datafield: 'Territ_id', width: 120, hidden: true },
                         { text: 'Street_id', datafield: 'Street_id', width: 120, hidden: true },
@@ -101,61 +147,10 @@
                     ]
         }));
         
-        GridState.StateInitGrid('DemandsGrid', 'DemandsIndex_DemandsGrid');
-        $("#ProgressGrid").jqxGrid(
-            $.extend(true, {}, GridDefaultSettings, GridsSettings['ProgressGrid'], {
-                height: 250,
-                width: '100%',
-                sortable: false,
-                autorowheight: true,
-                virtualmode: false,
-                pageable: true,
-                showfilterrow: false,
-                filterable: false,
-                //autoshowfiltericon: true,
-        }));
-        // Проставляем знаячение по умолчанию в фильтрах
-        //$("#edDemand_id").jqxInput('val', DefaultNumber);
-        $("#edDate").jqxDateTimeInput('val', DefaultDateReg);
-        $("#cmbDemandType").jqxComboBox('val', DefaultDemandType);
-        $("#cmbMaster").jqxComboBox('val', DefaultMaster);
-        $("#cmbExecutor").jqxComboBox('val', DefaultExecutor);
-        $("#cmbStreet").jqxComboBox('selectItem', DefaultStreet);
+        //GridState.StateInitGrid('DemandsGrid', 'DemandsIndex_DemandsGrid');
         
-        // Привязка фильтров к гриду
-        GridFilters.AddControlFilter('cmbMaster', 'jqxComboBox', 'DemandsGrid', 'Master', 'numericfilter', 1, 'EQUAL', true);
-        GridFilters.AddControlFilter('cmbExecutor', 'jqxComboBox', 'DemandsGrid', 'OtherName', 'stringfilter', 1, 'CONTAINS', true);
-        GridFilters.AddControlFilter('chbNotDateMaster', 'jqxCheckBox', 'DemandsGrid', 'DateMaster', 'stringfilter', 1, 'NULL', true);
-        GridFilters.AddControlFilter('chbNotDateExec', 'jqxCheckBox', 'DemandsGrid', 'DateExec', 'stringfilter', 1, 'NULL', true);
-        //GridFilters.AddControlFilter('edDemand_id', 'jqxInput', 'DemandsGrid', 'Demand_id', 'stringfilter', 1, 'EQUAL', true);
-        GridFilters.AddControlFilter('edDate', 'jqxDateTimeInput', 'DemandsGrid', 'DateReg', 'stringfilter', 1, 'DATE_EQUAL', true);
-        GridFilters.AddControlFilter('cmbDemandType', 'jqxComboBox', 'DemandsGrid', 'DemandType_id', 'numericfilter', 1, 'EQUAL', true);
-        GridFilters.AddControlFilter('edAddr', 'jqxInput', 'DemandsGrid', 'Address', 'stringfilter', 1, 'CONTAINS', true);
-        GridFilters.AddControlFilter('cmbTerrit', 'jqxComboBox', 'DemandsGrid', 'Territ_id', 'numericfilter', 1, 'EQUAL', true);
-        GridFilters.AddControlFilter('cmbStreet', 'jqxComboBox', 'DemandsGrid', 'Street_id', 'numericfilter', 1, 'EQUAL', true);
-        GridFilters.AddControlFilter('edHouse', 'jqxInput', 'DemandsGrid', 'House', 'stringfilter', 1, 'STR_EQUAL', true);
-        FilterGroupDatePeriod = new $.jqx.filter();
-        GridFilters.AddControlFilter('edDateStart', 'jqxDateTimeInput', 'DemandsGrid', 'DateReg', 'datefilter', 1, 'DATE_GREATER_THAN_OR_EQUAL', true, FilterGroupDatePeriod);
-        GridFilters.AddControlFilter('edDateEnd', 'jqxDateTimeInput', 'DemandsGrid', 'DateReg', 'datefilter', 1, 'DATE_LESS_THAN_OR_EQUAL', true, FilterGroupDatePeriod);
-        // 
-        $("#DemandsGrid").on('rowselect', function (event) {
-            CurrentRowData = $('#DemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
-            if (CurrentRowData != undefined) {
-                $("#edContact").jqxInput('val', CurrentRowData.Contacts);
-                $("#edDemandText").jqxTextArea('val', CurrentRowData.DemandText);
-
-                var DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceExecutorReports, {}), {
-                    formatData: function (data) {
-                        $.extend(data, {
-                            Filters: ["ex.Demand_id = " + CurrentRowData.Demand_id],
-                        });
-                        return data;
-                    },
-                });
-                DataExecutorReports.dataBind();
-                $("#ProgressGrid").jqxGrid({source: DataExecutorReports});
-            }
-        });
+        
+         
         
         $('#btnDemView').on('click', function(){
             if (CurrentRowData != undefined)
@@ -188,40 +183,44 @@
 </style>
 
 
-<div style="float: left; margin-top: 20px; width: 100%">
-    
-    <div id="GridContainer" style="float: left; width: 100%">
-        <div id="DemandsGrid" class="jqxGridAliton"></div>
-        <div style="clear: both;"></div>
-        <div id='Tabs'>
-            <ul>
-                <li style="margin-left: 30px;">
-                    <div style="height: 20px; margin-top: 5px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Общая</div>
-                    </div>
-                </li>
-                <li>
-                    <div style="height: 20px; margin-top: 5px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ход работы</div>
-                    </div>
-                </li>
-            </ul>
-            <div style="overflow: hidden;">
-                <div style="padding: 10px;">
-                    <div>Контакты</div>
-                    <div><input id="edContact" type="text"/></div>
-                    <div>Неисправность</div>
-                    <div><textarea id="edDemandText"></textarea></div>
+<div id="GridContainer" style="float: left; width: 100%; height: calc(100% - 240px)">
+    <div id="DemandsGrid" class="jqxGridAliton"></div>
+</div>    
+<div style="clear: both;"></div>
+<div style="float: left; width: 100%; height: 200px">
+    <div id='Tabs'>
+        <ul>
+            <li style="margin-left: 30px;">
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Общая</div>
                 </div>
-            </div>
-            <div style="overflow: hidden;">
-                <div style="padding: 10px;">
-                    <div id="ProgressGrid"></div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ход работы</div>
                 </div>
+            </li>
+        </ul>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px;">
+                <div>Контакты <input id="edContact" type="text"/></div>
+                <div>Неисправность</div>
+                <div><textarea id="edDemandText"></textarea></div>
             </div>
         </div>
-        <div style="clear: both;"></div>
-        <input type="button" value="Доп-но" id='btnDemView' />
+        <div style="overflow: hidden;">
+            <div style="padding: 10px;">
+                <div id="ProgressGrid"></div>
+            </div>
+        </div>
     </div>
-</div>
+</div>    
+<div style="clear: both;"></div>
+<div style="float: left; width: 100%; height: 30px; padding-top: 10px">
+    <input type="button" value="Доп-но" id='btnDemView' />
+</div>    
+<div style="clear: both;"></div>
+
+    
+
 

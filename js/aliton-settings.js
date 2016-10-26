@@ -13,7 +13,7 @@ var GridDefaultSettings = {
     columnsresize: true,
     columnsreorder: true,
     virtualmode: false,
-    //autosavestate: true,
+    autosavestate: true,
     enableanimations: false,
     //autoloadstate: true,
     //enablebrowserselection: true,
@@ -339,44 +339,7 @@ GridsSettings['ObjectsGrid'] = {
     ]
 };
 
-// Просмотр заявок (Грид)
-GridsSettings['DemandsGrid'] = {
-    columns:
-    [
-        { text: 'Зарегистрировал', datafield: 'UCreateName', width: 150 },
-        { text: 'Номер', datafield: 'Demand_id', width: 100 },
-        { text: 'Адрес', datafield: 'Address', width: 200 },
-        { text: 'ВИП', datafield: 'VIPName', width: 50 },
-        { text: 'Регистрация', filtertype: 'date', datafield: 'DateReg', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' },
-        { text: 'Передача мастеру', filtertype: 'date', datafield: 'DateMaster', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' }, // 5
-        { text: 'Выполнение', filtertype: 'date', datafield: 'DateExec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'DATE_EQUAL' },
-        { text: 'Время на вып.', datafield: 'ExceedDays', width: 50 },
-        { text: 'Просрочка', datafield: 'FullOverDay', width: 80 },
-        { text: 'Тип заявки', datafield: 'DemandType', width: 120 },
-        { text: 'Тип заявки ID', datafield: 'DemandType_id', width: 120, hidden: true }, //10
-        { text: 'Тип оборудования', datafield: 'EquipType', width: 120 },
-        { text: 'Неисправность', datafield: 'Malfunction', width: 120 },
-        { text: 'Приоритет', datafield: 'DemandPrior', width: 120 },
-        { text: 'Мастер', datafield: 'MasterName', width: 120 },
-        { text: 'Мастер', datafield: 'Master', width: 120, hidden: true }, // 15
-        { text: 'Запл. дата выпол.', filtertype: 'date', datafield: 'PlanDateExec', cellsformat: 'dd.MM.yyyy HH:mm', width: 150},
-        { text: 'Исполнитель', datafield: 'ExecutorsName', width: 120 },
-        { text: 'Тип обслуживания', datafield: 'ServiceType', width: 120 }, 
-        { text: 'Первоначальный тип', datafield: 'FirstDemandType', width: 120 }, 
-        { text: 'Контакт', datafield: 'Contacts', width: 120 }, // 20
-        { text: 'Неисправность', datafield: 'DemandText', width: 120 },
-        { text: 'Примечание', datafield: 'Note', width: 120 },
-        { text: 'Район', datafield: 'AreaName', width: 120 }, 
-        { text: 'Изменил', datafield: 'UChangeName', width: 120 },
-        { text: 'Результат', datafield: 'ResultName', width: 120 }, // 25
-        { text: 'Исполнители', datafield: 'OtherName', width: 120, hidden: true },
-        { text: 'Object_id', datafield: 'Object_id', width: 120, hidden: true },
-        { text: 'Territ_id', datafield: 'Territ_id', width: 120, hidden: true },
-        { text: 'Street_id', datafield: 'Street_id', width: 120, hidden: true },
-        { text: 'House', datafield: 'House', width: 120, hidden: true }, // 30
-        { text: 'Выполнение(Фильтр)', datafield: 'DateExecFilter', width: 150, cellsformat: 'd' },
-    ]
-};
+
 
 // Просмотр заявок (Ход работы)
 GridsSettings['ProgressGrid'] = {
