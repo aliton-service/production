@@ -1,22 +1,7 @@
 <script type="text/javascript">
     
     $(document).ready(function () {
-        $("#btnShowHideFilter").jqxButton({ width: 120, height: 30 });
-         
-        $("#btnShowHideFilter").on('click', function () {
-            var Display = $("#FilterContainer").css('display');
-            if (Display == 'none') {
-                $("#FilterContainer").css('display', 'block');
-                $("#GridContainer").css('width', '79%');
-                $("#DemandsGrid").jqxGrid('refresh');
-            }
-            else {
-                $("#FilterContainer").css('display', 'none');
-                $("#GridContainer").css('width', '100%');
-                $("#DemandsGrid").jqxGrid('refresh');
-            }
-
-        });
+       
         
         var CurrentRowData;
         
@@ -29,72 +14,12 @@
             }
         }));
         
-        // Присваиваем значения по умолчанию для фильтров
-        var DefaultMaster = '<?php echo $Filters2['Master']; ?>';
-        var DefaultNoDateMaster = '<?php echo $Filters2['NoDateMaster']; ?>';
-        var DefaultObject = '<?php echo $Filters2['Object_id']; ?>';
-        var DefaultDateReg = '<?php echo $Filters2['DateReg']; ?>';
-        var DefaultStreet = '<?php echo $Filters2['Street_id']; ?>';
-        var DefaultHouse = '<?php echo $Filters2['House']; ?>';
-        var DefaultNumber = '<?php echo $Filters2['Demand_id']; ?>';
-        var DefaultDemandType = '<?php echo $Filters2['DemandType_id']; ?>';
-        var DefaultExecutor = '<?php echo $Filters2['Executor']; ?>';
+//        // Инициализация источников данных
+//        var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
+//        var DataDemandTypes = new $.jqx.dataAdapter(Sources.SourceDemandTypes);
+//        var DataStreets = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}));
+//        var DataTerritory = new $.jqx.dataAdapter(Sources.SourceTerritory);
         
-        // Создаем фильтры
-        var DefaultFilterDateExec = GridFilters.CreateFilterAndFilterGroup('stringfilter', 1, 'true', 'NULL');
-        if (DefaultMaster !== '')
-            var DefaultFilterMaster = GridFilters.CreateFilterAndFilterGroup('numericfilter', 1, DefaultMaster, 'EQUAL');
-        if (DefaultNoDateMaster !== '')
-            var DefaultFilterNoDateMaster = GridFilters.CreateFilterAndFilterGroup('datefilter', 1, DefaultNoDateMaster, 'NULL');
-        if (DefaultObject !== '')
-            var DefaultFilterObject = GridFilters.CreateFilterAndFilterGroup('numericfilter', 1, DefaultObject, 'EQUAL');
-        if (DefaultStreet !== '')
-            var DefaultFilterStreet = GridFilters.CreateFilterAndFilterGroup('numericfilter', 1, DefaultStreet, 'EQUAL');
-        if (DefaultHouse !== '')
-            var DefaultFilterHouse = GridFilters.CreateFilterAndFilterGroup('stringfilter', 1, DefaultHouse, 'STR_EQUAL');
-        if (DefaultNumber !== '')
-            var DefaultFilterNumber = GridFilters.CreateFilterAndFilterGroup('numericfilter', 1, DefaultNumber, 'EQUAL');
-        if (DefaultDemandType !== '')
-            var DefaultFilterDemandType = GridFilters.CreateFilterAndFilterGroup('numericfilter', 1, DefaultDemandType, 'EQUAL');
-        if (DefaultDateReg !== '')
-            var DefaultFilterDate = GridFilters.CreateFilterAndFilterGroup('datefilter', 1, DefaultDateReg, 'DATE_EQUAL');
-        if (DefaultExecutor !== '')
-            var DefaultFilterExecutor = GridFilters.CreateFilterAndFilterGroup('stringfilter', 1, '#' + DefaultExecutor + '#', 'CONTAINS');
-        
-        // Фильтры храним в массиве, номер ячейки это номер колонке в гриде
-        var ColumnsDefaultFilters = [];
-        ColumnsDefaultFilters[1] = {filter: DefaultFilterNumber};
-        ColumnsDefaultFilters[4] = {filter: DefaultFilterDate};
-        ColumnsDefaultFilters[5] = {filter: DefaultFilterNoDateMaster};
-        ColumnsDefaultFilters[6] = {filter: DefaultFilterDateExec};
-        ColumnsDefaultFilters[10] = {filter: DefaultFilterDemandType};
-        ColumnsDefaultFilters[15] = {filter: DefaultFilterMaster};
-        ColumnsDefaultFilters[26] = {filter: DefaultFilterExecutor};
-        ColumnsDefaultFilters[27] = {filter: DefaultFilterObject};
-        ColumnsDefaultFilters[29] = {filter: DefaultFilterStreet};
-        ColumnsDefaultFilters[30] = {filter: DefaultFilterHouse};
-        
-        // Инициализация источников данных
-        var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-        var DataDemandTypes = new $.jqx.dataAdapter(Sources.SourceDemandTypes);
-        var DataStreets = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}));
-        var DataTerritory = new $.jqx.dataAdapter(Sources.SourceTerritory);
-        
-        // Инициализируем контролы фильтров
-        $("#cmbMaster").jqxComboBox({ source: DataEmployees, width: '240', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр по мастеру
-        $("#chbNotDateExec").jqxCheckBox({ width: 160, height: 25, checked: true}); // Фильтр невыполненные
-        $("#chbNotDateMaster").jqxCheckBox({ width: 160, height: 25, checked: DefaultNoDateMaster}); // Фильтр непереданные
-        $("#chbNotWorkedOut").jqxCheckBox({ width: 160, height: 25, checked: false}); // Фильтр неотработанные
-        $("#edDemand_id").jqxInput({height: 25, width: 234, minLength: 1}); // Фильтр номер
-        $("#edDate").jqxDateTimeInput({ width: '180px', height: '25px', formatString: 'dd.MM.yyyy HH:mm', value: null, readonly: false}); // Фильтр дата регистрации
-        $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '240', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"}); // Фильтр тип заявки
-        $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '240', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр исполнитель
-        $("#edAddr").jqxInput({height: 25, width: 234, minLength: 1}); // Фильтр по адресу
-        $("#cmbTerrit").jqxComboBox({ source: DataTerritory, width: '240', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id"}); // Фильтр участок
-        $("#cmbStreet").jqxComboBox({ source: DataStreets, width: '240', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}); // Фильтр улицы
-        $("#edHouse").jqxInput({height: 25, width: 60, minLength: 1}); // Фильтр ДОМ
-        $("#edDateStart").jqxDateTimeInput({ width: '180px', height: '25px', formatString: 'dd.MM.yyyy', value: null, readonly: false}); // Фильтр дата рег.
-        $("#edDateEnd").jqxDateTimeInput({ width: '180px', height: '25px', formatString: 'dd.MM.yyyy', value: null, readonly: false}); // Фильтр дата рег
         // Все остальные
         $('#Tabs').jqxTabs({ width: '100%', height: 320});
         $("#edContact").jqxInput({height: 25, width: 400, minLength: 1});
@@ -131,11 +56,12 @@
                 pagesize:200,
                 virtualmode: true,
                 ready: function() {
+                    
                     var State = $('#DemandsGrid').jqxGrid('getstate');
                     var Columns = GridState.LoadGridSettings('DemandsGrid', 'DemandsIndex_DemandsGrid');
                     $.extend(true, State.columns, Columns);
                     $('#DemandsGrid').jqxGrid('loadstate', State);    
-                    $('#DemandsGrid').jqxGrid({source: DemandsAdapter});
+                    //$('#DemandsGrid').jqxGrid({source: DemandsAdapter});
 
                 },
                 columns:
@@ -173,7 +99,7 @@
                         { text: 'House', datafield: 'House', width: 120, hidden: true }, // 30
                         { text: 'Выполнение(Фильтр)', datafield: 'DateExecFilter', width: 150, cellsformat: 'd', cellsrenderer: cellsrenderer },
                     ]
-        }, {columns: ColumnsDefaultFilters}));
+        }));
         
         GridState.StateInitGrid('DemandsGrid', 'DemandsIndex_DemandsGrid');
         $("#ProgressGrid").jqxGrid(
@@ -189,7 +115,7 @@
                 //autoshowfiltericon: true,
         }));
         // Проставляем знаячение по умолчанию в фильтрах
-        $("#edDemand_id").jqxInput('val', DefaultNumber);
+        //$("#edDemand_id").jqxInput('val', DefaultNumber);
         $("#edDate").jqxDateTimeInput('val', DefaultDateReg);
         $("#cmbDemandType").jqxComboBox('val', DefaultDemandType);
         $("#cmbMaster").jqxComboBox('val', DefaultMaster);
@@ -201,7 +127,7 @@
         GridFilters.AddControlFilter('cmbExecutor', 'jqxComboBox', 'DemandsGrid', 'OtherName', 'stringfilter', 1, 'CONTAINS', true);
         GridFilters.AddControlFilter('chbNotDateMaster', 'jqxCheckBox', 'DemandsGrid', 'DateMaster', 'stringfilter', 1, 'NULL', true);
         GridFilters.AddControlFilter('chbNotDateExec', 'jqxCheckBox', 'DemandsGrid', 'DateExec', 'stringfilter', 1, 'NULL', true);
-        GridFilters.AddControlFilter('edDemand_id', 'jqxInput', 'DemandsGrid', 'Demand_id', 'stringfilter', 1, 'EQUAL', true);
+        //GridFilters.AddControlFilter('edDemand_id', 'jqxInput', 'DemandsGrid', 'Demand_id', 'stringfilter', 1, 'EQUAL', true);
         GridFilters.AddControlFilter('edDate', 'jqxDateTimeInput', 'DemandsGrid', 'DateReg', 'stringfilter', 1, 'DATE_EQUAL', true);
         GridFilters.AddControlFilter('cmbDemandType', 'jqxComboBox', 'DemandsGrid', 'DemandType_id', 'numericfilter', 1, 'EQUAL', true);
         GridFilters.AddControlFilter('edAddr', 'jqxInput', 'DemandsGrid', 'Address', 'stringfilter', 1, 'CONTAINS', true);
@@ -260,36 +186,10 @@
         color: black;
     }
 </style>
-<div><input type="button" value="Фильтры" id='btnShowHideFilter' /></div>
-<div style="clear: both;"></div>
+
+
 <div style="float: left; margin-top: 20px; width: 100%">
-    <div id="FilterContainer" style="float: left; display: none; width: 21%; min-height: 400px; max-width: 270px;">
-        <div>Мастер</div>
-        <div><div id='cmbMaster'><?php echo $Filters2['Master']; ?></div></div>
-        <div id='chbNotDateMaster'>Непереданные</div>
-        <div id='chbNotDateExec'>Невыполненные</div>
-        <div id='chbNotWorkedOut'>Неотработанные</div>
-        <div>Номер</div>
-        <div><input name="Demands[Demand_id]" id="edDemand_id" type="text" value="<?php echo $Filters2['Demand_id'];?>"/></div>
-        <div>Дата регистрации</div>
-        <div><div id='edDate' name="Demands[DateReg]"></div></div>
-        <div>Тип заявки</div>
-        <div id='cmbDemandType' name="Demands[DType_id]"><?php echo $Filters2['DemandType_id']; ?></div>
-        <div>Исполнитель</div>
-        <div><div id='cmbExecutor'><?php echo $Filters2['Executor']; ?></div></div>
-        <div>Адрес</div>
-        <div><input id="edAddr" type="text" /></div>
-        <div>Участок</div>
-        <div><div id='cmbTerrit'></div></div>
-        <div>Улица</div>
-        <div><div id='cmbStreet'></div></div>
-        <div>Дом</div>
-        <div><input name="Demands[Demand_id]" id="edHouse" type="text" value="<?php echo $Filters2['House'];?>"/></div>
-        <div>Период с</div>
-        <div><div id='edDateStart'></div></div>
-        <div>по</div>
-        <div><div id='edDateEnd'></div></div>
-    </div>
+    
     <div id="GridContainer" style="float: left; width: 100%">
         <div id="DemandsGrid" class="jqxGridAliton"></div>
         <div style="clear: both;"></div>
