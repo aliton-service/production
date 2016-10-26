@@ -18,7 +18,7 @@
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
-                    $("#edContact").jqxInput({height: 25, width: 400, minLength: 1});
+                    $("#edContact").jqxInput({height: 25, width: 600, minLength: 1});
                     $('#edDemandText').jqxTextArea({ placeHolder: 'Текст заявки', height: 90, width: '100%', minLength: 1 });
                     break;
                 case 1:
@@ -174,11 +174,13 @@
         color: #FF00FF;
     }
     
-    .jqx-fill-state-pressed .backlight_pink {
-        color: black;
-    }
+    .jqx-fill-state-pressed .backlight_pink,
     .jqx-fill-state-pressed .backlight_red {
-        color: black;
+        color: white;
+    }
+    
+    #DemandsGrid .jqx-fill-state-pressed {
+        background-color: #2e7d58 !important;
     }
 </style>
 

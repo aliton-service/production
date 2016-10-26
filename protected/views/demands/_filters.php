@@ -207,9 +207,9 @@
 
 <div>Мастер</div>
 <div><div id='cmbMaster'><?php echo $filterDefaultValues['Master']; ?></div></div>
-<div id='chbNotDateMaster'>Непереданные</div>
-<div id='chbNotDateExec'>Невыполненные</div>
-<div id='chbNotWorkedOut'>Неотработанные</div>
+<div id='chbNotDateMaster' style="color: white;">Непереданные</div>
+<div id='chbNotDateExec' style="color: white;">Невыполненные</div>
+<div id='chbNotWorkedOut' style="color: white;">Неотработанные</div>
 <div>Номер</div>
 <div><input name="Demands[Demand_id]" id="edDemand_id" type="text" value="<?php echo $filterDefaultValues['Demand_id'];?>"/></div>
 <div>Дата регистрации</div>

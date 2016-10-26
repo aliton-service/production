@@ -95,7 +95,7 @@
         $('#btnEditWHBuhActs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnEditWHBuhActs').on('click', function(){
-            $('#WHBuhActsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 350, width: 380, position: 'center'}));
+            $('#WHBuhActsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 600, width: 800, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Update')) ?>,
                 type: 'POST',
@@ -105,8 +105,8 @@
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
-                    $("#BodyPriceListDialog").html(Res.html);
-                    $('#PriceListDialog').jqxWindow('open');
+                    $("#BodyWHBuhActsDialog").html(Res.html);
+                    $('#WHBuhActsDialog').jqxWindow('open');
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -156,8 +156,8 @@
                 async: false,
                 success: function(Res) {
                     Res = JSON.parse(Res);
-                    $("#BodyPriceListDialog").html(Res.html);
-                    $('#PriceListDialog').jqxWindow('open');
+                    $("#BodyWHBuhActsDialog").html(Res.html);
+                    $('#WHBuhActsDialog').jqxWindow('open');
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -173,8 +173,8 @@
                 async: false,
                 success: function(Res) {
                     Res = JSON.parse(Res);
-                    $("#BodyPriceListDialog").html(Res.html);
-                    $('#PriceListDialog').jqxWindow('open');
+                    $("#BodyWHBuhActsDialog").html(Res.html);
+                    $('#WHBuhActsDialog').jqxWindow('open');
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -223,7 +223,7 @@
 <div class="row">
     <div class="row-column">Номер: <input readonly type="text" id="numberWHBA"></div>
     <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id="dateWHBA"></div></div>
-    <div class="row-column" style="margin: 2px 0 0 20px; font-weight: 500;"><?php echo $model->state; ?></div>
+    <div class="row-column" style="margin: 2px 0 0 40px; font-weight: 500;"><?php echo $model->state; ?></div>
 </div>
 
 <div class="row">
