@@ -425,8 +425,14 @@
 
             </div>
             <div class="page-content__filters">
-                <?php if (isset($this->gridFilters))
-                    $this->renderPartial($this->gridFilters, null, false, true);
+                <?php
+                    if (isset($this->gridFilters))
+                        if (isset($this->filterDefaultValues))
+                            $this->renderPartial($this->gridFilters, array(
+                                'filterDefaultValues' => $this->filterDefaultValues
+                            ), false, true);
+                        else
+                            $this->renderPartial($this->gridFilters, null, false, true);
                 ?>
             </div>
         </div>

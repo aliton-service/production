@@ -724,5 +724,22 @@ Order by [Address]";
 
 		return $report;
 	}
+        
+    public function attributeFilters()
+    {
+        return array(
+            'MasterName' => 'd.Master',
+            'DemandType' => 'd.DemandType_id',
+            'ExecutorsName' => 'd.OtherName',
+        );
+        
+        
+    }
+    
+    public function attributeSotrs() {
+        return array(
+            
+        );
+    }
 	
 }
