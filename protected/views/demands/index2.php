@@ -107,6 +107,13 @@
                 width: '100%',
                 showfilterrow: false,
                 autoshowfiltericon: true,
+                ready: function(){
+                    var State = $('#DemandsGrid').jqxGrid('getstate');
+                    var Columns = GridState.LoadGridSettings('DemandsGrid', 'DemandsIndex_DemandsGrid');
+                    $.extend(true, State.columns, Columns);
+                    $('#DemandsGrid').jqxGrid('loadstate', State);    
+                    //$('#DemandsGrid').jqxGrid({source: DemandsAdapter});
+                },
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
                 virtualmode: true,
