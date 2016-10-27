@@ -52,6 +52,10 @@
             Find();
         });
         
+        $("#chbNotDateExec").on('change', function() {
+            Find();
+        });
+        
         if (Filters.Master != null) $("#cmbMaster").val(Filters.Master);
         if (Filters.DemandType_id != null) $("#cmbDemandType").val(Filters.DemandType_id);
         if (Filters.Executor != null) $("#cmbExecutor").val(Filters.Executor);
