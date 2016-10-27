@@ -15,7 +15,7 @@
             wrtp_name: <?php echo json_encode($model->wrtp_name); ?>,
             jbtp_name: <?php echo json_encode($model->jbtp_name); ?>,
             work_list: <?php echo json_encode($model->work_list); ?>,
-            signed_yn: <?php echo json_encode($model->signed_yn); ?>,
+            signed_yn: <?php echo $model->signed_yn; ?>,
             FIO: <?php echo json_encode($model->FIO); ?>,
             sum: <?php echo json_encode($model->sum); ?>,
             
@@ -28,12 +28,12 @@
         $("#org_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
         $("#AddressWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
         $("#JuridicalPersonWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
-        $("#rcrs_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
+        $("#ReceiptReasonsWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
         $("#ReceiptNumberWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 75 }));
         $("#wrtp_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
         $("#jbtp_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
         $("#FIO_WHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
-        $("#sumWHBA").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, inputMode: 'simple'}));
+        $("#sumWHBA").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, inputMode: 'simple'}));
         
         $("#signed_ynWHBA").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
         
@@ -47,7 +47,7 @@
         if (WHBuhActs.org_name !== '') $("#org_nameWHBA").jqxInput('val', WHBuhActs.org_name);
         if (WHBuhActs.Address !== '') $("#AddressWHBA").jqxInput('val', WHBuhActs.Address);
         if (WHBuhActs.JuridicalPerson !== '') $("#JuridicalPersonWHBA").jqxInput('val', WHBuhActs.JuridicalPerson);
-        if (WHBuhActs.rcrs_name !== '') $("#rcrs_nameWHBA").jqxInput('val', WHBuhActs.rcrs_name);
+        if (WHBuhActs.rcrs_name !== '') $("#ReceiptReasonsWHBA").jqxInput('val', WHBuhActs.rcrs_name);
         if (WHBuhActs.ReceiptNumber !== '') $("#ReceiptNumberWHBA").jqxInput('val', WHBuhActs.ReceiptNumber);
         if (WHBuhActs.wrtp_name !== '') $("#wrtp_nameWHBA").jqxInput('val', WHBuhActs.wrtp_name);
         if (WHBuhActs.jbtp_name !== '' && WHBuhActs.jbtp_name !== 'null') $("#jbtp_nameWHBA").jqxInput('val', WHBuhActs.jbtp_name);
@@ -63,6 +63,29 @@
         if (WHBuhActs.date_act !== '') $("#date_actWHBA").jqxDateTimeInput('val', WHBuhActs.date_act);
         if (WHBuhActs.ReceiptDate !== '') $("#ReceiptDateWHBA").jqxDateTimeInput('val', WHBuhActs.ReceiptDate);
         
+        $('#btnEditWHBuhActs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnAcceptWHBuhActs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        $('#btnEditWHBuhActs').on('click', function(){
+            $('#WHBuhActsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 580, width: 750, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Update')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    docm_id: WHBuhActs.docm_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyWHBuhActsDialog").html(Res.html);
+                    $('#WHBuhActsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
         var WHBuhActsEquipsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceWHBuhActsEquips, {}), {
             formatData: function (data) {
                 $.extend(data, {
@@ -72,7 +95,7 @@
             },
         });
         
-        $("#WHBuhActsGrid").jqxGrid(
+        $("#WHBuhActsGridEquips").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
@@ -92,27 +115,7 @@
                 ]
         }));
         
-        $('#btnEditWHBuhActs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
-        $('#btnEditWHBuhActs').on('click', function(){
-            $('#WHBuhActsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 600, width: 800, position: 'center'}));
-            $.ajax({
-                url: <?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Update')) ?>,
-                type: 'POST',
-                async: false,
-                data: {
-                    docm_id: WHBuhActs.docm_id
-                },
-                success: function(Res) {
-                    Res = JSON.parse(Res);
-                    $("#BodyWHBuhActsDialog").html(Res.html);
-                    $('#WHBuhActsDialog').jqxWindow('open');
-                },
-                error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                }
-            });
-        });
         
         $('#btnAddWHBuhActsEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnRefreshWHBuhActsEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -142,8 +145,8 @@
             $('#btnEditWHBuhActsEquips').jqxButton({disabled: !(CurrentRowData != undefined)})
         }
         
-        $("#WHBuhActsGrid").on('rowselect', function (event) {
-            CurrentRowData = $('#WHBuhActsGrid').jqxGrid('getrowdata', event.args.rowindex);
+        $("#WHBuhActsGridEquips").on('rowselect', function (event) {
+            CurrentRowData = $('#WHBuhActsGridEquips').jqxGrid('getrowdata', event.args.rowindex);
             CheckButton();
 //            console.log(CurrentRowData.prlt_id);
         });
@@ -194,8 +197,8 @@
                         prlt_id: CurrentRowData.prlt_id
                     },
                     success: function(Res) {
-                        $("#WHBuhActsGrid").jqxGrid('updatebounddata');
-                        $('#WHBuhActsGrid').jqxGrid('selectrow', 0);
+                        $("#WHBuhActsGridEquips").jqxGrid('updatebounddata');
+                        $('#WHBuhActsGridEquips').jqxGrid('selectrow', 0);
                     },
                     error: function(Res) {
                         Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -205,20 +208,21 @@
         });
         
         $('#btnRefreshWHBuhActsEquips').on('click', function(){
-            var RowIndex = $('#WHBuhActsGrid').jqxGrid('getselectedrowindex');
-            var Val = $('#WHBuhActsGrid').jqxGrid('getcellvalue', RowIndex, "prlt_id");
-            Aliton.SelectRowById('prlt_id', Val, '#WHBuhActsGrid', true);
+            var RowIndex = $('#WHBuhActsGridEquips').jqxGrid('getselectedrowindex');
+            var Val = $('#WHBuhActsGridEquips').jqxGrid('getcellvalue', RowIndex, "prlt_id");
+            Aliton.SelectRowById('prlt_id', Val, '#WHBuhActsGridEquips', true);
         });
         
         
         
-        $('#WHBuhActsGrid').jqxGrid('selectrow', 0);
+        $('#WHBuhActsGridEquips').jqxGrid('selectrow', 0);
         
       
     });
 </script>
 
 <?php $this->setPageTitle('Бухгалтерский акт'); ?>
+
 
 <div class="row">
     <div class="row-column">Номер: <input readonly type="text" id="numberWHBA"></div>
@@ -240,7 +244,7 @@
 </div>
 
 <div class="row">
-    <div class="row-column">Основание: <input readonly type="text" id="rcrs_nameWHBA"></div>
+    <div class="row-column">Основание: <input readonly type="text" id="ReceiptReasonsWHBA"></div>
     <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id="ReceiptDateWHBA"></div></div>
     <div class="row-column">Номер: <input readonly type="text" id="ReceiptNumberWHBA"></div>
 </div>
@@ -258,7 +262,7 @@
     </div>
 
     <div class="row">
-        <div class="row-column"><div id="signed_ynWHBA"></div></div>
+        <div class="row-column" style="margin: 0;"><div id="signed_ynWHBA"></div></div>
         <div class="row-column" style="margin-top: 2px;">Подписан</div>
         <div class="row-column"><input readonly type="text" id="FIO_WHBA"></div>
         <div class="row-column" style="margin-top: 2px;">Сумма: </div><div class="row-column"><div id="sumWHBA"></div></div>
@@ -268,10 +272,11 @@
 
 <div class="row" style="margin-top: 5px;">
     <div class="row-column"><input type="button" value="Изменить" id='btnEditWHBuhActs'/></div>
+    <div class="row-column"><input type="button" value="Подтвердить" id='btnAcceptWHBuhActs'/></div>
 </div>   
 
 <div class="row" style="margin: 0;">
-    <div id="WHBuhActsGrid" class="jqxGridAliton"></div>
+    <div id="WHBuhActsGridEquips" class="jqxGridAliton"></div>
 </div>
 
 <div class="row">

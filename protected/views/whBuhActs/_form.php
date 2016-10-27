@@ -1,19 +1,21 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
         
-        var WHBuhActs = {
-            docm_id: '<?php echo $model->docm_id; ?>',
+        var WHBuhActs2 = {
+            docm_id: <?php echo json_encode($model->docm_id); ?>,
+            objc_id: <?php echo json_encode($model->objc_id); ?>,
+            ObjectGr_id: <?php echo json_encode($model->ObjectGr_id); ?>,
             number: <?php echo json_encode($model->number); ?>,
             org_name: <?php echo json_encode($model->org_name); ?>,
-            Address: <?php echo json_encode($model->Address); ?>,
-            JuridicalPerson: <?php echo json_encode($model->JuridicalPerson); ?>,
-            rcrs_name: <?php echo json_encode($model->rcrs_name); ?>,
+            jrdc_id: <?php echo json_encode($model->jrdc_id); ?>,
+            rcrs_id: <?php echo json_encode($model->rcrs_id); ?>,
             ReceiptNumber: <?php echo json_encode($model->ReceiptNumber); ?>,
-            wrtp_name: <?php echo json_encode($model->wrtp_name); ?>,
-            jbtp_name: <?php echo json_encode($model->jbtp_name); ?>,
+            wrtp_id: <?php echo json_encode($model->wrtp_id); ?>,
+            jbtp_id: <?php echo json_encode($model->jbtp_id); ?>,
             work_list: <?php echo json_encode($model->work_list); ?>,
-            signed_yn: <?php echo json_encode($model->signed_yn); ?>,
-            FIO: <?php echo json_encode($model->FIO); ?>,
+            signed_yn: <?php echo $model->signed_yn; ?>,
+            info_id: <?php echo json_encode($model->info_id); ?>,
             sum: <?php echo json_encode($model->sum); ?>,
             
             date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
@@ -23,91 +25,163 @@
             
         $("#numberWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
         $("#org_nameWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
-        $("#AddressWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
-        $("#JuridicalPersonWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
-        $("#rcrs_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
-        $("#ReceiptNumberWHBA").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 75 }));
-        $("#wrtp_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
-        $("#jbtp_nameWHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
-        $("#FIO_WHBA").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
-        $("#sumWHBA").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120 }));
         
-        $("#signed_ynWHBA").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
+        var DataAddresses = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {}));
+        $("#AddressWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddresses, width: 350, displayMember: "Addr", valueMember: "Object_id" }));
+        $("#AddressWHBA2").on('bindingComplete', function (event) {
+            if (WHBuhActs2.objc_id !== '') $("#AddressWHBA2").jqxComboBox('val', WHBuhActs2.objc_id);
+            $("#btnOk").jqxButton({disabled: false});
+        });
         
-        $("#dateWHBA2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, formatString: 'dd.MM.yyyy H:mm', readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
-        $("#date_actWHBA").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
-        $("#ReceiptDateWHBA").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy', readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
+        var DataJuridicalPersons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceJuridicalsMin, {}));
+        $("#JuridicalPersonWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridicalPersons, width: 220, displayMember: "JuridicalPerson", valueMember: "Jrdc_Id", autoDropDownHeight: true }));
+        if (WHBuhActs2.jrdc_id !== '') $("#JuridicalPersonWHBA2").jqxComboBox('val', WHBuhActs2.jrdc_id);
         
-        $("#work_listWHBA").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 800 }));
+        var DataReceiptReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReceiptReasons, {}));
+        $("#ReceiptReasonsWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataReceiptReasons, width: 260, displayMember: "name", valueMember: "rcrs_id", autoDropDownHeight: true }));
+        if (WHBuhActs2.rcrs_id !== '') $("#ReceiptReasonsWHBA2").jqxComboBox('val', WHBuhActs2.rcrs_id);
         
-        if (WHBuhActs.number !== '') $("#numberWHBA2").jqxInput('val', WHBuhActs.number);
-        if (WHBuhActs.org_name !== '') $("#org_nameWHBA2").jqxInput('val', WHBuhActs.org_name);
-        if (WHBuhActs.Address !== '') $("#AddressWHBA").jqxInput('val', WHBuhActs.Address);
-        if (WHBuhActs.JuridicalPerson !== '') $("#JuridicalPersonWHBA").jqxInput('val', WHBuhActs.JuridicalPerson);
-        if (WHBuhActs.rcrs_name !== '') $("#rcrs_nameWHBA").jqxInput('val', WHBuhActs.rcrs_name);
-        if (WHBuhActs.ReceiptNumber !== '') $("#ReceiptNumberWHBA").jqxNumberInput('val', WHBuhActs.ReceiptNumber);
-        if (WHBuhActs.wrtp_name !== '') $("#wrtp_nameWHBA").jqxInput('val', WHBuhActs.wrtp_name);
-        if (WHBuhActs.jbtp_name !== '' && WHBuhActs.jbtp_name !== 'null') $("#jbtp_nameWHBA").jqxInput('val', WHBuhActs.jbtp_name);
-        if (WHBuhActs.FIO !== '' && WHBuhActs.FIO !== 'null') $("#FIO_WHBA").jqxInput('val', WHBuhActs.FIO);
+        $("#ReceiptNumberWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 75 }));
         
-        if (WHBuhActs.sum !== '' && WHBuhActs.sum !== 'null') $("#sumWHBA").jqxNumberInput('val', WHBuhActs.sum);
+        var DataWorkTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceWorkTypes, {}));
+        $("#WorkTypesWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataWorkTypes, width: 200, displayMember: "name", valueMember: "wrtp_id", autoDropDownHeight: true }));
+        if (WHBuhActs2.wrtp_id !== '') $("#WorkTypesWHBA2").jqxComboBox('val', WHBuhActs2.wrtp_id);
         
-        if (WHBuhActs.work_list !== '' && WHBuhActs.work_list !== 'null') $("#work_listWHBA").jqxTextArea('val', WHBuhActs.work_list);
+        var DataJobTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceJobTypes, {}));
+        $("#JobTypesWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJobTypes, width: 280, displayMember: "JobType_Name", valueMember: "JobType_Id", autoDropDownHeight: true }));
+        if (WHBuhActs2.jbtp_id !== '') $("#JobTypesWHBA2").jqxComboBox('val', WHBuhActs2.jbtp_id);
         
-        if (WHBuhActs.signed_yn !== '' && WHBuhActs.signed_yn !== 'null') $("#signed_ynWHBA").jqxCheckBox('val', WHBuhActs.signed_yn);
+        var DataContactInfo = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContactInfo, {}), {
+            formatData: function (data) {
+                $.extend(data, {
+                    Filters: ["ci.ObjectGr_id = " + WHBuhActs2.ObjectGr_id],
+                });
+                return data;
+            },
+        });
+        $("#ContactInfoWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, width: 280, displayMember: "FIO", valueMember: "Info_id", autoDropDownHeight: true }));
+        if (WHBuhActs2.info_id !== '') $("#ContactInfoWHBA2").jqxComboBox('val', WHBuhActs2.info_id);
         
-        if (WHBuhActs.date !== '') $("#dateWHBA2").jqxDateTimeInput('val', WHBuhActs.date);
-        if (WHBuhActs.date_act !== '') $("#date_actWHBA").jqxDateTimeInput('val', WHBuhActs.date_act);
-        if (WHBuhActs.ReceiptDate !== '') $("#ReceiptDateWHBA").jqxDateTimeInput('val', WHBuhActs.ReceiptDate);
+        $("#sumWHBA2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100 }));
         
-      
+        $("#signed_ynWHBA2").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings));
+        
+        $("#dateWHBA2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, formatString: 'dd.MM.yyyy H:mm', showTimeButton: true }));
+        $("#date_actWHBA2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
+        $("#ReceiptDateWHBA2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
+        
+        $("#work_listWHBA2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700, height: 100 }));
+        
+        if (WHBuhActs2.number !== '') $("#numberWHBA2").jqxInput('val', WHBuhActs2.number);
+        if (WHBuhActs2.org_name !== '') $("#org_nameWHBA2").jqxInput('val', WHBuhActs2.org_name);
+        if (WHBuhActs2.ReceiptNumber !== '') $("#ReceiptNumberWHBA2").jqxInput('val', WHBuhActs2.ReceiptNumber);
+        
+        if (WHBuhActs2.sum !== '' && WHBuhActs2.sum !== 'null') $("#sumWHBA2").jqxNumberInput('val', WHBuhActs2.sum);
+        
+        if (WHBuhActs2.work_list !== '' && WHBuhActs2.work_list !== 'null') $("#work_listWHBA2").jqxTextArea('val', WHBuhActs2.work_list);
+        
+        if (WHBuhActs2.signed_yn !== '' && WHBuhActs2.signed_yn !== 'null') $("#signed_ynWHBA2").jqxCheckBox('val', WHBuhActs2.signed_yn);
+        
+        if (WHBuhActs2.date !== '') $("#dateWHBA2").jqxDateTimeInput('val', WHBuhActs2.date);
+        if (WHBuhActs2.date_act !== '') $("#date_actWHBA2").jqxDateTimeInput('val', WHBuhActs2.date_act);
+        if (WHBuhActs2.ReceiptDate !== '') $("#ReceiptDateWHBA2").jqxDateTimeInput('val', WHBuhActs2.ReceiptDate);
+        
+        $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        $("#btnCancel").on('click', function () {
+            $('#WHBuhActsDialog').jqxWindow('close');
+        });
+        
+        $("#btnOk").on('click', function () {
+            var Url = <?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Create')); ?>;
+            
+            var Data = $('#WHBuhActs').serialize();
+                
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    var Res = JSON.parse(Res);
+                    if (Res.result == 1 || Res.result == '1') {
+                        $('#WHBuhActsDialog').jqxWindow('close');
+                        location.reload();
+                    }
+                    else {
+                        $('#BodyWHBuhActsDialog').html(Res.html);
+                    };
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        });
     });
 </script>
 
-<?php $this->setPageTitle('Бухгалтерский акт'); ?>
+<?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'WHBuhActs',
+        'htmlOptions'=>array(
+            'class'=>'form-inline'
+        ),
+    )); 
+?>
+
+<input type="hidden" name="WHBuhActs[docm_id]" value="<?php echo $model->docm_id; ?>" />
 
 <div class="row">
-    <div class="row-column">Номер: <input type="text" id="numberWHBA2"></div>
-    <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id="dateWHBA2"></div></div>
-    <div class="row-column" style="margin: 2px 0 0 20px; font-weight: 500;"><?php echo $model->state; ?></div>
+    <div class="row-column">Номер: <input type="text" id="numberWHBA2" name="WHBuhActs[number]"></div>
+    <div class="row-column" style="margin-top: 3px;">Дата: </div><div class="row-column"><div id="dateWHBA2" name="WHBuhActs[date]"></div></div>
+    <div class="row-column" style="margin: 3px 0 0 20px; font-weight: 500;"><?php echo $model->state; ?></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Клиент: <input type="text" id="org_nameWHBA2"></div>
+    <div class="row-column">Клиент: <input readonly type="text" id="org_nameWHBA2"></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Адрес: <input type="text" id="AddressWHBA"></div>
+    <div class="row-column" style="margin-top: 3px;">Адрес: </div><div class="row-column"><div id="AddressWHBA2" name="WHBuhActs[objc_id]"></div></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Юр.лицо: <input type="text" id="JuridicalPersonWHBA"></div>
-    <div class="row-column" style="margin-top: 2px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_actWHBA"></div></div>
+    <div class="row-column" style="margin-top: 3px;">Юр.лицо: </div><div class="row-column"><div id="JuridicalPersonWHBA2" name="WHBuhActs[jrdc_id]"></div></div>
+    <div class="row-column" style="margin-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_actWHBA2" name="WHBuhActs[date_act]"></div></div>
 </div>
 
 <div class="row">
-    <div class="row-column">Основание: <input type="text" id="rcrs_nameWHBA"></div>
-    <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id="ReceiptDateWHBA"></div></div>
-    <div class="row-column">Номер: <input type="text" id="ReceiptNumberWHBA"></div>
+    <div class="row-column" style="margin-top: 3px;">Основание: </div><div class="row-column"><div id="ReceiptReasonsWHBA2" name="WHBuhActs[rcrs_id]"></div></div>
+    <div class="row-column" style="margin-top: 3px;">Дата: </div><div class="row-column"><div id="ReceiptDateWHBA2" name="WHBuhActs[ReceiptDate]"></div></div>
+    <div class="row-column">Номер: <input type="text" id="ReceiptNumberWHBA2"></div>
 </div>
 
 <div class="row" style="padding-bottom: 5px; border: 1px solid #ddd;">
-    <div style="font-size: 1em; margin: 0 10px 0 5px;">Выполненные работы:</div>
+    <div style="font-size: 0.8em; margin: 0 10px 0 5px;">Выполненные работы:</div>
 
     <div class="row">
-        <div class="row-column">Тип работ: <input type="text" id="wrtp_nameWHBA"></div>
-        <div class="row-column">Вид работ: <input type="text" id="jbtp_nameWHBA"></div>
+        <div class="row-column" style="margin-top: 3px;">Тип работ: </div><div class="row-column"><div id="WorkTypesWHBA2" name="WHBuhActs[wrtp_id]"></div></div>
+        <div class="row-column" style="margin-top: 3px;">Вид работ: </div><div class="row-column"><div id="JobTypesWHBA2" name="WHBuhActs[jbtp_id]"></div></div>
     </div>
 
     <div class="row">
-        <div class="row-column">Перечень работ: <textarea type="text" id="work_listWHBA"></textarea></div>
+        <div class="row-column">Перечень работ: <textarea type="text" id="work_listWHBA2" name="WHBuhActs[work_list]"></textarea></div>
     </div>
 
     <div class="row">
-        <div class="row-column"><div id="signed_ynWHBA"></div></div>
+        <div class="row-column" style="margin: 0;"><div id="signed_ynWHBA2" name="WHBuhActs[signed_yn]"></div></div>
         <div class="row-column" style="margin-top: 2px;">Подписан</div>
-        <div class="row-column"><input type="text" id="FIO_WHBA"></div>
-        <div class="row-column" style="margin-top: 2px;">Сумма: </div><div class="row-column"><div id="sumWHBA"></div></div>
+        <div class="row-column"><div id="ContactInfoWHBA2" name="WHBuhActs[info_id]"></div></div>
+        <div class="row-column" style="margin-top: 2px;">Сумма: </div><div class="row-column"><div id="sumWHBA2" name="WHBuhActs[sum]"></div></div>
     </div>
-
 </div>
+    
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel' /></div>
+</div>
+    
+<?php $this->endWidget(); ?>

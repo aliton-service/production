@@ -87,7 +87,6 @@ class WHBuhActs extends MainFormModel
                     objc_id,
                     ObjectGr_id,
                     Address,
-                    org_name,
                     wrtp_id,
                     wrtp_name,
                     sum,
