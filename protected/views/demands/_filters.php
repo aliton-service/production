@@ -189,7 +189,7 @@
             $('#DemandsGrid').jqxGrid('removefilter', 'House', false);
             if ($("#edHouse").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'House', HouseFilterGroup);
             
-            $('#DemandsGrid').jqxGrid('removefilter', 'DateReg', false);
+            if ($("#edDate").val() == '') $('#DemandsGrid').jqxGrid('removefilter', 'DateReg', false);
             if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'DateReg', DateFilterGroup);
             
             $('#DemandsGrid').jqxGrid('removefilter', 'Object_id', false);
