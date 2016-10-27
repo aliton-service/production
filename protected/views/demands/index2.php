@@ -154,7 +154,7 @@
                     ]
         }));
         
-        //GridState.StateInitGrid('DemandsGrid', 'DemandsIndex_DemandsGrid');
+        GridState.StateInitGrid('DemandsGrid', 'DemandsIndex_DemandsGrid');
         
         
          
