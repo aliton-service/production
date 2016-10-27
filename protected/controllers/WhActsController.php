@@ -4,6 +4,8 @@ class WhActsController extends Controller
 {
     public $layout='//layouts/column2';
     public $title = 'Акты';
+    public $gridFilters = null;
+    public $filterDefaultValues = null;
     
     public function filters()
     {
@@ -52,6 +54,18 @@ class WhActsController extends Controller
     
     public function actionIndex() {
         $this->title = 'Просмотр актов';
+        
+        $this->gridFilters = '_filters';
+        $this->filterDefaultValues = array(
+            'DateStart' => '',
+            'DateEnd' => '',
+            'DateCrStart' => '',
+            'DateCrEnd' => '',
+            'DateAcStart' => '',
+            'DateAcEnd' => '',
+            'Master' => '',
+            'Address' => '',
+        );
         
         $this->render('Index');
     }
@@ -186,53 +200,54 @@ class WhActsController extends Controller
     }
     
     public function actionDelete($docm_id = null) {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
         
-        $model = new WhActs_v();
-        $model->getModelPk($docm_id);
-
-        $model->setScenario('Delete');
-        
-        if ($model->achs_id === null) {
-                $StoredProc = new StoredProc();
-                $StoredProc->ProcedureName = 'DELETE_WHDocuments';
-                $StoredProc->CheckParam = true;
-                $StoredProc->ParametersRefresh();
-
-                $StoredProc->Parameters[0]['Value'] = $model->docm_id;
-                $StoredProc->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
-
-                $StoredProc->Execute();
-
-                $this->redirect($this->createUrl('WhActs/index'), array());
+        if (isset($_POST['Docm_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'DELETE_WHDocuments';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Docm_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
         }
-        else {
-            throw new CHttpException(404, 'Нельзя удалить подтвержденный документ. Для удаления, отмените подтверждение');
-        }
+
+        echo json_encode($ObjectResult);
+
     }
     
     public function actionUndo($docm_id = null) {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
         
-        $model = new WhActs_v();
-        $model->getModelPk($docm_id);
-
-        $model->setScenario('Undo');
-        
-        if (!is_null($model->achs_id)) {
-                $StoredProc = new StoredProc();
-                $StoredProc->ProcedureName = 'UNDO_WHAction';
-                $StoredProc->CheckParam = true;
-                $StoredProc->ParametersRefresh();
-
-                $StoredProc->Parameters[0]['Value'] = $model->achs_id;
-                $StoredProc->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
-
-                $StoredProc->Execute();
-
-                $this->redirect($this->createUrl('WhActs/index'), array());
+        if (isset($_POST['Docm_id']) && isset($_POST['Achs_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'UNDO_WHAction';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Achs_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
         }
-        else {
-            throw new CHttpException(404, 'Нельзя отменить подтверждение');
-        }
+
+        echo json_encode($ObjectResult);
     }
 }
 

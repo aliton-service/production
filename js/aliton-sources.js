@@ -3337,3 +3337,46 @@ Sources.SourceWHBuhActsEquips =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.WHActsForReestrSource =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'docm_id', type: ''},
+        {name: 'achs_id', type: 'int'},
+        {name: 'date', type: 'date'},
+        {name: 'ac_date', type: 'date'},
+        {name: 'objc_id', type: 'int'},
+        {name: 'ObjectGr_id', type: 'int'},
+        {name: 'Address', type: 'string'},
+        {name: 'sum', type: 'float'},
+        {name: 'date_payment', type: 'date'},
+        {name: 'note', type: 'string'},
+        {name: 'work_list', type: 'string'},
+        {name: 'dmnd_empl_id', type: 'int'},
+        {name: 'signed_yn', type: 'bool'},
+        {name: 'cstm_id', type: 'int'},
+        {name: 'cstn_name', type: 'string'},
+        {name: 'master', type: 'string'},
+        {name: 'c_date', type: 'date'},
+        {name: 'c_name', type: 'string'},
+        {name: 'c_confirmname', type: 'string'},
+        {name: 'date_create', type: 'date'},
+        {name: 'EmplCreate', type: 'string'},
+        {name: 'user_create', type: 'string'},
+        {name: 'dctp_id', type: 'int'},
+        {name: 'DelDate', type: 'date'},
+        {name: 'sort', type: 'int'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=WhActsReestr_v',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+

@@ -57,5 +57,15 @@ class WhActsReestr_v extends MainFormModel
             'docm_id' => 'docm_id',
         );
     }
+    
+     public function attributeFilters()
+    {
+        return array(
+            'master' => 'w.dmnd_empl_id',
+            
+        );
+        
+        
+    }
 }
 
