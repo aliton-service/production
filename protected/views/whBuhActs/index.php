@@ -65,11 +65,34 @@
         
         $('#btnEditWHBuhActs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnAcceptWHBuhActs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnCancelAcceptWHBuhActs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnEditWHBuhActs').on('click', function(){
-            $('#WHBuhActsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 580, width: 750, position: 'center'}));
+            $('#WHBuhActsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 600, width: 760, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Update')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    docm_id: WHBuhActs.docm_id,
+                    DialogId: 'WHBuhActsDialog',
+                    BodyDialogId: 'BodyWHBuhActsDialog'
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyWHBuhActsDialog").html(Res.html);
+                    $('#WHBuhActsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        
+        $('#btnAcceptWHBuhActs').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Accept')) ?>,
                 type: 'POST',
                 async: false,
                 data: {
@@ -77,8 +100,29 @@
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
-                    $("#BodyWHBuhActsDialog").html(Res.html);
-                    $('#WHBuhActsDialog').jqxWindow('open');
+                    if(Res === '1' || Res === 1) {
+                        location.reload();
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        $('#btnCancelAcceptWHBuhActs').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHBuhActs/CancelAccept')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    docm_id: WHBuhActs.docm_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if(Res === '1' || Res === 1) {
+                        location.reload();
+                    }
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -273,6 +317,7 @@
 <div class="row" style="margin-top: 5px;">
     <div class="row-column"><input type="button" value="Изменить" id='btnEditWHBuhActs'/></div>
     <div class="row-column"><input type="button" value="Подтвердить" id='btnAcceptWHBuhActs'/></div>
+    <div class="row-column"><input type="button" value="Отменить подтв." id='btnCancelAcceptWHBuhActs'/></div>
 </div>   
 
 <div class="row" style="margin: 0;">

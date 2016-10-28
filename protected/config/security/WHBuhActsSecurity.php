@@ -26,6 +26,8 @@ return array(
                 'CreateWHBuhActs',
                 'UpdateWHBuhActs',
                 'DeleteWHBuhActs',
+                'AcceptWHBuhActs',
+                'CancelAcceptWHBuhActs',
                 ),
         ),
 
@@ -64,6 +66,20 @@ return array(
         'DeleteWHBuhActs' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'DeleteWHBuhActs',
+            'bizRule' => null,
+            'data' => null,
+        ),
+
+        'AcceptWHBuhActs' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'AcceptWHBuhActs',
+            'bizRule' => null,
+            'data' => null,
+        ),
+
+        'CancelAcceptWHBuhActs' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'CancelAcceptWHBuhActs',
             'bizRule' => null,
             'data' => null,
         ),

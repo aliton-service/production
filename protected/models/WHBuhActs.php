@@ -14,7 +14,7 @@ class WHBuhActs extends MainFormModel
     public $sum;
     public $jbtp_id;
     public $jbtp_name;
-    public $note;
+    public $note = '.';
     public $work_list;
     public $info_id;
     public $FIO;
@@ -30,6 +30,7 @@ class WHBuhActs extends MainFormModel
     public $date_ready;
     public $date_act;
     public $state;
+    public $EmplCreate;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);

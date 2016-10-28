@@ -3,6 +3,8 @@
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
         
         var WHBuhActs2 = {
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
             docm_id: <?php echo json_encode($model->docm_id); ?>,
             objc_id: <?php echo json_encode($model->objc_id); ?>,
             ObjectGr_id: <?php echo json_encode($model->ObjectGr_id); ?>,
@@ -14,7 +16,7 @@
             wrtp_id: <?php echo json_encode($model->wrtp_id); ?>,
             jbtp_id: <?php echo json_encode($model->jbtp_id); ?>,
             work_list: <?php echo json_encode($model->work_list); ?>,
-            signed_yn: <?php echo $model->signed_yn; ?>,
+            signed_yn: <?php echo json_encode($model->signed_yn); ?>,
             info_id: <?php echo json_encode($model->info_id); ?>,
             sum: <?php echo json_encode($model->sum); ?>,
             
@@ -80,7 +82,7 @@
         
         if (WHBuhActs2.work_list !== '' && WHBuhActs2.work_list !== 'null') $("#work_listWHBA2").jqxTextArea('val', WHBuhActs2.work_list);
         
-        if (WHBuhActs2.signed_yn !== '' && WHBuhActs2.signed_yn !== 'null') $("#signed_ynWHBA2").jqxCheckBox('val', WHBuhActs2.signed_yn);
+        if (WHBuhActs2.signed_yn !== '' && WHBuhActs2.signed_yn !== 'null') $("#signed_ynWHBA2").jqxCheckBox('val', Boolean(parseInt(WHBuhActs2.signed_yn)));
         
         if (WHBuhActs2.date !== '') $("#dateWHBA2").jqxDateTimeInput('val', WHBuhActs2.date);
         if (WHBuhActs2.date_act !== '') $("#date_actWHBA2").jqxDateTimeInput('val', WHBuhActs2.date_act);
@@ -90,7 +92,7 @@
         $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $("#btnCancel").on('click', function () {
-            $('#WHBuhActsDialog').jqxWindow('close');
+            $('#' + WHBuhActs2.DialogId).jqxWindow('close');
         });
         
         $("#btnOk").on('click', function () {
@@ -107,13 +109,22 @@
                 data: Data,
                 success: function(Res) {
                     var Res = JSON.parse(Res);
-                    if (Res.result == 1 || Res.result == '1') {
-                        $('#WHBuhActsDialog').jqxWindow('close');
-                        location.reload();
+                    
+//                    console.log('WHBuhActs2.DialogId = ' + WHBuhActs2.DialogId);
+//                    console.log('Res.result = ' + Res.result);
+                    
+                    if (Res.result === '1' || Res.result == 1) {
+                        $('#' + WHBuhActs2.DialogId).jqxWindow('close');
+                        if (WHBuhActs2.DialogId == 'CostCalculationsDialog') {
+                            $('#RefreshCostCalcDocuments').click();
+                        } 
+                        else {
+                            location.reload();
+                        } 
+                            
+                    } else {
+                        $('#' + WHBuhActs2.BodyDialogId).html(Res.html);
                     }
-                    else {
-                        $('#BodyWHBuhActsDialog').html(Res.html);
-                    };
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
@@ -133,45 +144,46 @@
 ?>
 
 <input type="hidden" name="WHBuhActs[docm_id]" value="<?php echo $model->docm_id; ?>" />
+<input type="hidden" name="WHBuhActs[objc_id]" value="<?php echo $model->objc_id; ?>" />
 
-<div class="row">
+<div class="row" style="margin-top: 10px;">
     <div class="row-column">Номер: <input type="text" id="numberWHBA2" name="WHBuhActs[number]"></div>
     <div class="row-column" style="margin-top: 3px;">Дата: </div><div class="row-column"><div id="dateWHBA2" name="WHBuhActs[date]"></div></div>
     <div class="row-column" style="margin: 3px 0 0 20px; font-weight: 500;"><?php echo $model->state; ?></div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 10px;">
     <div class="row-column">Клиент: <input readonly type="text" id="org_nameWHBA2"></div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 10px;">
     <div class="row-column" style="margin-top: 3px;">Адрес: </div><div class="row-column"><div id="AddressWHBA2" name="WHBuhActs[objc_id]"></div></div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 10px;">
     <div class="row-column" style="margin-top: 3px;">Юр.лицо: </div><div class="row-column"><div id="JuridicalPersonWHBA2" name="WHBuhActs[jrdc_id]"></div></div>
     <div class="row-column" style="margin-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_actWHBA2" name="WHBuhActs[date_act]"></div></div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 10px;">
     <div class="row-column" style="margin-top: 3px;">Основание: </div><div class="row-column"><div id="ReceiptReasonsWHBA2" name="WHBuhActs[rcrs_id]"></div></div>
     <div class="row-column" style="margin-top: 3px;">Дата: </div><div class="row-column"><div id="ReceiptDateWHBA2" name="WHBuhActs[ReceiptDate]"></div></div>
     <div class="row-column">Номер: <input type="text" id="ReceiptNumberWHBA2"></div>
 </div>
 
-<div class="row" style="padding-bottom: 5px; border: 1px solid #ddd;">
-    <div style="font-size: 0.8em; margin: 0 10px 0 5px;">Выполненные работы:</div>
+<div class="row" style="margin-top: 10px; padding-bottom: 5px; border: 1px solid #ddd;">
+    <div style="font-size: 0.8em; margin: 5px 10px 0 5px;">Выполненные работы:</div>
 
-    <div class="row">
+    <div class="row" style="margin-top: 10px;">
         <div class="row-column" style="margin-top: 3px;">Тип работ: </div><div class="row-column"><div id="WorkTypesWHBA2" name="WHBuhActs[wrtp_id]"></div></div>
         <div class="row-column" style="margin-top: 3px;">Вид работ: </div><div class="row-column"><div id="JobTypesWHBA2" name="WHBuhActs[jbtp_id]"></div></div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top: 10px;">
         <div class="row-column">Перечень работ: <textarea type="text" id="work_listWHBA2" name="WHBuhActs[work_list]"></textarea></div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top: 10px;">
         <div class="row-column" style="margin: 0;"><div id="signed_ynWHBA2" name="WHBuhActs[signed_yn]"></div></div>
         <div class="row-column" style="margin-top: 2px;">Подписан</div>
         <div class="row-column"><div id="ContactInfoWHBA2" name="WHBuhActs[info_id]"></div></div>
@@ -179,7 +191,7 @@
     </div>
 </div>
     
-<div class="row">
+<div class="row" style="margin-top: 10px;">
     <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>
     <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel' /></div>
 </div>

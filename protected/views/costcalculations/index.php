@@ -429,6 +429,31 @@
                     }
                 });
             });
+            
+            $('#btnAddDocBuhAct').on('click', function(){
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 600, width: 750}));
+                $.ajax({
+                    url: "<?php echo Yii::app()->createUrl('WHBuhActs/Create');?>",
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        DialogId: 'CostCalculationsDialog',
+                        BodyDialogId: 'BodyCostCalculationsDialog',
+                        Params: {
+                            date: CostCalculations.date,
+                            objc_id: CostCalculations.Object_id,
+                            jrdc_id: CostCalculations.Jrdc_id,
+                            wrtp_id: CostCalculations.wrtp_id,
+                            sum: CostCalcDetails.SumHighFull  
+                        }
+                    },
+                    success: function(Res) {
+                        $('#CostCalculationsDialog').jqxWindow('open');
+                        $('#BodyCostCalculationsDialog').html(Res);
+                    }
+                });
+            });
+            
             $('#btnAddDocContract3').on('click', function() {
                 $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '440px', width: '810'}));
                 $.ajax({
@@ -1462,7 +1487,7 @@
                         <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcWorks'/></div>
                         <div class="row-column"><input type="button" value="Для заказчика" id='btnPrintCostCalcWorks'/></div>
                         <div class="row-column"><input type="button" value="Для нас" id='btnPrintForUsCostCalcWorks'/></div>
-                        <div class="row-column" style="margin-left: 480px;"><input type="button" value="Удалить" id='DelCostCalcWorks' /></div>
+                        <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcWorks' /></div>
                     </div>
                 </div>
             </div>
@@ -1473,7 +1498,7 @@
                     <div class="row" style="margin-top: 3px; padding-left: 0;">
                         <div class="row-column"><input type="button" value="Инфо" id='MoreInfoCostCalcDocuments' /></div>
                         <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcDocuments'/></div>
-                        <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcDocuments' /></div>
+                        <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcDocuments' /></div>
                     </div>
                 </div>
             </div>
@@ -1486,7 +1511,7 @@
                         <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcSalarys' /></div>
                         <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcSalarys'/></div>
                         <div class="row-column"><input type="button" value="Подтвердить" id='AcceptCostCalcSalarys'/></div>
-                        <div class="row-column" style="margin-left: 350px;"><input type="button" value="Удалить" id='DelCostCalcSalarys' /></div>
+                        <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcSalarys' /></div>
                     </div>
                 </div>
             </div>

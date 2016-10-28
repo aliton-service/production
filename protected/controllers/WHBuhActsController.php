@@ -16,23 +16,27 @@ class WHBuhActsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'view'),
-                    'roles'=>array('ViewWHBuhActs'),
+                'actions'=>array('index', 'view'),
+                'roles'=>array('ViewWHBuhActs'),
             ),
             array('allow', 
-                    'actions'=>array('create'),
-                    'roles'=>array('CreateWHBuhActs'),
+                'actions'=>array('create'),
+                'roles'=>array('CreateWHBuhActs'),
             ),
             array('allow', 
-                    'actions'=>array('update'),
-                    'roles'=>array('UpdateWHBuhActs'),
+                'actions'=>array('update'),
+                'roles'=>array('UpdateWHBuhActs'),
             ),
             array('allow', 
-                    'actions'=>array('delete'),
-                    'roles'=>array('DeleteWHBuhActs'),
+                'actions'=>array('delete'),
+                'roles'=>array('DeleteWHBuhActs'),
+            ),
+            array('allow',
+                'actions'=>array('accept'),
+                'roles'=>array('AcceptWHBuhActs'),
             ),
             array('deny',  // deny all users
-                    'users'=>array('*'),
+                'users'=>array('*'),
             ),
         );
     }
@@ -40,37 +44,65 @@ class WHBuhActsController extends Controller
     public function actionCreate()
     {
         $model = new WHBuhActs();
+        
+        $DialogId = '';
+        $BodyDialogId = '';
+        
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
             'html' => '',
         );
+
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
+        
         if (isset($_POST['WHBuhActs'])) {
             $model->attributes = $_POST['WHBuhActs'];
+            $model->EmplCreate = Yii::app()->user->Employee_id;
             if ($model->validate()) {
-                $Res = $model->Insert();
+                $model->Insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['docm_id'];
+                $ObjectResult['id'] = $model->docm_id;
                 echo json_encode($ObjectResult);
                 return;
-            } 
+            }
         }
         
-        $ObjectResult['html'] = $this->renderPartial('_form', array(
+        $this->renderPartial('_form', array(
             'model' => $model,
-        ), true);
-        echo json_encode($ObjectResult);
+            'DialogId' => $DialogId,
+            'BodyDialogId' => $BodyDialogId,
+        ));
+       
     }
 
 
     public function actionUpdate()
     {
         $model = new WHBuhActs();
+        
+        $DialogId = '';
+        $BodyDialogId = '';
+        
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
             'html' => '',
         );
+        
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
+        
         if (isset($_POST['docm_id']))
             $model->getModelPk($_POST['docm_id']);
 
@@ -88,6 +120,8 @@ class WHBuhActsController extends Controller
 
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
+            'DialogId' => $DialogId,
+            'BodyDialogId' => $BodyDialogId,
         ), true);
         echo json_encode($ObjectResult);
     }
@@ -129,5 +163,43 @@ class WHBuhActsController extends Controller
         }
     }
     
+    public function actionAccept() 
+    {
+        if (isset($_POST['docm_id'])) {
+            $model = new WHBuhActs();
+            $model->getModelPk($_POST['docm_id']);
+            
+            if ($model->achs_id == null) {
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'INSERT_BuhActionHistory';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $model->docm_id;
+                $sp->Parameters[1]['Value'] = $model->objc_id;
+                $sp->Parameters[2]['Value'] = Yii::app()->user->Employee_id;
+                $sp->CheckParam = true;
+                $sp->Execute();
+                echo '1';
+            }
+        }
+    }
+    
+    public function actionCancelAccept() 
+    {
+        if (isset($_POST['docm_id'])) {
+            $model = new WHBuhActs();
+            $model->getModelPk($_POST['docm_id']);
+            
+            if ($model->achs_id !== null) {
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'UNDO_WHAction';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $model->achs_id;
+                $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+                $sp->CheckParam = true;
+                $sp->Execute();
+                echo '1';
+            }
+        }
+    }
 }
 
