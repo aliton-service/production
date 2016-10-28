@@ -164,91 +164,88 @@ class DemandsController extends Controller
 	}
 
 	public function actionCreate() {
-		$model = new Demands;
-                $model->setScenario('Insert');
-                $this->title = 'Создание новой заявки';
-		
-                $ReadOnly = false;
-                $this->performAjaxValidation($model);
-
-		if(isset($_POST['Demands']))
-		{
-			
-                         
-                        $model->attributes=$_POST['Demands'];
-			
-			$model->EmplCreate = Yii::app()->user->Employee_id;
-			$model->User = Yii::app()->user->Employee_id;
-                        
-                        
-                        
-                        if ($model->validate()) {
-                            $Result = $model->insert();
-                            if($Result)
-                            {	
-                                //$this->redirect('/index.php?r=demands&status[nofinish]=on');
-                                $this->redirect(Yii::app()->createUrl('Demands/view', array('Demand_id' => $Result['Demand_id'])));
-                            }
-                        }
-                        else
-                        {
-                            $ObjectsGroup = new ObjectsGroup();
-                            $ObjectsGroup->getModelPk($model->ObjectGr_id);
-                            
-                            $Objects = new ListObjects();
-                            $Objects->getModelPk($model->Object_id);
-                            
-                            $this->render('create', array(
-                                    'model'=>$model,
-                                    'ObjectsGroup' => $ObjectsGroup,
-                                    'ReadOnly' => $ReadOnly,
-                                    'Objects' => $Objects,
-                                )
-                            );
-                            Yii::app()->end();
-                             
-                        }
-		}
+            $model = new Demands;
+            
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+            
+            $model->setScenario('Insert');
+            $this->title = 'Создание новой заявки';
+            $ReadOnly = false;
+            
+            if(isset($_POST['Demands']))
+            {
+                $model->attributes=$_POST['Demands'];
+                $model->EmplCreate = Yii::app()->user->Employee_id;
+                $model->User = Yii::app()->user->Employee_id;
+                
+                if ($model->validate()) {
+                    $Result = $model->insert();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $Result['Demand_id'];
+                    echo json_encode($ObjectResult);
+                    return;
+                }
                 else
                 {
+                    $ObjectsGroup = new ObjectsGroup();
+                    $ObjectsGroup->getModelPk($model->ObjectGr_id);
+                    $Objects = new ListObjects();
+                    $Objects->getModelPk($model->Object_id);
 
-                    if (isset($_GET["Object_id"]))
-                    {
-                        $Object = new ListObjects();
-                        
-                        if (isset($_GET["ContrS_id"]))
-                            if ($_GET["ContrS_id"] !== "null")
-                                $Result = $Object->Find(array('o.Object_id' => $_GET["Object_id"], 'c.ContrS_id' => $_GET["ContrS_id"]));
-                            else
-                                $Result = $Object->Find(array('o.Object_id' => $_GET["Object_id"]));
-                        else
-                            $Result = $Object->Find(array('o.Object_id' => $_GET["Object_id"]));
-                        $Result = $Result[0];
-
-                        $model->Object_id = $Result['Object_id'];
-                        $model->ObjectGr_id = $Result['ObjectGr_id'];
-                        $model->ContrS_id = $Result['ContrS_id'];
-                        $model->Address = $Result['Addr'];
-                        $model->Master = $Result['Master'];
-                        $model->MasterName = $Result['MasterName'];
-                        $model->ServiceType = $Result['ServiceType'];        
-                        $model->DateReg = date("Y-m-d H:i:s");
-                        
-                    }
+                    $ObjectResult['html'] = $this->renderPartial('create', array(
+                            'model'=>$model,
+                            'ObjectsGroup' => $ObjectsGroup,
+                            'ReadOnly' => $ReadOnly,
+                            'Objects' => $Objects,
+                        ), true);
+                    echo json_encode($ObjectResult);
+                    return;
                 }
-                $ObjectsGroup = new ObjectsGroup();
-                $ObjectsGroup->getModelPk($model->ObjectGr_id);
-                
-                $Objects = new ListObjects();
-                $Objects->getModelPk($model->Object_id);
-                
-                $this->render('create', array(
-			'model'=>$model,
-                        'ObjectsGroup' => $ObjectsGroup,
-                        'ReadOnly' => $ReadOnly,
-                        'Objects' => $Objects,
-			)
-		);
+                return;
+            }
+            
+            if (isset($_GET["Object_id"]))
+            {
+                $Object = new ListObjects();
+                if (isset($_GET["ContrS_id"]))
+                    if ($_GET["ContrS_id"] !== "null")
+                        $Result = $Object->Find(array('o.Object_id' => $_GET["Object_id"], 'c.ContrS_id' => $_GET["ContrS_id"]));
+                    else
+                        $Result = $Object->Find(array('o.Object_id' => $_GET["Object_id"]));
+                else
+                    $Result = $Object->Find(array('o.Object_id' => $_GET["Object_id"]));
+                $Result = $Result[0];
+
+                $model->Object_id = $Result['Object_id'];
+                $model->ObjectGr_id = $Result['ObjectGr_id'];
+                $model->ContrS_id = $Result['ContrS_id'];
+                $model->Address = $Result['Addr'];
+                $model->Master = $Result['Master'];
+                $model->MasterName = $Result['MasterName'];
+                $model->ServiceType = $Result['ServiceType'];        
+                $model->DateReg = date("Y-m-d H:i:s");
+            
+
+
+                }
+            
+            $ObjectsGroup = new ObjectsGroup();
+            $ObjectsGroup->getModelPk($model->ObjectGr_id);
+
+            $Objects = new ListObjects();
+            $Objects->getModelPk($model->Object_id);
+
+            $this->render('create', array(
+                    'model'=>$model,
+                    'ObjectsGroup' => $ObjectsGroup,
+                    'ReadOnly' => $ReadOnly,
+                    'Objects' => $Objects,
+                    )
+            );
 	}
         
         public function actionView($Demand_id){
@@ -269,6 +266,11 @@ class DemandsController extends Controller
 
 	public function actionUpdate($id, $Exec = false, $ToMaster = false) {
 		$this->title = 'Редактирование заявки №' . $id;
+                $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
                 
                 $Scenario = 'Update';
                 
@@ -286,40 +288,56 @@ class DemandsController extends Controller
                 
 		if(isset($_POST['Demands']))
 		{
-                        $model->attributes=$_POST['Demands'];
-                        $model->Demand_id = $id;
-			$model->EmplChange = Yii::app()->user->Employee_id;
-                        
-                        if (!is_null($model->DateExec) && ($model->DateExec !== '')) 
-                            $Scenario = 'Exec';
-                        
-                        $model->setScenario($Scenario);
-                        
-			if ($model->validate()) {
-                            $model->update();
-                            $this->redirect(Yii::app()->createUrl('Demands/View', array(
-                                'Demand_id' => $model->Demand_id,
-                            )));
+                    $model->attributes=$_POST['Demands'];
+                    $model->Demand_id = $id;
+                    $model->EmplChange = Yii::app()->user->Employee_id;
+
+                    if (!is_null($model->DateExec) && ($model->DateExec !== '')) 
+                        $Scenario = 'Exec';
+
+                    $model->setScenario($Scenario);
+
+                    if ($model->validate()) {
+                        $model->update();
+                        $ObjectResult['result'] = 1;
+                        $ObjectResult['id'] = $model->Demand_id;
+                        echo json_encode($ObjectResult);
+                        return;
+                    } else {
+                        $ObjectsGroup = new ObjectsGroup();
+                        if ($model->ObjectGr_id !== null) {
+                            $ObjectsGroup->getModelPk($model->ObjectGr_id);
                         }
-                         
+                        $Objects = new ListObjects();
+                        $Objects->getModelPk($model->Object_id);
+                
+                        $ObjectResult['html'] = $this->renderPartial('create', array(
+                            'model'=>$model,
+                            'ObjectsGroup' => $ObjectsGroup,
+                            'ReadOnly' => $ReadOnly,
+                            'Objects' => $Objects,
+                        ), true);
+                        echo json_encode($ObjectResult);
+                        return;
+                    }
+                    return;     
 		}
-                else
-                {
-                    $model->getmodelPk($id);
-                    
-                    if ($Exec) {
-                        $model->EmplChange = Yii::app()->user->Employee_id;
-                        $model->DateExec = date('d.m.Y H:i');
-                        $model->setScenario('Exec');
-                        $model->validate();
-                    }
-                    
-                    if ($ToMaster) {
-                        $model->EmplChange = Yii::app()->user->Employee_id;
-                        $model->DateMaster = date('d.m.Y H:i');
-                        $model->validate();
-                    }
+                
+                $model->getmodelPk($id);
+
+                if ($Exec) {
+                    $model->EmplChange = Yii::app()->user->Employee_id;
+                    $model->DateExec = date('d.m.Y H:i');
+                    $model->setScenario('Exec');
+                    $model->validate();
                 }
+
+                if ($ToMaster) {
+                    $model->EmplChange = Yii::app()->user->Employee_id;
+                    $model->DateMaster = date('d.m.Y H:i');
+                    $model->validate();
+                }
+                
                 
                 $ObjectsGroup = new ObjectsGroup();
                 if ($model->ObjectGr_id !== null) {

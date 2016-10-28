@@ -116,6 +116,7 @@
                     $("#edComment").on('keydown', function(event){
                         if (event.keyCode == 13)
                             Comment();
+                        return true;
                     });
                     $("#btnSend").on('click', function(){
                         Comment();
@@ -173,7 +174,7 @@
             }
         };
         
-        $('#Tabs').jqxTabs({ width: '100%', height: '100%', initTabContent: initWidgets});
+        $('#Tabs').jqxTabs({ width: '100%', height: '100%', keyboardNavigation: false, initTabContent: initWidgets});
         
         
         

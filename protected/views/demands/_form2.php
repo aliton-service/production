@@ -267,7 +267,34 @@
         });
         
         $("#btnSave").on('click', function () {
-            $("#Demands").submit();
+            //$("#Demands").submit();
+            $("#btnSave").jqxButton({disabled: true});
+            var State = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+            var url = '';
+            if (State)
+                url = <?php echo json_encode(Yii::app()->createUrl('Demands/Create')) ?>;
+            else
+                url = <?php echo json_encode(Yii::app()->createUrl('Demands/Update')) ?> + '&id=' + $("#edDemand_id").val();
+            $.ajax({
+                url: url,
+                type: 'POST',
+                async: false,
+                data: $("#Demands").serialize(),
+                success: function(Res) {
+                    
+                    Res = JSON.parse(Res);
+                    if (Res.result === 1) {
+                        document.location = <?php echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + Res.id;
+                    } else {
+                        $("#body-form").html(Res.html);
+                    }
+                    $("#btnSave").jqxButton({disabled: false});
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], 'Попробуйте повторить попытку позже');
+                    $("#btnSave").jqxButton({disabled: false});
+                }
+            });
         });
         
         $("#btnClient").on('click', function(){
@@ -287,6 +314,8 @@
         margin-right: 10px;
     }
 </style>
+
+<div id="body-form">
 
 <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -417,3 +446,4 @@
 
 <?php $this->endWidget(); ?>
 
+</div>
