@@ -176,27 +176,29 @@ class WhActsController extends Controller
     }
     
     public function actionAddTreb($docm_id = null) {
-        $this->title = 'Просмотр акта';
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
         
-        if (isset($_POST['Treb'])) {
-            print_r($_POST['Treb']);
-            
-            $StoredProc = new StoredProc();
-            $StoredProc->ProcedureName = 'INSERT_ActDocuments';
-            $StoredProc->CheckParam = true;
-            $StoredProc->ParametersRefresh();
-
+        if (isset($_POST['Docm_id']) && isset($_POST['Act_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'INSERT_ActDocuments';
+            $sp->ParametersRefresh();
             $StoredProc->Parameters[0]['Value'] = null;
-            $StoredProc->Parameters[1]['Value'] = $_POST['Treb']['act_id'];
-            $StoredProc->Parameters[2]['Value'] = $_POST['Treb']['docm_id'];
+            $sp->Parameters[1]['Value'] = $_POST['Act_id'];
+            $sp->Parameters[2]['Value'] = $_POST['Docm_id'];
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
             
-            $StoredProc->Execute();
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
         }
-        
-        $model = new WhActs_v();
-        $model->getModelPk($docm_id);
-        
-        $this->redirect($this->createUrl('WhActs/view', array('docm_id' => $docm_id)));
+
+        echo json_encode($ObjectResult);
     }
     
     public function actionDelete($docm_id = null) {

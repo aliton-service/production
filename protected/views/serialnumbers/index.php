@@ -50,7 +50,11 @@
         }));
         
         $('#btnCloseSerialNumber').on('click', function(){
-            $('#btnRefreshDetails').click();
+            if ($('#btnRefreshDetails').length > 0)
+                $('#btnRefreshDetails').click();
+            if ($('#btnRefreshEquips').length > 0)
+                $('#btnRefreshEquips').click();
+            
             $('#WHDocumentsDialog').jqxWindow('close');
             
         });

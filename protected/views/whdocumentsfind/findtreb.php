@@ -49,7 +49,10 @@
         $("#edFindNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
         
         $('#btnFindSelectTreb').on('click', function(){
-            WHDoc2Edit.SelectDoc(CurrentRowDataAll.docm_id);
+            if (typeof(WHDoc2Edit) != 'undefined')
+                WHDoc2Edit.SelectDoc(CurrentRowDataAll.docm_id);
+            if (typeof(Acts) != 'undefined')
+                Acts.SelectTreb(CurrentRowDataAll.docm_id);
             $('#FindTrebsDialog').jqxWindow('close');
         });
         $('#btnFindClose').on('click', function(){
