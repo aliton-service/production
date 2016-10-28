@@ -1,533 +1,175 @@
-<?php
-    $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'WhActs',
+<script>
+    $(document).ready(function () {
+        Acts = {
+            Docm_id: <?php echo json_encode($model->docm_id); ?>,
+            Date: Aliton.DateConvertToJs(<?php echo json_encode($model->date); ?>),
+            Achs_id: <?php echo json_encode($model->achs_id); ?>,
+            Object_id: <?php echo json_encode($model->objc_id); ?>,
+            Address: <?php echo json_encode($model->Address); ?>,
+            Client: <?php echo json_encode($model->org_name); ?>,
+            Service: <?php echo json_encode($model->ServiceType); ?>,
+            DcknName: <?php echo json_encode($model->dckn_name); ?>,
+            SignedYn: Boolean(Number(<?php echo json_encode($model->signed_yn); ?>)),
+            CstmName: <?php echo json_encode($model->cstm_name); ?>,
+            Note: <?php echo json_encode($model->note); ?>,
+            Sum: <?php echo json_encode($model->sum); ?>,
+            PaymentType: <?php echo json_encode($model->pmtp_name); ?>,
+            Bill: <?php echo json_encode($model->bill); ?>,
+            DatePay: Aliton.DateConvertToJs(<?php echo json_encode($model->date_payment); ?>),
+            NotePayment: <?php echo json_encode($model->note_payment); ?>,
+            WorkType: <?php echo json_encode($model->wrtp_name); ?>,
+            JobType: <?php echo json_encode($model->wrtp_name); ?>,
+            WorkList: <?php echo json_encode($model->work_list); ?>,
+            Juridical: <?php echo json_encode($model->work_list); ?>,
+            UserCreate: <?php echo json_encode($model->UserCreate); ?>,
+            edMaster: <?php echo json_encode($model->master); ?>,
+        };
+
+        $("#edAddressEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 500, minLength: 1, value: Acts.Address}));
+        $("#edClientEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 250, minLength: 1, value: Acts.Client}));
+        $("#edServiceEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 182, minLength: 1, value: Acts.Service}));
+        $("#edDcknNameEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.DcknName}));
+        $("#edSignedYnEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Acts.SignedYn}));
+        $("#edCstmNameEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.CstmName}));
+        $('#edNoteEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
+        $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
+        $("#edPaymentTypeEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.PaymentType}));
+        $("#edBillEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.Bill}));
+        $("#edDatePayEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts.DatePay, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $('#edNotePaymentEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 32, width: 'calc(100% - 2px)', minLength: 1}));
+        $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edWorkTypeEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.WorkType}));
+        $("#edJobTypeEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.JobType}));
+        $('#edWorkListEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 32, width: 'calc(100% - 2px)', minLength: 1}));
+        $("#edJuridicalEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.Juridical}));
+        $("#edUserCreateEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
+        $("#edMasterEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
+        $('#btnSave').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        if (Acts.Note != null) $('#edNote').val(Acts.Note);
+        if (Acts.NotePayment != null) $('#edNotePayment').val(Acts.NotePayment);
+        if (Acts.WorkList != null) $('#edWorkList').val(Acts.WorkList);
+    });
+</script>
+
+<?php 
+    $form=$this->beginWidget('CActiveForm', array(
+        'id'=>'WhActs',
         'htmlOptions'=>array(
-                'class'=>'form-inline'
-                ),
-        'enableAjaxValidation' => true,
-        'enableClientValidation' => true,
+            'class'=>'form-inline'
+        ),
     )); 
-
+    
+    
 ?>
 
-<?php
-    $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-        'id' => 'edDocm_id',
-        'Width' => 200,
-        'Type' => 'String',
-        'Name' => 'WhActs[docm_id]',
-        'Value' => $model->docm_id,
-        'ReadOnly' => true,
-        'Visible' => false
-    ));
-?>
+<input type="hidden" name="CostCalculations[calc_id]" value="<?php echo $model->calc_id; ?>"/>
 
-<div style="float: left">
-<div style="float: left; border: 1px solid; padding: 6px">
-   <div>
-        <div style="float: left; width: 50px">Адрес</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbObjects',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbObjectsGrid',
-                    'ModelName' => 'ListObjects',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 400,
-                    'Name' => 'WhActs[objc_id]',
-                    'PopupWidth' => 500,
-                    'KeyField' => 'Object_id',
-                    'KeyValue' => $model->objc_id,
-                    'FieldName' => 'Addr',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Condition' => "a.Addr like ':Value%'",
-                    ),
-                    'OnAfterChange' => 'if (alcomboboxajaxSettings["CmbObjects"].CurrentRow !== null) { '
-                    . '                     $("#CmbOrganizations").alcomboboxajax("SetValue", alcomboboxajaxSettings["CmbObjects"].CurrentRow["PropForm_id"], true);'
-                    . '                     $("#edServiceType").aledit("SetValue", alcomboboxajaxSettings["CmbObjects"].CurrentRow["ServiceType"]);'
-                    . '                     $("#CmbJuridical").alcomboboxajax("SetValue", alcomboboxajaxSettings["CmbObjects"].CurrentRow["jrdc_id"]);'
-                    . '                }'
-                                       . ' ',
-                    'Columns' => array(
-                        'Addr' => array(
-                            'Name' => 'Адрес',
-                            'FieldName' => 'Addr',
-                            'Width' => 300,
-                            'Filter' => array(
-                                'Condition' => "a.Addr like ':Value%'",
-                            ),
-
-                        ),
-                    ),
-                ));
-            ?>
-        </div> 
+<div class="al-data-nb" style="width: 900px; height: 230px;">
+    <div class="al-row-column">
+        <div class="al-row">
+            <div class="al-data" style="width: 552px">
+                <!--<div class="al-row-label"><b>Объект</b></div>-->
+                <div class="al-row">
+                    <div class="al-row-column">Адрес</div>
+                    <div class="al-row-column"><input id="edAddressEdit" /></div>
+                </div>
+                <div style="clear: both"></div>
+                <div style="margin-top: 4px;">
+                    <div class="row-column">Клиент</div>
+                    <div class="row-column"><input id="edClientEdit" /></div>
+                    <div class="row-column">Тариф</div>
+                    <div class="row-column"><input id="edServiceEdit" /></div>
+                </div>
+                
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        <div class="al-row">
+            <div class="al-data" style="width: 552px">
+                <!--<div class="al-row-label"><b>Документ</b></div>-->
+                <div class="al-row">
+                    <div class="al-row-column">Тип</div>
+                    <div class="al-row-column"><input id="edDcknNameEdit" /></div>
+                    <div class="al-row-column"><div id="edSignedYnEdit">Подписан</div></div>
+                    <div class="al-row-column"><input id="edCstmNameEdit" /></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-label">Примечание</div>
+                    <div class="al-row"><textarea id="edNoteEdit"></textarea></div>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
     </div>
-    <div style="float: left; margin-top: 6px">
-        <div style="float: left; width: 50px">Клиент</div>
-        <div style="float: left;">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbOrganizations',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbOrganizations',
-                    'ModelName' => 'OrganizationsV',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 300,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'Form_id',
-                    'FieldName' => 'FullName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "p.FullName like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'FullName' => array(
-                            'Name' => 'Клиент',
-                            'FieldName' => 'FullName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div> 
-    </div>
-    <div style="float: left; margin-left: 6px; margin-top: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                'id' => 'edServiceType',
-                'Width' => 200,
-                'Type' => 'String',
-                'Value' => $model->ServiceType,
-                'ReadOnly' => true,
-            ));
-        ?>
+    <div class="al-row-column">
+        <div class="al-row">
+            <div class="al-data" style="width: 298px; height: 200px;">
+                <!--<div class="al-row-label"><b>Оплата</b></div>-->
+                <div class="al-row">
+                    <div class="al-row-column">Сумма по акту</div>
+                    <div class="al-row-column"><div id="edSumEdit"></div></div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column">Форма оплаты</div>
+                    <div class="al-row-column"><input id="edPaymentTypeEdit" /></div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column">Счет</div>
+                    <div class="al-row-column"><input id="edBillEdit" /></div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column">Дата оплаты</div>
+                    <div class="al-row-column"><div id="edDatePayEdit"></div></div>
+                    <div style="clear: both"></div>
+                </div>
+               <div class="al-row">
+                    <div class="al-row-label">Примечание</div>
+                    <div class="al-row"><textarea id="edNotePaymentEdit"></textarea></div>
+                    <div style="clear: both"></div>
+                </div> 
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        <div style="clear: both"></div>
     </div>
 </div>
-    
 <div style="clear: both"></div>
-<div style="margin-top: 12px; padding: 6px; float: left; border: 1px solid">
-    <div style="float: left">
-        <div style="float: left; width: 50px">Вид</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbWhDckn',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbWhDckn',
-                    'ModelName' => 'WHDocKinds',
-                    'Name' => 'WhActs[dckn_id]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'dckn_id',
-                    'KeyValue' => $model->dckn_id,
-                    'FieldName' => 'name',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "k.name like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'name' => array(
-                            'Name' => 'Вид',
-                            'FieldName' => 'name',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div> 
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.checkbox.alcheckbox', array(
-                    'id' => 'edSignedYn',
-                    'Label' => 'Подписан',
-                    'Checked' => $model->signed_yn,
-                ));
-            ?>
-        </div> 
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbCustomer',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbCustomer',
-                    'ModelName' => 'Customers',
-                    'Name' => 'WhActs[cstm_id]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 250,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'Customer_Id',
-                    'KeyValue' => $model->cstm_id,
-                    'FieldName' => 'CustomerName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "c.CustomerName like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'name' => array(
-                            'Name' => 'Должность',
-                            'FieldName' => 'CustomerName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-            
-        </div> 
-    </div>
-    <div style="clear: both"></div>
-    
-    <div >
-        <div style="width: 50px">Примечание</div>
-        <div style="">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-                    'id' => 'edNote',
-                    'Width' => 558,
-                    'Height' => 60,
-                    'Name' => 'WhActs[note]',
-                    'Value' => $model->note,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div> 
-    </div>
-</div>
-</div>
-
-<div style="margin-left: 6px; float: left; border: 1px solid; padding: 6px">
-    <div style="float: left">
-        <div style="float: left; width: 100px">Сумма по акту</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edSumAct',
-                    'Width' => 150,
-                    'Type' => 'String',
-                    'Name' => 'WhActs[sum]',
-                    'Value' => $model->sum,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div> 
-    </div>
-    <div style="clear: both"></div>
-    <div style="margin-top: 6px">
-        <div style="float: left; width: 100px">Форма оплаты</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbPaymentType',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbPaymentType',
-                    'ModelName' => 'PaymentTypes',
-                    'Name' => 'WhActs[pmtp_id]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'PaymentType_Id',
-                    'KeyValue' => $model->pmtp_id,
-                    'FieldName' => 'PaymentTypeName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "pt.PaymentTypeName like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'PaymentTypeName' => array(
-                            'Name' => 'Вид оплаты',
-                            'FieldName' => 'PaymentTypeName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
+<div class="al-data-nb" style="width: 900px; height: 146px;">
+    <div class="al-data">
+        <!--<div class="al-row-label"><b>Выполненные работы</b></div>-->
+        <div class="al-row">
+            <div class="al-row-column">Дата выпонения работ</div>
+            <div class="al-row-column"><div id="edDateEdit"></div></div>
+            <div class="al-row-column">Тип работ</div>
+            <div class="al-row-column"><input id="edWorkTypeEdit" /></div>
+            <div class="al-row-column">Вид работ</div>
+            <div class="al-row-column"><input id="edJobTypeEdit" /></div>
+            <div style="clear: both"></div>
         </div>
-        <div><?php echo $form->error($model, 'pmtp_id'); ?></div>
-    </div>
-    <div style="clear: both"></div>
-    <div style="margin-top: 6px">
-        <div style="float: left; width: 100px">Счет</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edBill',
-                    'Width' => 150,
-                    'Type' => 'String',
-                    'Name' => 'WhActs[bill]',
-                    'Value' => $model->bill,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div> 
-    </div>
-    <div style="clear: both"></div>
-    <div style="margin-top: 6px">
-        <div style="float: left; width: 100px">Дата оплаты</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-                    'id' => 'edDatePayment',
-                    'Name' => 'WhActs[date_payment]',
-                    'Width' => 160,
-                    'Value' => null,
-                    'Value' => DateTimeManager::YiiDateToAliton($model->date_payment),
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div> 
-    </div>
-    <div style="clear: both"></div>
-    <div style="float: left;">
-        <div style="width: 50px">Примечание</div>
-        <div style="">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-                    'id' => 'edPaymentNote',
-                    'Width' => 322,
-                    'Height' => 50,
-                    'Name' => 'WhActs[note_payment]',
-                    'Value' => $model->note_payment,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div> 
-    </div>
-</div>
-<div style="clear: both;"></div>
-
-<div style="margin-top: 12px; border: 1px solid; float: left; padding: 6px">
-    <div style="margin-top: 6px; float: left">
-        <div style="float: left; width: 160px">Дата выполнения работ</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.dateedit.aldateedit', array(
-                    'id' => 'edDate',
-                    'Name' => '',
-                    'Width' => 160,
-                    'Value' => null,
-                    'Name' => 'WhActs[date]',
-                    'Value' => DateTimeManager::YiiDateToAliton($model->date),
-                    'ReadOnly' => false,
-                ));
-            ?>
+        <div class="al-row-label">Перечень работ</div>
+        <div class="al-row"><textarea id="edWorkListEdit"></textarea></div>
+        <div class="al-row">
+            <div class="al-row-column">Юр. лицо</div>
+            <div class="al-row-column"><input id="edJuridicalEdit" /></div>
+            <div class="al-row-column">Создал</div>
+            <div class="al-row-column"><input id="edUserCreateEdit" /></div>
+            <div class="al-row-column">Исполнитель</div>
+            <div class="al-row-column"><input id="edMasterEdit" /></div>
         </div>
-        <div><?php echo $form->error($model, 'date'); ?></div>
-    </div>
-    <div style="margin-top: 6px; float: left; margin-left: 6px">
-        <div style="float: left; width: 100px">Тип работ</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbWorkType',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbWorkType',
-                    'ModelName' => 'WorkTypes',
-                    'Name' => 'WhActs[wrtp_id]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'wrtp_id',
-                    'KeyValue' => $model->wrtp_id,
-                    'FieldName' => 'name',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "wt.name like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'Name' => array(
-                            'Name' => 'Тип работы',
-                            'FieldName' => 'name',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div> 
-    </div>
-    <div style="margin-top: 6px; float: left; margin-left: 6px">
-        <div style="float: left; width: 100px">Вид работ</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbJobType',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbJobType',
-                    'ModelName' => 'JobTypes',
-                    'Name' => 'WhActs[jbtp_id]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'JobType_Id',
-                    'KeyValue' => $model->jbtp_id,
-                    'FieldName' => 'JobType_Name',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "jt.JobType_Name like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'JobType_Name' => array(
-                            'Name' => 'Вид работы',
-                            'FieldName' => 'JobType_Name',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-            
-        </div> 
-    </div>
-    <div style="clear: both;"></div>
-    <div style="float: left;">
-        <div style="width: 150px">Перечень работ</div>
-        <div style="">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.memo.almemo', array(
-                    'id' => 'edWorkList',
-                    'Width' => 900,
-                    'Height' => 100,
-                    'Name' => 'WhActs[work_list]',
-                    'Value' => $model->work_list,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div> 
-    </div>
-    <div style="clear: both;"></div>
-    <div style="float: left; margin-top: 6px">
-        <div style="width: 70px; float: left">Юр. лицо</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbJuridical',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbJuridical',
-                    'ModelName' => 'Juridicals',
-                    'Name' => 'WhActs[jrdc_id]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'Jrdc_Id',
-                    'KeyValue' => $model->jrdc_id,
-                    'FieldName' => 'JuridicalPerson',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "jur.JuridicalPerson like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'JuridicalPerson' => array(
-                            'Name' => 'Юр. лицо',
-                            'FieldName' => 'JuridicalPerson',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div><?php echo $form->error($model, 'jrdc_id'); ?></div>
-    </div>
-    <div style="float: left; margin-top: 6px; margin-left: 6px">
-        <div style="width: 318px; float: left"></div>
-        <div style="float: left">
-            
-        </div> 
-    </div>
-    <div style="float: left; margin-top: 6px; margin-left: 6px">
-        <div style="width: 100px; float: left">Исполнитель</div>
-        <div style="float: left;">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbMaster',
-                    'Stretch' => true,
-                    'Key' => 'WhActs_Update_CmbMaster',
-                    'ModelName' => 'Employees',
-                    'Name' => 'WhActs[dmnd_empl_id]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 250,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'Employee_id',
-                    'KeyValue' => $model->dmnd_empl_id,
-                    'FieldName' => 'ShortName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "e.EmployeeName like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'EmployeeName' => array(
-                            'Name' => 'ФИО',
-                            'FieldName' => 'EmployeeName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-            <div><?php echo $form->error($model, 'dmnd_empl_id'); ?></div>
-        </div> 
     </div>
 </div>
-<div style="clear: both;"></div>
-<div>
-    <div style="float: left; margin-top: 6px;">
-        <div style="float: left;">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                    'id' => 'EditWhAct',
-                    'Width' => 124,
-                    'Height' => 30,
-                    'Text' => 'Сохранить',
-                    'FormName' => 'WhActs',
-                    'Type' => 'Form',
-                ));
-            ?>
-        </div> 
+<div style="clear: both"></div>
+<div class="al-data-nb" style="width: 100%; height: 38px;">
+    <div class="al-row">
+        <div class="al-row-column"><input type="button" id="btnSave" value="Сохранить"/></div>
+        <div class="al-row-column" style="float: right"><input type="button" id="btnCancel" value="Отмена"/></div>
+        <div style="clear: both"></div>
     </div>
-    
-</div>
-<div style="clear: both;"></div>
-<div style="margin-top: 12px;">
-    
 </div>
 
 <?php $this->endWidget(); ?>
-
-
