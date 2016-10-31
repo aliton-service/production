@@ -69,7 +69,7 @@ class ActEquips_v extends MainFormModel
                         isNull(d.fact_quant, d.docm_quant) fact_quant,
                         d.used,
                         isNull(d.acdc_id, d.dadt_id) snf, 
-                        (select case when min(s.SN) is null then '()' else min(s.SN) end from SerialNumbers s where s.dadt_id = d.dadt_id) as SN,
+                        (select case when min(s.SN) is null then '()' else min(s.SN) end from SerialNumbers s where s.empldel is null and s.dadt_id = d.dadt_id) as SN,
                         d.price,
                         d.sum,
                         d.ToProduction,

@@ -19,6 +19,10 @@ class CostCalcDocumentsController extends Controller
                 'actions'=>array('index', 'view'),
                 'roles'=>array('ViewCostCalcDocuments'),
             ),
+            array('allow', 
+                    'actions'=>array('delete'),
+                    'roles'=>array('DeleteCostCalcDocuments'),
+            ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
@@ -39,6 +43,21 @@ class CostCalcDocumentsController extends Controller
                 'Rows' => $Res
             );
             echo json_encode($Data);
+        }
+    }
+
+    public function actionDelete() 
+    {
+        if (isset($_POST['docm_id']) && isset($_POST['DocType_id']) && $_POST['DocType_id'] === '6') {
+            
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'DELETE_WHDocuments';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['docm_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $sp->Execute();
+            echo '1';
         }
     }
 }

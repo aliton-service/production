@@ -9,7 +9,9 @@
     src: url('../fonts/Roboto-Regular.ttf');
 }
 
-
+.jqx-calendar-month-container:last-child table{
+    width: 10px;
+}
 html, body {
     height: 100%;
     margin: 0;
@@ -101,7 +103,7 @@ body {
 }
 
 .filter-btn__wrapper{
-    min-width: 250px;
+    min-width: 270px;
     height: 30px;
     background-color: #2d7d57;
     border-radius: 3px 0 0 3px;
@@ -155,7 +157,7 @@ input, textarea {
 .page-content__filters{
     display: none;
     overflow: auto;
-    min-width: 210px;
+    min-width: 230px;
     padding: 10px 20px 20px;
     border-radius: 3px 0 0 3px;
     background-color: #236d4a;
@@ -169,7 +171,7 @@ input, textarea {
 }
 
 .filter-row{
-    margin: 15px 8px 0 0;
+    margin: 3px 3px 0 0;
 }
 
 .filter-row-column{
@@ -178,11 +180,11 @@ input, textarea {
 }
 
 .filter-input{
-    margin-top: 5px;
+    margin-top: 2px;
 }
 
 .filter-text{
-    margin-top: 5px;
+    margin-top: 3px;
     line-height: 1.6em;
 }
 

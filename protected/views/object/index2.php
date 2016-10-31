@@ -254,6 +254,10 @@
         background-color: #2e7d58 !important;
     }
     
+    .jqx-calendar-month-container:last-child {
+        height: 10px !important;
+    }
+    
 </style>
 
 

@@ -35,6 +35,10 @@ class WHBuhActsController extends Controller
                 'actions'=>array('accept'),
                 'roles'=>array('AcceptWHBuhActs'),
             ),
+            array('allow',
+                'actions'=>array('cancelAccept'),
+                'roles'=>array('CancelAcceptWHBuhActs'),
+            ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),

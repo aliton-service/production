@@ -29,7 +29,7 @@
         $("#org_nameWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
         
         var DataAddresses = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {}));
-        $("#AddressWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddresses, width: 350, displayMember: "Addr", valueMember: "Object_id" }));
+        $("#AddressWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddresses, width: 350, displayMember: "Addr", valueMember: "Object_id", disabled: true }));
         $("#AddressWHBA2").on('bindingComplete', function (event) {
             if (WHBuhActs2.objc_id !== '') $("#AddressWHBA2").jqxComboBox('val', WHBuhActs2.objc_id);
             $("#btnOk").jqxButton({disabled: false});
@@ -143,8 +143,10 @@
     )); 
 ?>
 
+
 <input type="hidden" name="WHBuhActs[docm_id]" value="<?php echo $model->docm_id; ?>" />
 <input type="hidden" name="WHBuhActs[objc_id]" value="<?php echo $model->objc_id; ?>" />
+<input type="hidden" name="WHBuhActs[calc_id]" value="<?php echo $model->calc_id; ?>" />
 
 <div class="row" style="margin-top: 10px;">
     <div class="row-column">Номер: <input type="text" id="numberWHBA2" name="WHBuhActs[number]"></div>
@@ -153,7 +155,7 @@
 </div>
 
 <div class="row" style="margin-top: 10px;">
-    <div class="row-column">Клиент: <input readonly type="text" id="org_nameWHBA2"></div>
+    <div class="row-column">Клиент: <input readonly type="text" id="org_nameWHBA2" name="WHBuhActs[org_name]"></div>
 </div>
 
 <div class="row" style="margin-top: 10px;">

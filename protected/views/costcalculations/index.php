@@ -444,7 +444,8 @@
                             objc_id: CostCalculations.Object_id,
                             jrdc_id: CostCalculations.Jrdc_id,
                             wrtp_id: CostCalculations.wrtp_id,
-                            sum: CostCalcDetails.SumHighFull  
+                            calc_id: CostCalculations.calc_id,
+                            sum: CostCalcDetails.SumHighFull,
                         }
                     },
                     success: function(Res) {
@@ -1100,12 +1101,6 @@
                         },
                     });
                     
-                    $("#CostCalcDocumentsGrid").on('rowselect', function (event) {
-                        CurrentRowDataCCD = $('#CostCalcDocumentsGrid').jqxGrid('getrowdata', event.args.rowindex);
-                        CheckButtonCCD();
-                        console.log(CurrentRowDataCCD);
-                    });
-                    
                     $('#CostCalcDocumentsGrid').on('rowdoubleclick', function (event) { 
                         $("#MoreInfoCostCalcDocuments").click();
                     });
@@ -1146,6 +1141,17 @@
                         })
                     );
                     
+                    
+                    $("#CostCalcDocumentsGrid").on('rowselect', function (event) {
+                        CurrentRowDataCCD = $('#CostCalcDocumentsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                        CheckButtonCCD();
+                        console.log(CurrentRowDataCCD);
+                        if (CurrentRowDataCCD.DocType_id == 6) {
+                            $('#DelCostCalcDocuments').jqxButton({ disabled: false })
+                        } else {
+                            $('#DelCostCalcDocuments').jqxButton({ disabled: true })
+                        }
+                    });
                     $('#MoreInfoCostCalcDocuments').on('click', function(){
                         if (CurrentRowDataCCD != undefined) {
                             var Type = parseInt(CurrentRowDataCCD.DocType_id);
@@ -1165,7 +1171,23 @@
                     });
 
                     $('#DelCostCalcDocuments').on('click', function(){
-                        
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('CostCalcDocuments/Delete')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                docm_id: CurrentRowDataCCD.Docid,
+                                DocType_id: CurrentRowDataCCD.DocType_id
+                            },
+                            success: function(Res) {
+                                var RowIndex = $('#CostCalcDocumentsGrid').jqxGrid('getselectedrowindex');
+                                var Val = $('#CostCalcDocumentsGrid').jqxGrid('getcellvalue', RowIndex, "Docid");
+                                Aliton.SelectRowById('Docid', Val, '#CostCalcDocumentsGrid', true);
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
                     });
 
                     $('#RefreshCostCalcDocuments').on('click', function(){
