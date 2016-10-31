@@ -167,6 +167,8 @@
         $('#DemandsGrid').on('rowdoubleclick', function (event) { 
             $('#btnDemView').click();
         });
+        
+        $('#Tabs').css({display: 'block'});
     });
     
     
@@ -198,7 +200,7 @@
 </div>    
 <div style="clear: both;"></div>
 <div style="float: left; width: 100%; height: 200px">
-    <div id='Tabs'>
+    <div id='Tabs' style="display: none">
         <ul>
             <li style="margin-left: 30px;">
                 <div style="height: 20px; margin-top: 5px;">

@@ -307,7 +307,30 @@
         if (Acts.Note != null) $('#edNote').val(Acts.Note);
         if (Acts.NotePayment != null) $('#edNotePayment').val(Acts.NotePayment);
         if (Acts.WorkList != null) $('#edWorkList').val(Acts.WorkList);
+        
+        
+        $('#btnEdit').on('click', function(){
+            if ($('#btnEdit').jqxButton('disabled')) return;
+            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 470, width: 920, position: 'center' }));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WhActs/Update')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    docm_id: Acts.Docm_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyWHDocumentsDialog").html(Res.html);
+                    $('#WHDocumentsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
             
+        
     });
 </script>
 <style>
@@ -505,7 +528,6 @@
             </div>
         </div>
     </div>
-    
 </div>
 <div id="WHDocumentsDialog" style="display: none;">
     <div id="WHDocumentsDialogHeader">

@@ -82,56 +82,58 @@ class WhActsController extends Controller
     }
     
     public function actionInsert() {
-        $this->title = 'Создание акта';
-        
         $model = new WhActs_v();
-        $model->setScenario('Insert');
         
-        if(isset($_POST['WhActs']))
-        {
-            $model->attributes=$_POST['WhActs'];
-            
-            $model->EmplCreate = Yii::app()->user->Employee_id;
-
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        if (isset($_POST['WHActs'])) {
+            $model->attributes = $_POST['WHActs'];
             if ($model->validate()) {
-                $model->insert();
-                $this->redirect(Yii::app()->createUrl('WhActs/index'));
-            }
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $Res['docm_id'];
+                echo json_encode($ObjectResult);
+                return;
+            } 
         }
         
-        $this->render('insert', array(
-                'model'=>$model,
-            )
-        );
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
     }
     
-    public function actionUpdate($docm_id) {
-        $this->title = 'Редактирование акта';
-        
+    public function actionUpdate() {
         $model = new WhActs_v();
-        $model->setScenario('Update');
         
-        if ($docm_id == null)
-                throw new CHttpException(404, 'Не выбрана запись.');
-        
-        if(isset($_POST['WhActs']))
-        {
-            $model->attributes=$_POST['WhActs'];
-            
-            $model->EmplChange = Yii::app()->user->Employee_id;
-
-            if ($model->validate())
-                $model->update();
-        }
-        else
-        {
-            $model->getmodelPk($docm_id);
-        }
-
-        $this->render('update', array(
-                'model'=>$model,
-            )
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
         );
+        if (isset($_POST['docm_id']))
+            $model->getModelPk($_POST['docm_id']);
+
+        if (isset($_POST['WhActs'])) {
+            $model->getModelPk($_POST['WhActs']['docm_id']);
+            $model->attributes = $_POST['WhActs'];
+            if ($model->validate()) {
+                $model->Update();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->cceq_id;
+                echo json_encode($ObjectResult);
+                return;
+            }
+        }
+
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
     }
     
     public function actionConfirm($docm_id) {
