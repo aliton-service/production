@@ -27,7 +27,7 @@ class WhActsController extends Controller
                     'roles'=>array('ConfirmWhActs'),
             ),
             array('allow',  
-                    'actions'=>array('index', 'view'),
+                    'actions'=>array('index', 'view', 'GetContracts'),
                     'roles'=>array('ViewWhActs'),
             ),
             array('allow',  
@@ -252,6 +252,33 @@ class WhActsController extends Controller
         }
 
         echo json_encode($ObjectResult);
+    }
+    
+    public function actionGetContracts() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['ObjectGr_id']) && isset($_POST['Date'])) {
+            $q = new SQLQuery();
+            $q->setSelect("Select
+                                c.ContrS_id,
+                                isNull(c.ServiceType, 'Не на обслуживании') + isNull(' (договор № ' + c.ContrNumS + ' от ' + convert(nvarchar, c.ContrDateS, 104) + ')', '') ServiceType,
+                                c.Jrdc_id,
+                                case when ('" . $_POST['Date'] . "' between dbo.truncdate(c.ContrSDateStart) and dbo.truncdate(c.ContrSDateEnd)) then 1 else 0 end Act
+                            From Contracts_v c
+                            Where c.ObjectGr_id = " . $_POST['ObjectGr_id'] . " and c.DocType_id = 4
+                            Order by c.ContrDateS");
+            $Res = $q->QueryAll();
+            $ObjectResult['result'] = 1;
+            $ObjectResult['html'] = $Res;
+            
+        }
+        
+        echo json_encode($ObjectResult);
+        return;
     }
 }
 
