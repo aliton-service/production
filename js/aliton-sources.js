@@ -3338,6 +3338,25 @@ Sources.SourceWHBuhActsEquips =
     }
 };
 
+Sources.SourceJobTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'JobType_Id', type: 'int'},
+        {name: 'JobType_Name', type: 'string'},
+    ],
+    id: 'JobType_Id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=JobTypes',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
 Sources.WHActsForReestrSource =
 {
     datatype: "json",

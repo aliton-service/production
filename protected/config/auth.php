@@ -209,7 +209,6 @@ return array_merge(
         
     /* Бухгалтерский акт */
     include(dirname(__FILE__).'/security/WHBuhActsSecurity.php'),
-    include(dirname(__FILE__).'/security/WHBuhActsEquipsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -411,7 +410,6 @@ return array_merge(
                 'AdminCostCalcSalarys',
                 'AdminCostCalcDocuments',
                 'AdminWHBuhActs',
-                'AdminWHBuhActsEquips',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
