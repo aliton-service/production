@@ -57,8 +57,8 @@
         $("#edTransferReason").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.TransferReason});
         $("#edDelayReason").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.DelayReason});
         $("#edResultName").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.ResultName});
-        $("#edDemandText").jqxTextArea({height: 71, width: 200, minLength: 1});
-        $("#edSpecCondition").jqxTextArea({height: 71, width: 160, minLength: 1});
+        $("#edDemandText").jqxTextArea({height: 71, width: 220, minLength: 1});
+        $("#edSpecCondition").jqxTextArea({height: 71, width: 180, minLength: 1});
         $("#edUCreateName").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.UCreateName});
         $("#edUChangeName").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.UChangeName});
         
@@ -442,7 +442,7 @@
     <div class="row-column"><input type="button" value="Текст СМС" id='btnSMS' /></div>
     <div class="row-column" style="margin-left: 60px"><input type="button" value="Отработано" id='btnWorkOut' /></div>
     <div class="row-column"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
-    <div class="row-column" style="margin-left: 60px"><input type="button" value="Выполнено" id='btnExec' /></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Выполнено" id='btnExec' /></div>
 </div>    
 <div style="clear: both;"></div>
 <div style="float: left; width: 100%; height: calc(100% - 342px)">
@@ -464,7 +464,7 @@
             <div style="padding: 10px; height: calc(100% - 20px)">
                 <div id="ProgressGrid"></div>
                 <div style="clear: both;"></div>
-                <div style="height: 30px;">
+                <div style="height: 30px; margin-top: 5px;">
                     <div style="float: left"><input id="edComment" type="text"/></div>
                     <div style="float: left; margin-left: 6px;">План. дата вып.</div>
                     <div style="float: left; margin-left: 6px;"><div id='edPlanDateExec'></div></div>
