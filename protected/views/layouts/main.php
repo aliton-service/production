@@ -233,7 +233,7 @@
                             )
                             ),
                             array('label'=>'Графики', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewEvents'), 'items'=>array(
-                                array('label'=>'Графики', 'url'=>array('/events')),
+                                array('label'=>'Графики', 'url'=>array('/Events/index')),
                             ),
                             ),
                             array('label' => 'Списание оборудования', 'visible'=>Yii::app()->user->checkAccess('ViewWhActs'), 'url' => '#', 'items' => array(

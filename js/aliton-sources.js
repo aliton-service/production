@@ -3433,4 +3433,47 @@ Sources.ActEquipsSource =
     }
 };
 
+Sources.SourceEventsClients =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'form_id', type: 'int'},
+        {name: 'objectgr_id', type: 'int'},
+        {name: 'fullname', type: 'string'},
+        {name: 'addr', type: 'string'},
+        {name: 'event_count', type: 'int'},
+        {name: 'no_exec_event_count', type: 'int'},
+        {name: 'vip', type: 'bool'},
+        {name: 'isVisible', type: 'bool'},
+    ],
+    id: 'form_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EventsClients',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceEventTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'evtp_id', type: 'int'},
+        {name: 'EventType', type: 'string'},
+    ],
+    id: 'evtp_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EventTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 
