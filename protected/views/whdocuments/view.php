@@ -135,7 +135,7 @@
                         });
                         return data;
                     },
-            beforeSend(jqXHR, settings) {
+            beforeSend: function(jqXHR, settings) {
                         DisabledDetailsControls();
                     },
         });
