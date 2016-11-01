@@ -2,20 +2,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="en">
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/admin/block.css">
     <!-- Подключаем таблицу стилей -->
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/header.css">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
-    <!--<script type="text/javascript" src="/protected/extensions/alitonwidgets/button/assets/js/albutton.js"></script>-->
     <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
-    <?php Yii::app()->clientScript->registerPackage('jquery_ui_css'); ?>
     <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
-    <?php Yii::app()->clientScript->registerPackage('widgets_css'); ?>
-    <?php Yii::app()->clientScript->registerPackage('graj'); ?>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/jqwidgets/localization.js"></script>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
@@ -323,6 +316,10 @@
                                 array('label'=>'Склад', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Выданное оборудование (детальный)',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Выданное оборудование (детальный)', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
+                                    ),
+                                    array('label' => 'Оборудование сичлящееся за мастерами',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Оборудование числящееся за мастерами', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
                                     ),
                                 )),

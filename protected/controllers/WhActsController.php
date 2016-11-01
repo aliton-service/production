@@ -27,7 +27,7 @@ class WhActsController extends Controller
                     'roles'=>array('ConfirmWhActs'),
             ),
             array('allow',  
-                    'actions'=>array('index', 'view', 'GetContracts'),
+                    'actions'=>array('index', 'view', 'GetContracts', 'GetModel'),
                     'roles'=>array('ViewWhActs'),
             ),
             array('allow',  
@@ -90,8 +90,8 @@ class WhActsController extends Controller
             'html' => '',
         );
         
-        if (isset($_POST['WHActs'])) {
-            $model->attributes = $_POST['WHActs'];
+        if (isset($_POST['WhActs'])) {
+            $model->attributes = $_POST['WhActs'];
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
@@ -124,7 +124,7 @@ class WhActsController extends Controller
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->cceq_id;
+                $ObjectResult['id'] = $model->docm_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -136,47 +136,47 @@ class WhActsController extends Controller
         echo json_encode($ObjectResult);
     }
     
-    public function actionConfirm($docm_id) {
+    public function actionConfirm() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
         
-        $model = new WhActs_v();
-        $model->getModelPk($docm_id);
+        if (isset($_POST['Docm_id'])) {
+            $model = new WhActs_v();
+            $model->getModelPk($_POST['Docm_id']);
+                   
+            $StoredProc = new StoredProc();
+            $StoredProc->ProcedureName = 'INSERT_ActionHistory';
+            $StoredProc->CheckParam = true;
+            $StoredProc->ParametersRefresh();
+            $StoredProc->Parameters[0]['Value'] = null;
+            $StoredProc->Parameters[1]['Value'] = $model->dlrs_id;
+            $StoredProc->Parameters[2]['Value'] = $model->docm_id;
+            $StoredProc->Parameters[3]['Value'] = 304;
+            $StoredProc->Parameters[4]['Value'] = null;
+            $StoredProc->Parameters[5]['Value'] = null;
+            $StoredProc->Parameters[6]['Value'] = $model->dmnd_empl_id;
+            $StoredProc->Parameters[7]['Value'] = $model->objc_id;
+            $StoredProc->Parameters[8]['Value'] = null;
+            $StoredProc->Parameters[9]['Value'] = null;
+            $StoredProc->Parameters[10]['Value'] = Yii::app()->user->Employee_id;
+            
+            $Res = $StoredProc->Execute();
 
-        $model->setScenario('Confirm');
-        
-        if ($model->achs_id === null)
-            if ($model->validate()) {
-                //$model->callProc('INSERT_ActionHistory');
-                
-                $StoredProc = new StoredProc();
-                $StoredProc->ProcedureName = 'INSERT_ActionHistory';
-                $StoredProc->CheckParam = true;
-                $StoredProc->ParametersRefresh();
-                
-                $StoredProc->Parameters[0]['Value'] = null;
-                $StoredProc->Parameters[1]['Value'] = $model->dlrs_id;
-                $StoredProc->Parameters[2]['Value'] = $model->docm_id;
-                $StoredProc->Parameters[3]['Value'] = 304;
-                $StoredProc->Parameters[4]['Value'] = null;
-                $StoredProc->Parameters[5]['Value'] = null;
-                $StoredProc->Parameters[6]['Value'] = $model->dmnd_empl_id;
-                $StoredProc->Parameters[7]['Value'] = $model->objc_id;
-                $StoredProc->Parameters[8]['Value'] = null;
-                $StoredProc->Parameters[9]['Value'] = null;
-                $StoredProc->Parameters[10]['Value'] = Yii::app()->user->Employee_id;
-                         
-                $StoredProc->Execute();
-                
-                $this->redirect($_SERVER['HTTP_REFERER']);
-            }
-            else {
-                $this->render('update', array(
-                    'model'=>$model,
-                ));
-            }
-        else
-            $this->redirect($_SERVER['HTTP_REFERER']);
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $Res['achs_id'];
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+
+        echo json_encode($ObjectResult);
     }
-    
+
+        
+
     public function actionAddTreb($docm_id = null) {
         $ObjectResult = array(
                 'result' => 0,
@@ -279,6 +279,17 @@ class WhActsController extends Controller
         
         echo json_encode($ObjectResult);
         return;
+    }
+    
+    public function actionGetModel()
+    {
+        $model = array();
+        if (isset($_POST['Docm_id'])) {
+            $model = new WhActs_v();
+            $model->getModelPk($_POST['Docm_id']);
+        }
+       
+        echo json_encode($model);
     }
 }
 

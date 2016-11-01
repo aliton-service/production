@@ -1,6 +1,8 @@
 <script>
     $(document).ready(function () {
-        Acts = {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
+        
+        Acts2 = {
             Docm_id: <?php echo json_encode($model->docm_id); ?>,
             Date: Aliton.DateConvertToJs(<?php echo json_encode($model->date); ?>),
             Achs_id: <?php echo json_encode($model->achs_id); ?>,
@@ -21,13 +23,17 @@
             DatePay: Aliton.DateConvertToJs(<?php echo json_encode($model->date_payment); ?>),
             NotePayment: <?php echo json_encode($model->note_payment); ?>,
             WorkType: <?php echo json_encode($model->wrtp_name); ?>,
-            JobType: <?php echo json_encode($model->wrtp_name); ?>,
+            Wrtp_id: <?php echo json_encode($model->wrtp_id); ?>,
+            Jbtp_id: <?php echo json_encode($model->jbtp_id); ?>,
+            JobType: <?php echo json_encode($model->jbtp_name); ?>,
             WorkList: <?php echo json_encode($model->work_list); ?>,
             Juridical: <?php echo json_encode($model->work_list); ?>,
             UserCreate: <?php echo json_encode($model->UserCreate); ?>,
             edMaster: <?php echo json_encode($model->master); ?>,
             Cntr_id: <?php echo json_encode($model->cntr_id); ?>,
             Dckn_id: <?php echo json_encode($model->dckn_id); ?>,
+            Jrdc_id: <?php echo json_encode($model->jrdc_id); ?>,
+            Dmnd_empl_id: <?php echo json_encode($model->dmnd_empl_id); ?>,
         };
 
         var DataAddress = new $.jqx.dataAdapter(Sources.SourceListAddresses);
@@ -35,6 +41,11 @@
         var DataWHDocKinds = new $.jqx.dataAdapter(Sources.SourceWHDocKinds);
         var DataCustomers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCustomers, {}));
         var DataPaymentTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePaymentTypes, {}));
+        var DataWorkTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceWorkTypes, {}));
+        var DataJobTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceJobTypes, {}));
+        var DataJuridicals = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceJuridicalsMin, {}));
+        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
+        
         
         $("#edAddressEdit").on('select', function(event){
             var args = event.args;
@@ -42,14 +53,15 @@
                 var item = args.item;
                 var value = item.value;
             }
+            else {return; }
             var ObjectGr_id = Aliton.FindArray(DataAddress.records, 'Object_id', value);
             ObjectGr_id = ObjectGr_id['ObjectGr_id'];
             
             if ($("#edDateEdit").val() != '')
                 var Date = $("#edDateEdit").val();
             else {
-                var Date = new Date();
-                var Date = Date.getDate() + '.' + (Date.getMonth() + 1) + '.' + Date.getFullYear();
+                var DateS = new window.Date();
+                var Date = DateS.getDate() + '.' + (DateS.getMonth() + 1) + '.' + DateS.getFullYear();
             }
             
             $.ajax({
@@ -64,8 +76,8 @@
                     Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         $("#edServiceEdit").jqxComboBox({source: Res.html});
-                        if (Acts.Cntr_id != null)
-                            $("#edServiceEdit").jqxComboBox('val', Acts.Cntr_id);
+                        if (Acts2.Cntr_id != null)
+                            $("#edServiceEdit").jqxComboBox('val', Acts2.Cntr_id);
                         else
                             $("#edServiceEdit").jqxComboBox({source: Res.html, selectedIndex: 0});
                     }
@@ -76,44 +88,81 @@
         
         $("#edAddressEdit").on('bindingComplete', function(){
             $('#btnSave').jqxButton({disabled: false});
-            if (Acts.Object_id !== null) $("#edAddressEdit").jqxComboBox('val', Acts.Object_id);
+            if (Acts2.Object_id !== null) $("#edAddressEdit").jqxComboBox('val', Acts2.Object_id);
         });
         $("#edAddressEdit").jqxComboBox({ source: DataAddress, width: '500', height: '25px', displayMember: "Addr", valueMember: "Object_id"});
-        $("#edClientEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 250, minLength: 1, value: Acts.Client}));
-        //$("#edServiceEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 182, minLength: 1, value: Acts.Service}));
+        $("#edClientEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 250, minLength: 1, value: Acts2.Client}));
         $("#edServiceEdit").jqxComboBox({ width: '182', height: '25px', displayMember: "ServiceType", valueMember: "ContrS_id"});
-        //$("#edDcknNameEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.DcknName}));
         $("#edDcknNameEdit").jqxComboBox({source: DataWHDocKinds, width: '182', height: '25px', displayMember: "name", valueMember: "dckn_id"});
-        $("#edSignedYnEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Acts.SignedYn}));
-        //$("#edCstmNameEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.CstmName}));
+        $("#edSignedYnEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Acts2.SignedYn}));
         $("#edCstmNameEdit").jqxComboBox({source: DataCustomers, width: '182', height: '25px', displayMember: "CustomerName", valueMember: "Customer_Id"});
-        
         $('#edNoteEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
-        $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Acts.Sum}));
-        
-        //$("#edPaymentTypeEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.PaymentType}));
+        $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Acts2.Sum}));
         $("#edPaymentTypeEdit").jqxComboBox({source: DataPaymentTypes, width: '182', height: '25px', displayMember: "PaymentTypeName", valueMember: "PaymentType_Id"});
-        $("#edBillEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.Bill}));
-        $("#edDatePayEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts.DatePay, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edBillEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts2.Bill}));
+        $("#edDatePayEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts2.DatePay}));
         $('#edNotePaymentEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 32, width: 'calc(100% - 2px)', minLength: 1}));
-        $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edWorkTypeEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.WorkType}));
-        $("#edJobTypeEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.JobType}));
+        $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts2.Date}));
+        $("#edWorkTypeEdit").jqxComboBox({source: DataWorkTypes, width: '182', height: '25px', displayMember: "name", valueMember: "wrtp_id"});
+        $("#edJobTypeEdit").jqxComboBox({source: DataJobTypes, width: '182', height: '25px', displayMember: "JobType_Name", valueMember: "JobType_Id"});
         $('#edWorkListEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 32, width: 'calc(100% - 2px)', minLength: 1}));
-        $("#edJuridicalEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.Juridical}));
-        $("#edUserCreateEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
-        $("#edMasterEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
+        $("#edJuridicalEdit").jqxComboBox({source: DataJuridicals, width: '182', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
+        $("#edMasterEdit").jqxComboBox({source: DataEmployees, width: '282', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"});
+        
         $('#btnSave').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
         $('#btnCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCancel').on('click', function() {
             $("#WHDocumentsDialog").jqxWindow('close');
         });
-        if (Acts.Note != null) $('#edNoteEdit').val(Acts.Note);
-        if (Acts.NotePayment != null) $('#edNotePayment').val(Acts.NotePayment);
-        if (Acts.WorkList != null) $('#edWorkList').val(Acts.WorkList);
-        if (Acts.Dckn_id != null) $('#edDcknNameEdit').val(Acts.Dckn_id);
-        if (Acts.Cstm_id != null) $('#edCstmNameEdit').val(Acts.Cstm_id);
-        if (Acts.Pmtp_id != null) $('#edPaymentTypeEdit').val(Acts.Pmtp_id);
+        $('#btnSave').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('WHActs/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('WHActs/Insert')); ?>;
+            
+            var Model = $('#WhActs').serialize();
+            
+            $.ajax({
+                url: Url,
+                data: Model,
+                
+                type: 'POST',
+                success: function(Res) {
+                    var Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        if (!StateInsert) {
+                            if (typeof(Acts) != 'undefined')
+                                Acts.Refresh();
+                        }
+                        if (StateInsert) {
+                            if (typeof(WHReestr.Docm_id) != 'undefined') {
+                                WHReestr.Docm_id = Res.id;
+                                $('#ActsGrid').jqxGrid('updatebounddata');
+                            }   
+                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHActs/View'))?> + '&docm_id=' + Res.id);
+                        }
+                        $('#WHDocumentsDialog').jqxWindow('close');
+                    }
+                    else {
+                        $('#BodyWHDocumentsDialog').html(Res.html);
+                    };
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        });
+        
+        if (Acts2.Note != null) $('#edNoteEdit').val(Acts2.Note);
+        if (Acts2.NotePayment != null) $('#edNotePayment').val(Acts2.NotePayment);
+        if (Acts2.WorkList != null) $('#edWorkListEdit').val(Acts2.WorkList);
+        if (Acts2.Dckn_id != null) $('#edDcknNameEdit').val(Acts2.Dckn_id);
+        if (Acts2.Cstm_id != null) $('#edCstmNameEdit').val(Acts2.Cstm_id);
+        if (Acts2.Pmtp_id != null) $('#edPaymentTypeEdit').val(Acts2.Pmtp_id);
+        if (Acts2.Wrtp_id != null) $('#edWorkTypeEdit').val(Acts2.Wrtp_id);
+        if (Acts2.Jbtp_id != null) $('#edJobTypeEdit').val(Acts2.Jbtp_id);
+        if (Acts2.Jrdc_id != null) $('#edJuridicalEdit').val(Acts2.Jrdc_id);
+        if (Acts2.Dmnd_empl_id != null) $('#edMasterEdit').val(Acts2.Dmnd_empl_id);
+        
     });
 </script>
 
@@ -126,8 +175,8 @@
     )); 
 ?>
 
-<input type="hidden" name="CostCalculations[docm_id]" value="<?php echo $model->docm_id; ?>"/>
-<input type="hidden" name="CostCalculations[calc_id]" value="<?php echo $model->calc_id; ?>"/>
+<input type="hidden" name="WhActs[docm_id]" value="<?php echo $model->docm_id; ?>"/>
+<input type="hidden" name="WhActs[calc_id]" value="<?php echo $model->calc_id; ?>"/>
 
 <div class="al-data-nb" style="width: 900px; height: 230px;">
     <div class="al-row-column">
@@ -136,14 +185,14 @@
                 <!--<div class="al-row-label"><b>Объект</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Адрес</div>
-                    <div class="al-row-column"><div id="edAddressEdit" name="WhActs[objc_id]"></div></div>
+                    <div class="al-row-column"><div id="edAddressEdit" name="WhActs[objc_id]"></div><?php echo $form->error($model, 'objc_id'); ?></div>
                 </div>
                 <div style="clear: both"></div>
                 <div style="margin-top: 4px;">
                     <div class="row-column">Клиент</div>
                     <div class="row-column"><input id="edClientEdit" /></div>
                     <div class="row-column">Тариф</div>
-                    <div class="row-column"><div id="edServiceEdit" name="WhActs[cntr_id]"></div></div>
+                    <div class="row-column"><div id="edServiceEdit" name="WhActs[cntr_id]"></div><?php echo $form->error($model, 'cntr_id'); ?></div>
                 </div>
                 
             </div>
@@ -154,13 +203,13 @@
                 <!--<div class="al-row-label"><b>Документ</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Тип</div>
-                    <div class="al-row-column"><div id="edDcknNameEdit" name="WhActs[dckn_id]"></div></div>
-                    <div class="al-row-column"><div id="edSignedYnEdit">Подписан</div></div>
-                    <div class="al-row-column"><div id="edCstmNameEdit" name="WhActs[cstm_id]"></div></div>
+                    <div class="al-row-column"><div id="edDcknNameEdit" name="WhActs[dckn_id]"></div><?php echo $form->error($model, 'dckn_id'); ?></div>
+                    <div class="al-row-column"><div id="edSignedYnEdit" name="WhActs[signed_yn]">Подписан</div></div>
+                    <div class="al-row-column"><div id="edCstmNameEdit" name="WhActs[cstm_id]"></div><?php echo $form->error($model, 'cstm_id'); ?></div>
                 </div>
                 <div class="al-row">
                     <div class="al-row-label">Примечание</div>
-                    <div class="al-row"><textarea id="edNoteEdit" name="WhActs[note]"></textarea></div>
+                    <div class="al-row"><textarea id="edNoteEdit" name="WhActs[note]"></textarea><?php echo $form->error($model, 'note'); ?></div>
                 </div>
             </div>
             <div style="clear: both"></div>
@@ -172,27 +221,27 @@
                 <!--<div class="al-row-label"><b>Оплата</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Сумма по акту</div>
-                    <div class="al-row-column"><div id="edSumEdit" name="WhActs[sum]"></div></div>
+                    <div class="al-row-column"><div id="edSumEdit" name="WhActs[sum]"></div><?php echo $form->error($model, 'sum'); ?></div>
                     <div style="clear: both"></div>
                 </div>
                 <div class="al-row">
                     <div class="al-row-column">Форма оплаты</div>
-                    <div class="al-row-column"><div id="edPaymentTypeEdit" name="WhActs[pmtp_id]"></div></div>
+                    <div class="al-row-column"><div id="edPaymentTypeEdit" name="WhActs[pmtp_id]"></div><?php echo $form->error($model, 'pmtp_id'); ?></div>
                     <div style="clear: both"></div>
                 </div>
                 <div class="al-row">
                     <div class="al-row-column">Счет</div>
-                    <div class="al-row-column"><input id="edBillEdit" name="WhActs[bill]" /></div>
+                    <div class="al-row-column"><input id="edBillEdit" name="WhActs[bill]" /><?php echo $form->error($model, 'bill'); ?></div>
                     <div style="clear: both"></div>
                 </div>
                 <div class="al-row">
                     <div class="al-row-column">Дата оплаты</div>
-                    <div class="al-row-column"><div id="edDatePayEdit" name="WhActs[date_payment]"></div></div>
+                    <div class="al-row-column"><div id="edDatePayEdit" name="WhActs[date_payment]"></div><?php echo $form->error($model, 'date_payment'); ?></div>
                     <div style="clear: both"></div>
                 </div>
                <div class="al-row">
                     <div class="al-row-label">Примечание</div>
-                    <div class="al-row"><textarea id="edNotePaymentEdit"></textarea></div>
+                    <div class="al-row"><textarea id="edNotePaymentEdit" name="WhActs[note_payment]"></textarea><?php echo $form->error($model, 'note_payment'); ?></div>
                     <div style="clear: both"></div>
                 </div> 
             </div>
@@ -207,22 +256,20 @@
         <!--<div class="al-row-label"><b>Выполненные работы</b></div>-->
         <div class="al-row">
             <div class="al-row-column">Дата выпонения работ</div>
-            <div class="al-row-column"><div id="edDateEdit"></div></div>
+            <div class="al-row-column"><div id="edDateEdit" name="WhActs[date]"></div><?php echo $form->error($model, 'date'); ?></div>
             <div class="al-row-column">Тип работ</div>
-            <div class="al-row-column"><input id="edWorkTypeEdit" /></div>
+            <div class="al-row-column"><div id="edWorkTypeEdit" name="WhActs[wrtp_id]"></div><?php echo $form->error($model, 'wrtp_id'); ?></div>
             <div class="al-row-column">Вид работ</div>
-            <div class="al-row-column"><input id="edJobTypeEdit" /></div>
+            <div class="al-row-column"><div id="edJobTypeEdit" name="WhActs[jbtp_id]"></div><?php echo $form->error($model, 'jbtp_id'); ?></div>
             <div style="clear: both"></div>
         </div>
         <div class="al-row-label">Перечень работ</div>
-        <div class="al-row"><textarea id="edWorkListEdit"></textarea></div>
+        <div class="al-row"><textarea id="edWorkListEdit" name="WhActs[work_list]"></textarea><?php echo $form->error($model, 'work_list'); ?></div>
         <div class="al-row">
             <div class="al-row-column">Юр. лицо</div>
-            <div class="al-row-column"><input id="edJuridicalEdit" /></div>
-            <div class="al-row-column">Создал</div>
-            <div class="al-row-column"><input id="edUserCreateEdit" /></div>
+            <div class="al-row-column"><div id="edJuridicalEdit" name="WhActs[jrdc_id]"></div><?php echo $form->error($model, 'jrdc_id'); ?></div>
             <div class="al-row-column">Исполнитель</div>
-            <div class="al-row-column"><input id="edMasterEdit" /></div>
+            <div class="al-row-column"><div id="edMasterEdit" name="WhActs[dmnd_empl_id]"></div><?php echo $form->error($model, 'dmnd_empl_id'); ?></div>
         </div>
     </div>
 </div>

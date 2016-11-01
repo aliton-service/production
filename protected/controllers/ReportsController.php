@@ -102,6 +102,8 @@ class ReportsController extends Controller
     public function GetViewForReport($ReportName = '') {
         if ($ReportName == '/Склад/Выданное оборудование (детальный)')
             return 'wh_report1';
+        if ($ReportName == '/Склад/Оборудование числящееся за мастерами')
+            return 'wh_report2';
         else if ($ReportName == '/Заявки/Отчет по заявкам Call-центра')
             return 'demand_report1';
         else if ($ReportName == '/Заявки/Чужие и удаленные заявки СЦ')
