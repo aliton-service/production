@@ -1,16 +1,2 @@
-.row {
-    margin: 10px 0px 0px 0px;
-    overflow: hidden;
-}
-    
-.row-column {
-    float: left;
-    margin-right: 10px;
-    font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
-}
-
-.row-column:last-child {
-    margin-right: 0px;
-}
 
 

@@ -21,11 +21,80 @@
             DatePay: Aliton.DateConvertToJs(<?php echo json_encode($model->date_payment); ?>),
             NotePayment: <?php echo json_encode($model->note_payment); ?>,
             WorkType: <?php echo json_encode($model->wrtp_name); ?>,
-            JobType: <?php echo json_encode($model->wrtp_name); ?>,
+            JobType: <?php echo json_encode($model->jbtp_name); ?>,
             WorkList: <?php echo json_encode($model->work_list); ?>,
-            Juridical: <?php echo json_encode($model->work_list); ?>,
+            Juridical: <?php echo json_encode($model->JuridicalPerson); ?>,
             UserCreate: <?php echo json_encode($model->UserCreate); ?>,
             edMaster: <?php echo json_encode($model->master); ?>,
+        };
+        
+        var SetValueControls = function() {
+            $("#edDate").val(Acts.Date);
+            $("#edAddress").val(Acts.Address);
+            $("#edClient").val(Acts.Client);
+            $("#edService").val(Acts.Service);
+            $("#edDcknName").val(Acts.DcknName);
+            $("#edSignedYn").jqxCheckBox({checked: Acts.SignedYn});
+            $("#edCstmName").val(Acts.CstmName);
+            $("#edNote").val(Acts.Note);
+            $("#edSum").val(Acts.Sum);
+            $("#edPaymentType").val(Acts.PaymentType);
+            $("#edBill").val(Acts.Bill);
+            $("#edDatePay").val(Acts.DatePay);
+            $("#edNotePayment").val(Acts.NotePayment);
+            $("#edWorkType").val(Acts.WorkType);
+            $("#edJobType").val(Acts.JobType);
+            $("#edWorkList").val(Acts.WorkList);
+            $("#edJuridical").val(Acts.Juridical);
+            $("#edUserCreate").val(Acts.UserCreate);
+            $("#edMaster").val(Acts.edMaster);
+        };
+        
+        var SetStateButtons = function() {
+            $('#btnEdit').jqxButton({disabled: (Acts.Achs_id !== null)});
+            $('#btnAction').jqxButton({disabled: (Acts.Achs_id !== null)});
+        };
+        
+        Acts.Refresh = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHActs/GetModel'))?>,
+                type: 'POST',
+                data: {
+                    Docm_id: Acts.Docm_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    console.log(Res);
+                    Acts.Docm_id = Res.docm_id;
+                    Acts.Date = Aliton.DateConvertToJs(Res.date);
+                    Acts.Achs_id = Res.achs_id;
+                    Acts.Object_id = Res.objc_id;
+                    Acts.Address = Res.Address;
+                    Acts.Client = Res.org_name;
+                    Acts.Service = Res.ServiceType;
+                    Acts.DcknName = Res.dckn_name;
+                    Acts.SignedYn = Boolean(Number(Res.signed_yn));
+                    Acts.CstmName = Res.cstm_name;
+                    Acts.Note = Res.note;
+                    Acts.Sum = Res.sum;
+                    Acts.PaymentType = Res.pmtp_name;
+                    Acts.Bill = Res.bill;
+                    Acts.DatePay = Aliton.DateConvertToJs(Res.date_payment);
+                    Acts.NotePayment = Res.note_payment;
+                    Acts.WorkType = Res.wrtp_name;
+                    Acts.JobType = Res.jbtp_name;
+                    Acts.WorkList = Res.work_list;
+                    Acts.Juridical = Res.JuridicalPerson;
+                    Acts.UserCreate = Res.UserCreate;
+                    Acts.edMaster = Res.master;
+                    SetValueControls();
+                    $("#btnRefreshDetails").click();
+                    SetStateButtons();
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
         };
         
         SN.Add = function() {
@@ -330,7 +399,27 @@
             });
         });
             
+        $('#btnAction').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WhActs/confirm')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Docm_id: Acts.Docm_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result === 1) {
+                        Acts.Refresh();
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         
+        SetStateButtons();
     });
 </script>
 <style>

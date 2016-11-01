@@ -45,7 +45,7 @@ class WhActs_v extends MainFormModel
     public function rules()
     {
         return array(
-                array('date, pmtp_id, dmnd_empl_id, jrdc_id', 'required', 'on' => 'Insert, Update, Confirm'),
+                array('date, pmtp_id, dmnd_empl_id, jrdc_id', 'required'),
                 array(''
                     . 'docm_id,
                         achs_id,
@@ -85,7 +85,7 @@ class WhActs_v extends MainFormModel
                         calc_id,
                         repr_id,
                         UserCreate,
-                        DelDate', 'safe', 'on' => 'Insert, Update, Confirm'),
+                        DelDate', 'safe'),
         );
     }
     

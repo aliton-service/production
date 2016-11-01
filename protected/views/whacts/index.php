@@ -1,4 +1,6 @@
 <script>
+    WHReestr = {};
+    WHReestr.Docm_id = 0;
     $(document).ready(function () {
         var CurrentRowData;
         var First = true;
@@ -29,15 +31,27 @@
         
         $("#ActsGrid").on('bindingcomplete', function(){
             var Docm_id;
+            if (WHReestr.Docm_id != 0)
+                NextDocm_id = WHReestr.Docm_id;
+            
             if (CurrentRowData != undefined) {
                 if (NextDocm_id != null) Docm_id = NextDocm_id; else Docm_id = CurrentRowData.docm_id;
                 Aliton.SelectRowByIdVirtual('docm_id', Docm_id, '#ActsGrid', false);
             }
-            else
-                Aliton.SelectRowByIdVirtual('docm_id', null, '#ActsGrid', false);
+            else {
+                if (WHReestr.Docm_id != 0)
+                    Aliton.SelectRowByIdVirtual('docm_id', WHReestr.Docm_id, '#ActsGrid', false);
+                else
+                    Aliton.SelectRowByIdVirtual('docm_id', null, '#ActsGrid', false);
+            }
             
             First = false;
             NextDocm_id = null;
+            WHReestr.Docm_id = 0;
+        });
+        
+        $('#ActsGrid').on('rowdoubleclick', function (event) { 
+            $('#btnInfo').click();
         });
         
         $("#ActsGrid").jqxGrid(
@@ -128,10 +142,76 @@
                 window.open(url + '&docm_id=' + CurrentRowData.docm_id);
                 
         });
+        
+        $('#btnAdd').on('click', function() {
+            if ($('#btnAdd').jqxButton('disabled')) return;
+            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 470, width: 920, position: 'center' }));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WhActs/Insert')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    docm_id: CurrentRowData.docm_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyWHDocumentsDialog").html(Res.html);
+                    $('#WHDocumentsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
     });
 </script>
+<style>
+    .al-data {
+        float: left;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        width: calc(100% - 22px);
+    }
+    
+    .al-data-nb {
+        float: left;
+        overflow: auto;
+        width: 100%
+    }
+    .al-row {
+        width: 100%;
+        padding: 4px 0px 4px 0px;
+    }
+    .al-row-label {
+        width: 100%;
+        padding: 0px;
+    }
+    .al-row-column {
+        float: left;
+        margin-left: 6px;
+    }
+    
+    .al-row-column:first-child {
+        margin-left: 0px;
+    }
+    
+    .al-data, .al-data-nb, .al-row, .al-row-column {
+        font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+    }
+    
+    .al-data .al-row:first-child {
+        padding-top: 0px;
+    }
+    
+    .al-data .al-row:last-child {
+        padding-bottom: 0px;
+    }
+    .row {
+        margin-top: 0px;
+    }
+</style>
 
-<div id="GridContainer" style="float: left; width: 100%; height: calc(100% - 200px)">
+<div id="GridContainer" style="float: left; width: 100%; height: calc(100% - 206px)">
     <div id="ActsGrid"></div>
 </div>    
 <div style="clear: both;"></div>
@@ -142,7 +222,7 @@
         <div><textarea id="edWorkList"></textarea></div>
     </div>
     <div style="clear: both;"></div>
-    <div style="float: left; width: 100%; height: 64px">
+    <div style="float: left; width: 100%; height: 70px">
         <div>Примечание</div>
         <div style="clear: both;"></div>
         <div><textarea id="edNote"></textarea></div>
@@ -171,6 +251,14 @@
                 <div style="float: left;"><input type="button" id="btnUndo" value="Отменить подтв."/></div>
             </div>
         </div>    
+    </div>
+</div>
+<div id="WHDocumentsDialog" style="display: none;">
+    <div id="WHDocumentsDialogHeader">
+        <span id="WHDocumentsHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogWHDocumentsContent">
+        <div style="" id="BodyWHDocumentsDialog"></div>
     </div>
 </div>
 

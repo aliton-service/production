@@ -38,20 +38,15 @@ return array(
 
 	// application components
 	'components'=>array(
-                
                 'LockManager' => array(
                     'class' => 'LockManager',
                 ),
-            
                 'clientScript' => array(
                     'packages' => array(
                         'jquery_js' => array(
                             'baseUrl' => '/js',
                             'js' => array(
                                 'jquery-1.11.3.min.js',
-                                'jquery-ui-stable.js',
-                                'jquery.mask.js',
-                                'aliton-widgets.js',
                                 '/jqwidgets/localization.js',
                                 'aliton-sources.js',
                                 'aliton-settings.js',
@@ -61,38 +56,14 @@ return array(
                             ),
                             'css' => array(
                                 '/jqwidgets/styles/jqx.base.css',
-                                '../css/aliton.css',
-                            ),
-                        ),
-                        'jquery_ui_css' => array(
-                            'baseUrl' => '/css',
-                            'css' => array(
-                                'jquery-ui.css',
-                                
-                            ),
-                        ),
-                        'widgets_css' => array(
-                            'baseUrl' => '/css',
-                            'css' => array(
-                                    'aliton-widgets.css',
                             ),
                         ),
                         'widgets' => array(
-                                'baseUrl' => '/js',
-                                
-                                'js' => array(
-                                        //'widgets.js',
-                                        'aliton.js',
-                                        'new_main.js',
-                                        //'aliton-widgets.js',
-                                ),
-                        ),
-                        'graj' => array(
-                                'baseUrl' => '/js',
-                                'js' => array(
+                            'baseUrl' => '/js',
 
-                                        //'algridajax.js',
-                                ),
+                            'js' => array(
+                                    'aliton.js',
+                            ),
                         ),
                     ),
                 ),
