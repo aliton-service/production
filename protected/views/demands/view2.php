@@ -108,7 +108,7 @@
                                 { text: '№ Заявки', datafield: 'demand_id', width: 100},
                             ]
                     }));
-                    $("#edComment").jqxInput({height: 25, width: 580, minLength: 1});
+                    $("#edComment").jqxInput({height: 25, width: 'calc(100% - 6px)', minLength: 1});
                     $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, dropDownVerticalAlignment: "top"}));
                     $("#btnSend").jqxButton({ width: 120, height: 30 });
                     $("#btnDelComment").jqxButton({ width: 120, height: 30 });
@@ -305,7 +305,7 @@
     });
 </script>
 
-<div style="float: left; width: 912px; height: 310px;">
+<div style="float: left; width: 1100px; height: 310px;">
     <div style="float: left; width: 100%; height: 32px">
         <div class="row-column">Номер</div>
         <div class="row-column"><input readonly id="edNumber" type="text"/></div>
@@ -465,11 +465,13 @@
                 <div id="ProgressGrid"></div>
                 <div style="clear: both;"></div>
                 <div style="height: 30px; margin-top: 5px;">
-                    <div style="float: left"><input id="edComment" type="text"/></div>
-                    <div style="float: left; margin-left: 6px;">План. дата вып.</div>
-                    <div style="float: left; margin-left: 6px;"><div id='edPlanDateExec'></div></div>
-                    <div style="float: left; margin-left: 6px;"><input type="button" value="Написать" id='btnSend' /></div>
-                    <div style="float: left; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelComment' /></div>
+                    <div style="float: left; width: calc(100% - 576px)"><input id="edComment" type="text"/></div>
+                    <div style="float: right">
+                        <div style="float: left; margin-left: 6px;">План. дата вып.</div>
+                        <div style="float: left; margin-left: 6px;"><div id='edPlanDateExec'></div></div>
+                        <div style="float: left; margin-left: 6px;"><input type="button" value="Написать" id='btnSend' /></div>
+                        <div style="float: left; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelComment' /></div>
+                    </div>
                 </div>
             </div>
         </div>

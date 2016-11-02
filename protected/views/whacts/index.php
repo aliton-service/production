@@ -165,51 +165,7 @@
         });
     });
 </script>
-<style>
-    .al-data {
-        float: left;
-        border: 1px solid #e0e0e0;
-        padding: 10px;
-        width: calc(100% - 22px);
-    }
-    
-    .al-data-nb {
-        float: left;
-        overflow: auto;
-        width: 100%
-    }
-    .al-row {
-        width: 100%;
-        padding: 4px 0px 4px 0px;
-    }
-    .al-row-label {
-        width: 100%;
-        padding: 0px;
-    }
-    .al-row-column {
-        float: left;
-        margin-left: 6px;
-    }
-    
-    .al-row-column:first-child {
-        margin-left: 0px;
-    }
-    
-    .al-data, .al-data-nb, .al-row, .al-row-column {
-        font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
-    }
-    
-    .al-data .al-row:first-child {
-        padding-top: 0px;
-    }
-    
-    .al-data .al-row:last-child {
-        padding-bottom: 0px;
-    }
-    .row {
-        margin-top: 0px;
-    }
-</style>
+
 
 <div id="GridContainer" style="float: left; width: 100%; height: calc(100% - 206px)">
     <div id="ActsGrid"></div>

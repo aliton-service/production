@@ -57,7 +57,8 @@ var DialogDefaultSettings = {
 var DateTimeDefaultSettings = {
     showFooter: true,
     todayString: 'Сегодня',
-    width: '150px',
+    clearString: 'Очистить',
+    //width: '150px',
     height: '25px',
     formatString: 'dd.MM.yyyy HH:mm',
     culture: 'ru-RU',
