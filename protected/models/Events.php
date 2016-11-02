@@ -37,6 +37,8 @@ class Events extends MainFormModel
 
 	public $datestart = null;
 	public $dateend = null;
+        
+	public $form_id = null;
 
 	public $KeyFiled = 'e.evnt_id';
 	public $PrimaryKey = 'evnt_id';
@@ -48,46 +50,44 @@ class Events extends MainFormModel
 
 	public function __construct($scenario = '') {
 		parent::__construct($scenario);
-		$select = "
-			select
-			e.evnt_id,
-			e.evtp_id,
-			et.eventtype,
-			e.objectgr_id,
-			e.date,
-			e.note,
-			e.date_exec,
-			e.empl_id,
-			e.date_act,
-			e.date_plan,
-			e.rpfr_id,
-			c.ServiceType,
-			e.evaluation,
-			e.prds_id,
-			e.who_reported,
-			emp3.EmployeeName as master,
-			dbo.fio(emp.employeename) employeename,
-			dbo.fio(emp2.employeename) emplcreate,
-				a.addr,
-				datediff(dd, dateadd(mm, 1, dbo.encodedate(5, month(e.date), year(e.date))), isnull(e.date_exec, getdate())) overday
+		$select = "\nSelect
+                            e.evnt_id,
+                            e.evtp_id,
+                            et.eventtype,
+                            e.objectgr_id,
+                            e.date,
+                            e.date_exec,
+                            e.empl_id,
+                            dbo.fio(emp.employeename) employeename,
+                            a.addr,
+                            datediff(dd, dateadd(mm, 1, dbo.encodedate(5, month(e.date), year(e.date))), isnull(e.date_exec, getdate())) overday,
+                            e.note,
+                            e.date_act,
+                            e.date_plan,
+                            e.rpfr_id,
+                            c.ServiceType,
+                            e.evaluation,
+                            e.prds_id,
+                            e.who_reported,
+                            emp3.EmployeeName as master,
+                            dbo.fio(emp2.employeename) emplcreate,
+                            o.form_id
 		";
-		$from = "
-			from events e inner join eventtypes et on (e.evtp_id = et.evtp_id)
-			left join employees_forobj_v emp on (e.empl_id = emp.employee_id)
-				inner join objectsgroup og on (e.objectgr_id = og.objectgr_id)
-			left join employees_forobj_v emp2 on (e.EmplCreate = emp2.employee_id)
-
-			inner join organizations_v o on (og.propform_id = o.form_id)
-				inner join addresses_v a on (a.address_id = og.address_id)
-				left join contracts_v c on (c.objectgr_id = og.objectgr_id and dbo.truncdate(getdate()) between c.contrsdatestart and c.contrsdateend and c.doctype_id = 4)
-				left join Employees emp3 on (c.Master = emp3.Employee_id)
+		$from = "\nFrom events e 
+                            inner join eventtypes et on (e.evtp_id = et.evtp_id)
+                            left join employees_forobj_v emp on (e.empl_id = emp.employee_id)
+                            inner join objectsgroup og on (e.objectgr_id = og.objectgr_id)
+                            left join employees_forobj_v emp2 on (e.EmplCreate = emp2.employee_id)
+                            inner join organizations_v o on (og.propform_id = o.form_id)
+                            inner join addresses_v a on (a.address_id = og.address_id)
+                            left join contracts_v c on (c.objectgr_id = og.objectgr_id and dbo.truncdate(getdate()) between c.contrsdatestart and c.contrsdateend and c.doctype_id = 4)
+                            left join Employees emp3 on (c.Master = emp3.Employee_id)
 		";
-		$where = "
-			where e.deldate is null
-
-		";
-		$order = " order by a.addr, et.eventtype, e.date ";
-		$groupby = " group by e.evnt_id, e.date_act, e.evaluation, e.evtp_id, emp3.EmployeeName, e.who_reported, et.eventtype, e.rpfr_id, e.objectgr_id, e.prds_id, e.date, e.date_exec, e.empl_id, emp.employeename, emp2.employeename, c.ServiceType, e.date_plan, e.note, a.addr ";
+		$where = "\nWhere e.deldate is null";
+                
+		$order = "\nOrder by a.addr, et.eventtype, e.date ";
+                
+		$groupby = "\nGroup by e.evnt_id, e.date_act, e.evaluation, e.evtp_id, emp3.EmployeeName, e.who_reported, et.eventtype, e.rpfr_id, e.objectgr_id, e.prds_id, e.date, e.date_exec, e.empl_id, emp.employeename, emp2.employeename, c.ServiceType, e.date_plan, e.note, a.addr, o.form_id ";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);
@@ -138,57 +138,6 @@ class Events extends MainFormModel
 			'DateChange' => 'Date Change',
 			'EmplDel' => 'Empl Del',
 		);
-	}
-
-	public static function getClients($where = false, $out_where=false) {
-		$filter = '';
-		$filter_evtp = '(1=1)';
-		if(is_array($out_where))
-			$filter_evtp = implode('and ', $out_where);
-
-		if(is_array($where))
-			$filter = 'and ' . implode('and ', $where);
-		$sql = "
-		select
-			t.form_id,
-			t.fullname,
-			t.objectgr_id,
-			t.addr,
-			--e.evtp_id,
-			--e.Date,
-				t.isVisible,
-				case when lag(t.form_id, 1, 0) over (order by t.fullname, t.addr) <> t.form_id then 1 else 0 end as count_form,
-			sum(case when e.evnt_id is null then 0 else 1 end) event_count,
-			sum(case when e.evnt_id is not null and e.date_exec is null then 1 else 0 end) no_exec_event_count
-		from (
-			select
-				1 sort,
-				o.form_id,
-				(o.fullname + ' ' + case when max(o.sum_price) > 7500 then 'VIP' else '' end) as fullname,
-				og.objectgr_id,
-				a.addr,
-						isNull(v.isVisible, 1) isVisible
-			from organizations_v o inner join objectsgroup og on (o.form_id = og.propform_id and og.deldate is null)
-				inner join addresses_v a on (og.address_id = a.address_id)
-				left join contracts_v c on (c.objectgr_id = og.objectgr_id and dbo.truncdate(getdate()) between c.contrsdatestart and c.contrsdateend and c.doctype_id = 4)
-				left join ObjectsGroupSystems st on (og.objectgr_id = st.ObjectGr_id and st.Availability_id = 1 and st.deldate is null and exists (select 1 from systemcompetitors stc where stc.ObjectsGroupSystem_id = st.ObjectsGroupSystem_id and stc.cmtr_id = 4))
-						left join ObjectsGroupVisible v on (og.objectgr_id = v.objectgr_id
-		)
-			where o.lph_id = 1
-				 and og.deldate is null
-						 and isnull(c.servicetype_id, 0) <> 1
-						 {$filter}
-		group by o.form_id, o.fullname, og.objectgr_id, a.addr, og.isplanvisible, v.isVisible
-		) t left join events e on (t.objectgr_id = e.objectgr_id and e.deldate is null
-		)
-		 where $filter_evtp
-		  group by t.form_id, t.fullname,	t.objectgr_id, t.addr, t.isVisible--, e.Date, e.evtp_id
-		having (1=1)
-		order by t.fullname, t.addr
-		";
-
-		$command = Yii::app()->db->createCommand($sql);
-		return $command->queryAll();
 	}
 
 

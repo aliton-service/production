@@ -1,10 +1,8 @@
 <script type="text/javascript">
-    var SN = {};
-    var EventsClients = {};
     $(document).ready(function () {
-        var CurrentRowEquips;
         
         /* Текущая выбранная строка данных */
+        var CurrentRowDataClients;
         
         var EventsClients = {
 //            docm_id: '<?php // echo $model->docm_id; ?>',
@@ -31,7 +29,7 @@
             if (data.subItems.length > 0) {
                 var event_count = data.subItems[0]['event_count'];
                 var no_exec_event_count = data.subItems[0]['no_exec_event_count'];
-                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + '<span style="margin-left: 20px; color: #105287;"> З:' + event_count + '<span style="margin-left: 8px;"> Н:' + no_exec_event_count + '</span></span></span>';
+                return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + '<span style="margin-left: 10px; color: #105287;"> З:' + event_count + '<span style="margin-left: 5x;"> Н:' + no_exec_event_count + '</span></span></span>';
             }
         };
         
@@ -40,7 +38,7 @@
         $("#EventsClientsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: '400',
-                width: '45%',
+                width: '100%',
                 source: EventsClientsDataAdapter,
                 showstatusbar: true,
                 statusbarheight: 29,
@@ -56,31 +54,86 @@
                     { text: 'Клиент', datafield: 'fullname', minwidth: 250 },
                     { text: 'Адрес', datafield: 'addr', minwidth: 250 },
                     { text: 'Запл.', datafield: 'event_count', width: 50 },
-                    { text: 'Невыпол.', datafield: 'no_exec_event_count', width: 70 },
+                    { text: 'Невып.', datafield: 'no_exec_event_count', width: 60 },
                 ],
                 groups: ['fullname']
         }));
         
-        $("#EventsClientsGrid").on("bindingcomplete", function () {
-            $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
-        });
         
         
-        $('#EventsClientsGrid').jqxGrid('selectrow', 0);
         
         var EventTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
         EventTypesDataAdapter.dataBind();
-        
+
 //        console.log(EventTypesDataAdapter.records);
+
+        for (var i = 0; i < EventTypesDataAdapter.records.length; i++) {
+            $('#jqxTabsEventsClientsList').append("<li><div style='margin-top: 3px;'>" + EventTypesDataAdapter.records[i].EventType + "</div></li>");
+            $('#jqxTabsEventsClients').append('<div id="contentEventsClients' + (i + 1) + '"></div>');
+        }
         
-        var initWidgets = function (tab) {
-            for (var i = 0; i < EventTypesDataAdapter.records.length; i++) {
-                console.log(EventTypesDataAdapter.records[i]);
-                
+        
+        $('#EventsGrid').jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                height: '360px',
+                width: '99.5%',
+                showstatusbar: true,
+                statusbarheight: 29,
+                showaggregates: true,
+                showfilterrow: false,
+                autoshowfiltericon: true,
+                groupable: true,
+                showgroupsheader: false,
+                groupsrenderer: groupsrenderer,
+                pagesize: 200,
+                virtualmode: false,
+                columns: [
+                    { text: 'Дата', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
+                    { text: 'Тип', datafield: 'eventtype', width: 150 },
+                    { text: 'Адрес', datafield: 'addr', minwidth: 230 },
+                    { text: 'Исполнитель', datafield: 'employeename', width: 100 },
+                    { text: 'Выполнение', dataField: 'date_exec', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
+                ]
+        }));
+        
+        
+        $("#EventsClientsGrid").on('rowselect', function (event) {
+            var Temp = $('#EventsClientsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowDataClients = Temp;
+            } else {CurrentRowDataClients = null};
+            console.log(CurrentRowDataClients);
+
+            if (CurrentRowDataClients !== null) {
+                var GridDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEvents, {}), {
+                    formatData: function (data) {
+                        $.extend(data, {
+                            Filters: ["e.objectgr_id = " + CurrentRowDataClients.objectgr_id + " and o.form_id = " + CurrentRowDataClients.form_id],
+                        });
+                        return data;
+                    },
+                });
+
+                $('#EventsGrid').jqxGrid({ source: GridDataAdapter });
             }
+        });
+
+
+        var initWidgets = function (tab) {
+                console.log('tab = ' + tab);
+            
         };
         
-        $('#jqxTabsEventsClients').jqxTabs({ width: '54%', height: 400, initTabContent: initWidgets});
+        
+        $('#jqxTabsEventsClients').jqxTabs({ width: '100%', height: 37, initTabContent: initWidgets});
+            
+        
+        $("#EventsClientsGrid").on("bindingcomplete", function () {
+//            $('#jqxTabsEventsClients').jqxTabs('select', 3);
+            $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
+            $('#EventsClientsGrid').jqxGrid('expandallgroups');
+            $('#EventsClientsGrid').jqxGrid('selectrow', 0);
+        });
       
     });
 </script>
@@ -95,31 +148,24 @@
 
 <div class="row" style="display: flex; justify-content: space-between;">
     
-    <div id="EventsClientsGrid" class="jqxGridAliton"></div>
+    <div class="row-column" style="min-width: 400px; width: 45%; max-width: 900px;"><div id="EventsClientsGrid" class="jqxGridAliton"></div></div>
     
-    <div id='jqxTabsEventsClients'>
-        <ul>
-            <li>
-                <div style="margin-top: 3px;">
-                    Все
-                </div>
-            </li>
-            <li>
-                <div style="margin-top: 3px;">
-                    Профилактики
-                </div>
-            </li>
-            <li>
-                <div style="margin-top: 3px;">
-                    Инспекции
-                </div>
-            </li>
-        </ul>
+    <div class="row-column" style="min-width: 400px; width: 54.5%; max-width: 900px;">
+        <div id='jqxTabsEventsClients'>
+            <ul id="jqxTabsEventsClientsList">
+                <li>
+                    <div style="margin-top: 3px;">
+                        Все
+                    </div>
+                </li>
 
-        <div id='contentCostCalcEquips'></div>
-        <div id='contentCostCalcWorks'></div>
-        <div id='contentCostCalcDocuments'></div>
+            </ul>
 
+            <div id='contentEventsClients0'>
+            </div>
+
+        </div>
+        <div id="EventsGrid" class="jqxGridAliton"></div>
     </div>
 </div>
 

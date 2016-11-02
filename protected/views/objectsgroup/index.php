@@ -257,7 +257,7 @@ $this->breadcrumbs=array(
                 </div>
             </li>
         </ul>
-        <div style="overflow: hidden; margin: 10px 15px; background-color: #F2F2F2;">
+        <div style="overflow: hidden; padding: 10px 15px; background-color: #F2F2F2;">
             <div style="overflow: hidden;">
                 <div class="row">
                     <div class="row-column">Клиент: <input readonly type="text" id="FullName"></div>

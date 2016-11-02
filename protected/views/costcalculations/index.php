@@ -1380,12 +1380,12 @@
             <div class="row-column">Наименование: <input readonly id='group_name' type="text"></div>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: 5px;">
             <div class="row-column">Вид работ: <input readonly id='workname' type="text"></div>
             <div class="row-column">Сотрудник: <input readonly id='empl_name' type="text"></div>
         </div>
     </div>
-    <div class="row-column" style="margin: 0;">
+    <div class="row-column" style="margin: 0 0 0 5px;">
         <div><div class="row-column">Техническое задание:</div></div>
         <div style="clear: both"></div>
         <div><div class="row-column"><textarea readonly id="spec_condt"></textarea></div></div>
@@ -1398,12 +1398,12 @@
             <div class="row-column">Юр. лицо: <input readonly id='jrdc_name' type="text"></div>
             <div class="row-column"><input readonly id='RegistrationName' type="text"></div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 5px;">
             <div class="row-column" style="margin-top: 2px;">Желаемая дата получения: </div><div class="row-column"><div id='best_date'></div></div>
             <div class="row-column">Номер заявки: <input readonly id='Demand_id' type="text"></div>
         </div>
     </div>
-    <div class="row-column" style="margin: 0;">
+    <div class="row-column" style="margin: 0 0 0 5px;">
         <div><div class="row-column">Примечание:</div></div>
         <div style="clear: both"></div>
         <div><div class="row-column" ><textarea readonly id="note"></textarea></div></div>
@@ -1413,9 +1413,9 @@
     <div class="row-column">Расходные материалы:</div>
     <div class="row-column"><div id='sum_materials_low' readonly="readonly"></div></div>
     <div class="row-column" style="margin-top: 2px;">Дата согл. с рук.: </div><div class="row-column"><div id='date_ready'></div></div>
-    <div class="row-column">Согласовал: <input readonly id='EmplAgreed' type="text"></div>
+    <div class="row-column" style="margin-top: 3px;">Согласовал: <input readonly id='EmplAgreed' type="text"></div>
 </div>
-<div class="row">
+<div class="row" style="margin-top: 3px;">
     <div class="row-column"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>
     <div style='float: left;' id="dropDownBtnCostCalculations">
         <div style="padding: 2px"><input type="button" value="Согласовано с рук." id='btnAgreedCostCalculations'/></div>
@@ -1490,7 +1490,7 @@
             <div id='contentCostCalcEquips' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
                 <div style="margin-top: 5px;">
                     <div id="CostCalcEquipsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                    <div class="row" style="margin-top: 3px; padding-left: 0;">
+                    <div class="row" style="margin-top: 5px; padding-left: 0;">
                         <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcEquips' /></div>
                         <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcEquips' /></div>
                         <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcEquips'/></div>
@@ -1541,7 +1541,7 @@
         </div>
     </div>
 </div>
-<div class="row" style="max-width: 1024px">
+<div class="row" style="margin-top: 5px; max-width: 1024px">
     <div class="row-column">
         <div>
             <div class="row-column" style="width: 250px">Пусконаладочные работы для клиента</div>
@@ -1566,7 +1566,7 @@
             <div class="row-column"><div id="edIntogoKoef"></div></div>
         </div>
         <div>
-            <div class="row-column" style="float: right"><input id="btnEditDetailsCostCalc" value="Изменить"/></div>
+            <div class="row-column" style="float: right; margin-top: 5px;"><input id="btnEditDetailsCostCalc" value="Изменить"/></div>
         </div>
     </div>
     <div class="row-column" style="float: right; width: 400px">
