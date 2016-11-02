@@ -3501,4 +3501,55 @@ Sources.SourceEvents =
     }
 };
 
+Sources.SourceRepairs =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Repr_id', type: 'int'},
+        {name: 'status', type: 'int'},
+        {name: 'status_name', type: 'string'},
+        {name: 'number', type: 'string'},
+        {name: 'date', type: 'date'},
+        {name: 'date_create', type: 'date'},
+        {name: 'action', type: 'string'},
+        {name: 'EquipName', type: 'string'},
+        {name: 'Addr', type: 'string'},
+        {name: 'date_ready', type: 'date'},
+        {name: 'date_exec', type: 'date'},
+        {name: 'date_accept', type: 'date'},
+        {name: 'RepairPrior', type: 'string'},
+        {name: 'deadline', type: 'date'},
+        {name: 'mstr_empl_id', type: 'int'},
+        {name: 'mstr_empl_name', type: 'string'},
+        {name: 'egnr_empl_id', type: 'int'},
+        {name: 'egnr_empl_name', type: 'string'},
+        {name: 'defect', type: 'string'},
+        {name: 'SN', type: 'string'},
+        {name: 'user_create', type: 'int'},
+        {name: 'reg_empl_name', type: 'string'},
+        {name: 'Return', type: 'bool'},
+        {name: 'overday', type: 'int'},
+        {name: 'date_plan', type: 'date'},
+        {name: 'wrnt', type: 'bool'},
+        {name: 'splr_id', type: 'int'},
+        {name: 'namesupplier', type: 'string'},
+        {name: 'delayreason', type: 'string'},
+        {name: 'resultname', type: 'string'},
+        {name: 'date_undo', type: 'date'},
+        {name: 'undo_empl_name', type: 'int'},
+        {name: 'reason_name', type: 'string'},
+        {name: 'DatePlan', type: 'date'}
+    ],
+    id: 'Repr_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=Repairs',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 

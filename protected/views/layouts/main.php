@@ -183,27 +183,9 @@
                             )
                             ),
 
-
                             array('label'=>'Ремонт', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewRepairs'), 'items'=>array(
-                                array('label'=>'Формы', 'url'=>'#', 'items'=>array(
-                                    array('label'=>'Форма для менеджера по ремонту', 'url'=>array('/repair')),
-                                    array('label'=>'Форма для инженера ПРЦ', 'url'=>array('/repair/RepaisForEngineer')),
-                                    array('label'=>'Акты дефектации', 'url'=>array('/RepairActDefectations/Index')),
-                                    array('label'=>'Сопроводительные накладные', 'url'=>array('/RepairSRM/Index')),
-                                    array('label'=>'Гарантийные талоны', 'url'=>array('/RepairWarrantys/Index')),
-                                    array('label'=>'Акт утилизации', 'url'=>array('/RepairActUtilizations/Index')),
-
-                                    )
-                                ),
-                                array('label'=>'Справочники', 'url'=>'#', 'items'=>array(
-                                    array('label'=>'Реестр оборудования', 'url'=>array('/repair')),
-                                    )
-                                ),
-                                array('label'=>'Отчеты', 'url'=>'#', 'items'=>array(
-                                    array('label'=>'Реестр оборудования', 'url'=>array('/repair')),
-                                    )
+                                    array('label'=>'Реестр оборудования', 'url'=>array('/Repair')),
                                 )
-                            )
                             ),
 
                             array('label'=>'Склад', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('WHDocumentsView'), 'items'=>array(
