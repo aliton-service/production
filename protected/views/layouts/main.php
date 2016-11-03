@@ -220,10 +220,6 @@
                             )),
 
                             array('label'=>'Авторизация', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-//                            array('label'=>'Выход ('.$fullname.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
-                            array('label'=>'Администрирование', 'url'=>array('/admin'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
-                            array('label'=>'Тестирование', 'url'=>array('test/index'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
-                            array('label'=>'Отправка SMS', 'url'=>array('test/send'), 'visible'=>Yii::app()->user->checkAccess('Administrator')),
                             array('label'=>'Отчеты', 'url'=>'#', 'items' => array(
                                 array('label'=>'Заявки', 'url'=>'#', 'items'=>array(
                                     array('label' => 'Отчет по заявкам Call-центра', 

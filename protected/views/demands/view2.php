@@ -72,7 +72,6 @@
         $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
         
         
-        
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:

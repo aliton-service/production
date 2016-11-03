@@ -10,7 +10,7 @@
             
             $("#Structure_id").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100, value: Structure.Structure_id,}));
             $("#Parent_id").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100, value: Structure.Parent_id,}));
-            $("#edEmpl").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id"}));
+            $("#edEmpl").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: 'calc(100% - 4px)', displayMember: "ShortName", valueMember: "Employee_id"}));
             
             if (Structure.Empl_id != '') $("#edEmpl").jqxComboBox('val', Structure.Empl_id);
             
@@ -26,14 +26,14 @@
      )); 
 ?>
 
-<div class="row">
-    <div class="row-column">
+<div class="al-row">
+    <div class="row-column" style="width: 100%">
         <input id='Structure_id' type="hidden" name='OrganizationStructure[Structure_id]'/>
         <input id='Parent_id' type="hidden" name='OrganizationStructure[Parent_id]'/>ФИО сотрудника:
     </div>
 </div>    
-<div class="row">
-    <div class="row-column">
+<div class="al-row">
+    <div class="row-column" style="width: 100%">
         <div id='edEmpl' name="OrganizationStructure[Empl_id]"></div><?php echo $form->error($model, 'Empl_id'); ?>
     </div>
 </div>  

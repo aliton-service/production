@@ -60,24 +60,39 @@ class OrganizationStructureController extends Controller
             $this->title = 'Создание новой организации';
             $model = new OrganizationStructure();
             
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+            
             if(isset($_POST['OrganizationStructure'])) {
                 $model->attributes=$_POST['OrganizationStructure'];
                 $model->EmplCreate = Yii::app()->user->Employee_id;
 
                 if ($model->validate()) {
-                    $model->insert();
-                    echo '1';
+                    $Res = $model->insert();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $Res['Structure_id'];
+                    echo json_encode($ObjectResult);
                     return;
                 }    
             }
 
-            $this->renderPartial('_form',array(
-                    'model'=>$model,
-            ));
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
 	public function actionDragAndDrop() {
             $model = new OrganizationStructure();
+            
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
             
             if(isset($_POST['OrganizationStructure']))
             {
@@ -87,17 +102,26 @@ class OrganizationStructureController extends Controller
 
                 if ($model->validate()) {
                     $model->update();
-                    echo '1';
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Structure_id;
+                    echo json_encode($ObjectResult);
                     return;
                 }
             }
             
-            echo '0';
+            echo json_encode($ObjectResult);
+            return;
         }
         
 	public function actionUpdate()
 	{
             $model = new OrganizationStructure();
+            
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
             
             if(isset($_POST['OrganizationStructure']))
             {
@@ -106,21 +130,21 @@ class OrganizationStructureController extends Controller
 
                 if ($model->validate()) {
                     $model->update();
-                    echo '1';
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Structure_id;
+                    echo json_encode($ObjectResult);
                     return;
                 }
             }
-            else
-            {
-                if (isset($_POST['Structure_id'])) {
-                    $model->getmodelPk($_POST['Structure_id']);
-                }
-            }
             
-            $this->renderPartial('_form', array(
-                    'model'=>$model,
-                )
-            );
+            if (isset($_POST['Structure_id'])) {
+                $model->getmodelPk($_POST['Structure_id']);
+            }
+
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
             
 	}
 

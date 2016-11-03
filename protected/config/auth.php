@@ -232,6 +232,18 @@ return array_merge(
             ),
         ),
         
+        'Clerk' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Делопроизводитель',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'UserObjects',
+                'AdminOrganizationStructure',
+            ),
+        ),
+        
         'SeniorDispatcher' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Старший диспетчер',
