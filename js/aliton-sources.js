@@ -3476,6 +3476,31 @@ Sources.SourceEventTypes =
     }
 };
 
+Sources.SourceEvents =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'evnt_id', type: 'int'},
+        {name: 'evtp_id', type: 'int'},
+        {name: 'date', type: 'date'},
+        {name: 'eventtype', type: 'string'},
+        {name: 'addr', type: 'string'},
+        {name: 'employeename', type: 'string'},
+        {name: 'date_exec', type: 'date'},
+        {name: 'overday', type: 'int'},
+    ],
+    id: 'evnt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Events',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 Sources.SourceRepairs =
 {
     datatype: "json",

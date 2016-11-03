@@ -59,7 +59,7 @@
         $("#edResultName").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.ResultName});
         $("#edDemandText").jqxTextArea({height: 71, width: 220, minLength: 1});
         $("#edSpecCondition").jqxTextArea({height: 71, width: 180, minLength: 1});
-        $("#edUCreateName").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.UCreateName});
+        $("#edUCreateName").jqxInput({height: 25, width: 110, minLength: 1, value: Demand.UCreateName});
         $("#edUChangeName").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.UChangeName});
         
         
@@ -420,7 +420,7 @@
             <div style="clear: both;"></div>
             <div><input readonly id="edResultName" type="text"/></div>
         </div>
-        <div class="row-column" style="width: 100px;">
+        <div class="row-column" style="width: 110px;">
             <div>Зарегистрировал</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edUCreateName" type="text"/></div>
