@@ -241,6 +241,7 @@ return array_merge(
             'children' => array(
                 'UserObjects',
                 'AdminOrganizationStructure',
+                'ManagerEmployees',
             ),
         ),
         
