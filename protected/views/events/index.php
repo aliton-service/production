@@ -100,7 +100,7 @@
                 columns: [
                     { text: 'Дата', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
                     { text: 'Тип', datafield: 'eventtype', width: 150 },
-                    { text: 'evtp_id', datafield: 'evtp_id', width: 40, hidden: true },
+                    { text: 'evnt_id', datafield: 'evnt_id', width: 40, hidden: true },
                     { text: 'Адрес', datafield: 'addr', minwidth: 230, maxwidth: 400 },
                     { text: 'Исполнитель', datafield: 'employeename', width: 120 },
                     { text: 'Выполнение', dataField: 'date_exec', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
@@ -111,11 +111,11 @@
         
         
         $("#EventsGrid").on('rowselect', function (event) {
-            var Temp = $('#EventsClientsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            var Temp = $('#EventsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowDataEvents = Temp;
             } else {CurrentRowDataEvents = null};
-//            console.log(CurrentRowDataEvents);
+            console.log(CurrentRowDataEvents);
         });
         
         
@@ -161,7 +161,7 @@
                 type: 'POST',
                 async: false,
                 data: {
-                    evnt_id: CurrentRowDataClients.evnt_id,
+                    evnt_id: CurrentRowDataEvents.evnt_id,
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);

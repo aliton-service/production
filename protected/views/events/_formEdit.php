@@ -65,8 +65,6 @@
         if (Events.user_create != null) $("#user_create").jqxComboBox('val', Events.user_create);
         
         
-        if (Events.evnt_id != null) $("#EventType").jqxComboBox('val', Events.evnt_id);
-        
 //        if (Events.dateend != null) $("#dateend").jqxDateTimeInput('val', Events.dateend);
     });
 </script>        
@@ -80,7 +78,7 @@
     ));
 ?>
 
-empl_id = <?php echo json_encode($model->empl_id); ?>
+addr = <?php echo json_encode($model->addr); ?>
 
 <!--<input type="hidden" name="Events[evnt_id]" value="<?php // echo $model->evnt_id; ?>"/>-->
 <input type="hidden" name="Events[objectgr_id]" value="<?php echo $model->objectgr_id; ?>"/>
