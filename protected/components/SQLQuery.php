@@ -29,9 +29,9 @@ class SQLQuery
     {
         $Idx = 0;
         
-        while (strpos($Text, '#', $Idx) !== false)
+        while (strpos($Text, ':#', $Idx) !== false)
         {
-            $Idx = strpos($Text, '#', $Idx);
+            $Idx = strpos($Text, ':#', $Idx);
             $IdxEnd = strpos($Text, ')', $Idx);
             if ($IdxEnd === false)
                 $IdxEnd = strpos($Text, ',', $Idx);
@@ -62,7 +62,7 @@ class SQLQuery
     {
         for ($i = 0; $i < count($this->Parameters); $i++)
         {
-            if (mb_strtoupper('#' . $ParamName) === mb_strtoupper($this->Parameters[$i]['ParamName']))
+            if (mb_strtoupper(':#' . $ParamName) === mb_strtoupper($this->Parameters[$i]['ParamName']))
             {
                 $this->Parameters[$i]['ParamValue'] = quotemeta($Value);
                 break; 
@@ -163,7 +163,7 @@ class SQLQuery
     {
         $SQLText = $this->text;
         foreach ($this->Parameters as $key => $value) {
-            $SQLText = str_ireplace('#' . $value['ParamName'], $value['ParamValue'], $SQLText);
+            $SQLText = str_ireplace(':#' . $value['ParamName'], $value['ParamValue'], $SQLText);
         }
         $c = Yii::app()->db->createCommand($SQLText);
         return $c->queryRow();
