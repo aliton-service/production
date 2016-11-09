@@ -246,12 +246,12 @@
     }
     
     .jqx-fill-state-pressed .backlight_green {
-        color: white;
+        color: black;
     }
     
     #ObjectsGrid .jqx-fill-state-pressed {
-        color: white;
-        background-color: #2e7d58 !important;
+        color: black;
+        background-color: #86BFA0 !important;
     }
     
     .jqx-calendar-month-container:last-child {

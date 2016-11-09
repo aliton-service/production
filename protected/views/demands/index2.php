@@ -185,12 +185,12 @@
     
     .jqx-fill-state-pressed .backlight_pink,
     .jqx-fill-state-pressed .backlight_red {
-        color: white;
+        color: black;
     }
     
     #DemandsGrid .jqx-fill-state-pressed {
-        background-color: #2e7d58 !important;
-        color: white;
+        background-color: #86BFA0 !important;
+        color: black;
     }
 </style>
 
