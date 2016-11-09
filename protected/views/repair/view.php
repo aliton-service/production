@@ -67,6 +67,7 @@
             $('#edResult').val(Repairs.ResultName);
             $('#edDatePlanAction1').val(Repairs.DatePlanAction1);
             $('#edDateFactAction1').val(Repairs.DateFactAction1);
+            $('#edExecHour').val(Repairs.ExecHour);
         };
         
         var CheckTabs = function() {
@@ -150,8 +151,9 @@
                     Repairs.Rslt_id = Res.rslt_id;
                     Repairs.ResultName = Res.resultname;
                     Repairs.EDefect = Res.edefect;
-                    Repairs.DatePlanAction1 = Aliton.DateConvertToJs(Res.date_plan),
-                    Repairs.edDateFactAction1 = Aliton.DateConvertToJs(Res.date_fact),
+                    Repairs.DatePlanAction1 = Aliton.DateConvertToJs(Res.date_plan);
+                    Repairs.edDateFactAction1 = Aliton.DateConvertToJs(Res.date_fact);
+                    Repairs.ExecHour = Res.exechour;
                     SetValueControls();
                     CheckTabs();
                     //$("#btnRefreshDetails").click();
@@ -202,11 +204,15 @@
                     if (Repairs.ResultName != '') $("#edResult").jqxInput('val', Repairs.ResultName);
                 break;
                 case 2:
-                    $("#edEDefect").jqxTextArea($.extend(true, {}, {height: 25, width: 600, minLength: 1}));
-                    $("#edDatePlanAction1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-                    $("#edDateFactAction1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edEDefect").jqxTextArea($.extend(true, {}, {height: 85, width: 600, minLength: 1}));
+                    $("#edDatePlanAction1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DatePlanAction1, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edDateFactAction1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DateFactAction1, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edExecHour").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
                     
                     if (Repairs.EDefect != '') $("#edEDefect").jqxTextArea('val', Repairs.EDefect);
+                    if (Repairs.DatePlanAction1 != '') $("#edDatePlanAction1").jqxDateTimeInput('val', Repairs.DatePlanAction1);
+                    if (Repairs.DateFactAction1 != '') $("#edDateFactAction1").jqxDateTimeInput('val', Repairs.DateFactAction1);
+                    if (Repairs.ExecHour != '') $("#edExecHour").jqxInput('val', Repairs.ExecHour);
                 break;
             }
         };
@@ -609,6 +615,7 @@
                             <div style="clear: both"></div>
                             <div class="al-row" style="padding: 0px;"><div id="edDateFactAction1"></div></div>
                         </div>
+                        <div style="clear: both"></div>
                     </div>
                 </div>
                  <div class="al-row">
