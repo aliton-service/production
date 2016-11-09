@@ -23,7 +23,7 @@ class EventsClients extends MainFormModel
                             sc.fullname,
                             sc.objectgr_id,
                             sc.addr,
-                            sc.isVisible,
+                            --sc.isVisible,
                             sc.event_count,
                             sc.no_exec_event_count
             ";
@@ -61,8 +61,16 @@ class EventsClients extends MainFormModel
 	{
             return array(
                 'evnt_id' => 'Evnt',
+                
             );
 	}
 
+        public function attributeFilters()
+        {
+            return array(
+                'master' => '(select c.Master from Contracts_v c where c.ObjectGr_id = sc.ObjectGr_id and GETDATE() between c.ContrSDateStart and c.ContrSDateEnd and c.DocType_id = 4) ',
+                
+            );
+        }
 
 }

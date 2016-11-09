@@ -99,7 +99,7 @@ class Events extends MainFormModel
 	public function rules()
 	{
 		return array(
-			//array('evtp_id, objectgr_id, date, empl_id', 'required'),
+			array('evtp_id, objectgr_id, empl_id', 'required'),
 			array('evtp_id, objectgr_id, prds_id, achs_id, empl_id, rpfr_id, user_create, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
 			array('user_date_exec, user_date_act', 'length', 'max'=>20),
 			array('who_reported, evaluation', 'length', 'max'=>150),
@@ -113,7 +113,7 @@ class Events extends MainFormModel
 	{
 		return array(
 			'evnt_id' => 'Evnt',
-			'evtp_id' => 'Evtp',
+			'evtp_id' => 'Направление',
 			'objectgr_id' => 'Objectgr',
 			'prds_id' => 'Prds',
 			'date' => 'Date',
@@ -125,7 +125,7 @@ class Events extends MainFormModel
 			'date_act' => 'Date Act',
 			'user_date_act' => 'User Date Act',
 			'add_date_act' => 'Add Date Act',
-			'empl_id' => 'Empl',
+			'empl_id' => 'Исполнитель',
 			'rpfr_id' => 'Rpfr',
 			'who_reported' => 'Who Reported',
 			'evaluation' => 'Evaluation',
@@ -140,6 +140,13 @@ class Events extends MainFormModel
 		);
 	}
 
+        public function attributeFilters()
+        {
+            return array(
+                'objectgr_id' => 'e.objectgr_id',
+                'evtp_id' => 'e.evtp_id',
+            );
+        }
 
 
 }
