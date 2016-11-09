@@ -40,6 +40,7 @@ class AddressList extends MainFormModel
                         left join dbo.Addresses_v AS a ON og.Address_id = a.Address_id ";
         $Where =    "\nWhere (o.DelDate IS NULL)
                         AND (og.DelDate IS NULL)
+                        AND ISNULL(a.Addr, '') <> ''
                         AND (o.Doorway <> 'Общее')";
         $Order =    "\nOrder by a.Addr";
         $this->Query->setSelect($Select);

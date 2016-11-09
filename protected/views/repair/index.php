@@ -148,7 +148,7 @@
             });
         });
         $('#btnInfo').on('click', function() {
-            var url = <?php echo json_encode(Yii::app()->createUrl('WHActs/View')); ?>;
+            var url = <?php echo json_encode(Yii::app()->createUrl('Repair/View')); ?>;
             if (CurrentRowData != undefined) 
                 window.open(url + '&Repr_id=' + CurrentRowData.Repr_id);
                 
@@ -156,9 +156,9 @@
         
         $('#btnAdd').on('click', function() {
             if ($('#btnAdd').jqxButton('disabled')) return;
-            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 470, width: 920, position: 'center' }));
+            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 780, position: 'center' }));
             $.ajax({
-                url: <?php echo json_encode(Yii::app()->createUrl('WhActs/Insert')) ?>,
+                url: <?php echo json_encode(Yii::app()->createUrl('Repair/Create')) ?>,
                 type: 'POST',
                 async: false,
                 data: {

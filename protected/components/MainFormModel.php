@@ -115,20 +115,20 @@ class MainFormModel extends CFormModel
 
     }
     
-    public function Find($Params, $Conditions = array(), $TopCount = -1)
+    public function Find($Params, $Conditions = array(), $TopCount = -1, $Variables = array())
     {
-        $this->createQuery($Params, $Conditions, $TopCount);
+        $this->createQuery($Params, $Conditions, $TopCount, $Variables);
         
         return $this->Query->QueryAll();
     }
 
-    public function queryRow($Params, $Conditions = array(), $TopCount = -1)
+    public function queryRow($Params, $Conditions = array(), $TopCount = -1, $Variables = array())
     {
-        $this->createQuery($Params, $Conditions, $TopCount);
+        $this->createQuery($Params, $Conditions, $TopCount, $Variables);
         return $this->Query->queryRow();
     }
 
-    protected function createQuery($Params, $Conditions = array(), $TopCount = -1) {
+    protected function createQuery($Params, $Conditions = array(), $TopCount = -1, $Variables = array()) {
         // Поиск по параметрам, возвращаем массив записей
         foreach ($Params as $key => $value)
         {
@@ -142,6 +142,10 @@ class MainFormModel extends CFormModel
         if (($TopCount != -1) && ($TopCount != ""))
         {
             $this->Query->text = str_ireplace("Select", "Select Top " . $TopCount, $this->Query->text);
+        }
+        
+        foreach ($Variables as $key => $value) {
+            $this->Query->bindParam($key, $value);
         }
 
     }

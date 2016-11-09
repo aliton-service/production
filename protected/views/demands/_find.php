@@ -3,6 +3,7 @@
         /* Текущая выбранная строка данных */
         var Params = {
             Demand_id: <?php echo json_encode($Demand_id); ?>,
+            Object_id: <?php echo json_encode($Object_id); ?>,
         };
         var CurrentRowDataAll;
         
@@ -48,7 +49,10 @@
         });
         
         $('#btnFindSelectDem').on('click', function(){
-            $("#Demand_idCC").val(CurrentRowDataAll.Demand_id);
+            if ($("#Demand_idCC").length>0)
+                $("#Demand_idCC").val(CurrentRowDataAll.Demand_id);
+            if ($("#edDemandEdit").length>0)
+                $("#edDemandEdit").val(CurrentRowDataAll.Demand_id);
             $('#FindDemandDialog').jqxWindow('close');
         });
         
@@ -67,13 +71,11 @@
                 var FilterNumber = NumberFilterGroup.createfilter('stringfilter', $("#edFindDemNumber").val(), 'CONTAINS');
                 NumberFilterGroup.addfilter(1, FilterNumber);
             }
-            
             var ExecFilterGroup = new $.jqx.filter();
             if ($("#edFindDemNoExec").jqxCheckBox('checked')) {
                 var FilterExec = ExecFilterGroup.createfilter('datefilter', Date(), 'NULL');
                 ExecFilterGroup.addfilter(1, FilterExec);
             }
-            
             var DateFilterGroup = new $.jqx.filter();
             if ($("#edFindDateStart").val() != '') {
                 var FilterDateStart = DateFilterGroup.createfilter('datefilter', $("#edFindDateStart").val(), 'DATE_GREATER_THAN_OR_EQUAL');   
@@ -83,6 +85,12 @@
                 var FilterDateEnd = DateFilterGroup.createfilter('datefilter', $("#edFindDateEnd").val(), 'DATE_LESS_THAN_OR_EQUAL');   
                 DateFilterGroup.addfilter(1, FilterDateEnd);
             }
+            var ObjectFilterGroup = new $.jqx.filter();
+            if (Params.Object_id != 0) {
+                var FilterObject = ObjectFilterGroup.createfilter('numericfilter', Repair.Object_id, 'EQUAL');
+                ObjectFilterGroup.addfilter(1, FilterObject);
+            }
+            
             
             $('#FindDemandsGrid').jqxGrid('removefilter', 'Demand_id', false);
             if ($("#edFindDemNumber").val() != '') $("#FindDemandsGrid").jqxGrid('addfilter', 'Demand_id', NumberFilterGroup);
@@ -92,6 +100,9 @@
             
             $('#FindDemandsGrid').jqxGrid('removefilter', 'DateReg', false);
             if (($("#edFindDateStart").val() != '' || $("#edFindDateEnd").val() != '') && (!$("#chbPeriodAll").jqxRadioButton('checked'))) $("#FindDemandsGrid").jqxGrid('addfilter', 'DateReg', DateFilterGroup);
+            
+            $('#FindDemandsGrid').jqxGrid('removefilter', 'Object_id', false);
+            if (Params.Object_id != 0) $("#FindDemandsGrid").jqxGrid('addfilter', 'Object_id', ObjectFilterGroup);
             
             $("#FindDemandsGrid").jqxGrid({source: Data});
         };
@@ -144,6 +155,7 @@
                         { text: 'Мастер', columngroup: 'Documents', datafield: 'MasterName', width: 120 },
                         { text: 'Тип заявки', columngroup: 'Documents', datafield: 'DemandType', width: 150 },
                         { text: 'Неисправность', columngroup: 'Documents', datafield: 'Malfunction', width: 150 },
+                        { text: 'Объект', columngroup: 'Documents', datafield: 'Object_id', width: 150, hidden: true },
                     ],
                 
                 }));

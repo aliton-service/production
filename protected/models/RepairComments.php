@@ -9,12 +9,14 @@ class RepairComments extends MainFormModel
     public $Comment;
     public $EmplCreate;
     public $EmployeeName;
+    public $DatePlan;
         
     public function rules() {
             return array(
                     array('Rpcm_id,
                             Repr_id,
                             Date,
+                            DatePlan,
                             Auto,
                             Comment,
                             EmplCreate,
@@ -36,7 +38,8 @@ class RepairComments extends MainFormModel
                         rc.Auto,
                         rc.Comment,
                         rc.EmplCreate,
-                        dbo.FIO(e.EmployeeName) as EmployeeName";
+                        dbo.FIO(e.EmployeeName) as EmployeeName,
+                        rc.DatePlan";
         $From = "\nFrom RepairComments rc left join Employees e on (rc.EmplCreate = e.Employee_id)";
         $Order = "\nOrder by rc.Rpcm_id desc";
 
@@ -52,6 +55,7 @@ class RepairComments extends MainFormModel
             'Rpcm_id' => '',
             'Repr_id' => '',
             'Date' => '',
+            'DatePlan' => '',
             'Auto' => '',
             'Comment' => '',
             'EmplCreate' => '',

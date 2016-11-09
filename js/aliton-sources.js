@@ -3552,4 +3552,137 @@ Sources.SourceRepairs =
     }
 };
 
+Sources.SourceRepairComments =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Repr_id', type: 'int'},
+        {name: 'Rpcm_id', type: 'int'},
+        {name: 'Repr_id', type: 'int'},
+        {name: 'Date', type: 'date'},
+        {name: 'DatePlan', type: 'date'},
+        {name: 'Auto', type: 'bool'},
+        {name: 'Comment', type: 'string'},
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'EmployeeName', type: 'string'}
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=RepairComments',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
 
+
+Sources.SourceRepairDetails =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'rpdt_id', type: 'int'},
+        {name: 'repr_id', type: 'int'},
+        {name: 'eqip_id', type: 'int'},
+        {name: 'EquipName', type: 'string'},
+        {name: 'um_name', type: 'string'},
+        {name: 'docm_quant', type: 'float'},
+        {name: 'fact_quant', type: 'float'},
+        {name: 'summa', type: 'float'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=RepairDetails',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceRepairDocuments =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'keyfield', type: ''},
+        {name: 'docid', type: ''},
+        {name: 'doctype_id', type: ''},
+        {name: 'doctype', type: ''},
+        {name: 'number', type: ''},
+        {name: 'datereg', type: ''},
+        {name: 'dateexec', type: ''},
+        {name: 'note', type: ''},
+        {name: 'status', type: ''},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=RepairDocuments',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceRepairPriors =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'prtp_id', type: 'int'},
+	{name: 'RepairPrior', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=RepairPriors',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceRepairDelayReasons =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Dlrs_id', type: 'int'},
+	{name: 'DelayReason', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=RepairDelayReasons',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceRepairResults =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Rslt_id', type: 'int'},
+	{name: 'ResultName', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=RepairResults',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

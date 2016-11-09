@@ -16,6 +16,9 @@ html, body {
     min-height: 720px;
     *min-width: 100%;
 }
+form {
+    margin-bottom: 0px;
+}
 
 html {
     background-color: #a1a1a1;
