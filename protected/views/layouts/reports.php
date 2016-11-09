@@ -4,10 +4,7 @@
 	<meta name="language" content="en">
         
         <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
-        <?php Yii::app()->clientScript->registerPackage('jquery_ui_css'); ?>
         <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
-        <?php Yii::app()->clientScript->registerPackage('widgets_css'); ?>
-        <?php Yii::app()->clientScript->registerPackage('graj'); ?>
         
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
     </head>

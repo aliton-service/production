@@ -2,64 +2,62 @@
 
 class RepairDocuments extends MainFormModel
 {
-    public $Repr_id;
-    public $Docm_id;
-    public $KeyField;
-    public $DocType_id;
-    public $DocType;
-    public $Number;
-    public $DateReg;
-    public $Note;
-    public $Status;
+    public $keyfield;
+    public $docid;
+    public $doctype_id;
+    public $doctype;
+    public $number;
+    public $datereg;
+    public $dateexec;
+    public $note;
+    public $status;
 
     function __construct() {
         parent::__construct();
         
         $Select = "\nSelect
-                        d.Repr_id,
-                        d.Docm_id,
-                        d.KeyField,
-                        d.DocType_id,
-                        d.DocType,
-                        d.Number,
-                        d.DateReg,
-                        d.Note,
-                        d.Status";
-        $From = "\nFrom dbo.GET_RepairDocuments(#Repr_id) d";
-        $Order = "\nOrder by d.DateReg";
-
+                        d.keyfield,
+                        d.docid,
+                        d.doctype_id,
+                        d.doctype,
+                        d.number,
+                        d.datereg,
+                        d.dateexec,
+                        d.note,
+                        d.[status]";
+        $From = "\nFrom get_documents_repair(:Repr_id) d";
+        
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
-        $this->Query->setOrder($Order);
     }
 
     public function rules()
     {
         return array(
-                array('Repr_id,
-                    Docm_id,
-                    KeyField,
-                    DocType_id,
-                    DocType,
-                    Number,
-                    DateReg,
-                    Note,
-                    Status', 'safe'),
+                array('keyfield,
+                        docid,
+                        doctype_id,
+                        doctype,
+                        number,
+                        datereg,
+                        dateexec,
+                        note,
+                        status,', 'safe'),
         );
     }
     
     public function attributeLabels()
     {
         return array(
-            'Repr_id' => '',
-            'Docm_id' => '',
-            'KeyField' => '',
-            'DocType_id' => '',
-            'DocType' => '',
-            'Number' => '',
-            'DateReg' => '',
-            'Note' => '',
-            'Status' => '',
+            'keyfield' => '',
+            'docid' => '',
+            'doctype_id' => '',
+            'doctype' => '',
+            'number' => '',
+            'datereg' => '',
+            'dateexec' => '',
+            'note' => '',
+            'status' => '',
         );
     }
 

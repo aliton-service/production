@@ -17,53 +17,55 @@ class SQLQuery
         
     }
     
-    public function AddParam($ParamName, $Value)
-    {
-         $Idx = count($this->$Parameters);
-         
-         $this->$Parameters[$Idx + 1] = array('ParamName' => $ParamName, 'ParamValue' => $Value);
+    public function AddParam($ParamName, $Value) {
+        $Idx = count($this->Parameters);
+        array_push($this->Parameters, array(
+            'ParamName' => $ParamName,
+            'ParamValue' => $Value,
+            ));
     }
     
     protected function ParamParser($Text)
     {
         $Idx = 0;
         
-        while (!strpos($Text, $Idx) === FALSE)
+        while (strpos($Text, '#', $Idx) !== false)
         {
-            $ParamName = '';
-            $Idx = strpos($Text, ':', $Idx);
-            $IdxEnd = strpos($Text, ' ', $Idx);
-            if ($IdxEnd === FALSE)
+            $Idx = strpos($Text, '#', $Idx);
+            $IdxEnd = strpos($Text, ')', $Idx);
+            if ($IdxEnd === false)
                 $IdxEnd = strpos($Text, ',', $Idx);
-            if ($IdxEnd === FALSE)
+            if ($IdxEnd === false)
+                $IdxEnd = strpos($Text, ' ', $Idx);
+            if ($IdxEnd === false)
                 $IdxEnd = strlen ($Text);
-            
-            $ParamName = substr($Text, $Idx, $IdxEnd);
-            
-            if ($ParamName <> '')
+            $ParamName = substr($Text, $Idx, ($IdxEnd - $Idx));
+            $Idx++;
+            if ($ParamName <> '') {
                 $this->AddParam ($ParamName, NULL);
+            }
         }
     }
     
     public function ParametersRefresh()
     {
-        $this->$Parameters = array();
+        $this->Parameters = array();
                
-        $this->ParamParser($this->Select);
-        $this->ParamParser($this->From);
-        $this->ParamParser($this->Where);
-        $this->ParamParser($this->Order);
+        $this->ParamParser($this->select);
+        $this->ParamParser($this->from);
+        $this->ParamParser($this->where);
+        $this->ParamParser($this->order);
         $this->ParamParser($this->groupby);
     }
     
     public function bindParam($ParamName, $Value)
     {
-        for ($i = 0; $i < $this->Parameters; ++$i)
+        for ($i = 0; $i < count($this->Parameters); $i++)
         {
-            if (mb_strtoupper($ParamName) === mb_strtoupper($this->Parameters[$i]['ParamName']))
+            if (mb_strtoupper('#' . $ParamName) === mb_strtoupper($this->Parameters[$i]['ParamName']))
             {
                 $this->Parameters[$i]['ParamValue'] = quotemeta($Value);
-                break;
+                break; 
             }
         }
     }
@@ -83,6 +85,7 @@ class SQLQuery
     public function createText()
     {
         $this->text = $this->select . $this->from . $this->where . $this->groupby . $this->order;
+        $this->ParametersRefresh();
     }
     
     public function setSelect($sql)
@@ -148,13 +151,21 @@ class SQLQuery
     
     public function QueryAll()
     {
-        return Yii::app()->db->createCommand($this->text)->queryAll();
+        $SQLText = $this->text;
+        foreach ($this->Parameters as $key => $value) {
+            $SQLText = str_ireplace($value['ParamName'], $value['ParamValue'], $SQLText);
+        }
+        return Yii::app()->db->createCommand($SQLText)->queryAll();
         
     }
     
     public function QueryRow()
     {
-        $c = Yii::app()->db->createCommand($this->text);
+        $SQLText = $this->text;
+        foreach ($this->Parameters as $key => $value) {
+            $SQLText = str_ireplace('#' . $value['ParamName'], $value['ParamValue'], $SQLText);
+        }
+        $c = Yii::app()->db->createCommand($SQLText);
         return $c->queryRow();
     }
     

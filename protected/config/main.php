@@ -41,6 +41,12 @@ return array(
                 'LockManager' => array(
                     'class' => 'LockManager',
                 ),
+                'session' => array(
+                   'timeout' => 60*60,
+                   //'class' => 'CDbHttpSession',
+                   'cookieMode' =>'only',
+                   'cookieParams' => array('secure' => false, 'httponly' => false),
+                ),
                 'clientScript' => array(
                     'packages' => array(
                         'jquery_js' => array(
@@ -78,6 +84,7 @@ return array(
 			'class' => 'WebUser',
                         // enable cookie-based authentication
 			'allowAutoLogin'=>true,
+                        //'authTimeout' => 60,
 		),
                 
             

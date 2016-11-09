@@ -25,23 +25,22 @@
 
             $("#FullName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
             $("#LphName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
-            $("#Address").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 400 }));
-            $("#Apartment").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
-            $("#Floor").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
+            $("#Address").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
+            $("#Apartment").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
+            $("#Floor").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
             $("#year_construction").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
             $("#DoorwayList").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
-            $("#CountPorch").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
-            $("#ClientGroup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
-            $("#Journal").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
-            $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 630 }));
+            $("#CountPorch").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
+            $("#ClientGroup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
+            $("#Journal").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
+            $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
             
-            $("#Refusers").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
-            $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {}));
-            $("#Information").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
+            $("#Refusers").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 250}));
+            $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 250}));
+            $("#Information").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 250}));
             
-            $("#InstallManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 210 }));
-            $("#ServiceManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
-            $("#SalesManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
+            $("#ServiceManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
+            $("#SalesManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
             
             $("#ChangeObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             
@@ -66,7 +65,6 @@
             if (Demand.Note !== '') $("#Note").jqxTextArea('val', Demand.Note);
             if (Demand.Information !== '') $("#Information").jqxTextArea('val', Demand.Information);
             
-            if (Demand.InstallManager !== '') $("#InstallManager").jqxInput('val', Demand.InstallManager);
             if (Demand.ServiceManager !== '') $("#ServiceManager").jqxInput('val', Demand.ServiceManager);
             if (Demand.SalesManager !== '') $("#SalesManager").jqxInput('val', Demand.SalesManager);
         };
@@ -95,8 +93,8 @@
                     pagesize: 200,
                     showfilterrow: false,
                     virtualmode: false,
-                    width: '100%',
-                    height: '180',
+                    width: 'calc(100% - 2px)',
+                    height: 'calc(100% - 2px)',
                     source: DataObjectsGroupsExecutors,
                     columns: [
                         { text: 'ФИО', dataField: 'FIO', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
@@ -191,7 +189,7 @@
                     break;
             }
         };
-        $('#jqxTabs').jqxTabs({ width: '100%', height: 860,  initTabContent: initWidgets });
+        $('#jqxTabs').jqxTabs({ width: '100%', height: 'calc(100% - 2px)',  initTabContent: initWidgets });
         $('#jqxTabs').jqxTabs({ selectedItem: 0 });
         
 
@@ -211,149 +209,141 @@ $this->breadcrumbs=array(
 ?>
 
     
-<!--<div id='jqxWidget' style="background-color: #F2F2F2;">-->
-    <div id='jqxTabs' style="">
-        <ul>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Общие данные
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Системы
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Оборудование
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Договора и оплаты
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Контакты
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 15px; margin-top: 3px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                        Коммерческие предложения и сметы
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <div style="overflow: hidden; padding: 10px 15px; background-color: #F2F2F2;">
-            <div style="overflow: hidden;">
-                <div class="row">
-                    <div class="row-column">Клиент: <input readonly type="text" id="FullName"></div>
-                    <div class="row-column">Тип клиента: <input readonly type="text" id="LphName"></div>
-                </div>
-
-                <div class="row">
-                    <div class="row-column">Адрес: <input readonly type="text" id="Address"></div>
-                </div>
-
-                <div class="row">
-                    <div class="row-column">Квартир: <input readonly type="text" id="Apartment"></div>
-                    <div class="row-column">Кол-во этажей: <input readonly type="text" id="Floor"></div>
-                    <div class="row-column">Год постройки: <input readonly type="text" id="year_construction"></div>
-                </div>
-
-                <div class="row">
-                    <div class="row-column">Подъезды: <input readonly type="text" id="DoorwayList"></div>
-                    <div class="row-column">Кол-во подъездов: <input readonly type="text" id="CountPorch"></div>
-                </div>
-
-                <div class="row">
-                    <div class="row-column">Сегмент: <input readonly type="text" id="ClientGroup"></div>
-                    <div class="row-column">Журнал: <input readonly type="text" id="Journal"></div>
-                </div>
-
-                <div class="row">
-                    <div class="row-column">Почта: <input readonly type="text" id="PostalAddress"></div>
-                </div>
-                
-                <div class="row" style="margin: 0; padding: 0;">
-                    <div class="row-column" style="padding: 0;">
-                        <div class="row">
-                            <div class="row-column">Отказники: <textarea readonly type="text" id="Refusers"></textarea></div>
-                            <div class="row-column">Примечание: <textarea readonly type="text" id="Note"></textarea></div>
-                        </div>
-
-                        <div class="row">
-                            <div class="row-column">Общая информация: <textarea readonly type="text" id="Information"></textarea></div>
-                        </div>
-                    </div>
-                    
-                    <div class="row" style="margin-top: 85px;">
-                        <div class="row">
-                            <div class="row-column">Менеджер М: <input readonly type="text" id="InstallManager"></div>
-                        </div>
-
-                        <div class="row">
-                            <div class="row-column">Менеджер СЦ: <input readonly type="text" id="ServiceManager"></div>
-                        </div>
-
-                        <div class="row">
-                            <div class="row-column">Менеджер ОП: <input readonly type="text" id="SalesManager"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row" style="margin: 0;"><input type="button" value="Изменить" id='ChangeObjectsGroup' /></div>
-            </div>
-            
-            <hr style="border-color: #cecece;"/>
-                
-            <div class="row">
-
-                <div class="row" style="margin: 0 0 5px 0;">
-                    <div class="row-column">Контактные лица: </div>
-                </div>
-
-                <div style="padding-right: 15px"><div id="ContactInfoGrid" class="jqxGridAliton"></div></div>
-
-                <div class="row" style="padding: 0;">
-                    <div class="row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='EditContactInfo' /></div>
-                    <div class="row-column"><input type="button" value="Удалить" id='DelContactInfo' /></div>
+<div id='jqxTabs' style="">
+    <ul>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="vertical-align: middle; text-align: center; float: left; margin-left: 20px">
+                    Общие данные
                 </div>
             </div>
+        </li>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                    Системы
+                </div>
+            </div>
+        </li>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                    Оборудование
+                </div>
+            </div>
+        </li>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                    Договора и оплаты
+                </div>
+            </div>
+        </li>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                    Контакты
+                </div>
+            </div>
+        </li>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                    Коммерческие предложения и сметы
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div style="overflow: auto; height: calc(100% - 2px); background-color: #F2F2F2;">
+        <div style="overflow: auto;">
+            <div class="al-row">
+                <div class="al-row-column" style="width: 60px">Клиент:</div>
+                <div class="al-row-column"><input readonly type="text" id="FullName"></div>
+                <div class="al-row-column">Тип клиента:</div>
+                <div class="al-row-column"><input readonly type="text" id="LphName"></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column" style="width: 60px">Адрес:</div>
+                <div class="al-row-column"><input readonly type="text" id="Address"></div>
+                <div class="al-row-column">Квартир:</div>
+                <div class="al-row-column"><input readonly type="text" id="Apartment"></div>
+                <div class="al-row-column">Кол-во этажей:</div>
+                <div class="al-row-column"><input readonly type="text" id="Floor"></div>
+                <div class="al-row-column">Год постройки:</div>
+                <div class="al-row-column"><input readonly type="text" id="year_construction"></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column">Подъезды:</div>
+                <div class="al-row-column"><input readonly type="text" id="DoorwayList"></div>
+                <div class="al-row-column">Кол-во под.:</div>
+                <div class="al-row-column"><input readonly type="text" id="CountPorch"></div>
+                <div class="al-row-column">Сегмент:</div>
+                <div class="al-row-column"><input readonly type="text" id="ClientGroup"></div>
+                <div class="al-row-column">Журнал:</div>
+                <div class="al-row-column"><input readonly type="text" id="Journal"></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column" style="width: 60px">Почта:</div>
+                <div class="al-row-column"><input readonly type="text" id="PostalAddress"></div>
+                <div class="al-row-column">Менеджер СЦ:</div>
+                <div class="al-row-column"><input readonly type="text" id="ServiceManager"></div>
+                <div class="al-row-column">Менеджер ОП:</div>
+                <div class="al-row-column"><input readonly type="text" id="SalesManager"></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column">
+                    <div class="al-row"><div class="al-row-column">Отказники:</div><div style="clear: both"></div></div>
+                    <div class="al-row"><div class="al-row-column"><textarea readonly type="text" id="Refusers"></textarea></div><div style="clear: both"></div></div>
+                </div>
+                <div class="al-row-column">
+                    <div class="al-row"><div class="al-row-column">Примечание:</div><div style="clear: both"></div></div>
+                    <div class="al-row"><div class="al-row-column"><textarea readonly type="text" id="Note"></textarea></div><div style="clear: both"></div></div>
+                </div>
+                <div class="al-row-column">
+                    <div class="al-row"><div class="al-row-column">Общая информация:</div><div style="clear: both"></div></div>
+                    <div class="al-row"><div class="al-row-column"><textarea readonly type="text" id="Information"></textarea></div><div style="clear: both"></div></div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="al-row" style="margin: 0;">
+                <input type="button" value="Изменить" id='ChangeObjectsGroup' />
+            </div>
         </div>
-        
-        <div id='content2' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%"></div>
+
+        <div class="al-row" style="padding: 0px; height: calc(100% - 323px)">
+            <div id="ContactInfoGrid" class="jqxGridAliton"></div>
         </div>
-        
-        <div id='content3' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%"></div>
-        </div>
-        
-        <div id='content4' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%"></div>
-        </div>
-        
-        <div id='content5' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%"></div>
-        </div>
-        
-        <div id='content6' style="overflow: hidden; margin-left: 10px;">
-            <div style="width: 100%; height: 100%"></div>
+        <div class="al-row" style="padding: 0;">
+            <div class="al-row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>
+            <div class="al-row-column"><input type="button" value="Изменить" id='EditContactInfo' /></div>
+            <div class="al-row-column"><input type="button" value="Удалить" id='DelContactInfo' /></div>
+            <div style="clear: both"></div>
         </div>
     </div>
-<!--</div>-->
+
+    <div id='content2' style="overflow: hidden; margin-left: 10px;">
+        <div style="width: 100%; height: 100%"></div>
+    </div>
+
+    <div id='content3' style="overflow: hidden; margin-left: 10px;">
+        <div style="width: 100%; height: 100%"></div>
+    </div>
+
+    <div id='content4' style="overflow: hidden; margin-left: 10px;">
+        <div style="width: 100%; height: 100%"></div>
+    </div>
+
+    <div id='content5' style="overflow: hidden; margin-left: 10px;">
+        <div style="width: 100%; height: 100%"></div>
+    </div>
+
+    <div id='content6' style="overflow: hidden; margin-left: 10px;">
+        <div style="width: 100%; height: 100%"></div>
+    </div>
+</div>
+
+

@@ -695,8 +695,14 @@ class DemandsController extends Controller
     
     public function actionFindDemand() {
         $Demand_id = 0;
-        if ($_POST['Demand_id']) {
+        $Object_id = 0;
+        
+        if (isset($_POST['Demand_id'])) {
             $Demand_id = $_POST['Demand_id'];
+        }
+        
+        if (isset($_POST['Object_id'])) {
+            $Object_id = $_POST['Object_id'];
         }
         
         $ObjectResult = array(
@@ -707,6 +713,7 @@ class DemandsController extends Controller
         
         $ObjectResult['html'] = $this->renderPartial('_find', array(
                 'Demand_id' => $Demand_id,
+                'Object_id' => $Object_id,
             ), true);
         
         echo json_encode($ObjectResult);

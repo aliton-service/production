@@ -17,6 +17,7 @@ return array(
                         'ViewRepairEngineerInformation',
                         'AcceptRepairs',
                         'UndoAcceptRepairs',
+                        'SendAgreeRepairs',
 		),
 	),
 
@@ -79,6 +80,14 @@ return array(
         'AcceptRepairs' => array(
 		'type' => CAuthItem::TYPE_OPERATION,
 		'description' => 'AcceptRepairs',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'SendAgreeRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'SendAgreeRepairs',
 		'bizRule' => null,
 		'data' => null,
 		'defaultIndex' => 'Repais',

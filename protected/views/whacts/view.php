@@ -64,7 +64,7 @@
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
-                    console.log(Res);
+                    
                     Acts.Docm_id = Res.docm_id;
                     Acts.Date = Aliton.DateConvertToJs(Res.date);
                     Acts.Achs_id = Res.achs_id;
