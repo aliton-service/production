@@ -260,6 +260,7 @@ return array_merge(
                 'ManagerObjectsGroupSystems',
                 'UserDeliveryDemands',
                 'ManagerContacts',
+                'UserContractsS',
             ),
         ),
         
@@ -279,6 +280,7 @@ return array_merge(
                 'UserDeliveryDemands',
                 'ChangeType',
                 'ManagerContacts',
+                'UserContractsS',
                 
                 /* Отчеты*/
                 'Demand1Report',
@@ -300,6 +302,7 @@ return array_merge(
                 'ManagerObjectsGroupSystems',
                 'UserDeliveryDemands',
                 'ManagerContacts',
+                'UserContractsS',
             ),
         ),
 

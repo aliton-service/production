@@ -61,12 +61,6 @@ class ScheduleClientsController extends Controller
         if (isset($_POST['Params']))
             $model->attributes = $_POST['Params'];
 
-        if (isset($_POST['DialogId']))
-            $DialogId = $_POST['DialogId'];
-        
-        if (isset($_POST['BodyDialogId']))
-            $BodyDialogId = $_POST['BodyDialogId'];
-        
         if (isset($_POST['ScheduleClients'])) {
             $model->attributes = $_POST['ScheduleClients'];
             $model->EmplCreate = Yii::app()->user->Employee_id;
@@ -81,8 +75,6 @@ class ScheduleClientsController extends Controller
         
         $this->renderPartial('_form', array(
             'model' => $model,
-            'DialogId' => $DialogId,
-            'BodyDialogId' => $BodyDialogId,
         ));
        
     }

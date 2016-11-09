@@ -20,7 +20,7 @@ var GridDefaultSettings = {
     localization: getLocalization('ru'),
     updatefilterconditions: function (type, defaultconditions) {
         var stringcomparisonoperators = ['NULL', 'NOT_NULL', 'CONTAINS', 'DOES_NOT_CONTAIN', 'STARTS_WITH', 'ENDS_WITH', 'STR_EQUAL', 'STR_NOT_EQUAL'];
-        var numericcomparisonoperators = ['EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'];
+        var numericcomparisonoperators = ['EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL', 'IN'];
         var datecomparisonoperators = ['DATE_EQUAL', 'DATE_NOT_EQUAL', 'DATE_LESS_THAN', 'DATE_LESS_THAN_OR_EQUAL', 'DATE_GREATER_THAN', 'DATE_GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'];
         var booleancomparisonoperators = ['EQUAL', 'NOT_EQUAL'];
         switch (type) {

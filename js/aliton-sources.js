@@ -3442,6 +3442,7 @@ Sources.SourceEventsClients =
         {name: 'fullname', type: 'string'},
         {name: 'addr', type: 'string'},
         {name: 'event_count', type: 'int'},
+        {name: 'master', type: 'int'},
         {name: 'no_exec_event_count', type: 'int'},
         {name: 'vip', type: 'bool'},
         {name: 'isVisible', type: 'bool'},
@@ -3488,12 +3489,14 @@ Sources.SourceEvents =
         {name: 'employeename', type: 'string'},
         {name: 'date_exec', type: 'date'},
         {name: 'overday', type: 'int'},
+        {name: 'objectgr_id', type: 'int'},
+        {name: 'form_id', type: 'int'},
     ],
     id: 'evnt_id',
-    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Events',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=Events',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
@@ -3680,6 +3683,26 @@ Sources.SourceRepairResults =
     root: 'Rows',
     cache: false,
     async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+Sources.SourcePeriods =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'code', type: 'int'},
+        {name: 'periodname', type: 'string'},
+        {name: 'interval', type: 'int'},
+        {name: 'sort', type: 'int'},
+    ],
+    id: 'evnt_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=Periods',
+    root: 'Rows',
+    cache: false,
+    async: true,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {

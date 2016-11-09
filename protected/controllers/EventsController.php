@@ -5,6 +5,8 @@ class EventsController extends Controller
 
 	public $layout = '//layouts/column2';
 	public $title = '';
+        public $gridFilters = null;
+        public $filterDefaultValues = null;
 
 	public function filters()
 	{
@@ -41,65 +43,67 @@ class EventsController extends Controller
 
 
 
-	public function actionCreate($objgr_id)
+	public function actionCreate()
 	{
             $model = new Events;
-
+            
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+            
+            if (isset($_POST['objectgr_id'])) {
+                $model->objectgr_id = $_POST['objectgr_id'];
+            }
             if (isset($_POST['Events'])) {
                 $model->attributes = $_POST['Events'];
                 $model->EmplCreate = Yii::app()->user->Employee_id;
-                $model->objectgr_id = $objgr_id;
                 if ($model->validate()) {
                     $model->insert();
-                    if ($this->isAjax()) {
-                        die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о событии успешно создана'))));
-                    } else {
-                        $this->redirect('/?r=Events');
-                    }
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->evnt_id;
+                    echo json_encode($ObjectResult);
+                    return;
                 }
             }
-//		if ($this->isAjax()) {
-//			$this->renderPartial('create', array('model' => $model), false, true);
-//		} else {
-//			$this->render('create', array('model' => $model));
-//		}
-
-
+            
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-            $model = new Events;
-            if ($id == null)
-                throw new CHttpException(404, 'Не выбран сотрудник.');
+            $model = new Events();
+        
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
 
-//		if (!Yii::app()->LockManager->LockRecord('Events', $model->tableSchema->primaryKey, $id))
-//			throw new CHttpException(404, 'Запись заблокирована другим пользователем');
+            if (isset($_POST['evnt_id']))
+                $model->getModelPk($_POST['evnt_id']);
 
-            if($id && (int)$id > 0 && isset($_POST['Events'])) {
-                $model->getModelPk($id);
+            if (isset($_POST['Events'])) {
+                $model->getModelPk($_POST['Events']['evnt_id']);
                 $model->attributes = $_POST['Events'];
-                $model->evnt_id = (int)$id;
                 $model->EmplChange = Yii::app()->user->Employee_id;
                 if ($model->validate()) {
-                    $model->update();
-                    if ($this->isAjax()) {
-                        die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о событии успешно изменена'))));
-                    } else {
-
-                        $this->redirect('/?r=Events');
-                    }
+                    $model->Update();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->evnt_id;
+                    echo json_encode($ObjectResult);
+                    return;
                 }
-            } else {
-                $model->getModelPk($id);
             }
-            if($this->isAjax()) {
-                $this->renderPartial('update', array('model'=>$model), false, true);
-            } else {
-                $this->render('update', array('model'=>$model));
-		}
 
-
+            $ObjectResult['html'] = $this->renderPartial('_formEdit', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
 	public function actionDelete($id)
@@ -119,22 +123,21 @@ class EventsController extends Controller
 
 	public function actionIndex()
 	{
-            $model = new Events();
-//            $model->getModelPk($id);
-            $this->render('index', array(
-                'model'=>$model
-            ));
+            $this->title = 'Графики';
+            $this->gridFilters = '_filters';
+            $this->filterDefaultValues = array(
+                'Master' => '',
+            );
             
-//            $systype = new SystemTypes();
-//            $event_types = new EventTypes();
-//            $this->render('index', array('systypes' => $systype->find(array()), 'event_types'=>$event_types->find(array())));
+            $this->render('index');
 	}
 
-	public function actionView($id) {
-            $model = new Events();
-            $model->getModelPk($id);
-            $this->render('view', array('model'=>$model));
-	}
+//	public function actionView($id) {
+//            $this->title = 'Графики';
+//            $model = new Events();
+//            $model->getModelPk($id);
+//            $this->render('view', array('model'=>$model));
+//	}
 
 	public function actionAutoEvents($objgr_id = false) {
             if($this->isAjax()) {
@@ -146,12 +149,21 @@ class EventsController extends Controller
             }
 	}
 
-	public function actionShowHide($evtp_id, $objgr_id) {
-            $model = new Events();
-            $model->evtp_id = (int)$evtp_id;
-            $model->objectgr_id = (int)$objgr_id;
-            $model->callProc('HideOrShowObjectsGroup');
-            die(json_encode(array('status'=>'ok')));
+	public function actionShowHide() {
+            
+            if (isset($_POST['objectgr_id']) && isset($_POST['evtp_id'])) {
+
+                $sp = new StoredProc();
+                $sp->ProcedureName = 'HideOrShowObjectsGroup';
+                $sp->ParametersRefresh();
+                $sp->Parameters[0]['Value'] = $_POST['objectgr_id'];
+                $sp->Parameters[1]['Value'] = $_POST['evtp_id'];
+                $sp->CheckParam = true;
+                $sp->Execute();
+            }
+            
+//            $model->callProc('HideOrShowObjectsGroup');
+//            die(json_encode(array('status'=>'ok')));
 	}
 
 	public function actionClients() {

@@ -196,16 +196,23 @@ class AjaxDataController extends Controller
                                 $condition = " IS NOT NULL ";
                                 $value = "";
                                 break;
+                        case "IN":
+                                $condition = " IN ";
+                                $value = $filtervalue;
+                                break;
                     }
-			
-                    $where.= " " . $filterdatafield . $condition . $value;
+                    
+                    if ($filtercondition == 'IN')
+                        $where.= " " . $value . $condition . $filterdatafield;
+                    else
+                        $where.= " " . $filterdatafield . $condition . $value;
                                         
 		
                     if ($i == $filterscount - 1)
                     {
 			$where.= ")";
                     }
-		
+                    
                     $tmpfilteroperator = $filteroperator;
                     $tmpdatafield = $filterdatafield;
 		}
