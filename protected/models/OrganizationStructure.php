@@ -20,6 +20,7 @@ class OrganizationStructure extends MainFormModel
     {
         return array(
             array('Empl_id', 'required'),
+            array('Empl_id', 'UniqueValidate'),
             array('Structure_id,
                     Parent_id,
                     Empl_id,
@@ -32,6 +33,16 @@ class OrganizationStructure extends MainFormModel
                     DateLock,
                     DelDate,', 'safe'),
         );
+    }
+    
+    public function UniqueValidate($attribute, array $params = array()) {
+        $Structures = $this->Find(array(), array(
+            's.Empl_id = ' . $this->Empl_id,
+            's.DelDate is Null',
+        ));
+        
+        if (count($Structures) > 0)
+            $this->addError($attribute, 'Сотрудник уже заведен в справочник');
     }
     
     function __construct($scenario = '') {
@@ -58,7 +69,7 @@ class OrganizationStructure extends MainFormModel
                         s.EmplLock";
         $From = "\nFrom OrganizationStructure s inner join Employees e on (s.Empl_id = e.Employee_id)";
         $Where = "\nWhere s.DelDate is Null";
-        $Order = "\nOrder by s.Parent_id";
+        $Order = "\nOrder by e.EmployeeName";
         
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
