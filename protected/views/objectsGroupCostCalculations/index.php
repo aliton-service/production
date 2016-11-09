@@ -267,7 +267,7 @@
     
     .CellSmet:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .CellSmet:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
         color: black;
-        background-color: #40EE40;
+        background-color: #6CE06C;
     }
     .jqx-grid-group-cell {
         border-width:0 1px 1px 0;
