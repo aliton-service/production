@@ -123,6 +123,8 @@
                     Repairs.DateAgree = Aliton.DateConvertToJs(Res.date_agree),
                     Repairs.DateNoAgree = Aliton.DateConvertToJs(Res.date_no_agree),
                     Repairs.DateExec = Aliton.DateConvertToJs(Res.date_exec),
+                    Repairs.Rslt_id = Res.rslt_id;
+                    Repairs.ResultName
                     SetValueControls();
                     //$("#btnRefreshDetails").click();
                     //SetStateButtons();

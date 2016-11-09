@@ -29,9 +29,9 @@ class SQLQuery
     {
         $Idx = 0;
         
-        while (strpos($Text, ':', $Idx) !== false)
+        while (strpos($Text, '#', $Idx) !== false)
         {
-            $Idx = strpos($Text, ':', $Idx);
+            $Idx = strpos($Text, '#', $Idx);
             $IdxEnd = strpos($Text, ')', $Idx);
             if ($IdxEnd === false)
                 $IdxEnd = strpos($Text, ',', $Idx);
