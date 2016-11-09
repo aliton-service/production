@@ -32,11 +32,17 @@
             DateAgree: Aliton.DateConvertToJs(<?php echo json_encode($model->date_agree); ?>),
             DateNoAgree: Aliton.DateConvertToJs(<?php echo json_encode($model->date_no_agree); ?>),
             DateExec: Aliton.DateConvertToJs(<?php echo json_encode($model->date_exec); ?>),
+            DateReady: Aliton.DateConvertToJs(<?php echo json_encode($model->date_ready); ?>),
             Master_id: <?php echo json_encode($model->mstr_empl_id); ?>,
             Egnr_id: <?php echo json_encode($model->egnr_empl_id); ?>,
+            EDefect: <?php echo json_encode($model->edefect); ?>,
+            DatePlanAction1: Aliton.DateConvertToJs(<?php echo json_encode($model->date_plan); ?>),
+            DateFactAction1: Aliton.DateConvertToJs(<?php echo json_encode($model->date_fact); ?>),
+            ExecHour: <?php echo json_encode($model->exechour); ?>
         };
         
         var SetValueControls = function() {
+                        
             $("#edNumber").jqxInput('val', Repairs.Number);
             $("#edDate").jqxDateTimeInput('val', Repairs.Date);
             $("#edPrior").jqxInput('val', Repairs.Prior);
@@ -58,6 +64,9 @@
             $('#edSet').jqxTextArea('val', Repairs.Set);
             $('#edDefect').jqxTextArea('val', Repairs.Defect);
             $('#edStatusName').html('<b>' + Repairs.StatusName + '</b>');
+            $('#edResult').val(Repairs.ResultName);
+            $('#edDatePlanAction1').val(Repairs.DatePlanAction1);
+            $('#edDateFactAction1').val(Repairs.DateFactAction1);
         };
         
         var CheckTabs = function() {
@@ -77,11 +86,26 @@
                 if (Repairs.Rslt_id == 4) ChangeMode = 0;
             }
             
-            if (ChangeMode >= 1) $("#Tabs .jqx-tabs-title:eq(" + 1 + ")").css("display", "block");
-            if (ChangeMode = 2) $("#Tabs .jqx-tabs-title:eq(" + 2 + ")").css("display", "block");
-            if (ChangeMode = 3) $("#Tabs .jqx-tabs-title:eq(" + 3 + ")").css("display", "block");
-            if (ChangeMode = 4) $("#Tabs .jqx-tabs-title:eq(" + 4 + ")").css("display", "block");
-            if (ChangeMode = 5) $("#Tabs .jqx-tabs-title:eq(" + 5 + ")").css("display", "block");
+            if (ChangeMode >= 1) {
+                $("#Tabs .jqx-tabs-title:eq(" + 1 + ")").css("display", "block");
+                $('#Tabs').jqxTabs({ selectedItem: 1 }); 
+            }
+            if (ChangeMode = 2) {
+                $("#Tabs .jqx-tabs-title:eq(" + 2 + ")").css("display", "block");
+                $('#Tabs').jqxTabs({ selectedItem: 2 }); 
+            }
+            if (ChangeMode = 3) {
+                $("#Tabs .jqx-tabs-title:eq(" + 3 + ")").css("display", "block");
+                $('#Tabs').jqxTabs({ selectedItem: 3 }); 
+            }
+            if (ChangeMode = 4) {
+                $("#Tabs .jqx-tabs-title:eq(" + 4 + ")").css("display", "block");
+                $('#Tabs').jqxTabs({ selectedItem: 4 }); 
+            }
+            if (ChangeMode = 5) {
+                $("#Tabs .jqx-tabs-title:eq(" + 5 + ")").css("display", "block");
+                $('#Tabs').jqxTabs({ selectedItem: 5 }); 
+            }
         };
         
         
@@ -124,8 +148,12 @@
                     Repairs.DateNoAgree = Aliton.DateConvertToJs(Res.date_no_agree),
                     Repairs.DateExec = Aliton.DateConvertToJs(Res.date_exec),
                     Repairs.Rslt_id = Res.rslt_id;
-                    Repairs.ResultName
+                    Repairs.ResultName = Res.resultname;
+                    Repairs.EDefect = Res.edefect;
+                    Repairs.DatePlanAction1 = Aliton.DateConvertToJs(Res.date_plan),
+                    Repairs.edDateFactAction1 = Aliton.DateConvertToJs(Res.date_fact),
                     SetValueControls();
+                    CheckTabs();
                     //$("#btnRefreshDetails").click();
                     //SetStateButtons();
                 },
@@ -172,6 +200,13 @@
                 case 1:
                     $("#edResult").jqxInput($.extend(true, {}, {height: 25, width: 250, minLength: 1}));
                     if (Repairs.ResultName != '') $("#edResult").jqxInput('val', Repairs.ResultName);
+                break;
+                case 2:
+                    $("#edEDefect").jqxTextArea($.extend(true, {}, {height: 25, width: 600, minLength: 1}));
+                    $("#edDatePlanAction1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edDateFactAction1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    
+                    if (Repairs.EDefect != '') $("#edEDefect").jqxTextArea('val', Repairs.EDefect);
                 break;
             }
         };
@@ -340,6 +375,10 @@
             $('#btnAgree').jqxButton({ disabled: !(parseInt(Repairs.Status) == 8 && Repairs.DateAgree == null) });
             $('#btnNoAgree').jqxButton({ disabled: !(parseInt(Repairs.Status) == 8 && Repairs.DateNoAgree == null) });
             $('#btnReady').jqxButton({ disabled: true });
+            $('#btnExec').jqxButton({disabled: true});
+            if (parseInt(Repairs.Status) in {9:null, 3:null, 4:null}) {
+                $('#btnReady').jqxButton({ disabled: !(Repairs.DateReady == null) });
+            }
             if (parseInt(Repairs.Status) in {5:null, 6:null, 10:null}) {
                 $('#btnExec').jqxButton({ disabled: !(Repairs.DateExec == null) });
             }
@@ -444,6 +483,11 @@
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Диагностика</div>
                 </div>
             </li>
+            <li style="*margin-left: 30px;">
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ремонт в ПРЦ</div>
+                </div>
+            </li>
         </ul>
         <div style="overflow: hidden;">
             <div style="padding: 10px;">
@@ -542,6 +586,35 @@
                 <div class="al-row">
                     <div class="al-row-column">Диагностика</div>
                     <div class="al-row-column"><input type="text" id="edResult" /></div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px;">
+                <div class="al-row">
+                    <div class="al-row" style="padding: 0px;">Подтвержденная неисправность</div>
+                    <div style="clear: both"></div>
+                    <div class="al-row" style="padding: 0px;"><textarea readonly="readonly" id="edEDefect"></textarea></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row" style="padding: 0px;">Дата выполнения ремонта</div>
+                    <div class="al-row" style="padding: 0px;">
+                        <div class="al-row-column">
+                            <div class="al-row" style="padding: 0px;">План. дата</div>
+                            <div style="clear: both"></div>
+                            <div class="al-row" style="padding: 0px;"><div id="edDatePlanAction1"></div></div>
+                        </div>
+                        <div class="al-row-column">
+                            <div class="al-row" style="padding: 0px;">Факт. дата</div>
+                            <div style="clear: both"></div>
+                            <div class="al-row" style="padding: 0px;"><div id="edDateFactAction1"></div></div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="al-row">
+                    <div class="al-row" style="padding: 0px;">Времязатратность (ч)</div>
+                    <div style="clear: both"></div>
+                    <div class="al-row" style="padding: 0px;"><input type="text" readonly="readonly" id="edExecHour" /></div>
                 </div>
             </div>
         </div>
