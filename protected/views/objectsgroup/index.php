@@ -196,7 +196,16 @@
         
     });
 </script>
+
+<style>
     
+    #ContactInfoGrid .jqx-fill-state-pressed {
+        background-color: #86BFA0 !important;
+        color: black;
+    }
+     
+</style>
+
 <?php $this->setPageTitle('Карточка объекта'); ?>
 
 <?php
@@ -255,7 +264,7 @@ $this->breadcrumbs=array(
         </li>
     </ul>
     <div style="overflow: auto; height: calc(100% - 2px); background-color: #F2F2F2;">
-        <div style="overflow: auto;">
+        <div style="overflow: auto; padding: 5px 10px 0;">
             <div class="al-row">
                 <div class="al-row-column" style="width: 60px">Клиент:</div>
                 <div class="al-row-column"><input readonly type="text" id="FullName"></div>
@@ -294,18 +303,18 @@ $this->breadcrumbs=array(
                 <div class="al-row-column"><input readonly type="text" id="SalesManager"></div>
                 <div style="clear: both"></div>
             </div>
-            <div class="al-row">
+            <div class="al-row" style="padding: 0">
                 <div class="al-row-column">
                     <div class="al-row"><div class="al-row-column">Отказники:</div><div style="clear: both"></div></div>
-                    <div class="al-row"><div class="al-row-column"><textarea readonly type="text" id="Refusers"></textarea></div><div style="clear: both"></div></div>
+                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Refusers"></textarea></div><div style="clear: both"></div></div>
                 </div>
                 <div class="al-row-column">
                     <div class="al-row"><div class="al-row-column">Примечание:</div><div style="clear: both"></div></div>
-                    <div class="al-row"><div class="al-row-column"><textarea readonly type="text" id="Note"></textarea></div><div style="clear: both"></div></div>
+                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Note"></textarea></div><div style="clear: both"></div></div>
                 </div>
                 <div class="al-row-column">
                     <div class="al-row"><div class="al-row-column">Общая информация:</div><div style="clear: both"></div></div>
-                    <div class="al-row"><div class="al-row-column"><textarea readonly type="text" id="Information"></textarea></div><div style="clear: both"></div></div>
+                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Information"></textarea></div><div style="clear: both"></div></div>
                 </div>
                 <div style="clear: both"></div>
             </div>

@@ -19,7 +19,7 @@
             },
         });
         
-        $('#edObjectNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 180, width: '300px', minLength: 1 }));
+        $('#edObjectNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 180, width: 600, minLength: 1 }));
         $('#btnAddObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnEditObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnDelObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -308,6 +308,8 @@
                         EquipCommonCurrentRow = $('#CommonEquipsGrid').jqxGrid('getrowdata', event.args.rowindex);
                     });
                     
+                    $("#CommonEquipsGrid").jqxGrid('selectrow', 0);
+                    
                     break;
             }
         };
@@ -351,9 +353,20 @@
         });
         
         $("#ObjectsGrid").jqxGrid('selectrow', 0);
-        
+        $("#ObjectEquipsGrid").jqxGrid('selectrow', 0);
     });
 </script>
+
+<style>
+    
+    #ObjectsGrid .jqx-fill-state-pressed,
+    #CommonEquipsGrid .jqx-fill-state-pressed,
+    #ObjectEquipsGrid .jqx-fill-state-pressed {
+        background-color: #86BFA0 !important;
+        color: black;
+    }
+     
+</style>
 
 <div class="row">
     <div class="row-column">

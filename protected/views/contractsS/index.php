@@ -828,6 +828,15 @@
         
 </script>
 
+<style>
+    
+    #ContractsGrid .jqx-fill-state-pressed {
+        background-color: #86BFA0 !important;
+        color: black;
+    }
+     
+</style>
+
 <div class="row">
     <div id="ContractsGrid" class="jqxGridAliton"></div>
 </div>
