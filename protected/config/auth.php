@@ -431,6 +431,7 @@ return array_merge(
                 'AdminCostCalcSalarys',
                 'AdminCostCalcDocuments',
                 'AdminWHBuhActs',
+                'AdminRepairDocs',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

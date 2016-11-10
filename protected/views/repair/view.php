@@ -692,7 +692,33 @@
                                 }
                             });
                         });
-                
+                        
+                        $('#btnAddActDefect').on('click', function() {
+                            $('#RepairsDialog').jqxWindow({width: 710, height: 300, position: 'center', isModal: true});
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('RepairDocs/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Dctp_id: 1,
+                                    DialogId: 'RepairsDialog',
+                                    BodyDialogId: 'BodyRepairsDialog',
+                                    Params: {
+                                        repr_id: Repairs.Repr_id,
+                                        dctp_id: 1
+                                    },
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+
+                                    $("#BodyRepairsDialog").html(Res.html);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        });
                 
                     }});
                     

@@ -45,6 +45,12 @@ class RepairDocsController extends Controller
         if (isset($_POST['Repr_id']))
             $model->repr_id = $_POST['Repr_id'];
         
+        if (isset($_POST['Dctp_id']))
+            $model->dctp_id = $_POST['Dctp_id'];
+        
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+        
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
@@ -52,8 +58,6 @@ class RepairDocsController extends Controller
             );
         if (isset($_POST['RepairDocs'])) {
             $model->attributes = $_POST['RepairDocs'];
-            if ($model->fact_quant == '0.00')
-                $model->fact_quant = null;
             
             if ($model->validate()) {
                 $Res = $model->Insert();
@@ -64,7 +68,7 @@ class RepairDocsController extends Controller
             } 
         }
         
-        $ObjectResult['html'] = $this->renderPartial('_form', array(
+        $ObjectResult['html'] = $this->renderPartial('_form' . $model->dctp_id, array(
             'model' => $model,
         ), true);
         echo json_encode($ObjectResult);
@@ -93,7 +97,7 @@ class RepairDocsController extends Controller
             }
         }
 
-        $ObjectResult['html'] = $this->renderPartial('_form', array(
+        $ObjectResult['html'] = $this->renderPartial('_form' . $model->dctp_id, array(
             'model' => $model,
         ), true);
         echo json_encode($ObjectResult);
