@@ -10,6 +10,7 @@ class EventOffers extends MainFormModel
 	public $DelDate = null;
 	public $systemtype_id = null;
 	public $situation = null;
+	public $demand = null;
 	public $resulltdate = null;
 	public $resultcreator_id = null;
 	public $EmplCreate = null;
@@ -32,23 +33,23 @@ class EventOffers extends MainFormModel
 		$select = "
 		 select
 			eo.code,
-				eo.evnt_id,
+                        eo.evnt_id,
 			eo.oftp_id,
 			ot.offertype,
 			eo.rslt_id,
 			r.resultname,
 			eo.note,
-				eo.situation,
+                        eo.situation,
 			(select case when min(od.dmnd_id) is not null then  '[' +  cast(min(od.dmnd_id) as nvarchar) + ', ...]' else '[]' end
 			 from offerdemands od
 			 where od.offer_id = eo.code
-				and od.deldate is null) as demand,
+                         and od.deldate is null) as demand,
 			prev_eo.note prev_note,
 			prev_eo.rslt_id prev_rslt_id,
-				prev_r.resultname prev_resultname,
-				prev_e.date prev_date,
-				dbo.fio(emp.employeename) prev_emplname,
-				dbo.is_systemtype_elton(ot.systp_id, e.objectgr_id) is_system
+                        prev_r.resultname prev_resultname,
+                        prev_e.date prev_date,
+                        dbo.fio(emp.employeename) prev_emplname,
+                        dbo.is_systemtype_elton(ot.systp_id, e.objectgr_id) is_system
 		 ";
 		$from = "
 		 from eventoffers eo left join offertypes ot on (eo.oftp_id = ot.code)
@@ -76,7 +77,7 @@ class EventOffers extends MainFormModel
 			array('evnt_id, oftp_id', 'required'),
 			array('evnt_id, oftp_id, rslt_id, systemtype_id, resultcreator_id, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
 			array('note, DelDate, situation, resulltdate, DateCreate, DateChange', 'safe'),
-			array('code, evnt_id, oftp_id, note, rslt_id, DelDate, systemtype_id, situation, resulltdate, resultcreator_id, EmplCreate, EmplChange, EmplDel, DateCreate, DateChange', 'safe'),
+			array('code, evnt_id, oftp_id, note, rslt_id, DelDate, systemtype_id, situation, demand, resulltdate, resultcreator_id, EmplCreate, EmplChange, EmplDel, DateCreate, DateChange', 'safe'),
 		);
 	}
 
@@ -92,6 +93,7 @@ class EventOffers extends MainFormModel
 			'DelDate' => 'Del Date',
 			'systemtype_id' => 'Systemtype',
 			'situation' => 'Ситуация по постановке на обслуживание',
+			'demand' => 'demand',
 			'resulltdate' => 'Resulltdate',
 			'resultcreator_id' => 'Resultcreator',
 			'EmplCreate' => 'Empl Create',

@@ -73,9 +73,17 @@
 //            console.log(tab);
         };
 
-        $('#jqxTabsEventsEdit').jqxTabs({ width: '99.5%', height: 37, initTabContent: initTabEventsEditContent});
+        $('#jqxTabsEventsEdit').jqxTabs({ width: '100%', height: 37, initTabContent: initTabEventsEditContent});
         $('#jqxTabsEventsEdit').jqxTabs('select', 0);
         
+        var EventOffersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventOffers, {}), {
+            formatData: function (data) {
+                $.extend(data, {
+                    Filters: ["eo.evnt_id = " + Events.evnt_id],
+                });
+                return data;
+            },
+        });
         
         $("#EventsEditGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
@@ -85,10 +93,13 @@
                 virtualmode: false,
                 width: '100%',
                 height: '300',
-                source: ContactsDataAdapter,
+                source: EventOffersDataAdapter,
                 columns: [
-                    { text: 'Отдел', columngroup: 'Current', dataField: 'GroupContact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
-                    { text: 'Дата', columngroup: 'Previous', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Наименование предложения', dataField: 'offertype', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Результат данного предложения', dataField: 'ResultName', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Примечание данного предложения', dataField: 'note', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Заявки', dataField: 'Demand', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
+                    { text: 'Дата', dataField: 'date', columngroup: 'Previous', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
                 ],
                 columngroups: 
                 [
@@ -98,7 +109,7 @@
             })
         );
     });
-</script>        
+</script>
 
 <?php 
     $form=$this->beginWidget('CActiveForm', array(
@@ -147,6 +158,8 @@ prds_id = <?php echo json_encode($model->prds_id); ?><br>
     <div id='contentEventsEdit2'></div>
     
 </div>
+
+<div id="EventsEditGrid" class="jqxGridAliton"></div>
 
 <div class="row"> 
     <div class="row-column">по: </div>
