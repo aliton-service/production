@@ -96,6 +96,7 @@
             }
         });
         // Инициализируем контроды
+        $("#btnSave").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         $("#edDemand_id").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "-НОМЕР-", width: 100}));
         $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 300, value: Demand.Address}));
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
@@ -107,27 +108,26 @@
         $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypes, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
         $("#cmbEquipType").jqxComboBox({ disabled: false, source: DataEquipTypes, promptText: "Выберите тип системы...", width: '182', height: '25px', displayMember: "EquipType", valueMember: "DEquip_id"});
         $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctions, promptText: "Выберите тип оборудования...", width: '300', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
-        $("#cmbPrior").jqxComboBox({ source: DataPriors, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id"});
+        $("#cmbPrior").jqxComboBox({ source: DataPriors, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: true });
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.AgreeDate, }));
         $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 300}));
         $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '300', height: '25px', displayMember: "contact", valueMember: "Info_id"});
         $('#edRefusers').jqxTextArea({ disabled: true, placeHolder: '', height: 50, width: 800, minLength: 1});
         $('#edDemandText').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
-        $("#btnSave").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
         
         if (!StateInsert) {
             $('#edRepMaster').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
-            $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster}));
-            $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec}));
-            $("#edDateOfHelpRequest").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfHelpRequest}));
-            $("#edDateOfTransfer").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTransfer}));
-            $("#cmbDelayedClosureReason").jqxComboBox({ source: DataDelayedClosureReasons, width: '220', height: '25px', displayMember: "Name", valueMember: "DelayedClosureReason_id"});
-            $("#cmbTransferReason").jqxComboBox({ source: DataTransferReasons, width: '220', height: '25px', displayMember: "TransferReason", valueMember: "TransferReason_id"});
-            $("#cmbCloseReason").jqxComboBox({ source: DataCloseReasons, width: '220', height: '25px', displayMember: "CloseReason", valueMember: "CloseReason_id"});
-            $("#cmbDelayReason").jqxComboBox({ source: DataDelayReasons, width: '290', height: '25px', displayMember: "name", valueMember: "dlrs_id"});
-            $("#cmbDemandResult").jqxComboBox({ source: DataDemandResults, width: '250', height: '25px', displayMember: "ResultName", valueMember: "Result_id"});
+            $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, width: 160 }));
+            $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec, width: 160 }));
+            $("#edDateOfHelpRequest").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfHelpRequest, width: 160 }));
+            $("#edDateOfTransfer").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTransfer, width: 145 }));
+            $("#cmbDelayedClosureReason").jqxComboBox({ source: DataDelayedClosureReasons, width: '230', height: '25px', displayMember: "Name", valueMember: "DelayedClosureReason_id", autoDropDownHeight: true });
+            $("#cmbTransferReason").jqxComboBox({ source: DataTransferReasons, width: '230', height: '25px', displayMember: "TransferReason", valueMember: "TransferReason_id", autoDropDownHeight: true });
+            $("#cmbCloseReason").jqxComboBox({ source: DataCloseReasons, width: '220', height: '25px', displayMember: "CloseReason", valueMember: "CloseReason_id", autoDropDownHeight: true });
+            $("#cmbDelayReason").jqxComboBox({ source: DataDelayReasons, width: '420', height: '25px', displayMember: "name", valueMember: "dlrs_id"});
+            $("#cmbDemandResult").jqxComboBox({ source: DataDemandResults, width: '140', height: '25px', displayMember: "ResultName", valueMember: "Result_id", autoDropDownHeight: true});
             $("#cmbDemandType").jqxComboBox({disabled: ReadOnly});
             $("#cmbSystemType").jqxComboBox({disabled: ReadOnly});
             $("#cmbEquipType").jqxComboBox({disabled: ReadOnly});
@@ -268,6 +268,7 @@
         
         $("#btnSave").on('click', function () {
             //$("#Demands").submit();
+            
             $("#btnSave").jqxButton({disabled: true});
             var State = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
             var url = '';
@@ -281,14 +282,13 @@
                 async: false,
                 data: $("#Demands").serialize(),
                 success: function(Res) {
-                    
+
                     Res = JSON.parse(Res);
                     if (Res.result === 1) {
                         document.location = <?php echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + Res.id;
                     } else {
                         $("#body-form").html(Res.html);
                     }
-                    $("#btnSave").jqxButton({disabled: false});
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], 'Попробуйте повторить попытку позже');
@@ -338,10 +338,10 @@
     <div class="row-column">Адрес: <input type="text" id="edAddr" /></div>
     <div class="row-column">Особые условия: <b><?php echo $Objects->Condition; ?></b></div>
 </div>
-<div class="row" style="margin-bottom: 0px;">
-    <div class="row-column" style="width: 180px;">Дата и время заявки</div>
+<div class="row" style="margin-top: 7px;">
+    <div class="row-column" style="width: 210px;">Дата и время заявки</div>
     <div class="row-column" style="width: 200px;">Тариф обслуживания</div>
-    <div class="row-column" style="width: 160px;"><div id='chbDateMaster'>Передача мастеру</div></div>
+    <div class="row-column" style="width: 150px;"><div id='chbDateMaster'>Передача мастеру</div></div>
     <div class="row-column" style="width: 160px;"><div id='chbOtherExecutor'>Другой исполнитель</div></div>
 </div>
 <div class="row" style="margin-top: 0px;">
@@ -349,9 +349,9 @@
     <div class="row-column"><input name="Demands[ServiceType]" type="text" id="edServiceType"/></div>
     <div class="row-column"><div id='cmbExecutor' name='Demands[ExecOther]'><?php echo $model->Master; ?></div></div>
 </div>
-<div class="row" style="margin-bottom: 0px;">
-    <div class="row-column" style="width: 300px;">Тип <?php echo $model->DType_id; ?></div>
-    <div class="row-column" style="width: 300px;">Тип системы</div>
+<div class="row" style="margin-top: 5px;">
+    <div class="row-column" style="width: 303px;">Тип <?php echo $model->DType_id; ?></div>
+    <div class="row-column" style="width: 303px;">Тип системы</div>
     <div class="row-column" style="width: 180px;">Тип оборудования</div>
 </div>
 <div class="row" style="margin-top: 0px;">
@@ -359,7 +359,7 @@
     <div class="row-column"><div id='cmbSystemType' name="Demands[DSystem_id]"></div></div>
     <div class="row-column"><div id='cmbEquipType' name="Demands[DEquip_id]"></div></div>
 </div>
-<div class="row" style="margin-bottom: 0px;">
+<div class="row" style="margin-top: 5px;">
     <div class="row-column" style="width: 300px;">Неисправность</div>
     <div class="row-column" style="width: 300px;">Приоритет</div>
     <div class="row-column" style="width: 180px;">Предельная дата</div>
@@ -370,7 +370,7 @@
     <div class="row-column" style="width: 300px;"><div id='cmbPrior' name="Demands[DPrior_id]"></div><div><?php echo $form->error($model, 'DPrior_id'); ?></div></div>
     <div class="row-column" style="width: 180px;"><div id='edDeadline' name="Demands[Deadline]"></div></div>
 </div>
-<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
+<div class="row" style="margin-top: 5px;">
     <div class="row-column" style="width: 300px;">Контактное лицо</div>
     <div class="row-column" style="width: 300px;">Из карточки клиента</div>
     <div class="row-column" style="width: 180px;">Согласованная дата</div>
@@ -386,60 +386,40 @@
     Причина закрытия, Причина просрочки, Результат заявки
 -->
 <?php if (Yii::app()->controller->action->id == 'Update') { ?>
-    <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-        <div class="row-column" style="width: 160px;">Дата доклада о помощи</div>
-        <div class="row-column" style="width: 160px;">Дата перевода заявки</div>
-        <div class="row-column" style="width: 220px;">Причина несв. закрытия заявки </div>
-        <div class="row-column" style="width: 220px;">Причина перевода заявки</div>
+    <div class="row" style="margin-top: 5px;">
+        <div class="row-column">Дата доклада о помощи <div id='edDateOfHelpRequest' name="Demands[DateOfHelpRequest]"></div></div>
+        <div class="row-column">Дата перевода заявки <div id='edDateOfTransfer' name="Demands[DateOfTransfer]"></div></div>
+        <div class="row-column">Причина несв. закрытия заявки <div id='cmbDelayedClosureReason' name="Demands[DelayedClosureReason_id]"></div></div>
+        <div class="row-column">Причина перевода заявки<div id='cmbTransferReason' name="Demands[TransferReason]"></div><div><?php echo $form->error($model, 'TransferReason'); ?></div></div>
     </div>
-    <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-        <div class="row-column" style="width: 160px;"><div id='edDateOfHelpRequest' name="Demands[DateOfHelpRequest]"></div></div>
-        <div class="row-column" style="width: 160px;"><div id='edDateOfTransfer' name="Demands[DateOfTransfer]"></div></div>
-        <div class="row-column" style="width: 220px;"><div id='cmbDelayedClosureReason' name="Demands[DelayedClosureReason_id]"></div></div>
-        <div class="row-column" style="width: 220px;"><div id='cmbTransferReason' name="Demands[TransferReason]"></div><div><?php echo $form->error($model, 'TransferReason'); ?></div></div>
-    </div>
-    <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-        <div class="row-column" style="width: 220px;">Причина закрытия</div>
-        <div class="row-column" style="width: 290px;">Причина просрочки</div>
-        <div class="row-column" style="width: 250px;">Результат заявки</div>
-    </div>
-    <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-        <div class="row-column" style="width: 220px;"><div id='cmbCloseReason' name="Demands[clrs_id]"></div></div>
-        <div class="row-column" style="width: 290px;"><div id='cmbDelayReason' name="Demands[dlrs_id]"></div><div><?php echo $form->error($model, 'dlrs_id'); ?></div></div>
-        <div class="row-column" style="width: 250px;"><div id='cmbDemandResult' name="Demands[rslt_id]"></div><div><?php echo $form->error($model, 'rslt_id'); ?></div></div>
+    <div class="row" style="margin-top: 5px;">
+        <div class="row-column">Причина закрытия <div id='cmbCloseReason' name="Demands[clrs_id]"></div></div>
+        <div class="row-column">Причина просрочки <div id='cmbDelayReason' name="Demands[dlrs_id]"></div><div><?php echo $form->error($model, 'dlrs_id'); ?></div></div>
+        <div class="row-column">Результат заявки <div id='cmbDemandResult' name="Demands[rslt_id]"></div><div><?php echo $form->error($model, 'rslt_id'); ?></div></div>
     </div>
 <?php } ?>
 
-<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-    <div class="row-column" style="width: 300px;">Отказники</div>
-</div>
-<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-    <div class="row-column" style="width: 300px;"><textarea id="edRefusers" name="Demands[Refusers]"><?php echo $ObjectsGroup->Refusers; ?></textarea></div>
+<div class="row" style="margin-top: 0;">
+    <div class="row-column">Отказники <textarea id="edRefusers" name="Demands[Refusers]"><?php echo $ObjectsGroup->Refusers; ?></textarea></div>
 </div>    
-<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-    <div class="row-column" style="width: 300px;">Неисправность</div>
-</div>
-<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-    <div class="row-column" style="width: 300px;"><textarea id="edDemandText" name="Demands[DemandText]"><?php echo $model->DemandText; ?></textarea></div>
+<div class="row" style="margin-top: 0;">
+    <div class="row-column">Неисправность <textarea id="edDemandText" name="Demands[DemandText]"><?php echo $model->DemandText; ?></textarea></div>
 </div>
 
 <!-- Если мы редактируем, то выводим поля: Отчет мастера, Дата передач, Дата выполнения -->
 <?php if (Yii::app()->controller->action->id == 'Update') { ?>
-    <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-        <div class="row-column" style="width: 300px;">Отчет мастера</div>
+    <div class="row" style="margin-top: 0px;">
+        <div class="row-column">Отчет мастера <textarea id="edRepMaster" name="Demands[RepMaster]"><?php echo $model->RepMaster; ?></textarea></div>
     </div>
-    <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-        <div class="row-column" style="width: 300px;"><textarea id="edRepMaster" name="Demands[RepMaster]"><?php echo $model->RepMaster; ?></textarea></div>
-    </div>
-    <div class="row" style="margin-bottom: 0px; margin-top: 0px; width: 800px">
+    <div class="row" style="margin-top: 5px; width: 800px">
         <div class="row-column">Передано</div>
         <div class="row-column"><div id='edDateMaster' name="Demands[DateMaster]"></div><div><?php echo $form->error($model, 'DateMaster'); ?></div></div>
-        <div class="row-column" style="float: right;"><div id='edDateExec' name="Demands[DateExec]"></div><div><?php echo $form->error($model, 'DateExec'); ?></div></div>
-        <div class="row-column" style="float: right;">Выполнено</div>
+        <div class="row-column" style="float: right; margin: 0;"><div id='edDateExec' name="Demands[DateExec]"></div><div><?php echo $form->error($model, 'DateExec'); ?></div></div>
+        <div class="row-column" style="float: right; margin-right: 5px;">Выполнено </div>
     </div>
 <?php } ?>
 
-<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
+<div class="row" style="margin-top: 5px;">
     <div class="row-column"><input type="button" value="Сохранить" id='btnSave' /></div>
     <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
 </div>
