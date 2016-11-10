@@ -9,7 +9,7 @@
             date: Aliton.DateConvertToJs(<?php echo json_encode($model->date); ?>),
             empl_id: <?php echo json_encode($model->empl_id); ?>,
             splr_id: <?php echo json_encode($model->splr_id); ?>,
-            diagnostics: <?php echo json_encode($model->diagnostics); ?>,
+            diagnostics: Boolean(Number(<?php echo json_encode($model->diagnostics); ?>)),
             diagnostics_sum: <?php echo json_encode($model->diagnostics_sum); ?>,
             sum: <?php echo json_encode($model->sum); ?>,
             defect: <?php echo json_encode($model->defect); ?>,
@@ -28,8 +28,16 @@
         
         $("#edNumberDocEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
         $("#edDateDocEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: RepairDocs.date}));
-        $('#edDefectDocEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 50, width: 'calc(100% - 2px)', minLength: 1}));
-        $('#edResultDocEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 50, width: 'calc(100% - 2px)', minLength: 1}));
+        var DataSuppliers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliersListMin, {async: false, url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SuppliersListMin',}));
+        $("#edSplrDocEdit").jqxComboBox({ source: DataSuppliers, width: '300', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id"});
+        $("#edContactPersonDocEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
+        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees)); 
+        $("#edFromEmplDocEdit").jqxComboBox({ source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $('#edDiagnostiсsDocEdit').jqxCheckBox($.extend(true, CheckBoxDefaultSettings, { height: 80, width: '150px'}));
+        $("#edSumDiagnostiсsDocEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '120px'}));
+        $("#edSumDocEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '120px'}));
+        $('#edNoteDocEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 50, width: 'calc(100% - 2px)', minLength: 1}));
+        
         
         $('#btnSaveRepairDocs').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: false }));
         $('#btnCancelRepairDocs').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -68,8 +76,13 @@
         });
         
         if (RepairDocs.number != '') $("#edNumberDocEdit").jqxInput('val', RepairDocs.number);
-        if (RepairDocs.defect != '') $("#edDefectDocEdit").jqxTextArea('val', RepairDocs.defect);
-        if (RepairDocs.result != '') $("#edResultDocEdit").jqxTextArea('val', RepairDocs.result);
+        if (RepairDocs.splr_id != '') $("#edSplrDocEdit").jqxComboBox('val', RepairDocs.splr_id);
+        if (RepairDocs.contact_person != '') $("#edContactPersonDocEdit").jqxInput('val', RepairDocs.contact_person);
+        if (RepairDocs.empl_id != '') $("#edFromEmplDocEdit").jqxComboBox('val', RepairDocs.empl_id);
+        $("#edDiagnostiсsDocEdit").jqxCheckBox('val', RepairDocs.diagnostics);
+        if (RepairDocs.diagnostics_sum != '') $("#edSumDiagnostiсsDocEdit").jqxNumberInput('val', RepairDocs.diagnostics_sum);
+        if (RepairDocs.sum != '') $("#edSumDocEdit").jqxNumberInput('val', RepairDocs.sum);
+        if (RepairDocs.note != '') $("#edNoteDocEdit").jqxTextArea('val', RepairDocs.note);
         
     });
 </script>        
@@ -96,13 +109,31 @@
 </div>
 <div class="al-row">
     <div class="al-row-column">СРМ</div>
-    <div class="al-row-column">СРМ</div>
+    <div class="al-row-column"><div name="RepairDocs[splr_id]" id="edSplrDocEdit" ></div><?php echo $form->error($model, 'splr_id'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Контактное лицо</div>
+    <div class="al-row-column"><input type="text" name="RepairDocs[contact_person]" id="edContactPersonDocEdit" /><?php echo $form->error($model, 'contact_person'); ?></div>
+    <div style="clear: both"></div>
 </div>    
-<div class="al-row">Дефекты выявленные в ходе обследования</div>
-<div class="al-row"><textarea id="edDefectDocEdit" name="RepairDocs[defect]"></textarea><?php echo $form->error($model, 'defect'); ?></div>
-<div class="al-row">Заключение инженера ПРЦ</div>
-<div class="al-row"><textarea id="edResultDocEdit" name="RepairDocs[result]"></textarea><?php echo $form->error($model, 'result'); ?></div>
-
+<div class="al-row">
+    <div class="al-row-column">Контакты отправителя</div>
+    <div class="al-row-column"><div name="RepairDocs[empl_id]" id="edFromEmplDocEdit"></div><?php echo $form->error($model, 'empl_id'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column"><div name="RepairDocs[diagnostics]" id="edDiagnostiсsDocEdit">Диагн. за счет клиета</div></div>
+    <div class="al-row-column"><div name="RepairDocs[diagnostics_sum]" id="edSumDiagnostiсsDocEdit"></div><?php echo $form->error($model, 'diagnostics_sum'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Стоимость ремонта</div>
+    <div class="al-row-column"><div name="RepairDocs[sum]" id="edSumDocEdit"></div><?php echo $form->error($model, 'sum'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">Примечание</div>
+<div class="al-row"><textarea id="edNoteDocEdit" name="RepairDocs[note]"></textarea><?php echo $form->error($model, 'note'); ?></div>
    
 <div class="row">
     <div class="row-column"><input type="button" value="Сохранить" id='btnSaveRepairDocs'/></div>

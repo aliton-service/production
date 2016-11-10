@@ -21,6 +21,8 @@ return array(
                         'ReadyRepairs',
                         'ReturnRepairs',
                         'ExecRepairs',
+                        'AgreeRepairs',
+                        'NoAgreeRepairs',
 		),
 	),
 
@@ -91,6 +93,22 @@ return array(
         'ReadyRepairs' => array(
 		'type' => CAuthItem::TYPE_OPERATION,
 		'description' => 'ReadyRepairs',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'AgreeRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'AgreeRepairs',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'NoAgreeRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'AgreeRepairs',
 		'bizRule' => null,
 		'data' => null,
 		'defaultIndex' => 'Repais',
