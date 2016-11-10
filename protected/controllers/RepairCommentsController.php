@@ -42,20 +42,25 @@ class RepairCommentsController extends Controller
 
     public function actionCreate()
     {
-            $model = new RepairComments;
-
-            if (isset($_POST['RepairComments'])) {
-                    $model->attributes = $_POST['RepairComments'];
-                    $model->EmplCreate = Yii::app()->user->Employee_id;
-                    if ($model->validate()) {
-                            $model->insert();
-                            if ($this->isAjax()) {
-                                    die(json_encode(array('status' => 'ok', 'data' => array('msg' => '������ � ������� ������� �������'))));
-                            } else {
-                                    $this->redirect('/?r=RepairComments');
-                            }
-                    }
-            }
+        $model = new RepairComments();
+        
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        if (isset($_POST['RepairComments'])) {
+            $model->attributes = $_POST['RepairComments'];
+            if ($model->validate()) {
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                echo json_encode($ObjectResult);
+                return;
+            } 
+        }
+        
+        echo json_encode($ObjectResult);
     }
 
     public function actionIndex($Repr_id)

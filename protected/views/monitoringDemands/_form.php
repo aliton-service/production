@@ -59,7 +59,9 @@
                         } 
                         if (MonitoringDemands3.DialogId == 'CostCalculationsDialog') {
                             $('#RefreshCostCalcDocuments').click();
-                        } 
+                        }
+                        if ($('#GridDocuments').length>0)
+                            $('#GridDocuments').jqxGrid('updatebounddata');
                             
                     } else {
                         $('#' + MonitoringDemands3.BodyDialogId).html(Res);
@@ -142,6 +144,7 @@
 ?>
 
 <input  name="MonitoringDemands[Calc_id]" type="hidden" value="<?php echo $model->Calc_id; ?>"/>
+<input  name="MonitoringDemands[Repr_id]" type="hidden" value="<?php echo $model->Repr_id; ?>"/>
 
 
 <div class="row">

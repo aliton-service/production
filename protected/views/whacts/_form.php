@@ -112,7 +112,10 @@
         $('#btnSave').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
         $('#btnCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCancel').on('click', function() {
-            $("#WHDocumentsDialog").jqxWindow('close');
+            if ($('#WHDocumentsDialog').length>0)
+                $('#WHDocumentsDialog').jqxWindow('close');
+            if ($('#RepairsDialog').length>0)
+                $('#RepairsDialog').jqxWindow('close');
         });
         $('#btnSave').on('click', function(){
             var Url = <?php echo json_encode(Yii::app()->createUrl('WHActs/Update')); ?>;
@@ -129,21 +132,31 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
+                        console.log(Res);
                         if (!StateInsert) {
-                            if (typeof(Acts) != 'undefined')
+                            if (typeof(Acts.Refresh) != 'undefined')
                                 Acts.Refresh();
                         }
                         if (StateInsert) {
-                            if (typeof(WHReestr.Docm_id) != 'undefined') {
+                            if (typeof(WHReestr) != 'undefined') {
                                 WHReestr.Docm_id = Res.id;
                                 $('#ActsGrid').jqxGrid('updatebounddata');
-                            }   
-                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHActs/View'))?> + '&docm_id=' + Res.id);
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHActs/View'))?> + '&docm_id=' + Res.id);
+                            }
+                            if ($('#GridDocuments').length>0)
+                                $('#GridDocuments').jqxGrid('updatebounddata');
+                            
                         }
-                        $('#WHDocumentsDialog').jqxWindow('close');
+                        if ($('#WHDocumentsDialog').length>0)
+                            $('#WHDocumentsDialog').jqxWindow('close');
+                        if ($('#RepairsDialog').length>0)
+                            $('#RepairsDialog').jqxWindow('close');
                     }
                     else {
-                        $('#BodyWHDocumentsDialog').html(Res.html);
+                        if ($('#WHDocumentsDialog').length>0)
+                            $('#BodyWHDocumentsDialog').html(Res.html);
+                        if ($('#RepairsDialog').length>0)
+                            $('#BodyRepairsDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {
@@ -177,8 +190,9 @@
 
 <input type="hidden" name="WhActs[docm_id]" value="<?php echo $model->docm_id; ?>"/>
 <input type="hidden" name="WhActs[calc_id]" value="<?php echo $model->calc_id; ?>"/>
+<input type="hidden" name="WhActs[repr_id]" value="<?php echo $model->repr_id; ?>"/>
 
-<div class="al-data-nb" style="width: 900px; height: 230px;">
+<div class="al-data-nb" style="width: 920px; height: 230px;">
     <div class="al-row-column">
         <div class="al-row">
             <div class="al-data" style="width: 552px">
@@ -251,7 +265,7 @@
     </div>
 </div>
 <div style="clear: both"></div>
-<div class="al-data-nb" style="width: 900px; height: 146px;">
+<div class="al-data-nb" style="width: 920px; height: 146px;">
     <div class="al-data">
         <!--<div class="al-row-label"><b>Выполненные работы</b></div>-->
         <div class="al-row">

@@ -154,6 +154,8 @@
                         }
                         if (DeliveryDemands.DialogId == 'CostCalculationsDialog')
                             $('#RefreshCostCalcDocuments').click();
+                        if (DeliveryDemands.DialogId == 'RepairsDialog')
+                            $('#GridDocuments').jqxGrid('updatebounddata');
                     }
                     else
                         $('#' + DeliveryDemands.BodyDialogId).html(Res);
@@ -203,6 +205,7 @@
 ?>
 
 <input type="hidden" name="DeliveryDemands[calc_id]" value="<?php echo $model->calc_id; ?>" />
+<input type="hidden" name="DeliveryDemands[repr_id]" value="<?php echo $model->repr_id; ?>" />
 
 <div class="row">
     <div class="row-column">

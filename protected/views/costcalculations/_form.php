@@ -92,7 +92,10 @@
         
         
         $('#btnCancelCostCalculations').on('click', function(){
-            $('#CostCalculationsDialog').jqxWindow('close');
+            if ($('#CostCalculationsDialog').length>0)
+                $('#CostCalculationsDialog').jqxWindow('close');
+            if ($('#RepairsDialog').length>0)
+                $('#RepairsDialog').jqxWindow('close');
         });
         
         $('#btnSaveCostCalculations').on('click', function(){
@@ -107,11 +110,25 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        $('#CostCalculationsDialog').jqxWindow('close');
-                        CostCalculations.Refresh(); 
+                        if ($('#CostCalculationsDialog').length>0)
+                            $('#CostCalculationsDialog').jqxWindow('close');
+                        if ($('#RepairsDialog').length>0)
+                            $('#RepairsDialog').jqxWindow('close');
+                        
+                        if (typeof(CostCalculations.Refresh) != 'undefined')
+                            CostCalculations.Refresh(); 
+                        
+                        if (typeof(Repairs) != 'undefined') {
+                            Repairs.Refresh(); 
+                            if ($('#GridDocuments').length>0)
+                                $('#GridDocuments').jqxGrid('updatebounddata');
+                        }
                     }
                     else {
-                        $('#BodyCostCalculationsDialog').html(Res.html);
+                        if ($('#CostCalculationsDialog').length>0)
+                            $('#BodyCostCalculationsDialog').html(Res.html);
+                        if ($('#RepairsDialog').length>0)
+                            $('#BodyRepairsDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {
@@ -150,6 +167,7 @@
 <input type="hidden" name="CostCalculations[calc_id]" value="<?php echo $model->calc_id; ?>"/>
 <input type="hidden" name="CostCalculations[cgrp_id]" value="<?php echo $model->cgrp_id; ?>"/>
 <input type="hidden" name="CostCalculations[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>"/>
+<input type="hidden" name="CostCalculations[repr_id]" value="<?php echo $model->repr_id; ?>"/>
 
 <div class="row">
     <div class="row-column" style="margin-top: 2px; width: 115px;">Дата: </div>
