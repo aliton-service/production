@@ -784,15 +784,15 @@
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View')); ?> + "&Docm_id=" + CurrentRowDoc.docid);
                             if (Type == 4)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View')); ?> + "&Docm_id=" + CurrentRowDoc.docid);
-                            if (Type == 5) {
+                            if (Type == 5 || Type == 6) {
                                 $('#RepairsDialog').jqxWindow({width: 710, height: 450, position: 'center', isModal: true});
                                 $.ajax({
                                     url: <?php echo json_encode(Yii::app()->createUrl('RepairDocs/Update')) ?>,
                                     type: 'POST',
                                     async: false,
                                     data: {
-                                        rpdoc_id: CurrentRowDoc.rpdoc_id,
-                                        Dctp_id: 1,
+                                        rpdoc_id: CurrentRowDoc.docid,
+                                        Dctp_id: (Type == 5) ? 1:2,
                                         DialogId: 'RepairsDialog',
                                         BodyDialogId: 'BodyRepairsDialog',
                                         Params: {
