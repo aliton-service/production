@@ -21,6 +21,7 @@ class WHDocumentsDoc9 extends MainFormModel
     public $achs_id;
     public $strg_id;
     public $storage;
+    public $repr_id;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -48,7 +49,8 @@ class WHDocumentsDoc9 extends MainFormModel
                         dbo.FIO(a.strm_name) as strm_name,
                         a.achs_id,
                         isnull(d.strg_id, 1) as strg_id,
-                        isnull(d.storage, '') as storage";
+                        isnull(d.storage, '') as storage,
+                        d.repr_id";
         $From = "\nFrom WHDocuments_v d left join ActionHistory_v a on (d.achs_id = a.achs_id)";
         $Where = "\nWhere d.dctp_id = 9";
         $Order = "\nOrder by a.ac_date";
@@ -84,7 +86,8 @@ class WHDocumentsDoc9 extends MainFormModel
                     strm_name,
                     achs_id,
                     strg_id,
-                    storage', 'safe'),
+                    storage,
+                    repr_id', 'safe'),
         );
     }
     
@@ -110,6 +113,7 @@ class WHDocumentsDoc9 extends MainFormModel
             'achs_id' => '',
             'strg_id' => 'Склад',
             'storage' => '',
+            'repr_id' => '',
         );
     }
     

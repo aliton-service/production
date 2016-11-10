@@ -1,8 +1,12 @@
 <script type="text/javascript">
     var Repairs = {};
     $(document).ready(function () {
+        var CurrentRowDetails;
+        var FirstStart = true;
         Repairs = {
             Repr_id: <?php echo json_encode($model->Repr_id); ?>,
+            Object_id: <?php echo json_encode($model->objc_id); ?>,
+            ObjectGr_id: <?php echo json_encode($model->objectgr_id); ?>,
             Status: parseInt(<?php echo json_encode($model->status); ?>),
             StatusName: <?php echo json_encode($model->status_name); ?>,
             Number: <?php echo json_encode($model->number); ?>,
@@ -38,7 +42,9 @@
             EDefect: <?php echo json_encode($model->edefect); ?>,
             DatePlanAction1: Aliton.DateConvertToJs(<?php echo json_encode($model->date_plan); ?>),
             DateFactAction1: Aliton.DateConvertToJs(<?php echo json_encode($model->date_fact); ?>),
-            ExecHour: <?php echo json_encode($model->exechour); ?>
+            ExecHour: <?php echo json_encode($model->exechour); ?>,
+            Jrdc_id: <?php echo json_encode($model->jrdc_id); ?>,
+            CurrentEmpl_id: parseInt(<?php echo json_encode(Yii::app()->user->Employee_id); ?>)
         };
         
         var SetValueControls = function() {
@@ -78,8 +84,8 @@
             if (Repairs.Status in {0:null, 1:null, 6:null}) ChangeMode = 0;
             if (Repairs.Status == 2) ChangeMode = 1;
             if (Repairs.Status == 3) ChangeMode = 2;
-            if (Repairs.Status == 4) ChangeMode = 4;
-            if (Repairs.Status == 5) ChangeMode = 3;
+            if (Repairs.Status == 4) ChangeMode = 3;
+            if (Repairs.Status == 5) ChangeMode = 4;
             if (Repairs.Status in {7:null, 8:null, 9:null, 10:null, 11:null, 12:null}) {
                 if (Repairs.Rslt_id == 1) ChangeMode = 2;
                 if (Repairs.Rslt_id == 2) ChangeMode = 4;
@@ -87,23 +93,25 @@
                 if (Repairs.Rslt_id == 4) ChangeMode = 0;
             }
             
+            $('#Tabs').jqxTabs({ selectedItem: 0 }); 
+            
             if (ChangeMode >= 1) {
                 $("#Tabs .jqx-tabs-title:eq(" + 1 + ")").css("display", "block");
                 $('#Tabs').jqxTabs({ selectedItem: 1 }); 
             }
-            if (ChangeMode = 2) {
+            if (ChangeMode == 2) {
                 $("#Tabs .jqx-tabs-title:eq(" + 2 + ")").css("display", "block");
                 $('#Tabs').jqxTabs({ selectedItem: 2 }); 
             }
-            if (ChangeMode = 3) {
+            if (ChangeMode == 3) {
                 $("#Tabs .jqx-tabs-title:eq(" + 3 + ")").css("display", "block");
                 $('#Tabs').jqxTabs({ selectedItem: 3 }); 
             }
-            if (ChangeMode = 4) {
+            if (ChangeMode == 4) {
                 $("#Tabs .jqx-tabs-title:eq(" + 4 + ")").css("display", "block");
                 $('#Tabs').jqxTabs({ selectedItem: 4 }); 
             }
-            if (ChangeMode = 5) {
+            if (ChangeMode == 5) {
                 $("#Tabs .jqx-tabs-title:eq(" + 5 + ")").css("display", "block");
                 $('#Tabs').jqxTabs({ selectedItem: 5 }); 
             }
@@ -152,7 +160,7 @@
                     Repairs.ResultName = Res.resultname;
                     Repairs.EDefect = Res.edefect;
                     Repairs.DatePlanAction1 = Aliton.DateConvertToJs(Res.date_plan);
-                    Repairs.edDateFactAction1 = Aliton.DateConvertToJs(Res.date_fact);
+                    Repairs.DateFactAction1 = Aliton.DateConvertToJs(Res.date_fact);
                     Repairs.ExecHour = Res.exechour;
                     SetValueControls();
                     CheckTabs();
@@ -227,10 +235,13 @@
             if ($('#btnEdit').jqxButton('disabled')) return;
             
             var CurrentTabIndex = $('#Tabs').jqxTabs('selectedItem');
+            
             if (CurrentTabIndex == 0)
                 $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 660, width: 780, position: 'center' }));
             if (CurrentTabIndex == 1)
                 $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 140, width: 500, position: 'center' }));
+            if (CurrentTabIndex == 2)
+                $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 360, width: 700, position: 'center',  }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Repair/Update')) ?>,
                 type: 'POST',
@@ -254,7 +265,7 @@
             switch (tab) {
                 case 0:
                     $("#edComment").jqxInput($.extend(true, {}, {height: 25, width: 440, minLength: 1}));
-                    $("#edPlanDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: null}));
+                    $("#edPlanDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: null, dropDownVerticalAlignment: 'top'}));
                     $('#btnAddComment').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     
                     var DataRepairComments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairComments), { async: true,
@@ -287,6 +298,45 @@
                                     { text: 'План. дата', datafield: 'DatePlan', filtertype: 'date', cellsformat: 'dd.MM.yyyy', width: 130},
                                 ]
                     }));
+                    
+                    $("#edComment").on('keyup', function(e) {
+                        var keyCode = e.keyCode || e.which;
+                        if (keyCode === 13) { 
+                             $('#btnAddComment').click();
+                            return false;
+                        }
+                    });
+                    
+                    $('#btnAddComment').on('click', function() {
+                        if ($("#edComment").val() == '' && $("#edPlanDate").val() == '') return;
+                        
+                        var CurrentDate = new Date();
+                        CurrentDate = CurrentDate.getDay() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear();
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('RepairComments/Create')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                RepairComments: {
+                                    Repr_id: Repairs.Repr_id,
+                                    Date: CurrentDate,
+                                    DatePlan: $("#edPlanDate").val(),
+                                    Comment: $("#edComment").val()
+                                }
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                if (Res.result === 1) {
+                                    //Repairs.Refresh();
+                                    $("#GridComments").jqxGrid('updatebounddata');
+                                    $("#edComment").val('');
+                                }
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
                 break;
                 case 1:
                     $('#btnAddEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -305,6 +355,24 @@
                             //DisabledCommentsControls();
                         }
                     });
+                    
+                    $("#GridEquips").on('rowselect', function (event) {
+                        CurrentRowDetails = $('#GridEquips').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
+                    $("#GridEquips").on("bindingcomplete", function (event) {
+                        if (CurrentRowDetails != undefined) {
+                            Aliton.SelectRowById('rpdt_id', CurrentRowDetails.rpdt_id, '#GridEquips', false);
+                        }
+                        else {
+                            if (FirstStart) {
+                                $('#GridEquips').jqxGrid('selectrow', 0);
+                                $('#GridEquips').jqxGrid('ensurerowvisible', 0);
+                                FirstStart = false;
+                            }
+                        }
+                    });
+            
                     
                     $("#GridEquips").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
@@ -325,8 +393,313 @@
                                     { text: 'Сумма', datafield: 'summa', width: 110, cellsformat: 'f2'},
                                 ]
                     }));
+                    
+                    $("#btnAddEquips").on('click', function(){
+                        if ($("#btnAddEquips").jqxButton('disabled')) return;
+                        if (Repairs.Repr_id !== null) {
+                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 205, width: 640, position: 'center' }));
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('RepairDetails/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Repr_id: Repairs.Repr_id
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $("#BodyRepairsDialog").html(Res.html);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
+
+                    $("#btnEditEquips").on('click', function(){
+                        if ($("#btnEditEquips").jqxButton('disabled')) return;
+                        if (Repairs.Repr_id !== null) {
+                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 205, width: 640, position: 'center' }));
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('RepairDetails/Update')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Rpdt_id: CurrentRowDetails.rpdt_id,
+                                    Repr_id: Repairs.Repr_id
+                                    
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $("#BodyRepairsDialog").html(Res.html);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
+
+                    $("#btnRefreshEquips").on('click', function() {
+                        if ($("#btnRefreshEquips").jqxButton('disabled')) return;
+                        if (CurrentRowDetails != undefined) {
+                            var Rpdt_id = CurrentRowDetails.rpdt_id
+                            CurrentRowDetails = undefined;
+                            Aliton.SelectRowById('rpdt_id', Rpdt_id, '#GridEquips', true);
+                        }
+                        else
+                            Aliton.SelectRowById('rpdt_id', null, '#GridEquips', true);
+
+                    });
+                    
+                    $("#btnDelEquips").on('click', function(){
+                        if ($("#btnDelEquips").jqxButton('disabled')) return;
+                        if (Repairs.Repr_id !== null && CurrentRowDetails !== undefined) {
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('RepairDetails/Delete')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Rpdt_id: CurrentRowDetails.rpdt_id,
+                                    Repr_id: Repairs.Repr_id
+                                    
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    if (Res.result === 1) {
+                                        CurrentRowDetails = undefined;
+                                        $("#btnRefreshEquips").click();
+                                    }
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
                 break;
                 case 2:
+
+                    $("#DocsPanel").on('open', function(){
+                        SetStateButtons();
+                    });
+
+                    $("#DocsPanel").jqxDropDownButton({initContent: function(){
+                        $('#btnAddMonitoring').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        $('#btnAddCostCalc').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        $('#btnAddWHDoc9').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        $('#btnAddWHDoc7').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        $('#btnAddActDefect').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        $('#btnAddSRM').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        $('#btnAddDelivery').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        $('#btnAddWHDoc5').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        $('#btnAddWHDoc4').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
+                        
+                        $('#btnAddMonitoring').on('click', function(){
+                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '640'}));
+                            $.ajax({
+                                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Insert');?>",
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    DialogId: 'RepairsDialog',
+                                    BodyDialogId: 'BodyRepairsDialog',
+                                    Params: {
+                                        Repr_id: Repairs.Repr_id,
+                                        Prior: 1,
+                                        Note: Repairs.Note
+                                    }
+                                },
+                                success: function(Res) {
+                                    $('#BodyRepairsDialog').html(Res);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                }
+                            });
+                        });
+                        
+                        $("#btnAddCostCalc").on('click', function(){
+                            if ($("#btnAddCostCalc").jqxButton('disabled')) return;
+                            if (Repairs.ObjectGr_id !== null) {
+                                $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 540, width: 635, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Create')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Params: {
+                                            ObjectGr_id: Repairs.ObjectGr_id,
+                                            repr_id: Repairs.Repr_id,
+                                            group_name: 'Ремонт, заявка №' + Repairs.Number,
+                                            ccwt_id: (parseInt(Repairs.Rslt_id) == 1) ? 6:5,
+                                            date: Repairs.Date,
+                                            Demand_id: Repairs.Demand_id,
+                                            jrdc_id: Repairs.Jrdc_id,
+                                        },
+                                        ObjectGr_id: Repairs.ObjectGr_id
+
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyRepairsDialog").html(Res.html);
+                                        $('#RepairsDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+                        
+                        $('#btnAddWHDoc9').on('click', function() {
+                            $('#RepairsDialog').jqxWindow({width: 600, height: 300, position: 'center', isModal: true});
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Dctp_id: 9,
+                                    DialogId: 'RepairsDialog',
+                                    BodyDialogId: 'BodyRepairsDialog',
+                                    Params: {
+                                        repr_id: Repairs.Repr_id,
+                                        date: Repairs.Date,
+                                        dmnd_empl_id: Repairs.Master_id,
+                                        empl_id: Repairs.CurrentEmpl_id,
+                                        objc_id: Repairs.Object_id,
+                                        note: 'Ремонт, заявка №' + Repairs.Number
+                                    },
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+
+                                    $("#BodyRepairsDialog").html(Res.html);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        });
+                        
+                        $('#btnAddWHDoc7').on('click', function() {
+                            $('#RepairsDialog').jqxWindow({width: 600, height: 300, position: 'center', isModal: true});
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Dctp_id: 7,
+                                    DialogId: 'RepairsDialog',
+                                    BodyDialogId: 'BodyRepairsDialog',
+                                    Params: {
+                                        repr_id: Repairs.Repr_id,
+                                        date: Repairs.Date,
+                                        objc_id: Repairs.Object_id,
+                                        strg_id: 1,
+                                        note: 'Ремонт, заявка №' + Repairs.Number
+                                    },
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+
+                                    $("#BodyRepairsDialog").html(Res.html);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        });
+                        
+                        $('#btnAddDelivery').on('click', function(){
+                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '440px', width: '740'}));
+                            $.ajax({
+                                url: "<?php echo Yii::app()->createUrl('Delivery/Insert');?>",
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    DialogId: 'RepairsDialog',
+                                    BodyDialogId: 'BodyRepairsDialog',
+                                    Params: {
+                                        repr_id: Repairs.Repr_id,
+                                        date: Repairs.Date,
+                                        prty_id: 1,
+                                        objc_id: Repairs.Object_id
+                                    }
+                                },
+                                success: function(Res) {
+                                    $('#BodyRepairsDialog').html(Res);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                }
+                            });
+                        });
+                        
+                        $('#btnAddWHDoc5').on('click', function(){
+                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 470, width: 940}));
+                            $.ajax({
+                                url: "<?php echo Yii::app()->createUrl('WHActs/Insert');?>",
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    DialogId: 'RepairsDialog',
+                                    BodyDialogId: 'BodyRepairsDialog',
+                                    Params: {
+                                        repr_id: Repairs.Repr_id,
+                                        date: Repairs.date,
+                                        jbtp_id: 1,
+                                        objc_id: Repairs.Object_id,
+                                        jrdc_id: Repairs.Jrdc_id,
+                                        dmnd_empl_id: Repairs.Egnr_id
+                                    }
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                    $('#BodyRepairsDialog').html(Res.html);
+                                }
+                            });
+                        });
+                        
+                        $('#btnAddWHDoc4').on('click', function() {
+                            $('#RepairsDialog').jqxWindow({width: 710, height: 500, position: 'center', isModal: true});
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Dctp_id: 4,
+                                    DialogId: 'RepairsDialog',
+                                    BodyDialogId: 'BodyRepairsDialog',
+                                    Params: {
+                                        repr_id: Repairs.Repr_id,
+                                        date: Repairs.Date,
+                                        objc_id: Repairs.Object_id,
+                                        strg_id: 1,
+                                        dmnd_empl_id: Repairs.Egnr_id,
+                                        note: Repairs.Note
+                                    },
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+
+                                    $("#BodyRepairsDialog").html(Res.html);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        });
+                
+                
+                    }});
+                    
+                    $("#DocsPanel").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { dropDownVerticalAlignment: 'top', autoOpen: false, width: 260, height: 28 }));
+                    var DD = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 6px;">Создать</div>';
+                    $("#DocsPanel").jqxDropDownButton('setContent', DD);
+                    
                     $('#btnDelDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     var DataRepairDocuments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairDocuments), { async: true,
                         formatData: function (data) {
@@ -370,6 +743,27 @@
         $("#edMaster").jqxComboBox({source: DataEmployees, width: '150', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"});
         $("#edEngineer").jqxComboBox({source: DataEmployees, width: '150', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"});
         $('#btnReturn').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 220, height: 30 }));
+        $('#btnReturn').on('click', function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Repair/Return')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Repairs: {
+                        Repr_id: Repairs.Repr_id
+                    }
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result === 1) {
+                        Repairs.Refresh();
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         
         if (Repairs.Master_id != '') $("#edMaster").jqxComboBox('val', Repairs.Master_id);
         if (Repairs.Egnr_id != '') $("#edEngineer").jqxComboBox('val', Repairs.Egnr_id);
@@ -465,6 +859,52 @@
                 });
             });
             
+            $('#btnReady').on('click', function() {
+                $("#ActionPanel").jqxDropDownButton('close');
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Repair/Ready')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Repairs: {
+                            Repr_id: Repairs.Repr_id
+                        }
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result === 1) {
+                            Repairs.Refresh();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            });
+            
+            $('#btnExec').on('click', function() {
+                $("#ActionPanel").jqxDropDownButton('close');
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Repair/Exec')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Repairs: {
+                            Repr_id: Repairs.Repr_id
+                        }
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result === 1) {
+                            Repairs.Refresh();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            });
+            
         }});
         
         $("#ActionPanel").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { dropDownVerticalAlignment: 'top', autoOpen: false, width: 260, height: 28 }));
@@ -492,6 +932,16 @@
             <li style="*margin-left: 30px;">
                 <div style="height: 20px; margin-top: 5px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ремонт в ПРЦ</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ремонт в СРМ</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Неремонтопригодно</div>
                 </div>
             </li>
         </ul>
@@ -625,6 +1075,12 @@
                 </div>
             </div>
         </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px;"></div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px;"></div>
+        </div>
     </div>
 </div>
 <div class="al-row">
@@ -652,6 +1108,7 @@
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Документы</div>
                 </div>
             </li>
+            
         </ul>
         <div style="overflow: hidden;">
             <div style="padding: 10px;">
@@ -681,7 +1138,29 @@
             <div style="padding: 10px;">
                 <div class="al-row"><div id="GridDocuments"></div></div>
                 <div class="al-row">
-                    <div class="al-row-column"></div>
+                    <div class="al-row-column">
+                            <div style='float: left;' id="DocsPanel">
+                                <div style="height: 308px">
+                                    <div style="padding: 2px"><input type="button" value="Заявка на мониторинг" id='btnAddMonitoring'/></div>
+                                    <div style="clear: both"></div>
+                                    <div style="padding: 2px"><input type="button" value="Коммерческое предложение" id='btnAddCostCalc'/></div>
+                                    <div style="clear: both"></div>
+                                    <div style="padding: 2px"><input type="button" value="Накладная на возврат мастеру" id='btnAddWHDoc9'/></div>
+                                    <div style="clear: both"></div>
+                                    <div style="padding: 2px"><input type="button" value="Накладная на перемещение с ПРЦ на склад" id='btnAddWHDoc7'/></div>
+                                    <div style="clear: both"></div>
+                                    <div style="padding: 2px"><input type="button" value="Акт дефектации" id='btnAddActDefect'/></div>
+                                    <div style="clear: both"></div>
+                                    <div style="padding: 2px"><input type="button" value="Сопроводительная накладная" id='btnAddSRM'/></div>
+                                    <div style="clear: both"></div>
+                                    <div style="padding: 2px"><input type="button" value="Заявка на доставку" id='btnAddDelivery'/></div>
+                                    <div style="clear: both"></div>
+                                    <div style="padding: 2px"><input type="button" value="Акт списания метериалов с инженера ПРЦ" id='btnAddWHDoc5'/></div>
+                                    <div style="clear: both"></div>
+                                    <div style="padding: 2px"><input type="button" value="Требование" id='btnAddWHDoc4'/></div>
+                                </div>
+                            </div>
+                    </div>
                     <div class="al-row-column" style="float: right"><input type="button" id="btnDelDocuments" value="Удалить"/></div>
                     <div style="clear: both"></div>
                 </div>

@@ -49,6 +49,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $note;
     public $plan_date;
     public $calc_id;
+    public $repr_id;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -103,7 +104,8 @@ class WHDocumentsDoc4 extends MainFormModel
                         d.storage,
                         d.control,
                         d.note,
-                        d.plan_date";
+                        d.plan_date,
+                        d.repr_id";
         $From = "\nFrom WHDocuments_Treb_v d left join ActionHistory_v a on (d.achs_id = a.achs_id)
                         left join ActionConfirm_v ac on (ac.docm_id = d.docm_id)";
         $Where = "\nWhere d.dctp_id = 4";
@@ -166,7 +168,8 @@ class WHDocumentsDoc4 extends MainFormModel
                     control,
                     note,
                     plan_date,
-                    calc_id', 'safe'),
+                    calc_id,
+                    repr_id', 'safe'),
         );
     }
     
@@ -220,6 +223,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'note' => '',
             'plan_date' => '',
             'calc_id' => 'calc_id',
+            'repr_id' => 'repr_id',
         );
     }
     

@@ -18,6 +18,9 @@ return array(
                         'AcceptRepairs',
                         'UndoAcceptRepairs',
                         'SendAgreeRepairs',
+                        'ReadyRepairs',
+                        'ReturnRepairs',
+                        'ExecRepairs',
 		),
 	),
 
@@ -85,6 +88,30 @@ return array(
 		'defaultIndex' => 'Repais',
 	),
     
+        'ReadyRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'ReadyRepairs',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'ReturnRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'ReturnRepairs',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
+        'ExecRepairs' => array(
+		'type' => CAuthItem::TYPE_OPERATION,
+		'description' => 'ExecRepairs',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repais',
+	),
+    
         'SendAgreeRepairs' => array(
 		'type' => CAuthItem::TYPE_OPERATION,
 		'description' => 'SendAgreeRepairs',
@@ -100,4 +127,5 @@ return array(
 		'data' => null,
 		'defaultIndex' => 'Repais',
 	),
+        
 );

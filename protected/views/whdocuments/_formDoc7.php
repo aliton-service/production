@@ -29,15 +29,19 @@
         $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '100%', minLength: 1});
         $("#edAddressEdit").on('bindingComplete', function(){
             if (WHDocuments.Objc_id !== null) $("#edAddressEdit").jqxComboBox('val', WHDocuments.Objc_id);
+            console.log(WHDocuments.Objc_id);
             $('#btnSaveWHDocuments').jqxButton({disabled: false});
         });
         $("#edAddressEdit").jqxComboBox({ source: DataAddress, width: '450', height: '25px', displayMember: "Addr", valueMember: "Object_id"});
         
-        $('#btnSaveWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnSaveWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
         $('#btnCancelWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#btnCancelWHDocuments').on('click', function(){
-            $('#WHDocumentsDialog').jqxWindow('close');
+            if ($('#WHDocumentsDialog').length>0)
+                $('#WHDocumentsDialog').jqxWindow('close');
+            if ($('#RepairsDialog').length>0)
+                $('#RepairsDialog').jqxWindow('close');
         });
         
         $('#btnSaveWHDocuments').on('click', function(){
@@ -55,16 +59,29 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        if (!StateInsert) WHDoc.Refresh();
-                        if (StateInsert) {
-                            WHReestr.Docm_id = Res.id;
-                            $('#Grid6').jqxGrid('updatebounddata');
-                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                        if (!StateInsert) {
+                            if (typeof(WHDoc.Refresh) != 'undefined')
+                                WHDoc.Refresh();
                         }
-                        $('#WHDocumentsDialog').jqxWindow('close');
+                        if (StateInsert) {
+                            if ($('#Grid7').length>0) {
+                                WHReestr.Docm_id = Res.id;
+                                $('#Grid6').jqxGrid('updatebounddata');
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                            }
+                            if ($('#GridDocuments').length>0)
+                                $('#GridDocuments').jqxGrid('updatebounddata');
+                        }
+                        if ($('#WHDocumentsDialog').length>0)
+                            $('#WHDocumentsDialog').jqxWindow('close');
+                        if ($('#RepairsDialog').length>0)
+                            $('#RepairsDialog').jqxWindow('close');
                     }
                     else {
-                        $('#BodyWHDocumentsDialog').html(Res.html);
+                        if ($('#WHDocumentsDialog').length>0)
+                            $('#BodyWHDocumentsDialog').html(Res.html);
+                        if ($('#RepairsDialog').length>0)
+                            $('#BodyRepairsDialog').jqxWindow('close');
                     };
                 },
                 error: function(Res) {
@@ -92,6 +109,7 @@
 
 <input type="hidden" name="WHDocuments[docm_id]" value="<?php echo $model->docm_id; ?>" />
 <input type="hidden" name="WHDocuments[dctp_id]" value="<?php echo $model->dctp_id; ?>" />
+<input type="hidden" name="WHDocuments[repr_id]" value="<?php echo $model->repr_id; ?>" />
 
 
 <div class="row">

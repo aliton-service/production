@@ -25,7 +25,7 @@ class RepairDocuments extends MainFormModel
                         d.dateexec,
                         d.note,
                         d.[status]";
-        $From = "\nFrom get_documents_repair(#Repr_id) d";
+        $From = "\nFrom get_documents_repair(:#Repr_id) d";
         
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);

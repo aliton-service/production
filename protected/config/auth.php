@@ -140,6 +140,8 @@ return array_merge(
     /* Ремонт (материалы) */
     include(dirname(__FILE__).'/security/RepairMaterialsSecurity.php  '),
         
+    include(dirname(__FILE__).'/security/RepairDetailsSecurity.php  '),
+        
     /* Ремонт (сопроводительная накладная) */
     include(dirname(__FILE__).'/security/RepairSRMSecurity.php'),
         
@@ -148,6 +150,9 @@ return array_merge(
         
     /* Ремонт (акт утилизации) */
     include(dirname(__FILE__).'/security/RepairActUtilizationsSecurity.php'),
+        
+    /* Ремонт (СРМ и ПРЦ) */
+    include(dirname(__FILE__).'/security/RepairDocsSecurity.php'),
 
     /* Ремонт (ход работы) */
     include(dirname(__FILE__).'/security/RepairCommentsSecurity.php'),
@@ -463,6 +468,7 @@ return array_merge(
                 'Contacts2',
                 'DeliveryDemandsReport',
                 'DeliveryDemandsBrokenDeadlinesReport',
+                'AdminRepairDetails',
                 ),
         ),
         

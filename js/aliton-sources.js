@@ -3599,7 +3599,7 @@ Sources.SourceRepairDetails =
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=RepairDetails',
     root: 'Rows',
     cache: false,
-    async: true,
+    async: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {

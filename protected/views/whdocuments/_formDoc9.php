@@ -35,7 +35,10 @@
         $('#btnCancelWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#btnCancelWHDocuments').on('click', function(){
-            $('#WHDocumentsDialog').jqxWindow('close');
+            if ($('#WHDocumentsDialog').length>0)
+                $('#WHDocumentsDialog').jqxWindow('close');
+            if ($('#RepairsDialog').length>0)
+                $('#RepairsDialog').jqxWindow('close');
         });
         
         $('#btnSaveWHDocuments').on('click', function(){
@@ -53,16 +56,29 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        if (!StateInsert) WHDoc.Refresh();
-                        if (StateInsert) {
-                            WHReestr.Docm_id = Res.id;
-                            $('#Grid7').jqxGrid('updatebounddata');
-                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                        if (!StateInsert) {
+                            if (typeof(WHDoc.Refresh) != 'undefined')
+                                WHDoc.Refresh();
                         }
-                        $('#WHDocumentsDialog').jqxWindow('close');
+                        if (StateInsert) {
+                            if ($('#Grid7').length>0) {
+                                WHReestr.Docm_id = Res.id;
+                                $('#Grid7').jqxGrid('updatebounddata');
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                            }
+                            if ($('#GridDocuments').length>0)
+                                $('#GridDocuments').jqxGrid('updatebounddata');
+                        }
+                        if ($('#WHDocumentsDialog').length>0)
+                            $('#WHDocumentsDialog').jqxWindow('close');
+                        if ($('#RepairsDialog').length>0)
+                            $('#RepairsDialog').jqxWindow('close');
                     }
                     else {
-                        $('#BodyWHDocumentsDialog').html(Res.html);
+                        if ($('#WHDocumentsDialog').length>0)
+                            $('#BodyWHDocumentsDialog').html(Res.html);
+                        if ($('#RepairsDialog').length>0)
+                            $('#BodyRepairsDialog').jqxWindow('close');
                     };
                 },
                 error: function(Res) {
@@ -90,6 +106,7 @@
 
 <input type="hidden" name="WHDocuments[docm_id]" value="<?php echo $model->docm_id; ?>" />
 <input type="hidden" name="WHDocuments[dctp_id]" value="<?php echo $model->dctp_id; ?>" />
+<input type="hidden" name="WHDocuments[repr_id]" value="<?php echo $model->repr_id; ?>" />
 
 
 <div class="row">

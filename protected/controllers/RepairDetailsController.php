@@ -2,150 +2,135 @@
 
 class RepairDetailsController extends Controller
 {
+    public $layout = '//layouts/column2';
+    public $title = '';
 
-	public $layout = '//layouts/column2';
-	public $title = '';
+    public function filters()
+    {
+            return array(
+                    'accessControl', // perform access control for CRUD operations
+                    'postOnly + delete', // we only allow deletion via POST request
+            );
+    }
 
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
-	}
+    public function accessRules()
+    {
+        return array(
+                array('allow',  
+                        'actions' => array('index'),
+                        'roles' => array('ViewRepairDetails'),
+                ),
+                array('allow', 
+                        'actions' => array('Create'),
+                        'roles' => array('CreateRepairDetails'),
+                ),
+                array('allow', 
+                        'actions' => array('update'),
+                        'roles' => array('UpdateRepairDetails'),
+                ),
+                array('allow',
+                        'actions' => array('delete'),
+                        'roles' => array('DeleteRepairDetails'),
+                ),
+                array('deny',
+                        'users' => array('*'),
+                ),
+        );
+    }
 
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions' => array('index', 'view', 'equipAnalog', 'clients', 'autoRepairDetails', 'ShowHide'),
-				'roles' => array(
-					'ViewRepairDetails',
+    public function actionCreate()
+    {
+        $model = new RepairDetails();
+        
+        if (isset($_POST['Repr_id']))
+            $model->repr_id = $_POST['Repr_id'];
+        
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        if (isset($_POST['RepairDetails'])) {
+            $model->attributes = $_POST['RepairDetails'];
+            if ($model->fact_quant == '0.00')
+                $model->fact_quant = null;
+            
+            if ($model->validate()) {
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $Res['rpdt_id'];
+                echo json_encode($ObjectResult);
+                return;
+            } 
+        }
+        
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
+    }
 
-				),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions' => array('create'),
-				'roles' => array(
+    public function actionUpdate()
+    {
+        $model = new RepairDetails();
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        if (isset($_POST['Rpdt_id']))
+            $model->getModelPk($_POST['Rpdt_id']);
 
-					'CreateRepairDetails',
+        if (isset($_POST['RepairDetails'])) {
+            $model->getModelPk($_POST['RepairDetails']['rpdt_id']);
+            $model->attributes = $_POST['RepairDetails'];
+            if ($model->validate()) {
+                $model->Update();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->rpdt_id;
+                echo json_encode($ObjectResult);
+                return;
+            }
+        }
 
-				),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions' => array('update'),
-				'roles' => array(
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
+    }
 
-					'UpdateRepairDetails',
+    public function actionDelete()
+    {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Rpdt_id'])) {
+            $model = new RepairDetails();
+            $model->getModelPk($_POST['Rpdt_id']);
+            if ($model->validate()) {
+                $model->delete();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->rpdt_id;
+                echo json_encode($ObjectResult);
+                return;
+            }
+            else {
+                $ObjectResult['result'] = 2;
+            }
+        }
+        echo json_encode($ObjectResult);
+    }
 
-				),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions' => array('delete'),
-				'roles' => array(
-					'DeleteRepairDetails',
-				),
-
-			),
-			array('deny',  // deny all users
-				'users' => array('*'),
-			),
-		);
-	}
-
-
-
-	public function actionCreate()
-	{
-		$model = new RepairDetails;
-
-		if (isset($_POST['RepairDetails'])) {
-			$model->attributes = $_POST['RepairDetails'];
-			$model->EmplCreate = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->insert();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о событии успешно создана'))));
-				} else {
-					$this->redirect('/?r=RepairDetails');
-				}
-			}
-		}
-//		if ($this->isAjax()) {
-//			$this->renderPartial('create', array('model' => $model), false, true);
-//		} else {
-//			$this->render('create', array('model' => $model));
-//		}
-
-
-	}
-
-	public function actionUpdate($id)
-	{
-		$model = new RepairDetails;
-		if ($id == null)
-			throw new CHttpException(404, 'Не выбран сотрудник.');
-
-//		if (!Yii::app()->LockManager->LockRecord('RepairDetails', $model->tableSchema->primaryKey, $id))
-//			throw new CHttpException(404, 'Запись заблокирована другим пользователем');
-
-		if($id && (int)$id > 0 && isset($_POST['RepairDetails'])) {
-			$model->getModelPk($id);
-			$model->attributes = $_POST['RepairDetails'];
-			$model->rpdt_id = (int)$id;
-			$model->EmplChange = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->update();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о событии успешно изменена'))));
-				} else {
-
-					$this->redirect('/?r=RepairDetails');
-				}
-			}
-		} else {
-			$model->getModelPk($id);
-		}
-		if($this->isAjax()) {
-			$this->renderPartial('update', array('model'=>$model), false, true);
-		} else {
-			$this->render('update', array('model'=>$model));
-		}
-
-
-	}
-
-	public function actionDelete($id)
-	{
-		$model = new RepairDetails;
-		$model->rpdt_id = $id;
-		$model->EmplDel = Yii::app()->user->Employee_id;
-		$model->delete();
-		if($this->isAjax()) {
-			die(json_encode(array('status'=>'ok','data'=>array('msg'=>'Запись о событии успешно удалена'))));
-		}
-		else {
-			$this->redirect('/?r=RepairDetails');
-		}
-
-	}
-
-	public function actionIndex($repr_id)
-	{
-		if($this->isAjax()) {
-			$this->renderPartial('index', array('repr_id' => $repr_id), false, true);
-		} else {
-			$this->render('index', array('repr_id' => $repr_id));
-		}
-	}
-
-	public function actionView($id) {
-		$model = new RepairDetails();
-		$model->getModelPk($id);
-		$this->render('view', array('model'=>$model));
-	}
-
-
-
+    public function actionIndex($repr_id)
+    {
+            if($this->isAjax()) {
+                    $this->renderPartial('index', array('repr_id' => $repr_id), false, true);
+            } else {
+                    $this->render('index', array('repr_id' => $repr_id));
+            }
+    }
 }
 

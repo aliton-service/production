@@ -35,6 +35,18 @@ class RepairController extends Controller {
                     'roles'=>array('AcceptRepairs'),
             ),
             array('allow', 
+                    'actions'=>array('Ready'),
+                    'roles'=>array('ReadyRepairs'),
+            ),
+            array('allow', 
+                    'actions'=>array('Return'),
+                    'roles'=>array('ReturnRepairs'),
+            ),
+            array('allow', 
+                    'actions'=>array('Exec'),
+                    'roles'=>array('ExecRepairs'),
+            ),
+            array('allow', 
                     'actions'=>array('SendAgree'),
                     'roles'=>array('SendAgreeRepairs'),
             ),
@@ -165,6 +177,80 @@ class RepairController extends Controller {
         if (isset($_POST['Repairs'])) {
             $sp = new StoredProc();
             $sp->ProcedureName = 'SEND_RepairAgree';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Repairs']['Repr_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionReady() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Repairs'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'READY_Repairs';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Repairs']['Repr_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionReturn() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Repairs'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'UNDO_RepairToDiagnostik';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Repairs']['Repr_id'];
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionExec() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Repairs'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'EXEC_Repairs';
             $sp->ParametersRefresh();
             $sp->Parameters[0]['Value'] = $_POST['Repairs']['Repr_id'];
             $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;

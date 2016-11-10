@@ -83,8 +83,15 @@ class CostCalculationsController extends Controller
             'id' => 0,
             'html' => '',
         );
-        if (isset($_POST['CostCalcDetails'])) {
-            $model->attributes = $_POST['CostCalcDetails'];
+        
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+        
+        if (isset($_POST['ObjectGr_id']))
+            $model->ObjectGr_id = $_POST['ObjectGr_id'];
+        
+        if (isset($_POST['CostCalculations'])) {
+            $model->attributes = $_POST['CostCalculations'];
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;

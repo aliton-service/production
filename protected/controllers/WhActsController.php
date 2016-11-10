@@ -90,6 +90,9 @@ class WhActsController extends Controller
             'html' => '',
         );
         
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+        
         if (isset($_POST['WhActs'])) {
             $model->attributes = $_POST['WhActs'];
             if ($model->validate()) {
