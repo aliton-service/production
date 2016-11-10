@@ -72,10 +72,10 @@
         };
 
 
-        $('#jqxTabsEventsClients').jqxTabs({ width: '99.5%', height: 37, initTabContent: initWidgets});
+        $('#jqxTabsEvents').jqxTabs({ width: '99.5%', height: 37, initTabContent: initWidgets});
 
         for (var i = 0; i < EventTypesDataAdapter.records.length; i++) {
-               $('#jqxTabsEventsClients').jqxTabs('addLast', EventTypesDataAdapter.records[i].EventType, '');
+               $('#jqxTabsEvents').jqxTabs('addLast', EventTypesDataAdapter.records[i].EventType, '');
         }
         
         $("#EventsClientsGrid").on('rowselect', function (event) {
@@ -98,9 +98,10 @@
                 pageable: false,
                 virtualmode: true,
                 columns: [
+                    { text: 'evnt_id', datafield: 'evnt_id', width: 40, hidden: true },
                     { text: 'Дата', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
                     { text: 'Тип', datafield: 'eventtype', width: 150 },
-                    { text: 'evnt_id', datafield: 'evnt_id', width: 40, hidden: true },
+                    { text: 'evtp_id', datafield: 'evtp_id', width: 40, hidden: true },
                     { text: 'Адрес', datafield: 'addr', minwidth: 230, maxwidth: 400 },
                     { text: 'Исполнитель', datafield: 'employeename', width: 120 },
                     { text: 'Выполнение', dataField: 'date_exec', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
@@ -115,12 +116,12 @@
             if (Temp !== undefined) {
                 CurrentRowDataEvents = Temp;
             } else {CurrentRowDataEvents = null};
-            console.log(CurrentRowDataEvents);
+//            console.log(CurrentRowDataEvents);
         });
         
         
         $("#EventsClientsGrid").on("bindingcomplete", function () {
-//            $('#jqxTabsEventsClients').jqxTabs('select', 3);
+//            $('#jqxTabsEvents').jqxTabs('select', 3);
             $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
             $('#EventsClientsGrid').jqxGrid('expandallgroups');
             $('#EventsClientsGrid').jqxGrid('selectrow', 0);
@@ -175,7 +176,7 @@
         });
         
         $('#btnShowHide').on('click', function(){
-            var tabIndex1 = $('#jqxTabsEventsClients').jqxTabs('selectedItem');
+            var tabIndex1 = $('#jqxTabsEvents').jqxTabs('selectedItem');
             var evtp_id = 0;
             if (tabIndex1 != 0) {
                 evtp_id = EventTypesDataAdapter.records[tabIndex1 - 1].evtp_id;
@@ -202,9 +203,18 @@
             });
         });
         
-        $('#jqxTabsEventsClients').jqxTabs('select', 0);
+        $('#jqxTabsEvents').jqxTabs('select', 0);
     });
 </script>
+
+<style>
+
+    #EventsGrid .jqx-fill-state-pressed,
+    #EventsClientsGrid .jqx-fill-state-pressed {
+        background-color: #86BFA0 !important;
+        color: black;
+    }
+</style>
 
 <?php $this->setPageTitle('Графики'); ?>
 
@@ -219,8 +229,8 @@
     <div class="row-column" style="min-width: 400px; width: 45%; max-width: 700px;"><div id="EventsClientsGrid" class="jqxGridAliton"></div></div>
     
     <div class="row-column" style="min-width: 400px; width: 60%; max-width: 1700px;">
-        <div id='jqxTabsEventsClients'>
-            <ul id="jqxTabsEventsClientsList">
+        <div id='jqxTabsEvents'>
+            <ul>
                 <li>
                     <div>
                         Все
@@ -228,7 +238,7 @@
                 </li>
             </ul>
 
-            <div id='contentEventsClients0'>
+            <div id='contentEvents0'>
             </div>
 
         </div>

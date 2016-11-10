@@ -1,15 +1,15 @@
 <script>
     $(document).ready(function () {
         
-        var tabIndex = $('#jqxTabsEventsClients').jqxTabs('selectedItem'); 
+        var tabIndex = $('#jqxTabsEvents').jqxTabs('selectedItem'); 
 //        console.log('tabIndex0 = ' + tabIndex);
         
-        $('#jqxTabsEventsClients').on('selected', function (event) {
+        $('#jqxTabsEvents').on('selected', function (event) {
             tabIndex = event.args.item;
 //            console.log('tabIndex-selected = ' + tabIndex);
             Find();
         });
-//        $('#jqxTabsEventsClients').on('selecting', function (event) {
+//        $('#jqxTabsEvents').on('selecting', function (event) {
 //            Find();
 //        }); 
             
@@ -81,7 +81,7 @@
                 $('#EventsGrid').jqxGrid('selectrow', 0);
                 
                 var rowindex = $('#EventsGrid').jqxGrid('getselectedrowindex');
-                console.log('rowindex = ' + rowindex);
+//                console.log('rowindex = ' + rowindex);
                 if (rowindex == -1) {
                     $("#btnEditEvent").jqxButton({ disabled: true });
                 } else {
