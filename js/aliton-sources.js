@@ -3709,3 +3709,27 @@ Sources.SourcePeriods =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceEventOffers =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'code', type: 'int'},
+        {name: 'evnt_id', type: 'int'},
+        {name: 'oftp_id', type: 'int'},
+        {name: 'offertype', type: 'string'},
+        {name: 'rslt_id', type: 'int'},
+        {name: 'resultname', type: 'string'},
+        {name: 'note', type: 'string'},
+        {name: 'situation', type: 'string'},
+    ],
+    id: 'evnt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EventOffers',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

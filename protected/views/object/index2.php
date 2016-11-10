@@ -154,7 +154,7 @@
                     $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: "dd.MM.yyyy" }));
                     $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '350', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"});
                     $("#cmbExecutor").jqxComboBox({ source: DataListEmployees, width: '200', height: '25px', displayMember: 'ShortName', valueMember: 'Employee_id'});
-                    
+                                        
                     var resetDate = function () {
                         if (!filtersChanged) {
                             $('#edDate').jqxDateTimeInput('val', null);
@@ -172,7 +172,23 @@
                     });
                     $('#edNumber').on('change', function (event){
                         resetDate();
-                    }); 
+                    });
+                    
+                    $('#rbAll').on('checked', function (event) { 
+                        resetDate();
+                    });
+                    $('#rbNoDateMaster').on('checked', function (event) { 
+                        resetDate();
+                    });
+                    $('#rbDemObject').on('checked', function (event) { 
+                        resetDate();
+                    });
+                    $('#rbNoDateExec').on('checked', function (event) { 
+                        resetDate();
+                    });
+                    $('#rbDemAllObject').on('checked', function (event) { 
+                        resetDate();
+                    });
 
                     $("#edNumber").on('keyup keypress', function(e) {
                         var keyCode = e.keyCode || e.which;
@@ -193,7 +209,6 @@
                         $("#cmbMasterFilter").jqxComboBox('clearSelection');
                         $("#cmbMasterFilter input").val('');
                         $("#edNumber").jqxInput('val', null);
-                        $("#edDate").jqxDateTimeInput('val', new Date() )
                         $("#cmbDemandType").jqxComboBox('clearSelection');
                         $("#cmbDemandType input").val('');
                         $("#cmbExecutor").jqxComboBox('clearSelection');
@@ -205,15 +220,16 @@
                         $('#OptionsDialog').jqxWindow('Close');
                         $(Object).find('input').val(true);
                         $("#DemFilters2").submit();
-                        
+                        resetInputValues();
                     }
                     
-                    $("#OptionsDialogYes").on('click', function () { Close(); resetInputValues(); });
+                    $("#OptionsDialogYes").on('click', function () { Close(); });
                     $('#rbAll').on('checked', function (event) { Close(this); });
                     $('#rbNoDateMaster').on('checked', function (event) { Close(this); });
                     $('#rbDemObject').on('checked', function (event) { Close(this); });
                     $('#rbNoDateExec').on('checked', function (event) { Close(this); });
                     $('#rbDemAllObject').on('checked', function (event) { Close(this); });
+                    
                 }
             })
         );
@@ -225,6 +241,7 @@
             $("#rbNoDateExec").jqxRadioButton('val', false);
             $("#rbDemAllObject").jqxRadioButton('val', false);
             $("#rbParams").jqxRadioButton('val', true);
+            $("#edDate").jqxDateTimeInput('val', new Date() );
             
         });
         
