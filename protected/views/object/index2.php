@@ -137,10 +137,11 @@
         $('#OptionsDialog').jqxWindow(
             $.extend(true, DialogDefaultSettings, {
                 width: 500,
-                height: 400,
+                height: 340,
                 initContent: function () {
                     var DataListEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
                     var DataDemandTypes = new $.jqx.dataAdapter(Sources.SourceDemandTypes);
+                    var filtersChanged = false;
                     
                     $("#rbAll").jqxRadioButton({ width: 100, height: 25, checked: false});
                     $("#rbNoDateMaster").jqxRadioButton({ width: 130, height: 25, checked: false});
@@ -150,10 +151,29 @@
                     $("#rbParams").jqxRadioButton({ width: 130, height: 25, checked: false});
                     $("#cmbMasterFilter").jqxComboBox({ source: DataListEmployees, width: '200', height: '25px', displayMember: 'ShortName', valueMember: 'Employee_id'});
                     $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Номер", width: 100}));
-                    $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: null, readonly: false}));
+                    $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: "dd.MM.yyyy" }));
                     $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '350', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"});
                     $("#cmbExecutor").jqxComboBox({ source: DataListEmployees, width: '200', height: '25px', displayMember: 'ShortName', valueMember: 'Employee_id'});
                     
+                    var resetDate = function () {
+                        if (!filtersChanged) {
+                            $('#edDate').jqxDateTimeInput('val', null);
+                        }
+                        filtersChanged = true;
+                    };
+                    $('#cmbMasterFilter').on('select', function (event){
+                        resetDate();
+                    });
+                    $('#cmbDemandType').on('select', function (event){
+                        resetDate();
+                    });
+                    $('#cmbExecutor').on('select', function (event){
+                        resetDate();
+                    });
+                    $('#edNumber').on('change', function (event){
+                        resetDate();
+                    }); 
+
                     $("#edNumber").on('keyup keypress', function(e) {
                         var keyCode = e.keyCode || e.which;
                         if (keyCode === 13) { 
@@ -165,8 +185,21 @@
                     $("#OptionsDialogCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
                     
                     $("#OptionsDialogCancel").on('click', function () {
+                        resetInputValues();
                         $('#OptionsDialog').jqxWindow('Close');
                     });
+                    
+                    var resetInputValues = function () {
+                        $("#cmbMasterFilter").jqxComboBox('clearSelection');
+                        $("#cmbMasterFilter input").val('');
+                        $("#edNumber").jqxInput('val', null);
+                        $("#edDate").jqxDateTimeInput('val', new Date() )
+                        $("#cmbDemandType").jqxComboBox('clearSelection');
+                        $("#cmbDemandType input").val('');
+                        $("#cmbExecutor").jqxComboBox('clearSelection');
+                        $("#cmbExecutor input").val('');
+                        filtersChanged = false;
+                    };
                     
                     function Close(Object) {
                         $('#OptionsDialog').jqxWindow('Close');
@@ -175,13 +208,12 @@
                         
                     }
                     
-                    $("#OptionsDialogYes").on('click', function () { Close(); });
+                    $("#OptionsDialogYes").on('click', function () { Close(); resetInputValues(); });
                     $('#rbAll').on('checked', function (event) { Close(this); });
                     $('#rbNoDateMaster').on('checked', function (event) { Close(this); });
                     $('#rbDemObject').on('checked', function (event) { Close(this); });
                     $('#rbNoDateExec').on('checked', function (event) { Close(this); });
                     $('#rbDemAllObject').on('checked', function (event) { Close(this); });
-                    
                 }
             })
         );
@@ -193,14 +225,6 @@
             $("#rbNoDateExec").jqxRadioButton('val', false);
             $("#rbDemAllObject").jqxRadioButton('val', false);
             $("#rbParams").jqxRadioButton('val', true);
-            $("#cmbMasterFilter").jqxComboBox('clearSelection');
-            $("#cmbMasterFilter input").val('');
-            $("#edNumber").jqxInput('val', null);
-            $("#edDate").jqxDateTimeInput('val', null)
-            $("#cmbDemandType").jqxComboBox('clearSelection');
-            $("#cmbDemandType input").val('');
-            $("#cmbExecutor").jqxComboBox('clearSelection');
-            $("#cmbExecutor input").val('');
             
         });
         
@@ -303,7 +327,6 @@
     </div>
     <div id="customWindowContent" style="overflow: hidden">
         <div style="margin: 10px">
-            <div>По данному объекту сегодня уже зарегистрированы заявки. Просмотреть?</div>
             <div style="margin-top: 10px">
                 <form class="form-inline"  id="DemFilters2" target="_blank" action="/index.php?r=Demands/index" method="post">
                     <div class="row">
@@ -319,12 +342,12 @@
                         <div class="row-column"><div id='rbNoDateExec' name='DemFilters[NoDateExec]'>Невыполненные</div></div>
                         <div class="row-column" style="float: right"><div id='rbDemAllObject' name='DemFilters[DemObjectGroup]'>По всем объектам адреса</div></div>
                     </div>
-                    <div class="row">
-                        <div class="row-column"><div id='rbParams'>По параметрам</div></div>
-                        <div class="row-column" style="float: right"><div id='cmbMasterFilter' name='DemFilters[Master]'></div></div>
-                        <div class="row-column" style="margin-top: 4px; float: right;">Мастер:</div>
-                    </div>
-                    <div class="row" style="border: 1px solid #e5e5e5; margin-right: 14px;">
+                    <div class="row" style="border: 1px solid #ccc; margin-right: 14px; padding: 0 10px 10px;">
+                        <div class="row">
+                            <div class="row-column"><div id='rbParams'>По параметрам: </div></div>
+                            <div class="row-column" style="float: right"><div id='cmbMasterFilter' name='DemFilters[Master]'></div></div>
+                            <div class="row-column" style="margin: 4px 7px 0 0; float: right;">Мастер:</div>
+                        </div>
                         <div class="row">
                            <div class="row-column" style="margin-top: 6px;">Номер:</div>
                            <div class="row-column"><input type="text" name='DemFilters[Demand_id]' id="edNumber"/></div>
