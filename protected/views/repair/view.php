@@ -47,6 +47,16 @@
             CurrentEmpl_id: parseInt(<?php echo json_encode(Yii::app()->user->Employee_id); ?>)
         };
         
+        var CheckDocButtons = function() {
+            $('#btnEdit').jqxButton({disabled: !(parseInt(Repairs.Status) < 8 && Repairs.DateExec == null)});
+        };
+        
+        var CheckEquipsButton = function() {
+            $('#btnAddEquips').jqxButton({disabled: !(Repairs.DateExec == null)});
+            $('#btnEditEquips').jqxButton({disabled: !(Repairs.DateExec == null)});
+            $('#btnDelEquips').jqxButton({disabled: !(Repairs.DateExec == null)});
+        }
+        
         var SetValueControls = function() {
                         
             $("#edNumber").jqxInput('val', Repairs.Number);
@@ -164,6 +174,7 @@
                     Repairs.ExecHour = Res.exechour;
                     SetValueControls();
                     CheckTabs();
+                    CheckDocButtons();
                     //$("#btnRefreshDetails").click();
                     //SetStateButtons();
                 },
@@ -230,6 +241,26 @@
         $('#btnDemand').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnClient').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnClient').on('click', function() {
+            if (Repairs.ObjectGr_id > 0)
+                window.open('/index.php?r=Objectsgroup/index&ObjectGr_id=' + Repairs.ObjectGr_id);
+        });
+        
+        $('#btnDemand').on('click', function() {
+            if (Repairs.Demand_id > 0)
+                window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + Repairs.Demand_id);
+        });
+        
+        $('#btnPrint').on('click', function() {
+            var url = '';
+            var CurrentTabIndex = $('#Tabs').jqxTabs('selectedItem');
+            url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                    'ReportName' => '/Ремонт/Приходная_накладная_в_ПРЦ'
+                ))); ?>;
+            url += '&Parameters[Repr_id]=' + Repairs.Repr_id;
+            window.open(url);
+        });
         
         $('#btnEdit').on('click', function(){
             if ($('#btnEdit').jqxButton('disabled')) return;
@@ -358,6 +389,7 @@
                     
                     $("#GridEquips").on('rowselect', function (event) {
                         CurrentRowDetails = $('#GridEquips').jqxGrid('getrowdata', event.args.rowindex);
+                        CheckEquipsButton();
                     });
                     
                     $("#GridEquips").on("bindingcomplete", function (event) {
@@ -1067,7 +1099,8 @@
         $("#ActionPanel").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { dropDownVerticalAlignment: 'top', autoOpen: false, width: 260, height: 28 }));
         var DD = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 6px;">Операция</div>';
         $("#ActionPanel").jqxDropDownButton('setContent', DD);
-        CheckTabs(); 
+        CheckTabs();
+        CheckDocButtons();
     });
 </script> 
 
