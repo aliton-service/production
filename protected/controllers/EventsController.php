@@ -76,7 +76,6 @@ class EventsController extends Controller
 
 	public function actionUpdate()
 	{
-//            echo $_POST['evnt_id'];
             $model = new Events();
         
             $ObjectResult = array(
