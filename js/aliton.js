@@ -33,6 +33,7 @@ Aliton.SelectRowById = function(FieldName, Value, Grid, Refresh, Scroll) {
 };
 
 Aliton.SelectRowByIdVirtual = function(FieldName, Value, Grid, Refresh) {
+    
     var idx = -1;
     var Rows = $(Grid).jqxGrid('getrows');
     for (var i = 0; i < Rows.length; i++) {
@@ -41,6 +42,7 @@ Aliton.SelectRowByIdVirtual = function(FieldName, Value, Grid, Refresh) {
             idx = i;
         }
     } 
+    
     if (idx == -1) {
         var PI = $(Grid).jqxGrid('getpaginginformation');
         idx = PI.pagesize*PI.pagenum; 

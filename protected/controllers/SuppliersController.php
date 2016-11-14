@@ -42,26 +42,30 @@ class SuppliersController extends Controller
             );
 	}
 
-	public function actionCreate()
-	{
-            $this->title = 'Создание нового поставщика';
-            $model = new Suppliers();
-            $model->setScenario('Insert');
+    public function actionCreate()
+    {
+        $model = new Suppliers();
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        if (isset($_POST['Suppliers'])) {
+            $model->attributes = $_POST['Suppliers'];
+            if ($model->validate()) {
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $Res['Supplier_id'];
+                echo json_encode($ObjectResult);
+                return;
+            } 
+        }
 
-            if(isset($_POST['Suppliers'])) {
-                $model->attributes=$_POST['Suppliers'];
-                $model->EmplCreate = Yii::app()->user->Employee_id;
-
-                if ($model->validate()) {
-                    $model->insert();
-                    $this->redirect(Yii::app()->createUrl('suppliers/index'));
-                }    
-            }
-            
-            $this->render('create',array(
-                    'model'=>$model,
-            ));
-	}
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
+    }
 
 	
 	public function actionUpdate($Supplier_id)

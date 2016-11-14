@@ -1,397 +1,200 @@
-<script>
-    Aliton.Links.push({
-        Out: "edSupplierName",
-        In: "SuppliersGrid",
-        TypeControl: "Grid",
-        Condition: "s.NameSupplier like '%:Value%'",
-        Name: "Filter1",
-        Field: "",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false
-    });
-    
-    Aliton.Links.push({
-        Out: "SuppliersGrid",
-        In: "edFullName",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "FullName",
-        Name: "Filter2",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false,
-    });
-    
-    Aliton.Links.push({
-        Out: "SuppliersGrid",
-        In: "edBank",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "bank_name",
-        Name: "Filter2",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false,
-    });
-    
-    Aliton.Links.push({
-        Out: "SuppliersGrid",
-        In: "edNote",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "Note",
-        Name: "Filter2",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false,
-    });
-    
-    Aliton.Links.push({
-        Out: "SuppliersGrid",
-        In: "edBik",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "bik",
-        Name: "Filter2",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false,
-    });
-    
-    Aliton.Links.push({
-        Out: "SuppliersGrid",
-        In: "edCorAccount",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "cor_account",
-        Name: "Filter2",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false,
+<script type="text/javascript">
+    $(document).ready(function () {
+        /* Текущая выбранная строка данных */
+        var CurrentRowSupplierData;
+        
+        var SuppliersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliers /*, {async: true, id: 'id'} */));
+
+        $('#btnAddSupplier').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnEditSupplier').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnRefreshSupplier').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnDelSupplier').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#SuppliersDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '200px', width: '400', position: 'center'}));
+        $('#edSupplierFullName').jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 12px)'}));
+        $('#edSupplierNote').jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 12px)'}));
+        $('#edSupplierBank').jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 12px)'}));
+        $('#edSupplierBik').jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 12px)'}));
+        $('#edSupplierCorAccount').jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'}));
+        
+        var CheckButton = function() {
+            $('#btnEditSupplier').jqxButton({disabled: !(CurrentRowSupplierData != undefined)})
+            $('#btnDelSupplier').jqxButton({disabled: !(CurrentRowSupplierData != undefined)})
+        }
+        
+        $("#SuppliersGrid").on('rowselect', function (event) {
+            CurrentRowSupplierData = $('#SuppliersGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (CurrentRowSupplierData != undefined) {
+                $('#edSupplierFullName').jqxInput('val', CurrentRowSupplierData.FullName);
+                $('#edSupplierNote').jqxInput('val', CurrentRowSupplierData.Note);
+                $('#edSupplierBank').jqxInput('val', CurrentRowSupplierData.bank_name);
+                $('#edSupplierBik').jqxInput('val', CurrentRowSupplierData.bik);
+                $('#edSupplierCorAccount').jqxInput('val', CurrentRowSupplierData.cor_account);
+            }
+                
+            CheckButton();
+        });
+        
+        $("#SuppliersGrid").on('rowdoubleclick', function(){
+            $('#btnEditSupplier').click();
+        });
+        
+        $("#SuppliersGrid").on('bindingcomplete', function(){
+            if (CurrentRowSupplierData != undefined) 
+                Aliton.SelectRowByIdVirtual('Supplier_id', CurrentRowSupplierData.Supplier_id, '#SuppliersGrid', false);
+            else
+                Aliton.SelectRowByIdVirtual('Supplier_id', null, '#SuppliersGrid', false);
+        });
+        
+        $("#SuppliersGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                sortable: true,
+                showfilterrow: true,
+                width: '100%',
+                height: 'calc(100% - 2px)',
+                source: SuppliersDataAdapter,
+                columns: [
+                    { text: 'Наименование', datafield: 'NameSupplier', filtercondition: 'CONTAINS', width: 320},    
+                    { text: 'Адрес', datafield: 'Adress', filtercondition: 'CONTAINS', width: 150},    
+                    { text: 'Телефон', datafield: 'Tel', filtercondition: 'CONTAINS', width: 150},    
+                    { text: 'Контактное лицо', datafield: 'ContactFace', filtercondition: 'CONTAINS', width: 150},
+                    { text: 'Поставщик', columntype: 'checkbox', filtertype: 'bool', datafield: 'Supplier', width: 80},    
+                    { text: 'Производитель', columntype: 'checkbox', filtertype: 'bool', datafield: 'Producer', width: 80},    
+                    { text: 'СРМ', columntype: 'checkbox', filtertype: 'bool', datafield: 'Repair', width: 80},
+                    { text: 'Дата послед. контакта', filtertype: 'date', datafield: 'DateLastContact', width: 120, cellsformat: 'dd.MM.yyyy'},
+                    { text: 'Дата послед. закупки', filtertype: 'date', datafield: 'DateLastPurchase', width: 120, cellsformat: 'dd.MM.yyyy'},
+                    { text: 'ИНН', datafield: 'inn', width: 120, filtercondition: 'CONTAINS'},
+                    { text: 'КПП', datafield: 'kpp', width: 120, filtercondition: 'CONTAINS'},
+                    { text: 'Р/Счет', datafield: 'account', width: 120, filtercondition: 'CONTAINS'}
+                ]
+
+        }));
+        
+        $('#btnAddSupplier').on('click', function(){
+            $('#SuppliersDialog').jqxWindow({width: 800, height: 460, position: 'center'});
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Suppliers/Create')) ?>,
+                type: 'POST',
+                async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodySuppliersDialog").html(Res.html);
+                    $('#SuppliersDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+
+        $('#btnEditSupplier').on('click', function(){
+            if (CurrentRowSupplierData != undefined) {
+                $('#SuppliersDialog').jqxWindow({width: 800, height: 480, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Suppliers/Update')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Supplier_id: CurrentRowSupplierData.Supplier_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodySuppliersDialog").html(Res.html);
+                        $('#SuppliersDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $('#btnDelSupplier').on('click', function(){
+            if (CurrentRowSupplierData != undefined) {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Suppliers/Delete')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Supplier_id: CurrentRowSupplierData.Supplier_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result == 1) {
+                            var RowIndex = $('#SuppliersGrid').jqxGrid('getselectedrowindex');
+                            var Text = $('#SuppliersGrid').jqxGrid('getcelltext', RowIndex + 1, "Supplier_id");
+                            Aliton.SelectRowById('Supplier_id', Text, '#SuppliersGrid', true);
+                            RowIndex = $('#SuppliersGrid').jqxGrid('getselectedrowindex');
+                            var S = $('#SuppliersGrid').jqxGrid('getrowdata', RowIndex);
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $('#btnRefreshSupplier').on('click', function(){
+            $('#SuppliersGrid').jqxGrid('updatebounddata');
+        });
+        
+        $('#SuppliersGrid').jqxGrid('selectrow', 0);
     });
 </script>
-<?php $this->setPageTitle('Поставщики\Производители'); ?>
+
+<?php $this->setPageTitle('Должности'); ?>
+
 <?php
     $this->breadcrumbs=array(
-            'Справочники'=>array('/reference/index'),
-            'Поставщики\Производители'=>array('index'),
-    );
-?>
+            'Кадры'=>array('/Employees/index'),
+            'Подразделения'=>array('index'),
+    );?>
 
-<div style="float: left; margin-top: 16px;">
-    <div style="text-align: center; float: left">Поиск по наименованию</div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edSupplierName',
-                    'Width' => 350,
-                    'Type' => 'String',
-            ));
-        ?>
+
+<div class="al-row" style="height: calc(100% - 164px)">
+    <div class="al-row-column" style="width: 100%">
+        <div id="SuppliersGrid" class="jqxGridAliton"></div>
     </div>
 </div>
-<div style="clear: both"></div>
-<div style="margin-top: 16px">
-    <?php
-        $this->widget('application.extensions.alitonwidgets.gridajax.algridajax', array(
-            'id' => 'SuppliersGrid',
-            'Stretch' => true,
-            'Key' => 'Supplier_Index_SuppliersGrid',
-            'ModelName' => 'Suppliers',
-            'ShowFilters' => true,
-            'Height' => 230,
-            'Width' => 500,
-            'OnDblClick' => '$("#EditSuppliers").albutton("BtnClick");',
-            'Columns' => array(
-                'NameSupplier' => array(
-                    'Name' => 'Наименование',
-                    'FieldName' => 'NameSupplier',
-                    'Width' => 200,
-                    'Filter' => array(
-                        'Condition' => "s.NameSupplier like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.NameSupplier desc',
-                        'Down' => 's.NameSupplier',
-                    ),
-                ),
-                'Adress' => array(
-                    'Name' => 'Адрес',
-                    'FieldName' => 'Adress',
-                    'Width' => 280,
-                    'Filter' => array(
-                        'Condition' => "s.Adress like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.Adress desc',
-                        'Down' => 's.Adress',
-                    ),
-                ),
-                'Tel' => array(
-                    'Name' => 'Телефон',
-                    'FieldName' => 'Tel',
-                    'Width' => 180,
-                    'Filter' => array(
-                        'Condition' => "s.Tel like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.Tel desc',
-                        'Down' => 's.Tel',
-                    ),
-                ),
-                'ContactFace' => array(
-                    'Name' => 'Контактное лицо',
-                    'FieldName' => 'ContactFace',
-                    'Width' => 180,
-                    'Filter' => array(
-                        'Condition' => "s.ContactFace like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.ContactFace desc',
-                        'Down' => 's.ContactFace',
-                    ),
-                ),
-                'Supplier' => array(
-                    'Name' => 'Поставщик',
-                    'FieldName' => 'Supplier',
-                    'Width' => 60,
-                    'Filter' => array(
-                        'Condition' => "s.Supplier like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.Supplier desc',
-                        'Down' => 's.Supplier',
-                    ),
-                ),
-                'Producer' => array(
-                    'Name' => 'Производитель',
-                    'FieldName' => 'Producer',
-                    'Width' => 60,
-                    'Filter' => array(
-                        'Condition' => "s.Producer like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.Producer desc',
-                        'Down' => 's.Producer',
-                    ),
-                ),
-                'Repair' => array(
-                    'Name' => 'СРМ',
-                    'FieldName' => 'Repair',
-                    'Width' => 60,
-                    'Filter' => array(
-                        'Condition' => "s.Repair = ':Value'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.Repair desc',
-                        'Down' => 's.Repair',
-                    ),
-                ),
-                'DateLastContact' => array(
-                    'Name' => 'Дата последнего контакта',
-                    'FieldName' => 'DateLastContact',
-                    'Width' => 130,
-                    'Format' => 'd.m.Y',
-                    'Filter' => array(
-                        'Condition' => "s.DateLastContact = ':Value'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.DateLastContact desc',
-                        'Down' => 's.DateLastContact',
-                    ),
-                ),
-                'DateLastPurchase' => array(
-                    'Name' => 'Дата последней закупки',
-                    'FieldName' => 'DateLastPurchase',
-                    'Width' => 130,
-                    'Format' => 'd.m.Y',
-                    'Filter' => array(
-                        'Condition' => "s.DateLastPurchase = ':Value'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.DateLastPurchase desc',
-                        'Down' => 's.DateLastPurchase',
-                    ),
-                ),
-                'INN' => array(
-                    'Name' => 'ИНН',
-                    'FieldName' => 'inn',
-                    'Width' => 130,
-                    'Filter' => array(
-                        'Condition' => "s.inn like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.inn desc',
-                        'Down' => 's.inn',
-                    ),
-                ),
-                'KPP' => array(
-                    'Name' => 'КПП',
-                    'FieldName' => 'kpp',
-                    'Width' => 130,
-                    'Filter' => array(
-                        'Condition' => "s.kpp like ':Value%'",
-                    ),
-                    'Sort' => array(
-                        'Up' => 's.kpp desc',
-                        'Down' => 's.kpp',
-                    ),
-                ),
-            ),
-        ));
-    ?>
-</div>
-<div style="margin-top: 16px;">    
-    <div style="float: left;">
-        <div style="text-align: left;">Полное наименование:</div>
-        <div style="float: left; margin-left: 0px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edFullName',
-                        'Width' => 320,
-                        'Type' => 'String',
-                ));
-            ?>
-        </div>
+<div class="al-row" style="">
+    <div class="al-row-column" style="width: calc(50% - 6px)">
+        <div class="al-row" style="padding: 0px">Полное наименование</div>
+        <div class="al-row"><input type="text" readonly="readonly" id="edSupplierFullName" /></div>
+        <div class="al-row" style="padding: 0px">Примечание</div>
+        <div class="al-row"><input type="text" readonly="readonly" id="edSupplierNote" /></div>
     </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="text-align: left; margin-left: 6px">Банк</div>
-        <div style="float: left; margin-left: 6px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edBank',
-                        'Width' => 320,
-                        'Type' => 'String',
-                ));
-            ?>
+    <div class="al-row-column" style="width: 50%">
+        <div class="al-row" style="padding: 0px">Банк</div>
+        <div class="al-row"><input type="text" readonly="readonly" id="edSupplierBank" /></div>
+        <div class="al-row" style="padding: 0px">
+            <div class="al-row-column" style="width: 50%">
+                <div class="al-row" style="padding: 0px">БИК</div>
+                <div class="al-row"><input type="text" readonly="readonly" id="edSupplierBik" /></div>
+            </div>
+            <div class="al-row-column" style="width: calc(50% - 12px)">
+                <div class="al-row" style="padding: 0px">Кор/Счет</div>
+                <div class="al-row"><input type="text" readonly="readonly" id="edSupplierCorAccount" /></div>
+            </div>
         </div>
     </div>
     <div style="clear: both"></div>
-    <div style="float: left; margin-left: 0px; margin-top: 6px">
-        <div style="text-align: left; margin-left: 0px">Примечание</div>
-        <div style="float: left; margin-left: 0px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edNote',
-                        'Width' => 220,
-                        'Type' => 'String',
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="float: left; margin-left: 6px; margin-top: 6px">
-        <div style="text-align: left;">БИК</div>
-        <div style="float: left; margin-left: 0px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edBik',
-                        'Width' => 120,
-                        'Type' => 'String',
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="float: left; margin-left: 6px; margin-top: 6px">
-        <div style="text-align: left;">Кор. счет</div>
-        <div style="float: left; margin-left: 0px">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                        'id' => 'edCorAccount',
-                        'Width' => 300,
-                        'Type' => 'String',
-                ));
-            ?>
-        </div>
-    </div>
 </div>
 
-
-
-
-<div style="clear: both"></div>
-<div style="margin-top: 16px">
-    <div style="float: left">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'AddSupplier',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Создать',
-                'Href' => Yii::app()->createUrl('suppliers/Create'),
-            ));
-        ?>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'EditSuppliers',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Изменить',
-                'Href' => Yii::app()->createUrl('suppliers/Update'),
-                'Params' => array(
-                        array(
-                                'ParamName' => 'Supplier_id',
-                                'NameControl' => 'SuppliersGrid',
-                                'TypeControl' => 'Grid',
-                                'FieldControl' => 'Supplier_id',
-                        ),
-                ),
-            ));
-        ?>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'Assortments',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Ассортимент',
-                'Type' => 'None',
-                /*
-                'Href' => Yii::app()->createUrl('suppliers/Assortments'),
-                'Params' => array(
-                        array(
-                                'ParamName' => 'Supplier_id',
-                                'NameControl' => 'SuppliersGrid',
-                                'TypeControl' => 'Grid',
-                                'FieldControl' => 'Supplier_id',
-                        ),
-                ),
-                */
-                'OnAfterClick' => '$("#AssortmentsDialog").aldialog("Show", {Supplier_id: algridajaxSettings["SuppliersGrid"].CurrentRow["Supplier_id"]});',
-            ));
-        ?>
-    </div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Добавить" id='btnAddSupplier'/></div>
+    <div class="al-row-column"><input type="button" value="Изменить" id='btnEditSupplier'/></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshSupplier'/></div>
+    <div class="al-row-column" style="float: right; margin: 0px"><input type="button" value="Удалить" id='btnDelSupplier'/></div>
     <div style="clear: both"></div>
-    <div style="float: left; margin-top: 8px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'DelSuppliers',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Удалить',
-                'Href' => Yii::app()->createUrl('suppliers/Delete'),
-                'Params' => array(
-                        array(
-                                'ParamName' => 'Supplier_id',
-                                'NameControl' => 'SuppliersGrid',
-                                'TypeControl' => 'Grid',
-                                'FieldControl' => 'Supplier_id',
-                        ),
-                ),
-            ));
-        ?>
+</div>    
+
+<div id="SuppliersDialog" style="display: none;">
+    <div id="SuppliersDialogHeader">
+        <span id="SuppliersHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogSuppliersContent">
+        <div style="" id="BodySuppliersDialog"></div>
     </div>
 </div>
-
-<?php
-   $this->widget('application.extensions.alitonwidgets.dialog.aldialog', array(
-        'id' => 'AssortmentsDialog',
-        'Width' => 500,
-        'Height' => 380,
-        'ContentUrl' => Yii::app()->createUrl('suppliers/Assortments'),
-    ));
- ?>
-

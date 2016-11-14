@@ -14,6 +14,7 @@ class Suppliers extends MainFormModel
 	public $DateChange = null;
 	public $UserInsert2 = null;
 	public $UserChange2 = null;
+        public $isContract;
 	public $Producer = null;
 	public $Supplier = null;
 	public $Repair = null;
@@ -23,11 +24,14 @@ class Suppliers extends MainFormModel
 	public $date_create = null;
 	public $user_change2 = null;
 	public $date_change = null;
-	public $DateLastContact = null;
-	public $DateLastPurchase = null;
+	public $DateLastContact;
+	public $DateLastPurchase;
+        public $bank_name;
 	public $bank_id = null;
 	public $inn = null;
 	public $account = null;
+        public $cor_account;
+        public $bik;
 	public $kpp = null;
 	public $Lock = null;
 	public $EmplLock = null;
@@ -53,11 +57,12 @@ class Suppliers extends MainFormModel
                                s.ContactFace,
                                s.Properties,
                                s.Note,
+                               s.isContract,
                                s.Producer,
                                s.Supplier,
                                s.Repair,
                                s.FullName,
-                               s.DateLastContact,
+                               dbo.truncdate(s.DateLastContact) as DateLastContact,
                                s.bank_id,
                                s.inn,
                                s.account,
@@ -98,6 +103,7 @@ class Suppliers extends MainFormModel
                             DateChange,
                             UserInsert2,
                             UserChange2,
+                            isContract,
                             Producer,
                             Supplier,
                             Repair,
@@ -109,9 +115,12 @@ class Suppliers extends MainFormModel
                             date_change,
                             DateLastContact,
                             DateLastPurchase,
+                            bank_name,
                             bank_id,
                             inn,
+                            bik,
                             account,
+                            cor_account,
                             kpp,
                             Lock,
                             EmplLock,
@@ -133,7 +142,7 @@ class Suppliers extends MainFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'Supplier_Id' => 'Supplier',
+			'Supplier_id' => 'Supplier',
 			'NameSupplier' => 'Name Supplier',
 			'Adress' => 'Adress',
 			'Tel' => 'Tel',
@@ -155,9 +164,12 @@ class Suppliers extends MainFormModel
 			'date_change' => 'Date Change',
 			'DateLastContact' => 'Date Last Contact',
 			'DateLastPurchase' => 'Date Last Purchase',
+                        'bank_name' => 'bank_name',
 			'bank_id' => 'Bank',
 			'inn' => 'Inn',
+                        'bik' => 'bik',
 			'account' => 'Account',
+                        'cor_account' => '',
 			'kpp' => 'Kpp',
 			'Lock' => 'Lock',
 			'EmplLock' => 'Empl Lock',
