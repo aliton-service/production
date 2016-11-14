@@ -14,6 +14,7 @@
             Producer: Boolean(Number(<?php echo json_encode($model->Producer); ?>)),
             Repair: Boolean(Number(<?php echo json_encode($model->Repair); ?>)),
             FullName: <?php echo json_encode($model->FullName); ?>,
+            Note: <?php echo json_encode($model->Note); ?>,
         };
         
         $('#Suppliers').on('keyup keypress', function(e) {
@@ -35,6 +36,7 @@
         $("#chbProducerEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Suppliers.Producer}));
         $("#chbRepairEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Suppliers.Repair}));
         $("#edSuppliersFullNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 400} ));
+        $("#edSuppliersNoteEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 400} ));
         
         $('#btnSaveSuppliers').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCancelSuppliers').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -72,6 +74,8 @@
         if (Suppliers.Address != '') $("#edSuppliersAdressEdit").jqxInput('val', Suppliers.Address);
         if (Suppliers.Tel != '') $("#edSuppliersTelEdit").jqxInput('val', Suppliers.Tel);
         if (Suppliers.ContactFace != '') $("#edSuppliersContactFaceEdit").jqxInput('val', Suppliers.ContactFace);
+        if (Suppliers.FullName != '') $("#edSuppliersFullNameEdit").jqxInput('val', Suppliers.FullName);
+        if (Suppliers.Note != '') $("#edSuppliersNoteEdit").jqxInput('val', Suppliers.Note);
     });
 </script>        
 
@@ -119,15 +123,20 @@
     </div>
 </div>
 <div class="row">
-    <div class="row-column" style="width: 150px">Полное наименование:</div>
-    <div class="row-column"><input type="text" name="Suppliers[FullName]" autocomplete="off" id="edSuppliersFullNameEdit"/><?php echo $form->error($model, 'FullName'); ?></div>
-    <div style="clear: both"></div>
-</div>
-<div class="row">
     <div class="row-column"><div id="chbSupplierEdit" name="Suppliers[Supplier]">Поставщик</div></div>
     <div class="row-column"><div id="chbContractEdit" name="Suppliers[isContract]">Договор</div></div>
     <div class="row-column"><div id="chbProducerEdit" name="Suppliers[Producer]">Производитель</div></div>
     <div class="row-column"><div id="chbRepairEdit" name="Suppliers[Repair]">СРМ</div></div>
+</div>
+<div class="row">
+    <div class="row-column" style="width: 150px">Полное наименование:</div>
+    <div class="row-column"><input type="text" name="Suppliers[FullName]" autocomplete="off" id="edSuppliersFullNameEdit"/><?php echo $form->error($model, 'FullName'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="row" style="padding: 0px;">
+    <div class="row-column" style="width: 150px">Примечание:</div>
+    <div class="row-column"><input type="text" name="Suppliers[Note]" autocomplete="off" id="edSuppliersNoteEdit"/><?php echo $form->error($model, 'Note'); ?></div>
+    <div style="clear: both"></div>
 </div>
 <div class="row">
     <div class="row-column"><input type="button" value="Сохранить" id='btnSaveSuppliers'/></div>
