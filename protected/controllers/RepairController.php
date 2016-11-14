@@ -50,6 +50,14 @@ class RepairController extends Controller {
                     'actions'=>array('SendAgree'),
                     'roles'=>array('SendAgreeRepairs'),
             ),
+            array('allow', 
+                    'actions'=>array('Agree'),
+                    'roles'=>array('AgreeRepairs'),
+            ),
+            array('allow', 
+                    'actions'=>array('NoAgree'),
+                    'roles'=>array('NoAgreeRepairs'),
+            ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
@@ -251,6 +259,56 @@ class RepairController extends Controller {
         if (isset($_POST['Repairs'])) {
             $sp = new StoredProc();
             $sp->ProcedureName = 'EXEC_Repairs';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Repairs']['Repr_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionAgree() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Repairs'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'AGREE_Repairs';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Repairs']['Repr_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionNoAgree() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Repairs'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'NOAGREE_Repairs';
             $sp->ParametersRefresh();
             $sp->Parameters[0]['Value'] = $_POST['Repairs']['Repr_id'];
             $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;

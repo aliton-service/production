@@ -47,6 +47,16 @@
             CurrentEmpl_id: parseInt(<?php echo json_encode(Yii::app()->user->Employee_id); ?>)
         };
         
+        var CheckDocButtons = function() {
+            $('#btnEdit').jqxButton({disabled: !(parseInt(Repairs.Status) < 8 && Repairs.DateExec == null)});
+        };
+        
+        var CheckEquipsButton = function() {
+            $('#btnAddEquips').jqxButton({disabled: !(Repairs.DateExec == null)});
+            $('#btnEditEquips').jqxButton({disabled: !(Repairs.DateExec == null)});
+            $('#btnDelEquips').jqxButton({disabled: !(Repairs.DateExec == null)});
+        }
+        
         var SetValueControls = function() {
                         
             $("#edNumber").jqxInput('val', Repairs.Number);
@@ -164,6 +174,7 @@
                     Repairs.ExecHour = Res.exechour;
                     SetValueControls();
                     CheckTabs();
+                    CheckDocButtons();
                     //$("#btnRefreshDetails").click();
                     //SetStateButtons();
                 },
@@ -230,6 +241,26 @@
         $('#btnDemand').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnClient').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnClient').on('click', function() {
+            if (Repairs.ObjectGr_id > 0)
+                window.open('/index.php?r=Objectsgroup/index&ObjectGr_id=' + Repairs.ObjectGr_id);
+        });
+        
+        $('#btnDemand').on('click', function() {
+            if (Repairs.Demand_id > 0)
+                window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + Repairs.Demand_id);
+        });
+        
+        $('#btnPrint').on('click', function() {
+            var url = '';
+            var CurrentTabIndex = $('#Tabs').jqxTabs('selectedItem');
+            url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                    'ReportName' => '/Ремонт/Приходная_накладная_в_ПРЦ'
+                ))); ?>;
+            url += '&Parameters[Repr_id]=' + Repairs.Repr_id;
+            window.open(url);
+        });
         
         $('#btnEdit').on('click', function(){
             if ($('#btnEdit').jqxButton('disabled')) return;
@@ -358,6 +389,7 @@
                     
                     $("#GridEquips").on('rowselect', function (event) {
                         CurrentRowDetails = $('#GridEquips').jqxGrid('getrowdata', event.args.rowindex);
+                        CheckEquipsButton();
                     });
                     
                     $("#GridEquips").on("bindingcomplete", function (event) {
@@ -471,6 +503,7 @@
                                     if (Res.result === 1) {
                                         CurrentRowDetails = undefined;
                                         $("#btnRefreshEquips").click();
+                                        Repairs.Refresh();
                                     }
                                 },
                                 error: function(Res) {
@@ -719,6 +752,33 @@
                                 }
                             });
                         });
+                        
+                        $('#btnAddSRM').on('click', function() {
+                            $('#RepairsDialog').jqxWindow({width: 710, height: 450, position: 'center', isModal: true});
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('RepairDocs/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Dctp_id: 2,
+                                    DialogId: 'RepairsDialog',
+                                    BodyDialogId: 'BodyRepairsDialog',
+                                    Params: {
+                                        repr_id: Repairs.Repr_id,
+                                        dctp_id: 2
+                                    },
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+
+                                    $("#BodyRepairsDialog").html(Res.html);
+                                    $('#RepairsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        });
                 
                     }});
                     
@@ -738,6 +798,62 @@
                             //DisabledCommentsControls();
                         }
                     });
+                    
+                    var CurrentRowDoc;
+                    
+                    $("#GridDocuments").on('rowselect', function (event) {
+                        CurrentRowDoc = $('#GridDocuments').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
+                    $("#GridDocuments").on('rowdoubleclick', function() {
+                        if (CurrentRowDoc != undefined) {
+                            var Type = parseInt(CurrentRowDoc.doctype_id);
+                            if (Type == 1)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('MonitoringDemands/Index')); ?> + "&mndm_id=" + CurrentRowDoc.docid);
+                            if (Type == 2)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('CostCalculations/Index')); ?> + "&calc_id=" + CurrentRowDoc.docid);
+                            if (Type == 3)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View')); ?> + "&Docm_id=" + CurrentRowDoc.docid);
+                            if (Type == 4)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View')); ?> + "&Docm_id=" + CurrentRowDoc.docid);
+                            if (Type == 5 || Type == 6) {
+                                $('#RepairsDialog').jqxWindow({width: 710, height: 450, position: 'center', isModal: true});
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('RepairDocs/Update')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        rpdoc_id: CurrentRowDoc.docid,
+                                        Dctp_id: (Type == 5) ? 1:2,
+                                        DialogId: 'RepairsDialog',
+                                        BodyDialogId: 'BodyRepairsDialog',
+                                        Params: {
+                                            repr_id: Repairs.Repr_id,
+                                            dctp_id: 1
+                                        },
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+
+                                        $("#BodyRepairsDialog").html(Res.html);
+                                        $('#RepairsDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                            
+//                            if (Type == 6)
+                            if (Type == 7)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('Delivery/View')); ?> + "&Dldm_id=" + CurrentRowDoc.docid);
+                            if (Type == 8)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHActs/View')); ?> + "&docm_id=" + CurrentRowDoc.docid);
+                    
+                            
+                        }
+                    });
+                    
                     $("#GridDocuments").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 62px)',
@@ -929,6 +1045,53 @@
                         Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                     }
                 });
+                
+            });
+            
+            $('#btnNoAgree').on('click', function() {
+                $("#ActionPanel").jqxDropDownButton('close');
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Repair/NoAgree')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Repairs: {
+                            Repr_id: Repairs.Repr_id
+                        }
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result === 1) {
+                            Repairs.Refresh();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            });
+            
+            $('#btnAgree').on('click', function() {
+                $("#ActionPanel").jqxDropDownButton('close');
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Repair/Agree')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Repairs: {
+                            Repr_id: Repairs.Repr_id
+                        }
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result === 1) {
+                            Repairs.Refresh();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
             });
             
         }});
@@ -936,7 +1099,8 @@
         $("#ActionPanel").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { dropDownVerticalAlignment: 'top', autoOpen: false, width: 260, height: 28 }));
         var DD = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 6px;">Операция</div>';
         $("#ActionPanel").jqxDropDownButton('setContent', DD);
-        CheckTabs(); 
+        CheckTabs();
+        CheckDocButtons();
     });
 </script> 
 

@@ -65,8 +65,11 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         Aliton.SelectRowById('rpdt_id', Res.id, '#GridEquips', true);
-                        if ($('#RepairsDialog').length>0)
+                        if ($('#RepairsDialog').length>0) {
+                            Repairs.Refresh();
                             $('#RepairsDialog').jqxWindow('close');
+                            
+                        }
                     }
                     else {
                         if ($('#RepairsDialog').length>0)
