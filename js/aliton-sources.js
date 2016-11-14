@@ -233,6 +233,7 @@ Sources.SourceContactInfo =
         { name: 'Info_id', type: 'int' },
         { name: 'contact', type: 'string' },
         { name: 'FIO', type: 'string' },
+        { name: 'CName', type: 'string' },
     ],
     id: 'Info_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContactInfo',
@@ -3703,11 +3704,11 @@ Sources.SourcePeriods =
         {name: 'interval', type: 'int'},
         {name: 'sort', type: 'int'},
     ],
-    id: 'evnt_id',
+    id: 'code',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=Periods',
     root: 'Rows',
     cache: false,
-    async: true,
+    async: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
@@ -3727,11 +3728,72 @@ Sources.SourceEventOffers =
         {name: 'resultname', type: 'string'},
         {name: 'note', type: 'string'},
         {name: 'situation', type: 'string'},
+        {name: 'prev_date', type: 'date'},
+        {name: 'prev_resultname', type: 'string'},
+        {name: 'prev_note', type: 'string'},
     ],
-    id: 'evnt_id',
+    id: 'code',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EventOffers',
     root: 'Rows',
     cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceOfferTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'code', type: 'int'},
+        {name: 'offertype', type: 'string'},
+    ],
+    id: 'code',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OfferTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceOfferResults =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'rslt_id', type: 'int'},
+        {name: 'ResultName', type: 'string'},
+    ],
+    id: 'rslt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OfferResults',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceReportForms =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'rslt_id', type: 'int'},
+        {name: 'ReportForm', type: 'string'},
+    ],
+    id: 'rslt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ReportForms',
+    root: 'Rows',
+    cache: false,
+    async: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {

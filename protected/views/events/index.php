@@ -156,7 +156,7 @@
         });
         
         $('#btnEditEvent').on('click', function(){
-            $('#EventsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 700, width: 920, position: 'center'}));
+            $('#EventsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 750, width: 970, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Events/Update')) ?>,
                 type: 'POST',

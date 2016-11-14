@@ -37,15 +37,17 @@
         $("#chbNotDateMaster").jqxCheckBox({ width: 160, height: 25, checked: Filters.NoDateMaster}); // Фильтр непереданные
         $("#chbNotWorkedOut").jqxCheckBox({ width: 160, height: 25, checked: false}); // Фильтр неотработанные
         $("#edDemand_id").jqxInput({height: 25, width: 200, minLength: 1, value: Filters.Demand_id}); // Фильтр номер
-        $("#edDate").jqxDateTimeInput({ width: '180px', height: '25px', formatString: 'dd.MM.yyyy HH:mm', value: Filters.DateReg, readonly: false}); // Фильтр дата регистрации
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '200', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"}); // Фильтр тип заявки
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр исполнитель
         $("#edAddr").jqxInput({height: 25, width: 200, minLength: 1}); // Фильтр по адресу
         $("#cmbTerrit").jqxComboBox({ source: DataTerritory, width: '200', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id"}); // Фильтр участок
         $("#cmbStreet").jqxComboBox({ source: DataStreets, width: '200', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}); // Фильтр улицы
         $("#edHouse").jqxInput({height: 25, width: 60, minLength: 1, value: Filters.House}); // Фильтр ДОМ
-        $("#edDateStart").jqxDateTimeInput({ width: '180px', height: '25px', formatString: 'dd.MM.yyyy', value: null, readonly: false}); // Фильтр дата рег.
-        $("#edDateEnd").jqxDateTimeInput({ width: '180px', height: '25px', formatString: 'dd.MM.yyyy', value: null, readonly: false}); // Фильтр дата рег
+        
+        $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: Filters.DateReg })); // Фильтр дата регистрации
+        $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
+        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
+
         $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#edFiltering').on('click', function(){

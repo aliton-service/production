@@ -49,9 +49,6 @@ class ScheduleClientsController extends Controller
     {
         $model = new ScheduleClients();
         
-        $DialogId = '';
-        $BodyDialogId = '';
-        
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
@@ -83,9 +80,6 @@ class ScheduleClientsController extends Controller
     public function actionUpdate()
     {
         $model = new ScheduleClients();
-        
-        $DialogId = '';
-        $BodyDialogId = '';
         
         $ObjectResult = array(
             'result' => 0,

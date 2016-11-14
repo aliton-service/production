@@ -103,7 +103,6 @@ class Events extends MainFormModel
 			array('evtp_id, objectgr_id, prds_id, achs_id, empl_id, rpfr_id, user_create, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
 			array('user_date_exec, user_date_act', 'length', 'max'=>20),
 			array('who_reported, evaluation', 'length', 'max'=>150),
-			array('date_plan, date_exec, add_date_exec, date_act, add_date_act, note, DateCreate, DelDate, DateChange', 'safe'),
 			array('dateend, datestart, evnt_id, evtp_id, objectgr_id, prds_id, date, achs_id, date_plan, date_exec, user_date_exec, add_date_exec, date_act, user_date_act, add_date_act, empl_id, rpfr_id, who_reported, evaluation, note, user_create, DateCreate, DelDate, EmplCreate, EmplChange, DateChange, EmplDel', 'safe'),
 		);
 	}

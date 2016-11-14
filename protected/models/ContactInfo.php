@@ -21,6 +21,7 @@ class ContactInfo extends MainFormModel
     public $EmplChange;
     public $contact;
     public $NoSend;
+    public $CName;
 
         
      
@@ -71,7 +72,10 @@ class ContactInfo extends MainFormModel
                     ."  ci.EmplCreate,"
                     ."  ci.EmplChange,"
                     ."  ci.NoSend,"
-                    ."  ci.FIO + ' (' + ISNULL(c.CustomerName + ', ', '') + ISNULL(ci.telephone, '') + CASE WHEN ci.ctelephone IS NOT NULL THEN ', ' + ci.ctelephone + ')' ELSE ')' END AS contact";
+                    ."  ci.FIO + ' (' + ISNULL(c.CustomerName + ', ', '') + ISNULL(ci.telephone, '') + CASE WHEN ci.ctelephone IS NOT NULL THEN ', ' + ci.ctelephone + ')' ELSE ')' END AS contact,"
+                    ."  ISNULL(c.Reduction + ' - ', '') + isNull(ci.FIO, '') +
+                            case when isNull(ci.telephone, '') <> '' or isNull(ci.ctelephone, '') <> ''
+                            then ', тел.:' + isNull(ci.telephone + '', '') + isNull(ci.ctelephone, '') else '' end CName";
         $From =     "\nFrom ContactInfo ci left join Customers c on (ci.Cstm_id = c.Customer_Id)";
         $Where =    "\nWhere ci.DelDate is Null";
         $Order =    "\nOrder by ci.Info_id";
@@ -102,6 +106,7 @@ class ContactInfo extends MainFormModel
                     'CTelephone' => 'Сотовый телефон',
                     'ForReport' => 'Для отчетов',
                     'NoSend' => 'Эл. почту не отправлять',
+                    'CName' => 'Перед кем отчитался',
             );
     } 
 

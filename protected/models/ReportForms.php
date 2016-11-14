@@ -17,10 +17,10 @@ class ReportForms extends MainFormModel
 	public function __construct($scenario = '') {
 		parent::__construct($scenario);
 
-		$select = " Select rf.rpfr_id, rf.ReportForm ";
-		$from = " From ReportForms rf ";
-		$where = "";
-		$order = "Order By rf.ReportForm";
+		$select = "\nSelect rf.rpfr_id, rf.ReportForm ";
+		$from = "\nFrom ReportForms rf ";
+		$where = "\nWhere rpfr_id <> 3 and rpfr_id <> 4";
+		$order = "\nOrder By rf.ReportForm";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);
