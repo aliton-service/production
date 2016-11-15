@@ -53,6 +53,9 @@
                 $("#Demand_idCC").val(CurrentRowDataAll.Demand_id);
             if ($("#edDemandEdit").length>0)
                 $("#edDemandEdit").val(CurrentRowDataAll.Demand_id);
+            if (typeof(OfferDemands) != undefined)
+                OfferDemands.AddDemand(CurrentRowDataAll.Demand_id);
+            
             $('#FindDemandDialog').jqxWindow('close');
         });
         
@@ -174,8 +177,8 @@
         </div>
     </div>
     <div class="row-column" style="float: right">
-        <div>Выберите период за который будут отображены заявки</div>
-        <div>
+        <div>Выберите период за который будут отображены заявки: </div>
+        <div style="margin-top: 10px;">
             <div class="row-column"><div id="chbPeriod">За период с</div></div>
             <div class="row-column"><div id="edFindDateStart"></div></div>
             <div class="row-column">по</div>

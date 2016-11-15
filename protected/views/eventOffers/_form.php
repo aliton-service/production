@@ -55,8 +55,6 @@
             });
         });
         
-        console.log('EventOffers.note = ' + EventOffers.note);
-        
         if (EventOffers.oftp_id != null) $("#OfferTypes").jqxComboBox('val', EventOffers.oftp_id);
         if (EventOffers.note != null) $("#note2").jqxTextArea('val', EventOffers.note);
         if (EventOffers.situation != null) $("#situation2").jqxTextArea('val', EventOffers.situation);

@@ -26,6 +26,9 @@
         $("#Periods2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: PeriodsDataAdapter, displayMember: "periodname", valueMember: "code", width: 160, autoDropDownHeight: true }));
         
         var EmployeeDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees));
+        EmployeeDataAdapter.dataBind();
+        EmployeeDataAdapter = EmployeeDataAdapter.records;
+        
         $("#Employee").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: EmployeeDataAdapter, displayMember: "ShortName", valueMember: "Employee_id", width: 230 }));
         $("#user_create").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: EmployeeDataAdapter, displayMember: "ShortName", valueMember: "Employee_id", width: 230, disabled: true }));
         
@@ -40,15 +43,16 @@
             formatData: function (data) {
                 $.extend(data, {
                     Filters: ["ci.ObjectGr_id = " + EventEdit.objectgr_id],
+                    
                 });
                 return data;
             },
         });
-        $("#ContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: ContactInfoDataAdapter, displayMember: "CName", valueMember: "Info_id", width: 350, autoDropDownHeight: true }));
+        $("#ContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: ContactInfoDataAdapter, displayMember: "CName", valueMember: "Info_id", width: 500, autoDropDownHeight: true }));
 
         $("#date_act").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 117, formatString: 'dd.MM.yyyy', value: null }));
         
-        $("#evaluation").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 520 }));
+        $("#evaluation").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 700 }));
         
         if (EventEdit.date != null) $("#date").jqxDateTimeInput('val', EventEdit.date);
         if (EventEdit.prds_id != null) $("#Periods2").jqxComboBox('val', EventEdit.prds_id);
@@ -62,76 +66,27 @@
         if (EventEdit.evaluation != null) $("#evaluation").jqxInput('val', EventEdit.evaluation);
         
         
-        var initTabEventEditContent = function (tab) {
-//            console.log(tab);
-        };
+        
 
-        $('#jqxTabsEventOffers').jqxTabs({ width: '100%', height: 37, initTabContent: initTabEventEditContent});
-        $('#jqxTabsEventOffers').jqxTabs('select', 0);
+        $('#jqxTabsEventOffers').jqxTabs({ width: '100%', height: 37});
         
-        
-//        var tabIndex = $('#jqxTabsEventOffers').jqxTabs('selectedItem'); 
-//        console.log('tabIndex0 = ' + tabIndex);
-        
-        $('#jqxTabsEventOffers').on('selected', function (event) {
-            var tabIndex = event.args.item;
-//            console.log('tabIndex-selected = ' + tabIndex);
-            tabFilter(tabIndex);
-        });
-        
-        var tabFilter = function(tabIndex){
-//            console.log('tabIndex-tabFilter = ' + tabIndex);
-            if (tabIndex != 0) {
-//                console.log('evtp_id = ' + EventTypesDataAdapter.records[tabIndex - 1].evtp_id);
-                var EventEditTabGroup = new $.jqx.filter();
-                var FilterEventEditTab = EventEditTabGroup.createfilter('numericfilter', (EventTypesDataAdapter.records[tabIndex - 1].evtp_id), 'EQUAL');
-                EventEditTabGroup.addfilter(1, FilterEventEditTab);
-            }
-
-            $('#EventOffersGrid').jqxGrid('removefilter', 'evtp_id', false);
-            if (tabIndex != 0) {
-                $("#EventOffersGrid").jqxGrid('addfilter', 'evtp_id', EventEditTabGroup);
-            } else {
-                $('#EventOffersGrid').jqxGrid('removefilter', 'evtp_id', false);
-            }
-
-            $('#EventOffersGrid').jqxGrid({source: EventOffersDataAdapter});
-            $("#EventOffersGrid").on("bindingcomplete", function () {
-                $('#EventOffersGrid').jqxGrid('selectrow', 0);
-                
-                var rowindex = $('#EventOffersGrid').jqxGrid('getselectedrowindex');
-//                console.log('rowindex = ' + rowindex);
-                if (rowindex == -1) {
-                    $("#btnEditEventOffer").jqxButton({ disabled: true });
-                    $("#btnAddDemandEventOffer").jqxButton({ disabled: true });
-                } else {
-                    $("#btnEditEventOffer").jqxButton({ disabled: false });
-                    $("#btnAddDemandEventOffer").jqxButton({ disabled: false });
-                }
-            });
+        var tabFilter = function(){
+            $("#EventOffersGrid").jqxGrid('updatebounddata');
         };
         
-        
-        
-        var EventOffersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventOffers, {
-            filter: function () {
-                $("#EventOffersGrid").jqxGrid('updatebounddata', 'filter');
-            },
-            sort: function () {
-                $("#EventOffersGrid").jqxGrid('updatebounddata', 'sort');
-            },
-            beforeSend: function(jqXHR, settings) {
-//                DisabledControls();
-            }
-        }), {
+        var EventOffersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventOffers, {async: true}), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["eo.evnt_id = " + EventEdit.evnt_id],
+                    Filters: ["eo.evnt_id = " + EventEdit.evnt_id, "ot.offergroup = " + ($('#jqxTabsEventOffers').jqxTabs('selectedItem') + 1)],
                 });
                 return data;
             },
         });
         
+        $("#EventOffersGrid").on("bindingcomplete", function () {
+            $('#EventOffersGrid').jqxGrid('selectrow', 0);
+        });
+                
         $("#EventOffersGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -141,13 +96,14 @@
                 groupable: false,
                 width: '100%',
                 height: '300',
-//                source: EventOffersDataAdapter,
+                source: EventOffersDataAdapter,
                 columns: [
-                    { text: 'Наименование предложения', dataField: 'offertype', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
-                    { text: 'Результат данного предложения', dataField: 'ResultName', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
+                    { text: 'Наименование предложения', dataField: 'offertype', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 220 },
+                    { text: 'Результат данного предложения', dataField: 'resultname', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
                     { text: 'Примечание данного предложения', dataField: 'note', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
-                    { text: 'Заявки', dataField: 'Demand', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
-                    { text: 'Дата', dataField: 'prev_date', columngroup: 'Previous', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Заявки', dataField: 'demand', columngroup: 'Current', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
+                    { text: 'offergroup', datafield: 'offergroup', columngroup: 'Current', /*columntype: 'textbox', filtercondition: 'STARTS_WITH', */ width: 150, hidden: true },
+                    { text: 'Дата', dataField: 'prev_date', columngroup: 'Previous', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 80 },
                     { text: 'Результат', dataField: 'prev_resultname', columngroup: 'Previous', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
                     { text: 'Примечание', dataField: 'prev_note', columngroup: 'Previous', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
                 ],
@@ -158,11 +114,19 @@
             })
         );
 
+        
+        
+        
+        $('#jqxTabsEventOffers').on('selected', function (event) {
+            tabFilter();
+        });
+        
+        
         $("#EventOffersGrid").on('rowselect', function (event) {
             var Temp = $('#EventOffersGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowDataEventEdit = Temp;
-            } else {CurrentRowDataEventEdit = null};
+            } else { CurrentRowDataEventEdit = null; };
 //            console.log(CurrentRowDataEventEdit);
         });
 
@@ -170,7 +134,6 @@
         $('#btnEditEventOffer').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnAddDemandEventOffer').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 280 }));
         $('#btnDelEventOffer').jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $('#btnAddDemandEvaluation').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 280 }));
         
         $('#btnAddEventOffer').on('click', function(){
             $('#EventOffersDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 460, width: 600, position: 'center'}));
@@ -205,6 +168,26 @@
                 data: {
                     code: CurrentRowDataEventEdit.code,
                     evnt_id: CurrentRowDataEvents.evnt_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyEventOffersDialog").html(Res.html);
+                    $('#EventOffersDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        $('#btnAddDemandEventOffer').on('click', function(){
+            $('#EventOffersDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 590, width: 700, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('OfferDemands/Index')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    offer_id: CurrentRowDataEventEdit.code
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
@@ -263,8 +246,8 @@
             });
         });
         
-        $('#EventOffersGrid').jqxGrid('selectrow', 0);
     });
+    
 </script>
 
 <?php 
@@ -276,11 +259,7 @@
     ));
 ?>
 
-<?php // echo "user_create = " . json_encode($model->user_create); ?>
-
 <input type="hidden" name="Events[evnt_id]" value="<?php echo $model->evnt_id; ?>"/>
-<!--<input type="hidden" name="Events[objectgr_id]" value="<?php // echo $model->objectgr_id; ?>"/>-->
-
 
 <div class="row">
     <div class="row-column">Плановая дата: </div>
@@ -340,11 +319,10 @@
 </div>
 
 <div class="row">
-    <div class="row-column"><input type="button" value="Создать заявку по итогам оценки" id='btnAddDemandEvaluation'/></div>
     <div class="al-row-column">Итоги оценки <input type="text" id="evaluation" name="Events[evaluation]"></div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 20px;">
     <div class="row-column"><input type="button" value="Сохранить" id='btnSaveEventEdit'/></div>
     <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelEventEdit'/></div>
 </div>

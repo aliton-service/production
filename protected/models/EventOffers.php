@@ -15,6 +15,7 @@ class EventOffers extends MainFormModel
     public $demand = null;
     public $resulltdate = null;
     public $resultcreator_id = null;
+    public $offergroup = null;
     public $EmplCreate = null;
     public $EmplChange = null;
     public $EmplDel = null;
@@ -38,6 +39,7 @@ class EventOffers extends MainFormModel
                 eo.evnt_id,
                 eo.oftp_id,
                 ot.offertype,
+                ot.offergroup,
                 eo.rslt_id,
                 r.resultname,
                 eo.note,
@@ -110,24 +112,24 @@ class EventOffers extends MainFormModel
         $sql = "
         select
                 eo.code,
-                        e.date,
-                        eo.evnt_id,
+                e.date,
+                eo.evnt_id,
                 eo.oftp_id,
                 ot.offertype,
-                        ot.offergroup,
+                ot.offergroup,
                 eo.rslt_id,
                 r.resultname,
                 eo.note,
-                        eo.situation,
+                eo.situation,
                 (select case when min(od.dmnd_id) is not null then  '[' +  cast(min(od.dmnd_id) as nvarchar) + ', ...]' else '[]' end
                  from offerdemands od
                  where od.offer_id = eo.code
-                        and od.deldate is null) as demand,
-                        dbo.fio(emp.employeename) emplname
+                 and od.deldate is null) as demand,
+                 dbo.fio(emp.employeename) emplname
         from eventoffers eo left join offertypes ot on (eo.oftp_id = ot.code)
                 left join events e on (eo.evnt_id = e.evnt_id)
                 left join offerresults r on (eo.rslt_id = r.rslt_id)
-                        left join employees_forobj_v emp on (e.empl_id = emp.employee_id)
+                left join employees_forobj_v emp on (e.empl_id = emp.employee_id)
         where e.objectgr_id = $objgr_id
                         and ot.offergroup = $group_id
         order by ot.offertype, e.date desc

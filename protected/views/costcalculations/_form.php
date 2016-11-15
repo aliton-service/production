@@ -61,7 +61,7 @@
         
         $("#Demand_idCC").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 140 }));
         $('#btnFindDemand').on('click', function(){
-            $('#FindDemandDialog').jqxWindow({width: 800, height: 530, position: 'center'});
+            $('#FindDemandDialog').jqxWindow({width: 800, height: 550, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Demands/FindDemand')) ?>,
                 type: 'POST',
@@ -85,8 +85,8 @@
         $('#FindDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {}));
         $("#ContrNumCC").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120}));
         $("#ContrDateCC").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalc.ContrDateS, formatString: 'dd.MM.yyyy H:mm', showTimeButton: true, width: 180}));
-        $("#spec_condtCC").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 50 }));
-        $("#noteCC").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 50 }));
+        $("#spec_condtCC").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 100 }));
+        $("#noteCC").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 100 }));
         $('#btnSaveCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnCancelCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         

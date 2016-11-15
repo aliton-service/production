@@ -463,9 +463,6 @@
     .al-data .al-row:last-child {
         padding-bottom: 0px;
     }
-    .row {
-        margin-top: 0px;
-    }
 </style>
 <div class="al-data-nb" style="width: 900px; height: 230px;">
     <div class="al-row-column">
