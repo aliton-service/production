@@ -45,10 +45,12 @@
                                 console.log('i == rowindexes.length - 1; i = ' + i);
                                 $('#EventsGrid').jqxGrid('updatebounddata');
                                 $('#EventsClientsGrid').jqxGrid('updatebounddata');
-                                $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
-                                $('#EventsClientsGrid').jqxGrid({ groupable: true });
-                                $('#EventsClientsGrid').jqxGrid('addgroup', 'fullname');
-                                $('#EventsClientsGrid').jqxGrid('expandallgroups');
+                                if (checked) {
+                                    $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
+                                    $('#EventsClientsGrid').jqxGrid({ groupable: true });
+                                    $('#EventsClientsGrid').jqxGrid('addgroup', 'fullname');
+                                    $('#EventsClientsGrid').jqxGrid('expandallgroups');
+                                }
                             }
                         }
                         else {
