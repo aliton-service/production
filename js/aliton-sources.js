@@ -922,6 +922,13 @@ Sources.SourceObjectsGroupSystems =
         { name: 'sysav_id',  type: 'int' },
         { name: 'count',  type: 'int' },
         { name: 'Competitors',  type: 'string' },
+        {name: 'SysCmplxt_id', type: 'int'},
+        {name: 'SysSttmnt_id', type: 'int'},
+        {name: 'SystemComplexitysName', type: 'string'},
+        {name: 'SystemStatementsName', type: 'string'},
+        {name: 'Coefficient', type: 'float'},
+        {name: 'Coefficient2', type: 'float'},
+        {name: 'SystemComplexityFull', type: 'string'},
     ],
     id: 'ObjectsGroupSystem_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectsGroupSystems',
@@ -3884,6 +3891,48 @@ Sources.SourceSuppliers =
     }
 };
 
+Sources.SourceSystemCompetitors =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'SystemCompetitor_id', type: 'int'},
+        {name: 'ObjectsGroupSystem_id', type: 'int'},
+        {name: 'Cmtr_id', type: 'int'},
+        {name: 'Competitor', type: 'string'},
+    ],
+    id: 'Bank_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SystemCompetitors',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceObjectsGroupSystemComplexitys =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Ogsc_id', type: 'int'},
+        {name: 'Ogst_id', type: 'int'},
+        {name: 'ObjectGr_id', type: 'int'},
+        {name: 'SystemComplexity_id', type: 'int'},
+        {name: 'SystemComplexitysName', type: 'string'},
+    ],
+    id: 'Bank_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectsGroupSystemComplexitys',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
     
 Sources.SourceOfferDemands =
 {

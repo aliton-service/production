@@ -94,7 +94,7 @@
         $("#edBankEdit").on('bindingComplete', function() {
             if (Organization.bank_id != '') $("#edBankEdit").jqxComboBox('val', Organization.bank_id);
         });
-        $("#edBankEdit").jqxComboBox({ source: BanksDataAdapter, width: '450px', height: '25px', displayMember: "bank_name", valueMember: "Bank_id"});
+        $("#edBankEdit").jqxComboBox({ source: BanksDataAdapter, width: '300px', height: '25px', displayMember: "bank_name", valueMember: "Bank_id"});
         $("#edBankBikEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edBankCorAccountEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edTelephoneEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 350} ));
@@ -105,6 +105,25 @@
         $('#btnCancelOrganization').on('click', function(){
             $('#OrganizationsDialog').jqxWindow('close');
         });
+        
+        $('#btnSupplierFindBank').on('click', function(){
+            $('#FindBanksDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 520, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Banks/Find')) ?>,
+                type: 'POST',
+                async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyFindBanksDialog").html(Res.html);
+                    $('#FindBanksDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+
+        $('#btnSupplierFindBank').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#btnSaveOrganization').on('click', function(){
             var Url = <?php echo json_encode(Yii::app()->createUrl('propForms/Update')); ?>;
@@ -247,6 +266,7 @@
 <div class="al-row">
     <div class="al-row-column" style="width: 80px;">Банк:</div>
     <div class="al-row-column"><div name="Organizations[bank_id]" id="edBankEdit"></div><?php echo $form->error($model, 'bank_id'); ?></div>
+    <div class="row-column"><input id="btnSupplierFindBank" type="button" value="Поиск"/></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
@@ -267,5 +287,12 @@
 </div>
 <?php $this->endWidget(); ?>
 
-
+<div id="FindBanksDialog" style="display: none;">
+    <div id="FindBanksDialogHeader">
+        <span id="FindBanksHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogFindBanksContent">
+        <div style="" id="BodyFindBanksDialog"></div>
+    </div>
+</div>
 

@@ -15,6 +15,10 @@
             Repair: Boolean(Number(<?php echo json_encode($model->Repair); ?>)),
             FullName: <?php echo json_encode($model->FullName); ?>,
             Note: <?php echo json_encode($model->Note); ?>,
+            Inn: <?php echo json_encode($model->inn); ?>,
+            Kpp: <?php echo json_encode($model->kpp); ?>,
+            Account: <?php echo json_encode($model->account); ?>,
+            bank_id: <?php echo json_encode($model->bank_id); ?>,
         };
         
         $('#Suppliers').on('keyup keypress', function(e) {
@@ -24,6 +28,8 @@
                 return false;
             }
         });
+        
+        var BanksDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceBanks, {async: true}));
         
         $("#edSuppliersNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Наименование", width: 400} ));
         $("#edSuppliersAdressEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 400} ));
@@ -37,9 +43,37 @@
         $("#chbRepairEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Suppliers.Repair}));
         $("#edSuppliersFullNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 400} ));
         $("#edSuppliersNoteEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 400} ));
+        $("#edSuppliersInnEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
+        $("#edSuppliersKppEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
+        $("#edSuppliersAccountEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 400} ));
+        
+        
+        $("#edBankEdit").on('bindingComplete', function() {
+            if (Suppliers.bank_id != '') $("#edBankEdit").jqxComboBox('val', Suppliers.bank_id);
+        });
+        $("#edBankEdit").jqxComboBox({ source: BanksDataAdapter, width: '300px', height: '25px', displayMember: "bank_name", valueMember: "Bank_id"});
         
         $('#btnSaveSuppliers').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCancelSuppliers').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnSupplierFindBank').on('click', function(){
+            $('#FindBanksDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 520, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Banks/Find')) ?>,
+                type: 'POST',
+                async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyFindBanksDialog").html(Res.html);
+                    $('#FindBanksDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+
+        $('#btnSupplierFindBank').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#btnCancelSuppliers').on('click', function(){
             $('#SuppliersDialog').jqxWindow('close');
@@ -57,7 +91,8 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('Suppliers_id', Res.id, '#SuppliersGrid', true);
+                        CurrentRowSupplierData.Supplier_id = Res.id;
+                        Aliton.SelectRowById('Supplier_id', Res.id, '#SuppliersGrid', true);
                         $('#SuppliersDialog').jqxWindow('close');
                     }
                     else {
@@ -76,6 +111,9 @@
         if (Suppliers.ContactFace != '') $("#edSuppliersContactFaceEdit").jqxInput('val', Suppliers.ContactFace);
         if (Suppliers.FullName != '') $("#edSuppliersFullNameEdit").jqxInput('val', Suppliers.FullName);
         if (Suppliers.Note != '') $("#edSuppliersNoteEdit").jqxInput('val', Suppliers.Note);
+        if (Suppliers.Inn != '') $("#edSuppliersInnEdit").jqxInput('val', Suppliers.Inn);
+        if (Suppliers.Kpp != '') $("#edSuppliersKppEdit").jqxInput('val', Suppliers.Kpp);
+        if (Suppliers.Account != '') $("#edSuppliersAccountEdit").jqxInput('val', Suppliers.Account);
     });
 </script>        
 
@@ -88,10 +126,10 @@
     )); 
 ?>
 
-<input type="hidden" name="Suppliers[Suppliers_id]" value="<?php echo $model->Supplier_id; ?>"/>
+<input type="hidden" name="Suppliers[Supplier_id]" value="<?php echo $model->Supplier_id; ?>"/>
 <div class="row">
     <div class="row-column" style="width: 150px">Наименование:</div>
-    <div class="row-column"><input type="text" name="Suppliers[SuppliersName]" autocomplete="off" id="edSuppliersNameEdit"/><?php echo $form->error($model, 'NameSupplier'); ?></div>
+    <div class="row-column"><input type="text" name="Suppliers[NameSupplier]" autocomplete="off" id="edSuppliersNameEdit"/><?php echo $form->error($model, 'NameSupplier'); ?></div>
     <div style="clear: both"></div>
 </div>
 <div class="row">
@@ -123,7 +161,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="row-column"><div id="chbSupplierEdit" name="Suppliers[Supplier]">Поставщик</div></div>
+    <div class="row-column"><div id="chbSupplierEdit" name="Suppliers[Supplier]">Поставщик</div><?php echo $form->error($model, 'Supplier'); ?></div>
     <div class="row-column"><div id="chbContractEdit" name="Suppliers[isContract]">Договор</div></div>
     <div class="row-column"><div id="chbProducerEdit" name="Suppliers[Producer]">Производитель</div></div>
     <div class="row-column"><div id="chbRepairEdit" name="Suppliers[Repair]">СРМ</div></div>
@@ -139,10 +177,36 @@
     <div style="clear: both"></div>
 </div>
 <div class="row">
+    <div class="row-column" style="width: 150px">ИНН:</div>
+    <div class="row-column"><input type="text" name="Suppliers[inn]" autocomplete="off" id="edSuppliersInnEdit"/><?php echo $form->error($model, 'inn'); ?></div>
+    <div class="row-column">КПП:</div>
+    <div class="row-column"><input type="text" name="Suppliers[kpp]" autocomplete="off" id="edSuppliersKppEdit"/><?php echo $form->error($model, 'kpp'); ?></div>
+</div>
+<div class="row">
+    <div class="row-column" style="width: 150px">Р/Счет:</div>
+    <div class="row-column"><input type="text" name="Suppliers[account]" autocomplete="off" id="edSuppliersAccountEdit"/><?php echo $form->error($model, 'account'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="row-column" style="width: 150px;">Банк:</div>
+    <div class="row-column"><div name="Suppliers[bank_id]" id="edBankEdit"></div><?php echo $form->error($model, 'bank_id'); ?></div>
+    <div class="row-column"><input id="btnSupplierFindBank" type="button" value="Поиск"/></div>
+    <div style="clear: both"></div>
+</div>
+<div class="row">
     <div class="row-column"><input type="button" value="Сохранить" id='btnSaveSuppliers'/></div>
     <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelSuppliers'/></div>
 </div>
 <?php $this->endWidget(); ?>
+
+<div id="FindBanksDialog" style="display: none;">
+    <div id="FindBanksDialogHeader">
+        <span id="FindBanksHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogFindBanksContent">
+        <div style="" id="BodyFindBanksDialog"></div>
+    </div>
+</div>
 
 
 

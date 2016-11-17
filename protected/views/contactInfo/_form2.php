@@ -1,7 +1,7 @@
 <script type="text/javascript">
     
     $(document).ready(function () {
-        
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         var DataCustomers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCustomers, {}));
         
         $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "ФИО", width: 300}));
@@ -13,13 +13,37 @@
         $("#Cstm_id").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataCustomers, width: 307, displayMember: "CustomerName", valueMember: "Customer_Id" }));
         $("#Email").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 300}));
         $("#NoSend").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
-        $("#ClientName").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 300 }));
-        $("#OGTelephone").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 300 }));
+        $("#ClientName").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: '25px' }));
+        $("#OGTelephone").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: '25px' }));
          
         $("#SaveNewContactInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#SaveNewContactInfo").on('click', function ()
-        {
-            $('#ContactInfo').submit();
+        $("#CancelContactInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#CancelContactInfo").on('click', function (){
+            $('#ObjectsGroupDialog').jqxWindow('close');
+        });
+        $("#SaveNewContactInfo").on('click', function () {
+            var Url = <?php echo json_encode(Yii::app()->createUrl('ContactInfo/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('ContactInfo/Insert')); ?>;
+            
+            $.ajax({
+                url: Url,
+                data: $('#ContactInfo').serialize(),
+                type: 'POST',
+                success: function(Res) {
+                    var Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        Aliton.SelectRowById('Info_id', Res.id, '#ContactInfoGrid', true);
+                        $('#ObjectsGroupDialog').jqxWindow('close');
+                    }
+                    else {
+                        $('#BodyObjectsGroupDialog').html(Res.html);
+                    };
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
         });
         
         var Demand = {
@@ -32,8 +56,8 @@
             Cstm_id: '<?php echo $model->Cstm_id; ?>',
             Email: '<?php echo $model->Email; ?>',
             NoSend: <?php echo json_encode($model->NoSend); ?>,
-            ClientName: '<?php echo $model2->ClientName; ?>',
-            OGTelephone: '<?php echo $model2->Telephone; ?>',
+            ClientName: <?php echo json_encode($ClientName); ?>,
+            OGTelephone: <?php echo json_encode($Telephone); ?>,
         };
 
         if (Demand.FIO != '') $("#FIO").jqxInput('val', Demand.FIO);
@@ -51,11 +75,6 @@
 </script>
 
 <?php
-/* @var $this ContactInfoController */
-/* @var $model ContactInfo */
-/* @var $form CActiveForm */
-?>
-<?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'ContactInfo',
         'htmlOptions'=>array(
@@ -64,20 +83,66 @@
      )); 
 ?>
 
-<div class="row" style="padding-bottom: 10px; width: 350px; border: 1px solid #ddd;">
-    <div class="row">Контактное лицо: <br><input name="ContactInfo[FIO]" type="text" id="FIO"><?php echo $form->error($model, 'FIO'); ?></div>
-    <div class="row">Дата рождения: <div id='Birthday' name="ContactInfo[Birthday]" ></div></div>
-    <div class="row-column"><div class="row">Лицо принимающее решение <div id='Main' name="ContactInfo[Main]" ></div></div></div>
-    <div class="row">Для отчетов <div id='ForReport' name="ContactInfo[ForReport]" ></div></div>
-    <div class="row">Домашний телефон: <br><input name="ContactInfo[Telephone]" type="text" id="Telephone"></div>
-    <div class="row">Сотовый телефон: <br><input name="ContactInfo[CTelephone]" type="text" id="CTelephone"></div>
-    <div class="row">Должность: <div id="Cstm_id" name="ContactInfo[Cstm_id]"></div></div>
-    <div class="row">Электронная почта: <br><input name="ContactInfo[Email]" type="text" id="Email"></div>
-    <div class="row">Эл. почту не присылать <div id='NoSend' name="ContactInfo[NoSend]" ></div></div>
-    <div class="row" style="margin-top: 5px;">Контактное лицо из карточки клиента: <textarea readonly type="text" id="ClientName"></textarea></div>
-    <div class="row" style="margin-top: 5px;">Телефон из карточки клиента: <textarea readonly type="text" id="OGTelephone"></textarea></div>
-    <br/>
-    <div class="row"><input type="button" value="Сохранить" id='SaveNewContactInfo' /></div>
+<input type="hidden" name="ContactInfo[Info_id]" value="<?php echo $model->Info_id; ?>"/>
+<input type="hidden" name="ContactInfo[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>"/>
+
+<div class="al-data">
+    <div class="al-row">
+        <div class="al-row-column" style="width: 150px;">Контактное лицо:</div>
+        <div class="al-row-column"><input name="ContactInfo[FIO]" type="text" id="FIO"><?php echo $form->error($model, 'FIO'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column" style="width: 150px;">Дата рождения:</div>
+        <div class="al-row-column"><div id='Birthday' name="ContactInfo[Birthday]" ></div><?php echo $form->error($model, 'Birthday'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column" style="width: 200px;">Лицо принимающее решение</div>
+        <div class="al-row-column"><div id='Main' name="ContactInfo[Main]" ></div><?php echo $form->error($model, 'Main'); ?></div>
+        <div class="al-row-column" >Для отчетов</div>
+        <div class="al-row-column"><div id='ForReport' name="ContactInfo[ForReport]" ></div><?php echo $form->error($model, 'ForReport'); ?></div>
+        <div class="al-row-column" style="">Эл. почту не присылать:</div>
+        <div class="al-row-column"><div id='NoSend' name="ContactInfo[NoSend]" ></div><?php echo $form->error($model, 'NoSend'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column" style="width: 150px;">Домашний телефон:</div>
+        <div class="al-row-column"><input name="ContactInfo[Telephone]" type="text" id="Telephone"><?php echo $form->error($model, 'Telephone'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column" style="width: 150px;">Сотовый телефон:</div>
+        <div class="al-row-column"><input name="ContactInfo[CTelephone]" type="text" id="CTelephone"><?php echo $form->error($model, 'CTelephone'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column" style="width: 150px;">Должность:</div>
+        <div class="al-row-column"><div id="Cstm_id" name="ContactInfo[Cstm_id]"></div><?php echo $form->error($model, 'Cstm_id'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column" style="width: 150px;">Электронная почта:</div>
+        <div class="al-row-column"><input name="ContactInfo[Email]" type="text" id="Email"><?php echo $form->error($model, 'Email'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+
+    <div class="al-row">
+        <div class="al-row" style="padding: 0px;">Контактное лицо из карточки клиента:</div>
+        <div class="al-row"><textarea readonly type="text" id="ClientName"></textarea><?php echo $form->error($model, 'ClientName'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row" style="padding: 0px;">Телефон из карточки клиента:</div>
+        <div class="al-row"><textarea readonly type="text" id="OGTelephone"></textarea><?php echo $form->error($model, 'OGTelephone'); ?></div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Сохранить" id='SaveNewContactInfo' /></div>
+    <div class="al-row-column" style="float: right;"><input type="button" value="Закрыть" id='CancelContactInfo' /></div>
+    <div style="clear: both"></div>
 </div>
 
 <?php $this->endWidget(); ?>

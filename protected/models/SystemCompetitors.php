@@ -27,9 +27,9 @@ class SystemCompetitors extends MainFormModel
 
         parent::__construct($scenario);
 
-        $this->SP_INSERT_NAME = '';
-        $this->SP_UPDATE_NAME = '';
-        $this->SP_DELETE_NAME = '';
+        $this->SP_INSERT_NAME = 'INSERT_SystemCompetitors';
+        $this->SP_UPDATE_NAME = 'UPDATE_SystemCompetitors';
+        $this->SP_DELETE_NAME = 'DELETE_SystemCompetitors';
 
         $Select = "Select
                         sc.SystemCompetitor_id,

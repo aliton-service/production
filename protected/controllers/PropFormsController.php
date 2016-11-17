@@ -17,7 +17,7 @@ class PropFormsController extends Controller
 	{
             return array(
                 array('allow',  
-                        'actions'=>array('index'),
+                        'actions'=>array('index', 'Find'),
                         'roles'=>array('ViewPropForms'),
                 ),
                 array('allow', 
@@ -152,4 +152,18 @@ class PropFormsController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+    public function actionFind() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        $ObjectResult['html'] = $this->renderPartial('_find', array(
+                
+            ), true);
+        
+        echo json_encode($ObjectResult);
+    }
 }

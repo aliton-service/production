@@ -1,42 +1,45 @@
 <script type="text/javascript">
     
     $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
         
-        var Demand = {
-            PropForm_id: '<?php echo $model->PropForm_id; ?>',
-            Region: '<?php echo $model->Region_id; ?>',
-            Area: '<?php echo $model->Area_id; ?>',
-            Street: <?php echo $model->Street_id; ?>,
-            House: '<?php echo $model->House; ?>',
-            Corp: '<?php echo $model->Corp; ?>',
-            Room: '<?php echo $model->Room; ?>',
-            Apartment: '<?php echo $model->Apartment; ?>',
-            DoorwayList: '<?php echo $model->DoorwayList; ?>',
-            Journal: '<?php echo $model->Journal; ?>',
-            year_construction: '<?php echo $model->year_construction; ?>',
-            CountPorch: '<?php echo $model->CountPorch; ?>',
-            Floor: '<?php echo $model->Floor; ?>',
-            ClientGroup: '<?php echo $model->clgr_id; ?>',
-            ClientName: '<?php echo $model->ClientName; ?>',
-            Telephone: '<?php echo $model->Telephone; ?>',
+        var ObjectGroup = {
+            PropForm_id: <?php echo json_encode($model->PropForm_id); ?>,
+            Region: <?php echo json_encode($model->Region_id); ?>,
+            Area: <?php echo json_encode($model->Area_id); ?>,
+            Street: <?php echo json_encode($model->Street_id); ?>,
+            House: <?php echo json_encode($model->House); ?>,
+            Corp: <?php echo json_encode($model->Corp); ?>,
+            Room: <?php echo json_encode($model->Room); ?>,
+            Apartment: <?php echo json_encode($model->Apartment); ?>,
+            DoorwayList: <?php echo json_encode($model->Entrance); ?>,
+            Journal: Aliton.DateConvertToJs(<?php echo json_encode($model->Journal); ?>),
+            YearConstruction: <?php echo json_encode($model->year_construction); ?>,
+            CountPorch: <?php echo json_encode($model->CountPorch); ?>,
+            Floor: <?php echo json_encode($model->Floor); ?>,
+            ClientGroup: <?php echo json_encode($model->clgr_id); ?>,
+            ClientName: <?php echo json_encode($model->ClientName); ?>,
+            Telephone: <?php echo json_encode($model->Telephone); ?>,
             PostalAddress: <?php echo json_encode($model->PostalAddress); ?>,
-            no_sms: '<?php echo $model->no_sms; ?>',
-            AreaSize: '<?php echo $model->AreaSize; ?>',
+            NoSms: Boolean(Number(<?php echo json_encode($model->no_sms); ?>)),
+            AreaSize: <?php echo json_encode($model->AreaSize); ?>,
             Refusers: <?php echo json_encode($model->Refusers); ?>,
             Note: <?php echo json_encode($model->Note); ?>,
             Information: <?php echo json_encode($model->Information); ?>,
-            Slmg_id: '<?php echo $model->Slmg_id; ?>',
-            Srmg_id: '<?php echo $model->Srmg_id; ?>',
-            Inmg_id: '<?php echo $model->Inmg_id; ?>',
+            Slmg_id: <?php echo json_encode($model->Slmg_id); ?>,
+            Srmg_id: <?php echo json_encode($model->Srmg_id); ?>,
+            Inmg_id: <?php echo json_encode($model->Inmg_id); ?>,
+            AreaSize: <?php echo json_encode($model->AreaSize); ?>
         };
 
+        
         
         var DataRegion = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListRegionsMin, {}));
         var DataArea = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAreas, {}));
         var DataStreet = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListStreetsMin, {}), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["rg.Region_id = " + Demand.Region],
+                    Filters: ["rg.Region_id = " + ObjectGroup.Region],
                 });
                 return data;
             },
@@ -45,49 +48,50 @@
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
         var DataOrg = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceOrganizationsVMin, {}));
         
-        $("#FullName").on('bindingComplete', function (event) {
-            if (Demand.PropForm_id !== '') $("#FullName").jqxComboBox('val', Demand.PropForm_id);
+        $("#edFullNameGrEdit").on('bindingComplete', function (event) {
+            if (ObjectGroup.PropForm_id !== '') $("#edFullNameGrEdit").jqxComboBox('val', ObjectGroup.PropForm_id);
             $("#SaveNewObjectsGroup").jqxButton({disabled: false});
         });
-        $("#FullName").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrg, width: 300, displayMember: "FullName", valueMember: "Form_id" }));
+        $("#edFullNameGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrg, width: 300, displayMember: "FullName", valueMember: "Form_id" }));
       
         
-        $("#JAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 365 }));
-        $("#FAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
-        $("#bank_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
-        $("#bik").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
-        $("#inn").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 160 }));
-        $("#account").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
-        $("#cor_account").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
+        $("#edJAddressGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 365 }));
+        $("#edFAddressGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
+        $("#edBankNameGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
+        $("#edBikGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
+        $("#edInnGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 160 }));
+        $("#edAccountGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
+        $("#edCorAccountGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         
-        $("#Region").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataRegion, width: 220, displayMember: "RegionName", valueMember: "Region_id" }));
-        $("#Area").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataArea, width: 150, displayMember: "AreaName", valueMember: "Area_id" }));
-        $("#Street").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataStreet, width: 240, displayMember: "StreetName", valueMember: "Street_id" }));
+        $("#edRegionGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataRegion, width: 110, displayMember: "RegionName", valueMember: "Region_id" }));
+        $("#edAreaGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataArea, width: 150, displayMember: "AreaName", valueMember: "Area_id" }));
+        $("#edStreetGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataStreet, width: 240, displayMember: "StreetName", valueMember: "Street_id" }));
         
-        $("#House").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 40 }));
-        $("#Corp").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 60 }));
-        $("#Room").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
+        $("#edHouseGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 40 }));
+        $("#edCorpGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 60 }));
+        $("#edRoomGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
         
-        $("#Apartment").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 110 }));
-        $("#CountPorch").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#Floor").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
-        $("#year_construction").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
-        $("#ClientGroup").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataClientGroup, width: 160, displayMember: "ClientGroup", valueMember: "clgr_id" }));
-        $("#DoorwayList").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 830 }));
-        $("#Journal").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '110px', formatString: 'dd.MM.yyyy' }));
-        $("#AreaSize").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: '120px', height: '25px', inputMode: 'simple'}));
-        $("#ClientName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 320 }));
-        $("#Telephone").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 383 }));
-        $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 385 }));
-        $("#no_sms").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
+        $("#edApartmentGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 110 }));
+        $("#edCountPorchGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#edFloorGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
+        $("#edYearConstructionGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
+        $("#edClientGroupGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataClientGroup, width: 160, displayMember: "edClientGroupGrEdit", valueMember: "clgr_id" }));
+        $("#edDoorwayListGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#edAreaSizeGrEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: '120px', height: '25px', inputMode: 'simple'}));
+        $("#edJournalGrEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '110px', formatString: 'dd.MM.yyyy' }));
+//        $("#AreaSize").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: '120px', height: '25px', inputMode: 'simple'}));
+        $("#edClientNameGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
+        $("#edTelephoneGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
+        $("#edPostalAddressGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
+        $("#edNoSmsGrEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
         
-        $("#Information").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 915 }));
-        $("#Refusers").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 450 }));
-        $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 450 }));
+        $("#edInformationGrEdit").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)' }));
+        $("#edRefusersGrEdit").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)' }));
+        $("#edNoteGrEdit").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)' }));
         DataEmployees.dataBind();
-        $("#Slmg_id").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees.records, width: 290, displayMember: "ShortName", valueMember: "Employee_id" }));
-        $("#Srmg_id").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees.records, width: 290, displayMember: "ShortName", valueMember: "Employee_id" }));
-        $("#Inmg_id").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees.records, width: 290, displayMember: "ShortName", valueMember: "Employee_id" }));
+        $("#edSlmgGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees.records, width: 150, dropDownVerticalAlignment: 'top', displayMember: "ShortName", valueMember: "Employee_id" }));
+        $("#edSrmgGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees.records, width: 150, dropDownVerticalAlignment: 'top', displayMember: "ShortName", valueMember: "Employee_id" }));
+        $("#edInmgGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees.records, width: 150, dropDownVerticalAlignment: 'top', displayMember: "ShortName", valueMember: "Employee_id" }));
         
         var find = function(id) {
             for (var i = 0; i < DataOrg.records.length; i++) {
@@ -99,23 +103,23 @@
             return null;
         };
         
-        $("#FullName").on('select', function(event){
+        $("#edFullNameGrEdit").on('select', function(event){
             var args = event.args;
             if (args) {
                 var item = args.item;
                 var value = item.value;
                 var res = find(item.value);
-                $("#JAddress").jqxInput('val', res.JAddress);
-                $("#FAddress").jqxInput('val', res.FAddress);
-                $("#bank_name").jqxInput('val', res.bank_name);
-                $("#bik").jqxInput('val', res.bik);
-                $("#inn").jqxInput('val', res.inn);
-                $("#account").jqxInput('val', res.account);
-                $("#cor_account").jqxInput('val', res.cor_account);
+                $("#edJAddressGrEdit").jqxInput('val', res.JAddress);
+                $("#edFAddressGrEdit").jqxInput('val', res.FAddress);
+                $("#edBankNameGrEdit").jqxInput('val', res.bank_name);
+                $("#edBikGrEdit").jqxInput('val', res.bik);
+                $("#edInnGrEdit").jqxInput('val', res.inn);
+                $("#edAccountGrEdit").jqxInput('val', res.account);
+                $("#edCorAccountGrEdit").jqxInput('val', res.cor_account);
             } 
         });
         
-        $("#Region").on('change', function(event){
+        $("#edRegionGrEdit").on('change', function(event){
             var args = event.args;
             if (args) {
                 var item = args.item;
@@ -128,67 +132,113 @@
                         return data;
                     },
                 });
-                $("#Street").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: NewDataStreet, width: 240, displayMember: "StreetName", valueMember: "Street_id" }));
-                if(itemId != Demand.Region) {
-                    $("#Area").jqxComboBox('val', '');
-                    $("#Street").jqxComboBox('val', '');
+                $("#edStreetGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: NewDataStreet, width: 240, displayMember: "StreetName", valueMember: "Street_id" }));
+                if(itemId != ObjectGroup.edRegionGrEdit) {
+                    $("#edAreaGrEdit").jqxComboBox('val', '');
+                    $("#edStreetGrEdit").jqxComboBox('val', '');
                 } else {
-                    $("#Area").jqxComboBox('val', Demand.Area);
-                    $("#Street").jqxComboBox('val', Demand.Street);
+                    $("#edAreaGrEdit").jqxComboBox('val', ObjectGroup.edAreaGrEdit);
+                    $("#edStreetGrEdit").jqxComboBox('val', ObjectGroup.edStreetGrEdit);
                 }
             }
-            if ($("#Street").val() == '') {
+            if ($("#edStreetGrEdit").val() == '') {
                 $("#errorStreet").html('Регион изменился, измените улицу и дом.');
             }
         });
-        $("#Street").on('change', function(event){
-            if ($("#Street").val() != '') {
+        $("#edStreetGrEdit").on('change', function(event){
+            if ($("#edStreetGrEdit").val() != '') {
                 $("#errorStreet").html('');
             }
         });
         
-        if (Demand.Region !== '') $("#Region").jqxComboBox('val', Demand.Region);
-        if (Demand.Area !== '') $("#Area").jqxComboBox('val', Demand.Area);
-        if (Demand.Street !== '') $("#Street").jqxComboBox('val', Demand.Street);
-        if (Demand.House !== '') $("#House").jqxInput('val', Demand.House);
-        if (Demand.Corp !== '') $("#Corp").jqxInput('val', Demand.Corp);
-        if (Demand.Room !== '') $("#Room").jqxInput('val', Demand.Room);
-        if (Demand.Apartment !== '') $("#Apartment").jqxInput('val', Demand.Apartment);
-        if (Demand.DoorwayList !== '') $("#DoorwayList").jqxInput('val', Demand.DoorwayList);
-        if (Demand.Journal !== '') $("#Journal").jqxDateTimeInput('val', Demand.Journal);
-        if (Demand.year_construction !== '') $("#year_construction").jqxInput('val', Demand.year_construction);
-        if (Demand.CountPorch !== '') $("#CountPorch").jqxInput('val', Demand.CountPorch);
-        if (Demand.Floor !== '') $("#Floor").jqxInput('val', Demand.Floor);
-        if (Demand.ClientGroup !== '') $("#ClientGroup").jqxComboBox('val', Demand.ClientGroup);
-        if (Demand.AreaSize !== '') $("#AreaSize").jqxNumberInput('val', Demand.AreaSize);
-        if (Demand.ClientName !== '') $("#ClientName").jqxInput('val', Demand.ClientName);
-        if (Demand.Telephone !== '') $("#Telephone").jqxInput('val', Demand.Telephone);
-        if (Demand.PostalAddress !== '') $("#PostalAddress").jqxInput('val', Demand.PostalAddress);
-        if (Demand.no_sms !== '') $("#no_sms").jqxCheckBox('val', Demand.no_sms);
+        if (ObjectGroup.Region !== '') $("#edRegionGrEdit").jqxComboBox('val', ObjectGroup.Region);
+        if (ObjectGroup.Area !== '') $("#edAreaGrEdit").jqxComboBox('val', ObjectGroup.Area);
+        if (ObjectGroup.Street !== '') $("#edStreetGrEdit").jqxComboBox('val', ObjectGroup.Street);
+        if (ObjectGroup.House !== '') $("#edHouseGrEdit").jqxInput('val', ObjectGroup.House);
+        if (ObjectGroup.Corp !== '') $("#edCorpGrEdit").jqxInput('val', ObjectGroup.Corp);
+        if (ObjectGroup.Room !== '') $("#edRoomGrEdit").jqxInput('val', ObjectGroup.Room);
+        if (ObjectGroup.Apartment !== '') $("#edApartmentGrEdit").jqxInput('val', ObjectGroup.Apartment);
+        if (ObjectGroup.DoorwayList !== '') $("#edDoorwayListGrEdit").jqxInput('val', ObjectGroup.DoorwayList);
+        if (ObjectGroup.Journal !== '') $("#edJournalGrEdit").jqxDateTimeInput('val', ObjectGroup.Journal);
+        if (ObjectGroup.YearConstruction !== '') $("#edYearConstructionGrEdit").jqxInput('val', ObjectGroup.YearConstruction);
+        if (ObjectGroup.CountPorch !== '') $("#edCountPorchGrEdit").jqxInput('val', ObjectGroup.CountPorch);
+        if (ObjectGroup.Floor !== '') $("#edFloorGrEdit").jqxInput('val', ObjectGroup.Floor);
+        if (ObjectGroup.ClientGroup !== '') $("#edClientGroupGrEdit").jqxComboBox('val', ObjectGroup.ClientGroup);
+        if (ObjectGroup.AreaSize !== '') $("#edAreaSizeGrEdit").jqxNumberInput('val', ObjectGroup.AreaSize);
+        if (ObjectGroup.ClientName !== '') $("#edClientNameGrEdit").jqxInput('val', ObjectGroup.ClientName);
+        if (ObjectGroup.Telephone !== '') $("#edTelephoneGrEdit").jqxInput('val', ObjectGroup.Telephone);
+        if (ObjectGroup.PostalAddress !== '') $("#edPostalAddressGrEdit").jqxInput('val', ObjectGroup.PostalAddress);
+        if (ObjectGroup.NoSms !== '') $("#edNoSmsGrEdit").jqxCheckBox('val', ObjectGroup.NoSms);
         
-        if (Demand.Refusers !== '') $("#Refusers").jqxTextArea('val', Demand.Refusers);
-        if (Demand.Note !== '') $("#Note").jqxTextArea('val', Demand.Note);
-        if (Demand.Information !== '') $("#Information").jqxTextArea('val', Demand.Information);
+        if (ObjectGroup.Refusers !== '') $("#edRefusersGrEdit").jqxTextArea('val', ObjectGroup.Refusers);
+        if (ObjectGroup.Note !== '') $("#edNoteGrEdit").jqxTextArea('val', ObjectGroup.Note);
+        if (ObjectGroup.Information !== '') $("#edInformationGrEdit").jqxTextArea('val', ObjectGroup.Information);
         
-        if (Demand.Slmg_id !== '') $("#Slmg_id").jqxComboBox('val', Demand.Slmg_id);
-        if (Demand.Srmg_id !== '') $("#Srmg_id").jqxComboBox('val', Demand.Srmg_id);
-        if (Demand.Inmg_id !== '') $("#Inmg_id").jqxComboBox('val', Demand.Inmg_id);
+        if (ObjectGroup.Slmg_id !== '') $("#edSlmgGrEdit").jqxComboBox('val', ObjectGroup.Slmg_id);
+        if (ObjectGroup.Srmg_id !== '') $("#edSrmgGrEdit").jqxComboBox('val', ObjectGroup.Srmg_id);
+        if (ObjectGroup.Inmg_id !== '') $("#edInmgGrEdit").jqxComboBox('val', ObjectGroup.Inmg_id);
         
         $("#SaveNewObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: true}));
+        $("#btnCloseObjectsGroupEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: false}));
+        $("#edFindOrg").jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: false}));
+        $("#edFindOrg").on('click', function() {
+            $('#FindOrgDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 520, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('PropForms/Find')) ?>,
+                type: 'POST',
+                async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyFindOrgDialog").html(Res.html);
+                    $('#FindOrgDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
         $("#SaveNewObjectsGroup").on('click', function ()
         {
-            $('#ObjectsGroup').submit();
+            var Url = <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/Create')); ?>;
+            
+            $.ajax({
+                url: Url,
+                data: $('#ObjectsGroup').serialize(),
+                type: 'POST',
+                success: function(Res) {
+                    var Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        if (typeof(OG) != 'undefined')
+                            OG.Refresh();
+                        if (typeof(CurrentRowObjectsData) != 'undefined') {
+                            RefObjects = Res.id;
+                            window.open('/index.php?r=Objectsgroup/index&ObjectGr_id=' + Res.id);
+                            $("#ReloadObjects").click();
+                        }
+                            
+                        if ($('#ObjectsGroupDialog').length>0)
+                            $('#ObjectsGroupDialog').jqxWindow('close');
+                        
+                    }
+                    else {
+                        $('#BodyObjectsGroupDialog').html(Res.html);
+                    };
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        });
+        
+        $('#btnCloseObjectsGroupEdit').on('click', function(){
+            $('#ObjectsGroupDialog').jqxWindow('close');
         });
         
     });   
 </script>
-
-<?php
-    $this->breadcrumbs=array(
-        'Список объектов'=>array('/object/index'),
-        'Редактирование карточки объекта: ' . $model->Address,
-    );
-?>
 
 <?php
 
@@ -198,102 +248,179 @@
             'class'=>'form-inline',
         ),
      )); 
-
 ?>
-<div style="margin: 0; background-color: #F2F2F2;">
-    <div class="row" style="margin: 0; padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
-        <h2 style="font-size: 1em; margin: 0 10px 0 5px;">Клиент</h2>
+<input type="hidden" name="ObjectsGroup[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>"/>
 
-        <div class="row">
-            <div class="row-column">Наименование:</div>
-            <div class="row-column"><div id="FullName" name="ObjectsGroup[PropForm_id]"></div><?php echo $form->error($model, 'FullName'); ?></div>
+<div class="al-data">
+    <div class="al-row" style="padding: 0px;">
+        <div class="al-row" style="padding: 0px;"><b>Клиент</b></div>
+        <div class="al-row">
+            <div class="al-row-column" style="width: 110px;">Наименование:</div>
+            <div class="al-row-column"><div id="edFullNameGrEdit" name="ObjectsGroup[PropForm_id]"></div></div>
+            <div class="al-row-column"><input type="button" id="edFindOrg" value="Поиск"/></div>
+            <div style="clear: both"></div>
         </div>
-
-        <div class="row">
-            <div class="row-column">ЮР.АДРЕС: <input type="text" id="JAddress"></div>
-            <div class="row-column">ИНН: <input type="text" id="inn"></div>
+        <div class="al-row">
+            <div class="al-row-column" style="width: 110px;">Юр.адрес:</div>
+            <div class="al-row-column"><input type="text" id="edJAddressGrEdit"></div>
+            <div class="al-row-column">ИНН:</div>
+            <div class="al-row-column"><input type="text" id="edInnGrEdit"></div>
+            <div style="clear: both"></div>
         </div>
-        
-        <div class="row">
-            <div class="row-column">ФАКТ.АДРЕС: <input type="text" id="FAddress"></div>
-            <div class="row-column">Р/СЧ: <input type="text" id="account"></div>
+        <div class="al-row">
+            <div class="al-row-column" style="width: 110px;">Факт.адрес:</div>
+            <div class="al-row-column"><input type="text" id="edFAddressGrEdit"></div>
+            <div class="al-row-column">Р/Счет:</div>
+            <div class="al-row-column"><input type="text" id="edAccountGrEdit"></div>
+            <div style="clear: both"></div>
         </div>
-        
-        <div class="row">
-            <div class="row-column">БАНК: <input type="text" id="bank_name"></div>
-            <div class="row-column">БИК: <input type="text" id="bik"></div>
-            <div class="row-column">КОР/СЧ: <input type="text" id="cor_account"></div>
-        </div>
-    </div>
-
-    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
-        <h2 style="display: inline-block; float: left; font-size: 1em; margin: 0 10px 0 5px;">Адрес проведения работ</h2> 
-        <span id="errorStreet" style="margin-left: 150px; color: red; font-weight: bold;"></span>
-        
-        <div class="row">
-            <div class="row-column">Регион: <div id="Region" name="ObjectsGroup[Region_id]"></div></div>
-            <div class="row-column">Район: <div id="Area" name="ObjectsGroup[Area_id]"></div></div>
-            <div class="row-column">Улица: <div id="Street" name="ObjectsGroup[Street_id]"></div><?php echo $form->error($model, 'StreetName'); ?></div>
-
-            <div class="row-column">Дом: <br><input type="text" id="House" name="ObjectsGroup[House]"></div>
-            <div class="row-column">Корпус: <br><input type="text" id="Corp" name="ObjectsGroup[Corp]"></div>
-            <div class="row-column">Помещение: <br><input type="text" id="Room" name="ObjectsGroup[Room]"></div>
+        <div class="al-row">
+            <div class="al-row-column" style="width: 110px;">Банк:</div>
+            <div class="al-row-column"><input type="text" id="edBankNameGrEdit"></div>
+            <div class="al-row-column">Бик:</div>
+            <div class="al-row-column"><input type="text" id="edBikGrEdit"></div>
+            <div class="al-row-column">Кор/Счет:</div>
+            <div class="al-row-column"><input type="text" id="edCorAccountGrEdit"></div>
+            <div style="clear: both"></div>
         </div>
     </div>
-    
-    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
-        <div class="row" style="margin-top: 0;">
-            <div class="row-column">Кол-во подъездов: <br><input type="text" id="CountPorch" name="ObjectsGroup[CountPorch]"></div>
-            <div class="row-column">Кол-во этажей: <br><input type="text" id="Floor" name="ObjectsGroup[Floor]"></div>
-            <div class="row-column">Кол-во квартир: <br><input type="text" id="Apartment" name="ObjectsGroup[Apartment]"></div>
-            <div class="row-column">Год постройки: <br><input type="text" id="year_construction" name="ObjectsGroup[year_construction]"></div>
-            <div class="row-column">Сегмент: <div id="ClientGroup" name="ObjectsGroup[clgr_id]"></div></div>
-            <div class="row-column">Журнал: <div id='Journal' name="ObjectsGroup[Journal]" ></div></div>
+</div>
+<div class="al-data">
+    <div class="al-row" style="padding: 0px;"><b>Адрес проведения работ</b> <span id="errorStreet" style="margin-left: 150px; color: red; font-weight: bold;"></span></div>
+    <div class="al-row">
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Регион:</div>
+            <div class="al-row"><div id="edRegionGrEdit" name="ObjectsGroup[Region_id]"></div></div>
         </div>
-        
-        <div class="row" style="margin-top: 0;">
-            <div class="row-column">Подъезды: <input readonly type="text" id="DoorwayList"></div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Район:</div>
+            <div class="al-row"><div id="edAreaGrEdit" name="ObjectsGroup[Area_id]"></div></div>
         </div>
-    </div>
-    
-    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
-        <div class="row" style="margin-top: 0;">
-            <div class="row-column">Контактное лицо: <input readonly type="text" id="ClientName"></div>
-            <div class="row-column">Телефон: <input readonly type="text" id="Telephone"></div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Улица:</div>
+            <div class="al-row"><div id="edStreetGrEdit" name="ObjectsGroup[Street_id]"></div><?php echo $form->error($model, 'StreetName'); ?></div>
         </div>
-    </div>
-    
-    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
-        <div class="row" style="margin-top: 0;">
-            <div class="row-column">Не отправлять смс:</div>
-            <div class="row-column"><div id="no_sms" name="ObjectsGroup[no_sms]"></div></div>
-            <div class="row-column">Почтовый адрес:</div>    
-            <div class="row-column"><input type="text" id="PostalAddress" name="ObjectsGroup[PostalAddress]"></div>
-            <div class="row-column">Площадь</div>
-            <div class="row-column"><div id='AreaSize' name="ObjectsGroup[AreaSize]"></div></div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Дом:</div>
+            <div class="al-row"><input type="text" id="edHouseGrEdit" name="ObjectsGroup[House]"></div>
         </div>
-    </div>
-    
-    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
-        <div class="row" style="margin-top: 0;">
-            <div class="row-column">Общая информация: <textarea  type="text" id="Information" name="ObjectsGroup[Information]"></textarea></div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Корпус:</div>
+            <div class="al-row"><input type="text" id="edCorpGrEdit" name="ObjectsGroup[Corp]"></div>
         </div>
-        
-        <div class="row" style="margin-top: 0;">
-            <div class="row-column">Отказники: <textarea  type="text" id="Refusers" name="ObjectsGroup[Refusers]"></textarea></div>
-            <div class="row-column">Примечание: <textarea  type="text" id="Note" name="ObjectsGroup[Note]"></textarea></div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Помещение:</div>
+            <div class="al-row"><input type="text" id="edRoomGrEdit" name="ObjectsGroup[Room]"></div>
         </div>
-    </div>
-    
-    <div class="row" style="padding-bottom: 5px; width: 950px; border: 1px solid #ddd;">
-        <div class="row" style="margin-top: 0;">
-            <div class="row-column">Менеджер ОП: <div id="Slmg_id" name="ObjectsGroup[Slmg_id]"></div></div>
-            <div class="row-column">Менеджер СЦ: <div id="Srmg_id" name="ObjectsGroup[Srmg_id]"></div></div>
-            <div class="row-column">Менеджер Монтажа: <div id="Inmg_id" name="ObjectsGroup[Inmg_id]"></div></div>
-        </div>
+        <div style="clear: both"></div>
     </div>
         
-    <div class="row" style="clear: both; margin-left: 5px;"><input type="button" value="Сохранить" id='SaveNewObjectsGroup' /></div>
+</div>    
+<div class="al-data">
+    <div class="al-row">
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Кол-во под.:</div>
+            <div class="al-row"><input type="text" id="edCountPorchGrEdit" name="ObjectsGroup[CountPorch]" /></div>
+        </div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Кол-во эт.:</div>
+            <div class="al-row"><input type="text" id="edFloorGrEdit" name="ObjectsGroup[Floor]" /></div>
+        </div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Кол-во квартир:</div>
+            <div class="al-row"><input type="text" id="edApartmentGrEdit" name="ObjectsGroup[Apartment]"></div>
+        </div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Год постройки:</div>
+            <div class="al-row"><input type="text" id="edYearConstructionGrEdit" name="ObjectsGroup[year_construction]"></div>
+        </div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Сегмент:</div>
+            <div class="al-row"><div id="edClientGroupGrEdit" name="ObjectsGroup[clgr_id]"></div></div>
+        </div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Журнал:</div>
+            <div class="al-row"><div id='edJournalGrEdit' name="ObjectsGroup[Journal]" ></div></div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column">Подъезды:</div>
+        <div class="al-row-column"><input type="text" id="edDoorwayListGrEdit" name="ObjectsGroup[Entrance]"></div>
+        <div class="al-row-column">Площадь АППЗ:</div>
+        <div class="al-row-column"><div id='edAreaSizeGrEdit' name="ObjectsGroup[AreaSize]"></div></div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<div class="al-data">    
+    <div class="al-row">
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Контактное лицо:</div>
+            <div class="al-row"><input readonly type="text" id="edClientNameGrEdit"></div>
+        </div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Телефон:</div>
+            <div class="al-row"><input readonly type="text" id="edTelephoneGrEdit"></div>
+        </div>
+        <div class="al-row-column" >
+            <div class="al-row" style="padding: 0px;">Почтовый адрес:</div>
+            <div class="al-row"><input type="text" id="edPostalAddressGrEdit" name="ObjectsGroup[PostalAddress]"></div>
+        </div>
+        <div class="al-row-column" >
+            <div class="al-row" style="padding: 0px;">Не отправлять смс:</div>
+            <div class="al-row"><div id="edNoSmsGrEdit" name="ObjectsGroup[no_sms]"></div></div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>    
+<div class="al-data">    
+    <div class="al-row">
+        <div class="al-row-column" style="width: 30%">
+            <div class="al-row" style="padding: 0px;">Общая информация:</div>
+            <div class="al-row"><textarea  type="text" id="edInformationGrEdit" name="ObjectsGroup[Information]"></textarea></div>
+        </div>
+        <div class="al-row-column" style="width: 30%">
+            <div class="al-row" style="padding: 0px;">Отказники:</div>
+            <div class="al-row"><textarea  type="text" id="edRefusersGrEdit" name="ObjectsGroup[Refusers]"></textarea></div>
+        </div>    
+        <div class="al-row-column" style="width: 30%">
+            <div class="al-row" style="padding: 0px;">Примечание:</div>
+            <div class="al-row"><textarea  type="text" id="edNoteGrEdit" name="ObjectsGroup[Note]"></textarea></div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Менеджер ОП:</div>
+            <div class="al-row"><div id="edSlmgGrEdit" name="ObjectsGroup[Slmg_id]"></div></div>
+        </div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Менеджер СЦ:</div>
+            <div class="al-row"><div id="edSrmgGrEdit" name="ObjectsGroup[Srmg_id]"></div></div>
+        </div>
+        <div class="al-row-column">
+            <div class="al-row" style="padding: 0px;">Менеджер Монтажа:</div>
+            <div class="al-row"><div id="edInmgGrEdit" name="ObjectsGroup[Inmg_id]"></div></div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <div style="clear: both"></div>
 </div>
 
 <?php $this->endWidget(); ?>
+
+<div style="clear: both"></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Сохранить" id='SaveNewObjectsGroup' /></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Отмена" id='btnCloseObjectsGroupEdit' /></div>
+</div>
+
+
+<div id="FindOrgDialog" style="display: none;">
+    <div id="FindOrgDialogHeader">
+        <span id="FindOrgHeaderText">Поиск</span>
+    </div>
+    <div style="padding: 10px;" id="DialogFindOrgContent">
+        <div style="" id="BodyFindOrgDialog"></div>
+    </div>
+</div>

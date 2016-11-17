@@ -1,7 +1,9 @@
 <script type="text/javascript">
+    var CurrentRowSupplierData;
+    
     $(document).ready(function () {
         /* Текущая выбранная строка данных */
-        var CurrentRowSupplierData;
+//        var CurrentRowSupplierData;
         
         var SuppliersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliers /*, {async: true, id: 'id'} */));
 
@@ -72,7 +74,7 @@
         }));
         
         $('#btnAddSupplier').on('click', function(){
-            $('#SuppliersDialog').jqxWindow({width: 800, height: 460, position: 'center'});
+            $('#SuppliersDialog').jqxWindow({width: 650, height: 550, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Suppliers/Create')) ?>,
                 type: 'POST',
@@ -90,7 +92,7 @@
 
         $('#btnEditSupplier').on('click', function(){
             if (CurrentRowSupplierData != undefined) {
-                $('#SuppliersDialog').jqxWindow({width: 800, height: 480, position: 'center'});
+                $('#SuppliersDialog').jqxWindow({width: 650, height: 550, position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('Suppliers/Update')) ?>,
                     type: 'POST',

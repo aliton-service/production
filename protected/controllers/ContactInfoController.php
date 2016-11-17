@@ -76,72 +76,85 @@ class ContactInfoController extends Controller
         echo CJSON::encode($model->getContactList($id));
     }
    
-    public function actionInsert($ObjectGr_id = FALSE)
+    public function actionInsert()
     {
-        $this->title = 'Добавление контактного лица';
-//        $this->action_url = $this->createUrl('ContactInfo/insert', array('ObjectGr_id' => $ObjectGr_id));
+        $model = new ContactInfo();
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
         
-        if ($ObjectGr_id !== FALSE)
-        {
-            $model = new ContactInfo();
-            $model->ObjectGr_id = $ObjectGr_id;
-            
-            if (isset($_POST['ContactInfo']))
-            {
-                $model->attributes = $_POST['ContactInfo'];
-                
-                $this->performAjaxValidation($model);
-                
-                if ($model->validate())
-                {
-                    $model->Insert();
-                    $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                }
-                
-            }
-            $model2 = new ObjectsGroup();
-            $model2->getModelPk($ObjectGr_id);
-            
-            
-            $this->render('edit', array(
-               'model' => $model,
-               'model2' => $model2
-            ));
+        $ClientName = '';
+        $Telephone = '';
+        
+        if (isset($_POST['ObjectGr_id']))
+            $model->ObjectGr_id = $_POST['ObjectGr_id'];
+        
+        if (isset($_POST['ClientName']))
+            $ClientName = $_POST['ClientName'];
+        
+        if (isset($_POST['Telephone']))
+            $Telephone = $_POST['Telephone'];
+        
+        if (isset($_POST['ContactInfo'])) {
+            $model->attributes = $_POST['ContactInfo'];
+            if ($model->validate()) {
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $Res['info_id'];
+                echo json_encode($ObjectResult);
+                return;
+            } 
         }
+
+        $ObjectResult['html'] = $this->renderPartial('_form2', array(
+            'model' => $model,
+            'ClientName' => $ClientName,
+            'Telephone' => $Telephone,
+        ), true);
+        echo json_encode($ObjectResult);
     }
     
     public function actionUpdate($ObjectGr_id = FALSE, $Info_id = FALSE)
     {
-        $this->title = 'Редактирование контактного лица';
-        $this->action_url = $this->createUrl('ContactInfo/update', array('Info_id' => $Info_id));
+        $model = new ContactInfo();
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
         
-        if ($Info_id !== FALSE)
-        {
-            $model = new ContactInfo();
-            $model->getModelPk($Info_id);
-            
-            if (isset($_POST['ContactInfo']))
-            {
-                $model->attributes = $_POST['ContactInfo'];
-                
-                $this->performAjaxValidation($model);
-                
-                if ($model->validate())
-                {
-                    $model->Update();
-                    $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-                }
-                
-            }
-            $model2 = new ObjectsGroup();
-            $model2->getModelPk($ObjectGr_id);
-            
-            $this->render('edit', array(
-               'model' => $model,
-               'model2' => $model2
-            ));
-            
+        $ClientName = '';
+        $Telephone = '';
+        
+        if (isset($_POST['Info_id']))
+            $model->getModelPk ($_POST['Info_id']);
+        
+        if (isset($_POST['ClientName']))
+            $ClientName = $_POST['ClientName'];
+        
+        if (isset($_POST['Telephone']))
+            $Telephone = $_POST['Telephone'];
+        
+        if (isset($_POST['ContactInfo'])) {
+            $model->getModelPk($_POST['ContactInfo']['Info_id']);
+            $model->attributes = $_POST['ContactInfo'];
+            if ($model->validate()) {
+                $Res = $model->Update();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->Info_id;
+                echo json_encode($ObjectResult);
+                return;
+            } 
         }
+
+        $ObjectResult['html'] = $this->renderPartial('_form2', array(
+            'model' => $model,
+            'ClientName' => $ClientName,
+            'Telephone' => $Telephone,
+        ), true);
+        echo json_encode($ObjectResult);
     }
     
     public function actionDelete()

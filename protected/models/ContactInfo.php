@@ -22,6 +22,7 @@ class ContactInfo extends MainFormModel
     public $contact;
     public $NoSend;
     public $CName;
+    public $dep;
 
         
      

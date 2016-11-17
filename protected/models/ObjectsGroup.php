@@ -41,6 +41,7 @@ class ObjectsGroup extends MainFormModel
     public $ClientName;
     public $Telephone;
     public $AreaSize;
+    public $Inform_id;
     
     public function rules()
     {
@@ -88,7 +89,7 @@ class ObjectsGroup extends MainFormModel
         // Инициализация процедур
         $this->SP_INSERT_NAME = 'INSERT_ObjectsGroup';
         $this->SP_UPDATE_NAME = 'UPDATE_ObjectsGroup';
-        $this->SP_DELETE_NAME = 'DELETE_ObjectsGroup';
+        $this->SP_DELETE_NAME = 'DELETE_OBJECTSGROUP';
         
         // Инициализация запроса
         $Select =   "Select"

@@ -312,7 +312,7 @@ GridState.SaveGridSettings = function(ID, KEY) {
 
 GridState.StateInitGrid = function(ID, KEY) {
     $('#' + ID).on('bindingcomplete', function(){
-        $('#' + ID).jqxGrid('selectrow', 0);
+//        $('#' + ID).jqxGrid('selectrow', 0);
         
         
     });

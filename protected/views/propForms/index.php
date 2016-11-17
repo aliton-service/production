@@ -71,7 +71,7 @@
         }));
         
         $('#btnAddOrganization').on('click', function(){
-            $('#OrganizationsDialog').jqxWindow({width: 800, height: 460, position: 'center'});
+            $('#OrganizationsDialog').jqxWindow({width: 800, height: 490, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('propForms/Create')) ?>,
                 type: 'POST',
@@ -89,7 +89,7 @@
 
         $('#btnEditOrganization').on('click', function(){
             if (CurrentRowOrgData != undefined) {
-                $('#OrganizationsDialog').jqxWindow({width: 800, height: 480, position: 'center'});
+                $('#OrganizationsDialog').jqxWindow({width: 800, height: 490, position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('propForms/Update')) ?>,
                     type: 'POST',

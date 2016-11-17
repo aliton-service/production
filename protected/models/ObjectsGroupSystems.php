@@ -15,7 +15,12 @@ class ObjectsGroupSystems extends MainFormModel
     public $Competitors;
     public $SysCmplxt_id;
     public $SysSttmnt_id;
-
+    public $SystemComplexitysName;
+    public $SystemStatementsName;
+    public $Coefficient;
+    public $Coefficient2;
+    public $SystemComplexityFull;
+    
     public function rules() {
         return array(
             /* обязательные поля*/
@@ -28,7 +33,14 @@ class ObjectsGroupSystems extends MainFormModel
                 . 'Availability,'
                 . 'count,'
                 . 'EmplCreate,'
-                . 'Competitors', 'safe'),
+                . 'Competitors,'
+                . 'SysCmplxt_id,'
+                . 'SysSttmnt_id,'
+                . 'SystemComplexitysName,'
+                . 'SystemStatementsName,'
+                . 'Coefficient,'
+                . 'Coefficient2,'
+                . 'SystemComplexityFull', 'safe'),
         );
     }
     
@@ -51,9 +63,17 @@ class ObjectsGroupSystems extends MainFormModel
                     ."  a.Availability,"
                     ."  s.count,"
                     ."  s.EmplCreate,"
-                    ."  cast(dbo.get_competitor_info(s.ObjectsGroupSystem_id) as nvarchar(50)) as Competitors";
+                    ."  cast(dbo.get_competitor_info(s.ObjectsGroupSystem_id) as nvarchar(50)) as Competitors,"
+                    ."  sc.SystemComplexitysName,
+                        sc.Coefficient,
+                        s.SysSttmnt_id,
+                        ss.SystemStatementsName,
+                        ss.Coefficient as Coefficient2,
+                        s.SystemComplexityFull";
         $From =     "\nFrom ObjectsGroupSystems s left join SystemTypes st on (s.Sttp_id = st.SystemType_id)"
-                    ."  left join SystemAvailabilitys a on (s.Availability_id = a.code_id)";
+                    ."  left join SystemAvailabilitys a on (s.Availability_id = a.code_id)"
+                    ."  left join SystemComplexitys sc on (sc.SystemComplexitys_id = s.SysCmplxt_id)
+                        left join SystemStatements ss on (ss.SystemStatements_id = s.SysSttmnt_id)";
         $Where =    "\nWhere s.DelDate is Null";
         
         $this->Query->setSelect($Select);
@@ -74,6 +94,13 @@ class ObjectsGroupSystems extends MainFormModel
                     'Availability_id' => 'Наличие',
                     'Availability' => 'Наличие',
                     'Count' => 'Кол-во',
+                    'SysCmplxt_id' => '',
+                    'SysSttmnt_id' => '',
+                    'SystemComplexitysName' => '',
+                    'SystemStatementsName' => '',
+                    'Coefficient' => '',
+                    'Coefficient2' => '',
+                    'SystemComplexityFull' => '',
             );
     }
 }

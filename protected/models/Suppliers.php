@@ -40,7 +40,6 @@ class Suppliers extends MainFormModel
 	public $EmplChange = null;
 	public $EmplDel = null;
 
-
 	function __construct($scenario = '') {
 
 		parent::__construct($scenario);

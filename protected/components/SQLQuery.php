@@ -163,7 +163,7 @@ class SQLQuery
     {
         $SQLText = $this->text;
         foreach ($this->Parameters as $key => $value) {
-            $SQLText = str_ireplace(':#' . $value['ParamName'], $value['ParamValue'], $SQLText);
+            $SQLText = str_ireplace($value['ParamName'], $value['ParamValue'], $SQLText);
         }
         $c = Yii::app()->db->createCommand($SQLText);
         return $c->queryRow();
