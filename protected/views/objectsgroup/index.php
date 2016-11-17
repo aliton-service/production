@@ -306,10 +306,20 @@
                     break;
             }
         };
-        $('#jqxTabs').jqxTabs({ width: '100%', height: 'calc(100% - 2px)',  initTabContent: initWidgets });
-        $('#jqxTabs').jqxTabs({ selectedItem: 0 });
         
-
+        $('#jqxTabs').jqxTabs({ width: '100%', height: 'calc(100% - 2px)',  initTabContent: initWidgets });
+        var defaultTabIndex = 0;
+        var tabIndex = Aliton.GetTabIndexFromURL(defaultTabIndex);
+        $('#jqxTabs').jqxTabs('select', tabIndex);
+        
+        var SelectTab = function() {
+            var SelectedTab = $('#jqxTabs').jqxTabs('selectedItem');
+            Aliton.SetLocation(SelectedTab);
+        };
+        
+        $('#jqxTabs').on('selected', function (event){ 
+            SelectTab();
+        });
         
     });
 </script>

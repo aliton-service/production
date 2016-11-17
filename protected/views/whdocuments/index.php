@@ -131,18 +131,9 @@
         $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings));
         
         
-        var SetLocation = function (tabIndex){
-            try {
-                history.pushState(null, null, '#' + tabIndex);
-                return;
-            } catch(e) {}
-//                location.hash = '#' + tabIndex;
-        };
-                    
         var SelectTab = function() {
             var SelectedTab = $('#edTabs').jqxTabs('selectedItem');
-            console.log(SelectedTab);
-            SetLocation(SelectedTab);
+            Aliton.SetLocation(SelectedTab);
             
             switch (SelectedTab) {
                 case 0: Dctp_id = 0; break;
@@ -157,8 +148,7 @@
             SetStateButton();
         };
         
-        $('#edTabs').on('selected', function (event) 
-        { 
+        $('#edTabs').on('selected', function (event){ 
             SelectTab();
         });
         
@@ -1057,19 +1047,10 @@
             }
         };
         
-        var GetTabIndexFromURL = function (){
-            var hashStr = location.hash;
-            if (hashStr === '') {
-                history.pushState(null, null, '#4');
-                hashStr = '#4';
-            }
-                var tabIndexStr = hashStr.substr(1);
-                var tabIndex = parseInt(tabIndexStr, 10);
-            return tabIndex;
-        };
         
         $('#edTabs').jqxTabs({ width: '99.8%', height: 445, initTabContent: initWidgets });
-        var tabIndex = GetTabIndexFromURL();
+        var defaultTabIndex = 4;
+        var tabIndex = Aliton.GetTabIndexFromURL(defaultTabIndex);
         $('#edTabs').jqxTabs('select', tabIndex);
         
         $("#btnCreate").on('click', function(){
