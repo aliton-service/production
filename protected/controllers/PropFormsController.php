@@ -40,67 +40,80 @@ class PropFormsController extends Controller
 
 	public function actionCreate()
 	{
-            $this->title = 'Создание новой организации';
             $model = new OrganizationsV();
-            $model->setScenario('Insert');
-
-            if(isset($_POST['PropForms'])) {
-                $model->attributes=$_POST['PropForms'];
-                $model->EmplCreate = Yii::app()->user->Employee_id;
-
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['Organizations'])) {
+                $model->attributes = $_POST['Organizations'];
                 if ($model->validate()) {
-                    $model->insert();
-                    $this->redirect(Yii::app()->createUrl('propForms/index'));
-                }    
+                    $Res = $model->Insert();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $Res['Form_id'];
+                    echo json_encode($ObjectResult);
+                    return;
+                } 
             }
 
-            $this->render('create',array(
-                    'model'=>$model,
-            ));
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
 	
-	public function actionUpdate($id)
-	{
-            $this->title = 'Редактирование организации';
-        
+	public function actionUpdate()
+        {
             $model = new OrganizationsV();
-            $model->setScenario('Update');
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['Form_id']))
+                $model->getModelPk($_POST['Form_id']);
 
-            if ($id == null)
-                    throw new CHttpException(404, 'Не выбрана запись.');
-
-            if(isset($_POST['PropForms']))
-            {
-                $model->attributes=$_POST['PropForms'];
-
-                $model->EmplChange = Yii::app()->user->Employee_id;
-
+            if (isset($_POST['Organizations'])) {
+                $model->getModelPk($_POST['Organizations']['Form_id']);
+                $model->attributes = $_POST['Organizations'];
                 if ($model->validate()) {
-                    $model->update();
+                    $model->Update();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Form_id;
+                    echo json_encode($ObjectResult);
+                    return;
                 }
             }
-            else
-            {
-                $model->getmodelPk($id);
-                $this->title .= ' ' . $model->FullName;
+
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
+        }
+
+        public function actionDelete()
+        {
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+
+            if (isset($_POST['Form_id'])) {
+                $model = new OrganizationsV();
+                $model->getModelPk($_POST['Form_id']);
+                if ($model->validate()) {
+                    $model->delete();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Form_id;
+                    echo json_encode($ObjectResult);
+                    return;
+                }
             }
-
-            $this->render('update', array(
-                    'model'=>$model,
-                )
-            );
-	}
-
-	
-	public function actionDelete($id)
-	{
-            $model = new OrganizationsV();
-            $model->getmodelPk($id);
-            $model->delete();
-            
-            $this->redirect($this->createUrl('propForms/Index'));
-	}
+            echo json_encode($ObjectResult);
+        }
 
 	public function actionIndex()
 	{

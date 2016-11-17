@@ -1,591 +1,271 @@
-<script>
-    Aliton.Links.push({
-        Out: "CmbBank",
-        In: "edCorAccount",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "cor_account",
-        Name: "Filter",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false,
+<script type="text/javascript">
+    $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
+        var Organization = {
+            Form_id: <?php echo json_encode($model->Form_id); ?>,
+            FormName: <?php echo json_encode($model->FormName); ?>,
+            fown_id: <?php echo json_encode($model->fown_id); ?>,
+            FownName: <?php echo json_encode($model->FownName); ?>,
+            FullName: <?php echo json_encode($model->FullName); ?>,
+            lph_id: <?php echo json_encode($model->lph_id); ?>,
+            TaxNumber: <?php echo json_encode($model->TaxNumber); ?>,
+            SettlementAccount: <?php echo json_encode($model->SettlementAccount); ?>,
+            City: <?php echo json_encode($model->City); ?>,
+            bank_id: <?php echo json_encode($model->bank_id); ?>,
+            inn: <?php echo json_encode($model->inn); ?>,
+            account: <?php echo json_encode($model->account); ?>,
+            kpp: <?php echo json_encode($model->kpp); ?>,
+            jregion: <?php echo json_encode($model->jregion); ?>,
+            jarea: <?php echo json_encode($model->jarea); ?>,
+            jstreet: <?php echo json_encode($model->jstreet); ?>,
+            jhouse: <?php echo json_encode($model->jhouse); ?>,
+            jcorp: <?php echo json_encode($model->jcorp); ?>,
+            jroom: <?php echo json_encode($model->jroom); ?>,
+            fregion: <?php echo json_encode($model->fregion); ?>,
+            farea: <?php echo json_encode($model->farea); ?>,
+            fstreet: <?php echo json_encode($model->fstreet); ?>,
+            fhouse: <?php echo json_encode($model->fhouse); ?>,
+            fcorp: <?php echo json_encode($model->fcorp); ?>,
+            froom: <?php echo json_encode($model->froom); ?>,
+            telephone: <?php echo json_encode($model->telephone); ?>,
+            bank_name: <?php echo json_encode($model->bank_name); ?>,
+            bik: <?php echo json_encode($model->bik); ?>,
+            cor_account: <?php echo json_encode($model->cor_account); ?>,
+            cityb: <?php echo json_encode($model->cityb); ?>,
+            lph_name: <?php echo json_encode($model->lph_name); ?>,
+            DEBT: <?php echo json_encode($model->DEBT); ?>,
+            sum_price: <?php echo json_encode($model->sum_price); ?>, 
+            sum_appz_price: <?php echo json_encode($model->sum_appz_price); ?>,
+            JAddress: <?php echo json_encode($model->JAddress); ?>,
+            FAddress: <?php echo json_encode($model->FAddress); ?>
+        };
+        
+        $('#Organizations').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        var FormsOfOwnershipVDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceFormsOfOwnership));
+        var RegionsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListRegionsMin));
+        RegionsDataAdapter.dataBind();
+        RegionsDataAdapter = RegionsDataAdapter.records;
+        var AreasDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAreas));
+        AreasDataAdapter.dataBind();
+        AreasDataAdapter = AreasDataAdapter.records;
+        var StreetsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}));
+        StreetsDataAdapter.dataBind();
+        StreetsDataAdapter = StreetsDataAdapter.records;
+        var BanksDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceBanks, {async: true}));
+        
+        $("#edFormNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 300} ));
+        $("#edFownEdit").jqxComboBox({ source: FormsOfOwnershipVDataAdapter, width: '200', height: '25px', displayMember: "name", valueMember: "fown_id"});
+        $("#edLphEdit").jqxComboBox({ source: [{id: 1, name: 'Юридическое лицо'}, {id: 2, name: 'Физическое лицо'}], width: '200', height: '25px', displayMember: "name", valueMember: "id"});
+        $("#edInnEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
+        $("#edAccountEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 200} ));
+        $("#edKppEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
+        $("#edJRegionEdit").jqxComboBox({ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"});
+        $("#edJAreaEdit").jqxComboBox({ source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"});
+        $("#edJStreetEdit").jqxComboBox({ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"});
+        $("#edJHouseEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
+        $("#edJCorpEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
+        $("#edJRoomEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
+        $("#edFRegionEdit").jqxComboBox({ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"});
+        $("#edFAreaEdit").jqxComboBox({ source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"});
+        $("#edFStreetEdit").jqxComboBox({ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"});
+        $("#edFHouseEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
+        $("#edFCorpEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
+        $("#edFRoomEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
+        $("#edBankEdit").on('select', function(event){
+            var args = event.args;
+            if (args) {
+                var item = args.item;
+                var value = item.value;
+                var RowData = Aliton.FindArray(BanksDataAdapter.records, 'Bank_id', value);
+                $('#edBankBikEdit').jqxInput('val', RowData['bik']);
+                $("#edBankCorAccountEdit").jqxInput('val', RowData['cor_account']);
+                
+            }
+            
+        });
+        
+        $("#edBankEdit").on('bindingComplete', function() {
+            if (Organization.bank_id != '') $("#edBankEdit").jqxComboBox('val', Organization.bank_id);
+        });
+        $("#edBankEdit").jqxComboBox({ source: BanksDataAdapter, width: '450px', height: '25px', displayMember: "bank_name", valueMember: "Bank_id"});
+        $("#edBankBikEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
+        $("#edBankCorAccountEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
+        $("#edTelephoneEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 350} ));
+        
+        $('#btnSaveOrganization').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnCancelOrganization').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnCancelOrganization').on('click', function(){
+            $('#OrganizationsDialog').jqxWindow('close');
+        });
+        
+        $('#btnSaveOrganization').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('propForms/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('propForms/Create')); ?>;
+            
+            $.ajax({
+                url: Url,
+                data: $('#Organizations').serialize(),
+                type: 'POST',
+                success: function(Res) {
+                    var Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        Aliton.SelectRowById('Form_id', Res.id, '#OrganizationsGrid', true);
+                        $('#OrganizationsDialog').jqxWindow('close');
+                    }
+                    else {
+                        $('#BodyOrganizationsDialog').html(Res.html);
+                    };
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                }
+            });
+        });
+        
+        if (Organization.FormName != '') $("#edFormNameEdit").jqxInput('val', Organization.FormName);
+        if (Organization.fown_id != '') $("#edFownEdit").jqxComboBox('val', Organization.fown_id);
+        if (Organization.lph_id != '') $("#edLphEdit").jqxComboBox('val', Organization.lph_id);
+        if (Organization.inn != '') $("#edInnEdit").jqxInput('val', Organization.inn);
+        if (Organization.account != '') $("#edAccountEdit").jqxInput('val', Organization.account);
+        if (Organization.kpp != '') $("#edKppEdit").jqxInput('val', Organization.kpp);
+        if (Organization.jregion != '') $("#edJRegionEdit").jqxComboBox('val', Organization.jregion);
+        if (Organization.jarea != '') $("#edJAreaEdit").jqxComboBox('val', Organization.jarea);
+        if (Organization.jstreet != '') $("#edJStreetEdit").jqxComboBox('val', Organization.jstreet);
+        if (Organization.jhouse != '') $("#edJHouseEdit").jqxInput('val', Organization.jhouse);
+        if (Organization.jcorp != '') $("#edJCorpEdit").jqxInput('val', Organization.jcorp);
+        if (Organization.jroom != '') $("#edJRoomEdit").jqxInput('val', Organization.jroom);
+        if (Organization.fregion != '') $("#edFRegionEdit").jqxComboBox('val', Organization.fregion);
+        if (Organization.farea != '') $("#edFAreaEdit").jqxComboBox('val', Organization.farea);
+        if (Organization.fstreet != '') $("#edFStreetEdit").jqxComboBox('val', Organization.fstreet);
+        if (Organization.fhouse != '') $("#edFHouseEdit").jqxInput('val', Organization.fhouse);
+        if (Organization.fcorp != '') $("#edFCorpEdit").jqxInput('val', Organization.fcorp);
+        if (Organization.froom != '') $("#edFRoomEdit").jqxInput('val', Organization.froom);
+        if (Organization.telephone != '') $("#edTelephoneEdit").jqxInput('val', Organization.telephone);
+        
     });
-    
-    Aliton.Links.push({
-        Out: "CmbBank",
-        In: "edBik",
-        TypeControl: "Grid",
-        Condition: ":Value",
-        Field: "bik",
-        Name: "Filter",
-        TypeFilter: "Internal",
-        TypeLink: "Filter",
-        isNullRun: false,
-    });
-</script>
+</script>        
 
 <?php 
     $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'PropForms',
+	'id'=>'Organizations',
 	'htmlOptions'=>array(
 		'class'=>'form-inline'
 		),
-	'enableAjaxValidation'=>false,
     )); 
 ?>
 
-<?php
-    $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-        'id' => 'edForm_id',
-        'Width' => 100,
-        'Type' => 'String',
-        'Name' => 'PropForms[Form_id]',
-        'Value' => $model->Form_id,
-        'ReadOnly' => true,
-        'Visible' => false,
-    ));
-?>
-
-<div style="margin-top: 16px"></div>
-<div style="float: left;">
-    <div style="float: left; width: 160px">Организация:</div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edFormName',
-                    'Width' => 280,
-                    'Type' => 'String',
-                    'Value' => $model->FormName,
-                    'Name' => 'PropForms[FormName]',
-            ));
-        ?>
-    </div>
-    <div><?php echo $form->error($model, 'FormName'); ?></div>
+<input type="hidden" name="Organizations[Form_id]" value="<?php echo $model->Form_id; ?>"/>
+<div class="al-row">
+    <div class="al-row-column" style="width: 150px">Наименование:</div>
+    <div class="al-row-column"><input type="text" name="Organizations[FormName]" autocomplete="off" id="edFormNameEdit"/><?php echo $form->error($model, 'FormName'); ?></div>
+    <div style="clear: both"></div>
 </div>
-<div style="clear: both"></div>
-<div style="float: left; margin-top: 8px">
-    <div style="float: left; width: 160px">Форма собственности:</div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                'id' => 'CmbFownName',
-                'Stretch' => true,
-                'Key' => 'PropForms_Update_CmbFownName',
-                'ModelName' => 'FormsOfOwnership',
-                'Name' => 'PropForms[fown_id]',
-                'ShowFilters' => false,
-                'ShowPager' => false,
-                'Height' => 300,
-                'Width' => 150,
-                'PopupWidth' => 500,
-                'KeyField' => 'fown_id',
-                'KeyValue' => $model->fown_id,
-                'FieldName' => 'name',
-                'Type' => array(
-                    'Mode' => 'Filter',
-                    'Type' => 'Internal',
-                    'Condition' => "fo.name like '%:Value%'",
-                    'Name' => 'Filter1'
-                ),
-                'Columns' => array(
-                    'name' => array(
-                        'Name' => 'Форма собственности',
-                        'FieldName' => 'name',
-                        'Width' => 300,
-                    ),
-                ),
-            ));
-        ?>
-    </div>
-    <div><?php echo $form->error($model, 'fown_id'); ?></div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 150px">Форма собственности:</div>
+    <div class="al-row-column"><div name="Organizations[fown_id]" id="edFownEdit"></div><?php echo $form->error($model, 'fown_id'); ?></div>
+    <div style="clear: both"></div>
 </div>
-<div style="clear: both"></div>
-<div style="float: left; margin-top: 8px">
-    <div style="float: left; width: 160px">Юр.\Физ. лица</div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                'id' => 'CmbLph',
-                'Stretch' => true,
-                'Key' => 'PropForms_Update_CmbLph',
-                'ModelName' => 'Lph',
-                'Name' => 'PropForms[lph_id]',
-                'ShowFilters' => false,
-                'ShowPager' => false,
-                'Height' => 300,
-                'Width' => 150,
-                'PopupWidth' => 500,
-                'KeyField' => 'LPh_id',
-                'KeyValue' => $model->lph_id,
-                'FieldName' => 'Name',
-                'Type' => array(
-                    'Mode' => 'Filter',
-                    'Type' => 'Internal',
-                    'Condition' => "l.Name like ':Value%'",
-                    'Name' => 'Filter1'
-                ),
-                'Columns' => array(
-                    'name' => array(
-                        'Name' => 'Тип',
-                        'FieldName' => 'Name',
-                        'Width' => 300,
-                    ),
-                ),
-            ));
-        ?>
-    </div>
-    <div><?php echo $form->error($model, 'LPh_id'); ?></div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 150px">Тип:</div>
+    <div class="al-row-column"><div name="Organizations[lph_id]" id="edLphEdit"></div><?php echo $form->error($model, 'lph_id'); ?></div>
+    <div style="clear: both"></div>
 </div>
-<div style="float: left; margin-left: 6px; margin-top: 8px">
-    <div style="text-align: center; float: left">Телефон:</div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edTelephone',
-                    'Width' => 150,
-                    'Type' => 'String',
-                    'Value' => $model->telephone,
-                    'Name' => 'PropForms[telephone]',
-            ));
-        ?>
-    </div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 150px">ИНН:</div>
+    <div class="al-row-column"><input type="text" name="Organizations[inn]" id="edInnEdit" /><?php echo $form->error($model, 'inn'); ?></div>
+    <div class="al-row-column" >Р/Счет:</div>
+    <div class="al-row-column"><input type="text" name="Organizations[account]" id="edAccountEdit" /><?php echo $form->error($model, 'account'); ?></div>
+    <div class="al-row-column" >КПП:</div>
+    <div class="al-row-column"><input type="text" name="Organizations[kpp]" id="edKppEdit" /><?php echo $form->error($model, 'kpp'); ?></div>
+    <div style="clear: both"></div>
 </div>
-<div style="clear: both"></div>
-<div style="margin-top: 6px; float: left">
-    <div style="float: left; width: 40px">ИНН:</div>
-    <div style="float: left">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                'id' => 'edINN',
-                'Width' => 150,
-                'Type' => 'String',
-                'Name' => 'PropForms[inn]',
-                'Value' => $model->inn,
-                'ReadOnly' => false,
-            ));
-        ?>
-    </div> 
+<div class="al-row">
+    <div class="al-row" style="padding: 0px"><b><u>Юридический адрес</u></b></div>
+    <div class="al-row-column" style="margin-left: 0px;">
+        <div class="al-row" style="padding: 0px">Регион</div>
+        <div class="al-row" style="padding: 0px"><div name="Organizations[jregion]" id="edJRegionEdit"></div><?php echo $form->error($model, 'jregion'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Район</div>
+        <div class="al-row" style="padding: 0px"><div name="Organizations[jarea]" id="edJAreaEdit"></div><?php echo $form->error($model, 'jarea'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Улица</div>
+        <div class="al-row" style="padding: 0px"><div name="Organizations[jstreet]" id="edJStreetEdit"></div><?php echo $form->error($model, 'jstreet'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Дом</div>
+        <div class="al-row" style="padding: 0px"><input type="text" name="Organizations[jhouse]" id="edJHouseEdit" /><?php echo $form->error($model, 'jhouse'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Корпус</div>
+        <div class="al-row" style="padding: 0px"><input type="text" name="Organizations[jcorp]" id="edJCorpEdit" /><?php echo $form->error($model, 'jcorp'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Помещение</div>
+        <div class="al-row" style="padding: 0px"><input type="text" name="Organizations[jroom]" id="edJRoomEdit" /><?php echo $form->error($model, 'jroom'); ?></div>
+    </div>
+    <div style="clear: both"></div>
 </div>
-<div style="margin-top: 6px; margin-left: 6px; float: left">
-    <div style="float: left; width: 120px">Расчетный счет:</div>
-    <div style="float: left">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                'id' => 'edAccount',
-                'Width' => 250,
-                'Type' => 'String',
-                'Name' => 'PropForms[account]',
-                'Value' => $model->account,
-                'ReadOnly' => false,
-            ));
-        ?>
-    </div> 
+<div class="al-row">
+    <div class="al-row" style="padding: 0px"><b><u>Фактический адрес</u></b></div>
+    <div class="al-row-column" style="margin-left: 0px;">
+        <div class="al-row" style="padding: 0px">Регион</div>
+        <div class="al-row" style="padding: 0px"><div name="Organizations[fregion]" id="edFRegionEdit"></div><?php echo $form->error($model, 'fregion'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Район</div>
+        <div class="al-row" style="padding: 0px"><div name="Organizations[farea]" id="edFAreaEdit"></div><?php echo $form->error($model, 'farea'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Улица</div>
+        <div class="al-row" style="padding: 0px"><div name="Organizations[fstreet]" id="edFStreetEdit"></div><?php echo $form->error($model, 'fstreet'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Дом</div>
+        <div class="al-row" style="padding: 0px"><input type="text" name="Organizations[fhouse]" id="edFHouseEdit" /><?php echo $form->error($model, 'fhouse'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Корпус</div>
+        <div class="al-row" style="padding: 0px"><input type="text" name="Organizations[fcorp]" id="edFCorpEdit" /><?php echo $form->error($model, 'fcorp'); ?></div>
+    </div>
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">Помещение</div>
+        <div class="al-row" style="padding: 0px"><input type="text" name="Organizations[froom]" id="edFRoomEdit" /><?php echo $form->error($model, 'froom'); ?></div>
+    </div>
+    <div style="clear: both"></div>
 </div>
-<div style="margin-top: 6px; margin-left: 6px; float: left">
-    <div style="float: left; width: 40px">КПП:</div>
-    <div style="float: left">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                'id' => 'edKPP',
-                'Width' => 250,
-                'Type' => 'String',
-                'Name' => 'PropForms[kpp]',
-                'Value' => $model->kpp,
-                'ReadOnly' => false,
-            ));
-        ?>
-    </div> 
+<div class="al-row">
+    <div class="al-row-column" style="width: 80px;">Банк:</div>
+    <div class="al-row-column"><div name="Organizations[bank_id]" id="edBankEdit"></div><?php echo $form->error($model, 'bank_id'); ?></div>
+    <div style="clear: both"></div>
 </div>
-<div style="clear: both"></div>
-<div style="margin-top: 16px">Юридический адрес</div>
-<div style="float: left; margin-top: 2px; border: 1px solid; padding: 6px">
-    <div style="float: left; ">
-        <div style="width: 60px">Регион</div>
-        <div>
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbRegions',
-                    'Stretch' => true,
-                    'Key' => 'PropForms_Update_CmbRegions',
-                    'ModelName' => 'Regions',
-                    'Name' => 'PropForms[jregion]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 350,
-                    'KeyField' => 'Region_id',
-                    'KeyValue' => $model->jregion,
-                    'FieldName' => 'RegionName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "r.RegionName like ':Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'RegionName' => array(
-                            'Name' => 'Регион',
-                            'FieldName' => 'RegionName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div><?php echo $form->error($model, 'jregion'); ?></div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 60px">Район</div>
-        <div>
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbAreas',
-                    'Stretch' => true,
-                    'Key' => 'PropForms_Update_CmbAreas',
-                    'ModelName' => 'Areas',
-                    'Name' => 'PropForms[jarea]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 350,
-                    'KeyField' => 'Area_id',
-                    'KeyValue' => $model->jarea,
-                    'FieldName' => 'AreaName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "a.AreaName like ':Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'AreaName' => array(
-                            'Name' => 'Район',
-                            'FieldName' => 'AreaName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div><?php echo $form->error($model, 'jarea'); ?></div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 60px">Улицы</div>
-        <div>
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbStreet',
-                    'Stretch' => true,
-                    'Key' => 'PropForms_Update_CmbAreas',
-                    'ModelName' => 'Streets',
-                    'Name' => 'PropForms[jstreet]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 250,
-                    'PopupWidth' => 350,
-                    'KeyField' => 'Street_id',
-                    'KeyValue' => $model->jstreet,
-                    'FieldName' => 'StreetName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "st.StreetName like ':Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'StreetName' => array(
-                            'Name' => 'Улица',
-                            'FieldName' => 'StreetName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div><?php echo $form->error($model, 'jstreet'); ?></div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 80px">Дом:</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edJHouse',
-                    'Width' => 80,
-                    'Type' => 'String',
-                    'Name' => 'PropForms[jhouse]',
-                    'Value' => $model->jhouse,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 80px">Корпус:</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edJCorp',
-                    'Width' => 80,
-                    'Type' => 'String',
-                    'Name' => 'PropForms[jcorp]',
-                    'Value' => $model->jcorp,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 80px">Помещение:</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edJRoom',
-                    'Width' => 100,
-                    'Type' => 'String',
-                    'Name' => 'PropForms[jroom]',
-                    'Value' => $model->jroom,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div>
-    </div>
-</div>	
-<div style="clear: both"></div>
-<div style="margin-top: 16px">Фактический адрес</div>
-<div style="float: left; margin-top: 2px; border: 1px solid; padding: 6px">
-    <div style="float: left; ">
-        <div style="width: 60px">Регион</div>
-        <div>
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbFRegions',
-                    'Stretch' => true,
-                    'Key' => 'PropForms_Update_CmbFRegions',
-                    'ModelName' => 'Regions',
-                    'Name' => 'PropForms[fregion]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 350,
-                    'KeyField' => 'Region_id',
-                    'KeyValue' => $model->fregion,
-                    'FieldName' => 'RegionName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "r.RegionName like ':Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'RegionName' => array(
-                            'Name' => 'Регион',
-                            'FieldName' => 'RegionName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div><?php echo $form->error($model, 'fregion'); ?></div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 60px">Район</div>
-        <div>
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbFAreas',
-                    'Stretch' => true,
-                    'Key' => 'PropForms_Update_CmbFAreas',
-                    'ModelName' => 'Areas',
-                    'Name' => 'PropForms[farea]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 150,
-                    'PopupWidth' => 350,
-                    'KeyField' => 'Area_id',
-                    'KeyValue' => $model->farea,
-                    'FieldName' => 'AreaName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "a.AreaName like ':Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'AreaName' => array(
-                            'Name' => 'Район',
-                            'FieldName' => 'AreaName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div><?php echo $form->error($model, 'farea'); ?></div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 60px">Улицы</div>
-        <div>
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbFStreet',
-                    'Stretch' => true,
-                    'Key' => 'PropForms_Update_CmbFStreet',
-                    'ModelName' => 'Streets',
-                    'Name' => 'PropForms[fstreet]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 250,
-                    'PopupWidth' => 350,
-                    'KeyField' => 'Street_id',
-                    'KeyValue' => $model->fstreet,
-                    'FieldName' => 'StreetName',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "st.StreetName like ':Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'StreetName' => array(
-                            'Name' => 'Улица',
-                            'FieldName' => 'StreetName',
-                            'Width' => 300,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div><?php echo $form->error($model, 'fstreet'); ?></div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 80px">Дом:</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edFHouse',
-                    'Width' => 80,
-                    'Type' => 'String',
-                    'Name' => 'PropForms[fhouse]',
-                    'Value' => $model->fhouse,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 80px">Корпус:</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edFCorp',
-                    'Width' => 80,
-                    'Type' => 'String',
-                    'Name' => 'PropForms[fcorp]',
-                    'Value' => $model->fcorp,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div>
-    </div>
-    <div style="float: left; margin-left: 6px">
-        <div style="width: 80px">Помещение:</div>
-        <div style="float: left">
-            <?php
-                $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edFRoom',
-                    'Width' => 100,
-                    'Type' => 'String',
-                    'Name' => 'PropForms[froom]',
-                    'Value' => $model->froom,
-                    'ReadOnly' => false,
-                ));
-            ?>
-        </div>
-    </div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 80px;">Бик:</div>
+    <div class="al-row-column"><input type="text" id="edBankBikEdit" /></div>
+    <div class="al-row-column">Кор/Счет:</div>
+    <div class="al-row-column"><input type="text" id="edBankCorAccountEdit" /></div>
+    <div style="clear: both"></div>
 </div>
-<div style="clear: both"></div>
-<div style="float: left; margin-top: 6px">
-        <div style="width: 60px">Банк:</div>
-        <div>
-            <?php
-                $this->widget('application.extensions.alitonwidgets.comboboxajax.alcomboboxajax', array(
-                    'id' => 'CmbBank',
-                    'Stretch' => true,
-                    'Key' => 'PropForms_Update_CmbBank',
-                    'ModelName' => 'Banks',
-                    'Name' => 'PropForms[bank_id]',
-                    'ShowFilters' => false,
-                    'ShowPager' => false,
-                    'Height' => 300,
-                    'Width' => 450,
-                    'PopupWidth' => 500,
-                    'KeyField' => 'Bank_id',
-                    'KeyValue' => $model->bank_id,
-                    'FieldName' => 'bank_name',
-                    'Type' => array(
-                        'Mode' => 'Filter',
-                        'Type' => 'Internal',
-                        'Condition' => "b.bank_name like '%:Value%'",
-                        'Name' => 'Filter1'
-                    ),
-                    'Columns' => array(
-                        'bank_name' => array(
-                            'Name' => 'Банк',
-                            'FieldName' => 'bank_name',
-                            'Width' => 400,
-                        ),
-                    ),
-                ));
-            ?>
-        </div>
-        <div><?php echo $form->error($model, 'fstreet'); ?></div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 80px;">Телефон:</div>
+    <div class="al-row-column"><input type="text" id="edTelephoneEdit" /></div>
+    <div style="clear: both"></div>
 </div>
-<div style="clear: both"></div>
-    <div style="float: left; margin-top: 6px">Кор. счет:</div>
-    <div style="float: left; margin-left: 6px; margin-top: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edCorAccount',
-                    'Width' => 220,
-                    'Type' => 'String',
-            ));
-        ?>
-    </div>
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='btnSaveOrganization'/></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelOrganization'/></div>
 </div>
-<div style="float: left; margin-left: 6px; margin-top: 6px">
-    <div style="text-align: center; float: left">БИК:</div>
-    <div style="float: left; margin-left: 6px">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.edit.aledit', array(
-                    'id' => 'edBik',
-                    'Width' => 120,
-                    'Type' => 'String',
-            ));
-        ?>
-    </div>
-</div>
-<div style="clear: both"></div>
-<div style="float: left; margin-top: 6px;">
-    <div style="float: left;">
-        <?php
-            $this->widget('application.extensions.alitonwidgets.button.albutton', array(
-                'id' => 'SavePropForms',
-                'Width' => 124,
-                'Height' => 30,
-                'Text' => 'Сохранить',
-                'FormName' => 'PropForms',
-                'Type' => 'Form',
-            ));
-        ?>
-    </div> 
-</div>
-
 <?php $this->endWidget(); ?>
+
+
 

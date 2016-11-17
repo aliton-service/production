@@ -307,7 +307,7 @@ Sources.SourceListAddresses =
     id: 'Object_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AddressList',
     root: 'Rows',
-    cache: false,
+    cache: true,
     async: true,
     pagenum: 0,
     pagesize: 300,
@@ -875,10 +875,14 @@ Sources.SourceOrganizationsV =
     datafields: [
         { name: 'Form_id',  type: 'int' },
         { name: 'FormName',  type: 'string' },
+        { name: 'FownName',  type: 'string' },
         { name: 'JAddress',  type: 'string' },
         { name: 'FAddress',  type: 'string' },
         { name: 'telephone',  type: 'string' },
         { name: 'bank_name',  type: 'string' },
+        { name: 'inn',  type: 'string' },
+        { name: 'kpp',  type: 'string' },
+        { name: 'account',  type: 'string' },
         { name: 'bik',  type: 'string' },
         { name: 'cor_account',  type: 'string' },
         { name: 'cityb',  type: 'string' },
@@ -887,6 +891,7 @@ Sources.SourceOrganizationsV =
         { name: 'sum_price',  type: 'string' },
         { name: 'sum_appz_price',  type: 'string' },
         { name: 'sum_appz_price',  type: 'string' },
+        { name: 'telephone',  type: 'string' },
     ],
     id: 'Form_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OrganizationsV',
@@ -895,7 +900,7 @@ Sources.SourceOrganizationsV =
     cache: false,
     async: false,
     pagenum: 0,
-    pagesize: 300,
+    pagesize: 200,
     beforeprocessing: function (data) {
             this.totalrecords = data[0].TotalRows;
         }
@@ -3798,6 +3803,88 @@ Sources.SourceReportForms =
     }
 };
 
+Sources.SourceFormsOfOwnership =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'fown_id', type: 'int'},
+        {name: 'name', type: 'string'},
+    ],
+    id: 'fown_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=FormsOfOwnership',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceBanks =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Bank_id', type: 'int'},
+        {name: 'bank_name', type: 'string'},
+        {name: 'cor_account', type: 'string'},
+	{name: 'bik', type: 'string'},
+	{name: 'City', type: 'string'},
+    ],
+    id: 'Bank_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Banks',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceSuppliers =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Supplier_id', type: 'int'},
+	{name: 'NameSupplier', type: 'string'},
+	{name: 'Adress', type: 'string'},
+	{name: 'Tel', type: 'string'},
+	{name: 'ContactFace', type: 'string'},
+	{name: 'Properties', type: 'string'},
+	{name: 'Note', type: 'string'},
+	{name: 'DateInsert', type: 'date'},
+	{name: 'Producer', type: 'bool'},
+	{name: 'Supplier', type: 'bool'},
+	{name: 'Repair', type: 'bool'},
+	{name: 'DelDate', type: 'date'},
+	{name: 'FullName', type: 'string'},
+	{name: 'DateLastContact', type: 'date'},
+	{name: 'DateLastPurchase', type: 'date'},
+	{name: 'bank_name', type: 'string'},
+        {name: 'bank_id', type: 'int'},
+	{name: 'inn', type: 'string'},
+        {name: 'bik', type: 'string'},
+	{name: 'account', type: 'string'},
+        {name: 'cor_account', type: 'string'},
+        
+	{name: 'kpp', type: 'string'},
+    ],
+    id: 'Supplier_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Suppliers',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+    
 Sources.SourceOfferDemands =
 {
     datatype: "json",
