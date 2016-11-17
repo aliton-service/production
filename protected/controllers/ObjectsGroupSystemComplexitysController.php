@@ -17,19 +17,19 @@ class ObjectsGroupSystemComplexitysController extends Controller
         return array(
             array('allow',
                     'actions'=>array('index', 'view'),
-                    'roles'=>array('ViewObjectsGroupSystemCompexitys'),
+                    'roles'=>array('ViewObjectsGroupSystemComplexitys'),
             ),
             array('allow', 
                     'actions'=>array('create'),
-                    'roles'=>array('CreateObjectsGroupSystemCompexitys'),
+                    'roles'=>array('CreateObjectsGroupSystemComplexitys'),
             ),
             array('allow', 
                     'actions'=>array('update'),
-                    'roles'=>array('UpdateObjectsGroupSystemCompexitys'),
+                    'roles'=>array('UpdateObjectsGroupSystemComplexitys'),
             ),
             array('allow', 
                     'actions'=>array('delete'),
-                    'roles'=>array('DeleteObjectsGroupSystemCompexitys'),
+                    'roles'=>array('DeleteObjectsGroupSystemComplexitys'),
             ),
             array('deny',  // deny all users
                     'users'=>array('*'),
@@ -39,7 +39,7 @@ class ObjectsGroupSystemComplexitysController extends Controller
 
     public function actionCreate()
     {
-        $model = new ObjectsGroupSystemCompexitys();
+        $model = new ObjectsGroupSystemComplexitys();
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
@@ -50,8 +50,12 @@ class ObjectsGroupSystemComplexitysController extends Controller
             $model->Ogst_id = $_POST['Ogst_id'];
         }
         
-        if (isset($_POST['ObjectsGroupSystemCompexitys'])) {
-            $model->attributes = $_POST['ObjectsGroupSystemCompexitys'];
+        if (isset($_POST['ObjectGr_id'])) {
+            $model->ObjectGr_id = $_POST['ObjectGr_id'];
+        }
+        
+        if (isset($_POST['ObjectsGroupSystemComplexitys'])) {
+            $model->attributes = $_POST['ObjectsGroupSystemComplexitys'];
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
@@ -70,7 +74,7 @@ class ObjectsGroupSystemComplexitysController extends Controller
 
     public function actionUpdate()
     {
-        $model = new ObjectsGroupSystemCompexitys();
+        $model = new ObjectsGroupSystemComplexitys();
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
@@ -79,9 +83,9 @@ class ObjectsGroupSystemComplexitysController extends Controller
         if (isset($_POST['Ogsc_id']))
             $model->getModelPk($_POST['Ogsc_id']);
 
-        if (isset($_POST['ObjectsGroupSystemCompexitys'])) {
-            $model->getModelPk($_POST['ObjectsGroupSystemCompexitys']['Ogsc_id']);
-            $model->attributes = $_POST['ObjectsGroupSystemCompexitys'];
+        if (isset($_POST['ObjectsGroupSystemComplexitys'])) {
+            $model->getModelPk($_POST['ObjectsGroupSystemComplexitys']['Ogsc_id']);
+            $model->attributes = $_POST['ObjectsGroupSystemComplexitys'];
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
@@ -106,7 +110,7 @@ class ObjectsGroupSystemComplexitysController extends Controller
             );
         
         if (isset($_POST['Ogsc_id'])) {
-            $model = new ObjectsGroupSystemCompexitys();
+            $model = new ObjectsGroupSystemComplexitys();
             $model->getModelPk($_POST['Ogsc_id']);
             if ($model->validate()) {
                 $model->delete();
@@ -127,11 +131,16 @@ class ObjectsGroupSystemComplexitysController extends Controller
                 'html' => '',
             );
         
+        $ObjectGr_id = 0;
+        if (isset($_POST['ObjectGr_id']))
+            $ObjectGr_id = $_POST['ObjectGr_id'];
+        
         if (isset($_POST['Ogst_id'])) {
             $ObjectResult['result'] = 1;
             $ObjectResult['id'] = 0;
             $ObjectResult['html'] = $this->renderPartial('index', array(
                 'Ogst_id' => $_POST['Ogst_id'],
+                'ObjectGr_id' => $_POST['ObjectGr_id'],
             ), true);
             
         }

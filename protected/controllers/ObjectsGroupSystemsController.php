@@ -17,7 +17,7 @@ class ObjectsGroupSystemsController extends Controller
         return array(
             
             array('allow',
-                    'actions'=>array('Index', 'GetCompetitor'),
+                    'actions'=>array('Index', 'GetCompetitor', 'GetSystemComplexitys'),
                     'roles'=>array('ViewObjectsGroupSystems'),
                 ),
             array('allow',
@@ -96,11 +96,10 @@ class ObjectsGroupSystemsController extends Controller
         
         if (isset($_POST['ObjectsGroupSystems']))
         {
+            $model->getModelPk($_POST['ObjectsGroupSystems']['ObjectsGroupSystem_id']);
             $model->attributes = $_POST['ObjectsGroupSystems'];
             $ObjectsGroupSystem_id = $model->ObjectsGroupSystem_id;
             
-            $this->performAjaxValidation($model);
-
             if ($model->validate())
             {
                 $model->Update();
@@ -146,6 +145,25 @@ class ObjectsGroupSystemsController extends Controller
             $Row = $Query->QueryRow();
             $ObjectResult['result'] = 1;
             $ObjectResult['html'] = $Row['Name'];
+        }
+        
+        echo json_encode($ObjectResult);
+    }   
+    
+    public function actionGetSystemComplexitys() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['ObjectsGroupSystem_id'])) {
+            $Query = new SQLQuery();
+            $Query->setSelect("Select SystemComplexityFull From ObjectsGroupSystems Where ObjectsGroupSystem_id = :#ObjectsGroupSystem_id");
+            $Query->bindParam('ObjectsGroupSystem_id', $_POST['ObjectsGroupSystem_id']);
+            $Row = $Query->QueryRow();
+            $ObjectResult['result'] = 1;
+            $ObjectResult['html'] = $Row['SystemComplexityFull'];
         }
         
         echo json_encode($ObjectResult);

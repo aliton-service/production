@@ -34,13 +34,13 @@ class ObjectsGroupSystems extends MainFormModel
                 . 'count,'
                 . 'EmplCreate,'
                 . 'Competitors,'
-                . 'SysCmplxt_id,
-                    SysSttmnt_id,
-                    SystemComplexitysName,
-                    SystemStatementsName,
-                    Coefficient,
-                    Coefficient2,
-                    SystemComplexityFull', 'safe'),
+                . 'SysCmplxt_id,'
+                . 'SysSttmnt_id,'
+                . 'SystemComplexitysName,'
+                . 'SystemStatementsName,'
+                . 'Coefficient,'
+                . 'Coefficient2,'
+                . 'SystemComplexityFull', 'safe'),
         );
     }
     

@@ -1,40 +1,41 @@
 <script type="text/javascript">
     $(document).ready(function () {
         /* Текущая выбранная строка данных */
-        var CurrentRowDataSystemCompetitors;
-        var ObjectsGroupSystem_id = <?php echo json_encode($ObjectsGroupSystem_id); ?>;
+        var CurrentRowDataObjectsGroupSystemComplexitys;
+        var Ogst_id = <?php echo json_encode($Ogst_id); ?>;
+        var ObjectGr_id = <?php echo json_encode($ObjectGr_id); ?>;
         
-        var SystemCompetitorsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSystemCompetitors), {
+        var ObjectsGroupSystemComplexitysDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceObjectsGroupSystemComplexitys), {
             formatData: function (data) {
                         $.extend(data, {
-                            Filters: ["sc.Ogst = " + ObjectsGroupSystem_id]
+                            Filters: ["s.Ogst_id = " + Ogst_id]
                         });
                         return data;
                     },
         });
 
-        $('#btnAddSystemCompetitor').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnEditSystemCompetitor').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnRefreshSystemCompetitor').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#btnDelSystemCompetitor').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-        $('#SystemCompetitorsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '200px', width: '400', position: 'center'}));
-        $('#btnCloseSystemCompetitor').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnAddObjectsGroupSystemComplexity').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnEditObjectsGroupSystemComplexity').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnRefreshObjectsGroupSystemComplexity').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnDelObjectsGroupSystemComplexity').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#ObjectsGroupSystemComplexitysDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '200px', width: '400', position: 'center'}));
+        $('#btnCloseObjectsGroupSystemComplexity').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         var CheckButton = function() {
-            $('#btnEditSystemCompetitor').jqxButton({disabled: !(CurrentRowDataSystemCompetitors != undefined)})
-            $('#btnDelSystemCompetitor').jqxButton({disabled: !(CurrentRowDataSystemCompetitors != undefined)})
+            $('#btnEditObjectsGroupSystemComplexity').jqxButton({disabled: !(CurrentRowDataObjectsGroupSystemComplexitys != undefined)})
+            $('#btnDelObjectsGroupSystemComplexity').jqxButton({disabled: !(CurrentRowDataObjectsGroupSystemComplexitys != undefined)})
         }
         
-        $("#SystemCompetitorsGrid").on('rowselect', function (event) {
-            CurrentRowDataSystemCompetitors = $('#SystemCompetitorsGrid').jqxGrid('getrowdata', event.args.rowindex);
+        $("#ObjectsGroupSystemComplexitysGrid").on('rowselect', function (event) {
+            CurrentRowDataObjectsGroupSystemComplexitys = $('#ObjectsGroupSystemComplexitysGrid').jqxGrid('getrowdata', event.args.rowindex);
             CheckButton();
         });
         
-        $("#SystemCompetitorsGrid").on('rowdoubleclick', function(){
-            $('#btnEditSystemCompetitor').click();
+        $("#ObjectsGroupSystemComplexitysGrid").on('rowdoubleclick', function(){
+            $('#btnEditObjectsGroupSystemComplexity').click();
         });
         
-        $("#SystemCompetitorsGrid").jqxGrid(
+        $("#ObjectsGroupSystemComplexitysGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
@@ -42,14 +43,14 @@
                 showfilterrow: true,
                 width: '100%',
                 height: 'calc(100% - 2px)',
-                source: SystemCompetitorsDataAdapter,
+                source: ObjectsGroupSystemComplexitysDataAdapter,
                 columns: [
-                    { text: 'Организация', datafield: 'Competitor', filtercondition: 'CONTAINS', width: 320},    
+                    { text: 'Сложность', datafield: 'SystemComplexitysName', filtercondition: 'CONTAINS', width: 320},    
                 ]
 
         }));
         
-        $('#btnCloseSystemCompetitor').on('click', function(){
+        $('#btnCloseObjectsGroupSystemComplexity').on('click', function(){
             if ($('#btnRefreshDetails').length > 0)
                 $('#btnRefreshDetails').click();
             if ($('#btnRefreshEquips').length > 0)
@@ -62,17 +63,20 @@
             
         });
         
-        $('#btnAddSystemCompetitor').on('click', function(){
-            $('#SystemCompetitorsDialog').jqxWindow({width: 400, height: 160, position: 'center'});
+        $('#btnAddObjectsGroupSystemComplexity').on('click', function(){
+            $('#ObjectsGroupSystemComplexitysDialog').jqxWindow({width: 400, height: 160, position: 'center'});
             $.ajax({
-                url: <?php echo json_encode(Yii::app()->createUrl('SystemCompetitors/Create')) ?>,
+                url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroupSystemComplexitys/Create')) ?>,
                 type: 'POST',
-                data: {ObjectsGroupSystem_id: ObjectsGroupSystem_id},
+                data: {
+                    Ogst_id: Ogst_id,
+                    ObjectGr_id: ObjectGr_id
+                },
                 async: false,
                 success: function(Res) {
                     Res = JSON.parse(Res);
-                    $("#BodySystemCompetitorsDialog").html(Res.html);
-                    $('#SystemCompetitorsDialog').jqxWindow('open');
+                    $("#BodyObjectsGroupSystemComplexitysDialog").html(Res.html);
+                    $('#ObjectsGroupSystemComplexitysDialog').jqxWindow('open');
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -80,20 +84,21 @@
             });
         });
 
-        $('#btnEditSystemCompetitor').on('click', function(){
-            if (CurrentRowDataSystemCompetitors != undefined) {
-                $('#SystemCompetitorsDialog').jqxWindow($.extend(true, DialogDefaultSettings,{width: 400, height: 160, position: 'center'}));
+        $('#btnEditObjectsGroupSystemComplexity').on('click', function(){
+            if (CurrentRowDataObjectsGroupSystemComplexitys != undefined) {
+                $('#ObjectsGroupSystemComplexitysDialog').jqxWindow($.extend(true, DialogDefaultSettings,{width: 400, height: 160, position: 'center'}));
                 $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('SystemCompetitors/Update')) ?>,
+                    url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroupSystemComplexitys/Update')) ?>,
                     type: 'POST',
                     async: false,
                     data: {
-                        SystemCompetitor_id: CurrentRowDataSystemCompetitors.SystemCompetitor_id
+                        Ogsc_id: CurrentRowDataObjectsGroupSystemComplexitys.Ogsc_id,
+                        ObjectGr_id: ObjectGr_id
                     },
                     success: function(Res) {
                         Res = JSON.parse(Res);
-                        $("#BodySystemCompetitorsDialog").html(Res.html);
-                        $('#SystemCompetitorsDialog').jqxWindow('open');
+                        $("#BodyObjectsGroupSystemComplexitysDialog").html(Res.html);
+                        $('#ObjectsGroupSystemComplexitysDialog').jqxWindow('open');
                     },
                     error: function(Res) {
                         Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -102,23 +107,23 @@
             }
         });
         
-        $('#btnDelSystemCompetitor').on('click', function(){
-            if (CurrentRowDataSystemCompetitors != undefined) {
+        $('#btnDelObjectsGroupSystemComplexity').on('click', function(){
+            if (CurrentRowDataObjectsGroupSystemComplexitys != undefined) {
                 $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('SystemCompetitors/Delete')) ?>,
+                    url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroupSystemComplexitys/Delete')) ?>,
                     type: 'POST',
                     async: false,
                     data: {
-                        SystemCompetitor_id: CurrentRowDataSystemCompetitors.SystemCompetitor_id
+                        Ogsc_id: CurrentRowDataObjectsGroupSystemComplexitys.Ogsc_id
                     },
                     success: function(Res) {
                         Res = JSON.parse(Res);
                         if (Res.result == 1) {
-                            var RowIndex = $('#SystemCompetitorsGrid').jqxGrid('getselectedrowindex');
-                            var Text = $('#SystemCompetitorsGrid').jqxGrid('getcelltext', RowIndex + 1, "SystemCompetitor_id");
-                            Aliton.SelectRowById('SystemCompetitor_id', Text, '#SystemCompetitorsGrid', true);
-                            RowIndex = $('#SystemCompetitorsGrid').jqxGrid('getselectedrowindex');
-                            var S = $('#SystemCompetitorsGrid').jqxGrid('getrowdata', RowIndex);
+                            var RowIndex = $('#ObjectsGroupSystemComplexitysGrid').jqxGrid('getselectedrowindex');
+                            var Text = $('#ObjectsGroupSystemComplexitysGrid').jqxGrid('getcelltext', RowIndex + 1, "ObjectsGroupSystemComplexity_id");
+                            Aliton.SelectRowById('ObjectsGroupSystemComplexity_id', Text, '#ObjectsGroupSystemComplexitysGrid', true);
+                            RowIndex = $('#ObjectsGroupSystemComplexitysGrid').jqxGrid('getselectedrowindex');
+                            var S = $('#ObjectsGroupSystemComplexitysGrid').jqxGrid('getrowdata', RowIndex);
                         }
                     },
                     error: function(Res) {
@@ -128,43 +133,43 @@
             }
         });
         
-        $('#btnRefreshSystemCompetitor').on('click', function(){
-            var RowIndex = $('#SystemCompetitorsGrid').jqxGrid('getselectedrowindex');
-            var Val = $('#SystemCompetitorsGrid').jqxGrid('getcellvalue', RowIndex, "SystemCompetitor_id");
-            Aliton.SelectRowById('SystemCompetitor_id', Val, '#SystemCompetitorsGrid', true);
+        $('#btnRefreshObjectsGroupSystemComplexity').on('click', function(){
+            var RowIndex = $('#ObjectsGroupSystemComplexitysGrid').jqxGrid('getselectedrowindex');
+            var Val = $('#ObjectsGroupSystemComplexitysGrid').jqxGrid('getcellvalue', RowIndex, "ObjectsGroupSystemComplexity_id");
+            Aliton.SelectRowById('ObjectsGroupSystemComplexity_id', Val, '#ObjectsGroupSystemComplexitysGrid', true);
         });
         
-        $('#SystemCompetitorsGrid').jqxGrid('selectrow', 0);
+        $('#ObjectsGroupSystemComplexitysGrid').jqxGrid('selectrow', 0);
     });
 </script>
 
 <div class="al-row" style="height: calc(100% - 100px)">
-    <div id="SystemCompetitorsGrid" class="jqxGridAliton"></div>
+    <div id="ObjectsGroupSystemComplexitysGrid" class="jqxGridAliton"></div>
 </div>
 <div class="al-row" style="margin: 0px; padding: 0px;">
     <div class="al-row-column">
         <div class="row">
-            <div class="row-column"><input type="button" value="Добавить" id='btnAddSystemCompetitor'/></div>
-            <div class="row-column"><input type="button" value="Изменить" id='btnEditSystemCompetitor'/></div>
+            <div class="row-column"><input type="button" value="Добавить" id='btnAddObjectsGroupSystemComplexity'/></div>
+            <div class="row-column"><input type="button" value="Изменить" id='btnEditObjectsGroupSystemComplexity'/></div>
         </div>
         <div class="row">
-            <div class="row-column" style=""><input type="button" value="Удалить" id='btnDelSystemCompetitor'/></div>
-            <div class="row-column"><input type="button" value="Обновить" id='btnRefreshSystemCompetitor'/></div>
+            <div class="row-column" style=""><input type="button" value="Удалить" id='btnDelObjectsGroupSystemComplexity'/></div>
+            <div class="row-column"><input type="button" value="Обновить" id='btnRefreshObjectsGroupSystemComplexity'/></div>
         </div>
     </div>
     <div class="al-row-column" style="float: right">
-        <div class="row-column" style=""><input type="button" value="Закрыть" id='btnCloseSystemCompetitor'/></div>
+        <div class="row-column" style=""><input type="button" value="Закрыть" id='btnCloseObjectsGroupSystemComplexity'/></div>
     </div> 
     <div style="clear: both"></div>
     
 </div>    
 
-<div id="SystemCompetitorsDialog" style="display: none;">
-    <div id="SystemCompetitorsDialogHeader">
-        <span id="SystemCompetitorsHeaderText">Вставка\Редактирование записи</span>
+<div id="ObjectsGroupSystemComplexitysDialog" style="display: none;">
+    <div id="ObjectsGroupSystemComplexitysDialogHeader">
+        <span id="ObjectsGroupSystemComplexitysHeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="padding: 10px;" id="DialogSystemCompetitorsContent">
-        <div style="" id="BodySystemCompetitorsDialog"></div>
+    <div style="padding: 10px;" id="DialogObjectsGroupSystemComplexitysContent">
+        <div style="" id="BodyObjectsGroupSystemComplexitysDialog"></div>
     </div>
 </div>
 

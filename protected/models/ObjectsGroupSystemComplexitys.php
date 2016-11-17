@@ -8,6 +8,8 @@ class ObjectsGroupSystemComplexitys extends MainFormModel
     public $ObjectGr_id;
     public $SystemComplexity_id;
     public $SystemComplexitysName;
+    public $EmplCreate;
+    public $EmplChange;
     
     public function rules()
     {

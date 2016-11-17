@@ -9,6 +9,9 @@
                 Competitors: <?php echo json_encode($model->Competitors); ?>,
                 Condition: <?php echo json_encode($model->Condition); ?>,
                 Desc: <?php echo json_encode($model->Desc); ?>,
+                ObjectGr_id: <?php echo json_encode($model->ObjectGr_id); ?>,
+                SystemComplexityFull: <?php echo json_encode($model->SystemComplexityFull); ?>,
+                SysSttmnt_id: <?php echo json_encode($model->SysSttmnt_id); ?>
             };
             
             var DataSystemTypes = new $.jqx.dataAdapter(Sources.SourceSystemTypesMin);
@@ -22,6 +25,29 @@
             $("#count2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
             $("#edCompetitors").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 340 }));
             $("#edComplexitySystems").jqxInput($.extend(true, {}, InputDefaultSettings, { width: '100%' }));
+            
+//
+            $('#btnEditComplexitySystems').on('click', function(){
+                $('#SystemDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 500, height: 500, position: 'center'}));
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroupSystemComplexitys/Index')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Ogst_id: OGSystems.ObjectsGroupSystem_id,
+                        ObjectGr_id: OGSystems.ObjectGr_id 
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodySystemDialog").html(Res.html);
+                        $('#SystemDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            });
+
             $("#edSystemStatements").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemStatements, displayMember: "SystemStatementsName", valueMember: "SystemStatements_id", width:'calc(100% - 2px)', autoDropDownHeight: true }));;
             $("#Condition2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 'calc(100% - 2px)'}));
             $("#Desc2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 'calc(100% - 2px)'}));
@@ -82,7 +108,8 @@
             if (OGSystems.SystemType_Id != '') $("#SystemType2").jqxComboBox('val', OGSystems.SystemType_Id);
             if (OGSystems.Availability != '') $("#Availability2").jqxComboBox('val', OGSystems.Availability);
             if (OGSystems.count != '') $("#count2").jqxNumberInput('val', OGSystems.count);
-//            if (OGSystems.Competitors != '') $("#Competitors").jqxComboBox('val', OGSystems.Competitors);
+            if (OGSystems.SysSttmnt_id != '') $("#edSystemStatements").jqxComboBox('val', OGSystems.SysSttmnt_id);
+            if (OGSystems.SystemComplexityFull != '') $("#edComplexitySystems").jqxInput('val', OGSystems.SystemComplexityFull);
             if (OGSystems.Condition != '') $("#Condition2").jqxTextArea('val', OGSystems.Condition);
             if (OGSystems.Desc != '') $("#Desc2").jqxTextArea('val', OGSystems.Desc);
             
@@ -98,6 +125,23 @@
                         Res = JSON.parse(Res);
                         if (Res.result == 1) {
                             $('#edCompetitors').val(Res.html);
+                        } 
+                    }
+                });
+            };
+            
+            OGSystem.GetSystemComplexitys = function () {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroupSystems/GetSystemComplexitys')); ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        ObjectsGroupSystem_id: OGSystems.ObjectsGroupSystem_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result == 1) {
+                            $('#edComplexitySystems').val(Res.html);
                         } 
                     }
                 });
@@ -159,7 +203,7 @@
     </div>
     <div class="al-row">
         <div class="al-row" style="padding: 0px">Условия:</div>
-        <div class="al-row" style="padding: 0px"><textarea id="Condition2" name="ObjectsGroupSystems[Condition]"></textarea></div>
+        <div class="al-row" style="padding: 0px"><textarea id="Condition2" name="ObjectsGroupSystems[Condition]"></textarea><?php echo $form->error($model, 'Condition'); ?></div>
     </div>
     <div class="al-row">
         <div class="al-row" style="padding: 0px">Примечание:</div>
