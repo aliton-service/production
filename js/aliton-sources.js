@@ -3783,10 +3783,10 @@ Sources.SourceReportForms =
 {
     datatype: "json",
     datafields: [
-        {name: 'rslt_id', type: 'int'},
+        {name: 'rpfr_id', type: 'int'},
         {name: 'ReportForm', type: 'string'},
     ],
-    id: 'rslt_id',
+    id: 'rpfr_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ReportForms',
     root: 'Rows',
     cache: false,

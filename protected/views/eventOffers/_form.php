@@ -50,7 +50,7 @@
                     };
                 },
                 error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], 'Добавляемое предложение уже есть в данном событии. ');
                 }
             });
         });

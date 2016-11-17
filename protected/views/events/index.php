@@ -2,6 +2,7 @@
     /* Текущая выбранная строка данных */
     var CurrentRowDataClients;
     var CurrentRowDataEvents;
+    var EventsClientsDataAdapter;
     
     $(document).ready(function () {
         
@@ -14,6 +15,7 @@
             if (checked) {
                 $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
                 $('#EventsClientsGrid').jqxGrid({ groupable: true }); 
+                $('#EventsClientsGrid').jqxGrid('expandallgroups');
             } 
             else if (!checked) {
                 $('#EventsClientsGrid').jqxGrid('showcolumn', 'fullname');
@@ -21,6 +23,8 @@
             }
         });
         
+        EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients));
+        EventsClientsDataAdapter.dataBind();
         
         var groupsrenderer = function (text, group, expanded, data) 
         {
@@ -31,7 +35,7 @@
             }
         };
         
-        var EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients));
+//        console.log(EventsClientsDataAdapter);
         
         $("#EventsClientsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
@@ -48,6 +52,7 @@
                 groupsrenderer: groupsrenderer,
                 pageable: false,
                 virtualmode: false,
+                selectionmode: 'multiplerowsextended',
                 columns: [
                     { text: 'Клиент', datafield: 'fullname', minwidth: 250 },
                     { text: 'Адрес', datafield: 'addr', minwidth: 250 },
@@ -56,8 +61,6 @@
                 ],
                 groups: ['fullname']
         }));
-        
-        $('#EventsClientsGrid').jqxGrid({ selectionmode: 'multiplerowsextended'}); 
         
         var EventTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
         EventTypesDataAdapter.dataBind();
@@ -74,7 +77,6 @@
             if (Temp !== undefined) {
                 CurrentRowDataClients = Temp;
             } else { CurrentRowDataClients = null; };
-//            console.log(CurrentRowDataClients);
         });
         
         $('#EventsGrid').jqxGrid(
@@ -117,7 +119,7 @@
         $("#EventsClientsGrid").on("bindingcomplete", function () {
             $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
             $('#EventsClientsGrid').jqxGrid('expandallgroups');
-            $('#EventsClientsGrid').jqxGrid('selectrow', 0);
+//            $('#EventsClientsGrid').jqxGrid('selectrow', 0);
         });
         
         
@@ -132,9 +134,7 @@
                 url: <?php echo json_encode(Yii::app()->createUrl('Events/Create')) ?>,
                 type: 'POST',
                 async: false,
-                data: {
-                    objectgr_id: CurrentRowDataClients.objectgr_id,
-                },
+                data: {},
                 success: function(Res) {
                     Res = JSON.parse(Res);
                     $("#BodyEventsDialog").html(Res.html);
@@ -147,7 +147,7 @@
         });
         
         $('#btnEditEvent').on('click', function(){
-            $('#EventsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 770, width: 970, position: 'center'}));
+            $('#EventsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 770, width: 990, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Events/Update')) ?>,
                 type: 'POST',
@@ -166,6 +166,19 @@
             });
         });
         
+        $("#btnDelEvent").on('click', function (){
+            $.ajax({
+                type: "POST",
+                url: "/index.php?r=Events/Delete",
+                data: { 
+                    evnt_id: CurrentRowDataEvents.evnt_id,
+                },
+                success: function(){
+                    $("#EventsGrid").jqxGrid('updatebounddata');
+                }
+            });
+        });
+        
         $('#btnShowHide').on('click', function(){
             var tabIndex1 = $('#jqxTabsEvents').jqxTabs('selectedItem');
             var evtp_id = 0;
@@ -179,11 +192,15 @@
                 type: 'POST',
                 async: false,
                 data: {
-                    objectgr_id: CurrentRowDataClients.objectgr_id,
-                    evtp_id: evtp_id,
+                    ObjectGr_id: CurrentRowDataClients.objectgr_id,
+                    Evtp_id: evtp_id,
                 },
                 success: function(Res) {
                     $('#EventsClientsGrid').jqxGrid('updatebounddata');
+                    $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
+                    $('#EventsClientsGrid').jqxGrid({ groupable: true });
+                    $('#EventsClientsGrid').jqxGrid('addgroup', 'fullname');
+                    $('#EventsClientsGrid').jqxGrid('expandallgroups');
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);

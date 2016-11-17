@@ -37,7 +37,7 @@
         $("#date_exec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 117, formatString: 'dd.MM.yyyy', value: null }));
         
         var ReportFormsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReportForms));
-        $("#ReportForms").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: ReportFormsDataAdapter, displayMember: "ReportForm", valueMember: "rslt_id", width: 150, autoDropDownHeight: true }));
+        $("#ReportForms").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: ReportFormsDataAdapter, displayMember: "ReportForm", valueMember: "rpfr_id", width: 150, autoDropDownHeight: true }));
         
         var ContactInfoDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContactInfo, {}), {
             formatData: function (data) {
@@ -48,7 +48,7 @@
                 return data;
             },
         });
-        $("#ContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: ContactInfoDataAdapter, displayMember: "CName", valueMember: "Info_id", width: 500, autoDropDownHeight: true }));
+        $("#ContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: ContactInfoDataAdapter, displayMember: "CName", valueMember: "Info_id", width: 510, autoDropDownHeight: true }));
 
         $("#date_act").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 117, formatString: 'dd.MM.yyyy', value: null }));
         
@@ -60,10 +60,11 @@
         if (EventEdit.user_create != null) $("#user_create").jqxComboBox('val', EventEdit.user_create);
         if (EventEdit.date_exec != null) $("#date_exec").jqxDateTimeInput('val', EventEdit.date_exec);
         if (EventEdit.rpfr_id != null) $("#ReportForms").jqxComboBox('val', EventEdit.rpfr_id);
-        if (EventEdit.who_reported != null) $("#ReportForms").jqxComboBox('val', EventEdit.who_reported);
+        if (EventEdit.who_reported != null) $("#ContactInfo").jqxComboBox('val', EventEdit.who_reported);
         if (EventEdit.date_act != null) $("#date_act").jqxDateTimeInput('val', EventEdit.date_act);
         if (EventEdit.who_reported != null) $("#ContactInfo").jqxComboBox('val', EventEdit.who_reported);
         if (EventEdit.evaluation != null) $("#evaluation").jqxInput('val', EventEdit.evaluation);
+        if (EventEdit.note != null) $("#note").jqxTextArea('val', EventEdit.note);
         
         
         
@@ -277,7 +278,7 @@
 
 <div class="row">
     <div class="row-column">Примечание:</div>
-    <div class="row-column"><div id="note" name="Events[note]"></div><?php echo $form->error($model, 'note'); ?></div>
+    <div class="row-column"><textarea id="note" name="Events[note]"></textarea><?php echo $form->error($model, 'note'); ?></div>
 </div>
 
 <div id='jqxTabsEventOffers' style="margin-top: 10px;">

@@ -56,6 +56,7 @@
         };
         
         $("#OfferDemandsGrid").on("bindingcomplete", function () {
+            $('#OfferDemandsGrid').jqxGrid('updatebounddata');
             $('#OfferDemandsGrid').jqxGrid('selectrow', 0);
         });
         
