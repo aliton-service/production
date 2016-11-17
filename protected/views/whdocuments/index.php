@@ -130,8 +130,20 @@
         $('#btnUndo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, height: 30, imgSrc: '/images/3.png' }));
         $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings));
         
+        
+        var SetLocation = function (tabIndex){
+            try {
+                history.pushState(null, null, '#' + tabIndex);
+                return;
+            } catch(e) {}
+//                location.hash = '#' + tabIndex;
+        };
+                    
         var SelectTab = function() {
             var SelectedTab = $('#edTabs').jqxTabs('selectedItem');
+            console.log(SelectedTab);
+            SetLocation(SelectedTab);
+            
             switch (SelectedTab) {
                 case 0: Dctp_id = 0; break;
                 case 1: Dctp_id = 1; break;
@@ -1044,9 +1056,21 @@
                 break;
             }
         };
-                    
-        $('#edTabs').jqxTabs({ width: '99.8%', height: 445, initTabContent: initWidgets, selectedItem: 4 });
-        SelectTab();
+        
+        var GetTabIndexFromURL = function (){
+            var hashStr = location.hash;
+            if (hashStr === '') {
+                history.pushState(null, null, '#4');
+                hashStr = '#4';
+            }
+                var tabIndexStr = hashStr.substr(1);
+                var tabIndex = parseInt(tabIndexStr, 10);
+            return tabIndex;
+        };
+        
+        $('#edTabs').jqxTabs({ width: '99.8%', height: 445, initTabContent: initWidgets });
+        var tabIndex = GetTabIndexFromURL();
+        $('#edTabs').jqxTabs('select', tabIndex);
         
         $("#btnCreate").on('click', function(){
             if (Dctp_id == 1)
@@ -1185,9 +1209,9 @@
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
             });
-            
-            
         });
+        
+        
     });
 </script>
 
