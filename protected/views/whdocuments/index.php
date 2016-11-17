@@ -111,7 +111,7 @@
                         },
                     }));            
                     
-        $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100} ));
+        $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 135} ));
         $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: DateStart}));
         $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: DateEnd}));
         $("#edDateCrStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: null}));
@@ -121,8 +121,8 @@
         $("#edSupplier").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSuppliers, width: '270', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id"}));
         $("#edAddress").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
         $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '150', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
-        $("#edControl").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '75'}));
-        $("#edAcDateNull").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '75'}));
+        $("#edControl").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 75}));
+        $("#edAcDateNull").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 120}));
         $('#btnRefresh').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnInfo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCreate').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, imgSrc: '/images/6.png' }));
@@ -555,7 +555,7 @@
                     
                     $("#GridAll").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 280,
+                            height: 300,
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -616,7 +616,7 @@
                     
                     $("#Grid1").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 280,
+                            height: 300,
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -680,7 +680,7 @@
                     
                     $("#Grid2").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 280,
+                            height: 300,
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -740,7 +740,7 @@
                     
                     $("#Grid3").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 280,
+                            height: 300,
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -821,7 +821,7 @@
                     
                     $("#Grid4").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 280,
+                            height: 300,
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -900,7 +900,7 @@
                     
                     $("#Grid5").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 280,
+                            height: 300,
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -957,7 +957,7 @@
                     
                     $("#Grid6").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 280,
+                            height: 300,
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -1015,7 +1015,7 @@
                     
                     $("#Grid7").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 280,
+                            height: 300,
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -1045,7 +1045,7 @@
             }
         };
                     
-        $('#edTabs').jqxTabs({ width: '100%', height: 445, initTabContent: initWidgets, selectedItem: 4 });
+        $('#edTabs').jqxTabs({ width: '99.8%', height: 445, initTabContent: initWidgets, selectedItem: 4 });
         SelectTab();
         
         $("#btnCreate").on('click', function(){
@@ -1191,11 +1191,6 @@
     });
 </script>
 
-<style>
-    .row {
-        margin-top: 0px;
-    }
-</style>
 
 <?php $this->setPageTitle('Склад - реестр документов'); ?>
 
@@ -1226,7 +1221,7 @@
         </div>
         <div style="clear: both"></div>
         <div style="margin-top: 4px;">
-            <div class="row-column" style="width: 40px;">по</div>
+            <div class="row-column" style="width: 40px; text-align: right;">по</div>
             <div class="row-column"><div id="edDateEnd"></div></div>
         </div>
     </div>
@@ -1237,7 +1232,7 @@
         </div>
         <div style="clear: both"></div>
         <div style="margin-top: 4px;">
-            <div class="row-column" style="width: 60px;">по</div>
+            <div class="row-column" style="width: 60px; text-align: right;">по</div>
             <div class="row-column"><div id="edDateCrEnd"></div></div>
         </div>
     </div>
@@ -1248,12 +1243,12 @@
         </div>
         <div style="clear: both"></div>
         <div style="margin-top: 4px;">
-            <div class="row-column" style="width: 100px;">по</div>
+            <div class="row-column" style="width: 100px; text-align: right;">по</div>
             <div class="row-column"><div id="edDateAcEnd"></div></div>
         </div>
     </div>
 </div>
-<div class="row" style="margin-top: 0px;">
+<div class="row" style="margin-top: 4px;">
     <div class="row-column">Поставщик</div>
     <div class="row-column"><div id="edSupplier"></div></div>
     <div class="row-column">Адрес</div>
@@ -1262,107 +1257,107 @@
     <div class="row-column"><div id="edMaster"></div></div>
 </div>
 <div class="row">
-<div id='edTabs' style="margin-top: 5px;">
-    <ul>
-        <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Все документы</div>
-                
+    <div id='edTabs'>
+        <ul>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Все документы</div>
+
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладные на приход</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладные на возрат</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Требования на возврат поставщику</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Требования на выдачу</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение с склада на склад</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение из ПРЦ на Склад</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладная на возврат мастеру</div>
+                </div>
+            </li>
+        </ul>
+        <div style="overflow: hidden;">
+            <div style="padding: 5px;">
+                <div id="GridAll"></div>
+                <div><div class="row-column">Примечание</div></div>
+                <div><textarea id="edNotesAll" readonly="readonly"></textarea></div>
             </div>
-        </li>
-        <li>
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладные на приход</div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 5px;">
+                <div id="Grid1"></div>
+                <div><div class="row-column">Примечание</div></div>
+                <div><textarea id="edNotes1" readonly="readonly"></textarea></div>
             </div>
-        </li>
-        <li>
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладные на возрат</div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 5px;">
+                <div id="Grid2"></div>
+                <div><div class="row-column">Примечание</div></div>
+                <div><textarea id="edNotes2" readonly="readonly"></textarea></div>
             </div>
-        </li>
-        <li>
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Требования на возврат поставщику</div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 5px;">
+                <div id="Grid3"></div>
+                <div><div class="row-column">Примечание</div></div>
+                <div><textarea id="edNotes3" readonly="readonly"></textarea></div>
             </div>
-        </li>
-        <li>
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Требования на выдачу</div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 5px;">
+                <div id="Grid4"></div>
+                <div><div class="row-column">Примечание</div></div>
+                <div><textarea id="edNotes4" readonly="readonly"></textarea></div>
             </div>
-        </li>
-        <li>
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение с склада на склад</div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 5px;">
+                <div id="Grid5"></div>
+                <div><div class="row-column">Примечание</div></div>
+                <div><textarea id="edNotes5" readonly="readonly"></textarea></div>
             </div>
-        </li>
-        <li>
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение из ПРЦ на Склад</div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 5px;">
+                <div id="Grid6"></div>
+                <div><div class="row-column">Примечание</div></div>
+                <div><textarea id="edNotes6" readonly="readonly"></textarea></div>
             </div>
-        </li>
-        <li>
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладная на возврат мастеру</div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 5px;">
+                <div id="Grid7"></div>
+                <div><div class="row-column">Примечание</div></div>
+                <div><textarea id="edNotes7" readonly="readonly"></textarea></div>
             </div>
-        </li>
-    </ul>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="GridAll"></div>
-            <div><div class="row-column">Примечание</div></div>
-            <div><textarea id="edNotesAll" readonly="readonly"></textarea></div>
         </div>
     </div>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="Grid1"></div>
-            <div><div class="row-column">Примечание</div></div>
-            <div><textarea id="edNotes1" readonly="readonly"></textarea></div>
-        </div>
-    </div>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="Grid2"></div>
-            <div><div class="row-column">Примечание</div></div>
-            <div><textarea id="edNotes2" readonly="readonly"></textarea></div>
-        </div>
-    </div>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="Grid3"></div>
-            <div><div class="row-column">Примечание</div></div>
-            <div><textarea id="edNotes3" readonly="readonly"></textarea></div>
-        </div>
-    </div>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="Grid4"></div>
-            <div><div class="row-column">Примечание</div></div>
-            <div><textarea id="edNotes4" readonly="readonly"></textarea></div>
-        </div>
-    </div>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="Grid5"></div>
-            <div><div class="row-column">Примечание</div></div>
-            <div><textarea id="edNotes5" readonly="readonly"></textarea></div>
-        </div>
-    </div>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="Grid6"></div>
-            <div><div class="row-column">Примечание</div></div>
-            <div><textarea id="edNotes6" readonly="readonly"></textarea></div>
-        </div>
-    </div>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="Grid7"></div>
-            <div><div class="row-column">Примечание</div></div>
-            <div><textarea id="edNotes7" readonly="readonly"></textarea></div>
-        </div>
-    </div>
-</div>
 </div>
 <div style="float: left">
     <div class="row">
@@ -1373,7 +1368,7 @@
         <div class="row-column"><input type="button" value="Обновить" id='btnRefresh' /></div>
     </div>
 </div>
-<div style="float: right; width: 300px">
+<div style="float: right;">
     <div class="row">
         <div class="row-column"><input type="button" value="Удалить" id='btnDel' /></div>
     </div>
