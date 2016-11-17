@@ -1,19 +1,10 @@
 <script type="text/javascript">
+    var CurrentRowObjectsData = {};
+    var RefObjects = 0;
     $(document).ready(function () {
         
-        /* Текущая выбранная строка данных */
-        var CurrentRowData;       
+        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListObjectsMin));
         
-        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListObjectsMin, {
-            /*
-            filter: function () {
-                $("#ObjectsGrid").jqxGrid('updatebounddata', 'filter');
-            },
-            sort: function () {
-                $("#ObjectsGrid").jqxGrid('updatebounddata', 'sort');
-            }
-            */
-        }));
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#ObjectsGrid').jqxGrid('getrowdata', row);
             if (Temp['Status'] === '1')//'Должник')
@@ -23,7 +14,30 @@
             if (Temp["Status"] === '3')//"Должник и особые условия")
                return '<span class="backlight_blue" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
             
-        }
+        };
+        
+        $("#ObjectsGrid").on('rowselect', function (event) {
+            CurrentRowObjectsData = $('#ObjectsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (CurrentRowObjectsData !== undefined) {
+                $('#ODObject_id').val(CurrentRowObjectsData['Object_id']);
+                $('#ODObjectGr_id').val(CurrentRowObjectsData['ObjectGr_id']);
+                $('#ODStreet_id').val(CurrentRowObjectsData['Street_id']);
+                $('#ODHouse').val(CurrentRowObjectsData['House']);
+            }
+        });
+        
+        $("#ObjectsGrid").on('bindingcomplete', function(){
+            if (RefObjects>0) {
+                Aliton.SelectRowByIdVirtual('ObjectGr_id', RefObjects, '#ObjectsGrid', false);
+                RefObjects = 0;
+                return;
+            }
+            
+            if (CurrentRowObjectsData != undefined) 
+                Aliton.SelectRowByIdVirtual('Object_id', CurrentRowObjectsData.Object_id, '#ObjectsGrid', false);
+            else
+                Aliton.SelectRowByIdVirtual('Object_id', null, '#ObjectsGrid', false);
+        });
         
         $("#ObjectsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, GridsSettings['ObjectsGrid'], {
@@ -57,16 +71,7 @@
         }));
         
         GridState.StateInitGrid('ObjectsGrid', 'ObjectIndex_ObjectsGrid');
-        $("#ObjectsGrid").on('rowselect', function (event) {
-            var Temp = $('#ObjectsGrid').jqxGrid('getrowdata', event.args.rowindex);
-            if (Temp !== undefined) {
-                CurrentRowData = Temp;
-                $('#ODObject_id').val(CurrentRowData['Object_id']);
-                $('#ODObjectGr_id').val(CurrentRowData['ObjectGr_id']);
-                $('#ODStreet_id').val(CurrentRowData['Street_id']);
-                $('#ODHouse').val(CurrentRowData['House']);
-            }
-        });
+        
         
         $('#ObjectsGrid').on('rowdoubleclick', function (event) { 
             $("#ObjInfo").click();
@@ -76,33 +81,69 @@
         $("#NewDem").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#ReloadObjects").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#ViewDemands").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140}));
+        $("#btnDelObject").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140}));
+        $('#btnDelObject').on('click', function(){
+            if (CurrentRowObjectsData != undefined) {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/Delete')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        ObjectGr_id: CurrentRowObjectsData.ObjectGr_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result == 1) {
+                            var RowIndex = $('#ObjectsGrid').jqxGrid('getselectedrowindex');
+                            var Text = $('#ObjectsGrid').jqxGrid('getcelltext', RowIndex + 1, "ObjectGr_id");
+                            RefObjects = parseInt(Text);
+                            $("#ReloadObjects").click();
+                        }
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        });
+        
+        $("#btnAddObject").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140}));
+        $("#btnAddObject").on('click', function() {
+            $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings,{width: 830, height: 730, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/Create')) ?>,
+                type: 'POST',
+                async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyObjectsGroupDialog").html(Res.html);
+                    $('#ObjectsGroupDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         
         $("#ViewDemands").on('click', function () {
             $('#OptionsDialog').jqxWindow('open');
         });
         
         $("#ObjInfo").on('click', function () {
-            window.open('/index.php?r=Objectsgroup/index&ObjectGr_id=' + CurrentRowData['ObjectGr_id']);
+            window.open('/index.php?r=Objectsgroup/index&ObjectGr_id=' + CurrentRowObjectsData['ObjectGr_id']);
         });
         
         $("#NewDem").on('click', function ()
         {
-            if (Aliton.CheckToDayDemands(CurrentRowData['Object_id'])) 
-                Aliton.NewDemand(CurrentRowData['Object_id'], CurrentRowData['ContrS_id']);
+            if (Aliton.CheckToDayDemands(CurrentRowObjectsData['Object_id'])) 
+                Aliton.NewDemand(CurrentRowObjectsData['Object_id'], CurrentRowObjectsData['ContrS_id']);
             else 
                 $('#ToDayDialog').jqxWindow('open');
         });
         
         $("#ReloadObjects").on('click', function ()
         {
-            $.ajax({
-                type: "POST",
-                url: "/index.php?r=Object/index",
-                success: function(){
-                    $("#ObjectsGrid").jqxGrid('updatebounddata');
-                    $("#ObjectsGrid").jqxGrid('selectrow', 0);
-                }
-            });
+              $("#ObjectsGrid").jqxGrid('updatebounddata');  
         });
         
         $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 400}));
@@ -121,13 +162,13 @@
                     $("#ToDayDialogCancel").on('click', function ()
                     {
                         $('#ToDayDialog').jqxWindow('Close');
-                        Aliton.NewDemand(CurrentRowData['Object_id'], CurrentRowData['ContrS_id']);
+                        Aliton.NewDemand(CurrentRowObjectsData['Object_id'], CurrentRowObjectsData['ContrS_id']);
                     });
 
                     $("#ToDayDialogYes").on('click', function ()
                     {
                         $('#ToDayDialog').jqxWindow('Close');
-                        $("#ToDayDialogObject_id").val(CurrentRowData['Object_id']);
+                        $("#ToDayDialogObject_id").val(CurrentRowObjectsData['Object_id']);
                         $("#DemFilters").submit();
                     });
                 }
@@ -245,31 +286,6 @@
             
         });
         
-        
-        
-        
-        
-//        var headerHeight1 = 60 + 10 + 30 + 10 + 10;
-//
-//
-//        var resizeGrid = function() {
-//            var windowHeight1 = $(window).outerHeight();
-//            var inputsHeight = $('.inputs').outerHeight();
-//            var buttonsHeight = $('.buttons').outerHeight();
-//            var marginHeight = 100;
-//
-//            
-//            var newGridHeight1 = windowHeight1 - inputsHeight - buttonsHeight - marginHeight - headerHeight1;
-//            $('.grid-wrapper').outerHeight(newGridHeight1);
-//
-//        };
-//
-//        $(window).resize(function() {
-//            resizeGrid();
-//        });
-//        resizeGrid();
-        
-        
     });
 </script>    
 
@@ -316,6 +332,8 @@
     <div class="row-column"><input type="button" value="Новая заявка" id='NewDem' /></div>
     <div class="row-column"><input type="button" value="Просмотр заявок" id='ViewDemands' /></div>
     <div class="row-column"><input type="button" value="Обновить" id='ReloadObjects' /></div>
+    <div class="row-column"><input type="button" value="Новый объект" id='btnAddObject' /></div>
+    <div class="row-column" style="float: right"><input type="button" value="Удалить объект" id='btnDelObject' /></div>
 </div>
 
 
@@ -390,3 +408,11 @@
     </div>
 </div>
 
+<div id="ObjectsGroupDialog" style="display: none;">
+    <div id="ObjectsGroupDialogHeader">
+        <span id="ObjectsGroupHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogObjectsGroupContent">
+        <div style="" id="BodyObjectsGroupDialog"></div>
+    </div>
+</div>

@@ -23,8 +23,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '100%',
-                height: '550',
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 source: OGSystemsDataAdapter,
                 columns: [
                     { text: 'Наличие системы', dataField: 'Availability', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
@@ -36,16 +36,16 @@
             })
         );
         
-        $('#EditDialogOGSystems').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '520px', width: '390'}));
+        $('#EditDialogOGSystems').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '460px', width: '600'}));
         
         $('#EditDialogOGSystems').jqxWindow({initContent: function() {
-            $("#btnOkOGSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#btnCancelOGSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+//            $("#btnOkOGSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+//            $("#btnCancelOGSystems").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         }});
 
-        $("#btnCancelOGSystems").on('click', function () {
-            $('#EditDialogOGSystems').jqxWindow('close');
-        });
+//        $("#btnCancelOGSystems").on('click', function () {
+//            $('#EditDialogOGSystems').jqxWindow('close');
+//        });
         
         SendForm = function(Mode, Form) {
             var Url;
@@ -77,14 +77,20 @@
             });
         }
 
-        $("#btnOkOGSystems").on('click', function () {
-            SendForm(Mode);
-        });
+//        $("#btnOkOGSystems").on('click', function () {
+//            SendForm(Mode);
+//        });
             
         
         $("#NewObjectsGroupSystem").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditObjectsGroupSystem").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelObjectsGroupSystem").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#RefreshObjectsGroupSystem").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        
+        $("#RefreshObjectsGroupSystem").on('click', function() {
+            $("#ObjectsGroupSystemsGrid").jqxGrid('updatebounddata');
+        });
         
         $("#ObjectsGroupSystemsGrid").on('rowselect', function (event) {
             var Temp = $('#ObjectsGroupSystemsGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -169,28 +175,24 @@
      
 </style>
 
-<div class="row">
+<div class="al-row" style="height: calc(100% - 68px)">
     <div id="ObjectsGroupSystemsGrid" class="jqxGridAliton"></div>
 </div>
 
-<div class="row">
-    <div class="row-column"><input type="button" value="Создать" id='NewObjectsGroupSystem' /></div>
-    <div class="row-column"><input type="button" value="Изменить" id='EditObjectsGroupSystem' /></div>
-    <div class="row-column"><input type="button" value="Удалить" id='DelObjectsGroupSystem' /></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Создать" id='NewObjectsGroupSystem' /></div>
+    <div class="al-row-column"><input type="button" value="Изменить" id='EditObjectsGroupSystem' /></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='RefreshObjectsGroupSystem' /></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='DelObjectsGroupSystem' /></div>
+    <div style="clear: both"></div>
 </div>
 
 
-    <div id="EditDialogOGSystems">
+<div id="EditDialogOGSystems" style="display: none;">
     <div id="DialogHeaderOGSystems">
         <span id="HeaderTextOGSystems">Вставка\Редактирование записи</span>
     </div>
     <div style="padding: 10px;" id="DialogContentOGSystems">
         <div id="BodyDialogOGSystems"></div>
-        <div id="BottomDialogOGSystems">
-            <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='btnOkOGSystems' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancelOGSystems' /></div>
-            </div>
-        </div>
     </div>
 </div>

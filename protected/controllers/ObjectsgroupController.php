@@ -5,15 +5,6 @@ class ObjectsgroupController extends Controller
     public $layout='//layouts/column2';
     public $title = '';
     
-    public function actionHello()
-    {
-        //$Region = new Regions();
-        //$Region = $Region->Find(array());
-        $this->renderPartial('hello', array(
-                //'Region' => $Region,
-        ));
-    }
-    
     public function actionIndex($ObjectGr_id)
     {
         $model = new ObjectsGroup();
@@ -26,13 +17,6 @@ class ObjectsgroupController extends Controller
         ));
     }
     
-    public function filters()
-    {
-	return array(
-            'accessControl', // perform access control for CRUD operations
-        );
-    }
-    
     public function accessRules()
     {
         return array(
@@ -43,15 +27,22 @@ class ObjectsgroupController extends Controller
                 ),
             
             array('allow',
-                    'actions'=>array('index', 'Hello'),
+                    'actions'=>array('index', 'Hello', 'GetModel'),
                     'roles'=>array('ViewObjectsGroup'),
                 ),
             
             array('allow',
+                    'actions'=>array('Create'),
+                    'roles'=>array('CreateObjectsGroup'),
+                ),
+            array('allow',
                     'actions'=>array('EditForm', 'Update'),
                     'roles'=>array('UpdateObjectsGroup'),
                 ),
-            
+            array('allow',
+                    'actions'=>array('Delete'),
+                    'roles'=>array('DeleteObjectsGroup'),
+                ),
             array('allow',
                     'actions'=>array('save'),
                     'roles'=>array('UpdateObjectsGroup'),
@@ -63,88 +54,106 @@ class ObjectsgroupController extends Controller
         );
     }
     
-    public function actionInsert()
-    {
-        
-    }
-    
-    public function actionEditForm($ObjectGr_id)
-    {
-        // Форма редактирования карточки объекта
-        
-        // Блокируем запись 
-        if (!Yii::app()->LockManager->LockRecord('ObjectsGroup', 'ObjectGr_id', $ObjectGr_id))
-            throw new CHttpException(404, 'Запись заблокирована другим пользователем');
-        
-        $model = new ObjectsGroup();
-        $model->getModelPk($ObjectGr_id);
-        $this->title = 'Редактирование карточки объекта: ' . $model->Address;
-        
-        $this->render('general', array(
-            'model' => $model,
-        ));
-    }
-    
-    public function actionUpdate($ObjectGr_id)
+    public function actionCreate()
     {
         $model = new ObjectsGroup();
-        $model->setScenario('Update');
-        $model->getModelPk($ObjectGr_id);
-        $this->performAjaxValidation($model);
-        $this->title = 'Редактирование карточки объекта: ' . $model->Address;
-
-        if (isset($_POST['ObjectsGroup']))
-        {
-            print_r($_POST['ObjectsGroup']);
-            
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        $model->setScenario('Insert');
+                
+        if (isset($_POST['ObjectsGroup'])) {
             $model->attributes = $_POST['ObjectsGroup'];
-                        
-            if ($model->validate())
-            {
-                $model->update();
-                Yii::app()->LockManager->UnLockrecord('ObjectsGroup', 'ObjectGr_id', $model->ObjectGr_id);
-                $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
-            }
-            else
-            {
-                alert('else');
-                $this->render('general', array(
-                    'model' => $model,
-                ));
+            if ($model->validate()) {
+                $ObjectsAddress = new ObjectsAddress();
+                $ObjectsAddress->attributes = $_POST['ObjectsGroup'];
+                $ResAddress = $ObjectsAddress->Insert();
+                
+                if ((int)$ResAddress['Address_id'] > 0) {
+                    $model->Address_id = $ResAddress['Address_id'];
+                    $Res = $model->Insert();
+                    $ObjectResult = array(
+                        'result' => 1,
+                        'id' => $Res['ObjectGr_id'],
+                        'html' => '',
+                    );
+                    echo json_encode($ObjectResult);
+                    return;
+                }
             }
         }
         
-        $this->render('general', array(
+        
+        $ObjectResult['html'] = $this->renderPartial('_general', array(
             'model' => $model,
-        ));
+        ), true);
+        echo json_encode($ObjectResult);
     }
     
-    protected function performAjaxValidation($model)
+    public function actionUpdate()
     {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='ObjectsGroup')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
+        $model = new ObjectsGroup();
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        if (isset($_POST['ObjectGr_id']))
+            $model->getModelPk($_POST['ObjectGr_id']);
+        
+        $model->setScenario('Update');
+        
+        if (isset($_POST['ObjectsGroup'])) {
+            $model->getModelPk($_POST['ObjectsGroup']['ObjectGr_id']);
+            $model->attributes = $_POST['ObjectsGroup'];
+            if ($model->validate()) {
+                $model->Update();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->ObjectGr_id;
+                echo json_encode($ObjectResult);
+                return;
+            }
         }
+
+        $ObjectResult['html'] = $this->renderPartial('general', array(
+            'model' => $model,
+        ), true);
+        echo json_encode($ObjectResult);
     }
     
-    public function actionAjaxGeneral()
+    public function actionGetModel()
     {
-        /* Отображение вкладки "Общие данные "*/
-        if (isset($_GET['ObjectGr_id']))
-        {
-            $ObjectGr_id = $_GET['ObjectGr_id'];
+        $model = array();
+        if (isset($_POST['ObjectGr_id'])) {
             $model = new ObjectsGroup();
-            $model->getModelPk($ObjectGr_id);
-            
-            
-            $this->renderPartial('viewgeneral', array(
-                    'model'=> $model,
-                    ), false, true);
-            
-            
-            //$this->render('viewgeneral', array('model'=> $model,));
+            $model->getModelPk($_POST['ObjectGr_id']);
         }
+       
+        echo json_encode($model);
+    }
+    
+    public function actionDelete() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+
+        if (isset($_POST['ObjectGr_id'])) {
+            $model = new ObjectsGroup();
+            $model->getModelPk($_POST['ObjectGr_id']);
+
+                $model->delete();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $model->ObjectGr_id;
+                echo json_encode($ObjectResult);
+                return;
+
+        }
+        echo json_encode($ObjectResult);
     }
             
 }

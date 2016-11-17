@@ -29,7 +29,7 @@ class BanksController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view', 'Find'),
 				'roles'=>array(
 					'ViewBanks',
 
@@ -84,65 +84,57 @@ class BanksController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model = new Banks;
+            $model = new Banks();
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['Banks'])) {
+                $model->attributes = $_POST['Banks'];
+                if ($model->validate()) {
+                    $Res = $model->Insert();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $Res['Bank_id'];
+                    echo json_encode($ObjectResult);
+                    return;
+                } 
+            }
 
-		if (isset($_POST['Banks'])) {
-			$model->attributes = $_POST['Banks'];
-			$model->EmplCreate = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->insert();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о банке успешно создана'))));
-				} else {
-					$this->redirect('/?r=banks');
-				}
-			}
-		}
-		if ($this->isAjax()) {
-			$this->renderPartial('create', array('model' => $model), false, true);
-		} else {
-			$this->render('create', array('model' => $model));
-		}
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
 
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-	$model=new Banks;
-		 if ($id == null)
-                        throw new CHttpException(404, 'Не выбрана запись.');
+            $model = new Banks();
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['Bank_id']))
+                $model->getModelPk($_POST['Bank_id']);
 
-                
-                //$model=$this->loadModel($id);
-            
-                
-//                if (!Yii::app()->LockManager->LockRecord('Banks', $model->tableSchema->primaryKey, $id))
-//                    throw new CHttpException(404, 'Запись заблокирована другим пользователем');
+            if (isset($_POST['Banks'])) {
+                $model->getModelPk($_POST['Banks']['Bank_id']);
+                $model->attributes = $_POST['Banks'];
+                if ($model->validate()) {
+                    $model->Update();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Bank_id;
+                    echo json_encode($ObjectResult);
+                    return;
+                }
+            }
 
-		if($id && (int)$id > 0 && isset($_POST['Banks'])) {
-			$model->attributes = $_POST['Banks'];
-			$model->Bank_id = (int)$id;
-			$model->EmplChange = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->update();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о банке успешно изменена'))));
-				} else {
-					$this->redirect('/?r=banks');
-				}
-			}
-		} else {
-			$model->getModelPk($id);
-		}
-
-		if($this->isAjax()) {
-			$this->renderPartial('update', array('model'=>$model), false, true);
-		} else {
-			$this->render('update', array('model'=>$model));
-		}
-
-
-
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
 	/**
@@ -150,27 +142,26 @@ class BanksController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete()
 	{
-		//$this->loadModel($id)->delete();
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
 
-		$model=new Banks;
-		$model->Bank_id = $id;
-		$model->EmplDel = Yii::app()->user->Employee_id;
-		$model->delete();
-		if($this->isAjax()) {
-			die(json_encode(array('status'=>'ok','data'=>array('msg'=>'Запись о банке успешно удалена'))));
-		}
-		else {
-			$this->redirect('/?r=banks');
-		}
-
-		
-//		$model->deleteCount($id, Yii::app()->user->Employee_id);
-//
-//		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-//		if(!isset($_GET['ajax']))
-//			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+            if (isset($_POST['Bank_id'])) {
+                $model = new Banks();
+                $model->getModelPk($_POST['Bank_id']);
+                
+                    $model->delete();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Bank_id;
+                    echo json_encode($ObjectResult);
+                    return;
+                
+            }
+            echo json_encode($ObjectResult);
 	}
 
 	/**
@@ -178,7 +169,7 @@ class BanksController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->title = 'Создать банк';
+		$this->title = 'Реестр банков';
 		$this->render('index');
 
 	}
@@ -225,4 +216,18 @@ class BanksController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+    public function actionFind() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        $ObjectResult['html'] = $this->renderPartial('_find', array(
+                
+            ), true);
+        
+        echo json_encode($ObjectResult);
+    }
 }

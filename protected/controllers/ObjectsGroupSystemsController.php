@@ -17,7 +17,7 @@ class ObjectsGroupSystemsController extends Controller
         return array(
             
             array('allow',
-                    'actions'=>array('Index'),
+                    'actions'=>array('Index', 'GetCompetitor'),
                     'roles'=>array('ViewObjectsGroupSystems'),
                 ),
             array('allow',
@@ -132,14 +132,23 @@ class ObjectsGroupSystemsController extends Controller
         $this->redirect($this->createUrl('ObjectsGroupSystems/Index'));
     }
     
-    
-    protected function performAjaxValidation($model)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='ObjectsGroupSystems')
-        {
-                echo CActiveForm::validate($model);
-                Yii::app()->end();
+    public function actionGetCompetitor() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['ObjectsGroupSystem_id'])) {
+            $Query = new SQLQuery();
+            $Query->setSelect("Select cast(dbo.get_competitor_info(:#ObjectsGroupSystem_id) as nvarchar(250)) as Name");
+            $Query->bindParam('ObjectsGroupSystem_id', $_POST['ObjectsGroupSystem_id']);
+            $Row = $Query->QueryRow();
+            $ObjectResult['result'] = 1;
+            $ObjectResult['html'] = $Row['Name'];
         }
-    }
+        
+        echo json_encode($ObjectResult);
+    }   
 }
 

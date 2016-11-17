@@ -1,28 +1,89 @@
 <script type="text/javascript">
+    var OG = {};
     $(document).ready(function () {
-         
+        var ObjectGroup = {
+            ObjectGr_id: <?php echo json_encode($model->ObjectGr_id); ?>,
+            FullName: <?php echo json_encode($model->FullName); ?>,
+            LphName: <?php echo json_encode($model->LphName); ?>,
+            Address: <?php echo json_encode($model->Address); ?>,
+            Apartment: <?php echo json_encode($model->Apartment); ?>,
+            Floor: <?php echo json_encode($model->Floor); ?>,
+            year_construction: <?php echo json_encode($model->year_construction); ?>,
+            DoorwayList: <?php echo json_encode($model->DoorwayList); ?>,
+            CountPorch: <?php echo json_encode($model->CountPorch); ?>,
+            ClientGroup: <?php echo json_encode($model->ClientGroup); ?>,
+            Journal: <?php echo json_encode($model->Journal); ?>,
+            PostalAddress: <?php echo json_encode($model->PostalAddress); ?>,
+            Refusers: <?php echo json_encode($model->Refusers); ?>,
+            Note: <?php echo json_encode($model->Note); ?>,
+            Information: <?php echo json_encode($model->Information); ?>,
+            InstallManager: <?php echo json_encode($model->InstallManager); ?>,
+            ServiceManager: <?php echo json_encode($model->ServiceManager); ?>,
+            SalesManager: <?php echo json_encode($model->SalesManager); ?>,
+            ClientName: <?php echo json_encode($model->ClientName); ?>,
+            Telephone: <?php echo json_encode($model->Telephone); ?>
+        };
+        
+        var SetValueOGControls = function() {
+            $("#FullName").jqxInput('val', ObjectGroup.FullName);
+            $("#LphName").jqxInput('val', ObjectGroup.LphName);
+            $("#Address").jqxInput('val', ObjectGroup.Address);
+            $("#Apartment").jqxInput('val', ObjectGroup.Apartment);
+            $("#Floor").jqxInput('val', ObjectGroup.Floor);
+            $("#year_construction").jqxInput('val', ObjectGroup.year_construction);
+            $("#DoorwayList").jqxInput('val', ObjectGroup.DoorwayList);
+            $("#CountPorch").jqxInput('val', ObjectGroup.CountPorch);
+            $("#ClientGroup").jqxInput('val', ObjectGroup.ClientGroup);
+            $("#Journal").jqxInput('val', ObjectGroup.Journal);
+            $("#PostalAddress").jqxInput('val', ObjectGroup.PostalAddress);
+            $("#Refusers").jqxTextArea('val', ObjectGroup.Refusers);
+            $("#Note").jqxTextArea('val', ObjectGroup.Note);
+            $("#Information").jqxTextArea('val', ObjectGroup.Information);
+            $("#ServiceManager").jqxInput('val', ObjectGroup.ServiceManager);
+            $("#SalesManager").jqxInput('val', ObjectGroup.SalesManager);
+        };
+        
+        OG.Refresh = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/GetModel'))?>,
+                type: 'POST',
+                data: {
+                    ObjectGr_id: ObjectGroup.ObjectGr_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    
+                    ObjectGroup.ObjectGr_id = Res.ObjectGr_id;
+                    ObjectGroup.FullName = Res.FullName;
+                    ObjectGroup.LphName = Res.LphName;
+                    ObjectGroup.Address = Res.Address;
+                    ObjectGroup.Apartment = Res.Apartment;
+                    ObjectGroup.Floor = Res.Floor;
+                    ObjectGroup.year_construction = Res.year_construction;
+                    ObjectGroup.DoorwayList = Res.DoorwayList;
+                    ObjectGroup.CountPorch = Res.CountPorch;
+                    ObjectGroup.ClientGroup = Res.ClientGroup;
+                    ObjectGroup.Journal = Res.Journal;
+                    ObjectGroup.PostalAddress = Res.PostalAddress;
+                    ObjectGroup.Refusers = Res.Refusers;
+                    ObjectGroup.Note = Res.Note;
+                    ObjectGroup.Information = Res.Information;
+                    ObjectGroup.InstallManager = Res.InstallManager;
+                    ObjectGroup.ServiceManager = Res.ServiceManager;
+                    ObjectGroup.SalesManager = Res.SalesManager;
+                    ObjectGroup.ClientName = Res.ClientName;
+                    ObjectGroup.Telephone = Res.Telephone;
+                    
+                    SetValueOGControls();
+                    
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        };
+        
         var initInputs = function () {
-            
-            var Demand = {
-                FullName: '<?php echo json_encode($model->FullName); ?>',
-                LphName: '<?php echo $model->LphName; ?>',
-                Address: '<?php echo $model->Address; ?>',
-                Apartment: '<?php echo $model->Apartment; ?>',
-                Floor: '<?php echo $model->Floor; ?>',
-                year_construction: '<?php echo $model->year_construction; ?>',
-                DoorwayList: '<?php echo $model->DoorwayList; ?>',
-                CountPorch: '<?php echo $model->CountPorch; ?>',
-                ClientGroup: '<?php echo $model->ClientGroup; ?>',
-                Journal: '<?php echo $model->Journal; ?>',
-                PostalAddress: <?php echo json_encode($model->PostalAddress); ?>,
-                Refusers: <?php echo json_encode($model->Refusers); ?>,
-                Note: <?php echo json_encode($model->Note); ?>,
-                Information: <?php echo json_encode($model->Information); ?>,
-                InstallManager: '<?php echo $model->InstallManager; ?>',
-                ServiceManager: '<?php echo $model->ServiceManager; ?>',
-                SalesManager: '<?php echo $model->SalesManager; ?>'
-            };
-
             $("#FullName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
             $("#LphName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
             $("#Address").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
@@ -46,32 +107,50 @@
             
             $("#ChangeObjectsGroup").on('click', function ()
             {
-                window.open('/index.php?r=ObjectsGroup/Update&ObjectGr_id=' + <?= $model->ObjectGr_id; ?>);
+                if (ObjectGroup != undefined) {
+                    $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 830, height: 730, position: 'center'}));
+                    $.ajax({
+                        url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/Update')) ?>,
+                        type: 'POST',
+                        async: false,
+                        data: {
+                            ObjectGr_id: ObjectGroup.ObjectGr_id
+                        },
+                        success: function(Res) {
+                            Res = JSON.parse(Res);
+                            $("#BodyObjectsGroupDialog").html(Res.html);
+                            $('#ObjectsGroupDialog').jqxWindow('open');
+                        },
+                        error: function(Res) {
+                            Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                        }
+                    });
+                }
             });
             
-            if (Demand.FullName !== '') $("#FullName").jqxInput('val', Demand.FullName);
-            if (Demand.LphName !== '') $("#LphName").jqxInput('val', Demand.LphName);
-            if (Demand.Address !== '') $("#Address").jqxInput('val', Demand.Address);
-            if (Demand.Apartment !== '') $("#Apartment").jqxInput('val', Demand.Apartment);
-            if (Demand.Floor !== '') $("#Floor").jqxInput('val', Demand.Floor);
-            if (Demand.year_construction !== '') $("#year_construction").jqxInput('val', Demand.year_construction);
-            if (Demand.DoorwayList !== '') $("#DoorwayList").jqxInput('val', Demand.DoorwayList);
-            if (Demand.CountPorch !== '') $("#CountPorch").jqxInput('val', Demand.CountPorch);
-            if (Demand.ClientGroup !== '') $("#ClientGroup").jqxInput('val', Demand.ClientGroup);
-            if (Demand.Journal !== '') $("#Journal").jqxInput('val', Demand.Journal);
-            if (Demand.PostalAddress !== '') $("#PostalAddress").jqxInput('val', Demand.PostalAddress);
-            
-            if (Demand.Refusers !== '') $("#Refusers").jqxTextArea('val', Demand.Refusers);
-            if (Demand.Note !== '') $("#Note").jqxTextArea('val', Demand.Note);
-            if (Demand.Information !== '') $("#Information").jqxTextArea('val', Demand.Information);
-            
-            if (Demand.ServiceManager !== '') $("#ServiceManager").jqxInput('val', Demand.ServiceManager);
-            if (Demand.SalesManager !== '') $("#SalesManager").jqxInput('val', Demand.SalesManager);
+            if (ObjectGroup.FullName !== '') $("#FullName").jqxInput('val', ObjectGroup.FullName);
+            if (ObjectGroup.LphName !== '') $("#LphName").jqxInput('val', ObjectGroup.LphName);
+            if (ObjectGroup.Address !== '') $("#Address").jqxInput('val', ObjectGroup.Address);
+            if (ObjectGroup.Apartment !== '') $("#Apartment").jqxInput('val', ObjectGroup.Apartment);
+            if (ObjectGroup.Floor !== '') $("#Floor").jqxInput('val', ObjectGroup.Floor);
+            if (ObjectGroup.year_construction !== '') $("#year_construction").jqxInput('val', ObjectGroup.year_construction);
+            if (ObjectGroup.DoorwayList !== '') $("#DoorwayList").jqxInput('val', ObjectGroup.DoorwayList);
+            if (ObjectGroup.CountPorch !== '') $("#CountPorch").jqxInput('val', ObjectGroup.CountPorch);
+            if (ObjectGroup.ClientGroup !== '') $("#ClientGroup").jqxInput('val', ObjectGroup.ClientGroup);
+            if (ObjectGroup.Journal !== '') $("#Journal").jqxInput('val', ObjectGroup.Journal);
+            if (ObjectGroup.PostalAddress !== '') $("#PostalAddress").jqxInput('val', ObjectGroup.PostalAddress);
+            if (ObjectGroup.Refusers !== '') $("#Refusers").jqxTextArea('val', ObjectGroup.Refusers);
+            if (ObjectGroup.Note !== '') $("#Note").jqxTextArea('val', ObjectGroup.Note);
+            if (ObjectGroup.Information !== '') $("#Information").jqxTextArea('val', ObjectGroup.Information);
+            if (ObjectGroup.ServiceManager !== '') $("#ServiceManager").jqxInput('val', ObjectGroup.ServiceManager);
+            if (ObjectGroup.SalesManager !== '') $("#SalesManager").jqxInput('val', ObjectGroup.SalesManager);
         };
         
         
         
         var initContactInfoGrid = function () {
+            
+            var CurrentRowCInfoData;
             
             var ObjectsGroup = {
                 ObjectGr_id: <?php echo $model->ObjectGr_id; ?>
@@ -115,10 +194,8 @@
             $("#DelContactInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             
             $("#ContactInfoGrid").on('rowselect', function (event) {
-                var Temp = $('#ContactInfoGrid').jqxGrid('getrowdata', event.args.rowindex);
-                if (Temp !== undefined) {
-                    CurrentRowData = Temp;
-                } else {CurrentRowData = null};
+                CurrentRowCInfoData = $('#ContactInfoGrid').jqxGrid('getrowdata', event.args.rowindex);
+                
             });
 
             $('#ContactInfoGrid').on('rowdoubleclick', function (event) { 
@@ -128,12 +205,49 @@
 
             $("#NewContactInfo").on('click', function ()
             {
-                window.open('/index.php?r=ContactInfo/Insert&ObjectGr_id=' + ObjectsGroup.ObjectGr_id);
+                $('#ObjectsGroupDialog').jqxWindow({width: 600, height: 470, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('ContactInfo/Insert')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        ObjectGr_id: ObjectGroup.ObjectGr_id,
+                        ClientName: ObjectGroup.ClientName,
+                        Telephone: ObjectGroup.Telephone 
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyObjectsGroupDialog").html(Res.html);
+                        $('#ObjectsGroupDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
             });
 
-            $("#EditContactInfo").on('click', function ()
-            {
-                window.open('/index.php?r=ContactInfo/Update&ObjectGr_id='+ ObjectsGroup.ObjectGr_id + '&Info_id=' + CurrentRowData.Info_id);
+            $("#EditContactInfo").on('click', function () {
+                if (CurrentRowCInfoData == undefined) return;
+                $('#ObjectsGroupDialog').jqxWindow({width: 600, height: 470, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('ContactInfo/Update')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Info_id: CurrentRowCInfoData.Info_id,
+                        ObjectGr_id: ObjectGroup.ObjectGr_id,
+                        ClientName: ObjectGroup.ClientName,
+                        Telephone: ObjectGroup.Telephone 
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyObjectsGroupDialog").html(Res.html);
+                        $('#ObjectsGroupDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
             });
 
             $("#DelContactInfo").on('click', function ()
@@ -141,11 +255,14 @@
                 $.ajax({
                     type: "POST",
                     url: "/index.php?r=ContactInfo/Delete",
-                    data: { Info_id: CurrentRowData.Info_id },
+                    data: { Info_id: CurrentRowCInfoData.Info_id },
                     
                     success: function(){
                         $("#ContactInfoGrid").jqxGrid('updatebounddata');
                         $("#ContactInfoGrid").jqxGrid('selectrow', 0);
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                     }
                 });
             });
@@ -220,9 +337,9 @@ $this->breadcrumbs=array(
     
 <div id='jqxTabs' style="">
     <ul>
-        <li>
+        <li style="margin-left: 20px;">
             <div style="height: 15px; margin-top: 3px;">
-                <div style="vertical-align: middle; text-align: center; float: left; margin-left: 20px">
+                <div style="vertical-align: middle; text-align: center; float: left; margin-left: 4px">
                     Общие данные
                 </div>
             </div>
@@ -264,7 +381,7 @@ $this->breadcrumbs=array(
         </li>
     </ul>
     <div style="overflow: auto; height: calc(100% - 2px); background-color: #F2F2F2;">
-        <div style="overflow: auto; padding: 5px 10px 0;">
+        <div style="overflow: auto; padding: 5 10px 0;">
             <div class="al-row">
                 <div class="al-row-column" style="width: 60px">Клиент:</div>
                 <div class="al-row-column"><input readonly type="text" id="FullName"></div>
@@ -322,20 +439,21 @@ $this->breadcrumbs=array(
                 <input type="button" value="Изменить" id='ChangeObjectsGroup' />
             </div>
         </div>
-
-        <div class="al-row" style="padding: 0px; height: calc(100% - 323px)">
-            <div id="ContactInfoGrid" class="jqxGridAliton"></div>
-        </div>
-        <div class="al-row" style="padding: 0;">
-            <div class="al-row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>
-            <div class="al-row-column"><input type="button" value="Изменить" id='EditContactInfo' /></div>
-            <div class="al-row-column"><input type="button" value="Удалить" id='DelContactInfo' /></div>
-            <div style="clear: both"></div>
+        <div style="padding: 10px; height: calc(100% - 323px)">
+            <div class="al-row" style="padding: 0px; height: calc(100% - 12px)">
+                <div id="ContactInfoGrid" class="jqxGridAliton"></div>
+            </div>
+            <div class="al-row" style="padding: 6px 0px 0px 0px;">
+                <div class="al-row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>
+                <div class="al-row-column"><input type="button" value="Изменить" id='EditContactInfo' /></div>
+                <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='DelContactInfo' /></div>
+                <div style="clear: both"></div>
+            </div>
         </div>
     </div>
 
-    <div id='content2' style="overflow: hidden; margin-left: 10px;">
-        <div style="width: 100%; height: 100%"></div>
+    <div style="overflow: hidden;">
+        <div id='content2' style="overflow: hidden; padding: 10px;"></div>
     </div>
 
     <div id='content3' style="overflow: hidden; margin-left: 10px;">
@@ -355,4 +473,12 @@ $this->breadcrumbs=array(
     </div>
 </div>
 
+<div id="ObjectsGroupDialog" style="display: none;">
+    <div id="ObjectsGroupDialogHeader">
+        <span id="ObjectsGroupHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogObjectsGroupContent">
+        <div style="" id="BodyObjectsGroupDialog"></div>
+    </div>
+</div>
 

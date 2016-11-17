@@ -16,6 +16,20 @@
             'data' => null
         ),
         
+        'CreateObjectsGroup' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Создание объекта',
+            'bizRule' => null,
+            'data' => null
+        ),
+        
+        'DeleteObjectsGroup' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Удаление объекта',
+            'bizRule' => null,
+            'data' => null
+        ),
+        
         
         /* Роли */
         'UserObjectsGroup' => array(
@@ -46,6 +60,8 @@
             'children' => array(
                 'ViewObjectsGroup',
                 'UpdateObjectsGroup',
+                'CreateObjectsGroup',
+                'DeleteObjectsGroup',
             ),
             'data' => null
         ),

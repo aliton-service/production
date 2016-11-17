@@ -55,7 +55,8 @@
             if ($('#btnRefreshEquips').length > 0)
                 $('#btnRefreshEquips').click();
             
-            $('#WHDocumentsDialog').jqxWindow('close');
+            if ($('#WHDocumentsDialog').length>0)
+                $('#WHDocumentsDialog').jqxWindow('close');
             
         });
         

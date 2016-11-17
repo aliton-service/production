@@ -203,6 +203,10 @@ return array_merge(
     
     /* Серийники */
     include(dirname(__FILE__).'/security/SerialNumbersSecurity.php'),
+    /* Обсл. орг. у систем */
+    include(dirname(__FILE__).'/security/SystemCompetitorsSecurity.php'),
+    /* Сложность системы */
+    include(dirname(__FILE__).'/security/ObjectsGroupSystemComplexitysSecurity.php'),
         
     /* Коммерческие предложения и сметы */
     include(dirname(__FILE__).'/security/ObjectsGroupCostCalculationsSecurity.php'),
@@ -432,6 +436,7 @@ return array_merge(
                 'AdminCostCalcDocuments',
                 'AdminWHBuhActs',
                 'AdminRepairDocs',
+                'AdminObjectsGroupSystemComplexitys',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
@@ -470,6 +475,7 @@ return array_merge(
                 'DeliveryDemandsReport',
                 'DeliveryDemandsBrokenDeadlinesReport',
                 'AdminRepairDetails',
+                'AdminSystemCompetitors',
                 ),
         ),
         

@@ -68,45 +68,55 @@ class SuppliersController extends Controller
     }
 
 	
-	public function actionUpdate($Supplier_id)
+	public function actionUpdate()
 	{
-            $this->title = 'Редактирование поставщика';
-        
             $model = new Suppliers();
-            $model->setScenario('Update');
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['Supplier_id']))
+                $model->getModelPk($_POST['Supplier_id']);
 
-            if ($Supplier_id == null)
-                    throw new CHttpException(404, 'Не выбрана запись.');
-
-            if(isset($_POST['Suppliers']))
-            {
-                $model->attributes=$_POST['Suppliers'];
-
-                $model->EmplChange = Yii::app()->user->Employee_id;
-
+            if (isset($_POST['Suppliers'])) {
+                $model->getModelPk($_POST['Suppliers']['Supplier_id']);
+                $model->attributes = $_POST['Suppliers'];
                 if ($model->validate()) {
-                    $model->update();
+                    $model->Update();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Supplier_id;
+                    echo json_encode($ObjectResult);
+                    return;
                 }
             }
-            else
-            {
-                $model->getmodelPk($Supplier_id);
-                $this->title .= ' ' . $model->NameSupplier;
-            }
 
-            $this->render('update', array(
-                    'model'=>$model,
-                )
-            );
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 	
-	public function actionDelete($Supplier_id)
+	public function actionDelete()
 	{
-            $model = new Suppliers();
-            $model->getmodelPk($Supplier_id);
-            $model->delete();
-            
-            $this->redirect($this->createUrl('suppliers/Index'));
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+
+            if (isset($_POST['Supplier_id'])) {
+                $model = new Suppliers();
+                $model->getModelPk($_POST['Supplier_id']);
+                
+                    $model->delete();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Supplier_id;
+                    echo json_encode($ObjectResult);
+                    return;
+                
+            }
+            echo json_encode($ObjectResult);
 	}
 
 	public function actionIndex()
