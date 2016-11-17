@@ -7,7 +7,7 @@
         var SystemCompetitorsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSystemCompetitors), {
             formatData: function (data) {
                         $.extend(data, {
-                            Filters: ["sc.ObjectsGroupSystem_id = " + ObjectsGroupSystem_id]
+                            Filters: ["sc.Ogst = " + ObjectsGroupSystem_id]
                         });
                         return data;
                     },
