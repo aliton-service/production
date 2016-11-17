@@ -305,7 +305,6 @@
 
 <style>
     .row {
-        margin: 0px 0px 0px 0px;
         overflow: hidden;
     }
     

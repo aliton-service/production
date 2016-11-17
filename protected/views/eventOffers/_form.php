@@ -50,12 +50,10 @@
                     };
                 },
                 error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], 'Добавляемое предложение уже есть в данном событии. ');
                 }
             });
         });
-        
-        console.log('EventOffers.note = ' + EventOffers.note);
         
         if (EventOffers.oftp_id != null) $("#OfferTypes").jqxComboBox('val', EventOffers.oftp_id);
         if (EventOffers.note != null) $("#note2").jqxTextArea('val', EventOffers.note);

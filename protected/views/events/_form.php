@@ -1,16 +1,5 @@
 <script type="text/javascript">
     $(document).ready(function () {
-        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
-        
-        var Events = {
-            evnt_id: <?php echo json_encode($model->evnt_id); ?>,
-            objectgr_id: <?php echo json_encode($model->objectgr_id); ?>,
-            evtp_id: <?php echo json_encode($model->evtp_id); ?>,
-            prds_id: <?php echo json_encode($model->prds_id); ?>,
-            empl_id: <?php echo json_encode($model->empl_id); ?>,
-            datestart: Aliton.DateConvertToJs('<?php echo $model->datestart; ?>'),
-            dateend: Aliton.DateConvertToJs('<?php echo $model->dateend; ?>'),
-        };
         
         var EventTypeDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
         $("#EventType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: EventTypeDataAdapter, displayMember: "EventType", valueMember: "evtp_id", width: 250 }));
@@ -34,38 +23,46 @@
         });
         
         $('#btnSaveEvents').on('click', function(){
-            var Url = <?php echo json_encode(Yii::app()->createUrl('Events/Update')); ?>;
-            if (StateInsert)
-                Url = <?php echo json_encode(Yii::app()->createUrl('Events/Create')); ?>;
+            var rowindexes = $('#EventsClientsGrid').jqxGrid('getselectedrowindexes');
+            console.log(rowindexes);
             
-            $.ajax({
-                url: Url,
-                data: $('#Events').serialize(),
-                type: 'POST',
-                success: function(Res) {
-                    var Res = JSON.parse(Res);
-                    if (Res.result == 1) {
-                        Aliton.SelectRowById('evnt_id', Res.id, '#EventsGrid', true);
-                        $('#EventsDialog').jqxWindow('close');
-                        $('#EventsClientsGrid').jqxGrid('updatebounddata');
-                        $('#EventsClientsGrid').jqxGrid({ groupable: true}); 
+            for (var i = 0; i < rowindexes.length; i++)
+            {
+                console.log('i = ' + i);
+                var rowindex = rowindexes[i];
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Events/Create')); ?>,
+                    data:  $('#Events').serialize() + '&Events[objectgr_id]=' + EventsClientsDataAdapter.records[rowindex]['objectgr_id'],
+                    type: 'POST',
+                    async: false,
+                    success: function(Res) {
+                        var Res = JSON.parse(Res);
+                        if (Res.result == 1) {
+                            Aliton.SelectRowById('evnt_id', Res.id, '#EventsGrid', true);
+                            $('#EventsDialog').jqxWindow('close');
+                            console.log('i2 = ' + i);
+                            if (i == (rowindexes.length - 1)) {
+                                console.log('i == rowindexes.length - 1; i = ' + i);
+                                $('#EventsGrid').jqxGrid('updatebounddata');
+                                $('#EventsClientsGrid').jqxGrid('updatebounddata');
+                                $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
+                                $('#EventsClientsGrid').jqxGrid({ groupable: true });
+                                $('#EventsClientsGrid').jqxGrid('addgroup', 'fullname');
+                                $('#EventsClientsGrid').jqxGrid('expandallgroups');
+                            }
+                        }
+                        else {
+                            $('#BodyEventsDialog').html(Res.html);
+                        };
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
                     }
-                    else {
-                        $('#BodyEventsDialog').html(Res.html);
-                    };
-                },
-                error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
-                }
-            });
+                });
+            }
         });
         
-        if (Events.evnt_id !== null) $("#EventType").jqxComboBox('val', Events.evnt_id);
-        if (Events.prds_id !== null) $("#Periods").jqxComboBox('val', Events.prds_id);
-        if (Events.empl_id !== null) $("#Employee").jqxComboBox('val', Events.empl_id);
         
-        if (Events.datestart !== null) $("#datestart").jqxDateTimeInput('val', Events.datestart);
-        if (Events.dateend !== null) $("#dateend").jqxDateTimeInput('val', Events.dateend);
     });
 </script>        
 
@@ -78,12 +75,9 @@
     ));
 ?>
 
-<!--<input type="hidden" name="Events[evnt_id]" value="<?php // echo $model->evnt_id; ?>"/>-->
-<input type="hidden" name="Events[objectgr_id]" value="<?php echo $model->objectgr_id; ?>"/>
-
 <div class="row">
     <div class="row-column">Направление:</div>
-    <div class="row-column"><div id="EventType" name="Events[evtp_id]"></div><?php echo $form->error($model, 'evtp_id'); ?></div>
+    <div class="row-column"><div id="EventType" name="Events[evtp_id]"></div><?php // echo $form->error($model, 'evtp_id'); ?></div>
 </div>
 
 <div class="row">
@@ -93,7 +87,7 @@
 
 <div class="row">
     <div class="row-column">Исполнитель:</div>
-    <div class="row-column"><div id="Employee" name="Events[empl_id]"></div><?php echo $form->error($model, 'empl_id'); ?></div>
+    <div class="row-column"><div id="Employee" name="Events[empl_id]"></div><?php // echo $form->error($model, 'empl_id'); ?></div>
 </div>
 
 <div class="row"> 

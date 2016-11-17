@@ -1,12 +1,9 @@
 <?php
 
-class EventsController extends Controller
+class OfferDemandsController extends Controller
 {
-
     public $layout = '//layouts/column2';
     public $title = '';
-    public $gridFilters = null;
-    public $filterDefaultValues = null;
 
     public function filters()
     {
@@ -20,20 +17,20 @@ class EventsController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'equipAnalog', 'clients', 'autoevents', 'ShowHide'),
-                'roles' => array('ViewEvents'),
+                'actions' => array('index', 'view'),
+                'roles' => array('ViewOfferDemands'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create'),
-                'roles' => array('CreateEvents'),
+                'roles' => array('CreateOfferDemands'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('update'),
-                'roles' => array('UpdateEvents',),
+                'roles' => array('UpdateOfferDemands'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('delete'),
-                'roles' => array('DeleteEvents'),
+                'roles' => array('DeleteOfferDemands'),
             ),
             array('deny',  // deny all users
                 'users' => array('*'),
@@ -42,29 +39,31 @@ class EventsController extends Controller
     }
 
 
+
     public function actionCreate()
     {
-        $model = new Events;
-        
+        $model = new OfferDemands;
+            
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
             'html' => '',
         );
 
-        if (isset($_POST['Events'])) {
-            $model->attributes = $_POST['Events'];
-            $model->EmplCreate = Yii::app()->user->Employee_id;
+        if (isset($_POST['offer_id']) && isset($_POST['dmnd_id'])) {
+            $model->offer_id = $_POST['offer_id'];
+            $model->dmnd_id = $_POST['dmnd_id'];
+
             if ($model->validate()) {
                 $model->insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->evnt_id;
+                $ObjectResult['id'] = $model->OfferDemand_id;
                 echo json_encode($ObjectResult);
                 return;
             }
         }
 
-        $ObjectResult['html'] = $this->renderPartial('_form', array(
+        $ObjectResult['html'] = $this->renderPartial('index', array(
             'model' => $model,
         ), true);
         echo json_encode($ObjectResult);
@@ -72,31 +71,31 @@ class EventsController extends Controller
 
     public function actionUpdate()
     {
-        $model = new Events();
-
+        $model = new OfferDemands();
+        
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
             'html' => '',
         );
 
-        if (isset($_POST['evnt_id']))
-            $model->getModelPk($_POST['evnt_id']);
+        if (isset($_POST['code']))
+            $model->getModelPk($_POST['code']);
 
-        if (isset($_POST['Events'])) {
-            $model->getModelPk($_POST['Events']['evnt_id']);
-            $model->attributes = $_POST['Events'];
+        if (isset($_POST['OfferDemands'])) {
+            $model->getModelPk($_POST['OfferDemands']['code']);
+            $model->attributes = $_POST['OfferDemands'];
             $model->EmplChange = Yii::app()->user->Employee_id;
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->evnt_id;
+                $ObjectResult['id'] = $model->code;
                 echo json_encode($ObjectResult);
                 return;
             }
         }
 
-        $ObjectResult['html'] = $this->renderPartial('_formEdit', array(
+        $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
         ), true);
         echo json_encode($ObjectResult);
@@ -109,14 +108,13 @@ class EventsController extends Controller
             'id' => 0,
             'html' => '',
         );
-
-        if (isset($_POST['evnt_id'])) {
-            $model = new Events();
-            $model->getModelPk($_POST['evnt_id']);
-            $model->EmplDel = Yii::app()->user->Employee_id;
+        
+        if (isset($_POST['OfferDemand_id'])) {
+            $model = new OfferDemands();
+            $model->getModelPk($_POST['OfferDemand_id']);
             $model->Delete();
             $ObjectResult['result'] = 1;
-            $ObjectResult['id'] = $model->evnt_id;
+            $ObjectResult['id'] = $model->OfferDemand_id;
             echo json_encode($ObjectResult);
             return;
         }
@@ -125,37 +123,23 @@ class EventsController extends Controller
 
     public function actionIndex()
     {
-        $this->title = 'Графики';
-        $this->gridFilters = '_filters';
-        $this->filterDefaultValues = array(
-            'Master' => '',
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
         );
-
-        $this->render('index');
-    }
-
-    public function actionAutoEvents($objgr_id = false) {
-        if($this->isAjax()) {
-            $objgr_id || die('Не выбран объект');
-            $this->renderPartial('autoevents',array('objgr_id'=>$objgr_id), false, true);
-        } else {
-            if(!$objgr_id) throw new CHttpException(404, 'Не выбран объект.');
-            $this->render('autoevents',array('objgr_id'=>$objgr_id));
+        
+        $offer_id = '';
+        
+        if (isset($_POST['offer_id'])) {
+            $offer_id = $_POST['offer_id'];
         }
-    }
 
-    public function actionShowHide() {
-        if (isset($_POST['ObjectGr_id']) && isset($_POST['Evtp_id'])) {
-            $sp = new StoredProc();
-            $sp->ProcedureName = 'HideOrShowObjectsGroup';
-            $sp->ParametersRefresh();
-            $sp->Parameters[0]['Value'] = $_POST['ObjectGr_id'];
-            $sp->Parameters[1]['Value'] = $_POST['Evtp_id'];
-            $sp->CheckParam = true;
-            $sp->Execute();
-        }
+        $ObjectResult['html'] = $this->renderPartial('index', array(
+            'offer_id' => $offer_id,
+        ), true);
+        echo json_encode($ObjectResult);
     }
-
 
 
 }

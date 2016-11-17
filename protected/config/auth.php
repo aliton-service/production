@@ -219,6 +219,9 @@ return array_merge(
     /* Бухгалтерский акт */
     include(dirname(__FILE__).'/security/WHBuhActsSecurity.php'),
         
+    /* Добавление заявки к приложению */
+    include(dirname(__FILE__).'/security/OfferDemandsSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -437,6 +440,7 @@ return array_merge(
                 'AdminWHBuhActs',
                 'AdminRepairDocs',
                 'AdminObjectsGroupSystemComplexitys',
+                'AdminOfferDemands',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

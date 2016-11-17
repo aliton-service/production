@@ -77,18 +77,13 @@
             }
 
             $('#EventsGrid').jqxGrid({source: EventsFiltersDataAdapter});
-            $("#EventsGrid").on("bindingcomplete", function () {
-                $('#EventsGrid').jqxGrid('selectrow', 0);
-                
-                var rowindex = $('#EventsGrid').jqxGrid('getselectedrowindex');
-//                console.log('rowindex = ' + rowindex);
-                if (rowindex == -1) {
-                    $("#btnEditEvent").jqxButton({ disabled: true });
-                } else {
-                    $("#btnEditEvent").jqxButton({ disabled: false });
-                }
-            });
+            
+            
         };
+        
+        $("#EventsGrid").on("bindingcomplete", function () {
+            $('#EventsGrid').jqxGrid('selectrow', 0);
+        });
     });
 </script>
 

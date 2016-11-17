@@ -684,7 +684,7 @@
         
         $('#btnEditCostCalculations').on('click', function(){
             if ($('#btnEditCostCalculations').jqxButton('disabled')) return;
-            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 530, width: 635, position: 'center' }));
+            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 635, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Update')) ?>,
                 type: 'POST',
@@ -1356,11 +1356,6 @@
     });
 </script>
 
-<style>
-    .row {
-        margin-top: 0px;
-    }
-</style>
 
 <?php $this->setPageTitle($model->CostCalcType); ?>
 

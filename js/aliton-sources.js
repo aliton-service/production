@@ -3738,6 +3738,8 @@ Sources.SourceEventOffers =
         {name: 'prev_date', type: 'date'},
         {name: 'prev_resultname', type: 'string'},
         {name: 'prev_note', type: 'string'},
+        {name: 'offergroup', type: 'int'},
+        {name: 'demand', type: 'string'},
     ],
     id: 'code',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EventOffers',
@@ -3793,10 +3795,10 @@ Sources.SourceReportForms =
 {
     datatype: "json",
     datafields: [
-        {name: 'rslt_id', type: 'int'},
+        {name: 'rpfr_id', type: 'int'},
         {name: 'ReportForm', type: 'string'},
     ],
-    id: 'rslt_id',
+    id: 'rpfr_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ReportForms',
     root: 'Rows',
     cache: false,
@@ -3922,6 +3924,27 @@ Sources.SourceObjectsGroupSystemComplexitys =
     ],
     id: 'Bank_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectsGroupSystemComplexitys',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+    
+Sources.SourceOfferDemands =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'OfferDemand_id', type: 'int'},
+        {name: 'offer_id', type: 'int'},
+        {name: 'dmnd_id', type: 'int'},
+        {name: 'Address', type: 'string'},
+    ],
+    id: 'OfferDemand_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OfferDemands',
     root: 'Rows',
     cache: false,
     async: false,
