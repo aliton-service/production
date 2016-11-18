@@ -13,16 +13,22 @@
             formatData: function (data) {
                 var Variables = {
                     Master: '',
-                    EventNoExec: ''
+                    EventNoExec: '',
+                    EventExec: '',
+                    Vip: '',
                 };
-                
-                //console.log($("#chbNoExecFilter").val());
                 
                 if ($('#cmbMaster').val() != '')
                     Variables.Master = " and c.Master = " + $('#cmbMaster').val();
                 
                 if ($("#chbNoExecFilter").val() != false)
                     Variables.EventNoExec = " and (e.evnt_id is not null and e.date_exec is null)";
+                
+                if ($("#chbExecFilter").val() != false)
+                    Variables.EventExec = " and e.date_exec is not null";
+                
+                if ($("#chbVipFilter").val() != false)
+                    Variables.Vip = " and o.sum_price > 7500";
                     
                 $.extend(data, {
                     Variables: Variables,
@@ -151,31 +157,37 @@
         $("#EventsClientsGrid").on("bindingcomplete", function () {
             $('#EventsClientsGrid').jqxGrid('expandallgroups');
             
-            if (CurrentRowDataClients == undefined)
-                $('#EventsClientsGrid').jqxGrid('selectrow', 0);
-            
-            if (CurrentRowDataClients != undefined) {
-               var Val = CurrentRowDataClients.ObjectGr_id;
-            } else Val = 0;
-            
             var GroupCount = 0;
             var GroupName = null;
             var Index = 0;
-            var Rows = $('#EventsClientsGrid').jqxGrid('getrows');
-            for (var i = 0; i < Rows.length; i++) {
-                var TmpVal = $('#EventsClientsGrid').jqxGrid('getcellvalue', i, 'ObjectGr_id');
-                var TmpGroup = $('#EventsClientsGrid').jqxGrid('getcellvalue', i, 'Fullname');
-                if (GroupName != TmpGroup) {
-                    GroupCount++;
-                    GroupName = TmpGroup;
+            var FindOk = false;
+            
+            if (CurrentRowDataClients != undefined) {
+                var Val = CurrentRowDataClients.ObjectGr_id;
+               
+                var Rows = $('#EventsClientsGrid').jqxGrid('getrows');
+                for (var i = 0; i < Rows.length; i++) {
+                    var TmpVal = $('#EventsClientsGrid').jqxGrid('getcellvalue', i, 'ObjectGr_id');
+                    var TmpGroup = $('#EventsClientsGrid').jqxGrid('getcellvalue', i, 'Fullname');
+                    if (GroupName != TmpGroup) {
+                        GroupCount++;
+                        GroupName = TmpGroup;
+                    }
+                    if (TmpVal == Val) {
+                        Index = i;
+                        FindOk = true;
+                        break;
+                    }
                 }
-                if (TmpVal == Val) {
-                    Index = i;
-                    break;
-                }
-            }
+            } else Val = 0;
+            
+            CurrentRowDataClients = undefined;
+            $('#EventsClientsGrid').jqxGrid('unselectrow', Index);
             $('#EventsClientsGrid').jqxGrid('selectrow', Index);
-            $('#EventsClientsGrid').jqxGrid('ensurerowvisible', (Index + GroupCount));
+            if (FindOk)
+                $('#EventsClientsGrid').jqxGrid('ensurerowvisible', (Index + GroupCount));
+            else
+                $('#EventsClientsGrid').jqxGrid('ensurerowvisible', (Index));
         });
         
         

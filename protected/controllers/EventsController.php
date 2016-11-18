@@ -171,6 +171,7 @@ class EventsController extends Controller
                                     left join Contracts_v c on (c.ObjectGr_id = og.ObjectGr_id and c.DocType_id = 4 and dbo.truncdate(GETDATE()) between c.ContrSDateStart and c.ContrSDateEnd)
                                     left join Events e on (og.ObjectGr_id = e.Objectgr_id and e.DelDate is Null
                                         :#EventNoExec 
+                                        :#EventExec 
                                     )
                             Where o.Lph_id = 1
                                     and isnull(c.Servicetype_id, 0) <> 1
@@ -179,6 +180,7 @@ class EventsController extends Controller
                                     and isnull(c.Servicetype_id, 0) <> 42
                                     and isnull(c.Servicetype_id, 0) <> 45
                                     :#Master 
+                                    :#Vip 
                             Group by
                                     o.Form_id,
                                     o.FullName,
