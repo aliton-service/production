@@ -1,18 +1,26 @@
 <script>
+    var Find;
+    
     $(document).ready(function () {
+        // Инициализация источников данных
+        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {async: false}));
+        var First = true;
+        DataEmployees.dataBind();
+        DataEmployees = DataEmployees.records;
         
-        var tabIndex = $('#jqxTabsEvents').jqxTabs('selectedItem'); 
-//        console.log('tabIndex0 = ' + tabIndex);
         
-        $('#jqxTabsEvents').on('selected', function (event) {
-            tabIndex = event.args.item;
-//            console.log('tabIndex-selected = ' + tabIndex);
-            Find();
+        
+        $("#cmbEmpl").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id" }); 
+        $("#cmbMaster").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id" }); 
+        $("#chbNoExecFilter").jqxCheckBox({ width: 160, height: 25, checked: false}); 
+        $("#chbExecFilter").jqxCheckBox({ width: 160, height: 25, checked: false}); 
+        
+        $("#edFiltering").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
+        
+        $('#edFiltering').on('click', function(){
+            $("#EventsClientsGrid").jqxGrid('updatebounddata', 'cells');
         });
-//        $('#jqxTabsEvents').on('selecting', function (event) {
-//            Find();
-//        }); 
-            
+        
         $("#EventsClientsGrid").on('rowselect', function (event) {
             Find();
         });
@@ -29,69 +37,66 @@
             }
         });
 
-        // Инициализация источников данных
-        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {async: false}));
-
-
-        $("#cmbEmpl").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id" }); 
-        $("#cmbMaster").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id" }); 
-
-        $('#edFiltering').on('click', function(){
-            //Find1();
-        });
-
-        var EventTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
-        EventTypesDataAdapter.dataBind();
-
-        var Find = function(){
-            var EmplFilterGroup = new $.jqx.filter();
-            if ($("#cmbEmpl").val() != '') {
-                var FilterEmpl = EmplFilterGroup.createfilter('numericfilter', $("#cmbEmpl").val(), 'IN');
-                EmplFilterGroup.addfilter(1, FilterEmpl);
-            }
-
+        Find = function(){
+//            var EmplFilterGroup = new $.jqx.filter();
+//            if ($("#cmbEmpl").val() != '') {
+//                var FilterEmpl = EmplFilterGroup.createfilter('numericfilter', $("#cmbEmpl").val(), 'IN');
+//                EmplFilterGroup.addfilter(1, FilterEmpl);
+//            }
+            
             if (CurrentRowDataClients != undefined) {
                 var ObjectGroup = new $.jqx.filter();
-                var FilterObject = ObjectGroup.createfilter('numericfilter', CurrentRowDataClients.objectgr_id, 'EQUAL');
+                var FilterObject = ObjectGroup.createfilter('numericfilter', CurrentRowDataClients.ObjectGr_id, 'EQUAL');
                 ObjectGroup.addfilter(1, FilterObject);
-            }
-//            console.log('tabIndex-Find = ' + tabIndex);
+            } else return;
+                 
+            
+            
+            
+            var tabIndex = $('#jqxTabsEvents').jqxTabs('selectedItem'); 
+              
             if (tabIndex != 0) {
-//                console.log('evtp_id = ' + EventTypesDataAdapter.records[tabIndex - 1].evtp_id);
                 var EventGroup = new $.jqx.filter();
                 var FilterEvent = EventGroup.createfilter('numericfilter', (EventTypesDataAdapter.records[tabIndex - 1].evtp_id), 'EQUAL');
                 EventGroup.addfilter(1, FilterEvent);
-            }
-
-            $('#EventsGrid').jqxGrid('removefilter', 'employee', false);
-            if ($("#cmbEmpl").val() != '') $("#EventsGrid").jqxGrid('addfilter', 'employee', EmplFilterGroup);
-
-            $('#EventsGrid').jqxGrid('removefilter', 'objectgr_id', false);
-            if (CurrentRowDataClients != null) $("#EventsGrid").jqxGrid('addfilter', 'objectgr_id', ObjectGroup);
-
-            $('#EventsGrid').jqxGrid('removefilter', 'evtp_id', false);
-            if (tabIndex != 0) {
-                $("#EventsGrid").jqxGrid('addfilter', 'evtp_id', EventGroup);
-            } else {
-                $('#EventsGrid').jqxGrid('removefilter', 'evtp_id', false);
-            }
-
-            $('#EventsGrid').jqxGrid({source: EventsFiltersDataAdapter});
+            };
             
+            D = new Date();
+            if ($("#chbNoExecFilter").val() != false) {
+                var DateExecGroup = new $.jqx.filter();
+                var FilterDateExec = DateExecGroup.createfilter('datefilter', D, 'NOT_NULL');
+                DateExecGroup.addfilter(1, FilterDateExec);
+            };
+
+//            $('#EventsGrid').jqxGrid('removefilter', 'employee', false);
+//            if ($("#cmbEmpl").val() != '') $("#EventsGrid").jqxGrid('addfilter', 'employee', EmplFilterGroup);
+
+            $('#EventsGrid').jqxGrid('removefilter', 'ObjectGr_id', false);
+            if (CurrentRowDataClients != null) $("#EventsGrid").jqxGrid('addfilter', 'ObjectGr_id', ObjectGroup);
+            
+            $('#EventsGrid').jqxGrid('removefilter', 'DateExec', false);
+            if ($("#chbNoExecFilter").val() != false) $("#EventsGrid").jqxGrid('addfilter', 'DateExec', DateExecGroup);
+
+            $('#EventsGrid').jqxGrid('removefilter', 'Evtp_id', false);
+            if (tabIndex > 0)
+                $("#EventsGrid").jqxGrid('addfilter', 'Evtp_id', EventGroup);
+            
+            if (First)
+                $('#EventsGrid').jqxGrid({source: EventsFiltersDataAdapter});
+            else
+                $('#EventsGrid').jqxGrid('updatebounddata', 'cells');
+            First = false;
             
         };
-        
-        $("#EventsGrid").on("bindingcomplete", function () {
-            $('#EventsGrid').jqxGrid('selectrow', 0);
-        });
     });
 </script>
 
-<div>Исполнитель</div>
-<div><div id='cmbEmpl'></div></div>
-
-<div>Мастер</div>
-<div><div id='cmbMaster'><?php // echo $filterDefaultValues['Master']; ?></div></div>
+<div class='al-row'>Исполнитель</div>
+<div class='al-row'><div id='cmbEmpl'></div></div>
+<div class='al-row'>Мастер</div>
+<div class='al-row'><div id='cmbMaster'></div></div>
+<div class='al-row'><div id='chbNoExecFilter'>Невыполненные</div></div>
+<div class='al-row'><div id='chbExecFilter'>Выполненные</div></div>
 <!--
 <div>Дата с</div>
 <div><div id='edDateStart'></div></div>

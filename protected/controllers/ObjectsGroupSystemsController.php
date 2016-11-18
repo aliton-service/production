@@ -140,7 +140,7 @@ class ObjectsGroupSystemsController extends Controller
         
         if (isset($_POST['ObjectsGroupSystem_id'])) {
             $Query = new SQLQuery();
-            $Query->setSelect("Select cast(dbo.get_competitor_info(:#ObjectsGroupSystem_id) as nvarchar(250)) as Name");
+            $Query->setSelect("Select cast(dbo.get_competitor_info(:#ObjectsGroupSystem_id ) as nvarchar(250)) as Name");
             $Query->bindParam('ObjectsGroupSystem_id', $_POST['ObjectsGroupSystem_id']);
             $Row = $Query->QueryRow();
             $ObjectResult['result'] = 1;

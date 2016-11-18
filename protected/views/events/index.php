@@ -3,9 +3,36 @@
     var CurrentRowDataClients;
     var CurrentRowDataEvents;
     var EventsClientsDataAdapter;
+    var EventTypesDataAdapter;
+//    var EventsFiltersDataAdapter;
     var checked;
     
     $(document).ready(function () {
+        
+        EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients, { id: 'Form_id' , url: '/index.php?r=Events/Clients'}), {
+            formatData: function (data) {
+                var Variables = {
+                    Master: '',
+                    EventNoExec: ''
+                };
+                
+                //console.log($("#chbNoExecFilter").val());
+                
+                if ($('#cmbMaster').val() != '')
+                    Variables.Master = " and c.Master = " + $('#cmbMaster').val();
+                
+                if ($("#chbNoExecFilter").val() != false)
+                    Variables.EventNoExec = " and (e.evnt_id is not null and e.date_exec is null)";
+                    
+                $.extend(data, {
+                    Variables: Variables,
+                });
+                return data;
+            },
+        });
+        
+        
+        
         
         $("#jqxRadioBtnGroupableON").jqxRadioButton($.extend(true, {}, RadioButtonDefaultSettings, { width: 200, checked: true }));
         $("#jqxRadioBtnGroupableOFF").jqxRadioButton($.extend(true, {}, RadioButtonDefaultSettings, { width: 200 }));
@@ -23,31 +50,26 @@
         };
         
         $("#jqxRadioBtnGroupableON").on('change', function (event) {
-//            clearLog();
-    console.log('checked');
             checked = event.args.checked;
-    console.log(checked);
             updateEventsClientsGrid(checked);
         });
 
-        EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients));
-        EventsClientsDataAdapter.dataBind();
+//        EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients));
+//        EventsClientsDataAdapter.dataBind();
         
         var groupsrenderer = function (text, group, expanded, data) 
         {
             if (data.subItems.length > 0) {
-                var event_count = data.subItems[0]['event_count'];
-                var no_exec_event_count = data.subItems[0]['no_exec_event_count'];
+                var event_count = data.subItems[0]['EventCount'];
+                var no_exec_event_count = data.subItems[0]['NoExecEventCount'];
                 return '<div class="jqx-grid-groups-row" style="position: absolute;"><span>' + text + '<span style="margin-left: 10px; color: #105287;"> З:' + event_count + '<span style="margin-left: 5x;"> Н:' + no_exec_event_count + '</span></span></span>';
             }
         };
         
-//        console.log(EventsClientsDataAdapter);
-        
         $("#EventsClientsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
-                height: '700',
-                width: '100%',
+                height: 'calc(100% - 2px)',
+                width: 'calc(100% - 2px)',
                 source: EventsClientsDataAdapter,
                 showstatusbar: true,
                 statusbarheight: 29,
@@ -61,19 +83,22 @@
                 virtualmode: false,
                 selectionmode: 'multiplerowsextended',
                 columns: [
-                    { text: 'Клиент', datafield: 'fullname', minwidth: 250 },
-                    { text: 'Адрес', datafield: 'addr', minwidth: 250 },
-                    { text: 'Запл.', datafield: 'event_count', width: 50 },
-                    { text: 'Невып.', datafield: 'no_exec_event_count', width: 60 },
+                    { text: 'Клиент', datafield: 'Fullname', width: 150 },
+                    { text: 'Адрес', datafield: 'Addr', width: 100/* minwidth: 250*/ },
+                    { text: 'Запл.', datafield: 'EventCount', width: 50 },
+                    { text: 'Невып.', datafield: 'NoExecEventCount', width: 60 },
                 ],
-                groups: ['fullname']
+                groups: ['Fullname']
         }));
         
-        var EventTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
+        EventTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
         EventTypesDataAdapter.dataBind();
 
-
-        $('#jqxTabsEvents').jqxTabs({ width: '99.5%', height: 37 });
+        $('#jqxTabsEvents').on('selected', function (event) { 
+            Find();
+        });
+        
+        $('#jqxTabsEvents').jqxTabs({ width: 'calc(100% - 2px)', height: 37 });
 
         for (var i = 0; i < EventTypesDataAdapter.records.length; i++) {
                $('#jqxTabsEvents').jqxTabs('addLast', EventTypesDataAdapter.records[i].EventType, '');
@@ -88,24 +113,25 @@
         
         $('#EventsGrid').jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
-                height: '660px',
-                width: '99.5%',
+                height: 'calc(100% - 2px)',
+                width: 'calc(100% - 2px)',
                 showstatusbar: true,
                 statusbarheight: 29,
                 showaggregates: true,
                 showfilterrow: false,
                 autoshowfiltericon: true,
+//                source: EventsFiltersDataAdapter,
                 pageable: true,
                 virtualmode: true,
                 columns: [
-                    { text: 'evnt_id', datafield: 'evnt_id', width: 40, hidden: true },
-                    { text: 'Дата', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
-                    { text: 'Тип', datafield: 'eventtype', width: 150 },
-                    { text: 'evtp_id', datafield: 'evtp_id', width: 40, hidden: true },
-                    { text: 'Адрес', datafield: 'addr', minwidth: 230, maxwidth: 400 },
-                    { text: 'Исполнитель', datafield: 'employeename', width: 120 },
-                    { text: 'Выполнение', dataField: 'date_exec', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
-                    { text: 'objectgr_id', datafield: 'objectgr_id', width: 60, hidden: true },
+//                    { text: 'evnt_id', datafield: 'evnt_id', width: 40, hidden: true },
+                    { text: 'Дата', dataField: 'Date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
+                    { text: 'Тип', datafield: 'EventType', width: 150 },
+                    { text: 'evtp_id', datafield: 'Evtp_id', width: 40, hidden: true },
+                    { text: 'Адрес', datafield: 'Addr', /* minwidth: 230, */ maxwidth: 400 },
+                    { text: 'Исполнитель', datafield: 'EmployeeName', width: 120 },
+                    { text: 'Выполнение', dataField: 'DateExec', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
+                    { text: 'ObjectGr_id', datafield: 'ObjectGr_id', width: 60, hidden: true },
                 ]
         }));
         
@@ -118,13 +144,38 @@
             if (Temp !== undefined) {
                 CurrentRowDataEvents = Temp;
             } else { CurrentRowDataEvents = null; };
-//            console.log(CurrentRowDataEvents);
             $('#btnEditEvent').jqxButton({disabled: (CurrentRowDataEvents == undefined)})
             $('#btnDelEvent').jqxButton({disabled: (CurrentRowDataEvents == undefined)})
         });
         
         $("#EventsClientsGrid").on("bindingcomplete", function () {
-            $('#jqxRadioBtnGroupableON').jqxRadioButton('check');
+            $('#EventsClientsGrid').jqxGrid('expandallgroups');
+            
+            if (CurrentRowDataClients == undefined)
+                $('#EventsClientsGrid').jqxGrid('selectrow', 0);
+            
+            if (CurrentRowDataClients != undefined) {
+               var Val = CurrentRowDataClients.ObjectGr_id;
+            } else Val = 0;
+            
+            var GroupCount = 0;
+            var GroupName = null;
+            var Index = 0;
+            var Rows = $('#EventsClientsGrid').jqxGrid('getrows');
+            for (var i = 0; i < Rows.length; i++) {
+                var TmpVal = $('#EventsClientsGrid').jqxGrid('getcellvalue', i, 'ObjectGr_id');
+                var TmpGroup = $('#EventsClientsGrid').jqxGrid('getcellvalue', i, 'Fullname');
+                if (GroupName != TmpGroup) {
+                    GroupCount++;
+                    GroupName = TmpGroup;
+                }
+                if (TmpVal == Val) {
+                    Index = i;
+                    break;
+                }
+            }
+            $('#EventsClientsGrid').jqxGrid('selectrow', Index);
+            $('#EventsClientsGrid').jqxGrid('ensurerowvisible', (Index + GroupCount));
         });
         
         
@@ -229,46 +280,50 @@
 <?php $this->setPageTitle('Графики'); ?>
 
 
-<div class="row" style="margin: 0;">
-    <div class="row-column"><div id='jqxRadioBtnGroupableON'>Группировать по клиенту</div></div>
-    <div class="row-column"><div id='jqxRadioBtnGroupableOFF'>Убрать группировку</div></div>
+<div class="al-row" style="margin: 0;">
+    <div class="al-row-column"><div id='jqxRadioBtnGroupableON'>Группировать по клиенту</div></div>
+    <div class="al-row-column"><div id='jqxRadioBtnGroupableOFF'>Убрать группировку</div></div>
+    <div style="clear: both"></div>
 </div>
-
-<div class="row" style="display: flex; justify-content: flex-start;">
-    
-    <div class="row-column" style="min-width: 400px; width: 45%; max-width: 700px;"><div id="EventsClientsGrid" class="jqxGridAliton"></div></div>
-    
-    <div class="row-column" style="min-width: 400px; width: 60%; max-width: 1700px;">
-        <div id='jqxTabsEvents'>
-            <ul>
-                <li>
-                    <div>
-                        Все
-                    </div>
-                </li>
-            </ul>
-
-            <div id='contentEvents0'>
+<div class="al-row" style="height: calc(100% - 76px)">
+    <div class="al-row-column" style="width: 450px;">
+        <div id="EventsClientsGrid" class="jqxGridAliton"></div>
+    </div>
+    <div class="al-row-column" style="width: calc(100% - 456px)">
+        <div style="">
+            <div id='jqxTabsEvents'>
+                <ul>
+                    <li style="margin-left: 20px;">
+                        <div>
+                            Все
+                        </div>
+                    </li>
+                </ul>
+                <div id='contentEvents0'>
+                </div>
             </div>
-
         </div>
-        <div id="EventsGrid" class="jqxGridAliton"></div>
+        <div class="al-row" style="height: calc(100% - 43px)">
+            <div id="EventsGrid" class="jqxGridAliton"></div>
+        </div>
     </div>
+    <div style="clear: both"></div>
 </div>
 
-<div class="row" style="display: flex; justify-content: flex-start;">
-    
-    <div class="row-column" style="min-width: 400px; width: 45%; max-width: 700px;">
-        <div class="row-column"><input type="button" value="Автопланирование" id='btnAutoplanning' /></div>
-        <div class="row-column"><input type="button" value="Скрыть\Показать" id='btnShowHide' /></div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 450px;">
+        <div class="al-row-column"><input type="button" value="Автопланирование" id='btnAutoplanning' /></div>
+        <div class="al-row-column"><input type="button" value="Скрыть\Показать" id='btnShowHide' /></div>
     </div>
     
-    <div class="row-column" style="display: flex; justify-content: space-between; min-width: 400px; width: 60%; max-width: 1700px;">
-        <div class="row-column"><input type="button" value="Изменить" id='btnEditEvent' /></div>
-        <div class="row-column"><input type="button" value="Удалить" id='btnDelEvent' /></div>
+    <div class="al-row-column" style="width: calc(100% - 456px)">
+        <div class="al-row-column"><input type="button" value="Изменить" id='btnEditEvent' /></div>
+        <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='btnDelEvent' /></div>
     </div>
+    <div style="clear: both"></div>
 </div>
 
+    
 <div id="EventsDialog" style="display: none;">
     <div id="EventsDialogHeader">
         <span id="EventsDialogHeaderText">Вставка\Редактирование записи</span>

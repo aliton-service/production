@@ -32,14 +32,23 @@ class SQLQuery
         while (strpos($Text, ':#', $Idx) !== false)
         {
             $Idx = strpos($Text, ':#', $Idx);
-            $IdxEnd = strpos($Text, ')', $Idx);
-            if ($IdxEnd === false)
-                $IdxEnd = strpos($Text, ',', $Idx);
-            if ($IdxEnd === false)
-                $IdxEnd = strpos($Text, ' ', $Idx);
-            if ($IdxEnd === false)
-                $IdxEnd = strlen ($Text);
-            $ParamName = substr($Text, $Idx, ($IdxEnd - $Idx));
+            $IdxEnd1 = (int)strpos($Text, ')', $Idx);
+            $IdxEnd2 = (int)strpos($Text, ',', $Idx);
+            $IdxEnd3 = (int)strpos($Text, ' ', $Idx);
+            $IdxEndFull = (int)strlen ($Text);
+            $Array = array();
+            if ($IdxEnd1 > 0)
+                array_push ($Array, $IdxEnd1);
+            if ($IdxEnd2 > 0)
+                array_push ($Array, $IdxEnd2);
+            if ($IdxEnd3 > 0)
+                array_push ($Array, $IdxEnd3);
+            if ($IdxEndFull > 0)
+                array_push ($Array, $IdxEndFull);
+            
+            $Min = min($Array);   
+            
+            $ParamName = substr($Text, $Idx, ($Min - $Idx));
             $Idx++;
             if ($ParamName <> '') {
                 $this->AddParam ($ParamName, NULL);
@@ -64,7 +73,8 @@ class SQLQuery
         {
             if (mb_strtoupper(':#' . $ParamName) === mb_strtoupper($this->Parameters[$i]['ParamName']))
             {
-                $this->Parameters[$i]['ParamValue'] = quotemeta($Value);
+                //$this->Parameters[$i]['ParamValue'] = quotemeta($Value);
+                $this->Parameters[$i]['ParamValue'] = $Value;
                 break; 
             }
         }
