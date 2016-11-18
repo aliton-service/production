@@ -271,3 +271,23 @@ Aliton.Message['ERROR_LOAD_PAGE'] = 'Внимание! Произошла оши
 Aliton.Message['ERROR_EDIT'] = 'Произошла ошибка добавления\\редактирования.';
 Aliton.Message['ERROR_DEL'] = 'Произошла ошибка удаления записи.';
 Aliton.Message['ERROR_AGREED_COSTCALC'] = 'Не согласовать КП/Смету.';
+
+
+
+
+Aliton.SetLocation = function (curLoc){
+    try {
+        history.pushState(null, null, '#' + curLoc);
+        return;
+    } catch(e) {}
+};
+
+Aliton.GetTabIndexFromURL = function (defaultTabIndex){
+    var hashStr = location.hash;
+    if (hashStr === '') {
+        return (defaultTabIndex === undefined) ? 0 : defaultTabIndex;
+    }
+    var tabIndexStr = hashStr.substr(1);
+    var tabIndex = parseInt(tabIndexStr, 10);
+    return tabIndex;
+};
