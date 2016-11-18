@@ -3,43 +3,27 @@
 
 class Events extends MainFormModel
 {
-    public $evnt_id = null;
-    public $evtp_id = null;
-    public $objectgr_id = null;
-    public $prds_id = null;
-    public $date = null;
-    public $achs_id = null;
-    public $date_plan = null;
-    public $date_exec = null;
-    public $user_date_exec = null;
-    public $add_date_exec = null;
-    public $date_act = null;
-    public $user_date_act = null;
-    public $add_date_act = null;
-    public $empl_id = null;
-    public $rpfr_id = null;
-    public $who_reported = null;
-    public $evaluation = null;
-    public $note = null;
-    public $user_create = null;
-    public $DateCreate = null;
-    public $DelDate = null;
-    public $EmplCreate = null;
-    public $EmplChange = null;
-    public $DateChange = null;
-    public $EmplDel = null;
-    public $EmplExec = null;
+    public $Evnt_id;
+    public $Evtp_id;
+    public $EventType;
+    public $ObjectGr_id;
+    public $Date;
+    public $DateExec;
+    public $Empl_id;
+    public $EmployeeName;
+    public $Addr;
+    public $OverDay;
+    public $Note;
+    public $DateAct;
+    public $DatePlan;
+    public $Rpfr_id;
+    public $Evaluation;
+    public $Prds_id;
+    public $Who_reported;
+    public $EmplCreate;
 
-    public $addr = null;
-    public $ServiceType = null;
-    public $emplcreate = null;
-    public $master = null;
-    public $datestart = null;
-    public $dateend = null;
-    public $form_id = null;
-
-    public $KeyFiled = 'e.evnt_id';
-    public $PrimaryKey = 'evnt_id';
+    public $KeyFiled = 'e.Evnt_id';
+    public $PrimaryKey = 'Evnt_id';
 
     public $SP_INSERT_NAME = 'AUTO_Events';
     public $SP_UPDATE_NAME = 'UPDATE_Events';
@@ -48,60 +32,63 @@ class Events extends MainFormModel
 
     public function __construct($scenario = '') {
         parent::__construct($scenario);
-        $select = "\nSelect
-                        e.evnt_id,
-                        e.evtp_id,
-                        et.eventtype,
-                        e.objectgr_id,
-                        e.date,
-                        e.date_exec,
-                        e.empl_id,
-                        dbo.fio(emp.employeename) employeename,
-                        a.addr,
-                        datediff(dd, dateadd(mm, 1, dbo.encodedate(5, month(e.date), year(e.date))), isnull(e.date_exec, getdate())) overday,
-                        e.note,
-                        e.date_act,
-                        e.date_plan,
-                        e.rpfr_id,
-                        c.ServiceType,
-                        e.evaluation,
-                        e.prds_id,
-                        e.who_reported,
-                        emp3.EmployeeName as master,
-                        dbo.fio(emp2.employeename) emplcreate,
-                        o.form_id
-        ";
-        $from = "\nFrom events e 
-                        inner join eventtypes et on (e.evtp_id = et.evtp_id)
-                        left join employees_forobj_v emp on (e.empl_id = emp.employee_id)
-                        inner join objectsgroup og on (e.objectgr_id = og.objectgr_id)
-                        left join employees_forobj_v emp2 on (e.EmplCreate = emp2.employee_id)
-                        inner join organizations_v o on (og.propform_id = o.form_id)
-                        inner join addresses_v a on (a.address_id = og.address_id)
-                        left join contracts_v c on (c.objectgr_id = og.objectgr_id and dbo.truncdate(getdate()) between c.contrsdatestart and c.contrsdateend and c.doctype_id = 4)
-                        left join Employees emp3 on (c.Master = emp3.Employee_id)
-        ";
-        $where = "\nWhere e.deldate is null";
+        $Select = "\nSelect
+                        e.Evnt_id,
+                        e.Evtp_id,
+                        et.EventType,
+                        e.ObjectGr_id,
+                        e.Date,
+                        e.Date_exec as DateExec,
+                        e.Empl_id,
+                        e1.ShortName as EmployeeName,
+                        a.Addr,
+                        datediff(dd, dateadd(mm, 1, dbo.encodedate(5, month(e.date), year(e.date))), isnull(e.date_exec, getdate())) OverDay,
+                        e.Note,
+                        e.Date_act as DateAct,
+                        e.date_plan as DatePlan,
+                        e.Rpfr_id,
+                        e.Evaluation,
+                        e.Prds_id,
+                        e.Who_reported,
+                        e2.ShortName as EmplCreate";
+        $From = "\nFrom Events e inner join EventTypes et on (e.evtp_id = et.evtp_id)
+                        inner join ObjectsGroup og on (e.ObjectGr_id = og.ObjectGr_id)
+                        inner join Addresses_v a on (og.Address_id = a.Address_id)
+                        left join Employees_forobj_v e1 on (e.empl_id = e1.employee_id)
+                        left join Employees_forobj_v e2 on (e.EmplCreate = e2.employee_id)";
+        $Where = "\nWhere
+                        e.DelDate is null
+                        and og.DelDate is Null";
 
-        $order = "\nOrder by a.addr, et.eventtype, e.date ";
+        $Order = "\nOrder by et.EventType, e.Date";
 
-        $groupby = "\nGroup by e.evnt_id, e.date_act, e.evaluation, e.evtp_id, emp3.EmployeeName, e.who_reported, et.eventtype, e.rpfr_id, e.objectgr_id, e.prds_id, e.date, e.date_exec, e.empl_id, emp.employeename, emp2.employeename, c.ServiceType, e.date_plan, e.note, a.addr, o.form_id ";
-
-        $this->Query->setSelect($select);
-        $this->Query->setFrom($from);
-        $this->Query->setOrder($order);
-        $this->Query->setWhere($where);
-        $this->Query->setGroupBy($groupby);
+        $this->Query->setSelect($Select);
+        $this->Query->setFrom($From);
+        $this->Query->setOrder($Order);
+        $this->Query->setWhere($Where);
     }
 
     public function rules()
     {
         return array(
-            array('evtp_id, objectgr_id, empl_id', 'required'),
-            array('evtp_id, objectgr_id, prds_id, achs_id, empl_id, rpfr_id, user_create, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
-            array('user_date_exec, user_date_act', 'length', 'max'=>20),
-            array('who_reported, evaluation', 'length', 'max'=>150),
-            array('dateend, datestart, evnt_id, evtp_id, objectgr_id, prds_id, date, achs_id, date_plan, date_exec, user_date_exec, add_date_exec, date_act, user_date_act, add_date_act, empl_id, rpfr_id, who_reported, evaluation, note, user_create, DateCreate, DelDate, EmplCreate, EmplChange, DateChange, EmplDel', 'safe'),
+            array('Evnt_id,
+                    Evtp_id,
+                    EventType,
+                    ObjectGr_id,
+                    Date,
+                    DateExec,
+                    Empl_id,
+                    EmployeeName,
+                    Addr,
+                    OverDay,
+                    Note,
+                    DateAct,
+                    DatePlan,
+                    Rpfr_id,
+                    Evaluation,
+                    Prds_id,
+                    Who_reported,
+                    EmplCreate,', 'safe'),
         );
     }
 
@@ -109,39 +96,33 @@ class Events extends MainFormModel
     public function attributeLabels()
     {
         return array(
-            'evnt_id' => 'Evnt',
-            'evtp_id' => 'Направление',
-            'objectgr_id' => 'Objectgr',
-            'prds_id' => 'Prds',
-            'date' => 'Date',
-            'achs_id' => 'Achs',
-            'date_plan' => 'Date Plan',
-            'date_exec' => 'Date Exec',
-            'user_date_exec' => 'User Date Exec',
-            'add_date_exec' => 'Add Date Exec',
-            'date_act' => 'Date Act',
-            'user_date_act' => 'User Date Act',
-            'add_date_act' => 'Add Date Act',
-            'empl_id' => 'Исполнитель',
-            'rpfr_id' => 'Форма отчетности',
-            'who_reported' => 'Who Reported',
-            'evaluation' => 'Evaluation',
-            'note' => 'Note',
-            'user_create' => 'User Create',
-            'DateCreate' => 'Date Create',
-            'DelDate' => 'Del Date',
-            'EmplCreate' => 'Empl Create',
-            'EmplChange' => 'Empl Change',
-            'DateChange' => 'Date Change',
-            'EmplDel' => 'Empl Del',
+            'Evnt_id' => '',
+            'Evtp_id' => '',
+            'EventType' => '',
+            'ObjectGr_id' => '',
+            'Date' => '',
+            'DateExec' => '',
+            'Empl_id' => '',
+            'EmployeeName' => '',
+            'Addr' => '',
+            'OverDay' => '',
+            'Note' => '',
+            'DateAct' => '',
+            'DatePlan' => '',
+            'Rpfr_id' => '',
+            'Evaluation' => '',
+            'Prds_id' => '',
+            'Who_reported' => '',
+            'EmplCreate' => '',
         );
     }
 
     public function attributeFilters()
     {
         return array(
-            'objectgr_id' => 'e.objectgr_id',
-            'evtp_id' => 'e.evtp_id',
+            'ObjectGr_id' => 'e.ObjectGr_id',
+            'Evtp_id' => 'e.Evtp_id',
+            'DateExec' => 'e.Date_exec',
         );
     }
 }

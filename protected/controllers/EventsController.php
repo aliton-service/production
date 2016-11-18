@@ -20,7 +20,7 @@ class EventsController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'equipAnalog', 'clients', 'autoevents', 'ShowHide'),
+                'actions' => array('index', 'view', 'equipAnalog', 'clients', 'autoevents', 'ShowHide', 'Clients'),
                 'roles' => array('ViewEvents'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -156,7 +156,58 @@ class EventsController extends Controller
         }
     }
 
-
+    public function actionClients() {
+        $Query = new SQLQuery();
+        $Query->setSelect(" Select
+                                o.Form_id,
+                                o.Fullname,
+                                Case when o.sum_price > 7500 then 1 else 0 end VIP,
+                                og.ObjectGr_id,
+                                a.Addr,
+                                Count(e.Evnt_id) as EventCount,
+                                Sum(Case When e.evnt_id is not null and e.date_exec is null then 1 else 0 end) as NoExecEventCount
+                            From Organizations_v o inner join ObjectsGroup og on (o.Form_id = og.PropForm_id and og.Deldate is null)
+                                    inner join Addresses_v a on (og.address_id = a.address_id)
+                                    left join Contracts_v c on (c.ObjectGr_id = og.ObjectGr_id and c.DocType_id = 4 and dbo.truncdate(GETDATE()) between c.ContrSDateStart and c.ContrSDateEnd)
+                                    left join Events e on (og.ObjectGr_id = e.Objectgr_id and e.DelDate is Null
+                                        :#EventNoExec 
+                                    )
+                            Where o.Lph_id = 1
+                                    and isnull(c.Servicetype_id, 0) <> 1
+                                    and isnull(c.Servicetype_id, 0) <> 2
+                                    and isnull(c.Servicetype_id, 0) <> 37
+                                    and isnull(c.Servicetype_id, 0) <> 42
+                                    and isnull(c.Servicetype_id, 0) <> 45
+                                    :#Master 
+                            Group by
+                                    o.Form_id,
+                                    o.FullName,
+                                    o.sum_price,
+                                    og.ObjectGr_id,
+                                    a.Addr
+                            Having (1 = 1)
+                            Order by o.FullName, a.Addr");
+        
+        $Variables = array();
+        if (isset($_GET['Variables']))
+            $Variables = $_GET['Variables'];
+        
+        foreach ($Variables as $Key => $Value) {
+            $Query->bindParam($Key, $Value);
+        }
+  
+        $Result = $Query->QueryAll();
+        $CountRow = count($Result);
+        
+        $Data = array();
+        
+        $Data[] = array(
+            'TotalRows' => $CountRow,
+            'Rows' => $Result,
+        );
+        echo json_encode($Data);
+        
+    }
 
 }
 
