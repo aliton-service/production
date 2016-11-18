@@ -29,8 +29,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '100%',
-                height: '300',
+                width: '99%',
+                height: 'calc(100% - 470px)',
                 source: ContractsSDataAdapter,
                 columns: [
                     { text: 'Вид документа', dataField: 'DocType_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
@@ -52,16 +52,16 @@
         );
 
         
-        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
-        $("#MasterName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
+        $("#MasterName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 230 }));
         $("#DateExecuting").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
-        $("#SpecialCondition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 470 }));
-        $("#ContrNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 470 }));
+        $("#SpecialCondition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 90 }));
+        $("#ContrNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 90 }));
         
         
         
         
-        $("#dropDownBtnContracts").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: true, width: 210, height: 28 }));
+        $("#dropDownBtnContracts").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { width: 210, height: 28 }));
         $("#jqxTreeContracts").jqxTree({ width: 210 });
         $("#MoreInformContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
         $("#ReloadContracts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -174,7 +174,7 @@
         
         
         
-        $('#jqxTabsContracts').jqxTabs({ width: '99%', height: 285 });
+        $('#jqxTabsContracts').jqxTabs({ width: '99%', height: 270 });
         $('#jqxTabsContracts').jqxTabs({ selectedItem: 1 });
         
         
@@ -184,63 +184,57 @@
                 CurrentRowData = Temp;
             } else {CurrentRowData = null};
             
-            console.log(CurrentRowData);
+            if (CurrentRowData != null) {
+                if (CurrentRowData.MasterName != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
+                if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
+                if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxInput('val', CurrentRowData.DateExecuting);
+                if (CurrentRowData.SpecialCondition != '') $("#SpecialCondition").jqxTextArea('val', CurrentRowData.SpecialCondition);
+                if (CurrentRowData.ContrNote != '') $("#ContrNote").jqxTextArea('val', CurrentRowData.ContrNote);
             
-            if (CurrentRowData.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
-            if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
-            if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxInput('val', CurrentRowData.DateExecuting);
-            if (CurrentRowData.SpecialCondition != '') $("#SpecialCondition").jqxTextArea('val', CurrentRowData.SpecialCondition);
-            if (CurrentRowData.ContrNote != '') $("#ContrNote").jqxTextArea('val', CurrentRowData.ContrNote);
-            
-            var ContractSystemsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractSystems, {}), {
-                formatData: function (data) {
-                    $.extend(data, {
-                        Filters: ["cs.ContrS_id = " + CurrentRowData.ContrS_id],
-                    });
-                    return data;
-                },
-            });
-            ContractSystemsDataAdapter.dataBind();
-            $("#ContractSystemsGrid").jqxGrid({source: ContractSystemsDataAdapter});
-            
-            
-            
-            var ContractPriceHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractPriceHistory, {}), {
-                formatData: function (data) {
-                    $.extend(data, {
-                        Filters: ["ph.ContrS_id = " + CurrentRowData.ContrS_id],
-                    });
-                    return data;
-                },
-            });
-            ContractPriceHistoryDataAdapter.dataBind();
-            $("#ContractPriceHistoryGrid").jqxGrid({source: ContractPriceHistoryDataAdapter});
-            
-            
-            
-            var PaymentHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePaymentHistory, {}), {
-                formatData: function (data) {
-                    $.extend(data, {
-                        Filters: ["ph.cntr_id = " + CurrentRowData.ContrS_id],
-                    });
-                    return data;
-                },
-            });
-            PaymentHistoryDataAdapter.dataBind();
-            $("#PaymentHistoryGrid").jqxGrid({source: PaymentHistoryDataAdapter});
-            
-            
-            
-            var ContractMasterHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractMasterHistory, {}), {
-                formatData: function (data) {
-                    $.extend(data, {
-                        Filters: ["c.ContrS_id = " + CurrentRowData.ContrS_id],
-                    });
-                    return data;
-                },
-            });
-            ContractMasterHistoryDataAdapter.dataBind();
-            $("#ContractMasterHistoryGrid").jqxGrid({source: ContractMasterHistoryDataAdapter});
+                var ContractSystemsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractSystems, {}), {
+                    formatData: function (data) {
+                        $.extend(data, {
+                            Filters: ["cs.ContrS_id = " + CurrentRowData.ContrS_id],
+                        });
+                        return data;
+                    },
+                });
+                ContractSystemsDataAdapter.dataBind();
+                $("#ContractSystemsGrid").jqxGrid({source: ContractSystemsDataAdapter});
+
+                var ContractPriceHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractPriceHistory, {}), {
+                    formatData: function (data) {
+                        $.extend(data, {
+                            Filters: ["ph.ContrS_id = " + CurrentRowData.ContrS_id],
+                        });
+                        return data;
+                    },
+                });
+                ContractPriceHistoryDataAdapter.dataBind();
+                $("#ContractPriceHistoryGrid").jqxGrid({source: ContractPriceHistoryDataAdapter});
+
+                var PaymentHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePaymentHistory, {}), {
+                    formatData: function (data) {
+                        $.extend(data, {
+                            Filters: ["ph.cntr_id = " + CurrentRowData.ContrS_id],
+                        });
+                        return data;
+                    },
+                });
+                PaymentHistoryDataAdapter.dataBind();
+                $("#PaymentHistoryGrid").jqxGrid({source: PaymentHistoryDataAdapter});
+
+                var ContractMasterHistoryDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractMasterHistory, {}), {
+                    formatData: function (data) {
+                        $.extend(data, {
+                            Filters: ["c.ContrS_id = " + CurrentRowData.ContrS_id],
+                        });
+                        return data;
+                    },
+                });
+                ContractMasterHistoryDataAdapter.dataBind();
+                $("#ContractMasterHistoryGrid").jqxGrid({source: ContractMasterHistoryDataAdapter});
+            }
         });
         
 
@@ -450,7 +444,7 @@
         $("#BtnOkDialogContractPriceHistory").on('click', function () {
             SendFormContractPriceHistory(Mode);
         });
-        console.log('Reason_id ' +Contracts.Reason_id);
+        
         var LoadFormContractPriceHistory = function(Mode, id) {
             var Date = CurrentRowData.ContrSDateEnd;
             var DateEnd = Date.getDate() + '.' + (Date.getMonth()+1) + '.' + Date.getFullYear();
@@ -484,8 +478,7 @@
         };
         
         
-        $("#NewContractPriceHistory").on('click', function ()
-        {
+        $("#NewContractPriceHistory").on('click', function () {
             Mode = 'InsertContractPriceHistory';
             LoadFormContractPriceHistory(Mode, CurrentRowData.ContrS_id);
             $('#EditDialogContractPriceHistory').jqxWindow('open');
@@ -566,7 +559,7 @@
             $("#EditPaymentHistory").click();
         });
         
-        $("#NotePaymentHistory").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 270, height: 160 }));
+        $("#NotePaymentHistory").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 160 }));
         
         $("#NewPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -830,29 +823,31 @@
 
 <style>
     
-    #ContractsGrid .jqx-fill-state-pressed {
-        background-color: #86BFA0 !important;
+    .jqxGridAliton .jqx-fill-state-pressed {
+        background-color: #A7D2BB !important;
         color: black;
     }
-     
+    .jqx-tree-item-li {
+        margin-left: 0 !important;
+    }
 </style>
 
 <div class="row">
     <div id="ContractsGrid" class="jqxGridAliton"></div>
 </div>
 
+<div class="row" style="display: flex; justify-content: space-between;">
+    <div class="row-column">
+        <div class="row">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
+        <div class="row">Мастер: <input readonly id="MasterName" type="text"></div>
+        <div class="row">Дата проводки через ВЦКП: <input readonly id='DateExecuting' type="text"></div> 
+    </div>
 
-<div class="row">
-    <div class="row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
-    <div class="row-column">Мастер: <input readonly id="MasterName" type="text"></div>
-    <div class="row-column">Дата проводки через ВЦКП: <input readonly id='DateExecuting' type="text"></div> 
+    <div class="row-column" style="width: calc(100% - 305px);">
+        <div class="row-column" style="width: 48%;">Особые договоренности: <textarea readonly id="SpecialCondition" ></textarea></div>
+        <div class="row-column" style="width: 49%;">Примечание: <textarea readonly id="ContrNote" ></textarea></div>
+    </div>
 </div>
-
-<div class="row">
-    <div class="row-column">Особые договоренности: <textarea readonly id="SpecialCondition" ></textarea></div>
-    <div class="row-column">Примечание: <textarea readonly id="ContrNote" ></textarea></div>
-</div>
-
 
 <div class="row">
     <div class="row-column">
@@ -860,10 +855,10 @@
             <div style='float: left;' id="dropDownBtnContracts">
                 <div style="border: none;" id='jqxTreeContracts'>
                     <ul>
-                        <li><div style="width: 160px; height: 20px;">Договор обслуживания</div></li>
-                        <li><div style="width: 160px; height: 20px;">Доп.соглашение</div></li>
-                        <li><div style="width: 160px; height: 20px;">Счет</div></li>
-                        <li><div style="width: 160px; height: 20px;">Счет-заказ</div></li>
+                        <li><div style="width: 160px; padding: 5px; text-align: center;">Договор обслуживания</div></li>
+                        <li><div style="width: 160px; padding: 5px; text-align: center;">Доп.соглашение</div></li>
+                        <li><div style="width: 160px; padding: 5px; text-align: center;">Счет</div></li>
+                        <li><div style="width: 160px; padding: 5px; text-align: center;">Счет-заказ</div></li>
                     </ul>
                 </div>
             </div>
@@ -875,7 +870,7 @@
 </div>
 
 
-<div id='jqxWidgetContracts' style="margin-top: 15px;">
+<div id='jqxWidgetContracts' style="margin-top: 10px;">
     <div id='jqxTabsContracts'>
         <ul>
             <li>
@@ -909,14 +904,12 @@
         </ul>
         
         
-        <div id='contentContractSystems' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%">
-            <div style="margin-top: 10px;">
-                <div id="ContractSystemsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+        <div id='contentContractSystems' style="overflow: hidden; margin: 5px; width: 100%; height: 100%">
+            <div id="ContractSystemsGrid" class="jqxGridAliton"></div>
 
-                <div class="row">
-                    <div class="row-column"><input type="button" value="Добавить" id='NewContractSystems' /></div>
-                    <div class="row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractSystems' /></div>
-                </div>
+            <div class="row">
+                <div class="row-column"><input type="button" value="Добавить" id='NewContractSystems' /></div>
+                <div class="row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractSystems' /></div>
             </div>
 
             <div id="EditDialogContractSystems">
@@ -936,15 +929,13 @@
         </div>
         
         
-        <div id='contentContractPriceHistory' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%">
-            <div style="margin-top: 10px;">
-                <div id="ContractPriceHistoryGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+        <div id='contentContractPriceHistory' style="overflow: hidden; margin: 5px; width: 100%; height: 100%">
+            <div id="ContractPriceHistoryGrid" class="jqxGridAliton"></div>
 
-                <div class="row">
-                    <div class="row-column"><input type="button" value="Добавить" id='NewContractPriceHistory' /></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='EditContractPriceHistory' /></div>
-                    <div class="row-column"><input type="button" value="Очистить тарифы" id='ClearContractPriceHistory' /></div>
-                </div>
+            <div class="row">
+                <div class="row-column"><input type="button" value="Добавить" id='NewContractPriceHistory' /></div>
+                <div class="row-column"><input type="button" value="Изменить" id='EditContractPriceHistory' /></div>
+                <div class="row-column"><input type="button" value="Очистить тарифы" id='ClearContractPriceHistory' /></div>
             </div>
 
             <div id="EditDialogContractPriceHistory">
@@ -964,18 +955,15 @@
         </div>
         
         
-        <div id='contentPaymentHistory' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%">
-            <div style="margin-top: 10px;">
-                <div class="row" style="padding: 0;">
-                    <div class="row-column" style="width: 83%;"><div id="PaymentHistoryGrid" class="jqxGridAliton" style="margin-right: 10px"></div></div>
-
-                    <div class="row-column">Примечание: <textarea readonly id="NotePaymentHistory"></textarea></div>
-                </div>
-                <div class="row">
-                    <div class="row-column"><input type="button" value="Добавить" id='NewPaymentHistory' /></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='EditPaymentHistory' /></div>
-                    <div class="row-column" style="float: right; margin-right: 25px;"><input type="button" value="Удалить" id='DelPaymentHistory' /></div>
-                </div>
+        <div id='contentPaymentHistory' style="overflow: hidden; margin: 5px; width: 100%; height: 100%">
+            <div class="row" style="margin: 0; padding: 0;">
+                <div class="row-column" style="width: calc(100% - 310px);"><div id="PaymentHistoryGrid" class="jqxGridAliton"></div></div>
+                <div class="row-column" style="width: 280px;">Примечание: <textarea readonly id="NotePaymentHistory"></textarea></div>
+            </div>
+            <div class="row">
+                <div class="row-column"><input type="button" value="Добавить" id='NewPaymentHistory' /></div>
+                <div class="row-column"><input type="button" value="Изменить" id='EditPaymentHistory' /></div>
+                <div class="row-column" style="float: right; margin-right: 25px;"><input type="button" value="Удалить" id='DelPaymentHistory' /></div>
             </div>
 
             <div id="EditDialogPaymentHistory">
@@ -995,16 +983,13 @@
         </div>
         
         
-        <div id='contentContractMasterHistory' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%">
-            <div style="margin-top: 10px;">
-                <div class="row" style="padding: 0;">
-                    <div class="row-column" style="width: 100%;"><div id="ContractMasterHistoryGrid" class="jqxGridAliton" style="margin-right: 10px"></div></div>
-                </div>
-                <div class="row">
-                    <div class="row-column"><input type="button" value="Добавить" id='NewContractMasterHistory' /></div>
-                    <div class="row-column"><input type="button" value="Обновить" id='ReloadContractMasterHistory' /></div>
-                    <div class="row-column" style="float: right; margin-right: 25px;"><input type="button" value="Удалить" id='DelContractMasterHistory' /></div>
-                </div>
+        <div id='contentContractMasterHistory' style="overflow: hidden; margin: 5px; width: 100%; height: 100%">
+            <div id="ContractMasterHistoryGrid" class="jqxGridAliton"></div>
+            
+            <div class="row">
+                <div class="row-column"><input type="button" value="Добавить" id='NewContractMasterHistory' /></div>
+                <div class="row-column"><input type="button" value="Обновить" id='ReloadContractMasterHistory' /></div>
+                <div class="row-column" style="float: right; margin-right: 25px;"><input type="button" value="Удалить" id='DelContractMasterHistory' /></div>
             </div>
 
             <div id="EditDialogContractMasterHistory">

@@ -362,7 +362,7 @@
     #ObjectsGrid .jqx-fill-state-pressed,
     #CommonEquipsGrid .jqx-fill-state-pressed,
     #ObjectEquipsGrid .jqx-fill-state-pressed {
-        background-color: #86BFA0 !important;
+        background-color: #A7D2BB !important;
         color: black;
     }
      

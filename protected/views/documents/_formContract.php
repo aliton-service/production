@@ -24,7 +24,14 @@
             PriceMonth: '<?php echo $model->PriceMonth; ?>',
             Master: '<?php echo $model->Master; ?>',
             ServiceType: '<?php echo $model->ServiceType_id; ?>',
+            DialogId: <?php echo json_encode($DialogId); ?>,
+            BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
+
+        if (Document.DialogId == '' || Document.DialogId == null) {
+            Document.DialogId = 'NewContractDialog';
+            Document.BodyDialogId = 'NewContractBodyDialog';
+        }
             
         var DataJuridical3 = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
         var DataContractTypes3 = new $.jqx.dataAdapter(Sources.SourceContractTypes);
@@ -79,10 +86,48 @@
         if (Document.SpecialCondition != '') $("#SpecialCondition3").jqxTextArea('val', Document.SpecialCondition);
         if (Document.Note != '') $("#Note3").jqxTextArea('val', Document.Note);
         if (Document.PriceMonth != '') $("#PriceMonth3").jqxNumberInput('val', Document.PriceMonth);
-       
+        
+        
+        $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        var SendFormContract = function(Form) {
+            var Data;
+            if (Form == undefined)
+                Data = $('#Documents').serialize();
+            else Data = Form;
+            Data = Data + "&DocType_Name=" + "Договор обслуживания" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
+            $.ajax({
+                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+                type: 'POST',
+                async: false,
+                data: Data,
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#' + Document.DialogId).jqxWindow('close');
+                        if (Document.DialogId == '') {
+                            $("#ContractsGrid").jqxGrid('updatebounddata');
+                            $("#ContractsGrid").jqxGrid('selectrow', 0);
+                        }
+                        if (Document.DialogId == 'CostCalculationsDialog')
+                            $('#RefreshCostCalcDocuments').click();
+                        
+                    } else {
+                        $('#' + Document.BodyDialogId).html(Res);
+                    }
+                }
+            });
+        }
+
+        $("#NewContractBtnOk").on('click', function () {
+            SendFormContract();
+        });
+        
+        $("#NewContractBtnCancel").on('click', function () {
+            $('#' + Document.DialogId).jqxWindow('close');
+        });
     });
     
-        
 </script>
 
 <?php
@@ -143,6 +188,10 @@
 
 <div class="row">
     <div class="row-column">Примечание: <textarea id="Note3" name="Documents[Note]"></textarea></div>
+</div>
+<div class="row">
+    <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

@@ -98,13 +98,13 @@
                             enablebrowserselection: true,
                             columns:
                             [
-                                { text: 'Дата сообщения', datafield: 'date', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
-                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 100 },
-                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 150, cellsformat: 'dd.MM.yyyy' },
-                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' },
-                                { text: 'Действие', filtertype: 'range', datafield: 'report', width: 250 },
-                                { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 150 },
-                                { text: '№ Заявки', datafield: 'demand_id', width: 100},
+                                { text: 'Дата сообщения', datafield: 'date', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 140 },
+                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 120, cellsformat: 'dd.MM.yyyy' },
+                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 120, cellsformat: 'dd.MM.yyyy HH:mm' },
+                                { text: 'Действие', filtertype: 'range', datafield: 'report', width: 400 },
+                                { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 120 },
+                                { text: '№ Заявки', datafield: 'demand_id', width: 80},
                             ]
                     }));
                     $("#edComment").jqxInput({height: 25, width: 'calc(100% - 6px)', minLength: 1});
@@ -304,6 +304,12 @@
     });
 </script>
 
+<style>
+    
+    /*@media all and (orientation: landscape), all and (min-width: 480px) { ... }*/
+    
+</style>
+
 <div style="float: left; width: 1100px; height: 310px;">
     <div style="float: left; width: 100%; height: 32px">
         <div class="row-column">Номер</div>
@@ -444,17 +450,17 @@
     <div class="row-column" style="float: right;"><input type="button" value="Выполнено" id='btnExec' /></div>
 </div>    
 <div style="clear: both;"></div>
-<div style="float: left; width: 100%; height: calc(100% - 342px)">
+<div style="float: left; width: 100%; margin-top: 5px; height: calc(100% - 347px)">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 20px;">
-                <div style="height: 20px; margin-top: 5px;">
+                <div style="height: 15px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ход работы</div>
 
                 </div>
             </li>
             <li>
-                <div style="height: 20px; margin-top: 5px;">
+                <div style="height: 15px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Исполнители</div>
                 </div>
             </li>

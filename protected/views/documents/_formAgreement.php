@@ -85,7 +85,7 @@
         });
         
         
-        var SendFormContract = function(Form) {
+        $("#NewContractBtnOk").on('click', function () {
             var Data;
             if (Form == undefined)
                 Data = $('#Documents').serialize();
@@ -100,6 +100,7 @@
                     if (Res == '1' || Res == 1) {
                         $('#' + Document.DialogId).jqxWindow('close');
                         if (Document.DialogId == '') {
+                            console.log();
                             $("#ContractsGrid").jqxGrid('updatebounddata');
                             $("#ContractsGrid").jqxGrid('selectrow', 0);
                         }
@@ -111,10 +112,6 @@
                     }
                 }
             });
-        }
-
-        $("#NewContractBtnOk").on('click', function () {
-            SendFormContract();
         });
         
         if (Document.ContrNumS != '') $("#ContrNumS5").jqxInput('val', Document.ContrNumS);
