@@ -44,7 +44,7 @@
         $("#edDemandType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandType});
         $("#edSystemType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SystemType});
         $("#edEquipType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.EquipType});
-        $("#edMalfunction").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.Malfunction});
+        $("#edMalfunction").jqxInput({height: 25, width: '100%', minLength: 1, value: Demand.Malfunction});
         $("#edDemandPrior").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandPrior});
         $("#edContacts").jqxInput({height: 25, width: 280, minLength: 1, value: Demand.Contacts});
         $("#edCloseReason").jqxInput({height: 25, width: 300, minLength: 1, value: Demand.CloseReason});
@@ -306,11 +306,31 @@
 
 <style>
     
-    /*@media all and (orientation: landscape), all and (min-width: 480px) { ... }*/
+    #demandInputs {
+        height: 310px;
+    }
+    #demandTabs {
+        height: calc(100% - 347px);
+    }
+        
+    @media screen and (max-height: 800px) { 
+        #demandInputs {
+            height: 160px;
+            overflow-x: hidden;
+        }
+        #demandTabs {
+            height: calc(100% - 197px);
+        }
+    }
+    
+/*    @media screen and (min-width: 1300px) { 
+        #MalfunctionWrapper {}
+        
+    }*/
     
 </style>
 
-<div style="float: left; width: 1100px; height: 310px;">
+<div id='demandInputs' style="float: left; width: 1100px;">
     <div style="float: left; width: 100%; height: 32px">
         <div class="row-column">Номер</div>
         <div class="row-column"><input readonly id="edNumber" type="text"/></div>
@@ -343,7 +363,7 @@
             <div style="clear: both;"></div>
             <div><input readonly id="edEquipType" type="text"/></div>
         </div>
-        <div class="row-column" style="width: 180px;">
+        <div id='MalfunctionWrapper' class="row-column" style="width: 180px;">
             <div>Неисправность</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edMalfunction" type="text"/></div>
@@ -450,7 +470,7 @@
     <div class="row-column" style="float: right;"><input type="button" value="Выполнено" id='btnExec' /></div>
 </div>    
 <div style="clear: both;"></div>
-<div style="float: left; width: 100%; margin-top: 5px; height: calc(100% - 347px)">
+<div id="demandTabs" style="float: left; width: 100%; margin-top: 5px;">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 20px;">
