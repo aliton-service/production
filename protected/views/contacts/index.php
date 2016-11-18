@@ -28,8 +28,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '100%',
-                height: '300',
+                width: '99%',
+                height: 'calc(100% - 270px)',
                 source: ContactsDataAdapter,
                 columns: [
                     { text: 'Отдел', columngroup: 'Current', dataField: 'GroupContact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
@@ -44,8 +44,7 @@
                     { text: 'Тип', columngroup: 'Next', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
                     { text: 'Контактное лицо', columngroup: 'Next', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
                 ],
-                columngroups: 
-                [
+                columngroups: [
                     { text: '', align: 'center', name: 'Current' },
                     { text: 'Следующий контакт', align: 'center', name: 'Next' },
                 ]
@@ -221,7 +220,7 @@
 <style>
     
     #ContactsGrid .jqx-fill-state-pressed {
-        background-color: #86BFA0 !important;
+        background-color: #A7D2BB !important;
         color: black;
     }
      

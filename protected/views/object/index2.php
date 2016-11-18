@@ -308,7 +308,7 @@
     
     #ObjectsGrid .jqx-fill-state-pressed {
         color: black;
-        background-color: #86BFA0 !important;
+        background-color: #A7D2BB !important;
     }
     
     .jqx-calendar-month-container:last-child {

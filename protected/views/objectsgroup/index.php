@@ -327,7 +327,7 @@
 <style>
     
     #ContactInfoGrid .jqx-fill-state-pressed {
-        background-color: #86BFA0 !important;
+        background-color: #A7D2BB !important;
         color: black;
     }
      

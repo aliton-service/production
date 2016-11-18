@@ -44,7 +44,7 @@
         $("#edDemandType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandType});
         $("#edSystemType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SystemType});
         $("#edEquipType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.EquipType});
-        $("#edMalfunction").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.Malfunction});
+        $("#edMalfunction").jqxInput({height: 25, width: '100%', minLength: 1, value: Demand.Malfunction});
         $("#edDemandPrior").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandPrior});
         $("#edContacts").jqxInput({height: 25, width: 280, minLength: 1, value: Demand.Contacts});
         $("#edCloseReason").jqxInput({height: 25, width: 300, minLength: 1, value: Demand.CloseReason});
@@ -98,13 +98,13 @@
                             enablebrowserselection: true,
                             columns:
                             [
-                                { text: 'Дата сообщения', datafield: 'date', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
-                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 100 },
-                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 150, cellsformat: 'dd.MM.yyyy' },
-                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' },
-                                { text: 'Действие', filtertype: 'range', datafield: 'report', width: 250 },
-                                { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 150 },
-                                { text: '№ Заявки', datafield: 'demand_id', width: 100},
+                                { text: 'Дата сообщения', datafield: 'date', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 140 },
+                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 120, cellsformat: 'dd.MM.yyyy' },
+                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 120, cellsformat: 'dd.MM.yyyy HH:mm' },
+                                { text: 'Действие', filtertype: 'range', datafield: 'report', width: 400 },
+                                { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 120 },
+                                { text: '№ Заявки', datafield: 'demand_id', width: 80},
                             ]
                     }));
                     $("#edComment").jqxInput({height: 25, width: 'calc(100% - 6px)', minLength: 1});
@@ -304,7 +304,33 @@
     });
 </script>
 
-<div style="float: left; width: 1100px; height: 310px;">
+<style>
+    
+    #demandInputs {
+        height: 310px;
+    }
+    #demandTabs {
+        height: calc(100% - 347px);
+    }
+        
+    @media screen and (max-height: 800px) { 
+        #demandInputs {
+            height: 160px;
+            overflow-x: hidden;
+        }
+        #demandTabs {
+            height: calc(100% - 197px);
+        }
+    }
+    
+/*    @media screen and (min-width: 1300px) { 
+        #MalfunctionWrapper {}
+        
+    }*/
+    
+</style>
+
+<div id='demandInputs' style="float: left; width: 1100px;">
     <div style="float: left; width: 100%; height: 32px">
         <div class="row-column">Номер</div>
         <div class="row-column"><input readonly id="edNumber" type="text"/></div>
@@ -337,7 +363,7 @@
             <div style="clear: both;"></div>
             <div><input readonly id="edEquipType" type="text"/></div>
         </div>
-        <div class="row-column" style="width: 180px;">
+        <div id='MalfunctionWrapper' class="row-column" style="width: 180px;">
             <div>Неисправность</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edMalfunction" type="text"/></div>
@@ -444,17 +470,17 @@
     <div class="row-column" style="float: right;"><input type="button" value="Выполнено" id='btnExec' /></div>
 </div>    
 <div style="clear: both;"></div>
-<div style="float: left; width: 100%; height: calc(100% - 342px)">
+<div id="demandTabs" style="float: left; width: 100%; margin-top: 5px;">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 20px;">
-                <div style="height: 20px; margin-top: 5px;">
+                <div style="height: 15px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ход работы</div>
 
                 </div>
             </li>
             <li>
-                <div style="height: 20px; margin-top: 5px;">
+                <div style="height: 15px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Исполнители</div>
                 </div>
             </li>
