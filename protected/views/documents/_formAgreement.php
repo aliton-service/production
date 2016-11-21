@@ -76,7 +76,7 @@
         
         $("#ExecDay5").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Garant5").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-        $("#Note5").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
+        $("#Note5").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 840 }));
         $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
@@ -86,10 +86,7 @@
         
         
         $("#NewContractBtnOk").on('click', function () {
-            var Data;
-            if (Form == undefined)
-                Data = $('#Documents').serialize();
-            else Data = Form;
+            var Data = $('#Documents').serialize();
             Data = Data + "&DocType_Name=" + "Счет" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
@@ -99,8 +96,7 @@
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
                         $('#' + Document.DialogId).jqxWindow('close');
-                        if (Document.DialogId == '') {
-                            console.log();
+                        if (Document.DialogId == 'NewContractDialog') {
                             $("#ContractsGrid").jqxGrid('updatebounddata');
                             $("#ContractsGrid").jqxGrid('selectrow', 0);
                         }
@@ -210,7 +206,7 @@
 </div>
 <div class="row">
     <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
-    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
+    <div style="float: right; margin-right: 10px;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

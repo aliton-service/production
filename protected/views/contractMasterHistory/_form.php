@@ -11,10 +11,10 @@
             var DataEmployees4 = new $.jqx.dataAdapter(Sources.SourceListEmployees);
             
             $("#Master2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees4, displayMember: "EmployeeName", valueMember: "Employee_id", width: 300 }));
-            $("#WorkDateStart4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102 }));
-            $("#WorkDateEnd4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102 }));
+            $("#WorkDateStart4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
+            $("#WorkDateEnd4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
             
-            if (ContractMasterHistory.Master != '') $("#Master2").jqxComboBox('val', ContractMasterHistory.Master);
+            if (ContractMasterHistory.Master !== null) $("#Master2").jqxComboBox('val', ContractMasterHistory.Master);
             if (ContractMasterHistory.WorkDateStart !== null) $("#WorkDateStart4").jqxDateTimeInput('val', ContractMasterHistory.WorkDateStart);
             if (ContractMasterHistory.WorkDateEnd !== null) $("#WorkDateEnd4").jqxDateTimeInput('val', ContractMasterHistory.WorkDateEnd);
             

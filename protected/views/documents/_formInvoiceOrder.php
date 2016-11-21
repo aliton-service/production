@@ -55,11 +55,8 @@
         });
         
         
-        var SendFormContract = function(Form) {
-            var Data;
-            if (Form == undefined)
-                Data = $('#Documents').serialize();
-            else Data = Form;
+        $("#NewContractBtnOk").on('click', function () {
+            var Data = $('#Documents').serialize();
             Data = Data + "&DocType_Name=" + "Счет" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
@@ -81,10 +78,6 @@
                     }
                 }
             });
-        }
-
-        $("#NewContractBtnOk").on('click', function () {
-            SendFormContract();
         });
         
         if (Document.ContrNumS != '') $("#ContrNumS6").jqxInput('val', Document.ContrNumS);

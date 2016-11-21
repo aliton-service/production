@@ -128,57 +128,22 @@
             });
         });
         
-        $('#EditContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '650px', width: '870'}));
-        
-        $('#EditContractDialog').jqxWindow({initContent: function() {
-            $("#ContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#ContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        }});
-        
-        $("#ContractBtnCancel").on('click', function () {
-            $('#EditContractDialog').jqxWindow('close');
-        });
-        
-        
-        var SendFormContract = function(Form) {
-            var Data;
-            if (Form == undefined)
-                Data = $('#Documents').serialize();
-            else Data = Form;
-                
-            $.ajax({
-                url: "<?php echo Yii::app()->createUrl('Documents/Update');?>",
-                type: 'POST',
-                async: false,
-                data: Data,
-                success: function(Res) {
-                    if (Res == '1' || Res == 1) {
-                        $('#EditContractDialog').jqxWindow('close');
-                        location.reload();
-                    } else {
-                        $('#ContractBodyDialog').html(Res);
-                    }
-                }
-            });
-        }
-
-        $("#ContractBtnOk").on('click', function () {
-            SendFormContract();
-        });
+        $('#EditContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 580, width: 870}));
         
     
-        $("#EditContract").on('click', function ()
-        {
+        $("#EditContract").on('click', function () {
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('Documents/Update');?>",
                 type: 'POST',
                 async: false,
                 data: { 
                     ContrS_id: CurrentContract.ContrS_id,
-                    ObjectGr_id: CurrentContract.ObjectGr_id 
+                    ObjectGr_id: CurrentContract.ObjectGr_id,
+                    DialogId: 'EditContractDialog',
+                    BodyDialogId: 'EditContractBodyDialog'
                 },
                 success: function(Res) {
-                    $('#ContractBodyDialog').html(Res);
+                    $('#EditContractBodyDialog').html(Res);
                 }
             });
             $('#EditContractDialog').jqxWindow('open');
@@ -240,22 +205,13 @@
         });
         
         var LoadFormMasters = function(Mode, id) {
-            var Url;
-            var Data;
-            if (Mode == 'Insert') {
-                Url = "<?php echo Yii::app()->createUrl('ContractMasterHistory/Insert');?>";
-                Data = { ContrS_id: id };
-            }
-            if (Mode == 'Update') {
-                Url = "<?php echo Yii::app()->createUrl('ContractMasterHistory/Update');?>";
-                Data = { History_id: id };
-            }
-            
             $.ajax({
-                url: Url,
+                url: "<?php echo Yii::app()->createUrl('ContractMasterHistory/Update');?>",
                 type: 'POST',
                 async: false,
-                data: Data,
+                data: { 
+                    History_id: id
+                },
                 success: function(Res) {
                     $('#MastersBodyDialog').html(Res);
                 }
@@ -305,7 +261,7 @@
                 }
             });
         });
-        
+        $("#MastersGrid").jqxGrid('selectrow', 0);
     });
     
         
@@ -381,17 +337,11 @@
 
 
 <div id="EditContractDialog">
-    <div id="ContractDialogHeader">
-        <span id="ContractHeaderText">Редактирование договора № <?php echo $model->ContrNumS; ?></span>
+    <div id="EditContractDialogHeader">
+        <span id="EditContractHeaderText">Редактирование записи</span>
     </div>
-    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="ContractDialogContent">
-        <div style="overflow: hidden;" id="ContractBodyDialog"></div>
-        <div id="ContractBottomDialog">
-            <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='ContractBtnOk' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='ContractBtnCancel' /></div>
-            </div>
-        </div>
+    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="EditContractDialogContent">
+        <div style="overflow: hidden;" id="EditContractBodyDialog"></div>
     </div>
 </div>
 

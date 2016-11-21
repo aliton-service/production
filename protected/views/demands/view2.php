@@ -44,11 +44,11 @@
         $("#edDemandType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandType});
         $("#edSystemType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SystemType});
         $("#edEquipType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.EquipType});
-        $("#edMalfunction").jqxInput({height: 25, width: '100%', minLength: 1, value: Demand.Malfunction});
+        $("#edMalfunction").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.Malfunction});
         $("#edDemandPrior").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandPrior});
         $("#edContacts").jqxInput({height: 25, width: 280, minLength: 1, value: Demand.Contacts});
         $("#edCloseReason").jqxInput({height: 25, width: 300, minLength: 1, value: Demand.CloseReason});
-        $("#edRepMaster").jqxTextArea({height: 71, width: 160, minLength: 1});
+        $("#edRepMaster").jqxTextArea({height: '100%', width: '100%', minLength: 1});
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.AgreeDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
@@ -57,8 +57,8 @@
         $("#edTransferReason").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.TransferReason});
         $("#edDelayReason").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.DelayReason});
         $("#edResultName").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.ResultName});
-        $("#edDemandText").jqxTextArea({height: 71, width: 220, minLength: 1});
-        $("#edSpecCondition").jqxTextArea({height: 71, width: 180, minLength: 1});
+        $("#edDemandText").jqxTextArea({height: '100%', width: '100%', minLength: 1});
+        $("#edSpecCondition").jqxTextArea({height: 71, width: '100%', minLength: 1});
         $("#edUCreateName").jqxInput({height: 25, width: 110, minLength: 1, value: Demand.UCreateName});
         $("#edUChangeName").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.UChangeName});
         
@@ -312,6 +312,18 @@
     #demandTabs {
         height: calc(100% - 347px);
     }
+    #MalfunctionWrapper {
+        width: 180px;
+        height: 70px;
+    }
+    #RepMasterWrapper {
+        width: 180px;
+        height: 70px;
+    }
+    #SpecConditionWrapper {
+        width: 180px;
+        height: 70px;
+    }
         
     @media screen and (max-height: 800px) { 
         #demandInputs {
@@ -323,14 +335,41 @@
         }
     }
     
-/*    @media screen and (min-width: 1300px) { 
-        #MalfunctionWrapper {}
-        
-    }*/
+    @media screen and (min-width: 1300px) { 
+        #MalfunctionWrapper {
+            position: relative;
+            left: 850;
+            top: -270;
+            width: 300px;
+            height: 110px;
+        }
+        #RepMasterWrapper {
+            position: relative;
+            left: 15;
+            top: -35;
+            width: 300px;
+            height: 105px;
+        }
+        #SpecConditionWrapper {
+            width: 400px;
+        }
+    }
+    @media screen and (min-width: 1500px) { 
+        #MalfunctionWrapper,
+        #RepMasterWrapper {
+            width: 500px;
+        }
+    }
+    @media screen and (min-width: 1700px) { 
+        #MalfunctionWrapper,
+        #RepMasterWrapper {
+            width: 700px;
+        }
+    }
     
 </style>
 
-<div id='demandInputs' style="float: left; width: 1100px;">
+<div id='demandInputs' style="float: left; width: 100%;">
     <div style="float: left; width: 100%; height: 32px">
         <div class="row-column">Номер</div>
         <div class="row-column"><input readonly id="edNumber" type="text"/></div>
@@ -363,8 +402,8 @@
             <div style="clear: both;"></div>
             <div><input readonly id="edEquipType" type="text"/></div>
         </div>
-        <div id='MalfunctionWrapper' class="row-column" style="width: 180px;">
-            <div>Неисправность</div>
+        <div class="row-column" style="width: 180px;">
+            <div>Тип неисправности</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edMalfunction" type="text"/></div>
         </div>
@@ -407,17 +446,17 @@
                 <div><div id='edDateExec'></div></div>
             </div>
         </div>
-        <div class="row-column" style="height: 96px">
-            <div>Отчет мастера</div>
-            <div style="clear: both;"></div>
-            <div><textarea readonly id="edRepMaster"><?php echo $model->RepMaster; ?></textarea></div>
-        </div>
-        <div class="row-column" style="height: 96px">
+        <div id="SpecConditionWrapper" class="row-column">
             <div>Особые условия</div>
             <div style="clear: both;"></div>
             <div><textarea readonly id="edSpecCondition"><?php echo $SpecCondition; ?></textarea></div>
         </div>
-        <div class="row-column" style="height: 96px">
+        <div id="RepMasterWrapper" class="row-column">
+            <div>Отчет мастера</div>
+            <div style="clear: both;"></div>
+            <div><textarea readonly id="edRepMaster"><?php echo $model->RepMaster; ?></textarea></div>
+        </div>
+        <div id="MalfunctionWrapper" class="row-column">
             <div>Неисправность</div>
             <div style="clear: both;"></div>
             <div><textarea readonly id="edDemandText"><?php echo $model->DemandText; ?></textarea></div>
