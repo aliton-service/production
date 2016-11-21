@@ -54,7 +54,7 @@
         
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 220 }));
         $("#MasterName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 230 }));
-        $("#DateExecuting").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
+        $("#DateExecuting").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100 }));
         $("#SpecialCondition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 90 }));
         $("#ContrNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 90 }));
         
@@ -68,44 +68,7 @@
         $("#DelContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         
-        $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '650px', width: '870'}));
-        
-        $('#NewContractDialog').jqxWindow({initContent: function() {
-//            $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-//            $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        }});
-        
-//        $("#NewContractBtnCancel").on('click', function () {
-//            $('#NewContractDialog').jqxWindow('close');
-//        });
-//        
-//        
-//        var SendFormContract = function(Form) {
-//            var Data;
-//            if (Form == undefined)
-//                Data = $('#Documents').serialize();
-//            else Data = Form;
-//                
-//            $.ajax({
-//                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
-//                type: 'POST',
-//                async: false,
-//                data: Data,
-//                success: function(Res) {
-//                    if (Res == '1' || Res == 1) {
-//                        $('#NewContractDialog').jqxWindow('close');
-//                        $("#ContractsGrid").jqxGrid('updatebounddata');
-//                        $("#ContractsGrid").jqxGrid('selectrow', 0);
-//                    } else {
-//                        $('#NewContractBodyDialog').html(Res);
-//                    }
-//                }
-//            });
-//        }
-//
-//        $("#NewContractBtnOk").on('click', function () {
-//            SendFormContract();
-//        });
+        $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 580, width: 870}));
         
         var openCreateWindow = function (DocType_Name) {
             $.ajax({
@@ -187,7 +150,7 @@
             if (CurrentRowData != null) {
                 if (CurrentRowData.MasterName != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
                 if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
-                if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxInput('val', CurrentRowData.DateExecuting);
+                if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxDateTimeInput('val', CurrentRowData.DateExecuting);
                 if (CurrentRowData.SpecialCondition != '') $("#SpecialCondition").jqxTextArea('val', CurrentRowData.SpecialCondition);
                 if (CurrentRowData.ContrNote != '') $("#ContrNote").jqxTextArea('val', CurrentRowData.ContrNote);
             
@@ -840,7 +803,10 @@
     <div class="row-column">
         <div class="row">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
         <div class="row">Мастер: <input readonly id="MasterName" type="text"></div>
-        <div class="row">Дата проводки через ВЦКП: <input readonly id='DateExecuting' type="text"></div> 
+        <div class="row">
+            <div class="row-column">Дата проводки через ВЦКП: </div>
+            <div class="row-column"><div id='DateExecuting'></div></div>
+        </div>
     </div>
 
     <div class="row-column" style="width: calc(100% - 305px);">
@@ -1017,14 +983,6 @@
     </div>
     <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="NewContractDialogContent">
         <div style="overflow: hidden;" id="NewContractBodyDialog"></div>
-        <!--
-        <div id="NewContractBottomDialog">
-            <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
-            </div>
-        </div>
-        -->
     </div>
 </div>
 

@@ -63,9 +63,9 @@ class DocumentsController extends Controller
 
 	public function actionView($id)
 	{
-		$this->render('view', array(
-			'model' => $this->loadModel($id),
-		));
+            $this->render('view', array(
+                'model' => $this->loadModel($id),
+            ));
 	}
 
 
@@ -86,7 +86,7 @@ class DocumentsController extends Controller
             
             if(isset($_POST['Documents']))
             {
-                $model->attributes=$_POST['Documents'];
+                $model->attributes = $_POST['Documents'];
                 switch ($model->DocType_id) {
                     case 8: $model->setScenario('Счет'); break;
                     case 4: $model->setScenario('Договор'); break;
@@ -149,8 +149,17 @@ class DocumentsController extends Controller
 
 	public function actionUpdate()
 	{
+            $DialogId = '';
+            $BodyDialogId = '';
+            
             if (isset($_POST['ContrS_id'])) {
                 $ContrS_id = $_POST['ContrS_id'];
+            }
+            if (isset($_POST['DialogId'])) {
+                $DialogId = $_POST['DialogId'];
+            }
+            if (isset($_POST['BodyDialogId'])){
+                $BodyDialogId = $_POST['BodyDialogId'];
             }
             
             $model = new Documents;
@@ -161,13 +170,10 @@ class DocumentsController extends Controller
 
             if(isset($_POST['Documents']))
             {
-                $model->attributes=$_POST['Documents'];
+                $model->attributes = $_POST['Documents'];
 //                $ContrS_id = $model->ContrS_id;
 
-                
-
-                if ($model->validate())
-                {
+                if ($model->validate()) {
                     $model->Update();
                     echo '1';
                     return;
@@ -177,29 +183,26 @@ class DocumentsController extends Controller
             
             $model->getModelPk($ContrS_id);
             
+            $fileName = '';
             switch ($model->DocType_id) {
                 case 8:
-                    $this->renderPartial('_formInvoice', array(
-                        'model' => $model
-                    ));
+                    $fileName = '_formInvoice';
                     break;
                 case 3:
-                    $this->renderPartial('_formInvoiceOrder', array(
-                        'model' => $model
-                    ));
+                    $fileName = '_formInvoiceOrder';
                     break;
                 case 5:
-                    $this->renderPartial('_formAgreement', array(
-                        'model' => $model
-                    ));
+                    $fileName = '_formAgreement';
                     break;
                 case 4:
-                    $this->renderPartial('_formContract', array(
-                        'model' => $model
-                    ));
+                    $fileName = '_formContract';
                     break;
             }
-            
+            $this->renderPartial($fileName, array(
+                'model' => $model,
+                'DialogId' => $DialogId,
+                'BodyDialogId' => $BodyDialogId,
+            ));
 	}
 
 

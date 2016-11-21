@@ -69,25 +69,21 @@ class ContractMasterHistoryController extends Controller
 
     public function actionInsert() 
     {
-        if (isset($_POST['ContrS_id'])) 
-            $ContrS_id = $_POST['ContrS_id'];
-
         $model = new ContractMasterHistory;
         
+        if (isset($_POST['ContrS_id'])) 
+            $model->ContrS_id = $_POST['ContrS_id'];
+
         if(isset($_POST['ContractMasterHistory']))
         {
             $model->attributes=$_POST['ContractMasterHistory'];
-            $ContrS_id = $model->ContrS_id;
-
-            if ($model->validate())
-            {
+            if ($model->validate()) {
                 $model->Insert();
                 echo '1';
                 return;
             }
         }
 
-        $model->ContrS_id = $ContrS_id;
         $this->renderPartial('_form', array(
             'model' => $model
         ));

@@ -41,12 +41,12 @@
         var DataServiceTypes = new $.jqx.dataAdapter(Sources.SourceServiceTypes);
         
         $("#ContrNumS3").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, value: "-Авто-" }));
-        $("#ContrDateS3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102 }));
-        $("#DateExecuting3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102, value: null }));
-        $("#DatePay3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102, value: null }));
-        $("#date_doc3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102, value: null }));
-        $("#ContrSDateStart3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102 }));
-        $("#ContrSDateEnd3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102 }));
+        $("#ContrDateS3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110 }));
+        $("#DateExecuting3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null }));
+        $("#DatePay3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null }));
+        $("#date_doc3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null }));
+        $("#ContrSDateStart3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110 }));
+        $("#ContrSDateEnd3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110 }));
         $("#JuridicalPerson3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridical3, displayMember: "JuridicalPerson", valueMember: "Jrdc_Id", width: 200, autoDropDownHeight: true }));
         $("#ContactType3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContractTypes3, displayMember: "name", valueMember: "crtp_id", width: 130, autoDropDownHeight: true }));
         $("#empl3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees3, displayMember: "ShortName", valueMember: "Employee_id", width: 180 }));
@@ -58,9 +58,10 @@
         $("#ServiceType3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataServiceTypes, displayMember: "ServiceType", valueMember: "ServiceType_id", width: 320 }));
         
         $("#Price3").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#SpecialCondition3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
         
-        $("#Note3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
+        $("#SpecialCondition3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 840 }));
+        $("#Note3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 840 }));
+        
         $("#PriceMonth3").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         
         if (Document.ContrNumS != '') $("#ContrNumS3").jqxInput('val', Document.ContrNumS);
@@ -91,11 +92,8 @@
         $("#NewContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
-        var SendFormContract = function(Form) {
-            var Data;
-            if (Form == undefined)
-                Data = $('#Documents').serialize();
-            else Data = Form;
+        $("#NewContractBtnOk").on('click', function () {
+            var Data = $('#Documents').serialize();
             Data = Data + "&DocType_Name=" + "Договор обслуживания" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
@@ -105,7 +103,7 @@
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
                         $('#' + Document.DialogId).jqxWindow('close');
-                        if (Document.DialogId == '') {
+                        if (Document.DialogId == 'NewContractDialog') {
                             $("#ContractsGrid").jqxGrid('updatebounddata');
                             $("#ContractsGrid").jqxGrid('selectrow', 0);
                         }
@@ -117,10 +115,6 @@
                     }
                 }
             });
-        }
-
-        $("#NewContractBtnOk").on('click', function () {
-            SendFormContract();
         });
         
         $("#NewContractBtnCancel").on('click', function () {
@@ -191,7 +185,7 @@
 </div>
 <div class="row">
     <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
-    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
+    <div style="float: right; margin-right: 7px;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

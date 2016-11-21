@@ -8,6 +8,7 @@ class ContractMasterHistory extends MainFormModel
     public $EmployeeName;
     public $WorkDateStart;
     public $WorkDateEnd;
+    public $error = 0;
 
 
     public $SP_INSERT_NAME = '';
@@ -27,9 +28,9 @@ class ContractMasterHistory extends MainFormModel
 
     function __construct($scenario='') {
         
-        $this->SP_INSERT_NAME = 'INSERT_ContractMasterHistory';
-        $this->SP_UPDATE_NAME = 'UPDATE_ContractMasterHistory';
-        $this->SP_DELETE_NAME = 'DELETE_ContractMasterHistory';
+        $this->SP_INSERT_NAME = 'insert_master';
+        $this->SP_UPDATE_NAME = 'UPDATE_Master';
+        $this->SP_DELETE_NAME = 'DELETE_master';
         
         parent::__construct($scenario);
         $select = "

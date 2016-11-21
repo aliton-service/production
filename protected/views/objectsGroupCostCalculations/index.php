@@ -261,13 +261,13 @@
     }
     
     .CellSmet {
-        color: white;
-        background-color: #409A40;
+        color: black;
+        background-color: #5FB989;
     }
     
     .CellSmet:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .CellSmet:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
         color: black;
-        background-color: #ACE7C7;
+        background-color: #B8E7AC;
     }
     .jqx-grid-group-cell {
         border-width:0 1px 1px 0;
