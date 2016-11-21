@@ -16,20 +16,78 @@
                     EventNoExec: '',
                     EventExec: '',
                     Vip: '',
+                    Count1: '',
+                    Count2: '',
+                    DatePlan: '',
+                    Executor: '',
+                    Area: '',
+                    Rpfr: '',
+                    Territ: '',
+                    System: '',
+                    DateStart: '',
+                    DateEnd: ''
                 };
                 
                 if ($('#cmbMaster').val() != '')
                     Variables.Master = " and c.Master = " + $('#cmbMaster').val();
                 
                 if ($("#chbNoExecFilter").val() != false)
-                    Variables.EventNoExec = " and (e.evnt_id is not null and e.date_exec is null)";
+                    Variables.EventNoExec = " and (e.Evnt_id is not null and e.date_exec is null)";
                 
                 if ($("#chbExecFilter").val() != false)
                     Variables.EventExec = " and e.date_exec is not null";
                 
                 if ($("#chbVipFilter").val() != false)
                     Variables.Vip = " and o.sum_price > 7500";
+                
+                if ($("#chbCount1Filter").val() != false)
+                    Variables.Count1 = " and e.Evnt_id is Not Null";
+                
+                if ($("#chbCount2Filter").val() != false)
+                    Variables.Count2 = " and Count(e.Evnt_id) = 0";
+                
+                if ($("#edPlanDateFilter").val() != '') 
+                    Variables.DatePlan = " and dbo.truncdate(e.Date) = '" + $("#edPlanDateFilter").val() + "'";
+                
+                if ($('#cmbEmpl').val() != '')
+                    Variables.Executor = " and e.Empl_id = " + $('#cmbEmpl').val();
+                
+                if ($('#edAreaFilter').val() != '')
+                    Variables.Area = " and og.Area_id = " + $('#edAreaFilter').val();
+                
+                if ($('#edReportForm').val() != '')
+                    Variables.Rpfr = " and e.Rpfr_id = " + $('#edReportForm').val();
+                
+                if ($('#edTerrit').val() != '')
+                    Variables.Territ = " and c.Territ_id = " + $('#edTerrit').val();
+                
+                if ($('#edSystemsFilter').val() != '') {
+                    var Items = $("#edSystemsFilter").jqxComboBox('getCheckedItems');
+                    var ItemsStr = '(';
+                    for (var i=0; i < Items.length; i++) {
+                        if (ItemsStr == '(')
+                            ItemsStr += Items[i].value;
+                        else
+                            ItemsStr += ', ' + Items[i].value;
+                    }
+                    ItemsStr += ')';
+                    Variables.System = "and exists (" +
+                                                "\nSelect 1" +
+                                                "\nFrom ObjectsGroupSystems ogs" +
+                                                "\nWhere ogs.Availability_id = 1" +
+                                                        "\n and ogs.DelDate is Null" +
+                                                        "\n and ogs.Sttp_id in " + ItemsStr +
+                                                        "\n and ogs.ObjectGr_id = og.ObjectGr_id)";
+                                                
                     
+                }
+                
+                if ($('#edDateStartFilter').val() != '')
+                    Variables.DateStart = " and dbo.truncdate(e.Date) >= '" + $('#edDateStartFilter').val() + "'";
+                
+                if ($('#edDateEndFilter').val() != '')
+                    Variables.DateEnd = " and dbo.truncdate(e.Date) <= '" + $('#edDateEndFilter').val() + "'";
+                
                 $.extend(data, {
                     Variables: Variables,
                 });
@@ -59,9 +117,6 @@
             checked = event.args.checked;
             updateEventsClientsGrid(checked);
         });
-
-//        EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients));
-//        EventsClientsDataAdapter.dataBind();
         
         var groupsrenderer = function (text, group, expanded, data) 
         {
@@ -130,7 +185,7 @@
                 pageable: true,
                 virtualmode: true,
                 columns: [
-//                    { text: 'evnt_id', datafield: 'evnt_id', width: 40, hidden: true },
+//                    { text: 'Evnt_id', datafield: 'Evnt_id', width: 40, hidden: true },
                     { text: 'Дата', dataField: 'Date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
                     { text: 'Тип', datafield: 'EventType', width: 150 },
                     { text: 'evtp_id', datafield: 'Evtp_id', width: 40, hidden: true },
@@ -138,6 +193,8 @@
                     { text: 'Исполнитель', datafield: 'EmployeeName', width: 120 },
                     { text: 'Выполнение', dataField: 'DateExec', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
                     { text: 'ObjectGr_id', datafield: 'ObjectGr_id', width: 60, hidden: true },
+                    { text: 'Rpfr_id', datafield: 'Rpfr_id', width: 60, hidden: true },
+                    
                 ]
         }));
         
@@ -221,7 +278,7 @@
                 type: 'POST',
                 async: false,
                 data: {
-                    evnt_id: CurrentRowDataEvents.evnt_id,
+                    Evnt_id: CurrentRowDataEvents.Evnt_id,
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
@@ -239,7 +296,7 @@
                 type: "POST",
                 url: "/index.php?r=Events/Delete",
                 data: { 
-                    evnt_id: CurrentRowDataEvents.evnt_id,
+                    Evnt_id: CurrentRowDataEvents.Evnt_id,
                 },
                 success: function(){
                     $("#EventsGrid").jqxGrid('updatebounddata');
@@ -260,7 +317,7 @@
                 type: 'POST',
                 async: false,
                 data: {
-                    ObjectGr_id: CurrentRowDataClients.objectgr_id,
+                    ObjectGr_id: CurrentRowDataClients.ObjectGr_id,
                     Evtp_id: evtp_id,
                 },
                 success: function(Res) {

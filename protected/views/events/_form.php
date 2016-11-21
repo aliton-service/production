@@ -24,25 +24,21 @@
         
         $('#btnSaveEvents').on('click', function(){
             var rowindexes = $('#EventsClientsGrid').jqxGrid('getselectedrowindexes');
-            console.log(rowindexes);
             
             for (var i = 0; i < rowindexes.length; i++)
             {
-                console.log('i = ' + i);
                 var rowindex = rowindexes[i];
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('Events/Create')); ?>,
-                    data:  $('#Events').serialize() + '&Events[objectgr_id]=' + EventsClientsDataAdapter.records[rowindex]['objectgr_id'],
+                    data:  $('#Events').serialize() + '&Events[ObjectGr_id]=' + EventsClientsDataAdapter.records[rowindex]['ObjectGr_id'],
                     type: 'POST',
                     async: false,
                     success: function(Res) {
                         var Res = JSON.parse(Res);
                         if (Res.result == 1) {
-                            Aliton.SelectRowById('evnt_id', Res.id, '#EventsGrid', true);
+                            Aliton.SelectRowById('Evnt_id', Res.id, '#EventsGrid', true);
                             $('#EventsDialog').jqxWindow('close');
-                            console.log('i2 = ' + i);
                             if (i == (rowindexes.length - 1)) {
-                                console.log('i == rowindexes.length - 1; i = ' + i);
                                 $('#EventsGrid').jqxGrid('updatebounddata');
                                 $('#EventsClientsGrid').jqxGrid('updatebounddata');
                                 if (checked) {
@@ -79,17 +75,17 @@
 
 <div class="row">
     <div class="row-column">Направление:</div>
-    <div class="row-column"><div id="EventType" name="Events[evtp_id]"></div><?php // echo $form->error($model, 'evtp_id'); ?></div>
+    <div class="row-column"><div id="EventType" name="Events[Evtp_id]"></div><?php // echo $form->error($model, 'evtp_id'); ?></div>
 </div>
 
 <div class="row">
     <div class="row-column">Интервал:</div>
-    <div class="row-column"><div id="Periods" name="Events[prds_id]"></div></div>
+    <div class="row-column"><div id="Periods" name="Events[Prds_id]"></div></div>
 </div>
 
 <div class="row">
     <div class="row-column">Исполнитель:</div>
-    <div class="row-column"><div id="Employee" name="Events[empl_id]"></div><?php // echo $form->error($model, 'empl_id'); ?></div>
+    <div class="row-column"><div id="Employee" name="Events[Empl_id]"></div><?php // echo $form->error($model, 'empl_id'); ?></div>
 </div>
 
 <div class="row"> 

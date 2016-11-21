@@ -7,8 +7,10 @@
         var First = true;
         DataEmployees.dataBind();
         DataEmployees = DataEmployees.records;
-        
-        
+        var DataAreas = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAreas, {async: false}));
+        var DataReportForms = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReportForms, {async: false}));
+        var DataTerritory = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceTerritory, {async: false}));
+        var DataSystemTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSystemTypesMin, {async: false}));
         
         $("#cmbEmpl").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id" }); 
         $("#cmbMaster").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id" }); 
@@ -16,16 +18,24 @@
         $("#chbExecFilter").jqxCheckBox({ width: 160, height: 25, checked: false}); 
         $("#chbVipFilter").jqxCheckBox({ width: 160, height: 25, checked: false}); 
         $("#chbNoVipFilter").jqxCheckBox({ width: 160, height: 25, checked: false}); 
+        $("#chbCount1Filter").jqxCheckBox({ width: 50, height: 25, checked: false}); 
+        $("#chbCount2Filter").jqxCheckBox({ width: 50, height: 25, checked: false}); 
+        $("#edPlanDateFilter").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null }));
+        $("#edAreaFilter").jqxComboBox({ source: DataAreas, width: '200', height: '25px', displayMember: "AreaName", valueMember: "Area_id" }); 
+        $("#edReportForm").jqxComboBox({ source: DataReportForms, width: '200', height: '25px', displayMember: "ReportForm", valueMember: "rpfr_id" });
+        $("#edTerrit").jqxComboBox({ source: DataTerritory, width: '200', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id" }); 
+        $("#edSystemsFilter").jqxComboBox({ checkboxes: true, source: DataSystemTypes, width: '200', height: '25px', displayMember: "SystemTypeName", valueMember: "SystemType_Id" }); 
+        $("#edDateStartFilter").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null }));
+        $("#edDateEndFilter").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null }));
+        
         
         $("#edFiltering").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
         
         $('#edFiltering').on('click', function(){
             $("#EventsClientsGrid").jqxGrid('updatebounddata', 'data');
-//            $("#EventsClientsGrid").jqxGrid('updatebounddata');
         });
         
         $("#EventsClientsGrid").on('rowselect', function (event) {
-            console.log('rowselect');
             Find();
         });
 
@@ -42,11 +52,11 @@
         });
 
         Find = function(){
-//            var EmplFilterGroup = new $.jqx.filter();
-//            if ($("#cmbEmpl").val() != '') {
-//                var FilterEmpl = EmplFilterGroup.createfilter('numericfilter', $("#cmbEmpl").val(), 'IN');
-//                EmplFilterGroup.addfilter(1, FilterEmpl);
-//            }
+            var EmplFilterGroup = new $.jqx.filter();
+            if ($("#cmbEmpl").val() != '') {
+                var FilterEmpl = EmplFilterGroup.createfilter('numericfilter', $("#cmbEmpl").val(), 'EQUAL');
+                EmplFilterGroup.addfilter(1, FilterEmpl);
+            }
             
             if (CurrentRowDataClients != undefined) {
                 var ObjectGroup = new $.jqx.filter();
@@ -74,9 +84,31 @@
                 var FilterDateExec = DateExecGroup.createfilter('datefilter', D, 'NOT_NULL');
                 DateExecGroup.addfilter(1, FilterDateExec);
             };
-
-//            $('#EventsGrid').jqxGrid('removefilter', 'employee', false);
-//            if ($("#cmbEmpl").val() != '') $("#EventsGrid").jqxGrid('addfilter', 'employee', EmplFilterGroup);
+            
+            var DatePlanGroup = new $.jqx.filter();
+            if ($("#edPlanDateFilter").val() != '') {
+                var FilterDatePlan = DatePlanGroup.createfilter('datefilter', $("#edPlanDateFilter").val(), 'DATE_EQUAL');
+                DatePlanGroup.addfilter(1, FilterDatePlan);
+            };
+            
+            var ReportFormFilterGroup = new $.jqx.filter();
+            if ($("#edReportForm").val() != '') {
+                var FilterReportForm = ReportFormFilterGroup.createfilter('numericfilter', $("#edReportForm").val(), 'EQUAL');
+                ReportFormFilterGroup.addfilter(1, FilterReportForm);
+            }
+            
+            if ($("#edDateStartFilter").val() != '') {
+                var FilterDateStart = DatePlanGroup.createfilter('datefilter', $("#edDateStartFilter").val(), 'DATE_GREATER_THAN_OR_EQUAL');
+                DatePlanGroup.addfilter(1, FilterDateStart);
+            };
+            
+            if ($("#edDateEndFilter").val() != '') {
+                var FilterDateStart = DatePlanGroup.createfilter('datefilter', $("#edDateEndFilter").val(), 'DATE_LESS_THAN_OR_EQUAL');
+                DatePlanGroup.addfilter(1, FilterDateStart);
+            };
+            
+            $('#EventsGrid').jqxGrid('removefilter', 'EmployeeName', false);
+            if ($("#cmbEmpl").val() != '') $("#EventsGrid").jqxGrid('addfilter', 'EmployeeName', EmplFilterGroup);
 
             $('#EventsGrid').jqxGrid('removefilter', 'ObjectGr_id', false);
             if (CurrentRowDataClients != null) $("#EventsGrid").jqxGrid('addfilter', 'ObjectGr_id', ObjectGroup);
@@ -87,6 +119,12 @@
             $('#EventsGrid').jqxGrid('removefilter', 'Evtp_id', false);
             if (tabIndex > 0)
                 $("#EventsGrid").jqxGrid('addfilter', 'Evtp_id', EventGroup);
+            
+            $('#EventsGrid').jqxGrid('removefilter', 'Date', false);
+            if ($("#edPlanDateFilter").val() != '' || $("#edDateStartFilter").val() != '' || $("#edDateEndFilter").val() != '') $("#EventsGrid").jqxGrid('addfilter', 'Date', DatePlanGroup);
+            
+            $('#EventsGrid').jqxGrid('removefilter', 'Rpfr_id', false);
+            if ($("#edReportForm").val() != '') $("#EventsGrid").jqxGrid('addfilter', 'Rpfr_id', ReportFormFilterGroup);
             
             if (First)
                 $('#EventsGrid').jqxGrid({source: EventsFiltersDataAdapter});
@@ -106,21 +144,26 @@
 <div class='al-row'><div id='chbExecFilter'>Выполненные</div></div>
 <div class='al-row'><div id='chbVipFilter'>ВИП</div></div>
 <div class='al-row'><div id='chbNoVipFilter'>Не ВИП</div></div>
-<!--
+<div class="al-row">
+    <div class="al-row-column"><div id='chbCount1Filter'> > 0</div></div>
+    <div class="al-row-column"><div id='chbCount2Filter'> = 0</div></div>
+    <div style="clear: both"></div>
+</div>
+<div class='al-row'>Плановая дата</div>
+<div class='al-row'><div id='edPlanDateFilter'></div></div>
+<div class='al-row'>Район</div>
+<div class='al-row'><div id='edAreaFilter'></div></div>
+<div class='al-row'>Форма отчетности</div>
+<div class='al-row'><div id='edReportForm'></div></div>
+<div class='al-row'>Участок</div>
+<div class='al-row'><div id='edTerrit'></div></div>
+<div class='al-row'>Системы</div>
+<div class='al-row'><div id='edSystemsFilter'></div></div>
 <div>Дата с</div>
-<div><div id='edDateStart'></div></div>
+<div><div id='edDateStartFilter'></div></div>
 <div>по</div>
-<div><div id='edDateEnd'></div></div>
-<div>Создан с</div>
-<div><div id='edDateCrStart'></div></div>
-<div>по</div>
-<div><div id='edDateCrEnd'></div></div>
-<div>Подтвержден с</div>
-<div><div id='edDateAcStart'></div></div>
-<div>по</div>
-<div><div id='edDateAcEnd'></div></div>
-<div>Адрес</div>
-<div><input type="text" id="edAddress" /></div>-->
+<div><div id='edDateEndFilter'></div></div>
+
 <div style="margin-top: 4px;"><input type="button" value="Фильтр" id="edFiltering"/></div>
 
 
