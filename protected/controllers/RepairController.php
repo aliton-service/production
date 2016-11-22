@@ -90,6 +90,9 @@ class RepairController extends Controller {
             'html' => '',
         );
         
+        if (isset($_POST['Params']))
+            $model->attributes =  $_POST['Params'];
+        
         if (isset($_POST['Repairs'])) {
             $model->attributes = $_POST['Repairs'];
             if ($model->validate()) {

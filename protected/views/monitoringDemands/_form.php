@@ -145,6 +145,7 @@
 
 <input  name="MonitoringDemands[Calc_id]" type="hidden" value="<?php echo $model->Calc_id; ?>"/>
 <input  name="MonitoringDemands[Repr_id]" type="hidden" value="<?php echo $model->Repr_id; ?>"/>
+<input  name="MonitoringDemands[Dmnd_id]" type="hidden" value="<?php echo $model->Dmnd_id; ?>"/>
 
 
 <div class="row">

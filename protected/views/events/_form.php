@@ -36,16 +36,11 @@
                     success: function(Res) {
                         var Res = JSON.parse(Res);
                         if (Res.result == 1) {
-                            Aliton.SelectRowById('Evnt_id', Res.id, '#EventsGrid', true);
+//                            Aliton.SelectRowById('Evnt_id', Res.id, '#EventsGrid', true);
                             $('#EventsDialog').jqxWindow('close');
                             if (i == (rowindexes.length - 1)) {
-                                $('#EventsGrid').jqxGrid('updatebounddata');
-                                $('#EventsClientsGrid').jqxGrid('updatebounddata');
                                 if (checked) {
-                                    $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
-                                    $('#EventsClientsGrid').jqxGrid({ groupable: true });
-                                    $('#EventsClientsGrid').jqxGrid('addgroup', 'fullname');
-                                    $('#EventsClientsGrid').jqxGrid('expandallgroups');
+//                                    $("#edFiltering").click();
                                 }
                             }
                         }
@@ -58,6 +53,7 @@
                     }
                 });
             }
+            $("#edFiltering").click();
         });
         
         

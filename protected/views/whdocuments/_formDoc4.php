@@ -164,6 +164,7 @@
 <input type="hidden" name="WHDocuments[dctp_id]" value="<?php echo $model->dctp_id; ?>" />
 <input type="hidden" name="WHDocuments[calc_id]" value="<?php echo $model->calc_id; ?>" />
 <input type="hidden" name="WHDocuments[repr_id]" value="<?php echo $model->repr_id; ?>" />
+<input type="hidden" name="WHDocuments[dmnd_id]" value="<?php echo $model->dmnd_id; ?>" />
 
 <div class="row">
     <div class="row-column" style="width: 100px">Номер</div>

@@ -61,7 +61,19 @@ class Demands extends MainFormModel
 	public $User = null;
 	public $note = null;
 	public $overday = null;
-
+        public $DateSurvey;
+        public $date_calc;
+        public $GoCalc;
+        public $Rvrs_id;
+        public $calc_accept;
+        public $DateContract;
+        public $WorkExec;
+        public $Ngtv_id;
+        public $offer;
+        public $initiative;
+        public $CalcSum;
+        public $upg_note;
+        public $competitive;
 	//------fulldemands-----
 	public $objectgr_id = null;
 	public $MasterName = null;

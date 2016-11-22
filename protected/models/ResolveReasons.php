@@ -1,16 +1,16 @@
 <?php
 
 
-class Negatives extends MainFormModel
+class ResolveReasons extends MainFormModel
 {
-    public $Ngtv_id;
-    public $NegativeName;
+    public $Rvrs_id;
+    public $ResolveReason;
                 
     public function rules()
     {
         return array(
-            array('Ngtv_id,
-                    NegativeName', 'safe'),
+            array('Rvrs_id,
+                    ResolveReason', 'safe'),
         );
             
     }
@@ -24,25 +24,25 @@ class Negatives extends MainFormModel
         $this->SP_DELETE_NAME = '';
 
         $Select = "\nSelect
-                        n.Ngtv_id,
-                        n.NegativeName";
-        $From = "\nFrom Negatives n";
-        $Order = "\nOrder by n.NegativeName";
+                      r.Rvrs_id,
+                      r.ResolveReason";
+        $From = "\nFrom ResolveReasons r";
+        $Order = "\nOrder by ResolveReason";
         
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
         $this->Query->setOrder($Order);
         
         // Инициализация первичного ключа
-        $this->KeyFiled = 'n.Ngtv_id';
-        $this->PrimaryKey = 'Ngtv_id';
+        $this->KeyFiled = 'r.Rvrs_id';
+        $this->PrimaryKey = 'Rvrs_id';
     }
     
     public function attributeLabels()
     {
             return array(
-                'Ngtv_id' => '',
-                'NegativeName' => '',
+                'Rvrs_id' => '',
+                'ResolveReason' => '',
             );
     }
      

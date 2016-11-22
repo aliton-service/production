@@ -45,21 +45,20 @@
 //            console.log(CurrentRowDataOfferDemands);
             CheckButtonOD();
         });
-
+//
         $('#btnFindDemand').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnReloadDemands').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnDelDemand').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnClose').jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        
+//        
         var CheckButtonOD = function() {
             $('#btnDelDemand').jqxButton({disabled: !(CurrentRowDataOfferDemands != undefined)});
         };
         
         $("#OfferDemandsGrid").on("bindingcomplete", function () {
-            $('#OfferDemandsGrid').jqxGrid('updatebounddata');
             $('#OfferDemandsGrid').jqxGrid('selectrow', 0);
         });
-        
+//        
         $("#OfferDemandsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -71,13 +70,13 @@
                 height: '450',
                 source: OfferDemandsDataAdapter,
                 columns: [
-                    { text: 'Номер', dataField: 'dmnd_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
-                    { text: 'Адрес', dataField: 'Address', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 500 },
+                    { text: 'Номер', datafield: 'dmnd_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Адрес', datafield: 'Address', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 500 },
                 ]
             })
         );
 
-        
+//        
         $('#btnFindDemand').on('click', function(){
             $('#FindDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 550, width: 800, position: 'center'}));
             $.ajax({

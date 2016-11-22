@@ -35,7 +35,7 @@ class DemandsController extends Controller
                 ),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('update'),
+                'actions' => array('update', 'UpdateDetails'),
                 'roles' => array(
                     'UpdateDemands',
                 ),
@@ -719,7 +719,41 @@ class DemandsController extends Controller
         echo json_encode($ObjectResult);
     }
         
+    public function actionUpdateDetails() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
         
+        if (isset($_POST['DemandsDetails'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'UPDATE_DEMANDDETAILS';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['DemandsDetails']['Demand_id'];
+            $sp->Parameters[1]['Value'] = $_POST['DemandsDetails']['GoCalc'];
+            $sp->Parameters[2]['Value'] = $_POST['DemandsDetails']['WorkExec'];
+            $sp->Parameters[3]['Value'] = $_POST['DemandsDetails']['ngtv_id'];
+            $sp->Parameters[4]['Value'] = $_POST['DemandsDetails']['Rvrs_id'];
+            $sp->Parameters[5]['Value'] = $_POST['DemandsDetails']['DateContract'];
+            $sp->Parameters[6]['Value'] = $_POST['DemandsDetails']['CalcSum'];
+            $sp->Parameters[7]['Value'] = $_POST['DemandsDetails']['DateSurvey'];
+            $sp->Parameters[8]['Value'] = $_POST['DemandsDetails']['offer'];
+            $sp->Parameters[9]['Value'] = $_POST['DemandsDetails']['competitive'];
+            $sp->Parameters[10]['Value'] = $_POST['DemandsDetails']['initiative'];
+            $sp->Parameters[11]['Value'] = $_POST['DemandsDetails']['clrs_id'];
+            $sp->Parameters[12]['Value'] = $_POST['DemandsDetails']['upg_note'];
+            $sp->Parameters[13]['Value'] = $_POST['DemandsDetails']['date_calc'];
+            $sp->Parameters[14]['Value'] = $_POST['DemandsDetails']['calc_accept'];
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $_POST['DemandsDetails']['Demand_id'];
+        }
+        
+        echo json_encode($ObjectResult);
+    }    
 }
 
 

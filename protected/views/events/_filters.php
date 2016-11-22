@@ -37,6 +37,7 @@
         
         $("#EventsClientsGrid").on('rowselect', function (event) {
             Find();
+            
         });
 
         var EventsFiltersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEvents), {
@@ -48,6 +49,8 @@
             },
             beforeSend: function(jqXHR, settings) {
 //                DisabledControls();
+                $('#btnEditEvent').jqxButton({disabled: true})
+                $('#btnDelEvent').jqxButton({disabled: true})
             }
         });
 

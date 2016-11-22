@@ -31,7 +31,7 @@
         });
         
         
-        $("#DateCC").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalc.date, formatString: 'dd.MM.yyyy H:mm', showTimeButton: true, width: 180}));
+        $("#DateCC").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalc.date, formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true, width: 180}));
         $("#group_nameCC").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 400 }));
 
         var RegistrationsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRegistrations));

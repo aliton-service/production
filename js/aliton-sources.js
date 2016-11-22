@@ -3960,3 +3960,67 @@ Sources.SourceOfferDemands =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceDemandDocuments =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'KeyField', type: 'string'},
+        {name: 'Docid', type: 'int'},
+        {name: 'DocType_id', type: 'int'},
+        {name: 'DocType', type: 'string'},
+        {name: 'Number', type: 'string'},
+        {name: 'DateReg', type: 'date'},
+        {name: 'DateExec', type: 'date'},
+        {name: 'Note', type: 'string'},
+        {name: 'Procpay', type: 'float'}
+    ],
+    id: 'KeyField',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DemandDocuments',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceResolveReasons =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Rvrs_id', type: 'int'},
+        {name: 'ResolveReason', type: 'string'},
+    ],
+    id: 'KeyField',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ResolveReasons',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceNegatives =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Ngtv_id', type: 'int'},
+        {name: 'NegativeName', type: 'string'},
+    ],
+    id: 'KeyField',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Negatives',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

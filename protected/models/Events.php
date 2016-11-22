@@ -91,7 +91,9 @@ class Events extends MainFormModel
                     Evaluation,
                     Prds_id,
                     Who_reported,
-                    EmplCreate,', 'safe'),
+                    EmplCreate,
+                    datestart,
+                    dateend', 'safe'),
         );
     }
 
@@ -117,6 +119,8 @@ class Events extends MainFormModel
             'Prds_id' => '',
             'Who_reported' => '',
             'EmplCreate' => '',
+            'datestart' => '',
+            'dateend' => '',
         );
     }
 
