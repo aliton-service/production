@@ -25,6 +25,19 @@ return array(
                         'NoAgreeRepairs',
 		),
 	),
+    
+        'UserRepairs' => array(
+		'type' => CAuthItem::TYPE_ROLE,
+		'description' => 'Админ раздела ремонт',
+		'bizRule' => null,
+		'data' => null,
+		'defaultIndex' => 'Repairs',
+		'children' => array(
+			'ViewRepairs',
+                        'UpdateRepairs',
+			'CreateRepairs',
+                ),
+         ),
 
 	'ViewRepairs' => array(
 		'type' => CAuthItem::TYPE_OPERATION,

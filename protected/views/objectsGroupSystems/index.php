@@ -109,6 +109,10 @@
                 },
                 success: function(Res) {
                     $('#BodyDialogOGSystems').html(Res);
+                    $('#EditDialogOGSystems').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
             });
         }
@@ -123,6 +127,10 @@
                 },
                 success: function(Res) {
                     $('#BodyDialogOGSystems').html(Res);
+                    $('#EditDialogOGSystems').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
             });
         }
@@ -137,14 +145,13 @@
         {
             Mode = 'Insert';
             LoadFormInsert(OGSystems.ObjectGr_id);
-            $('#EditDialogOGSystems').jqxWindow('open');
         });
         
         $("#EditObjectsGroupSystem").on('click', function ()
         {
             Mode = 'Edit';
             LoadFormUpdate(CurrentRowData.ObjectsGroupSystem_id);
-            $('#EditDialogOGSystems').jqxWindow('open');
+            
         });
            
         $("#DelObjectsGroupSystem").on('click', function ()

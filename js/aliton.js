@@ -71,6 +71,10 @@ Aliton.ShowErrorMessage = function(Msg, ErrorText) {
     if (ErrorText == undefined)
         ErrorText = '';
     
+    $('#MainDialog').on('open', function() {
+        $('#BodyMainDialog').jqxTextArea('val', Msg + '\nТекст ошибки:\n' + ErrorText);
+    });
+    
     $('#MainDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {
         height: '260px',
         width: '600px',
@@ -80,14 +84,18 @@ Aliton.ShowErrorMessage = function(Msg, ErrorText) {
         title: 'Внимание! Ошибка.',
         initContent: function(){
             $('#BodyMainDialog').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 170, width: '100%', minLength: 1}));
-            $('#BodyMainDialog').jqxTextArea('val', Msg + '\nТекст ошибки:\n' + ErrorText);
+            
             $('#MainDialogBtnClose').jqxButton({ width: 120, height: 30 });
             $('#MainDialogBtnClose').on('click', function(){
                 $('#MainDialog').jqxWindow('close');
             });
         }
     }));
+    
+    
+    
     $('#MainDialog').jqxWindow('open');
+    
 }
 
 Aliton.DateConvertToJs = function(DateStr) {

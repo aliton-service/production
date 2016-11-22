@@ -269,18 +269,50 @@
         };
         
         var loadPage = function (url, index) {
-            $.get(url, function (data) {
-                if (index == 1)
-                    $('#content2').html(data);
-                if (index == 2)
-                    $('#content3').html(data);
-                if (index == 3)
-                    $('#content4').html(data);
-                if (index == 4)
-                    $('#content5').html(data);
-                if (index == 5)
-                    $('#content6').html(data);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data) {
+                    if (index == 1)
+                        $('#content2').html(data);
+                    if (index == 2)
+                        $('#content3').html(data);
+                    if (index == 3)
+                        $('#content4').html(data);
+                    if (index == 4)
+                        $('#content5').html(data);
+                    if (index == 5)
+                        $('#content6').html(data);
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    if (index == 1)
+                        $('#content2').html(Res.responseText);
+                    if (index == 2)
+                        $('#content3').html(Res.responseText);
+                    if (index == 3)
+                        $('#content4').html(Res.responseText);
+                    if (index == 4)
+                        $('#content5').html(Res.responseText);
+                    if (index == 5)
+                        $('#content6').html(Res.responseText);
+                }
             });
+        
+//            $.get(url, function (data) {
+//                
+//            }).error(function() {
+//                if (index == 1)
+//                    $('#content2').html('Ошибка');
+//                if (index == 2)
+//                    $('#content3').html('Ошибка');
+//                if (index == 3)
+//                    $('#content4').html('Ошибка');
+//                if (index == 4)
+//                    $('#content5').html('Ошибка');
+//                if (index == 5)
+//                    $('#content6').html('Ошибка');
+//            });
         };
         
         var initWidgets = function (tab) {

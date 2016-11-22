@@ -344,6 +344,9 @@
                                 success: function(Res) {
                                     $('#BodyCostCalculationsDialog').html(Res);
                                     $('#CostCalculationsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                                 }
                             });
                         });

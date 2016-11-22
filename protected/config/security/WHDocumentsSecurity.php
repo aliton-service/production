@@ -34,7 +34,19 @@
                 'Confirm1WHDocuments',
             ),
         ),
-
+        
+        'MSWHDocuments' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'UserWHDocuments',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'WHDocuments/index',
+            'children' => array(
+                'WHDocumentsView',
+                'CreateWHDocuments',
+            ),
+        ),
+        
         'UserWHDocuments' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'UserWHDocuments',

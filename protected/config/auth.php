@@ -207,6 +207,8 @@ return array_merge(
     include(dirname(__FILE__).'/security/SystemCompetitorsSecurity.php'),
     /* Сложность системы */
     include(dirname(__FILE__).'/security/ObjectsGroupSystemComplexitysSecurity.php'),
+    /* Подъезды и оборудование */
+    include(dirname(__FILE__).'/security/ObjectEquipsSecurity.php'),
         
     /* Коммерческие предложения и сметы */
     include(dirname(__FILE__).'/security/ObjectsGroupCostCalculationsSecurity.php'),
@@ -518,6 +520,34 @@ return array_merge(
                 'UserDeliveryDemands',
                 'ManagerContacts',
                 'Demand2Report',
+            ),
+        ),
+        
+        /* МС */
+        'StaffManager' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель СЦ',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'UserObjects',
+                'UserObjectsGroup',
+                'ManagerContactInfo',
+                'UserObjectsGroupSystems',
+                'UserObjectEquips',
+                'ManagerContractsS',
+                'ManagerDocuments',
+                'ManagerContacts',
+                'UserObjectsGroupCostCalculations',
+                'ManagerCostCalculations',
+                'ManagerDemands',
+                'ManagerExecuteReports',
+                'UserRepairs',
+                'UserDeliveryDemands',
+                'MSWHDocuments',
+                'ManagerDocmAchsDetails',
+                'ManagerMonitoringDemands',
             ),
         ),
     )
