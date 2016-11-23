@@ -566,6 +566,7 @@ return array_merge(
                 'ManagerContacts',
                 'UserObjectsGroupCostCalculations',
                 'ManagerCostCalculations',
+                'ManagerCostCalcDocuments',
                 'ManagerDemands',
                 'ManagerExecuteReports',
                 'UserRepairs',
