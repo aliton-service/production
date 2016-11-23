@@ -1,8 +1,17 @@
 <script type="text/javascript">
-    
+    var Next_Demand_id = 0;
     $(document).ready(function () {
         var CurrentRowData;
+        var ChangeDemand = false;
         
+        //window.onblur = function () {document.title='документ неактивен'}
+        window.onfocus = function () {
+            if (ChangeDemand) {
+                $('#edFiltering').click();
+                ChangeDemand= false;
+            }
+        }
+            
         var DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceExecutorReports, {}), {
             formatData: function (data) {
                 var Filter = ["ex.Demand_id = -1"];
@@ -58,6 +67,7 @@
         
         
         $('#btnDemView').jqxButton({ width: 120, height: 30 });
+        $('#btnRefreshDemands').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         // Инициализация гридов - Реестр заявок и ход работы
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#DemandsGrid').jqxGrid('getrowdata', row);
@@ -80,6 +90,12 @@
         
         $("#DemandsGrid").on('rowselect', function (event) {
             CurrentRowData = $('#DemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            var NextRow = $('#DemandsGrid').jqxGrid('getrowdata', (event.args.rowindex + 1));
+            if (NextRow != undefined)
+                Next_Demand_id = NextRow.Demand_id;
+            else
+                Next_Demand_id = 0;
+            
             if (CurrentRowData != undefined) {
                 var SelectedTab = $('#Tabs').jqxTabs('selectedItem');
                 switch (SelectedTab) {
@@ -95,8 +111,12 @@
         });
 
         $("#DemandsGrid").on('bindingcomplete', function(){
-            if (CurrentRowData != undefined) 
-                Aliton.SelectRowByIdVirtual('Demand_id', CurrentRowData.Demand_id, '#DemandsGrid', false);
+            if (CurrentRowData != undefined) { 
+                if (Next_Demand_id != 0)
+                    Aliton.SelectRowByIdVirtual('Demand_id', Next_Demand_id, '#DemandsGrid', false);
+                else
+                    Aliton.SelectRowByIdVirtual('Demand_id', CurrentRowData.Demand_id, '#DemandsGrid', false);
+            }
             else Aliton.SelectRowByIdVirtual('Demand_id', null, '#DemandsGrid', false);
             
         });
@@ -160,8 +180,14 @@
          
         
         $('#btnDemView').on('click', function(){
-            if (CurrentRowData != undefined)
+            if (CurrentRowData != undefined) {
                 Aliton.ViewDemand(CurrentRowData.Demand_id);
+                ChangeDemand = true;
+            }
+        });
+        
+        $('#btnRefreshDemands').on('click', function(){
+            $('#edFiltering').click();
         });
         
         $('#DemandsGrid').on('rowdoubleclick', function (event) { 
@@ -229,7 +255,8 @@
 </div>    
 <div style="clear: both;"></div>
 <div style="float: left; width: 100%; height: 30px; padding-top: 10px">
-    <input type="button" value="Доп-но" id='btnDemView' />
+    <div class="al-row-column"><input type="button" value="Доп-но" id='btnDemView' /></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshDemands' /></div>
 </div>    
 <div style="clear: both;"></div>
 
