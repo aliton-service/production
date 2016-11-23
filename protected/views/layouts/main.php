@@ -221,57 +221,57 @@
 
                             array('label'=>'Авторизация', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                             array('label'=>'Отчеты', 'url'=>'#', 'items' => array(
-                                array('label'=>'Заявки', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Заявки', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('DemandsReportAll'), 'items'=>array(
                                     array('label' => 'Отчет по заявкам Call-центра', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Отчет по заявкам Call-центра', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('Demand1Report')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport1')
                                         ),
                                     array('label' => 'Чужие и удаленные заявки СЦ', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Чужие и удаленные заявки СЦ', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('Demand2Report')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport2')
                                         ),
                                     array('label' => 'Заявки по объектам', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки по объектам', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsObjectsReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport3')
                                         ),
                                     array('label' => 'Заявки по мастерам', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки по мастерам', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsMastersReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport4')
                                         ),
                                     array('label' => 'Заявки (общий отчет)', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки (общий отчет)', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsListDetailsReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport5')
                                         ),
                                     array('label' => 'Заявки (общий отчет) без хода работ', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки (общий отчет) без хода работ', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsListReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport6')
                                         ),
                                     array('label' => 'Нарушение сроков выполнения', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Нарушение сроков выполнения', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsBrokenDeadlinesReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport7')
                                         ),
                                     array('label' => 'Нарушение сроков выполнения (детальный)', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Нарушение сроков выполнения (детальный)', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsBrokenDeadlinesDetailsReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport8')
                                         ),
                                     array('label' => 'Заявки, переданные не вовремя', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки переданные не вовремя', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsSubmittedTooLateReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport9')
                                         ),
                                     array('label' => 'Отчет по модернизациям', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Отчет по модернизациям', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsForUpgradesReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport10')
                                         ),
                                     array('label' => 'Универсальный отчет', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Универсальный отчет', 'Render' => 0)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsUniversalReport')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport11')
                                         ),
                                     array('label' => 'Заявки для передачи мастеру', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Заявки для передачи мастеру', 'Render' => 1)),
-                                            'visible'=>Yii::app()->user->checkAccess('DemandsDateMaster')
+                                            'visible'=>Yii::app()->user->checkAccess('DemandsReport12')
                                         ),
                                 )),
-                                array('label'=>'Дебиторка', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Дебиторка', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('DebtorsReportAll'), 'items'=>array(
                                     array('label' => 'Дебиторка',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Дебиторка/Дебиторка', 'Render' => 1)),
                                         'visible'=>Yii::app()->user->checkAccess('Debt1Report')
@@ -281,7 +281,7 @@
                                         'visible'=>Yii::app()->user->checkAccess('Debt2Report')
                                     ),
                                 )),
-                                array('label'=>'Заявки на доставку', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Заявки на доставку', 'url'=>'#',  'visible'=>Yii::app()->user->checkAccess('DeliveryDemandsReportAll'), 'items'=>array(
                                     array('label' => 'Заявки на доставку',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки на доставку/Заявки на доставку', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('DeliveryDemandsReport')
@@ -291,7 +291,7 @@
                                         'visible'=>Yii::app()->user->checkAccess('DeliveryDemandsBrokenDeadlinesReport')
                                     ),
                                 )),
-                                array('label'=>'Склад', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Склад', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('WHDocumentsReportAll'), 'items'=>array(
                                     array('label' => 'Выданное оборудование (детальный)',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Выданное оборудование (детальный)', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
@@ -301,7 +301,7 @@
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
                                     ),
                                 )),
-                                array('label'=>'Кадры', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Кадры', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('EmployeesReportAll'), 'items'=>array(
                                     array('label' => 'Сотрудники',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Кадры/Сотрудники', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('Employee1Report')
@@ -315,30 +315,30 @@
                                         'visible'=>Yii::app()->user->checkAccess('Employee3Report')
                                     ),
                                 )),
-                                array('label'=>'Объекты', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Объекты', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ObjectReportAll'), 'items'=>array(
                                     array('label' => 'Объекты по мастерам', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Объекты по мастерам', 'Render' => 0)),
-                                            'visible'=>true
+                                            'visible'=>Yii::app()->user->checkAccess('ObjectReport1')
                                         ),
                                     array('label' => 'Объекты по тарифам', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Объекты по тарифам', 'Render' => 0)),
-                                            'visible'=>true
+                                            'visible'=>Yii::app()->user->checkAccess('ObjectReport2')
                                         ),
                                     array('label' => 'Объекты с тарифами и оборудованием', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Объекты по тарифам (Оборудование)', 'Render' => 0)),
-                                            'visible'=>true
+                                            'visible'=>Yii::app()->user->checkAccess('ObjectReport3')
                                         ),
                                     array('label' => 'Ушедшие клиенты', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Ушедшие клиенты', 'Render' => 0)),
-                                            'visible'=>true
+                                            'visible'=>Yii::app()->user->checkAccess('ObjectReport4')
                                         ),
                                     array('label' => 'Контактные лица', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Контактные лица', 'Render' => 0)),
-                                            'visible'=>true
+                                            'visible'=>Yii::app()->user->checkAccess('ObjectReport5')
                                         ),
                                     array('label' => 'Повышение расценок', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Повышение расценок', 'Render' => 0)),
-                                            'visible'=>true
+                                            'visible'=>Yii::app()->user->checkAccess('ObjectReport6')
                                         ),
                                     array('label' => 'Установленные системы на объектах', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Установленные системы', 'Render' => 0)),
@@ -350,13 +350,13 @@
                                         ),
 
                                 )),
-                                array('label'=>'Договора', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Договора', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ContractsReportAll'), 'items'=>array(
                                     array('label' => 'Список договоров обслуживания', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Договора/Список договоров обслуживания', 'Render' => 0)),
                                             'visible'=>Yii::app()->user->checkAccess('Contract1Report')
                                         ),
                                 )),
-                                array('label'=>'Оборудование', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Оборудование', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('EquipsReportAll'), 'items'=>array(
                                     array('label' => 'Оборудование на объектах', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Объекты/Оборудование на объектах', 'Render' => 0)),
                                             'visible'=>Yii::app()->user->checkAccess('ObjectEquipsReport')
@@ -370,7 +370,7 @@
                                             'visible'=>Yii::app()->user->checkAccess('Equips1')
                                         ),
                                 )),
-                                array('label'=>'Контакты', 'url'=>'#', 'items'=>array(
+                                array('label'=>'Контакты', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ContactsReportAll'), 'items'=>array(
                                     array('label' => 'Отчет по контактам', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Контакты/Контакты', 'Render' => 0)),
                                             'visible'=>Yii::app()->user->checkAccess('Contacts2')

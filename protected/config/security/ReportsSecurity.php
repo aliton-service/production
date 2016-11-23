@@ -1,12 +1,92 @@
 <?php
     return array(
-        'Demand1Report' => array(
+        /* Заявки */
+        'DemandsReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport1' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Отчет по заявкам Call-центра',
             'bizRule' => null,
             'data' => null,
         ),
+        'DemandsReport2' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Чужие и удаленные заявки СЦ',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport3' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки по объектам',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport4' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки по мастерам',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport5' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки (общий отчет)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport6' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки (общий отчет) без хода работ',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport7' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Нарушение сроков выполнения',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport8' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Нарушение сроков выполнения (детальный)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport9' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки переданные не вовремя',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport10' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Отчет по модернизациям',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport11' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Универсальный отчет',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'DemandsReport12' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки для передачи мастеру',
+            'bizRule' => null,
+            'data' => null,
+        ),
         
+        /* Склад */
+        'WHDocumentsReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Склад',
+            'bizRule' => null,
+            'data' => null,
+        ),
         'WHDocuments1Report' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Выданное оборудование (детальный)',
@@ -14,27 +94,25 @@
             'data' => null,
         ),
         
-        'Demand2Report' => array(
+        /* Кадры */
+        'EmployeesReportAll' => array(
             'type' => CAuthItem::TYPE_OPERATION,
-            'description' => 'Чужие и удаленные заявки СЦ',
+            'description' => 'Кадры',
             'bizRule' => null,
             'data' => null,
         ),
-        
         'Employee1Report' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Сорудники',
             'bizRule' => null,
             'data' => null,
         ),
-        
         'Employee2Report' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Сорудники (детальный)',
             'bizRule' => null,
             'data' => null,
         ),
-        
         'Employee3Report' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Дни рождения',
@@ -42,6 +120,13 @@
             'data' => null,
         ),
         
+        /* Контакты */
+        'ContactsReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Контакты',
+            'bizRule' => null,
+            'data' => null,
+        ),
         'ContactsReport' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Контактные лица',
@@ -125,6 +210,14 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        /* Дебиторка */
+        'DebtorsReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Дебиторка',
+            'bizRule' => null,
+            'data' => null,
+        ),
         'Debt1Report' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Дебиторка',
@@ -134,6 +227,14 @@
         'Debt2Report' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Дебиторка',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        /* Договора */
+        'ContractsReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Договора',
             'bizRule' => null,
             'data' => null,
         ),
@@ -166,6 +267,14 @@
         'DemandsUniversalReport' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Универсальный отчет',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        /* Оборудование */
+        'EquipsReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Оборудование',
             'bizRule' => null,
             'data' => null,
         ),
@@ -206,16 +315,68 @@
             'data' => null,
         ),
         
+        /* Заявки на доставку */
+        'DeliveryDemandsReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Заявки на доставку',
+            'bizRule' => null,
+            'data' => null,
+        ),
         'DeliveryDemandsReport' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Заявки на доставку',
             'bizRule' => null,
             'data' => null,
         ),
-        
         'DeliveryDemandsBrokenDeadlinesReport' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Нарушение сроков выполнения',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        /* Объекты */
+        'ObjectReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'ObjectReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'ObjectReport1' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'ObjectReport2' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'ObjectReport3' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'ObjectReport4' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'ObjectReport5' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Объекты',
             'bizRule' => null,
             'data' => null,
         ),

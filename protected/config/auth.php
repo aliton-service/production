@@ -548,6 +548,22 @@ return array_merge(
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
+                'ManagerEvents',
+                
+                /* Отчеты */
+                'DemandsReportAll',
+                'DemandsReport1',
+                'DemandsReport2',
+                'DemandsReport3',
+                'DemandsReport4',
+                'DemandsReport5',
+                'DemandsReport6',
+                'DemandsReport7',
+                'DemandsReport8',
+                'DemandsReport9',
+                'DemandsReport10',
+                'DemandsReport11',
+                'DemandsReport12',
             ),
         ),
     )
