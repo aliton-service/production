@@ -636,7 +636,7 @@ return array_merge(
             ),
         ),
         
-        /* ПМ */
+        /* Офис менеджер */
         'OfficeManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Руководитель СЦ',
@@ -680,6 +680,50 @@ return array_merge(
                 'DebtorsReportAll',
                 'Debt1Report',
                 'Debt2Report',
+            ),
+        ),
+        
+        /* Ведущий инженер */
+        'LeadEngineer' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель СЦ',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'UserObjects',
+                'UserObjectsGroup',
+                'ManagerContactInfo',
+                'UserObjectsGroupSystems',
+                'UserObjectEquips',
+                'ManagerContractsS',
+                'ManagerDocuments',
+                'ManagerContacts',
+                'UserObjectsGroupCostCalculations',
+                'ManagerCostCalculations',
+                'ManagerDemands',
+                'ManagerExecuteReports',
+                'UserRepairs',
+                'UserDeliveryDemands',
+                'MSWHDocuments',
+                'ManagerDocmAchsDetails',
+                'ManagerMonitoringDemands',
+                'ManagerEvents',
+                
+                /* Отчеты */
+                'DemandsReportAll',
+                'DemandsReport1',
+                'DemandsReport2',
+                'DemandsReport3',
+                'DemandsReport4',
+                'DemandsReport5',
+                'DemandsReport6',
+                'DemandsReport7',
+                'DemandsReport8',
+                'DemandsReport9',
+                'DemandsReport10',
+                'DemandsReport11',
+                'DemandsReport12',
             ),
         ),
     )
