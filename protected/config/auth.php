@@ -575,7 +575,7 @@ return array_merge(
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
-                
+                'LogDeliveryDemands',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',

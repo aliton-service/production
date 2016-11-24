@@ -4,6 +4,9 @@
     $(document).ready(function () {
         
         var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListObjectsMin));
+        var ServiceTypesData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceServiceTypes));
+        ServiceTypesData.dataBind();
+        ServiceTypesData = ServiceTypesData.records;
         
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#ObjectsGrid').jqxGrid('getrowdata', row);
@@ -61,7 +64,7 @@
                     { text: 'Организация', dataField: 'FullName', width: 150, cellsrenderer: cellsrenderer },
                     { text: 'Юр. лицо', dataField: 'JuridicalPerson', width: 100, cellsrenderer: cellsrenderer },
                     { text: 'Район', dataField: 'AreaName', width: 100, cellsrenderer: cellsrenderer },
-                    { text: 'Тип обслуживания', dataField: 'ServiceType', width: 100, cellsrenderer: cellsrenderer },
+                    { text: 'Тип обслуживания', filtertype: 'checkedlist', filteritems: ServiceTypesData, dataField: 'ServiceType', width: 100, cellsrenderer: cellsrenderer },
                     { text: 'Мастер', dataField: 'MasterName', width: 180, cellsrenderer: cellsrenderer },
                     { text: 'Новостройка', dataField: 'year_construction', width: 180, cellsrenderer: cellsrenderer },
                     { text: 'ВИП', dataField: 'VIP', width: 180, cellsrenderer: cellsrenderer },

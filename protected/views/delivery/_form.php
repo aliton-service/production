@@ -1,5 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function(){
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         var DeliveryDemands = {
             Dldm_id: <?php echo json_encode($model->dldm_id); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
@@ -140,8 +141,11 @@
         });
 
         $('#btnDeliveryDemOk').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('Delivery/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('Delivery/Insert')); ?>;
             $.ajax({
-                url: '<?php echo Yii::app()->createUrl('Delivery/Insert'); ?>',
+                url: Url,
                 type: 'POST',
                 data: $('#DeliveryDemands').serialize() + "&DialogId=" + DeliveryDemands.DialogId + "&BodyDialogId=" + DeliveryDemands.BodyDialogId,
                 success: function(Res) {

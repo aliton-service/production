@@ -21,7 +21,7 @@
             Logist: <?php echo json_encode($model->user_logist_name); ?>,
             CurrentUser: <?php echo json_encode(Yii::app()->user->Employee_id); ?>
         };
-        
+        var FlagLog = Boolean(Number(<?php echo json_encode(Yii::app()->user->checkAccess('LogDeliveryDemands')) ?>));
         var DetailMode = '';
         
         $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '120px', height: '25px', decimalDigits: 0 }));
@@ -283,7 +283,7 @@
         
         $('#btnEdit').on('click', function(){
             LoadEditForm('<?php echo Yii::app()->createUrl('Delivery/Update'); ?>', {Dldm_id: DeliveryDemands.Dldm_id}, 'POST');
-            $('#EditDeliveryDemandDialog').jqxWindow('open');
+            
         });
         $('#EditDeliveryDemandDialog').on('open', function(){
             $('#btnDeliveryDemOk').jqxButton({disabled: true});
@@ -322,6 +322,11 @@
         }});
         
         LoadEditForm = function(Url, Data, Type) {
+            if (FlagLog)
+                $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '800px', width: '740', position: 'center'}));
+            else
+                $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '460px', width: '740', position: 'center'}));
+            
             $.ajax({
                 url: Url,
                 type: Type,
@@ -329,6 +334,10 @@
                 async: false,
                 success: function(Res) {
                     $('#BodyDeliveryDemDialog').html(Res);
+                    $('#EditDeliveryDemandDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
                 }
             });
         };
@@ -438,6 +447,7 @@
     </div>
     <div style="/* overflow: hidden; */padding: 10px;" id="DialogDeliveryContent">
         <div style="/*overflow: hidden;*/" id="BodyDeliveryDemDialog"></div>
+        <!--
         <div id="BottomDeliveryDemDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnDeliveryDemOk' /></div>
@@ -445,6 +455,7 @@
                 <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnDeliveryDemCancel' /></div>
             </div>
         </div>
+        -->
     </div>
 </div>
 

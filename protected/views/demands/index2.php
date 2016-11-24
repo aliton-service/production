@@ -68,6 +68,30 @@
         
         $('#btnDemView').jqxButton({ width: 120, height: 30 });
         $('#btnRefreshDemands').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnObjectInfo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $("#btnObjectInfo").on('click', function(){
+            Aliton.ViewClient(CurrentRowData.ObjectGr_id);
+        });
+        $('#btnUndoDemands').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnUndoDemands').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Demands/Undo')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Demand_id: CurrentRowData.Demand_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result === 1) {
+                        $('#btnRefreshDemands').click();
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         // Инициализация гридов - Реестр заявок и ход работы
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#DemandsGrid').jqxGrid('getrowdata', row);
@@ -95,8 +119,9 @@
                 Next_Demand_id = NextRow.Demand_id;
             else
                 Next_Demand_id = 0;
-            
+            $('#btnUndoDemands').jqxButton({disabled: true});
             if (CurrentRowData != undefined) {
+                $('#btnUndoDemands').jqxButton({disabled: !(CurrentRowData.DateExec != null)});
                 var SelectedTab = $('#Tabs').jqxTabs('selectedItem');
                 switch (SelectedTab) {
                     case 0:
@@ -257,6 +282,9 @@
 <div style="float: left; width: 100%; height: 30px; padding-top: 10px">
     <div class="al-row-column"><input type="button" value="Доп-но" id='btnDemView' /></div>
     <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshDemands' /></div>
+    <div class="al-row-column"><input type="button" value="Карточка" id='btnObjectInfo' /></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Отменить вып." id='btnUndoDemands' /></div>
+    
 </div>    
 <div style="clear: both;"></div>
 

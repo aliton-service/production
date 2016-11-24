@@ -253,6 +253,7 @@ Sources.DemandsSource =
     datafields: [
         { name: 'Demand_id', type: 'int'},
         { name: 'Object_id', type: 'int'},
+        { name: 'ObjectGr_id', type: 'int'},
         { name: 'Address', type: 'string'},
         { name: 'UCreateName', type: 'string'},
         { name: 'VIPName', type: 'string'},

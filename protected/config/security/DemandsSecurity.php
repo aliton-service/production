@@ -86,6 +86,13 @@ return array(
         'data' => null,
     ),
     
+    'UndoDemands' => array(
+        'type' => CAuthItem::TYPE_OPERATION,
+        'description' => 'UndoDemands',
+        'bizRule' => null,
+        'data' => null,
+    ),
+    
     'ChangeType' => array(
         'type' => CAuthItem::TYPE_OPERATION,
         'description' => 'ChangeType',

@@ -48,6 +48,12 @@ class DemandsController extends Controller
                 ),
 
             ),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions' => array('Undo'),
+                'roles' => array(
+                    'UndoDemands',
+                ),
+            ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('delete'),
                 'roles' => array(
@@ -753,7 +759,30 @@ class DemandsController extends Controller
         }
         
         echo json_encode($ObjectResult);
-    }    
+    }
+
+    public function actionUndo() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        if (isset($_POST['Demand_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'UNDO_ExecDemand';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Demand_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $_POST['Demand_id'];
+        }
+        
+        echo json_encode($ObjectResult);
+    }     
 }
 
 

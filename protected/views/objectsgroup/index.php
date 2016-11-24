@@ -403,7 +403,7 @@ $this->breadcrumbs=array(
         <li>
             <div style="height: 15px; margin-top: 3px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                    Договора и оплаты
+                    Договор и оплаты
                 </div>
             </div>
         </li>
