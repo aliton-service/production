@@ -196,6 +196,8 @@
                         { text: 'Street_id', datafield: 'Street_id', width: 120, hidden: true },
                         { text: 'House', datafield: 'House', width: 120, hidden: true }, // 30
                         { text: 'Выполнение(Фильтр)', datafield: 'DateExecFilter', width: 150, cellsformat: 'd', cellsrenderer: cellsrenderer },
+                        { text: 'Предельная дата', filtertype: 'date', datafield: 'Deadline', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' /*, cellsrenderer: cellsrenderer */},
+                        
                     ]
         }));
         

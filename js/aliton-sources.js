@@ -258,6 +258,7 @@ Sources.DemandsSource =
         { name: 'UCreateName', type: 'string'},
         { name: 'VIPName', type: 'string'},
         { name: 'DateReg', type: 'date'},
+        { name: 'Deadline', type: 'date'},
         { name: 'DateMaster', type: 'date'},
         { name: 'DateExec', type: 'date'},
         { name: 'DateExecFilter', type: 'date'},
