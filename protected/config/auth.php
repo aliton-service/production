@@ -676,6 +676,7 @@ return array_merge(
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'WhActsView',
+                'ManagerControlContacts',
                 
                 /* Отчеты */
                 'DemandsReportAll',

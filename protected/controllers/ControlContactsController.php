@@ -6,6 +6,8 @@ class ControlContactsController extends Controller
     
     public $title = 'Контроль контактов';
     public $action_url = '';
+    public $gridFilters = null;
+    public $filterDefaultValues = null;
     
     /**
      * @return array action filters
@@ -56,6 +58,17 @@ class ControlContactsController extends Controller
         
         $this->title = 'Контроль контактов';
         $model->Employee_id = Yii::app()->user->Employee_id;
+        
+        $this->gridFilters = '_filters';
+        $this->filterDefaultValues = array(
+            'FullName' => '',
+            'DateStart' => Date('d.m.Y'),
+            'DateEnd' => Date('d.m.Y'),
+            'Address' => '',
+            'DebtStart' => 0,
+            'DebtEnd' => 9999999,
+            'Executor' => Yii::app()->user->Employee_id,
+        );
         
         $this->render('index', array(
             'model' => $model
