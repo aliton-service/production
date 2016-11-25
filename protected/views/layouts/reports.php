@@ -7,7 +7,13 @@
         <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
         
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
-        
+        <style>
+            @media print {
+                #panel_controls {
+                    display: none;
+                }
+            }
+        </style>
         <script>
             $(document).ready(function() {
                 var ReportName =  <?php echo json_encode(urlencode($this->ReportName)); ?>;
@@ -62,7 +68,7 @@
     </head>
 
     <body>
-        <div class="head_report" style="float: left; width: 100%; min-width: 1024px">
+        <div id="panel_controls" class="head_report" style="float: left; width: 100%; min-width: 1024px">
             <div style="float: left; width: 300px; overflow: auto; min-height: 21px;"></div>
             <div style="float: left; width: 900px; overflow: auto;">
                 <div style="float: left">
