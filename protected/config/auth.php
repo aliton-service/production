@@ -655,7 +655,7 @@ return array_merge(
             'defaultIndex' => 'object/index',
             'children' => array(
                 'UserObjects',
-                'UserObjectsGroup',
+                'ManagerObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
                 'UserObjectEquips',
