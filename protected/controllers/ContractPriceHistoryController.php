@@ -70,6 +70,10 @@ class ContractPriceHistoryController extends Controller
     {
         $model = new ContractPriceHistory();
         
+        if (isset($_POST['Params'])) 
+            $model->attributes = $_POST['Params'];
+        
+        
         if(isset($_POST['ContractPriceHistory']))
         {
             $model->attributes=$_POST['ContractPriceHistory'];
@@ -83,26 +87,6 @@ class ContractPriceHistoryController extends Controller
                 echo '1';
                 return;
             }
-        }
-        
-        if (isset($_POST['ContrS_id'])) { 
-            $model->ContrS_id = $_POST['ContrS_id'];
-        }
-        
-        if (isset($_POST['DateEnd'])) { 
-            $model->DateEnd = $_POST['DateEnd'];
-        }
-        if (isset($_POST['Price'])) { 
-            $model->Price = $_POST['Price'];
-        }
-        if (isset($_POST['PriceMonth'])) { 
-            $model->PriceMonth = $_POST['PriceMonth'];
-        }
-        if (isset($_POST['Reason_id'])) { 
-            $model->Reason_id = $_POST['Reason_id'];
-        }
-        if (isset($_POST['DateStart'])) { 
-            $model->DateStart = $_POST['DateStart'];
         }
         
         $this->renderPartial('_form', array(

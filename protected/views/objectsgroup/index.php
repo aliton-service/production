@@ -42,7 +42,7 @@
             $("#ServiceManager").jqxInput('val', ObjectGroup.ServiceManager);
             $("#SalesManager").jqxInput('val', ObjectGroup.SalesManager);
         };
-        
+        OG.Addr = ObjectGroup.Address;
         OG.Refresh = function() {
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/GetModel'))?>,
@@ -502,7 +502,7 @@ $this->breadcrumbs=array(
         <div style="width: 100%; height: 100%"></div>
     </div>
 
-    <div id='content4' style="overflow: hidden; margin-left: 10px;">
+    <div id='content4' style="overflow: hidden; padding: 10px;">
         <div style="width: 100%; height: 100%"></div>
     </div>
 

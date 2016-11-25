@@ -108,6 +108,7 @@ class ContractsS extends MainFormModel
                         pp.PaymentName,
                         pt.PaymentTypeName,
                         a.Addr,
+                        c.Debt,
                         c.CalcSum,
                         c.Jrdc_id,
                         j.JuridicalPerson,

@@ -13,7 +13,28 @@
             $("#Master2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees4, displayMember: "EmployeeName", valueMember: "Employee_id", width: 300 }));
             $("#WorkDateStart4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
             $("#WorkDateEnd4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
-            
+            $("#BtnOkDialogContractMasterHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#BtnCancelDialogContractMasterHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#BtnCancelDialogContractMasterHistory").on('click', function () {
+                $('#EditDialogContractMasterHistory').jqxWindow('close');
+            });
+            $("#BtnOkDialogContractMasterHistory").on('click', function () {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('ContractMasterHistory/Insert')); ?>,
+                    type: 'POST',
+                    async: false,
+                    data: $('#ContractMasterHistory').serialize(),
+                    success: function(Res) {
+                        if (Res == '1' || Res == 1) {
+                            $('#EditDialogContractMasterHistory').jqxWindow('close');
+                            $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
+                        } else {
+                            $('#BodyDialogContractMasterHistory').html(Res);
+                        }
+
+                    }
+                });
+            });
             if (ContractMasterHistory.Master !== null) $("#Master2").jqxComboBox('val', ContractMasterHistory.Master);
             if (ContractMasterHistory.WorkDateStart !== null) $("#WorkDateStart4").jqxDateTimeInput('val', ContractMasterHistory.WorkDateStart);
             if (ContractMasterHistory.WorkDateEnd !== null) $("#WorkDateEnd4").jqxDateTimeInput('val', ContractMasterHistory.WorkDateEnd);
@@ -41,6 +62,9 @@
     <div class="row-column" style="padding-top: 3px;">с </div><div class="row-column"><div id="WorkDateStart4" name="ContractMasterHistory[WorkDateStart]"></div><?php echo $form->error($model, 'WorkDateStart'); ?></div>
     <div class="row-column" style="padding-top: 3px;">по </div><div class="row-column"><div id="WorkDateEnd4" name="ContractMasterHistory[WorkDateEnd]"></div><?php echo $form->error($model, 'WorkDateEnd'); ?></div>
 </div>
-
+<div class="al-row">
+    <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogContractMasterHistory' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogContractMasterHistory' /></div>
+</div>
 
 <?php $this->endWidget(); ?>

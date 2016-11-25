@@ -23,9 +23,19 @@ class ContractPriceHistory extends MainFormModel
     public function rules()
     {
         return array(
-            array('PriceHistory_id, ContrS_id, Reason_id, ServiceType_id', 'numerical', 'integerOnly'=>true),
             array('ContrS_id, Reason_id, DateStart, Price, PriceMonth', 'required'),
-            array('PriceHistory_id, ContrS_id, Reason_id, ServiceType_id, DateStart, Price, PriceMonth, ReasonName, ServiceType, DateEnd', 'safe'),
+            array('PriceHistory_id,
+                    ContrS_id,
+                    DateStart,
+                    DateEnd,
+                    Price,
+                    PriceMonth,
+                    Reason_id,
+                    ReasonName,
+                    ServiceType_id,
+                    ServiceType,
+                    EmplCreate,
+                    EmplChange', 'safe'),
         );
     }
 
@@ -62,7 +72,7 @@ class ContractPriceHistory extends MainFormModel
 	";
 
         $order = "
-            order by ph.DateStart desc
+            order by ph.DateStart
         ";
 
         // Инициализация первичного ключа
@@ -78,15 +88,18 @@ class ContractPriceHistory extends MainFormModel
     public function attributeLabels()
     {
         return array(
-            'PriceHistory_id' => 'PriceHistory id',
-            'ContrS_id' => 'ContrS id',
-            'DateStart' => 'DateStart',
-            'DateEnd' => 'DateEnd',
-            'Price' => 'Price',
-            'PriceMonth' => 'PriceMonth',
-            'Reason_id' => 'Reason_id',
-            'ServiceType_id' => 'ServiceType_id',
-            'ServiceType' => 'ServiceType',
+            'PriceHistory_id' => '',
+            'ContrS_id' => '',
+            'DateStart' => '',
+            'DateEnd' => '',
+            'Price' => '',
+            'PriceMonth' => '',
+            'Reason_id' => '',
+            'ReasonName' => '',
+            'ServiceType_id' => '',
+            'ServiceType' => '',
+            'EmplCreate' => '',
+            'EmplChange' => '',
         );
     }
 

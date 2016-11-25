@@ -576,6 +576,7 @@ return array_merge(
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'LogDeliveryDemands',
+                'WhActsView',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -620,6 +621,7 @@ return array_merge(
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
+                'WhActsView',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -665,6 +667,7 @@ return array_merge(
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
+                'WhActsView',
                 
                 /* Отчеты */
                 'DemandsReportAll',
