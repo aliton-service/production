@@ -122,7 +122,7 @@
                             ]
                     }));
                     $("#edComment").jqxInput({height: 25, width: 'calc(100% - 6px)', minLength: 1});
-                    $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, dropDownVerticalAlignment: "top"}));
+                    $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: '120px', dropDownVerticalAlignment: "top"}));
                     $("#btnSend").jqxButton({ width: 120, height: 30 });
                     $("#btnDelComment").jqxButton({ width: 120, height: 30 });
                     
