@@ -4027,3 +4027,44 @@ Sources.SourceNegatives =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceCostCalculations_v =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Calc_id', type: 'int'},
+        {name: 'Type', type: 'int'},
+        {name: 'TypeName', type: 'string'},
+        {name: 'Date', type: 'date'},
+        {name: 'Sum_High_Full', type: 'float'},
+        {name: 'SumPay', type: 'float'},
+        {name: 'Treb_id', type: 'int'},
+        {name: 'Name', type: 'string'},
+        {name: 'Addr', type: 'string'},
+        {name: 'Territ_id', type: 'int'},
+        {name: 'MngrShortName', type: 'string'},
+        {name: 'Date_Ready', type: 'date'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'Date_Agreed', type: 'date'},
+        {name: 'AgreedShortName', type: 'string'},
+        {name: 'PaymentTypeName', type: 'string'},
+        {name: 'JuridicalPerson', type: 'string'},
+        {name: 'BuhAct_id', type: 'int'},
+        {name: 'Sum_Works_Low', type: 'float'},
+        {name: 'TrebShortName', type: 'string'},
+        {name: 'TrebDate', type: 'date'},
+        {name: 'Number', type: 'string'},
+        {name: 'ProcPay', type: 'float'},
+        {name: 'ObjectGr_id', type: 'int'},
+    ],
+    id: 'Calc_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=CostCalculations_v',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

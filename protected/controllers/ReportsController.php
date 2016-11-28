@@ -175,6 +175,16 @@ class ReportsController extends Controller
         echo $File;
     }
     
+    public function actionUpLoadFileGrid() {
+        if (isset($_POST['filename']) && isset($_POST['format']) && isset($_POST['content'])) {
+            ob_clean();
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . $_POST['filename'] . '.' . $_POST['format']);
+            echo $_POST['content'];
+        }
+    }
+    
     public function actionReportExportXLS($ReportName = '') {
         if ($ReportName != '') {
             
