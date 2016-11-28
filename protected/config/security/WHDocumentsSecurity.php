@@ -47,6 +47,7 @@
                 'WHDocumentsView',
                 'CreateWHDocuments',
                 'AddNoteWHDocuments',
+                'UpdateWHDocuments',
             ),
         ),
         
