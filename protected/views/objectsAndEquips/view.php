@@ -420,7 +420,7 @@
                 </li>
             </ul>
             <div id='content1' style="overflow: hidden; margin-left: 10px;">
-                <div style="overflow: hidden; width: 100%">
+                <div style="overflow: hidden; width: 100%; height: calc(100%)">
                     <div class="row">
                             <div id="ObjectEquipsGrid" class="jqxGridAliton"></div>
                     </div>
