@@ -204,6 +204,7 @@
             $('#DemandsGrid').jqxGrid('removefilter', 'ObjectGr_id', false);
             if (Filters.ObjectGr_id != '' && Filters.ObjectGr_id != null) $("#DemandsGrid").jqxGrid('addfilter', 'ObjectGr_id', ObjectGrFilterGroup);
             
+                        
             $('#DemandsGrid').jqxGrid({source: DemandsAdapter});
         };
         

@@ -19,7 +19,7 @@
             },
         });
         
-        $('#edObjectNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 180, width: 600, minLength: 1 }));
+        $('#edObjectNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 180, width: 'calc(100% - 2px)', minLength: 1 }));
         $('#btnAddObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnEditObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnDelObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -56,13 +56,13 @@
         $('#btnAddObject').on('click', function(){
             Mode = 'Insert';
             LoadEditForm('Insert', 0, House.ObjectGr_id);
-            $('#EditObjectDialog').jqxWindow('open');
+            
         });
         
         $('#btnEditObject').on('click', function(){
             Mode = 'Update';
             LoadEditForm(Mode, ObjectCorrentRow.Object_id, House.ObjectGr_id);
-            $('#EditObjectDialog').jqxWindow('open');
+            
         });
         
         $('#btnDelObject').on('click', function(){
@@ -80,6 +80,9 @@
                     }
                     else
                         $('#EditObjectDialog #BodyDialog').html(Res);
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
             });
         });
@@ -98,6 +101,9 @@
                         $("#CommonEquipsGrid").jqxGrid('updatebounddata');
                         $('#CommonEquipsGrid').jqxGrid('selectrow', 0);
                     }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
             });
         };
@@ -161,6 +167,10 @@
                 },
                 success: function(Res) {
                     $('#EditObjectDialog #BodyDialog').html(Res);
+                    $('#EditObjectDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
             });
         };
@@ -190,6 +200,10 @@
                 success: function(Res) {
                     //Elem.html(Res);
                     eval(AfterFunction);
+                    $('#EditObjectEquipDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
             });
         };
@@ -199,8 +213,8 @@
                 case 0:
                     $("#ObjectEquipsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 200,
-                            width: '100%',
+                            height: 'calc(100% - 55px)',
+                            width: 'calc(100% - 10px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesizeoptions: ['10', '200', '500', '1000'],
@@ -224,13 +238,14 @@
                     $('#btnAddEquip').on('click', function(){
                         Mode = 'Insert';
                         LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Insert'); ?>', {Object_Id: ObjectCorrentRow.Object_id}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
-                        $('#EditObjectEquipDialog').jqxWindow('open');
+                        
                     });
                     
                     $('#btnEditEquip').on('click', function(){
                         Mode = 'Update';
-                        LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>', {Code: EquipCurrentRow.Code}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
-                        $('#EditObjectEquipDialog').jqxWindow('open');
+                        if (EquipCurrentRow != undefined)
+                            LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>', {Code: EquipCurrentRow.Code}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
+                        
                     });
                     
                     $('#ObjectEquipsGrid').on('rowdoubleclick', function (event) { 
@@ -259,7 +274,7 @@
                     
                     $("#CommonEquipsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 200,
+                            height: 'calc(100% - 55px)',
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -286,13 +301,13 @@
                     $('#btnAddCommonEquip').on('click', function(){
                         Mode = 'Insert';
                         LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Insert'); ?>', {ObjectGr_id: House.ObjectGr_id}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
-                        $('#EditObjectEquipDialog').jqxWindow('open');
                     });
                     
                     $('#btnEditCommonEquip').on('click', function(){
                         Mode = 'Update';
-                        LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>', {Code: EquipCommonCurrentRow.Code}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');
-                        $('#EditObjectEquipDialog').jqxWindow('open');
+                        if (EquipCommonCurrentRow != undefined)
+                            LoadForm('<?php echo Yii::app()->createUrl('ObjectEquips/Update'); ?>', {Code: EquipCommonCurrentRow.Code}, $('#BodyObjectEquipDialog'), 'Elem.html(Res);');    
+                        
                     });
                     
                     $('#CommonEquipsGrid').on('rowdoubleclick', function (event) { 
@@ -314,12 +329,12 @@
             }
         };
         
-        $('#EquipTabs').jqxTabs({ width: '100%', height: 300,  initTabContent: initWidgets });
+        $('#EquipTabs').jqxTabs({ width: 'calc(100% - 10px)', height: 'calc(100% - 280px)',  initTabContent: initWidgets });
         
         $("#ObjectsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: 200,
-                width: '650px',
+                width: 'calc(100% - 2px)',
                 showfilterrow: false,
                 autoshowfiltericon: true,
                 source: DataObjects,
@@ -368,14 +383,17 @@
      
 </style>
 
-<div class="row">
-    <div class="row-column">
+<div class="al-row">
+    <div class="al-row-column" style="width: 60%">
         <div id="ObjectsGrid" class="jqxGridAliton"></div>
     </div>
-    <div class="row-column">
-        Примечание:
-        <textarea id="edObjectNote"></textarea>
+    <div class="al-row-column" style="width: calc(40% - 10px)">
+        <div>Примечание:</div>
+        <div>
+            <textarea id="edObjectNote"></textarea>
+        </div>
     </div>
+    <div style="clear: both"></div>
 </div>
 <div class="row">
     <div class="row-column"><input type="button" value="Добавить" id='btnAddObject' /></div>

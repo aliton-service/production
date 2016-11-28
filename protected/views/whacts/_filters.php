@@ -7,8 +7,8 @@
             DateCrEnd: Aliton.DateConvertToJs('<?php echo $filterDefaultValues['DateCrEnd']?>'),
             DateAcStart: Aliton.DateConvertToJs('<?php echo $filterDefaultValues['DateAcStart']?>'),
             DateAcEnd: Aliton.DateConvertToJs('<?php echo $filterDefaultValues['DateAcEnd']?>'),
-            Master: <?php echo json_encode($filterDefaultValues['Master'])?>,
-            Address: <?php echo json_encode($filterDefaultValues['Address'])?>
+            Master: <?php echo json_encode($filterDefaultValues['Master']); ?>,
+            Address: <?php echo json_encode($filterDefaultValues['Address']); ?>
         };
         
         var DisabledControls = function() {

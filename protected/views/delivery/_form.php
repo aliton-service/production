@@ -1,5 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function(){
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         var DeliveryDemands = {
             Dldm_id: <?php echo json_encode($model->dldm_id); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
@@ -140,8 +141,11 @@
         });
 
         $('#btnDeliveryDemOk').on('click', function(){
+            var Url = <?php echo json_encode(Yii::app()->createUrl('Delivery/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('Delivery/Insert')); ?>;
             $.ajax({
-                url: '<?php echo Yii::app()->createUrl('Delivery/Insert'); ?>',
+                url: Url,
                 type: 'POST',
                 data: $('#DeliveryDemands').serialize() + "&DialogId=" + DeliveryDemands.DialogId + "&BodyDialogId=" + DeliveryDemands.BodyDialogId,
                 success: function(Res) {
@@ -206,6 +210,7 @@
 
 <input type="hidden" name="DeliveryDemands[calc_id]" value="<?php echo $model->calc_id; ?>" />
 <input type="hidden" name="DeliveryDemands[repr_id]" value="<?php echo $model->repr_id; ?>" />
+<input type="hidden" name="DeliveryDemands[dmnd_id]" value="<?php echo $model->dmnd_id; ?>" />
 
 <div class="row">
     <div class="row-column">

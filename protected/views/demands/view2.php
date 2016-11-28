@@ -4,6 +4,7 @@
         // Присваиваем значения по умолчанию для фильтров
         var Demand = {
             Demand_id: <?php echo json_encode($model->Demand_id); ?>,
+            Object_id: <?php echo json_encode($model->Object_id); ?>,
             ObjectGr_id: <?php echo $model->ObjectGr_id; ?>,
             Address: <?php echo json_encode($model->Address); ?>,
             DateReg: Aliton.DateConvertToJs('<?php echo $model->DateReg; ?>'),
@@ -12,6 +13,7 @@
             DemandType: <?php echo json_encode($model->DemandType); ?>,
             SystemType: <?php echo json_encode($model->SystemType); ?>,
             EquipType: <?php echo json_encode($model->EquipType); ?>,
+            Master: <?php echo json_encode($model->Master); ?>,
             Malfunction: <?php echo json_encode($model->Malfunction); ?>,
             DemandPrior: <?php echo json_encode($model->DemandPrior); ?>,
             Contacts: <?php echo json_encode($model->Contacts); ?>,
@@ -28,12 +30,24 @@
             DemandText: <?php echo json_encode($model->DemandText); ?>,
             UCreateName: <?php echo json_encode($model->UCreateName); ?>,
             UChangeName: <?php echo json_encode($model->UChangeName); ?>,
-            WorkedOut: Aliton.DateConvertToJs('<?php echo $model->WorkedOut; ?>')
+            WorkedOut: Aliton.DateConvertToJs('<?php echo $model->WorkedOut; ?>'),
+            DateSurvey: Aliton.DateConvertToJs('<?php echo $model->DateSurvey; ?>'),
+            date_calc: Aliton.DateConvertToJs('<?php echo $model->date_calc; ?>'),
+            GoCalc: Boolean(Number(<?php echo json_encode($model->GoCalc); ?>)),
+            Rvrs_id: <?php echo json_encode($model->Rvrs_id); ?>,
+            calc_accept: Aliton.DateConvertToJs('<?php echo $model->calc_accept; ?>'),
+            DateContract: Aliton.DateConvertToJs('<?php echo $model->DateContract; ?>'),
+            WorkExec: Boolean(Number(<?php echo json_encode($model->WorkExec); ?>)),
+            Ngtv_id: <?php echo json_encode($model->Ngtv_id); ?>,
+            offer: <?php echo json_encode($model->offer); ?>,
+            initiative: <?php echo json_encode($model->initiative); ?>,
+            CalcSum: <?php echo json_encode($model->CalcSum); ?>,
+            upg_note: <?php echo json_encode($model->upg_note); ?>,
+            competitive: <?php echo json_encode($model->competitive); ?>,
+            clrs_id: <?php echo json_encode($model->clrs_id); ?>,
         };
         // Инициализация источников данных
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-        
-        
         
         // Инициализируем контролы
         $("#edNumber").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
@@ -108,7 +122,7 @@
                             ]
                     }));
                     $("#edComment").jqxInput({height: 25, width: 'calc(100% - 6px)', minLength: 1});
-                    $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, dropDownVerticalAlignment: "top"}));
+                    $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: '120px', dropDownVerticalAlignment: "top"}));
                     $("#btnSend").jqxButton({ width: 120, height: 30 });
                     $("#btnDelComment").jqxButton({ width: 120, height: 30 });
                     
@@ -169,6 +183,266 @@
                         ExecutorOperation = 'Change';
                         $('#ExecutorDialog').jqxWindow('open');
                     });
+                    break;
+                case 2:
+                    var OpenDocument = function() {
+                        var Row = $('#DocumentsGrid').jqxGrid('getrowdata', $('#DocumentsGrid').jqxGrid('getselectedrowindex'));
+                        if (Row == undefined) return;
+                        switch (parseInt(Row['DocType_id'])) {
+                            case 1: window.open(<?php echo json_encode(Yii::app()->createUrl('Delivery/View')); ?> + "&Dldm_id=" + Row.Docid); break;
+                            case 2: window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View')); ?> + "&Docm_id=" + Row.Docid); break;
+                            case 3: window.open(<?php echo json_encode(Yii::app()->createUrl('Repair/View')); ?> + "&Repr_id=" + Row.Docid); break;
+                            case 4: window.open(<?php echo json_encode(Yii::app()->createUrl('MonitoringDemands/Index')); ?> + "&mndm_id=" + Row.Docid); break;
+                            case 5: window.open(<?php echo json_encode(Yii::app()->createUrl('CostCalculations/Index')); ?> + "&calc_id=" + Row.Docid); break;
+                            case 7: window.open(<?php echo json_encode(Yii::app()->createUrl('Documents/Index')); ?> + "&ContrS_id=" + Row.Docid); break;
+                            case 8: window.open(<?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Index')); ?> + "&docm_id=" + Row.Docid); break;
+                        };
+                    };
+                    
+                    $("#btnAddDocuments").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { dropDownVerticalAlignment: 'top', autoOpen: false, width: 260, height: 28 }));
+                    var btnAddDocuments = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 6px;">Создать</div>';
+                    $("#btnAddDocuments").jqxDropDownButton('setContent', btnAddDocuments);
+                    
+                    $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 635, position: 'center' }));
+                    
+                    $('#CostCalculationsDialog').on('close', function() {
+                        $("#DocumentsGrid").jqxGrid('updatebounddata');
+                    });
+                    
+                    $("#btnAddDocuments").jqxDropDownButton({initContent: function(){
+                        $('#btnAddSmeta').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
+                        $('#btnAddRepair').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
+                        $('#btnAddDelivery').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
+                        $('#btnAddTreb').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
+                        $('#btnAddMonitoring').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
+                        
+                        $("#btnAddSmeta").on('click', function(){
+                            if ($("#btnAddSmeta").jqxButton('disabled')) return;
+                            if (Demand.ObjectGr_id !== null) {
+                                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 635, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Create')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Params: {
+                                            ObjectGr_id: Demand.ObjectGr_id,
+                                            group_name: 'Pаявка №' + Demand.Demand_id,
+                                            date: Demand.Date,
+                                            Demand_id: Demand.Demand_id
+                                        },
+                                        ObjectGr_id: Demand.ObjectGr_id
+
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyCostCalculationsDialog").html(Res.html);
+                                        $('#CostCalculationsDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+                        
+                        $('#btnAddRepair').on('click', function() {
+                            if ($('#btnAddRepair').jqxButton('disabled')) return;
+                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 780, position: 'center' }));
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('Repair/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Params: {
+                                        dmnd_id: Demand.Demand_id,
+                                        prtp_id: 1,
+                                        objc_id: Demand.Object_id,
+                                        docm_quant: 1,
+                                        mstr_empl_id: Demand.Master
+                                    }
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $("#BodyCostCalculationsDialog").html(Res.html);
+                                    $('#CostCalculationsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        });
+                        
+                        $('#btnAddDelivery').on('click', function(){
+                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '430px', width: '740'}));
+                            $.ajax({
+                                url: "<?php echo Yii::app()->createUrl('Delivery/Insert');?>",
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    DialogId: 'CostCalculationsDialog',
+                                    BodyDialogId: 'BodyCostCalculationsDialog',
+                                    Params: {
+                                        dmnd_id: Demand.Demand_id,
+                                        prty_id: 1,
+                                        objc_id: Demand.Object_id,
+                                    }
+                                },
+                                success: function(Res) {
+                                    $('#BodyCostCalculationsDialog').html(Res);
+                                    $('#CostCalculationsDialog').jqxWindow('open');
+                                }
+                            });
+                        });
+                        
+                        $('#btnAddTreb').on('click', function() {
+                            $('#CostCalculationsDialog').jqxWindow({width: 700, height: 500, position: 'center', isModal: true});
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Dctp_id: 4,
+                                    DialogId: 'CostCalculationsDialog',
+                                    BodyDialogId: 'BodyCostCalculationsDialog',
+                                    Params: {
+                                        objc_id: Demand.Object_id,
+                                        dmnd_id: Demand.Demand_id,
+                                        date: Demand.DateReg,
+                                        prty_id: 8,
+                                        rcrs_id: 2,
+                                        dmnd_empl_id: Demand.Master,
+                                        Address: Demand.Address
+                                    },
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+
+                                    $("#BodyCostCalculationsDialog").html(Res.html);
+                                    $('#CostCalculationsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        });
+                        
+                        $('#btnAddMonitoring').on('click', function(){
+                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '640'}));
+                            $.ajax({
+                                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Insert');?>",
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    DialogId: 'CostCalculationsDialog',
+                                    BodyDialogId: 'BodyCostCalculationsDialog',
+                                    Params: {
+                                        Prior: 1,
+                                        Dmnd_id: Demand.Demand_id
+                                    }
+                                },
+                                success: function(Res) {
+                                    $('#BodyCostCalculationsDialog').html(Res);
+                                    $('#CostCalculationsDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        });
+                        
+                    }});
+                    
+                    $('#DocumentsGrid').on('rowdoubleclick', function (event) { 
+                        OpenDocument();
+                    });
+                
+                    var DemandDocumentsExecutors = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDemandDocuments, {}), {
+                        formatData: function (data) {
+                            $.extend(data, {
+                                Variables: {Demand_id: Demand.Demand_id},
+                            });
+                            return data;
+                        },
+                    });
+                    $("#DocumentsGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            height: 'calc(100% - 36px)',
+                            width: '100%',
+                            sortable: true,
+                            virtualmode: false,
+                            pageable: true,
+                            showfilterrow: false,
+                            filterable: false,
+                            autoshowfiltericon: true,
+                            source: DemandDocumentsExecutors,
+                            columns:
+                            [
+                                { text: 'Тип документа', filtertype: 'range', datafield: 'DocType', width: 180 },
+                                { text: 'Номер', filtertype: 'range', datafield: 'Number', width: 100 },
+                                { text: 'Дата выполнения', datafield: 'DateExec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                { text: 'Оплачено', datafield: 'Procpay', width: 150, cellsformat: 'p'},
+                                { text: 'Текст', filtertype: 'range', datafield: 'Note', width: 100 },
+                                
+                            ]
+                    }));
+                    break;
+                    case 3:
+                        var ResolveReasonsData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceResolveReasons, {}));
+                        var NegativesData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceNegatives, {}));
+                        $("#edDateSurvey").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.DateSurvey, dropDownVerticalAlignment: "top"}));
+                        $("#edDateCalc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.date_calc, dropDownVerticalAlignment: "top"}));
+                        $("#chbGoCalc").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Demand.GoCalc}));
+                        $("#edRvrs").jqxComboBox({source: ResolveReasonsData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ResolveReason", valueMember: "Rvrs_id"});
+                        $("#edCalcAccept").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.calc_accept, dropDownVerticalAlignment: "top"}));
+                        $("#edDateContract").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.DateContract, dropDownVerticalAlignment: "top"}));
+                        $("#chbWorkExec").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Demand.WorkExec}));
+                        $("#edNegative").jqxComboBox({source: NegativesData, width: '150', height: '25px', displayMember: "NegativeName", dropDownVerticalAlignment: 'top', valueMember: "Ngtv_id"});
+                        $("#edOffer").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings,{height: 85, width: 300, minLength: 1}));
+                        $("#edNegative").jqxComboBox({source: NegativesData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "NegativeName", valueMember: "Ngtv_id"});
+                        $("#edOffer").jqxTextArea('val', Demand.offer);
+                        $("#edInitiative").jqxComboBox({source: [{id: 0, name: 'Компания'}, {id: 1, name: 'Клиент'}], dropDownVerticalAlignment: 'top', width: '150', height: '25px', displayMember: "name", valueMember: "id"});
+                        $("#edInitiative").jqxComboBox('val', Demand.initiative);
+                        $("#edCalcSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Demand.CalcSum}));
+                        $("#edUpgNote").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edUpgNote").jqxInput('val', Demand.upg_note);
+                        $("#edCompetitive").jqxComboBox({source: [{id: 0, name: 'Да'}, {id: 1, name: 'Нет'}, {id: 2, name: 'Не знаю'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"});
+                        $("#edCompetitive").jqxComboBox('val', Demand.competitive);
+                        $("#edClrs_id").jqxComboBox({source: [{id: 0, name: 'Отказ клиента'}, {id: 1, name: 'Фактическое исполнение'}, {id: 2, name: 'Дублирующая заявка'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"});
+                        $("#edClrs_id").jqxComboBox('val', Demand.clrs_id);
+                        $('#btnSaveDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnSaveDetails').on('click', function() {
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('Demands/UpdateDetails')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    DemandsDetails: {
+                                        Demand_id: Demand.Demand_id,
+                                        GoCalc: $('#chbGoCalc').val(),
+                                        WorkExec: $('#chbWorkExec').val(),
+                                        ngtv_id: $('#edNegative').val(),
+                                        Rvrs_id: $('#edRvrs').val(),
+                                        DateContract: $('#edDateContract').val(),
+                                        CalcSum: $('#edCalcSum').val(),
+                                        DateSurvey: $('#edDateSurvey').val(),
+                                        offer: $('#edOffer').val(),
+                                        competitive: $('#edCompetitive').val(),
+                                        initiative: $('#edInitiative').val(),
+                                        clrs_id: $('#edClrs_id').val(),
+                                        upg_note: $('#edUpgNote').val(),
+                                        date_calc: $('#edDateCalc').val(),
+                                        calc_accept: $('#edCalcAccept').val()
+                                    }
+                                },
+                                success: function(Res) {
+                                    Aliton.ShowErrorMessage('Запись произведена', 'Изменения успешно сохранены');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage('Ошибка', Res.responseText);
+                                }
+                            });
+                        });
                     break;
             }
         };
@@ -523,6 +797,16 @@
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Исполнители</div>
                 </div>
             </li>
+            <li>
+                <div style="height: 15px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Документы</div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Модернизация и монтаж</div>
+                </div>
+            </li>
         </ul>
         <div style="overflow: hidden;">
             <div style="padding: 10px; height: calc(100% - 20px)">
@@ -547,6 +831,112 @@
                     <div style="float: left;"><input type="button" value="Помощь" id='btnAddExecutor' /></div>
                     <div style="float: left; margin-left: 6px;"><input type="button" value="Другой исполнитель" id='btnChangeExecutor' /></div>
                     <div style="float: left; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelExecutor' /></div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px; height: calc(100% - 20px)">
+                <div id="DocumentsGrid"></div>
+                <div style="clear: both;"></div>
+                <div class="al-row">
+                    <div style='float: left; margin-left: 0px;' id="btnAddDocuments">
+                        <div style="height: 170px">
+                            <div style="padding: 2px"><input type="button" value="Смета" id='btnAddSmeta'/></div>
+                            <div style="clear: both"></div>
+                            <div style="padding: 2px"><input type="button" value="Ремонт" id='btnAddRepair'/></div>
+                            <div style="clear: both"></div>
+                            <div style="padding: 2px"><input type="button" value="Доставка" id='btnAddDelivery'/></div>
+                            <div style="clear: both"></div>
+                            <div style="padding: 2px"><input type="button" value="Требование" id='btnAddTreb'/></div>
+                            <div style="clear: both"></div>
+                            <div style="padding: 2px"><input type="button" value="Мониторинг" id='btnAddMonitoring'/></div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px; height: calc(100% - 20px)">
+                <div class="al-row">
+                    <div class="al-row-column">
+                        <div class="al-row">
+                            <div class="al-row-column">
+                                <div>Дата обсл.</div>
+                                <div><div id='edDateSurvey' name='DemandDetails[DateSurvey]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>Согл. дата подг. КП</div>
+                                <div><div id='edDateCalc' name='DemandDetails[date_calc]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>Смета передана</div>
+                                <div><div id='chbGoCalc' name='DemandDetails[GoCalc]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>От чего зависит закл. договора</div>
+                                <div><div id='edRvrs' name='DemandDetails[Rvrs_id]'></div></div>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                        <div class="al-row">
+                            <div class="al-row-column">
+                                <div>Cогл. см. с кл.</div>
+                                <div><div id='edCalcAccept' name='DemandDetails[calc_accept]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>План. дата дог.</div>
+                                <div><div id='edDateContract' name='DemandDetails[DateContract]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>Факт вып. работ</div>
+                                <div><div id='chbWorkExec' name='DemandDetails[WorkExec]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>Возражения клиента</div>
+                                <div><div id='edNegative' name='DemandDetails[Ngtv_id]'></div></div>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </div>
+                    <div class="al-row-column">
+                        <div class="al-row-column">
+                            <div>Предложения конкурентов</div>
+                            <div><textarea id='edOffer' name='DemandDetails[offer]'></textarea></div>
+                        </div>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column">
+                        <div class="al-row">
+                            <div class="al-row-column">
+                                <div>Инициатива</div>
+                                <div><div id='edInitiative' name='DemandDetails[initiative]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>Сумма сметы</div>
+                                <div><div id='edCalcSum' name='DemandDetails[CalcSum]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>Потенциал клиента</div>
+                                <div><input id='edUpgNote' name='DemandDetails[upg_note]' /></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>Конкурентоспособность</div>
+                                <div><div id='edCompetitive' name='DemandDetails[competitive]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div>Причина закрытия</div>
+                                <div><div id='edClrs_id' name='DemandDetails[clrs_id]'></div></div>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type='button' id='btnSaveDetails' value='Сохранить'/></div>
                 </div>
             </div>
         </div>
@@ -595,5 +985,14 @@
                 <input style="float: right;" type="button" value="Отмена" id='btnNoExDialog' />
             </div>
         </div>
+    </div>
+</div>
+
+<div id="CostCalculationsDialog" style="display: none;">
+    <div id="CostCalculationsDialogHeader">
+        <span id="CostCalculationsHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogCostCalculationsContent">
+        <div style="" id="BodyCostCalculationsDialog"></div>
     </div>
 </div>

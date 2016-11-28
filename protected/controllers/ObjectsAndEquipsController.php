@@ -5,6 +5,31 @@ class ObjectsAndEquipsController extends Controller
     
     public $ObjectGr_id;
     
+    public function filters()
+    {
+        return array(
+                'accessControl', // perform access control for CRUD operations
+        );
+    }
+    
+    public function accessRules()
+    {
+        return array(
+            array('allow',
+                    'actions'=>array('AjaxView', 'View'),
+                    'roles'=>array('ViewObjects'),
+                ),
+            
+            array('allow',
+                    'actions'=>array('ObjectEquips', 'CommonEquips'),
+                    'roles'=>array('ViewObjectsAndEquips'),
+                ),
+            array('deny',  // deny all users
+			'users'=>array('*'),
+                ),
+        );
+    }
+    
     public function actionAjaxView($Common_id = 0)
     {
         if (isset($_GET['ObjectGr_id']))

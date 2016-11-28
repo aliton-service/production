@@ -58,7 +58,7 @@ class EventsController extends Controller
             if ($model->validate()) {
                 $model->insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->evnt_id;
+                $ObjectResult['id'] = $model->Evnt_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -80,17 +80,17 @@ class EventsController extends Controller
             'html' => '',
         );
 
-        if (isset($_POST['evnt_id']))
-            $model->getModelPk($_POST['evnt_id']);
+        if (isset($_POST['Evnt_id']))
+            $model->getModelPk($_POST['Evnt_id']);
 
         if (isset($_POST['Events'])) {
-            $model->getModelPk($_POST['Events']['evnt_id']);
+            $model->getModelPk($_POST['Events']['Evnt_id']);
             $model->attributes = $_POST['Events'];
             $model->EmplChange = Yii::app()->user->Employee_id;
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->evnt_id;
+                $ObjectResult['id'] = $model->Evnt_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -110,13 +110,13 @@ class EventsController extends Controller
             'html' => '',
         );
 
-        if (isset($_POST['evnt_id'])) {
+        if (isset($_POST['Evnt_id'])) {
             $model = new Events();
-            $model->getModelPk($_POST['evnt_id']);
+            $model->getModelPk($_POST['Evnt_id']);
             $model->EmplDel = Yii::app()->user->Employee_id;
             $model->Delete();
             $ObjectResult['result'] = 1;
-            $ObjectResult['id'] = $model->evnt_id;
+            $ObjectResult['id'] = $model->Evnt_id;
             echo json_encode($ObjectResult);
             return;
         }
@@ -165,13 +165,18 @@ class EventsController extends Controller
                                 og.ObjectGr_id,
                                 a.Addr,
                                 Count(e.Evnt_id) as EventCount,
-                                Sum(Case When e.evnt_id is not null and e.date_exec is null then 1 else 0 end) as NoExecEventCount
+                                Sum(Case When e.Evnt_id is not null and e.date_exec is null then 1 else 0 end) as NoExecEventCount
                             From Organizations_v o inner join ObjectsGroup og on (o.Form_id = og.PropForm_id and og.Deldate is null)
                                     inner join Addresses_v a on (og.address_id = a.address_id)
                                     left join Contracts_v c on (c.ObjectGr_id = og.ObjectGr_id and c.DocType_id = 4 and dbo.truncdate(GETDATE()) between c.ContrSDateStart and c.ContrSDateEnd)
                                     left join Events e on (og.ObjectGr_id = e.Objectgr_id and e.DelDate is Null
                                         :#EventNoExec 
                                         :#EventExec 
+                                        :#Executor 
+                                        :#DatePlan 
+                                        :#Rpfr 
+                                        :#DateStart 
+                                        :#DateEnd 
                                     )
                             Where o.Lph_id = 1
                                     and isnull(c.Servicetype_id, 0) <> 1
@@ -181,6 +186,11 @@ class EventsController extends Controller
                                     and isnull(c.Servicetype_id, 0) <> 45
                                     :#Master 
                                     :#Vip 
+                                    :#Count1 
+                                    :#Area 
+                                    :#Territ 
+                                    :#System 
+                                    
                             Group by
                                     o.Form_id,
                                     o.FullName,
@@ -188,6 +198,7 @@ class EventsController extends Controller
                                     og.ObjectGr_id,
                                     a.Addr
                             Having (1 = 1)
+                                    :#Count2  
                             Order by o.FullName, a.Addr");
         
         $Variables = array();

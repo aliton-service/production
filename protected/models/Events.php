@@ -21,6 +21,9 @@ class Events extends MainFormModel
     public $Prds_id;
     public $Who_reported;
     public $EmplCreate;
+    public $EmplChange;
+    public $datestart;
+    public $dateend;
 
     public $KeyFiled = 'e.Evnt_id';
     public $PrimaryKey = 'Evnt_id';
@@ -88,7 +91,9 @@ class Events extends MainFormModel
                     Evaluation,
                     Prds_id,
                     Who_reported,
-                    EmplCreate,', 'safe'),
+                    EmplCreate,
+                    datestart,
+                    dateend', 'safe'),
         );
     }
 
@@ -114,6 +119,8 @@ class Events extends MainFormModel
             'Prds_id' => '',
             'Who_reported' => '',
             'EmplCreate' => '',
+            'datestart' => '',
+            'dateend' => '',
         );
     }
 
@@ -123,6 +130,7 @@ class Events extends MainFormModel
             'ObjectGr_id' => 'e.ObjectGr_id',
             'Evtp_id' => 'e.Evtp_id',
             'DateExec' => 'e.Date_exec',
+            'EmployeeName' => 'e.Empl_id',
         );
     }
 }

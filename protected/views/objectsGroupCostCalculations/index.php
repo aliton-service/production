@@ -137,7 +137,7 @@
                 statusbarheight: 25,
                 groupsrenderer: groupsrenderer,
                 width: '100%',
-                height: '500',
+                height: 'calc(100% - 150px)',
                 showgroupsheader: false,
                 source: CostCalculationsDataAdapter,
                 columns: [

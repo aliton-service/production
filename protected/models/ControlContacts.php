@@ -135,6 +135,16 @@ class ControlContacts extends MainFormModel
             'Debt' => 'Долг',
         );
     }
+    
+    public function attributeFilters()
+    {
+        return array(
+            'empl_name' => 'cnt.empl_id',
+            'debt' => 'og.debt',
+        );
+        
+        
+    }
 }
 
 

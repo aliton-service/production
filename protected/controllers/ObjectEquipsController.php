@@ -7,6 +7,38 @@ class ObjectEquipsController extends Controller
     
     public $layout='//layouts/column2';
     
+    public function filters()
+    {
+        return array(
+                'accessControl', // perform access control for CRUD operations
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array('allow',
+                    'actions'=>array('index', 'view'),
+                    'roles'=>array('ViewObjectEquips'),
+            ),
+            array('allow', 
+                    'actions'=>array('(Insert'),
+                    'roles'=>array('CreateObjectEquips'),
+            ),
+            array('allow', 
+                    'actions'=>array('Update'),
+                    'roles'=>array('UpdateObjectEquips'),
+            ),
+            array('allow', 
+                    'actions'=>array('Delete'),
+                    'roles'=>array('DeleteObjectEquips'),
+            ),
+            array('deny',  // deny all users
+                    'users'=>array('*'),
+            ),
+        );
+    }
+    
     public function actionGrid($GridName = "", $AjaxUrl = "")
     {
         if (isset($_GET['Object_id']))

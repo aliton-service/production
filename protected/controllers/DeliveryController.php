@@ -157,6 +157,8 @@ class DeliveryController extends Controller
         
         $this->renderPartial('_form', array(
             'model' => $model,
+            'DialogId' => 'EditDeliveryDemandDialog',
+            'BodyDialogId' => 'BodyDeliveryDemDialog',
         ));
     }
     

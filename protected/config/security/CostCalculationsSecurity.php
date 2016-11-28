@@ -12,6 +12,11 @@ return array(
                 'ViewCostCalculations',
                 'CreateCostCalculations',
                 'UpdateCostCalculations',
+                'AgreedCostCalculations',
+                'UndoAgreedCostCalculations',
+                'ReadyCostCalculations',
+                'UndoReadyCostCalculations',
+                'CopyCostCalculations',
                 ),
         ),
 

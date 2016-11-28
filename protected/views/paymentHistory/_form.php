@@ -1,5 +1,6 @@
 <script type="text/javascript">
         $(document).ready(function () {
+            var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
             var PaymentHistoryForm = {
                 pmhs_id: '<?php echo $model->pmhs_id; ?>',
                 cntr_id: '<?php echo $model->cntr_id; ?>',
@@ -9,23 +10,57 @@
                 year_start: '<?php echo $model->year_start; ?>',
                 month_end: '<?php echo $model->month_end; ?>',
                 year_end: '<?php echo $model->year_end; ?>',
-                note: '<?php echo $model->note; ?>',
+                note: <?php echo json_encode($model->note); ?>,
             };
             
             var DataMonths = new $.jqx.dataAdapter(Sources.SourceMonths);
             
             $("#date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100 }));
-            $("#sum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 140, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+            $("#sum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 140, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
             $("#month_start").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataMonths, displayMember: "Month_name", valueMember: "Month_id", width: 120, autoDropDownHeight: true }));
             $("#month_end").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataMonths, displayMember: "Month_name", valueMember: "Month_id", width: 120, autoDropDownHeight: true }));
             $("#year_start").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
             $("#year_end").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
             $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 260 }));
             
+            $("#BtnOkDialogPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#BtnCancelDialogPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            
+            $("#BtnCancelDialogPaymentHistory").on('click', function () {
+                $('#EditDialogPaymentHistory').jqxWindow('close');
+            });
+            
+            $("#BtnOkDialogPaymentHistory").on('click', function() {
+                var Url;
+                if (StateInsert)
+                    Url = <?php echo json_encode(Yii::app()->createUrl('PaymentHistory/Insert')); ?>;
+                else
+                    Url = <?php echo json_encode(Yii::app()->createUrl('PaymentHistory/Update')); ?>;
+                
+                $.ajax({
+                    url: Url,
+                    type: 'POST',
+                    async: false,
+                    data: $('#PaymentHistory').serialize(),
+                    success: function(Res) {
+                        if (Res == '1' || Res == 1) {
+                            $('#EditDialogPaymentHistory').jqxWindow('close');
+                            $("#PaymentHistoryGrid").jqxGrid('updatebounddata');
+                        } else {
+                            $('#BodyDialogPaymentHistory').html(Res);
+                        }
+
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            });
+            
             var now = new Date();
             var currentYear = now.getFullYear();
             var currentMonth = now.getMonth() + 1;
-            console.log(currentMonth);
+            
             
             if (PaymentHistoryForm.date != '') $("#date").jqxDateTimeInput('val', PaymentHistoryForm.date);
             if (PaymentHistoryForm.sum != '') $("#sum").jqxNumberInput('val', PaymentHistoryForm.sum);
@@ -85,5 +120,9 @@
     </div>
 </div>
 <div class="row"><div class="row-column">Примечание: <textarea type="text" id="note" name="PaymentHistory[note]"></textarea></div></div>
+<div class="al-row">
+    <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogPaymentHistory' /></div>
+    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogPaymentHistory' /></div>
+</div>
 
 <?php $this->endWidget(); ?>

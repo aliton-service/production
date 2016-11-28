@@ -67,6 +67,14 @@ class WhActsController extends Controller
             'Address' => '',
         );
         
+        if (isset($_GET['Address'])) {
+            if (strlen($_GET['Address']) > 5)
+                $Str = mb_substr($_GET['Address'], 0, 5);
+            else
+                $Str = mb_substr($_GET['Address'], 0, strlen($_GET['Address']));
+            $this->filterDefaultValues['Address'] = $Str;
+        }
+        
         $this->render('Index');
     }
     

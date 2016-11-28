@@ -253,10 +253,12 @@ Sources.DemandsSource =
     datafields: [
         { name: 'Demand_id', type: 'int'},
         { name: 'Object_id', type: 'int'},
+        { name: 'ObjectGr_id', type: 'int'},
         { name: 'Address', type: 'string'},
         { name: 'UCreateName', type: 'string'},
         { name: 'VIPName', type: 'string'},
         { name: 'DateReg', type: 'date'},
+        { name: 'Deadline', type: 'date'},
         { name: 'DateMaster', type: 'date'},
         { name: 'DateExec', type: 'date'},
         { name: 'DateExecFilter', type: 'date'},
@@ -1470,6 +1472,7 @@ Sources.SourceContractsS =
         {name: 'ContrSDateEnd', type: 'date'},
         {name: 'PaymentName', type: 'string'},
         {name: 'PaymentTypeName', type: 'string'},
+        {name: 'Debt', type: 'float'},
         {name: 'DatePay', type: 'date'},
         {name: 'Debtor', type: 'bool'},
         {name: 'CalcSum', type: 'float'},
@@ -1489,7 +1492,7 @@ Sources.SourceContractsS =
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
@@ -1713,7 +1716,7 @@ Sources.SourceContractMasterHistory =
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
@@ -1763,7 +1766,7 @@ Sources.SourceContractSystems =
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
@@ -1782,8 +1785,8 @@ Sources.SourceContractPriceHistory =
         { name: 'ServiceType_id',  type: 'int' },
         { name: 'DateStart',  type: 'date' },
         { name: 'DateEnd',  type: 'date' },
-        { name: 'Price',  type: 'string' },
-        { name: 'PriceMonth',  type: 'string' },
+        { name: 'Price',  type: 'float' },
+        { name: 'PriceMonth',  type: 'float' },
         { name: 'ReasonName',  type: 'string' },
         { name: 'ServiceType',  type: 'string' },
     ],
@@ -1792,7 +1795,7 @@ Sources.SourceContractPriceHistory =
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: false,
+    async: true,
     pagenum: 0,
     pagesize: 300,
     beforeprocessing: function (data) {
@@ -1833,7 +1836,7 @@ Sources.SourcePaymentHistory =
         { name: 'year_end',  type: 'int' },
         { name: 'month_start',  type: 'int' },
         { name: 'month_end',  type: 'int' },
-        { name: 'sum',  type: 'string' },
+        { name: 'sum',  type: 'float' },
         { name: 'note',  type: 'string' },
         { name: 'month_start_name',  type: 'string' },
         { name: 'month_end_name',  type: 'string' },
@@ -3951,6 +3954,70 @@ Sources.SourceOfferDemands =
     ],
     id: 'OfferDemand_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OfferDemands',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDemandDocuments =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'KeyField', type: 'string'},
+        {name: 'Docid', type: 'int'},
+        {name: 'DocType_id', type: 'int'},
+        {name: 'DocType', type: 'string'},
+        {name: 'Number', type: 'string'},
+        {name: 'DateReg', type: 'date'},
+        {name: 'DateExec', type: 'date'},
+        {name: 'Note', type: 'string'},
+        {name: 'Procpay', type: 'float'}
+    ],
+    id: 'KeyField',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DemandDocuments',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceResolveReasons =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Rvrs_id', type: 'int'},
+        {name: 'ResolveReason', type: 'string'},
+    ],
+    id: 'KeyField',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ResolveReasons',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceNegatives =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Ngtv_id', type: 'int'},
+        {name: 'NegativeName', type: 'string'},
+    ],
+    id: 'KeyField',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Negatives',
     root: 'Rows',
     cache: false,
     async: false,

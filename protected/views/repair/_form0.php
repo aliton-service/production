@@ -146,10 +146,14 @@
                         }
                         if ($('#RepairsDialog').length>0)
                             $('#RepairsDialog').jqxWindow('close');
+                        if ($('#CostCalculationsDialog').length>0)
+                            $('#CostCalculationsDialog').jqxWindow('close');
                     }
                     else {
                         if ($('#RepairsDialog').length>0)
                             $('#BodyRepairsDialog').html(Res.html);
+                        if ($('#CostCalculationsDialog').length>0)
+                            $('#BodyCostCalculationsDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {
@@ -162,7 +166,10 @@
         $('#btnCancelRepairs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnCancelRepairs').on('click', function() {
-            $('#RepairsDialog').jqxWindow('close');
+            if ($('#RepairsDialog').length>0)
+                $('#RepairsDialog').jqxWindow('close');
+            if ($('#CostCalculationsDialog').length>0)
+                $('#CostCalculationsDialog').jqxWindow('close');
         });
         $('#RepairsDialog').on('close', function (event) { 
             if ($('#TabsEdit').length>0)

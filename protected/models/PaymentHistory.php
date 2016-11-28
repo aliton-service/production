@@ -33,8 +33,8 @@ class PaymentHistory extends MainFormModel
 
     function __construct($scenario='') {
         
-        $this->SP_INSERT_NAME = 'INSERT_PaymentHistory';
-        $this->SP_UPDATE_NAME = 'UPDATE_PaymentHistory';
+        $this->SP_INSERT_NAME = 'INSERT_PaymentHistory2';
+        $this->SP_UPDATE_NAME = 'UPDATE_PaymentHistory2';
         $this->SP_DELETE_NAME = 'DELETE_PaymentHistory';
 
         

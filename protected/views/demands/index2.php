@@ -1,8 +1,17 @@
 <script type="text/javascript">
-    
+    var Next_Demand_id = 0;
     $(document).ready(function () {
         var CurrentRowData;
+        var ChangeDemand = false;
         
+        //window.onblur = function () {document.title='документ неактивен'}
+        window.onfocus = function () {
+            if (ChangeDemand) {
+                $('#edFiltering').click();
+                ChangeDemand= false;
+            }
+        }
+            
         var DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceExecutorReports, {}), {
             formatData: function (data) {
                 var Filter = ["ex.Demand_id = -1"];
@@ -58,6 +67,31 @@
         
         
         $('#btnDemView').jqxButton({ width: 120, height: 30 });
+        $('#btnRefreshDemands').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnObjectInfo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $("#btnObjectInfo").on('click', function(){
+            Aliton.ViewClient(CurrentRowData.ObjectGr_id);
+        });
+        $('#btnUndoDemands').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnUndoDemands').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Demands/Undo')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Demand_id: CurrentRowData.Demand_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result === 1) {
+                        $('#btnRefreshDemands').click();
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         // Инициализация гридов - Реестр заявок и ход работы
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#DemandsGrid').jqxGrid('getrowdata', row);
@@ -80,7 +114,14 @@
         
         $("#DemandsGrid").on('rowselect', function (event) {
             CurrentRowData = $('#DemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            var NextRow = $('#DemandsGrid').jqxGrid('getrowdata', (event.args.rowindex + 1));
+            if (NextRow != undefined)
+                Next_Demand_id = NextRow.Demand_id;
+            else
+                Next_Demand_id = 0;
+            $('#btnUndoDemands').jqxButton({disabled: true});
             if (CurrentRowData != undefined) {
+                $('#btnUndoDemands').jqxButton({disabled: !(CurrentRowData.DateExec != null)});
                 var SelectedTab = $('#Tabs').jqxTabs('selectedItem');
                 switch (SelectedTab) {
                     case 0:
@@ -95,8 +136,12 @@
         });
 
         $("#DemandsGrid").on('bindingcomplete', function(){
-            if (CurrentRowData != undefined) 
-                Aliton.SelectRowByIdVirtual('Demand_id', CurrentRowData.Demand_id, '#DemandsGrid', false);
+            if (CurrentRowData != undefined) { 
+                if (Next_Demand_id != 0)
+                    Aliton.SelectRowByIdVirtual('Demand_id', Next_Demand_id, '#DemandsGrid', false);
+                else
+                    Aliton.SelectRowByIdVirtual('Demand_id', CurrentRowData.Demand_id, '#DemandsGrid', false);
+            }
             else Aliton.SelectRowByIdVirtual('Demand_id', null, '#DemandsGrid', false);
             
         });
@@ -151,6 +196,8 @@
                         { text: 'Street_id', datafield: 'Street_id', width: 120, hidden: true },
                         { text: 'House', datafield: 'House', width: 120, hidden: true }, // 30
                         { text: 'Выполнение(Фильтр)', datafield: 'DateExecFilter', width: 150, cellsformat: 'd', cellsrenderer: cellsrenderer },
+                        { text: 'Предельная дата', filtertype: 'date', datafield: 'Deadline', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' /*, cellsrenderer: cellsrenderer */},
+                        
                     ]
         }));
         
@@ -160,8 +207,14 @@
          
         
         $('#btnDemView').on('click', function(){
-            if (CurrentRowData != undefined)
+            if (CurrentRowData != undefined) {
                 Aliton.ViewDemand(CurrentRowData.Demand_id);
+                ChangeDemand = true;
+            }
+        });
+        
+        $('#btnRefreshDemands').on('click', function(){
+            $('#edFiltering').click();
         });
         
         $('#DemandsGrid').on('rowdoubleclick', function (event) { 
@@ -229,7 +282,11 @@
 </div>    
 <div style="clear: both;"></div>
 <div style="float: left; width: 100%; height: 30px; padding-top: 10px">
-    <input type="button" value="Доп-но" id='btnDemView' />
+    <div class="al-row-column"><input type="button" value="Доп-но" id='btnDemView' /></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshDemands' /></div>
+    <div class="al-row-column"><input type="button" value="Карточка" id='btnObjectInfo' /></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Отменить вып." id='btnUndoDemands' /></div>
+    
 </div>    
 <div style="clear: both;"></div>
 
