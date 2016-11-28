@@ -780,6 +780,7 @@ return array_merge(
                 'ManagerBanks',
                 'ManagerStreets',
                 'ManagerRegions',
+                'ManagerObjects',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
