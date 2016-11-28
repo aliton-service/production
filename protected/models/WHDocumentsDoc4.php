@@ -152,6 +152,7 @@ class WHDocumentsDoc4 extends MainFormModel
                     ReceiptDate,
                     strm_name,
                     mstr_name,
+                    rcrs_id,
                     rcrs_name,
                     StatusFull,
                     status,
