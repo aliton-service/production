@@ -17,7 +17,8 @@ return array(
                 'ReadyCostCalculations',
                 'UndoReadyCostCalculations',
                 'CopyCostCalculations',
-                ),
+                'ReestrCostCalculations',
+            ),
         ),
 
         'AdminCostCalculations' => array(
@@ -37,7 +38,7 @@ return array(
                 'UndoReadyCostCalculations',
                 'CopyCostCalculations',
                 'AnnulCostCalculations',
-                
+                'ReestrCostCalculations',
                 ),
         ),
 
@@ -117,6 +118,13 @@ return array(
         'AnnulCostCalculations' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'AnnulCostCalculations',
+            'bizRule' => null,
+            'data' => null,
+        ),
+    
+        'ReestrCostCalculations' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'ReestrCostCalculations',
             'bizRule' => null,
             'data' => null,
         ),
