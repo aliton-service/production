@@ -16,7 +16,7 @@
             
             var DataSystemTypes = new $.jqx.dataAdapter(Sources.SourceSystemTypesMin);
             var DataSystemAvailabilitys = new $.jqx.dataAdapter(Sources.SourceSystemAvailabilitys);
-            var DataCompetitors = new $.jqx.dataAdapter(Sources.SourceCompetitors);
+//            var DataCompetitors = new $.jqx.dataAdapter(Sources.SourceCompetitors);
             var DataSystemStatements = new $.jqx.dataAdapter(Sources.SourceListSystemStatementsMin);
             
             

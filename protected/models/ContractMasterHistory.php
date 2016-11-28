@@ -9,6 +9,7 @@ class ContractMasterHistory extends MainFormModel
     public $WorkDateStart;
     public $WorkDateEnd;
     public $error = 0;
+    public $EmplChange;
 
 
     public $SP_INSERT_NAME = '';

@@ -1,5 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         
         var Document = {
             ContrS_id: '<?php echo $model->ContrS_id; ?>',
@@ -41,12 +42,12 @@
         var DataServiceTypes = new $.jqx.dataAdapter(Sources.SourceServiceTypes);
         
         $("#ContrNumS3").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, value: "-Авто-" }));
-        $("#ContrDateS3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110 }));
-        $("#DateExecuting3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null }));
-        $("#DatePay3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null }));
-        $("#date_doc3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null }));
-        $("#ContrSDateStart3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110 }));
-        $("#ContrSDateEnd3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110 }));
+        $("#ContrDateS3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
+        $("#DateExecuting3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null, formatString: 'dd.MM.yyyy' }));
+        $("#DatePay3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null, formatString: 'dd.MM.yyyy' }));
+        $("#date_doc3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null, formatString: 'dd.MM.yyyy' }));
+        $("#ContrSDateStart3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
+        $("#ContrSDateEnd3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
         $("#JuridicalPerson3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridical3, displayMember: "JuridicalPerson", valueMember: "Jrdc_Id", width: 200, autoDropDownHeight: true }));
         $("#ContactType3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContractTypes3, displayMember: "name", valueMember: "crtp_id", width: 130, autoDropDownHeight: true }));
         $("#empl3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees3, displayMember: "ShortName", valueMember: "Employee_id", width: 180 }));
@@ -93,10 +94,13 @@
         $("#NewContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $("#NewContractBtnOk").on('click', function () {
+            var Url = <?php echo json_encode(Yii::app()->createUrl('Documents/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('Documents/Insert')); ?>;
             var Data = $('#Documents').serialize();
             Data = Data + "&DocType_Name=" + "Договор обслуживания" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
             $.ajax({
-                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+                url: Url,
                 type: 'POST',
                 async: false,
                 data: Data,
@@ -106,6 +110,9 @@
                         if (Document.DialogId == 'NewContractDialog') {
                             $("#ContractsGrid").jqxGrid('updatebounddata');
                             $("#ContractsGrid").jqxGrid('selectrow', 0);
+                        }
+                        if (Document.DialogId == 'EditContractDialog') {
+                            location.reload();
                         }
                         if (Document.DialogId == 'CostCalculationsDialog')
                             $('#RefreshCostCalcDocuments').click();

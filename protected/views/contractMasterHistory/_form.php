@@ -1,24 +1,55 @@
 <script type="text/javascript">
-        $(document).ready(function () {
-            var ContractMasterHistory = {
-                History_id: '<?php echo $model->History_id; ?>',
-                ContrS_id: '<?php echo $model->ContrS_id; ?>',
-                Master: '<?php echo $model->Master; ?>',
-                WorkDateStart: Aliton.DateConvertToJs('<?php echo $model->WorkDateStart; ?>'),
-                WorkDateEnd: Aliton.DateConvertToJs('<?php echo $model->WorkDateEnd; ?>'),
-            };
-            
-            var DataEmployees4 = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-            
-            $("#Master2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees4, displayMember: "EmployeeName", valueMember: "Employee_id", width: 300 }));
-            $("#WorkDateStart4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
-            $("#WorkDateEnd4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
-            
-            if (ContractMasterHistory.Master !== null) $("#Master2").jqxComboBox('val', ContractMasterHistory.Master);
-            if (ContractMasterHistory.WorkDateStart !== null) $("#WorkDateStart4").jqxDateTimeInput('val', ContractMasterHistory.WorkDateStart);
-            if (ContractMasterHistory.WorkDateEnd !== null) $("#WorkDateEnd4").jqxDateTimeInput('val', ContractMasterHistory.WorkDateEnd);
-            
+    $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
+        console.log('StateInsert = ' + StateInsert);
+        var ContractMasterHistory = {
+            History_id: '<?php echo $model->History_id; ?>',
+            ContrS_id: '<?php echo $model->ContrS_id; ?>',
+            Master: '<?php echo $model->Master; ?>',
+            WorkDateStart: Aliton.DateConvertToJs('<?php echo $model->WorkDateStart; ?>'),
+            WorkDateEnd: Aliton.DateConvertToJs('<?php echo $model->WorkDateEnd; ?>'),
+        };
+
+        var DataEmployees4 = new $.jqx.dataAdapter(Sources.SourceListEmployees);
+
+        $("#Master2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees4, displayMember: "EmployeeName", valueMember: "Employee_id", width: 300 }));
+        $("#WorkDateStart4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
+        $("#WorkDateEnd4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
+
+        if (ContractMasterHistory.Master !== null) $("#Master2").jqxComboBox('val', ContractMasterHistory.Master);
+        if (ContractMasterHistory.WorkDateStart !== null) $("#WorkDateStart4").jqxDateTimeInput('val', ContractMasterHistory.WorkDateStart);
+        if (ContractMasterHistory.WorkDateEnd !== null) $("#WorkDateEnd4").jqxDateTimeInput('val', ContractMasterHistory.WorkDateEnd);
+
+        $("#MastersBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#MastersBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        
+        $("#MastersBtnCancel").on('click', function () {
+            $('#MastersEditDialog').jqxWindow('close');
         });
+
+        $("#MastersBtnOk").on('click', function () {
+            var Url = <?php echo json_encode(Yii::app()->createUrl('ContractMasterHistory/Update')); ?>;
+            if (StateInsert) {
+                Url = <?php echo json_encode(Yii::app()->createUrl('ContractMasterHistory/Insert')); ?>;
+            }
+            $.ajax({
+                url: Url,
+                type: 'POST',
+                async: false,
+                data: $('#ContractMasterHistory').serialize(),
+                success: function(Res) {
+                    if (Res == '1' || Res == 1) {
+                        $('#MastersEditDialog').jqxWindow('close');
+                        $("#MastersGrid").jqxGrid('updatebounddata');
+                    } else {
+                        $('#MastersBodyDialog').html(Res);
+                    }
+
+                }
+            });
+        });
+    });
+        
 </script> 
 
 <?php

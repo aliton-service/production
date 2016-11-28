@@ -63,9 +63,9 @@
         
         $("#dropDownBtnContracts").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { width: 210, height: 28 }));
         $("#jqxTreeContracts").jqxTree({ width: 210 });
-        $("#MoreInformContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150 }));
+        $("#MoreInformContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150, disabled: true }));
         $("#ReloadContracts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#DelContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#DelContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true } ));
         
         
         $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 580, width: 870}));
@@ -148,6 +148,8 @@
             } else {CurrentRowData = null};
             
             if (CurrentRowData != null) {
+                $("#DelContract").jqxButton({ disabled: false });
+                $("#MoreInformContract").jqxButton({ disabled: false });
                 if (CurrentRowData.MasterName != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
                 if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
                 if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxDateTimeInput('val', CurrentRowData.DateExecuting);

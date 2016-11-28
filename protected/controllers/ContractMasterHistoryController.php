@@ -76,7 +76,9 @@ class ContractMasterHistoryController extends Controller
 
         if(isset($_POST['ContractMasterHistory']))
         {
-            $model->attributes=$_POST['ContractMasterHistory'];
+            $model->attributes = $_POST['ContractMasterHistory'];
+            $model->EmplChange = Yii::app()->user->Employee_id;
+            
             if ($model->validate()) {
                 $model->Insert();
                 echo '1';
@@ -99,7 +101,8 @@ class ContractMasterHistoryController extends Controller
 
         if(isset($_POST['ContractMasterHistory']))
         {
-            $model->attributes=$_POST['ContractMasterHistory'];
+            $model->attributes = $_POST['ContractMasterHistory'];
+            $model->EmplChange = Yii::app()->user->Employee_id;
             $History_id = $model->History_id;
 
             if ($model->validate())

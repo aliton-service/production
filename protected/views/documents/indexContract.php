@@ -106,6 +106,10 @@
             } else {CurrentRowData = null};
             
 //            console.log(CurrentRowData.csdt_id);
+            if (CurrentRowData != null) {
+                $("#EditContractsMasters").jqxButton({ disabled: false });
+                $("#DelContractsMasters").jqxButton({ disabled: false });
+            }
         });
         
         $("#EditContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -154,95 +158,54 @@
         
         
         $("#NewContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#EditContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#EditContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         $("#ReloadContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $("#DelContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        
+        $("#DelContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         
         $('#MastersEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '240px', width: '370'}));
-        
-        $('#MastersEditDialog').jqxWindow({initContent: function() {
-            $("#MastersBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#MastersBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        }});
 
-        $("#MastersBtnCancel").on('click', function () {
-            $('#MastersEditDialog').jqxWindow('close');
+        $('#MastersGrid').on('rowdoubleclick', function (event) { 
+            $("#EditContractsMasters").click();
         });
         
-        var SendFormMasters = function(Mode, Form) {
-            var Url;
-            if (Mode == 'Insert')
-                Url = "<?php echo Yii::app()->createUrl('ContractMasterHistory/Insert');?>";
-            if (Mode == 'Update')
-                Url = "<?php echo Yii::app()->createUrl('ContractMasterHistory/Update');?>";
-            
-            var Data;
-            if (Form == undefined)
-                Data = $('#ContractMasterHistory').serialize();
-            else Data = Form;
-                
+        $("#NewContractsMasters").on('click', function () {
+            console.log('CurrentContract.ContrS_id = ' + CurrentContract.ContrS_id);
             $.ajax({
-                url: Url,
+                url: "<?php echo Yii::app()->createUrl('ContractMasterHistory/Insert');?>",
                 type: 'POST',
                 async: false,
-                data: Data,
+                data: { 
+                    ContrS_id: CurrentContract.ContrS_id
+                },
                 success: function(Res) {
-                    if (Res == '1' || Res == 1) {
-                        $('#MastersEditDialog').jqxWindow('close');
-                        $("#MastersGrid").jqxGrid('updatebounddata');
-//                        $('#MastersGrid').jqxGrid({source: LoadData(CurrentContractDataAdapter)});
-                    } else {
-                        $('#MastersBodyDialog').html(Res);
-                    }
-
+                    $('#MastersBodyDialog').html(Res);
+                    $('#MastersEditDialog').jqxWindow('open');
                 }
             });
-        }
-
-        $("#MastersBtnOk").on('click', function () {
-            SendFormMasters(Mode);
         });
         
-        var LoadFormMasters = function(Mode, id) {
+        $("#EditContractsMasters").on('click', function () {
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('ContractMasterHistory/Update');?>",
                 type: 'POST',
                 async: false,
                 data: { 
-                    History_id: id
+                    History_id: CurrentRowData.History_id
                 },
                 success: function(Res) {
                     $('#MastersBodyDialog').html(Res);
+                    $('#MastersEditDialog').jqxWindow('open');
                 }
             });
-        };
-        
-        
-        $('#MastersGrid').on('rowdoubleclick', function (event) { 
-            $("#EditContractsMasters").click();
-        });
-        
-        $("#NewContractsMasters").on('click', function ()
-        {
-            Mode = 'Insert';
-            LoadFormMasters(Mode, CurrentContract.ContrS_id);
-            $('#MastersEditDialog').jqxWindow('open');
-        });
-        
-        $("#EditContractsMasters").on('click', function ()
-        {
-            Mode = 'Update';
-            LoadFormMasters(Mode, CurrentRowData.History_id);
-            $('#MastersEditDialog').jqxWindow('open');
         });
            
-        $("#DelContractsMasters").on('click', function ()
-        {
+        $("#DelContractsMasters").on('click', function () {
             $.ajax({
                 type: "POST",
                 url: "/index.php?r=ContractMasterHistory/Delete",
-                data: { History_id: CurrentRowData.History_id},
+                data: { 
+                    History_id: CurrentRowData.History_id
+                },
                 success: function(){
                     $("#MastersGrid").jqxGrid('updatebounddata');
                     $("#MastersGrid").jqxGrid('selectrow', 0);
@@ -250,8 +213,7 @@
             });
         });
         
-        $("#ReloadContractsMasters").on('click', function ()
-        {
+        $("#ReloadContractsMasters").on('click', function () {
             $.ajax({
                 type: "POST",
                 url: "/index.php?r=Documents/Index",
