@@ -65,5 +65,17 @@
             ),
             'data' => null
         ),
+        
+        'ManagerOfficeObjectsGroup' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Все права по объекту',
+            'bizRule' => null,
+            'children' => array(
+                'ViewObjectsGroup',
+                'UpdateObjectsGroup',
+                'CreateObjectsGroup',
+            ),
+            'data' => null
+        ),
     );
 
