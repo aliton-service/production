@@ -213,7 +213,7 @@
                 case 0:
                     $("#ObjectEquipsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 'calc(100% - 55px)',
+                            height: '100%',
                             width: 'calc(100% - 10px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -421,14 +421,17 @@
             </ul>
             <div id='content1' style="overflow: hidden; margin-left: 10px;">
                 <div style="overflow: hidden; width: 100%; height: calc(100%)">
-                    <div class="row">
-                            <div id="ObjectEquipsGrid" class="jqxGridAliton"></div>
+                    <div class="row" style="height: calc(100% - 54px)">
+                        <div id="ObjectEquipsGrid" class="jqxGridAliton"></div>
+                        <div style="clear: both;"></div>
                     </div>
                     <div class="row" style="margin-top: 3px;">
                         <div class="row-column"><input type="button" value="Добавить" id='btnAddEquip' /></div>
                         <div class="row-column"><input type="button" value="Изменить" id='btnEditEquip' /></div>
                         <div class="row-column"><input type="button" value="Удалить" id='btnDelEquip' /></div>
+                        <div style="clear: both;"></div>
                     </div>
+                    <div style="clear: both;"></div>
                 </div>
             </div>
             <div id='content2' style="overflow: hidden; margin-left: 10px;">
