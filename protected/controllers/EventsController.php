@@ -170,6 +170,7 @@ class EventsController extends Controller
                                     inner join Addresses_v a on (og.address_id = a.address_id)
                                     left join Contracts_v c on (c.ObjectGr_id = og.ObjectGr_id and c.DocType_id = 4 and dbo.truncdate(GETDATE()) between c.ContrSDateStart and c.ContrSDateEnd)
                                     left join Events e on (og.ObjectGr_id = e.Objectgr_id and e.DelDate is Null
+                                        :#EventType 
                                         :#EventNoExec 
                                         :#EventExec 
                                         :#Executor 

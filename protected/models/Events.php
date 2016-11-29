@@ -29,7 +29,7 @@ class Events extends MainFormModel
     public $PrimaryKey = 'Evnt_id';
 
     public $SP_INSERT_NAME = 'AUTO_Events';
-    public $SP_UPDATE_NAME = 'UPDATE_Events';
+    public $SP_UPDATE_NAME = 'UPDATE_Events2';
     public $SP_DELETE_NAME = 'DELETE_Events';
 
 

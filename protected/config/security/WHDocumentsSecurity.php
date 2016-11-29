@@ -14,6 +14,7 @@
                 'AuditEquipsWHDocuments',
                 'Action1WHDocuments',
                 'PurchaseWHDocuments',
+                'AddNoteWHDocuments',
             ),
         ),
 
@@ -32,6 +33,7 @@
                 'Action1WHDocuments',
                 'PurchaseWHDocuments',
                 'Confirm1WHDocuments',
+                'AddNoteWHDocuments',
             ),
         ),
         
@@ -44,6 +46,8 @@
             'children' => array(
                 'WHDocumentsView',
                 'CreateWHDocuments',
+                'AddNoteWHDocuments',
+                'UpdateWHDocuments',
             ),
         ),
         
@@ -116,6 +120,15 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        'AddNoteWHDocuments' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'AddNoteWHDocuments',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        
     );
 ?>
 

@@ -1567,16 +1567,17 @@
     <div class="row-column" style="float: right; width: 400px">
         <div>
             <div class="row-column">Себестоимость</div>
-            <style>
-                #edSumLowFull input {
-                        font-weight: 600;
-                }
-            </style>
+            
             <div class="row-column" style="float: right"><div id="edSumLowFull"></div></div>
         </div>
         <div style="clear: both"></div>
         <div>
             <div class="row-column">Стоимость договора</div>
+            <style>
+                #edSumHightFull input {
+                        font-weight: 600;
+                }
+            </style>
             <div class="row-column" style="float: right"><div id="edSumHightFull"></div></div>
         </div>
         <div style="clear: both"></div>

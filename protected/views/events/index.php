@@ -8,10 +8,13 @@
     var checked;
     
     $(document).ready(function () {
+        EventTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
+        EventTypesDataAdapter.dataBind();
         
         EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients, { id: 'Form_id' , url: '/index.php?r=Events/Clients'}), {
             formatData: function (data) {
                 var Variables = {
+                    EventType: '',
                     Master: '',
                     EventNoExec: '',
                     EventExec: '',
@@ -27,6 +30,11 @@
                     DateStart: '',
                     DateEnd: ''
                 };
+                
+                var tabIndex = $('#jqxTabsEvents').jqxTabs('selectedItem'); 
+                if (tabIndex != 0 && tabIndex != undefined) {
+                    Variables.EventType = " and e.Evtp_id = " + EventTypesDataAdapter.records[tabIndex - 1].evtp_id;
+                }
                 
                 if ($('#cmbMaster').val() != '')
                     Variables.Master = " and c.Master = " + $('#cmbMaster').val();
@@ -146,17 +154,21 @@
                 columns: [
                     { text: 'Клиент', datafield: 'Fullname', width: 150 },
                     { text: 'Адрес', datafield: 'Addr', width: 100/* minwidth: 250*/ },
-                    { text: 'Запл.', datafield: 'EventCount', width: 50 },
+                    { text: 'Запл.', datafield: 'EventCount', width: 50, aggregates: [{ 'Запл.':
+                                        function (aggregatedValue, currentValue) {
+                                            return aggregatedValue + currentValue;
+                                        }
+                                      }] },
                     { text: 'Невып.', datafield: 'NoExecEventCount', width: 60 },
                 ],
                 groups: ['Fullname']
         }));
         
-        EventTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
-        EventTypesDataAdapter.dataBind();
+        
 
         $('#jqxTabsEvents').on('selected', function (event) { 
-            Find();
+            //Find();
+            $('#edFiltering').click();
         });
         
         $('#jqxTabsEvents').jqxTabs({ width: 'calc(100% - 2px)', height: 37 });
@@ -174,6 +186,12 @@
         
         $('#EventsGrid').on('bindingcomplete', function(){
             $('#EventsGrid').jqxGrid('selectrow', 0);
+        });
+        
+        $('#EventsClientsGrid').on('rowdoubleclick', function (event) { 
+            if (CurrentRowDataClients != undefined && CurrentRowDataClients != null) {
+                window.open(<?php echo json_encode(Yii::app()->createUrl('Objectsgroup/Index')); ?> + '&ObjectGr_id=' + CurrentRowDataClients.ObjectGr_id);
+            }
         });
         
         $('#EventsGrid').jqxGrid(
@@ -256,6 +274,14 @@
         $("#btnShowHide").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, disabled: true }));
         $("#btnEditEvent").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
         $("#btnDelEvent").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
+        $("#btnPrintEvent").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
+        $("#btnPrintEvent").on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                            'ReportName' => '/Графики/Графики',
+                            'Ajax' => false,
+                            'Render' => false,
+                        ))); ?>);
+        });
         
         $('#btnAutoplanning').on('click', function(){
             $('#EventsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 250, width: 400, position: 'center'}));
@@ -392,6 +418,7 @@
     
     <div class="al-row-column" style="width: calc(100% - 456px)">
         <div class="al-row-column"><input type="button" value="Изменить" id='btnEditEvent' /></div>
+        <div class="al-row-column"><input type="button" value="Печать" id='btnPrintEvent' /></div>
         <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='btnDelEvent' /></div>
     </div>
     <div style="clear: both"></div>

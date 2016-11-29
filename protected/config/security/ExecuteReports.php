@@ -1,7 +1,7 @@
 <?php
 return array(
 
-	/** Роли для таблицы ExecuteReports (отчеты исполнителей) **/
+	/** пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ExecuteReports (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ) **/
 	'ManagerExecuteReports' => array(
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'ManagerExecuteReports',
@@ -12,6 +12,7 @@ return array(
 			'ViewExecuteReports',
 			'CreateExecuteReports',
 			'UpdateExecuteReports',
+                        'DeleteExecuteReports',
 		),
 	),
 

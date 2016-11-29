@@ -214,7 +214,9 @@
                             array('label' => 'Списание оборудования', 'visible'=>Yii::app()->user->checkAccess('ViewWhActs'), 'url' => '#', 'items' => array(
                                 array('label' => 'Реестр актов', 'url' => array('/whacts/index')),
                             )),
-
+                            array('label' => 'Сметы', 'visible'=>Yii::app()->user->checkAccess('ReestrCostCalculations'), 'url' => '#', 'items' => array(
+                                array('label' => 'Реестр смет', 'url' => array('/CostCalculations/Reestr')),
+                            )),
                             array('label' => 'Задачи', 'visible'=>Yii::app()->user->checkAccess('ViewTasks'), 'url' => '#', 'items' => array(
                                 array('label' => 'Список задач', 'url' => array('/tasks')),
                             )),

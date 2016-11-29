@@ -4,7 +4,10 @@ class CostCalculationsController extends Controller
 {
     public $layout = '//layouts/column2';
     public $title = '';
-
+    public $gridFilters = null;
+    public $filterDefaultValues = null;
+    
+    
     public function filters()
     {
         return array(
@@ -55,6 +58,11 @@ class CostCalculationsController extends Controller
                 'actions'=>array('annul'),
                 'roles'=>array('AnnulCostCalculations'),
             ),
+            array('allow',
+                'actions'=>array('Reestr'),
+                'roles'=>array('ReestrCostCalculations'),
+            ),
+            
             
             array('deny',  // deny all users
                 'users'=>array('*'),
@@ -288,6 +296,16 @@ class CostCalculationsController extends Controller
                 'count_type1' => $Res['count_type1'],
             ));
         }
+    }
+    
+    public function actionReestr() {
+        
+        $Filters = array();
+        $this->title = 'Сметы - реестр';
+        $this->gridFilters = '_filters';
+        $this->filterDefaultValues = $Filters;
+        
+        $this->render('reestr');
     }
     
     public function actionReady() 
