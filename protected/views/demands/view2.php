@@ -89,6 +89,8 @@
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
+                    var CurrentRowDataER;
+                    
                     var DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceExecutorReports, {}), {
                         formatData: function (data) {
                             $.extend(data, {
@@ -97,6 +99,10 @@
                             return data;
                         },
                     });
+                    $("#ProgressGrid").on('rowselect', function (event) {
+                        CurrentRowDataER = $('#ProgressGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
                     $("#ProgressGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 36px)',
@@ -135,7 +141,10 @@
                         Comment();
                     });
                     $("#btnDelComment").on('click', function(){
+                        if (CurrentRowDataER == undefined) return;
+                        if (CurrentRowDataER.empl_id != <?php echo json_encode(Yii::app()->user->Employee_id); ?>) return;
                         if (Aliton.DelComment(CurrentRowData.exrp_id)) {
+                            
                             $("#ProgressGrid").jqxGrid('updatebounddata');
                         }
                     });

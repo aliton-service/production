@@ -366,6 +366,7 @@ Sources.SourceExecutorReports =
         {name: 'demand_id', type: 'int'},
         {name: 'date', type: 'date'},
         {name: 'EmployeeName', type: 'string'},
+        {name: 'empl_id', type: 'int'},
         {name: 'plandateexec', type: 'date'},
         {name: 'dateexec', type: 'date'},
         {name: 'report', type: 'string'},

@@ -11,6 +11,12 @@
         var DataReportForms = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReportForms, {async: false}));
         var DataTerritory = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceTerritory, {async: false}));
         var DataSystemTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSystemTypesMin, {async: false}));
+        var DS = new Date();
+        var CY = DS.getFullYear();
+        var DS = new Date(CY + "-01-01");
+        var DE = new Date(CY + "-12-31");
+        
+        
         
         $("#cmbEmpl").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id" }); 
         $("#cmbMaster").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id" }); 
@@ -25,8 +31,8 @@
         $("#edReportForm").jqxComboBox({ source: DataReportForms, width: '200', height: '25px', displayMember: "ReportForm", valueMember: "rpfr_id" });
         $("#edTerrit").jqxComboBox({ source: DataTerritory, width: '200', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id" }); 
         $("#edSystemsFilter").jqxComboBox({ checkboxes: true, source: DataSystemTypes, width: '200', height: '25px', displayMember: "SystemTypeName", valueMember: "SystemType_Id" }); 
-        $("#edDateStartFilter").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null }));
-        $("#edDateEndFilter").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null }));
+        $("#edDateStartFilter").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: DS }));
+        $("#edDateEndFilter").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: DE }));
         
         
         $("#edFiltering").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
