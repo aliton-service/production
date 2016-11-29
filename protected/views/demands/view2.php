@@ -381,6 +381,7 @@
                                 { text: 'Тип документа', filtertype: 'range', datafield: 'DocType', width: 180 },
                                 { text: 'Номер', filtertype: 'range', datafield: 'Number', width: 100 },
                                 { text: 'Дата выполнения', datafield: 'DateExec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                { text: 'Дата', datafield: 'DateReg', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
                                 { text: 'Оплачено', datafield: 'Procpay', width: 150, cellsformat: 'p'},
                                 { text: 'Текст', filtertype: 'range', datafield: 'Note', width: 100 },
                                 

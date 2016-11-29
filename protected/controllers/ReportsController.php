@@ -162,6 +162,8 @@ class ReportsController extends Controller
             return 'DeliveryDemands';
         else if ($ReportName == '/Заявки на доставку/Нарушение сроков выполнения')
             return 'DeliveryDemandsBrokenDeadlines';
+        else if ($ReportName == '/Графики/Графики')
+            return 'Events';
         else
             return 'standart';
     }
