@@ -271,6 +271,7 @@ return array_merge(
                 'UserRepairs',
                 'UserDeliveryDemands',
                 'MSWHDocuments',
+                'AdminSerialNumbers',
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
