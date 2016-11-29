@@ -324,7 +324,7 @@
                             columns:
                                 [
                                     { text: 'Администрирующий', datafield: 'EmployeeName', width: 150},
-                                    { text: 'Дата сообщения', datafield: 'Date', filtertype: 'date', cellsformat: 'dd.MM.yyyy', width: 130},
+                                    { text: 'Дата сообщения', datafield: 'Date', filtertype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', width: 130},
                                     { text: 'Сообщение', datafield: 'Comment', width: 450},
                                     { text: 'План. дата', datafield: 'DatePlan', filtertype: 'date', cellsformat: 'dd.MM.yyyy', width: 130},
                                 ]

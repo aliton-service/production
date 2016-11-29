@@ -551,7 +551,7 @@
         });
         
         $("#btnExec").on('click', function(){
-            Aliton.ExecDemand(Demand.Demand_id);
+            Aliton.ExecDemand(Demand.Demand_id, false);
         });
         
         function Comment() {
