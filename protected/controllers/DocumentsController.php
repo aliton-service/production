@@ -20,10 +20,10 @@ class DocumentsController extends Controller
 	 */
 	public function filters()
 	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
+            return array(
+                'accessControl', // perform access control for CRUD operations
+                'postOnly + delete', // we only allow deletion via POST request
+            );
 	}
 
 	/**
@@ -229,6 +229,7 @@ class DocumentsController extends Controller
                 $model = new Documents();
                 $model->getModelPk($ContrS_id);
                 $this->title = $model->DocType_Name .' № ' . $model->ContrNumS;
+                $this->setPageTitle($model->DocType_Name);
                 
                 switch ($model->DocType_id) {
                     case 8:

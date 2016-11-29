@@ -25,8 +25,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '99%',
-                height: '180',
+                width: '98%',
+                height: '99%',
                 source: ContractsDetails_vDataAdapter,
                 columns: [
                     { text: 'Наименование', dataField: 'ItemName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
@@ -57,7 +57,7 @@
         $("#DelContractsDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         
-        $('#CDetailsEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '360px', width: '700'}));
+        $('#CDetailsEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 310, width: 700}));
         
         $('#CDetailsEditDialog').jqxWindow({initContent: function() {
             $("#CDetailsBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -177,17 +177,17 @@
         
 </script>
 
-<div style="margin-top: 10px;">
-    <div id="CDetailsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
+    <div style="height: calc(100% - 60px); min-height: 130px;">
+        <div id="CDetailsGrid" class="jqxGridAliton" style="margin-top: 10px;"></div>
+    </div>
 
     <div class="row">
         <div class="row-column"><input type="button" value="Добавить" id='NewContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>
         <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsDetails' /></div>
         <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum"></div></div>
-        <div class="row-column" style="margin-left: 150px;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
+        <div class="row-column" style="float: right; margin-right: 20px;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
     </div>
-</div>
 
 
 
@@ -200,7 +200,7 @@
         <div id="CDetailsBottomDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='CDetailsBtnOk' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='CDetailsBtnCancel' /></div>
+                <div style="float: right; margin-right: 30px;" class="row-column"><input type="button" value="Отменить" id='CDetailsBtnCancel' /></div>
             </div>
         </div>
     </div>

@@ -46,6 +46,7 @@ class ObjectController extends Controller
     public function actionIndex()
     {
         $this->title = 'Список объектов';
+        $this->setPageTitle('Список объектов');
         $this->render('index2');
     }
     

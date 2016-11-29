@@ -11,6 +11,7 @@ class ObjectsgroupController extends Controller
         $model->getModelPk($ObjectGr_id);
         
         $this->title = 'Карточка объекта: ' . $model->Address;
+        $this->setPageTitle('Карточка объекта');
         
         $this->render('index', array(
             'model' => $model,

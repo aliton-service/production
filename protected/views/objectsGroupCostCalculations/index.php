@@ -262,7 +262,7 @@
     
     .CellSmet {
         color: black;
-        background-color: #5FB989;
+        /*background-color: #5FB989;*/
     }
     
     .CellSmet:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .CellSmet:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
@@ -271,6 +271,10 @@
     }
     .jqx-grid-group-cell {
         border-width:0 1px 1px 0;
+    }
+    #CostCalculationsGrid .jqx-fill-state-pressed {
+        background-color: #5FB989 !important;
+        color: black;
     }
 </style>
 

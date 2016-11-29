@@ -1,5 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         
         var Document = {
             ContrS_id: '<?php echo $model->ContrS_id; ?>',
@@ -56,10 +57,13 @@
         
         
         $("#NewContractBtnOk").on('click', function () {
+            var Url = <?php echo json_encode(Yii::app()->createUrl('Documents/Update')); ?>;
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('Documents/Insert')); ?>;
             var Data = $('#Documents').serialize();
             Data = Data + "&DocType_Name=" + "Счет" + "&DialogId=" + Document.DialogId + "&BodyDialogId=" + Document.BodyDialogId;
             $.ajax({
-                url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
+                url: Url,
                 type: 'POST',
                 async: false,
                 data: Data,
@@ -67,8 +71,12 @@
                     if (Res == '1' || Res == 1) {
                         $('#' + Document.DialogId).jqxWindow('close');
                         if (Document.DialogId == 'NewContractDialog') {
-                            $("#ContractsGrid").jqxGrid('updatebounddata');
-                            $("#ContractsGrid").jqxGrid('selectrow', 0);
+                            if (StateInsert) {
+                                $("#ContractsGrid").jqxGrid('updatebounddata');
+                                $("#ContractsGrid").jqxGrid('selectrow', 0);
+                            } else {
+                                location.reload();
+                            }
                         }
                         if (Document.DialogId == 'CostCalculationsDialog')
                             $('#RefreshCostCalcDocuments').click();
@@ -140,7 +148,7 @@
 
 <div class="row">
     <div class="row-column"><input type="button" value="Сохранить" id='NewContractBtnOk' /></div>
-    <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
+    <div style="float: right; margin-right: 20px;" class="row-column"><input type="button" value="Отменить" id='NewContractBtnCancel' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

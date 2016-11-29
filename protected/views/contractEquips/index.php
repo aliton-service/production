@@ -24,8 +24,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '99%',
-                height: '250',
+                width: '98%',
+                height: 'calc(100% - 60px)',
                 source: ContractEquipsDataAdapter,
                 columns: [
                     { text: 'Наименование', dataField: 'equipname', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
@@ -54,7 +54,7 @@
         $("#DelContractsEquips").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         
-        $('#CEquipsEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '230px', width: '700'}));
+        $('#CEquipsEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 210, width: 700}));
         
         $('#CEquipsEditDialog').jqxWindow({initContent: function() {
             $("#CEquipsBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -174,16 +174,15 @@
         
 </script>
 
-<div style="margin-top: 10px;">
-    <div id="CEquipsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
 
-    <div class="row">
-        <div class="row-column"><input type="button" value="Добавить" id='NewContractsEquips' /></div>
-        <div class="row-column"><input type="button" value="Изменить" id='EditContractsEquips' /></div>
-        <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsEquips' /></div>
-        <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum2"></div></div>
-        <div class="row-column" style="margin-left: 150px;"><input type="button" value="Удалить" id='DelContractsEquips' /></div>
-    </div>
+<div id="CEquipsGrid" class="jqxGridAliton" style="margin-top: 10px"></div>
+
+<div class="row">
+    <div class="row-column"><input type="button" value="Добавить" id='NewContractsEquips' /></div>
+    <div class="row-column"><input type="button" value="Изменить" id='EditContractsEquips' /></div>
+    <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsEquips' /></div>
+    <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum2"></div></div>
+    <div class="row-column" style="float: right; margin-right: 20px;"><input type="button" value="Удалить" id='DelContractsEquips' /></div>
 </div>
 
 

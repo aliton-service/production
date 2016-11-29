@@ -43,18 +43,18 @@
         $("#ContrSDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateEnd, width: 102, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
         $("#PaymentName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#Prolong").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
-        $("#Debtor").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
+        $("#Prolong").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
+        $("#Debtor").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
         $("#PaymentTypeName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#PriceMonth").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 270 }));
-        $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
-        $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
+        $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
+        $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 430, height: 120 }));
+        $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 430, height: 120 }));
         $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         $("#MasterName2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
-        $("#ServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
+        $("#ServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
         
         if (CurrentContract.ContrNumS != '') $("#ContrNumS").jqxInput('val', CurrentContract.ContrNumS);
         if (CurrentContract.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentContract.JuridicalPerson);
@@ -72,6 +72,8 @@
         if (CurrentContract.MasterName != '') $("#MasterName2").jqxInput('val', CurrentContract.MasterName);
         if (CurrentContract.ServiceType != '') $("#ServiceType").jqxInput('val', CurrentContract.ServiceType);
         
+        $('#jqxTabsCurrentContract').jqxTabs({ width: '99%', height: '99%' });
+        
         var MastersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractMasterHistory, {}), {
             formatData: function (data) {
                 $.extend(data, {
@@ -87,8 +89,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '100%',
-                height: '170',
+                width: '98%',
+                height: '98%',
                 source: MastersDataAdapter,
                 columns: [
                     { text: 'Сотрудник', dataField: 'EmployeeName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
@@ -154,22 +156,18 @@
         });
         
         
-        
-        
-        
         $("#NewContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#EditContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         $("#ReloadContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         
-        $('#MastersEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '240px', width: '370'}));
+        $('#MastersEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 220, width: 370}));
 
-        $('#MastersGrid').on('rowdoubleclick', function (event) { 
+        $('#MastersGrid').on('rowdoubleclick', function () { 
             $("#EditContractsMasters").click();
         });
         
         $("#NewContractsMasters").on('click', function () {
-            console.log('CurrentContract.ContrS_id = ' + CurrentContract.ContrS_id);
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('ContractMasterHistory/Insert');?>",
                 type: 'POST',
@@ -178,8 +176,8 @@
                     ContrS_id: CurrentContract.ContrS_id
                 },
                 success: function(Res) {
-                    $('#MastersBodyDialog').html(Res);
                     $('#MastersEditDialog').jqxWindow('open');
+                    $('#MastersBodyDialog').html(Res);
                 }
             });
         });
@@ -202,7 +200,7 @@
         $("#DelContractsMasters").on('click', function () {
             $.ajax({
                 type: "POST",
-                url: "/index.php?r=ContractMasterHistory/Delete",
+                url: "<?php echo Yii::app()->createUrl('ContractMasterHistory/Delete');?>",
                 data: { 
                     History_id: CurrentRowData.History_id
                 },
@@ -223,77 +221,89 @@
                 }
             });
         });
-        $("#MastersGrid").jqxGrid('selectrow', 0);
+        
+        $("#MastersGrid").on('bindingcomplete', function () {
+            $("#MastersGrid").jqxGrid('selectrow', 0);
+        });
     });
     
-        
 </script>
 
-<div style="background-color: #F2F2F2;">
-    <div class="row">
-        <div class="row-column">Номер: <input readonly id="ContrNumS" type="text"></div>
-        <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
-        <div class="row-column" style="padding-top: 3px;">Дата проводки через ВЦКП: </div><div class="row-column"><div id="DateExecuting2" type="text"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column" style="padding-top: 3px;">Срок действия с: </div><div class="row-column"><div id="ContrSDateStart" name="Documents[ContrSDateStart]" type="text"></div></div>
-        <div class="row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd" name="Documents[ContrSDateEnd]" type="text"></div></div>
-        <div class="row-column" style="padding-top: 3px;">Пролонгация: </div><div class="row-column"><div id="Prolong" type="checkbox"></div></div>
-        <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor" type="checkbox"></div></div>
-    </div>
+<div class="row">
+    <div class="row-column">Номер: <input readonly id="ContrNumS" type="text"></div>
+    <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Дата проводки через ВЦКП: </div><div class="row-column"><div id="DateExecuting2" type="text"></div></div>
+</div>
 
-    <div class="row">
-        <div class="row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
-        <div class="row-column">Тип контракта: <input readonly id="crtp_name" type="text"></div>
-    </div>
+<div class="row">
+    <div class="row-column" style="padding-top: 3px;">Срок действия с: </div><div class="row-column"><div id="ContrSDateStart" name="Documents[ContrSDateStart]" type="text"></div></div>
+    <div class="row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd" name="Documents[ContrSDateEnd]" type="text"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Пролонгация: </div><div class="row-column"><div id="Prolong" type="checkbox"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor" type="checkbox"></div></div>
+</div>
 
-    <div class="row">
-        <div class="row-column">Периодичность оплаты: <input readonly id="PaymentName" type="text"></div>
-        <div class="row-column">Вид оплаты: <input readonly id="PaymentTypeName" type="text"></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Ежемесячные начисления: </div><div class="row-column"><div id="PriceMonth" type="text"></div></div>
-        <div class="row-column">Расценка: </div><div class="row-column"><div id="Price" type="text"></div></div>
-        <div class="row-column">Оплачено по: </div><div class="row-column"><div id="DatePay" type="text"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Мастер: <input readonly id="MasterName2" type="text"></div>
-        <div class="row-column">Тариф: <input readonly id="ServiceType" type="text"></div>
-    </div>
-        
-    <div class="row">
-        <div class="row-column" style="padding-top: 10px;">Особые договоренности: <textarea readonly id="SpecialCondition1" ></textarea></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
-        <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала документа: </div><div class="row-column"><div id="date_doc" type="text"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Примечание: <textarea readonly id="Note" ></textarea></div>
-    </div>
+<div class="row">
+    <div class="row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
+    <div class="row-column">Тип контракта: <input readonly id="crtp_name" type="text"></div>
+</div>
 
-    <div class="row">
-        <div class="row-column"><input type="button" value="Изменить" id='EditContract' /></div>
-        <div class="row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
-        <div class="row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
-        <div class="row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
-        <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
-    </div>
+<div class="row">
+    <div class="row-column">Периодичность оплаты: <input readonly id="PaymentName" type="text"></div>
+    <div class="row-column">Вид оплаты: <input readonly id="PaymentTypeName" type="text"></div>
+</div>
 
-    <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
-        <div class="row-column" style="margin: 0 0 10px 0; width: 100%; font-weight: 500;">Мастера</div>
-        <div id="MastersGrid" class="jqxGridAliton"></div>
-    </div>
-    <div class="row">
-        <div class="row-column"><input type="button" value="Добавить" id='NewContractsMasters' /></div>
-        <div class="row-column"><input type="button" value="Изменить" id='EditContractsMasters' /></div>
-        <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsMasters' /></div>
-        <div class="row-column" style="margin-left: 310px;"><input type="button" value="Удалить" id='DelContractsMasters' /></div>
+<div class="row">
+    <div class="row-column">Ежемесячные начисления: </div><div class="row-column"><div id="PriceMonth" type="text"></div></div>
+    <div class="row-column">Расценка: </div><div class="row-column"><div id="Price" type="text"></div></div>
+    <div class="row-column">Оплачено по: </div><div class="row-column"><div id="DatePay" type="text"></div></div>
+</div>
+
+<div class="row">
+    <div class="row-column">Мастер: <input readonly id="MasterName2" type="text"></div>
+    <div class="row-column">Тариф: <input readonly id="ServiceType" type="text"></div>
+</div>
+
+<div class="row">
+    <div class="row-column">Особые договоренности: <textarea readonly id="SpecialCondition1" ></textarea></div>
+    <div class="row-column">Примечание: <textarea readonly id="Note" ></textarea></div>
+</div>
+
+<div class="row">
+    <div class="row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
+    <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала документа: </div><div class="row-column"><div id="date_doc" type="text"></div></div>
+</div>
+
+<div class="row">
+    <div class="row-column"><input type="button" value="Изменить" id='EditContract' /></div>
+    <div class="row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
+    <div class="row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
+    <div class="row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
+    <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
+</div>
+
+
+<div id='jqxWidgetCurrentContract' class="row" style="height: calc(100% - 465px);">
+    <div id='jqxTabsCurrentContract'>
+        <ul>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Мастера
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div id='contentContractDetails' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%;">
+            <div class="row" style="height: calc(100% - 60px);">
+                <div id="MastersGrid" class="jqxGridAliton"></div>
+            </div>
+            <div class="row">
+                <div class="row-column"><input type="button" value="Добавить" id='NewContractsMasters' /></div>
+                <div class="row-column"><input type="button" value="Изменить" id='EditContractsMasters' /></div>
+                <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsMasters' /></div>
+                <div class="row-column" style="float: right; margin-right: 20px;"><input type="button" value="Удалить" id='DelContractsMasters' /></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -314,11 +324,5 @@
     </div>
     <div style="overflow: hidden; padding: 10px;" id="MastersDialogContent">
         <div style="overflow: hidden;" id="MastersBodyDialog"></div>
-        <div id="MastersBottomDialog">
-            <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='MastersBtnOk' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='MastersBtnCancel' /></div>
-            </div>
-        </div>
     </div>
 </div>

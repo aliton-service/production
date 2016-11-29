@@ -365,8 +365,6 @@
      
 </style>
 
-<?php $this->setPageTitle('Карточка объекта'); ?>
-
 <?php
 
 $this->breadcrumbs=array(
@@ -403,7 +401,7 @@ $this->breadcrumbs=array(
         <li>
             <div style="height: 15px; margin-top: 3px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                    Договор и оплаты
+                    Договора и оплаты
                 </div>
             </div>
         </li>

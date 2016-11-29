@@ -66,43 +66,7 @@
             });
         });
         
-        $('#EditContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '520px', width: '810'}));
-        
-        $('#EditContractDialog').jqxWindow({initContent: function() {
-            $("#ContractBtnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#ContractBtnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        }});
-        
-        $("#ContractBtnCancel").on('click', function () {
-            $('#EditContractDialog').jqxWindow('close');
-        });
-        
-        
-        var SendFormContract = function(Form) {
-            var Data;
-            if (Form == undefined)
-                Data = $('#Documents').serialize();
-            else Data = Form;
-                
-            $.ajax({
-                url: "<?php echo Yii::app()->createUrl('Documents/Update');?>",
-                type: 'POST',
-                async: false,
-                data: Data,
-                success: function(Res) {
-                    if (Res == '1' || Res == 1) {
-                        $('#EditContractDialog').jqxWindow('close');
-                        location.reload();
-                    } else {
-                        $('#ContractBodyDialog').html(Res);
-                    }
-                }
-            });
-        }
-
-        $("#ContractBtnOk").on('click', function () {
-            SendFormContract();
-        });
+        $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 450, width: 810}));
         
     
         $("#EditContract").on('click', function ()
@@ -116,14 +80,11 @@
                     ObjectGr_id: CurrentContract.ObjectGr_id 
                 },
                 success: function(Res) {
-                    $('#ContractBodyDialog').html(Res);
+                    $('#NewContractBodyDialog').html(Res);
                 }
             });
-            $('#EditContractDialog').jqxWindow('open');
+            $('#NewContractDialog').jqxWindow('open');
         });
-        
-        
-        
         
         
         var loadPage = function (url, index) {
@@ -141,93 +102,85 @@
                     loadPage('<?php echo Yii::app()->createUrl('ContractsDetails_v/index', array('ContrS_id' => $model->ContrS_id)) ?>', 0);
                     break;
                 case 1:
-                    loadPage('<?php echo Yii::app()->createUrl('ContractEquips/index', array('contrs_id' => "$model->ContrS_id")) ?>', 1);
+                    loadPage('<?php echo Yii::app()->createUrl('ContractEquips/index', array('contrs_id' => $model->ContrS_id)) ?>', 1);
                     break;
             }
         };
-        $('#jqxTabsCurrentContract').jqxTabs({ width: '100%', height: 360,  initTabContent: initWidgets });
+        $('#jqxTabsCurrentContract').jqxTabs({ width: '100%', height: 'calc(100% - 430px)', initTabContent: initWidgets });
     });
 </script>
 
-<div style="background-color: #F2F2F2;">
-    <div class="row">
-        <div class="row-column">Номер: <input readonly id="ContrNumS" type="text"></div>
-        <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Наименование вида работ: <input readonly id="WorkText" type="text"></div>
-        <div class="row-column">Вид оплаты: <input readonly id="PaymentTypeName" type="text"></div>
-    </div>
-
-    <div class="row">
-        <div class="row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
-        <div class="row-column">Контактное лицо: <input readonly id="FIO" type="text"></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column" style="padding-top: 10px;">Особые договоренности: <textarea readonly id="SpecialCondition1" ></textarea></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Сумма: </div><div class="row-column"><div id="Price" type="text"></div></div>
-        <div class="row-column">Скидка: </div><div class="row-column"><div id="discount" type="text"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Примечание: <textarea readonly id="Note" ></textarea></div>
-    </div>
-
-    <div class="row">
-        <div class="row-column"><input type="button" value="Изменить" id='EditContract' /></div>
-        <div class="row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
-        <div class="row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
-        <div class="row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
-        <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
-    </div>
-
-    <br>
-
-
-
-
-    <div id='jqxWidgetCurrentContract'>
-        <div id='jqxTabsCurrentContract'>
-            <ul>
-                <li>
-                    <div style="height: 15px; margin-top: 3px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                            Спецификация
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div style="height: 15px; margin-top: 3px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                            Оборудование
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <div id='contentContractDetails' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
-            <div id='contentContractEquips' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%"></div>
-        </div>
-    </div>
-    
+<div class="row">
+    <div class="row-column">Номер: <input readonly id="ContrNumS" type="text"></div>
+    <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
 </div>
-        
-<div id="EditContractDialog">
-    <div id="ContractDialogHeader">
-        <span id="ContractHeaderText">Редактирование счета № <?php echo $model->ContrS_id; ?></span>
+
+<div class="row">
+    <div class="row-column">Наименование вида работ: <input readonly id="WorkText" type="text"></div>
+    <div class="row-column">Вид оплаты: <input readonly id="PaymentTypeName" type="text"></div>
+</div>
+
+<div class="row">
+    <div class="row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
+    <div class="row-column">Контактное лицо: <input readonly id="FIO" type="text"></div>
+</div>
+
+<div class="row">
+    <div class="row-column" style="padding-top: 10px;">Особые договоренности: <textarea readonly id="SpecialCondition1" ></textarea></div>
+</div>
+
+<div class="row">
+    <div class="row-column">Сумма: </div><div class="row-column"><div id="Price" type="text"></div></div>
+    <div class="row-column">Скидка: </div><div class="row-column"><div id="discount" type="text"></div></div>
+</div>
+
+<div class="row">
+    <div class="row-column">Примечание: <textarea readonly id="Note" ></textarea></div>
+</div>
+
+<div class="row">
+    <div class="row-column"><input type="button" value="Изменить" id='EditContract' /></div>
+    <div class="row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
+    <div class="row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
+    <div class="row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
+    <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
+</div>
+
+<br>
+
+
+
+
+<div id='jqxWidgetCurrentContract'>
+    <div id='jqxTabsCurrentContract'>
+        <ul>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Спецификация
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Оборудование
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div id='contentContractDetails' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%;"></div>
+        <div id='contentContractEquips' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%;"></div>
     </div>
-    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="ContractDialogContent">
-        <div style="overflow: hidden;" id="ContractBodyDialog"></div>
-        <div id="ContractBottomDialog">
-            <div class="row">
-                <div class="row-column"><input type="button" value="Сохранить" id='ContractBtnOk' /></div>
-                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='ContractBtnCancel' /></div>
-            </div>
-        </div>
+</div>
+    
+        
+<div id="NewContractDialog">
+    <div id="NewContractDialogHeader">
+        <span id="NewContractHeaderText">Редактирование счета № <?php echo $model->ContrS_id; ?></span>
+    </div>
+    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="NewContractDialogContent">
+        <div style="overflow: hidden;" id="NewContractBodyDialog"></div>
     </div>
 </div>
 
