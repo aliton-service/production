@@ -61,6 +61,7 @@ class ContractsS extends MainFormModel
     public $UserCheckUp = null;
     public $JuridicalPerson = null;
     public $MasterName = null;
+    public $PropForm_id = null;
 
 
 
@@ -116,6 +117,7 @@ class ContractsS extends MainFormModel
                         c.SpecialCondition,
                         c.Note ContrNote,
                         c.DateExecuting,
+                        og.PropForm_id,
                         case when c.DocType_id = 4 then round(c.PriceMonth, 2) else round(c.Price, 2) end Price";
 
         $from = "\nFrom ContractsS c left join ObjectsGroup og on (c.ObjectGr_id = og.ObjectGr_id)
@@ -202,6 +204,7 @@ class ContractsS extends MainFormModel
             'EmplChange' => 'Empl Change',
             'EmplDel' => 'Empl Del',
             'UserCheckUp' => 'User Check Up',
+            'PropForm_id' => 'PropForm_id',
         );
     }
 

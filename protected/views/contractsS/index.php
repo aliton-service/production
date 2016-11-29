@@ -148,7 +148,7 @@
         
         $("#MoreInformContract").on('click', function ()
         {
-            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id);
+            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id + '&PropForm_id=' + CurrentRowData.PropForm_id);
         });
         
         $("#ReloadContracts").on('click', function ()

@@ -77,7 +77,7 @@
         $("#edUChangeName").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.UChangeName});
         
         
-        $("#btnEdit").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null)});
+        $("#btnEdit").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" });
         $("#btnClient").jqxButton({ width: 120, height: 30 });
         $("#btnToMaster").jqxButton({ width: 170, height: 30, imgSrc: "/images/ok2.png", imgPosition: "left", disabled: !(Demand.DateMaster == null) });
         $("#btnSMS").jqxButton({ width: 120, height: 30 });
@@ -584,6 +584,10 @@
             $('#SMSDialog').jqxWindow('open');
             $("#edTextSMS").val(Message);
             
+        });
+        
+        $("#ProgressGrid").on('bindingcomplete', function(){
+            $("#ProgressGrid").jqxGrid('selectrow', 0);
         });
     });
 </script>

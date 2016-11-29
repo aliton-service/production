@@ -60,6 +60,7 @@ class Documents extends MainFormModel
         public $EmplDel;
         public $UserCheckUp;
         public $discount;
+        public $PropForm_id;
 
 	public $SP_INSERT_NAME = '';
 	public $SP_UPDATE_NAME = '';

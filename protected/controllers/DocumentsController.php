@@ -224,6 +224,10 @@ class DocumentsController extends Controller
 
 	public function actionIndex()
 	{
+            $PropForm_id = 0;
+            if (isset($_GET['PropForm_id'])) {
+                $PropForm_id = $_GET['PropForm_id'];
+            }
             if (isset($_GET['ContrS_id'])) {
                 $ContrS_id = $_GET['ContrS_id'];
                 $model = new Documents();
@@ -234,7 +238,8 @@ class DocumentsController extends Controller
                 switch ($model->DocType_id) {
                     case 8:
                         $this->render('indexInvoice', array(
-                            'model' => $model
+                            'model' => $model,
+                            'PropForm_id' => $PropForm_id
                         ));
                         break;
                     case 3:

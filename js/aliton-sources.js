@@ -1486,6 +1486,7 @@ Sources.SourceContractsS =
         {name: 'Price', type: 'float'},
         {name: 'PriceMonth', type: 'float'},
         {name: 'Reason_id', type: 'int'},
+        {name: 'PropForm_id', type: 'int'},
         {name: 'LastChangeDate', type: 'date'},
     ],
     id: 'ContrS_id',
