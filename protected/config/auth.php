@@ -279,6 +279,8 @@ return array_merge(
                 'WhActsView',
                 'WHDocumentsReportAll',
                 'WHDocuments1Report',
+                'ManagerEmployees',
+                'ManagerOrganizationStructure',
             ),
         ),
         
