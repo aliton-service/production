@@ -1442,8 +1442,8 @@
         <div style="clear: both"></div>
         <div style="padding: 2px"><input type="button" value="Счет заказ" id='btnAddDocContract3'/></div>
     </div>
-    <div style="float: right;     margin-right: 0px;">
-        <div class="row-column"><input type="button" value="Для заказчика" id='btnPrint1CostCalculations'/></div>
+    <div>
+        <div class="row-column" style="margin-left: 100px;"><input type="button" value="Для заказчика" id='btnPrint1CostCalculations'/></div>
         <div class="row-column"><input type="button" value="Печатать" id='btnPrint2CostCalculations'/></div>
     </div>
 </div>   

@@ -6,6 +6,8 @@
             ContrNumS: '<?php echo $model->ContrNumS; ?>',
             ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
             JuridicalPerson: '<?php echo $model->JuridicalPerson; ?>',
+            Jrdc_id: '<?php echo $model->Jrdc_id; ?>',
+            PropForm_id: '<?php echo $PropForm_id; ?>',
             ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
             date_doc: Aliton.DateConvertToJs('<?php echo $model->date_doc; ?>'),
             crtp_name: '<?php echo $model->crtp_name; ?>',
@@ -80,11 +82,19 @@
         if (CurrentContract.Note != '') $("#Note").jqxTextArea('val', CurrentContract.Note);
         if (CurrentContract.user_checkup != '') $("#user_checkup").jqxInput('val', CurrentContract.user_checkup);
 
-        $("#EditContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#EditContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { imgSrc: '/images/4.png' }));
         $("#PrintContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#CheckupContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#CheckupContract').jqxButton({disabled: (CurrentContract.user_checkup != '')});
+        
+        $('#PrintContract').on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Договора/Счет',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[ContrS_id]=' + CurrentContract.ContrS_id + '&Parameters[Jrdc_id]=' + CurrentContract.Jrdc_id + '&Parameters[PropForm_id]=' + CurrentContract.PropForm_id);
+        });
         
         $("#CheckupContract").on('click', function () {
             $.ajax({

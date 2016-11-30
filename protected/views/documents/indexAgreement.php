@@ -51,8 +51,8 @@
         $("#date_act").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_act, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420 }));
         $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 360 }));
-        $("#ExecDay").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-        $("#Garant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+        $("#ExecDay").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 50, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#Garant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 50, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 830 }));
         $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
@@ -78,7 +78,7 @@
         if (CurrentContract.user_checkup != '') $("#user_checkup").jqxInput('val', CurrentContract.user_checkup);
         
         
-        $("#EditContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $("#EditContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { imgSrc: '/images/4.png' }));
         $("#PrintContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#CheckupContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
