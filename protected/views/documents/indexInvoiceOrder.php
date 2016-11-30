@@ -68,6 +68,13 @@
         
         $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 450, width: 810}));
         
+        $('#PrintContract').on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Договора/Счет-заказ',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[ContrS_id]=' + CurrentContract.ContrS_id);
+        });
     
         $("#EditContract").on('click', function ()
         {
