@@ -55,7 +55,7 @@ class SerialNumbersController extends Controller
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['SystemCompetitor_id'];
+                $ObjectResult['id'] = $Res['srnm_id'];
                 echo json_encode($ObjectResult);
                 return;
             } 
@@ -76,16 +76,16 @@ class SerialNumbersController extends Controller
                 'id' => 0,
                 'html' => '',
             );
-        if (isset($_POST['SystemCompetitor_id']))
-            $model->getModelPk($_POST['SystemCompetitor_id']);
+        if (isset($_POST['srnm_id']))
+            $model->getModelPk($_POST['srnm_id']);
 
         if (isset($_POST['SerialNumbers'])) {
-            $model->getModelPk($_POST['SerialNumbers']['SystemCompetitor_id']);
+            $model->getModelPk($_POST['SerialNumbers']['srnm_id']);
             $model->attributes = $_POST['SerialNumbers'];
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->SystemCompetitor_id;
+                $ObjectResult['id'] = $model->srnm_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -105,13 +105,13 @@ class SerialNumbersController extends Controller
                 'html' => '',
             );
         
-        if (isset($_POST['SystemCompetitor_id'])) {
+        if (isset($_POST['srnm_id'])) {
             $model = new SerialNumbers();
-            $model->getModelPk($_POST['SystemCompetitor_id']);
+            $model->getModelPk($_POST['srnm_id']);
             if ($model->validate()) {
                 $model->delete();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->SystemCompetitor_id;
+                $ObjectResult['id'] = $model->srnm_id;
                 echo json_encode($ObjectResult);
                 return;
             }

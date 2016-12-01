@@ -86,6 +86,7 @@ class CostCalculationsController extends Controller
     public function actionCreate()
     {
         $model = new CostCalculations();
+        $model->discount = 0;
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,

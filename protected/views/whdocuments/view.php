@@ -194,6 +194,7 @@
         });
                     
         $("#GridDetails").on("bindingcomplete", function (event) {
+            console.log(CurrentRowDetails);
             if (CurrentRowDetails != undefined) {
                 Aliton.SelectRowById('dadt_id', CurrentRowDetails.dadt_id, '#GridDetails', false);
             }
@@ -639,9 +640,11 @@
         
         $("#btnRefreshDetails").on('click', function() {
             if ($("#btnRefreshDetails").jqxButton('disabled')) return;
+            console.log(CurrentRowDetails);
             if (CurrentRowDetails != undefined) {
+                
                 var Dadt_id = CurrentRowDetails.dadt_id
-                CurrentRowDetails = undefined;
+                //CurrentRowDetails.dadt_id = Dadt_id;
                 Aliton.SelectRowById('dadt_id', Dadt_id, '#GridDetails', true);
             }
             else
@@ -963,6 +966,7 @@
         });
         
         SN.Add = function() {
+            console.log(CurrentRowDetails);
             if (CurrentRowDetails !== undefined) {
                 $('#WHDocumentsDialog').jqxWindow({width: 600, height: 440, position: 'center'});
                 $.ajax({
