@@ -89,7 +89,7 @@
                                 array('label'=>'Подъезды и оборудование', 'url'=>array('/ObjectsAndEquips/view'), 'visible'=>false),
                                 array('label'=>'Контроль контактов', 'url'=>array('/ControlContacts/index'), 'visible'=>Yii::app()->user->checkAccess('ViewControlContacts')),
                                 array('label'=>'Перевод мастеров', 'url'=>array('/replaceMaster'), 'visible'=>Yii::app()->user->checkAccess('ViewReplaceMaster')),
-                                array('label'=>'Поиск счетов', 'url'=>array('/contractss'), 'visible'=>Yii::app()->user->checkAccess('ViewContractsS')),
+                                array('label'=>'Поиск счетов', 'url'=>array('/ContractsS/find'), 'visible'=>Yii::app()->user->checkAccess('ViewContractsS')),
                             )),
                             array('label'=>'Справочники', 'visible'=>!Yii::app()->user->isGuest, 'url'=>array('/reference/index'),
                                 'items' => array(
