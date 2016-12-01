@@ -68,6 +68,13 @@
         
         $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 450, width: 810}));
         
+        $('#PrintContract').on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Договора/Счет-заказ',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[ContrS_id]=' + CurrentContract.ContrS_id);
+        });
     
         $("#EditContract").on('click', function ()
         {
@@ -106,7 +113,7 @@
                     break;
             }
         };
-        $('#jqxTabsCurrentContract').jqxTabs({ width: '100%', height: 'calc(100% - 430px)', initTabContent: initWidgets });
+        $('#jqxTabsCurrentContract').jqxTabs({ width: '99%', height: '99%', initTabContent: initWidgets });
     });
 </script>
 
@@ -151,7 +158,7 @@
 
 
 
-<div id='jqxWidgetCurrentContract'>
+<div id='jqxWidgetCurrentContract' style="height: calc(100% - 430px); min-height: 270px;">
     <div id='jqxTabsCurrentContract'>
         <ul>
             <li>

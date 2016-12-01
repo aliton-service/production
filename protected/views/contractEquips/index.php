@@ -25,7 +25,7 @@
                 showfilterrow: false,
                 virtualmode: false,
                 width: '98%',
-                height: 'calc(100% - 60px)',
+                height: '99%',
                 source: ContractEquipsDataAdapter,
                 columns: [
                     { text: 'Наименование', dataField: 'equipname', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
@@ -174,8 +174,9 @@
         
 </script>
 
-
-<div id="CEquipsGrid" class="jqxGridAliton" style="margin-top: 10px"></div>
+<div style="height: calc(100% - 60px);">
+    <div id="CEquipsGrid" class="jqxGridAliton" style="margin-top: 10px"></div>
+</div>
 
 <div class="row">
     <div class="row-column"><input type="button" value="Добавить" id='NewContractsEquips' /></div>

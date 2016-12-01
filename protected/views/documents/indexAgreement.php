@@ -98,6 +98,14 @@
             });
         });
         
+        $('#PrintContract').on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Договора/Дополнительное соглашение',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[ContrS_id]=' + CurrentContract.ContrS_id);
+        });
+        
         $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 560, width: 870}));
         
         $("#EditContract").on('click', function ()
@@ -134,7 +142,7 @@
                     break;
             }
         };
-        $('#jqxTabsCurrentContract').jqxTabs({ width: '100%', height: 'calc(100% - 520px)', initTabContent: initWidgets });
+        $('#jqxTabsCurrentContract').jqxTabs({ width: '99%', height: '99%', initTabContent: initWidgets });
         
     });
     
@@ -200,7 +208,7 @@
     <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
 </div>
 
-<div id='jqxWidgetCurrentContract' style="margin-top: 10px;">
+<div id='jqxWidgetCurrentContract' style="margin-top: 10px; height: calc(100% - 520px); min-height: 250px;">
     <div id='jqxTabsCurrentContract'>
         <ul>
             <li>
