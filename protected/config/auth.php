@@ -1000,6 +1000,7 @@ return array_merge(
                 'ManagerWHDocuments',
                 'ManagerDeliveryDemands',
                 'ManagerMonitoringDemands',
+                'ManagerPriceMonitoring',
             ),
         ),
         
