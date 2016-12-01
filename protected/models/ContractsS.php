@@ -120,7 +120,8 @@ class ContractsS extends MainFormModel
                         og.PropForm_id,
                         case when c.DocType_id = 4 then round(c.PriceMonth, 2) else round(c.Price, 2) end Price";
 
-        $from = "\nFrom ContractsS c left join ObjectsGroup og on (c.ObjectGr_id = og.ObjectGr_id)
+        $from = "\nFrom ContractsS c 
+                        left join ObjectsGroup og on (c.ObjectGr_id = og.ObjectGr_id)
                         left join Addresses_v a on (a.Address_id = og.Address_id)
                         left join DocTypes dt on (c.DocType_id = dt.DocType_Id)
                         left join ContractTypes ct on (c.crtp_id = ct.crtp_id)
@@ -129,7 +130,8 @@ class ContractsS extends MainFormModel
                         left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
                         left join Employees_ForObj_v e on (c.Master = e.Employee_id)";
 
-        $where = "\nWhere c.DelDate is null
+        $where = "\nWhere 
+                        c.DelDate is null
                         and og.DelDate is null
                         and c.DocType_id in (3, 4, 5, 8)";
 

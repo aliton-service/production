@@ -93,12 +93,12 @@
             $("#DoorwayList").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
             $("#CountPorch").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
             $("#ClientGroup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
-            $("#Journal").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy', width: 90 }));
+            $("#Journal").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
             $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
             
-            $("#Refusers").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 'calc(100% - 30px)', width: '100%', minLength: 1}));
-            $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 'calc(100% - 30px)', width: '100%'}));
-            $("#Information").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 'calc(100% - 30px)', width: '100%'}));
+            $("#Refusers").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 250}));
+            $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 250}));
+            $("#Information").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 250}));
             
             $("#ServiceManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
             $("#SalesManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
@@ -137,7 +137,7 @@
             if (ObjectGroup.DoorwayList !== '') $("#DoorwayList").jqxInput('val', ObjectGroup.DoorwayList);
             if (ObjectGroup.CountPorch !== '') $("#CountPorch").jqxInput('val', ObjectGroup.CountPorch);
             if (ObjectGroup.ClientGroup !== '') $("#ClientGroup").jqxInput('val', ObjectGroup.ClientGroup);
-            if (ObjectGroup.Journal !== '') $("#Journal").jqxDateTimeInput('val', ObjectGroup.Journal);
+            if (ObjectGroup.Journal !== '') $("#Journal").jqxInput('val', ObjectGroup.Journal);
             if (ObjectGroup.PostalAddress !== '') $("#PostalAddress").jqxInput('val', ObjectGroup.PostalAddress);
             if (ObjectGroup.Refusers !== '') $("#Refusers").jqxTextArea('val', ObjectGroup.Refusers);
             if (ObjectGroup.Note !== '') $("#Note").jqxTextArea('val', ObjectGroup.Note);
@@ -172,8 +172,8 @@
                     pagesize: 200,
                     showfilterrow: false,
                     virtualmode: false,
-                    width: '99.5%',
-                    height: '99%',
+                    width: 'calc(100% - 2px)',
+                    height: 'calc(100% - 2px)',
                     source: DataObjectsGroupsExecutors,
                     columns: [
                         { text: 'ФИО', dataField: 'FIO', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
@@ -362,42 +362,6 @@
         background-color: #A7D2BB !important;
         color: black;
     }
-    
-    #RefusersWrapper,
-    #NoteWrapper,
-    #InformationWrapper{
-        height: 100px;
-        width: 280px;
-    }
-    
-    #ContactInfoGridWrapper {
-        height: calc(100% - 340px);
-    }
-    
-    @media screen and (min-height: 880px) { 
-        #ContactInfoGridWrapper {
-            height: calc(100% - 370px);
-        }
-        #RefusersWrapper,
-        #NoteWrapper,
-        #InformationWrapper{
-            height: 130px;
-        }
-    }
-    @media screen and (min-width: 1350px) { 
-        #RefusersWrapper,
-        #NoteWrapper,
-        #InformationWrapper{
-            width: 400px;
-        }
-    }
-    @media screen and (min-width: 1650px) { 
-        #RefusersWrapper,
-        #NoteWrapper,
-        #InformationWrapper{
-            width: 500px;
-        }
-    }
      
 </style>
 
@@ -456,8 +420,8 @@ $this->breadcrumbs=array(
             </div>
         </li>
     </ul>
-    <div style="overflow: auto; height: 100%; background-color: #F2F2F2;">
-        <div style="overflow: auto; padding: 5px 10px 0;">
+    <div style="overflow: auto; height: calc(100% - 2px); background-color: #F2F2F2;">
+        <div style="overflow: auto; padding: 5 10px 0;">
             <div class="al-row">
                 <div class="al-row-column" style="width: 60px">Клиент:</div>
                 <div class="al-row-column"><input readonly type="text" id="FullName"></div>
@@ -484,7 +448,7 @@ $this->breadcrumbs=array(
                 <div class="al-row-column">Сегмент:</div>
                 <div class="al-row-column"><input readonly type="text" id="ClientGroup"></div>
                 <div class="al-row-column">Журнал:</div>
-                <div class="al-row-column"><div id="Journal"></div></div>
+                <div class="al-row-column"><input readonly type="text" id="Journal"></div>
                 <div style="clear: both"></div>
             </div>
             <div class="al-row">
@@ -496,29 +460,27 @@ $this->breadcrumbs=array(
                 <div class="al-row-column"><input readonly type="text" id="SalesManager"></div>
                 <div style="clear: both"></div>
             </div>
-            
             <div class="al-row" style="padding: 0">
-                <div id="RefusersWrapper" class="al-row-column">
-                    <div class="al-row">Отказники:</div>
-                    <div class="al-row" style="padding: 0"><textarea readonly type="text" id="Refusers"></textarea></div>
+                <div class="al-row-column">
+                    <div class="al-row"><div class="al-row-column">Отказники:</div><div style="clear: both"></div></div>
+                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Refusers"></textarea></div><div style="clear: both"></div></div>
                 </div>
-                <div id="NoteWrapper" class="al-row-column">
-                    <div class="al-row">Примечание:</div>
-                    <div class="al-row" style="padding: 0"><textarea readonly type="text" id="Note"></textarea></div>
+                <div class="al-row-column">
+                    <div class="al-row"><div class="al-row-column">Примечание:</div><div style="clear: both"></div></div>
+                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Note"></textarea></div><div style="clear: both"></div></div>
                 </div>
-                <div id="InformationWrapper" class="al-row-column">
-                    <div class="al-row">Общая информация:</div>
-                    <div class="al-row" style="padding: 0"><textarea readonly type="text" id="Information"></textarea></div>
+                <div class="al-row-column">
+                    <div class="al-row"><div class="al-row-column">Общая информация:</div><div style="clear: both"></div></div>
+                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Information"></textarea></div><div style="clear: both"></div></div>
                 </div>
                 <div style="clear: both"></div>
             </div>
-            
             <div class="al-row" style="margin: 0;">
                 <input type="button" value="Изменить" id='ChangeObjectsGroup' />
             </div>
         </div>
-        <div style="padding: 10px;">
-            <div id="ContactInfoGridWrapper" class="al-row" style="padding: 0px;">
+        <div style="padding: 10px; height: calc(100% - 323px)">
+            <div class="al-row" style="padding: 0px; height: calc(100% - 12px)">
                 <div id="ContactInfoGrid" class="jqxGridAliton"></div>
             </div>
             <div class="al-row" style="padding: 6px 0px 0px 0px;">
