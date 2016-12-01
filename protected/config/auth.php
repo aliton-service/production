@@ -999,6 +999,8 @@ return array_merge(
                 'StaffManager',
                 'ManagerWHDocuments',
                 'ManagerDeliveryDemands',
+                'ManagerMonitoringDemands',
+                'ManagerPriceMonitoring',
             ),
         ),
         
