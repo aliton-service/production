@@ -282,7 +282,7 @@
 </div>
 
 
-<div id='jqxWidgetCurrentContract' class="row" style="height: calc(100% - 465px);">
+<div id='jqxWidgetCurrentContract' class="row" style="height: calc(100% - 465px); min-height: 270px;">
     <div id='jqxTabsCurrentContract'>
         <ul>
             <li>

@@ -221,7 +221,7 @@
     <div id='contentContractDetails2' style="overflow: hidden; width: 100%;"></div>
 </div>-->
 
-<div id='jqxWidgetCurrentContract' class="row" style="height: calc(100% - 520px);">
+<div id='jqxWidgetCurrentContract' class="row" style="height: calc(100% - 520px); min-height: 270px;">
     <div id='jqxTabsCurrentContract'>
         <ul>
             <li>

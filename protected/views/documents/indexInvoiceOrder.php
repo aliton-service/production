@@ -113,7 +113,7 @@
                     break;
             }
         };
-        $('#jqxTabsCurrentContract').jqxTabs({ width: '100%', height: 'calc(100% - 430px)', initTabContent: initWidgets });
+        $('#jqxTabsCurrentContract').jqxTabs({ width: '99%', height: '99%', initTabContent: initWidgets });
     });
 </script>
 
@@ -158,7 +158,7 @@
 
 
 
-<div id='jqxWidgetCurrentContract'>
+<div id='jqxWidgetCurrentContract' style="height: calc(100% - 430px); min-height: 270px;">
     <div id='jqxTabsCurrentContract'>
         <ul>
             <li>

@@ -177,7 +177,7 @@
         
 </script>
 
-    <div style="height: calc(100% - 60px); min-height: 130px;">
+    <div style="height: calc(100% - 60px);">
         <div id="CDetailsGrid" class="jqxGridAliton" style="margin-top: 10px;"></div>
     </div>
 
