@@ -98,6 +98,14 @@
             });
         });
         
+        $('#PrintContract').on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                'ReportName' => '/Договора/Дополнительное соглашение',
+                'Ajax' => false,
+                'Render' => true,
+            ))); ?> + '&Parameters[ContrS_id]=' + CurrentContract.ContrS_id);
+        });
+        
         $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 560, width: 870}));
         
         $("#EditContract").on('click', function ()
