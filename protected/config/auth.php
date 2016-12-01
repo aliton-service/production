@@ -921,6 +921,99 @@ return array_merge(
                 'DemandsReport12',
             ),
         ),
+        
+        /* Руководитель ОМТО */
+        'HeadMaterialLogistics' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель ОПР',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'ProjectManager',
+                'ManagerMaterialLogistics',
+                'EngineerPRC',
+                'HeadLogistics',
+            ),
+        ),
+        
+        /* Менеджер проектов */
+        'ProjectManager' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Менеджер проектов',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+            ),
+        ),
+        
+        /* Менеджер ОМТО */
+        'ManagerMaterialLogistics' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Менеджер ОМТО',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'AdminRepairs',
+            ),
+        ),
+        
+        /* Инженер ПРЦ */
+        'EngineerPRC' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Инженер ПРЦ',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'AdminRepairs',
+            ),
+        ),
+        
+        /* Руководитель логистики */
+        'HeadLogistics' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель логистики',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'LogisticsManager',
+                'Storeman',
+            ),
+        ),
+        
+        /* Менеджер по логитике */
+        'LogisticsManager' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Менеджер по логитике',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'ManagerWHDocuments',
+                'ManagerDeliveryDemands',
+            ),
+        ),
+        
+        /* Кладовщик */
+        'Storeman' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Кладовщик',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'ManagerWHDocuments',
+            ),
+        ),
     )
 );
 

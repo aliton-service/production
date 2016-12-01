@@ -14,6 +14,7 @@
                 'AuditEquipsWHDocuments',
                 'Action1WHDocuments',
                 'PurchaseWHDocuments',
+                'Confirm1WHDocuments',
                 'AddNoteWHDocuments',
             ),
         ),
