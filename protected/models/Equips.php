@@ -1,94 +1,50 @@
 <?php
 
-/**
- * This is the model class for table "Equips".
- *
- * The followings are the available columns in table 'Equips':
- * @property integer $Equip_id
- * @property string $EquipName
- * @property integer $UnitMeasurement_Id
- * @property integer $Supplier_id
- * @property string $Description
- * @property integer $GroupGood_Id
- * @property integer $SubGroupGood_Id
- * @property string $CategoryGood_Id
- * @property string $EquipImage
- * @property integer $actp_id
- * @property integer $ctgr_id
- * @property integer $grp_id
- * @property integer $sgrp_id
- * @property string $discontinued
- * @property integer $SystemType_id
- * @property integer $ServicingTime
- * @property integer $AddressSystem_id
- * @property string $rate
- * @property boolean $must_instruction
- * @property boolean $there_instruction
- * @property boolean $must_photo
- * @property boolean $there_photo
- * @property boolean $must_analog
- * @property boolean $there_analog
- * @property boolean $must_producer
- * @property boolean $there_producer
- * @property boolean $must_supplier
- * @property boolean $there_supplier
- * @property string $note
- * @property integer $group_id
- * @property boolean $Lock
- * @property integer $EmplLock
- * @property string $DateLock
- * @property integer $EmplCreate
- * @property string $DateCreate
- * @property integer $EmplChange
- * @property string $DateChange
- * @property integer $EmplDel
- * @property string $DelDate
- */
 class Equips extends MainFormModel
 {
+    public $Equip_id = null;
+    public $EquipName = null;
+    public $UnitMeasurement_Id = null;
+    public $Supplier_id = null;
+    public $Description = null;
+    public $GroupGood_Id = null;
+    public $SubGroupGood_Id = null;
+    public $CategoryGood_Id = null;
+    public $EquipImage = null;
+    public $actp_id = null;
+    public $ctgr_id = null;
+    public $grp_id = null;
+    public $sgrp_id = null;
+    public $discontinued = null;
+    public $SystemType_id = null;
+    public $ServicingTime = null;
+    public $AddressSystem_id = null;
+    public $rate = null;
+    public $must_instruction = null;
+    public $there_instruction = null;
+    public $must_photo = null;
+    public $there_photo = null;
+    public $must_analog = null;
+    public $there_analog = null;
+    public $must_producer = null;
+    public $there_producer = null;
+    public $must_supplier = null;
+    public $there_supplier = null;
+    public $note = null;
+    public $group_id = null;
+    public $Lock = null;
+    public $EmplLock = null;
+    public $DateLock = null;
+    public $EmplCreate = null;
+    public $DateCreate = null;
+    public $EmplChange = null;
+    public $DateChange = null;
+    public $EmplDel = null;
+    public $DelDate = null;
 
-	public $Equip_id = null;
-	public $EquipName = null;
-	public $UnitMeasurement_Id = null;
-	public $Supplier_id = null;
-	public $Description = null;
-	public $GroupGood_Id = null;
-	public $SubGroupGood_Id = null;
-	public $CategoryGood_Id = null;
-	public $EquipImage = null;
-	public $actp_id = null;
-	public $ctgr_id = null;
-	public $grp_id = null;
-	public $sgrp_id = null;
-	public $discontinued = null;
-	public $SystemType_id = null;
-	public $ServicingTime = null;
-	public $AddressSystem_id = null;
-	public $rate = null;
-	public $must_instruction = null;
-	public $there_instruction = null;
-	public $must_photo = null;
-	public $there_photo = null;
-	public $must_analog = null;
-	public $there_analog = null;
-	public $must_producer = null;
-	public $there_producer = null;
-	public $must_supplier = null;
-	public $there_supplier = null;
-	public $note = null;
-	public $group_id = null;
-	public $Lock = null;
-	public $EmplLock = null;
-	public $DateLock = null;
-	public $EmplCreate = null;
-	public $DateCreate = null;
-	public $EmplChange = null;
-	public $DateChange = null;
-	public $EmplDel = null;
-	public $DelDate = null;
+    public $from_equip_id = null;
+    public $in_equip_id = null;
 
-	public $from_equip_id = null;
-	public $in_equip_id = null;
 
 	public $KeyFiled = 'e.Equip_id';
 	public $PrimaryKey = 'Equip_id';

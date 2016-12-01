@@ -4070,3 +4070,72 @@ Sources.SourceCostCalculations_v =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceEquipGroups =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'group_id', type: 'int'},
+        {name: 'parent_group_id', type: 'int'},
+        {name: 'code', type: 'string'},
+        {name: 'group_name', type: 'string'},
+        {name: 'full_group_name', type: 'string'}
+    ],
+    id: 'group_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EqipGroups',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceEquips =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Equip_id', type: 'int'},
+        {name: 'EquipName', type: 'string'},
+        {name: 'UnitMeasurement_Id', type: 'int'},
+        {name: 'Supplier_id', type: 'int'},
+        {name: 'Description', type: 'string'},
+        {name: 'GroupGood_Id', type: 'int'},
+        {name: 'SubGroupGood_Id', type: 'int'},
+        {name: 'CategoryGood_Id', type: 'int'},
+        {name: 'EquipImage', type: 'string'},
+        {name: 'actp_id', type: 'int'},
+        {name: 'ctgr_id', type: 'int'},
+        {name: 'grp_id', type: 'int'},
+        {name: 'sgrp_id', type: 'int'},
+        {name: 'discontinued', type: 'string'},
+        {name: 'SystemType_id', type: 'int'},
+        {name: 'ServicingTime', type: 'string'},
+        {name: 'AddressSystem_id', type: 'int'},
+        {name: 'rate', type: 'string'},
+        {name: 'must_instruction', type: 'bool'},
+        {name: 'there_instruction', type: 'bool'},
+        {name: 'must_photo', type: 'bool'},
+        {name: 'there_photo', type: 'bool'},
+        {name: 'must_analog', type: 'bool'},
+        {name: 'there_analog', type: 'bool'},
+        {name: 'must_producer', type: 'bool'},
+        {name: 'there_producer', type: 'bool'},
+        {name: 'must_supplier', type: 'bool'},
+        {name: 'there_supplier', type: 'bool'},
+        {name: 'note', type: 'string'},
+        {name: 'group_id', type: 'int'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=Equips',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
