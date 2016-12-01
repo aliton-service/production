@@ -1,9 +1,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         
-        var ReplaceMaster = {
-            Employee_id: '<?php // echo $model->Employee_id; ?>',
-        };
+//        var ReplaceMaster = {
+//            Employee_id: '<?php // echo $model->Employee_id; ?>',
+//        };
 
         var DataEmpl = new $.jqx.dataAdapter(Sources.SourceListEmployees);
         
@@ -108,9 +108,9 @@
     </div>
 
     <div class="row" style="padding: 10px; width: 350px; border: 1px solid #ddd; background-color: #F2F2F2;">
-        <div class="row-column" style="margin: 0 0 15px 5px; width: 100%;">Мастер С которого переводим объекты</div>
+        <div class="row" style="margin: 0 0 15px 5px; width: 100%;">Мастер С которого переводим объекты</div>
         <div class="row">
-            <div class="row-column" style="margin-top: 4px;">Имя: </div><div class="row-column"><div id='FromEmpl' name="ReplaceMaster[FromEmpl]"></div><?php echo $form->error($model, 'FromEmpl'); ?></div>
+            <div class="row-column">Имя: </div><div class="row-column"><div id='FromEmpl' name="ReplaceMaster[FromEmpl]"></div><?php echo $form->error($model, 'FromEmpl'); ?></div>
         </div>
         <div class="row">
             <div class="row-column">Кол-во объектов на мастере: <input readonly id='FromObjectCount' type="text" style="margin-left: 18px;"></div>
@@ -121,7 +121,7 @@
     </div>
     
     <div class="row" style="padding: 10px; width: 350px; border: 1px solid #ddd; background-color: #F2F2F2;">
-        <div class="row-column" style="margin: 0 0 15px 5px; width: 100%;">Мастер НА которого переводим объекты</div>
+        <div class="row" style="margin: 0 0 15px 5px; width: 100%;">Мастер НА которого переводим объекты</div>
         <div class="row">
             <div class="row-column" style="margin-top: 4px;">Имя: </div><div class="row-column"><div id='ToEmpl' name="ReplaceMaster[ToEmpl]"></div><?php echo $form->error($model, 'ToEmpl'); ?></div>
         </div>
