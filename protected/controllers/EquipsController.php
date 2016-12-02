@@ -234,9 +234,10 @@ class EquipsController extends Controller
 //			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-	public function actionIndex()
-	{
-		$this->render('index');
+	public function actionIndex() {
+            $this->title = 'Оборудование';
+            $this->pageTitle = 'Оборудование';
+            $this->render('index');
 	}
 
 	public function actionAdmin()

@@ -1,24 +1,5 @@
 <?php
 
-/**
- * This is the model class for table "EqipGroups".
- *
- * The followings are the available columns in table 'EqipGroups':
- * @property integer $group_id
- * @property integer $parent_group_id
- * @property string $code
- * @property string $group_name
- * @property string $full_group_name
- * @property boolean $Lock
- * @property integer $EmplLock
- * @property string $DateLock
- * @property integer $EmplCreate
- * @property string $DateCreate
- * @property integer $EmplChange
- * @property string $DateChange
- * @property integer $EmplDel
- * @property string $DelDate
- */
 class EqipGroups extends MainFormModel
 {
 	public $group_id = null;
@@ -48,10 +29,10 @@ class EqipGroups extends MainFormModel
 	{
 		parent::__construct($scenario);
 
-		$select = "Select eg.* ";
-		$from = "From EqipGroups eg ";
-		$where = "Where eg.DelDate Is Null ";
-		$order = "Order By eg.group_name ";
+		$select = "\nSelect eg.*";
+		$from = "\nFrom EqipGroups eg ";
+		$where = "\nWhere eg.DelDate Is Null ";
+		$order = "\nOrder By eg.group_name ";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);
@@ -59,37 +40,14 @@ class EqipGroups extends MainFormModel
 		$this->Query->setWhere($where);
 	}
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
+        public function rules()
 	{
-		return 'EqipGroups';
-	}
-
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('group_name', 'required'),
-			array('parent_group_id, EmplLock, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
-			array('group_name', 'length', 'max'=>50),
-			array('code, Lock, DateLock, DateCreate, DateChange, DelDate', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('group_id, parent_group_id, code, group_name, full_group_name, Lock, EmplLock, DateLock, EmplCreate, DateCreate, EmplChange, DateChange, EmplDel, DelDate', 'safe', 'on'=>'search'),
-		);
+            return array(
+                array('group_id, parent_group_id, code, group_name, full_group_name', 'safe', 'on'=>'search'),
+            );
 	}
 
 
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
 	public function attributeLabels()
 	{
 		return array(
@@ -109,26 +67,5 @@ class EqipGroups extends MainFormModel
 			'DelDate' => 'Del Date',
 		);
 	}
-
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return EqipGroups the static model class
-	 */
-	 public function deleteCount($id, $empl_id) {
-	 
-		$Command = Yii::app()->db->createCommand(''
-                . "UPDATE EqipGroups SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE group_id = {$id}
-                ");
-        
-        return $Command->queryAll();
-	}
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
-
 	
 }
