@@ -54,8 +54,6 @@ class ContractM extends MainFormModel
                         and og.DelDate is null
                         and c.DocType_id in (3, 4, 5, 8)";
 
-//        $order = "\nOrder ";
-
         // Инициализация первичного ключа
         $this->KeyFiled = 'c.ContrS_id';
         $this->PrimaryKey = 'ContrS_id';
@@ -63,7 +61,6 @@ class ContractM extends MainFormModel
         $this->Query->setSelect($select);
         $this->Query->setFrom($from);
         $this->Query->setWhere($where);
-//        $this->Query->setOrdessr($order);
     }
 
 
