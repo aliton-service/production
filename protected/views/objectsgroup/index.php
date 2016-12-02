@@ -93,7 +93,7 @@
             $("#DoorwayList").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
             $("#CountPorch").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
             $("#ClientGroup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
-            $("#Journal").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
+            $("#Journal").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 90, formatString: 'dd.MM.yyyy', readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
             $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
             
             $("#Refusers").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 250}));
@@ -137,7 +137,7 @@
             if (ObjectGroup.DoorwayList !== '') $("#DoorwayList").jqxInput('val', ObjectGroup.DoorwayList);
             if (ObjectGroup.CountPorch !== '') $("#CountPorch").jqxInput('val', ObjectGroup.CountPorch);
             if (ObjectGroup.ClientGroup !== '') $("#ClientGroup").jqxInput('val', ObjectGroup.ClientGroup);
-            if (ObjectGroup.Journal !== '') $("#Journal").jqxInput('val', ObjectGroup.Journal);
+            if (ObjectGroup.Journal !== '') $("#Journal").jqxDateTimeInput('val', ObjectGroup.Journal);
             if (ObjectGroup.PostalAddress !== '') $("#PostalAddress").jqxInput('val', ObjectGroup.PostalAddress);
             if (ObjectGroup.Refusers !== '') $("#Refusers").jqxTextArea('val', ObjectGroup.Refusers);
             if (ObjectGroup.Note !== '') $("#Note").jqxTextArea('val', ObjectGroup.Note);
@@ -448,7 +448,7 @@ $this->breadcrumbs=array(
                 <div class="al-row-column">Сегмент:</div>
                 <div class="al-row-column"><input readonly type="text" id="ClientGroup"></div>
                 <div class="al-row-column">Журнал:</div>
-                <div class="al-row-column"><input readonly type="text" id="Journal"></div>
+                <div class="al-row-column"><div id="Journal"></div></div>
                 <div style="clear: both"></div>
             </div>
             <div class="al-row">

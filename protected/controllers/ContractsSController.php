@@ -35,7 +35,7 @@ class ContractsSController extends Controller
     {
             return array(
                     array('allow',  // allow all users to perform 'index' and 'view' actions
-                        'actions' => array('index', 'view', 'equipAnalog'),
+                        'actions' => array('index', 'view', 'find'),
                         'roles' => array('ViewContractsS'),
                     ),
                     array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -49,10 +49,6 @@ class ContractsSController extends Controller
                     array('allow', // allow admin user to perform 'admin' and 'delete' actions
                         'actions' => array('delete'),
                         'roles' => array('DeleteContractsS'),
-                    ),
-                    array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                        'actions' => array('find'),
-                        'roles' => array('actionFindContractsS'),
                     ),
                     array('deny',  // deny all users
                         'users' => array('*'),
@@ -163,6 +159,8 @@ class ContractsSController extends Controller
 
     public function actionFind()
     {
+        $this->title = 'Поиск счетов/договоров';
+        $this->setPageTitle('Поиск счетов/договоров');
         $this->render('find', array());
     }
 }

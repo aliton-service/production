@@ -4070,3 +4070,27 @@ Sources.SourceCostCalculations_v =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceContractM =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ContrS_id', type: 'int'},
+        {name: 'ContrDateS', type: 'date'},
+        {name: 'ContrNumS', type: 'string'},
+        {name: 'DocType_Name', type: 'string'},
+        {name: 'ContrSDateStart', type: 'date'},
+        {name: 'ContrSDateEnd', type: 'date'},
+        {name: 'Addr', type: 'string'},
+        {name: 'Price', type: 'float'},
+    ],
+    id: 'ContrS_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=ContractM',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

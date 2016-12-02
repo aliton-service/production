@@ -38,7 +38,7 @@
         );
         var summaryData = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
         
-        $("#GridSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#GridSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         if (summaryData.sum != '') $("#GridSum").jqxNumberInput('val', summaryData.sum);
         
         $("#CDetailsGrid").on('rowselect', function (event) {
