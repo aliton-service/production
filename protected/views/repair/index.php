@@ -101,6 +101,11 @@
         $('#btnExport').jqxButton({ width: 120, height: 30 });
         $('#btnDel').jqxButton({ width: 150, height: 30 });
         $('#btnUndo').jqxButton({ width: 150, height: 30 });
+        $('#btnExport').jqxButton({ width: 150, height: 30 });
+        
+        $('#btnExport').on('click', function() {
+                $("#RepairsGrid").jqxGrid('exportdata', 'xls', 'Ремонт', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+            });
         
         $('#btnRefresh').on('click', function(){
            $('#edFiltering').click(); 
@@ -205,6 +210,7 @@
             <div style="height: 36px">
                 <div style="float: left; margin-right: 6px;"><input type="button" id="btnRefresh" value="Обновить"/></div>
                 <div style="float: left"><input type="button" id="btnExport" value="Экспорт"/></div>
+                
             </div>
         </div>    
     </div>
