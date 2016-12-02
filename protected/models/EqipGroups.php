@@ -29,10 +29,15 @@ class EqipGroups extends MainFormModel
 	{
 		parent::__construct($scenario);
 
-		$select = "\nSelect eg.*";
+		$select = "\nSelect
+                                eg.group_id,
+                                eg.parent_group_id,
+                                eg.code,
+                                eg.group_name,
+                                eg.full_group_name";
 		$from = "\nFrom EqipGroups eg ";
 		$where = "\nWhere eg.DelDate Is Null ";
-		$order = "\nOrder By eg.group_name ";
+		$order = "\nOrder By eg.code ";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);

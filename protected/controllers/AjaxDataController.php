@@ -59,6 +59,9 @@ class AjaxDataController extends Controller
         if (isset($_POST['Filters']))
             array_push($InternalFilters, $_POST['Filters'][0]);
         
+        if (isset($_GET['Filters']))
+            array_push($InternalFilters, $_GET['Filters'][0]);
+        
         $Sort = array();
         
         $where = '';

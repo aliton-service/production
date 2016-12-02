@@ -52,7 +52,7 @@ class EquipsController extends Controller
 				),
 			),
                         array('allow', 
-				'actions' => array('EquipInfo', 'GetInvInfo', 'Inventory', 'Reserve'),
+				'actions' => array('EquipInfo', 'EquipInfoStorage', 'GetInvInfo', 'Inventory', 'Reserve'),
 				'users' => array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -90,6 +90,33 @@ class EquipsController extends Controller
                 $Info['Quant'] = $Result['quant'];
                 $Info['QuantUsed'] = $Result['quant_used'];
                 $Info['QuantReserv'] = $Result['quant_reserv'];
+                $Info['Check'] = 1;
+            }
+            echo json_encode($Info);
+        }
+        
+        public function actionEquipInfoStorage() {
+            $Info = array(
+                'Check' => 0,
+                'Quant' => 0,
+                'QuantUsed' => 0,
+                'QuantReserv' => 0,
+            );
+            
+            if (isset($_POST['Equip_id'])) {
+                $Query = new SQLQuery();
+                $Query->setSelect("\nSelect
+                                        dbo.get_wh_inventory(t.eqip_id, getdate(), 0, 1) quant,
+                                        dbo.get_wh_inventory(t.eqip_id, getdate(), 1, 1) quant_used,
+                                        dbo.get_wh_inventory(t.eqip_id, getdate(), 0, 2) quant2,
+                                        dbo.get_wh_inventory(t.eqip_id, getdate(), 1, 2) quant_used2
+                                        ");
+                $Query->setWhere("\nFrom (Select " . $_POST['Equip_id'] . " as eqip_id) t");
+                $Result = $Query->QueryRow();
+                $Info['Storage1Quant'] = $Result['quant'];
+                $Info['Storage1QuantUsed'] = $Result['quant_used'];
+                $Info['Storage2Quant'] = $Result['quant2'];
+                $Info['Storage2QuantUsed'] = $Result['quant_used2'];
                 $Info['Check'] = 1;
             }
             echo json_encode($Info);
