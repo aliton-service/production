@@ -4090,7 +4090,7 @@ Sources.SourceContractM =
     cache: false,
     async: false,
     pagenum: 0,
-    pagesize: 200,
+    pagesize: 500,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }

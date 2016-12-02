@@ -1,17 +1,14 @@
 <script type="text/javascript">
         $(document).ready(function () {
             
-            $("#DocNumber").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
-            $("#DocSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 150, decimalDigits: 2, symbol: "р", symbolPosition: 'right' }));
-            
             var DataContractM = new $.jqx.dataAdapter(Sources.SourceContractM);
             
             $("#ContractMGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
-                pagesize: 200,
+                pagesize: 500,
                 showfilterrow: true,
-                virtualmode: false,
+                filterable: true,
                 width: '98%',
                 height: '99%',
                 source: DataContractM,
@@ -27,11 +24,6 @@
         });
 </script> 
 
-<div class="row" style="margin: 0;">
-    <div class="row-column">Номер: <input type="text" id="DocNumber"></div>
-    <div class="row-column" style="padding-top: 3px;">Сумма: </div><div class="row-column"><div id="DocSum"></div></div>
-</div>
-
-<div style="height: calc(100% - 40px);" class="row">
+<div style="height: 100%;">
     <div id="ContractMGrid" class="jqxGridAliton"></div>
 </div>
