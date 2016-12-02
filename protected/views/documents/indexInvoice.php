@@ -93,7 +93,7 @@
                 'ReportName' => '/Договора/Счет',
                 'Ajax' => false,
                 'Render' => true,
-            ))); ?> + '&Parameters[ContrS_id]=' + CurrentContract.ContrS_id + '&Parameters[Jrdc_id]=' + CurrentContract.Jrdc_id + '&Parameters[PropForm_id]=' + CurrentContract.PropForm_id);
+            ))); ?> + '&Parameters[ContrS_id]=' + CurrentContract.ContrS_id);
         });
         
         $("#CheckupContract").on('click', function () {

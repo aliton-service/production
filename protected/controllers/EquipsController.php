@@ -166,40 +166,32 @@ class EquipsController extends Controller
 		));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
 	public function actionCreate()
 	{
-		$model = new Equips;
+            $model = new Equips();
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['Equips'])) {
+                $model->attributes = $_POST['Equips'];
+                if ($model->validate()) {
+                    $Res = $model->Insert();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $Res['Equip_id'];
+                    echo json_encode($ObjectResult);
+                    return;
+                } 
+            }
 
-		if (isset($_POST['Equips'])) {
-			$model->attributes = $_POST['Equips'];
-			$model->EmplCreate = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->insert();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о оборудовании успешно создана'))));
-				} else {
-					$this->redirect('/?r=Equips');
-				}
-			}
-		}
-		if ($this->isAjax()) {
-			$this->renderPartial('create', array('model' => $model), false, true);
-		} else {
-			$this->render('create', array('model' => $model));
-		}
-
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
 	public function actionUpdate($id)
 	{
 		$model = new Equips;
@@ -234,11 +226,6 @@ class EquipsController extends Controller
 
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
 	public function actionDelete($id)
 	{
 		//$this->loadModel($id)->delete();
@@ -254,11 +241,6 @@ class EquipsController extends Controller
 			$this->redirect('/?r=Equips');
 		}
 
-//		$model->deleteCount($id, Yii::app()->user->Employee_id);
-//
-//		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-//		if (!isset($_GET['ajax']))
-//			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
 	public function actionIndex() {

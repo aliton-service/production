@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var EquipsInfo = {};
     $(document).ready(function () {
         var Change = false;
         var CurrentRowData;
@@ -9,12 +10,9 @@
         var DataTreeEquipGroups = DataEquipGroups.getRecordsHierarchy('group_id', 'parent_group_id', 'items', [{name: 'group_id', map: 'value'}, { name: 'group_name', map: 'label'}]);
         $('#EquipGroupsGrid').jqxTree($.extend({}, TreeDefaultSettings, { source: DataTreeEquipGroups, height: 'calc(100% - 2px)', width: 'calc(100% - 2px)'}));
         
-        
         var items = $('#EquipGroupsGrid').jqxTree('getItems');
         $("#EquipGroupsGrid").jqxTree('expandItem', items[0]);
         $('#EquipGroupsGrid').jqxTree('selectItem', items[0]);
-        
-        
         
         var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEquips, {
             filter: function () {
@@ -25,7 +23,7 @@
             },
         }));
         
-        var GetInventory = function(Equip_id) {
+        EquipsInfo.GetInventory = function(Equip_id) {
             if (Equip_id == CurrentRowData.Equip_id) 
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('Equips/EquipInfoStorage')); ?>,
@@ -40,7 +38,6 @@
                         $("#edStorage1InvQuantUsed").val(Res.Storage1QuantUsed);
                         $("#edStorage2InvQuant").val(Res.Storage2Quant);
                         $("#edStorage2InvQuantUsed").val(Res.Storage2QuantUsed);
-                        console.log(Res);
                     }
                 });
         };
@@ -49,7 +46,7 @@
             CurrentRowData = $('#EquipsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (CurrentRowData != undefined) {
                 $("#edDescription").jqxInput('val', CurrentRowData.Description); 
-                window.setTimeout(GetInventory(CurrentRowData.Equip_id), 5000);
+                window.setTimeout("EquipsInfo.GetInventory(" + CurrentRowData.Equip_id + ")", 600);
             }
         });
         
@@ -115,6 +112,29 @@
         $("#edStorage2InvQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
         $("#edStorage2InvQuantUsed").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
         $("#edDescription").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'}));
+        
+        $("#btnAddEquip").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
+        $("#btnEditEquip").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
+        $("#btnHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
+        $("#btnMerge").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
+        
+        $("#btnAddEquip").on('click', function() {
+            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 600, height: 260, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Equips/Create')); ?>,
+                type: 'POST',
+                async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyEquipsDialog").html(Res.html);
+                    $('#EquipsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
         var Refresh = function() {
             var CurrentItem = $("#EquipGroupsGrid").jqxTree('getSelectedItem');
             var Code = '';
@@ -173,7 +193,20 @@
     <div style="clear: both;"></div>
 </div>
 <div class="al-row">
+    <div class="al-row-column"><input type="button" id="btnAddEquip" value="Добавить"/></div>
+    <div class="al-row-column"><input type="button" id="btnEditEquip" value="Изменить"/></div>
     <div class="al-row-column"><input type="button" id="btnRefresh" value="Обновить"/></div>
+    <div class="al-row-column"><input type="button" id="btnHistory" value="История"/></div>
+    <div class="al-row-column"><input type="button" id="btnMerge" value="Объединить"/></div>
     <div style="clear: both;"></div>
+</div>
+
+<div id="EquipsDialog" style="display: none;">
+    <div id="EquipsDialogHeader">
+        <span id="EquipsHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogEquipsContent">
+        <div style="" id="BodyEquipsDialog"></div>
+    </div>
 </div>
 
