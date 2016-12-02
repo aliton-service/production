@@ -274,7 +274,7 @@
                     
                     $("#CommonEquipsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 'calc(100% - 55px)',
+                            height: 'calc(100% - 2px)',
                             width: '100%',
                             showfilterrow: false,
                             autoshowfiltericon: true,
@@ -329,7 +329,7 @@
             }
         };
         
-        $('#EquipTabs').jqxTabs({ width: 'calc(100% - 10px)', height: 'calc(100% - 280px)',  initTabContent: initWidgets });
+        $('#EquipTabs').jqxTabs({ width: 'calc(100% - 10px)', height: 'calc(100% - 2px)',  initTabContent: initWidgets });
         
         $("#ObjectsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
@@ -400,57 +400,60 @@
     <div class="row-column"><input type="button" value="Изменить" id='btnEditObject' /></div>
     <div class="row-column"><input type="button" value="Удалить" id='btnDelObject' /></div>
 </div>
-<div class="row">
-    <div id='jqxWidget'>
-        <div id='EquipTabs'>
-            <ul>
-                <li>
-                    <div style="height: 15px; margin-top: 3px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                            Оборудование на подъезде
-                        </div>
+<div class="row" style="height: calc(100% - 288px)">
+    
+    <div id='EquipTabs'>
+        <ul>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Оборудование на подъезде
                     </div>
-                </li>
-                <li>
-                    <div style="height: 15px; margin-top: 3px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                            Оборудование на доме
-                        </div>
+                </div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Оборудование на доме
                     </div>
-                </li>
-            </ul>
-            <div id='content1' style="overflow: hidden; margin-left: 10px;">
-                <div style="overflow: hidden; width: 100%; height: calc(100%)">
-                    <div class="row" style="height: calc(100% - 54px)">
-                        <div id="ObjectEquipsGrid" class="jqxGridAliton"></div>
-                        <div style="clear: both;"></div>
-                    </div>
-                    <div class="row" style="margin-top: 3px;">
-                        <div class="row-column"><input type="button" value="Добавить" id='btnAddEquip' /></div>
-                        <div class="row-column"><input type="button" value="Изменить" id='btnEditEquip' /></div>
-                        <div class="row-column"><input type="button" value="Удалить" id='btnDelEquip' /></div>
-                        <div style="clear: both;"></div>
-                    </div>
+                </div>
+            </li>
+        </ul>
+        <div id='content1' style="overflow: hidden; margin-left: 10px; height: calc(100% - 2px)">
+            <div style="overflow: hidden; width: 100%; height: calc(100% - 2px)">
+                <div class="row" style="height: calc(100% - 54px)">
+                    <div id="ObjectEquipsGrid" class="jqxGridAliton"></div>
                     <div style="clear: both;"></div>
                 </div>
-            </div>
-            <div id='content2' style="overflow: hidden; margin-left: 10px;">
-                <div style="overflow: hidden; width: 100%">
-                    <div class="row">
-                            <div id="CommonEquipsGrid" class="jqxGridAliton"></div>
-                    </div>
-                    <div class="row" style="margin-top: 3px;">
-                        <div class="row-column"><input type="button" value="Добавить" id='btnAddCommonEquip' /></div>
-                        <div class="row-column"><input type="button" value="Изменить" id='btnEditCommonEquip' /></div>
-                        <div class="row-column"><input type="button" value="Удалить" id='btnDelCommonEquip' /></div>
-                    </div>
+                <div class="row" style="margin-top: 3px;">
+                    <div class="row-column"><input type="button" value="Добавить" id='btnAddEquip' /></div>
+                    <div class="row-column"><input type="button" value="Изменить" id='btnEditEquip' /></div>
+                    <div class="row-column"><input type="button" value="Удалить" id='btnDelEquip' /></div>
+                    <div style="clear: both;"></div>
                 </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+        <div id='content2' style="overflow: hidden; margin-left: 10px; height: calc(100% - 2px)">
+            <div style="overflow: hidden; height: calc(100% - 2px);">
+                <div class="row" style="height: calc(100% - 54px)">
+                    <div id="CommonEquipsGrid" class="jqxGridAliton"></div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="row" style="margin-top: 3px;">
+                    <div class="row-column"><input type="button" value="Добавить" id='btnAddCommonEquip' /></div>
+                    <div class="row-column"><input type="button" value="Изменить" id='btnEditCommonEquip' /></div>
+                    <div class="row-column"><input type="button" value="Удалить" id='btnDelCommonEquip' /></div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div style="clear: both;"></div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="EditObjectDialog">
+
+<div id="EditObjectDialog" style="display: none;">
     <div id="DialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>
@@ -465,7 +468,7 @@
     </div>
 </div>
 
-<div id="EditObjectEquipDialog">
+<div id="EditObjectEquipDialog" style="display: none;">
     <div id="DialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>

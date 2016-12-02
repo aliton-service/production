@@ -188,6 +188,7 @@
 
 <div class="al-row" style="height: calc(100% - 68px)">
     <div id="ObjectsGroupSystemsGrid" class="jqxGridAliton"></div>
+    <div style="clear: both"></div>
 </div>
 
 <div class="al-row">

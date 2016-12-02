@@ -137,7 +137,7 @@
                 statusbarheight: 25,
                 groupsrenderer: groupsrenderer,
                 width: '100%',
-                height: 'calc(100% - 150px)',
+                height: 'calc(100% - 2px)',
                 showgroupsheader: false,
                 source: CostCalculationsDataAdapter,
                 columns: [
@@ -278,7 +278,7 @@
     }
 </style>
 
-<div class="row">
+<div class="row" style="height: calc(100% - 150px)">
     <div id="CostCalculationsGrid" class="jqxGridAliton"></div>
 </div>
 

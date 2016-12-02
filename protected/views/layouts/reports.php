@@ -24,6 +24,7 @@
                 
                 $('#edRefresh').on('click', function() {
                     var Data = null;
+                    
                     if ($('#Parameters').length>0)
                         Data = $('#Parameters').serialize();
                     
@@ -45,17 +46,33 @@
                 
                 $('#edExportExcel').on('click', function() {
                     var Data = null;
+                    var Params = {};
+                    var Str = '';
+                    Params = <?php if ($_GET['Parameters']) echo json_encode($_GET['Parameters']); else echo jsom_encode(''); ?>;
                     if ($('#Parameters').length>0)
                         Data = $('#Parameters').serialize();
-                    window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportExportXLS')); ?> + '&ReportName=' + ReportName + '&' + Data);
+                    
+                    for (var key in Params) {
+                        Str += '&Parameters[' + key + ']=' + Params[key];
+                    }
+                    
+                    window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportExportXLS')); ?> + '&ReportName=' + ReportName + '&' + Data + Str);
                     
                 });
                 
                 $('#edExportPDF').on('click', function() {
                     var Data = null;
+                    var Params = {};
+                    var Str = '';
+                    Params = <?php if ($_GET['Parameters']) echo json_encode($_GET['Parameters']); else echo jsom_encode(''); ?>;
                     if ($('#Parameters').length>0)
                         Data = $('#Parameters').serialize();
-                    window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportExportPDF')); ?> + '&ReportName=' + ReportName + '&' + Data);
+                    
+                    for (var key in Params) {
+                        Str += '&Parameters[' + key + ']=' + Params[key];
+                    }
+                    
+                    window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportExportPDF')); ?> + '&ReportName=' + ReportName + '&' + Data + Str);
                     
                 });
                 
