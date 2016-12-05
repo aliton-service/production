@@ -50,12 +50,20 @@
             window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id + PropForm_id);
         });
 
-//        $("#ContractMGrid").on('bindingcomplete', function (event) {
-//            $("#ContractMGrid").jqxGrid('selectrow', 0);
-//        });
+        $("#ContractMGrid").on('bindingcomplete', function () {
+            $("#ContractMGrid").jqxGrid('selectrow', 0);
+        });
+        
+        $("#btnOpenObjectGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140}));
+        
+        $("#btnOpenObjectGroup").on('click', function () {
+            window.open('/index.php?r=Objectsgroup/index&ObjectGr_id=' + CurrentRowData.ObjectGr_id);
+        });
     });
 </script> 
 
-<div style="height: 100%;">
+<div style="height: calc(100% - 40px);">
     <div id="ContractMGrid" class="jqxGridAliton"></div>
 </div>
+
+<div class="row" style="margin-top: 7px;"><input type="button" value="Карточка клиента" id='btnOpenObjectGroup' /></div>
