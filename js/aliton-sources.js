@@ -4076,6 +4076,7 @@ Sources.SourceContractM =
     datatype: "json",
     datafields: [
         {name: 'ContrS_id', type: 'int'},
+        {name: 'ObjectGr_id', type: 'int'},
         {name: 'ContrDateS', type: 'date'},
         {name: 'ContrNumS', type: 'string'},
         {name: 'DocType_Name', type: 'string'},

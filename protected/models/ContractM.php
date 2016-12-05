@@ -3,6 +3,7 @@
 class ContractM extends MainFormModel
 {
     public $ContrS_id = null;
+    public $ObjectGr_id = null;
     public $ContrDateS = null;
     public $ContrNumS = null;
     public $DocType_Name = null;
@@ -36,6 +37,7 @@ class ContractM extends MainFormModel
         parent::__construct();
         $select = "\nSelect 
                         c.ContrS_id,
+                        c.ObjectGr_id,
                         c.ContrDateS,
                         c.ContrNumS,
                         dt.DocType_Name,
@@ -69,6 +71,7 @@ class ContractM extends MainFormModel
     {
         return array(
             'ContrS_id' => 'Contr S',
+            'ObjectGr_id' => 'ObjectGr_id',
             'ContrDateS' => 'ContrDateS',
             'ContrNumS' => 'ContrNumS',
             'DocType_Name' => 'DocType_Name',
