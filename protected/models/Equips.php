@@ -41,6 +41,7 @@ class Equips extends MainFormModel
     public $Replacement;
     public $Analogs;
     public $Sets;
+    public $EmplChange;
 
     public $KeyFiled = 'e.Equip_id';
     public $PrimaryKey = 'Equip_id';

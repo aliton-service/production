@@ -118,12 +118,52 @@
         $("#btnHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
         $("#btnMerge").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
         
+        $("#btnHistory").on('click', function() {
+            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 500, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Equips/History')); ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Equip_id: CurrentRowData.Equip_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyEquipsDialog").html(Res.html);
+                    $('#EquipsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
         $("#btnAddEquip").on('click', function() {
-            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 600, height: 260, position: 'center'}));
+            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 780, height: 600, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Equips/Create')); ?>,
                 type: 'POST',
                 async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyEquipsDialog").html(Res.html);
+                    $('#EquipsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
+        $("#btnEditEquip").on('click', function() {
+            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 780, height: 600, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Equips/Update')); ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Equip_id: CurrentRowData.Equip_id, 
+                },
                 success: function(Res) {
                     Res = JSON.parse(Res);
                     $("#BodyEquipsDialog").html(Res.html);

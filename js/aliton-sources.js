@@ -2856,7 +2856,7 @@ Sources.SourceEquipGroupsListMin =
     type: 'POST',
     root: 'Rows',
     cache: false,
-    async: true,
+    async: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
@@ -4167,6 +4167,94 @@ Sources.SourceEquips =
     root: 'Rows',
     cache: false,
     async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceAccountingTypes =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'actp_id', type: 'int'},
+        {name: 'name', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AccountingTypes',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceCategories =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ctgr_id', type: 'int'},
+        {name: 'name', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Categories',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceEquipSubgroups =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'sgrp_id', type: 'int'},
+        {name: 'grp_id', type: 'int'},
+        {name: 'name', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipSubgroups',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceEquipHistory =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'docm_id', type: 'int'},
+        {name: 'dadt_id', type: 'int'},
+        {name: 'dctp_id', type: 'int'},
+        {name: 'date', type: 'date'},
+        {name: 'ac_date', type: 'date'},
+        {name: 'achs_date', type: 'date'},
+        {name: 'number', type: 'string'},
+        {name: 'Addr', type: 'string'},
+        {name: 'MasterName', type: 'string'},
+        {name: 'quant', type: 'float'},
+        {name: 'quant_used', type: 'float'},
+        {name: 'note', type: 'string'},
+        {name: 'SN', type: 'string'}
+        
+    ],
+    id: 'docm_id',
+    url: '/index.php?r=Equips/DocHistory',
+    root: 'Rows',
+    cache: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {

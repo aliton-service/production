@@ -15,16 +15,16 @@ class SuppliersListMin extends MainFormModel
             $this->SP_DELETE_NAME = 'DELETE_Suppliers';
 
             $select = "\nSelect
-                            Supplier_id,
-                            NameSupplier,
-                            FullName";
+                            s.Supplier_id,
+                            s.NameSupplier,
+                            s.FullName";
 
-            $from = "\nFrom Suppliers";
+            $from = "\nFrom Suppliers s";
 
-            $Where = "\nWhere DelDate is Null
-                            and Supplier = 1";
+            $Where = "\nWhere s.DelDate is Null
+                            and s.Supplier = 1";
 
-            $order = "\nOrder by NameSupplier";
+            $order = "\nOrder by s.NameSupplier";
 
             $this->Query->setSelect($select);
             $this->Query->setFrom($from);
@@ -46,7 +46,7 @@ class SuppliersListMin extends MainFormModel
 	public function attributeLabels()
 	{
 		return array(
-                    'Supplier_Id' => 'Supplier',
+                    'Supplier_id' => 'Supplier',
                     'NameSupplier' => 'Name Supplier',
 		);
 	}

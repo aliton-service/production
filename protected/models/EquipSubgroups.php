@@ -42,27 +42,17 @@ class EquipSubgroups extends MainFormModel
 	function __construct($scenario='') {
 		parent::__construct($scenario);
 
-		$select = "Select esg.* ";
-		$from = "From EquipSubgroups esg ";
-		$where = "Where esg.DelDate Is Null ";
-		$order = "Order By esg.name ";
+		$select = "\nSelect esg.* ";
+		$from = "\nFrom EquipSubgroups esg ";
+		$where = "\nWhere esg.DelDate Is Null ";
+		$order = "\nOrder By esg.name ";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);
 		$this->Query->setOrder($order);
 		$this->Query->setWhere($where);
 	}
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'EquipSubgroups';
-	}
-
-	/**
-	 * @return array validation rules for model attributes.
-	 */
+	
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that

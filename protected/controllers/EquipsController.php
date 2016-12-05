@@ -52,7 +52,7 @@ class EquipsController extends Controller
 				),
 			),
                         array('allow', 
-				'actions' => array('EquipInfo', 'EquipInfoStorage', 'GetInvInfo', 'Inventory', 'Reserve'),
+				'actions' => array('EquipInfo', 'EquipInfoStorage', 'DocHistory', 'GetInvInfo', 'Inventory', 'History', 'Reserve'),
 				'users' => array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -192,40 +192,127 @@ class EquipsController extends Controller
 
 	}
 
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-		$model = new Equips;
-		if ($id == null)
-			throw new CHttpException(404, 'Не выбран сотрудник.');
+            $model = new Equips();
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['Equip_id']))
+                $model->getModelPk($_POST['Equip_id']);
 
-//		if (!Yii::app()->LockManager->LockRecord('Equips', $model->tableSchema->primaryKey, $id))
-//			throw new CHttpException(404, 'Запись заблокирована другим пользователем');
+            if (isset($_POST['Equips'])) {
+                $model->getModelPk($_POST['Equips']['Equip_id']);
+                $model->attributes = $_POST['Equips'];
+                if ($model->validate()) {
+                    $model->Update();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->Equip_id;
+                    echo json_encode($ObjectResult);
+                    return;
+                }
+            }
 
-		if($id && (int)$id > 0 && isset($_POST['Equips'])) {
-			$model->attributes = $_POST['Equips'];
-			$model->Equip_id = (int)$id;
-			$model->EmplChange = Yii::app()->user->Employee_id;
-			if ($model->validate()) {
-				$model->update();
-				if ($this->isAjax()) {
-					die(json_encode(array('status' => 'ok', 'data' => array('msg' => 'Запись о оборудовании успешно изменена'))));
-				} else {
-
-					$this->redirect('/?r=Equips');
-				}
-			}
-		} else {
-			$model->getModelPk($id);
-		}
-		if($this->isAjax()) {
-			$this->renderPartial('update', array('model'=>$model), false, true);
-		} else {
-			$this->render('update', array('model'=>$model));
-		}
-
-
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
+        
+        public function actionDocHistory() {
+            $Query = new SQLQuery();
+            $Query->setSelect("Declare @Equip_id int
+                                Set @Equip_id = :#Equip_id 
 
+                                Select
+                                  i.invn_id docm_id,
+                                  id.indt_id dadt_id,
+                                  0 dctp_id,
+                                  i.date date,
+                                  i.date ac_date,
+                                  i.date achs_date,
+                                  '' number,
+                                  '' Addr,
+                                  '' MasterName,
+                                  id.quant,
+                                  id.quant_used,
+                                  '' note,
+                                  '' SN
+                                From Inventories i inner join InventoryDetails id on (i.invn_id = id.invn_id)
+                                Where i.DelDate is null
+                                  and id.DelDate is null
+                                  and id.eqip_id = @Equip_id
+                                Union all
+                                Select
+                                  d.docm_id,
+                                  dt.dadt_id,
+                                  d.dctp_id,
+                                  d.date,
+                                  ah.ac_date,
+                                  case when d.dctp_id <> 4 then d.date else ah.ac_date end achs_date,
+                                  d.number,
+                                  a.AddrF + o.Doorway,
+                                  dbo.FIO(e.EmployeeName) MasterName,
+                                  case when dt.used = 0 then isnull(dt.fact_quant, dt.docm_quant) else 0 end * (CASE WHEN ac.hldr_src_id = 1 THEN -1 ELSE 1 END) quant,
+                                  case when dt.used = 1 then isnull(dt.fact_quant, dt.docm_quant) else 0 end * (CASE WHEN ac.hldr_src_id = 1 THEN -1 ELSE 1 END) quant_used,
+                                  d.note,
+                                  (select case when Min(s.SN) is not null then '(' + Min(s.SN) + ', ...)'
+                                                         else '()' end SN
+                                       from SerialNumbers s
+                                      where s.dadt_id = dt.dadt_id) as SN
+                                From WHDocuments d inner join DocmAchsDetails dt on (d.docm_id = dt.docm_id)
+                                  inner join ActionHistory ah on (d.achs_id = ah.achs_id)
+                                  inner join Actions ac on (ah.actn_code = ac.actn_code)
+                                  left join Objects o on (d.objc_id = o.Object_id)
+                                  left join ObjectsGroup og on (o.ObjectGr_id = og.ObjectGr_id)
+                                  left join Addresses_v a on (a.Address_id = og.Address_id)
+                                  left join Employees_ForObj_v e on (e.Employee_id = case when d.dctp_id <> 4 then ah.mstr_id else d.dmnd_empl_id end)
+                                Where d.DelDate is null
+                                  and dt.DelDate is null
+                                  and (ac.hldr_src_id = 1 or ac.hldr_dst_id = 1)
+                                  and ah.DelDate is null
+                                  and d.dctp_id < 5
+                                  and dt.eqip_id = @Equip_id
+                                Order by achs_date");
+
+            $Variables = array();
+            if (isset($_GET['Variables']))
+                $Variables = $_GET['Variables'];
+
+            foreach ($Variables as $Key => $Value) {
+                $Query->bindParam($Key, $Value);
+            }
+            
+            $Result = $Query->QueryAll();
+            $CountRow = count($Result);
+
+            $Data = array();
+
+            $Data[] = array(
+                'TotalRows' => $CountRow,
+                'Rows' => $Result,
+            );
+            echo json_encode($Data);
+            
+            
+        }
+        
+        public function actionHistory() {
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            
+            if (isset($_POST['Equip_id']))            
+                $ObjectResult['html'] = $this->renderPartial('history', array(
+                    'Equip_id' => $_POST['Equip_id']
+                ), true);
+            echo json_encode($ObjectResult);
+        }
+        
 	public function actionDelete($id)
 	{
 		//$this->loadModel($id)->delete();
