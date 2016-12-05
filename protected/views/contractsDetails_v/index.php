@@ -30,9 +30,9 @@
                 source: ContractsDetails_vDataAdapter,
                 columns: [
                     { text: 'Наименование', dataField: 'ItemName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
-                    { text: 'Количество', dataField: 'Quant', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
-                    { text: 'Цена', dataField: 'price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120, decimalDigits: 2 },
-                    { text: 'Сумма', dataField: 'sum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Кол-во', dataField: 'Quant', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
+                    { text: 'Цена', datafield: 'price', columntype: 'textbox', cellsformat: 'f2', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Сумма', dataField: 'sum', columntype: 'textbox', cellsformat: 'f2', filtercondition: 'STARTS_WITH', width: 120 },
                 ]
             })
         );

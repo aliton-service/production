@@ -131,7 +131,7 @@ class Documents extends MainFormModel
                         discount,', 'safe'),
             );
 	}
-
+        
 	function __construct($scenario='') {
             
             $this->SP_INSERT_NAME = 'INSERT_CONTRACTS';
@@ -198,11 +198,13 @@ class Documents extends MainFormModel
                     c.EmplChange,
                     c.EmplDel,
                     c.UserCheckUp,
+                    og.PropForm_id,
                     isnull(c.discount, 0) discount
             ";
 
             $from = "
             From ContractsS c 
+                left join ObjectsGroup og on (c.ObjectGr_id = og.ObjectGr_id)
                 left join ServiceTypes st on (c.ServiceType_id = st.Servicetype_id)
                 left join Juridicals j on (c.Jrdc_id = j.Jrdc_id)
                 left join ContractMasterHistory ch on (c.ContrS_id = ch.ContrS_id and ch.DelDate is Null and dbo.truncdate(getdate()) between dbo.truncdate(ch.WorkDateStart) and dbo.truncdate(ch.WorkDateEnd))
@@ -283,6 +285,7 @@ class Documents extends MainFormModel
 			'EmplChange' => 'Empl Change',
 			'EmplDel' => 'Empl Del',
 			'UserCheckUp' => 'User Check Up',
+			'PropForm_id' => 'PropForm_id',
 		);
 	}
 

@@ -44,7 +44,7 @@
             var Temp = $('#CEquipsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowData = Temp;
-            } else {CurrentRowData = null};
+            } else {CurrentRowData = null;};
         });
     
         

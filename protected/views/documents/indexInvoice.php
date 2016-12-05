@@ -7,7 +7,7 @@
             ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
             JuridicalPerson: '<?php echo $model->JuridicalPerson; ?>',
             Jrdc_id: '<?php echo $model->Jrdc_id; ?>',
-            PropForm_id: '<?php echo $PropForm_id; ?>',
+            PropForm_id: '<?php echo $model->PropForm_id; ?>',
             ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
             date_doc: Aliton.DateConvertToJs('<?php echo $model->date_doc; ?>'),
             crtp_name: '<?php echo $model->crtp_name; ?>',
