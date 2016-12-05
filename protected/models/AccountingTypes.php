@@ -37,15 +37,15 @@ class AccountingTypes extends MainFormModel
 	{
 		parent::__construct($scenario);
 
-		$select = "Select at.* ";
-		$from = "From AccountingTypes at ";
+		$select = "\nSelect at.* ";
+		$from = "\nFrom AccountingTypes at ";
 		$where = "Where at.DelDate Is Null ";
-		$order = "Order By at.name ";
+		$order = "\nOrder By at.name ";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);
 		$this->Query->setOrder($order);
-		$this->Query->setWhere($where);
+		//$this->Query->setWhere($where);
 	}
 	/**
 	 * @return string the associated database table name

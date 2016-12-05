@@ -48,7 +48,7 @@
                     var Data = null;
                     var Params = {};
                     var Str = '';
-                    Params = <?php if ($_GET['Parameters']) echo json_encode($_GET['Parameters']); else echo jsom_encode(''); ?>;
+                    Params = <?php if (isset($_GET['Parameters'])) echo json_encode($_GET['Parameters']); else echo jsom_encode(''); ?>;
                     if ($('#Parameters').length>0)
                         Data = $('#Parameters').serialize();
                     
@@ -64,7 +64,7 @@
                     var Data = null;
                     var Params = {};
                     var Str = '';
-                    Params = <?php if ($_GET['Parameters']) echo json_encode($_GET['Parameters']); else echo jsom_encode(''); ?>;
+                    Params = <?php if (isset($_GET['Parameters'])) echo json_encode($_GET['Parameters']); else echo jsom_encode(''); ?>;
                     if ($('#Parameters').length>0)
                         Data = $('#Parameters').serialize();
                     
