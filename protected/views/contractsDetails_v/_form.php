@@ -11,7 +11,7 @@
                 CDNote: '<?php echo $model->Note; ?>',
             };
             
-            var DataEquip = new $.jqx.dataAdapter(Sources.SourceListEquipsMin);
+            var DataEquip = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, { async: true }));
             
             $("#Equip").on('bindingComplete', function(){
                 if (ContractsDetails_v.Equip != '') {
@@ -23,7 +23,7 @@
             $("#Equip").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEquip, displayMember: "EquipName", valueMember: "Equip_id", width: 540 }));
             $("#NameUM").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
             $("#Quant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-            $("#price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 140, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+            $("#price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 140, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 2, spinButtons: true }));
             $("#CDNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 650 }));
             
             if (ContractsDetails_v.Name != '') $("#Name").jqxInput('val', ContractsDetails_v.Name);
