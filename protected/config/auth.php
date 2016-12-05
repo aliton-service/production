@@ -988,7 +988,7 @@ return array_merge(
             ),
         ),
         
-        /* Менеджер по логитике */
+        /* Менеджер по логиcтике */
         'LogisticsManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Менеджер по логитике',
@@ -1001,6 +1001,8 @@ return array_merge(
                 'ManagerDeliveryDemands',
                 'ManagerMonitoringDemands',
                 'ManagerPriceMonitoring',
+                'ManagerEquips',
+                'ManagerSuppliers',
             ),
         ),
         
@@ -1014,6 +1016,8 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'ManagerWHDocuments',
+                'ManagerEquips',
+                'ManagerSuppliers',
             ),
         ),
     )
