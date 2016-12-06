@@ -280,7 +280,7 @@ return array_merge(
                 'WHDocumentsReportAll',
                 'WHDocuments1Report',
                 'ManagerEmployees',
-                'ManagerOrganizationStructure',
+                'AdminOrganizationStructure',
             ),
         ),
         
@@ -1003,6 +1003,18 @@ return array_merge(
                 'ManagerPriceMonitoring',
                 'ManagerEquips',
                 'ManagerSuppliers',
+                'ManagerAddressSystems',
+                'ManagerInventories',
+                'UserInventoryDetails',
+                'UserPriceList',
+                'UserPriceListDetails',
+                
+                /* Отчеты */
+                'DeliveryDemandsReportAll',
+                'DeliveryDemandsReport',
+                'DeliveryDemandsBrokenDeadlinesReport',
+                
+                
             ),
         ),
         
@@ -1018,6 +1030,10 @@ return array_merge(
                 'ManagerWHDocuments',
                 'ManagerEquips',
                 'ManagerSuppliers',
+                'ManagerAddressSystems',
+                'ManagerInventories',
+                'UserInventoryDetails',
+                
             ),
         ),
     )

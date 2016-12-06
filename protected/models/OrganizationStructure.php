@@ -19,8 +19,8 @@ class OrganizationStructure extends MainFormModel
     public function rules()
     {
         return array(
-            array('Empl_id', 'required'),
-            array('Empl_id', 'UniqueValidate'),
+            array('Empl_id', 'required', 'on' => 'Insert, Update'),
+            array('Empl_id', 'UniqueValidate', 'on' => 'Insert, Update'),
             array('Structure_id,
                     Parent_id,
                     Empl_id,
@@ -31,7 +31,7 @@ class OrganizationStructure extends MainFormModel
                     Lock,
                     EmplLock,
                     DateLock,
-                    DelDate,', 'safe'),
+                    DelDate', 'safe', 'on' => 'Insert, Update, DragAndDrop'),
         );
     }
     
