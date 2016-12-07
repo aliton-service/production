@@ -42,28 +42,6 @@
             })
         );
 
-        $("#ControlWHDocumentsGrid").on('rowselect', function (event) {
-            var Temp = $('#ControlWHDocumentsGrid').jqxGrid('getrowdata', event.args.rowindex);
-            if (Temp !== undefined) {
-                CurrentRowData = Temp;
-            } else {CurrentRowData = null;}
-            console.log(CurrentRowData);
-            if (CurrentRowData != undefined) {
-                $("#notes").jqxTextArea('val', GetNotes(CurrentRowData.docm_id));
-                $('#btnNewNote').jqxButton({disabled: false});
-                $('#btnOpenObjectGroup').jqxButton({disabled: false});
-            }
-        });
-        
-        
-        $('#ControlWHDocumentsGrid').on('rowdoubleclick', function () {
-            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id + PropForm_id);
-        });
-
-        $("#ControlWHDocumentsGrid").on('bindingcomplete', function () {
-            $("#ControlWHDocumentsGrid").jqxGrid('selectrow', 0);
-        });
-        
         var GetNotes = function(Docm_id) {
             var Result = '';
             if (Docm_id != undefined) {
@@ -84,6 +62,29 @@
             return Result;
         };
         
+        $("#ControlWHDocumentsGrid").on('rowselect', function (event) {
+            var Temp = $('#ControlWHDocumentsGrid').jqxGrid('getrowdata', event.args.rowindex);
+            if (Temp !== undefined) {
+                CurrentRowData = Temp;
+            } else {CurrentRowData = null;}
+//            console.log(CurrentRowData);
+            if (CurrentRowData != undefined) {
+                $("#notes").jqxTextArea('val', GetNotes(CurrentRowData.docm_id));
+                $('#btnNewNote').jqxButton({disabled: false});
+                $('#btnOpenObjectGroup').jqxButton({disabled: false});
+            }
+        });
+        
+        
+        $('#ControlWHDocumentsGrid').on('rowdoubleclick', function () {
+            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id + PropForm_id);
+        });
+
+        $("#ControlWHDocumentsGrid").on('bindingcomplete', function () {
+            $("#ControlWHDocumentsGrid").jqxGrid('selectrow', 0);
+        });
+        
+        
         $("#notes").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 120 }));
         $("#inputNewNote").jqxInput($.extend(true, {}, InputDefaultSettings, { width: '100%' }));
         $("#btnNewNote").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 250, disabled: true }));
@@ -100,10 +101,8 @@
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
-                        console.log('finish0');
                     if (Res.result = 1) {
-                        console.log('finish1');
-                        location.reload();
+                        $("#notes").jqxTextArea('val', GetNotes(CurrentRowData.docm_id));
                     }
                 },
                 error: function(Res){
