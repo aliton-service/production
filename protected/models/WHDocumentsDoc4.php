@@ -244,8 +244,6 @@ class WHDocumentsDoc4 extends MainFormModel
             'dmnd_empl_name' => 'd.dmnd_empl_id',
             'AddressForFind' => 'd.objc_id',
         );
-        
-        
     }
     
     public function attributeSotrs() {
