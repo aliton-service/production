@@ -283,7 +283,7 @@ return array_merge(
                 'WHDocumentsReportAll',
                 'WHDocuments1Report',
                 'ManagerEmployees',
-                'ManagerOrganizationStructure',
+                'AdminOrganizationStructure',
             ),
         ),
         
@@ -992,7 +992,7 @@ return array_merge(
             ),
         ),
         
-        /* Менеджер по логитике */
+        /* Менеджер по логиcтике */
         'LogisticsManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Менеджер по логитике',
@@ -1005,6 +1005,20 @@ return array_merge(
                 'ManagerDeliveryDemands',
                 'ManagerMonitoringDemands',
                 'ManagerPriceMonitoring',
+                'ManagerEquips',
+                'ManagerSuppliers',
+                'ManagerAddressSystems',
+                'ManagerInventories',
+                'UserInventoryDetails',
+                'UserPriceList',
+                'UserPriceListDetails',
+                
+                /* Отчеты */
+                'DeliveryDemandsReportAll',
+                'DeliveryDemandsReport',
+                'DeliveryDemandsBrokenDeadlinesReport',
+                
+                
             ),
         ),
         
@@ -1018,6 +1032,12 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'ManagerWHDocuments',
+                'ManagerEquips',
+                'ManagerSuppliers',
+                'ManagerAddressSystems',
+                'ManagerInventories',
+                'UserInventoryDetails',
+                
             ),
         ),
     )

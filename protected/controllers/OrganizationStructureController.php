@@ -60,16 +60,20 @@ class OrganizationStructureController extends Controller
             $this->title = 'Создание новой организации';
             $model = new OrganizationStructure();
             
+            $model->setScenario('Insert');
+            
             $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
             
+            
+            
             if(isset($_POST['OrganizationStructure'])) {
                 $model->attributes=$_POST['OrganizationStructure'];
                 $model->EmplCreate = Yii::app()->user->Employee_id;
-
+                
                 if ($model->validate()) {
                     $Res = $model->insert();
                     $ObjectResult['result'] = 1;
@@ -88,6 +92,8 @@ class OrganizationStructureController extends Controller
 	public function actionDragAndDrop() {
             $model = new OrganizationStructure();
             
+            $model->setScenario('DragAndDrop');
+            
             $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
@@ -99,11 +105,12 @@ class OrganizationStructureController extends Controller
                 $model->getModelPk($_POST['OrganizationStructure']['Structure_id']);
                 $model->Parent_id = $_POST['OrganizationStructure']['Parent_id'];
                 $model->EmplChange = Yii::app()->user->Employee_id;
-
+                
                 if ($model->validate()) {
                     $model->update();
                     $ObjectResult['result'] = 1;
                     $ObjectResult['id'] = $model->Structure_id;
+                    
                     echo json_encode($ObjectResult);
                     return;
                 }
@@ -116,6 +123,7 @@ class OrganizationStructureController extends Controller
 	public function actionUpdate()
 	{
             $model = new OrganizationStructure();
+            $model->setScenario('Update');
             
             $ObjectResult = array(
                 'result' => 0,
@@ -127,7 +135,7 @@ class OrganizationStructureController extends Controller
             {
                 $model->attributes=$_POST['OrganizationStructure'];
                 $model->EmplChange = Yii::app()->user->Employee_id;
-
+                
                 if ($model->validate()) {
                     $model->update();
                     $ObjectResult['result'] = 1;

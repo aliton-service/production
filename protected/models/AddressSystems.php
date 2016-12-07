@@ -43,10 +43,10 @@ class AddressSystems extends MainFormModel
 
 	function __construct($scenario='') {
 		parent::__construct($scenario);
-		$select = "Select a.* ";
-		$from = "From AddressSystems a ";
-		$where = "Where a.DelDate Is Null ";
-		$order = "Order By a.AddressSystem ";
+		$select = "\nSelect a.* ";
+		$from = "\nFrom AddressSystems a ";
+		$where = "\nWhere a.DelDate Is Null ";
+		$order = "\nOrder By a.AddressSystem ";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);

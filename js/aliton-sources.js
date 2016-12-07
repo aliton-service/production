@@ -4262,6 +4262,24 @@ Sources.SourceEquipHistory =
     }
 };
 
+Sources.SourceAddressSystems =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'AddressSystem_id', type: 'int'},
+        {name: 'AddressSystem', type: 'string'}
+    ],
+    id: 'AddressSystem_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AddressSystems',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 Sources.SourceControlWHDocuments =
 {
     datatype: "json",
