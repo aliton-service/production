@@ -1079,6 +1079,44 @@ return array_merge(
                 'ManagerPaymentHistory',
             ),
         ),
+        
+        
+        /* Руководитель отдела маркетинга */
+        'HeadMarketing' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель отдела маркетинга',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'SeniorDispatcher',
+            ),
+        ),
+        
+        /* Менеджер по маркетингу */
+        'MarketingManager' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Менеджер по маркетингу',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+            ),
+        ),
+        
+        /* Интернет-маркетолог */
+        'InternetMarketer' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Интернет-маркетолог',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+            ),
+        ),
     )
 );
 
