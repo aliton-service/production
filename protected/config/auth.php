@@ -1044,6 +1044,45 @@ return array_merge(
                 
             ),
         ),
+        
+        /* Главный бухгалтер */
+        'AccountantGeneral' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Главный бухгалтер',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'ManagerPaymentHistory',
+            ),
+        ),
+        
+        /* Бухгалтер */
+        'Accountant' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Бухгалтер',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'ManagerPaymentHistory',
+            ),
+        ),
+        
+        /* Экономист-бухгалтер */
+        'EconomistAccountant' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Экономист-бухгалтер',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'ManagerPaymentHistory',
+            ),
+        ),
     )
 );
 
