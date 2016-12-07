@@ -127,7 +127,7 @@ class ControlWHDocuments extends MainFormModel
         );
     }
     
-    function attributeFilters()
+    public function attributeFilters()
     {
         return array(
             'dmnd_empl_name' => 'e.EmployeeName',
