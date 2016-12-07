@@ -100,6 +100,12 @@ class ReportsController extends Controller
     }
     
     public function GetViewForReport($ReportName = '') {
+        if ($ReportName == '/Склад/Приход на склад от поставщиков')
+            return 'wh_report3';
+        if ($ReportName == '/Склад/Приход на склад от поставщиков (детальный)')
+            return 'wh_report3';
+        if ($ReportName == '/Склад/Приход товара за период')
+            return 'wh_report3';
         if ($ReportName == '/Склад/Выданное оборудование (детальный)')
             return 'wh_report1';
         if ($ReportName == '/Склад/Оборудование числящееся за мастерами')
