@@ -93,6 +93,24 @@
             'bizRule' => null,
             'data' => null,
         ),
+        'WHDocuments3Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Приход на склад от поставщиков',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'WHDocuments4Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Приход на склад от поставщиков (детальный)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'WHDocuments5Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Приход товара за период',
+            'bizRule' => null,
+            'data' => null,
+        ),
         
         /* Кадры */
         'EmployeesReportAll' => array(

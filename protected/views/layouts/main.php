@@ -295,6 +295,18 @@
                                     ),
                                 )),
                                 array('label'=>'Склад', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('WHDocumentsReportAll'), 'items'=>array(
+                                    array('label' => 'Приход на склад от поставщиков',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Приход на склад от поставщиков', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments3Report')
+                                    ),
+                                    array('label' => 'Приход на склад от поставщиков (детальный)',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Приход на склад от поставщиков (детальный)', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments4Report')
+                                    ),
+                                    array('label' => 'Приход товара за период',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Приход товара за период', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments5Report')
+                                    ),
                                     array('label' => 'Выданное оборудование (детальный)',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Выданное оборудование (детальный)', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
@@ -303,6 +315,7 @@
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Оборудование числящееся за мастерами', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
                                     ),
+                                    
                                 )),
                                 array('label'=>'Кадры', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('EmployeesReportAll'), 'items'=>array(
                                     array('label' => 'Сотрудники',

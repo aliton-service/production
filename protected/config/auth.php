@@ -475,6 +475,10 @@ return array_merge(
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
+                'WHDocumentsReportAll',
+                'WHDocuments3Report',
+                'WHDocuments4Report',
+                'WHDocuments5Report',
                 'WHDocuments1Report',
                 'Employee1Report',
                 'Employee2Report',
