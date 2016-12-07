@@ -24,30 +24,23 @@
                 columns: [
                     { text: 'Тип документа', dataField: 'DocType_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
                     { text: 'Дата', dataField: 'ContrDateS', columntype: 'textbox', filtercondition: 'STARTS_WITH', cellsformat: 'dd.MM.yyyy', width: 100 },
-                    { text: 'Номер', dataField: 'ContrNumS', columntype: 'textbox', filtercondition: 'STARTS_WITH', cellsformat: 'dd.MM.yyyy', width: 120 },
+                    { text: 'Номер', dataField: 'ContrNumS', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
                     { text: 'Адрес', dataField: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 350 },
                     { text: 'Начисления', dataField: 'Price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
                 ]
             })
         );
 
-        var PropForm_id = '';
         $("#ContractMGrid").on('rowselect', function (event) {
             var Temp = $('#ContractMGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (Temp !== undefined) {
                 CurrentRowData = Temp;
-            } else {CurrentRowData = null;};
-            console.log(CurrentRowData);
-            if (typeof CurrentRowData['PropForm_id'] != undefined) {
-                PropForm_id = '&PropForm_id=' + CurrentRowData.PropForm_id;
-            } else {
-                PropForm_id = '';
-            }
+            } else {CurrentRowData = null;}
+//            console.log(CurrentRowData);
         });
         
-        
         $('#ContractMGrid').on('rowdoubleclick', function () { 
-            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id + PropForm_id);
+            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id);
         });
 
         $("#ContractMGrid").on('bindingcomplete', function () {

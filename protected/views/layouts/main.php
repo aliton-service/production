@@ -191,6 +191,7 @@
                             array('label'=>'Склад', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('WHDocumentsView'), 'items'=>array(
                                 array('label'=>'Остатки', 'url'=>array('/Inventories/index')),
                                 array('label'=>'Реестр документов', 'url'=>array('/WHDocuments/index')),
+                                array('label'=>'Контроль возвратов', 'url'=>array('/ControlWHDocuments/index'), 'visible'=>Yii::app()->user->checkAccess('ViewControlWHDocuments')),
                                 array('label'=>'Наценки', 'url'=>array('/PriceMarkups/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPriceMarkups')),
                                 array('label'=>'Заявки на мониторинг', 'url'=>array('/MonitoringDemands/index'), 'visible'=>Yii::app()->user->checkAccess('ViewMonitoringDemands')),
                                 array('label'=>'Мониторинг цен', 'url'=>array('/priceMonitoring/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPriceMonitoring')),

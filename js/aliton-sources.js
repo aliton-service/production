@@ -4261,3 +4261,37 @@ Sources.SourceEquipHistory =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceControlWHDocuments =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'dadt_id', type: 'int'},
+        {name: 'eqip_id', type: 'int'},
+        {name: 'docm_id', type: 'int'},
+        {name: 'equipname', type: 'string'},
+        {name: 'um_name', type: 'string'},
+        {name: 'quant', type: 'int'},
+        {name: 'used', type: 'bool'},
+        {name: 'Addr', type: 'string'},
+        {name: 'plan_date', type: 'date'},
+        {name: 'demand_id', type: 'int'},
+        {name: 'dmnd_empl_name', type: 'string'},
+        {name: 'ac_date', type: 'date'},
+        {name: 'number', type: 'int'},
+        {name: 'empl_name', type: 'string'},
+        {name: 'deadline', type: 'date'},
+        {name: 'overday', type: 'int'},
+        {name: 'SN', type: 'int'},
+    ],
+    id: 'dadt_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=ControlWHDocuments',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 500,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

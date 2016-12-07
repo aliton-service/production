@@ -224,6 +224,9 @@ return array_merge(
     /* Добавление заявки к приложению */
     include(dirname(__FILE__).'/security/OfferDemandsSecurity.php'),
         
+    /* Контроль возвратов */
+    include(dirname(__FILE__).'/security/ControlWHDocumentsSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -468,6 +471,7 @@ return array_merge(
                 'AdminRepairDocs',
                 'AdminObjectsGroupSystemComplexitys',
                 'AdminOfferDemands',
+                'AdminControlWHDocuments',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

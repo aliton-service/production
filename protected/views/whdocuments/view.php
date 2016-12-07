@@ -91,7 +91,7 @@
         
         var FirstStart = true;
         
-        $('#edNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 50, width: '100%', minLength: 1}));
+        $('#edNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 70, width: '100%', minLength: 1}));
         $("#edMsg").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '100%'}));
         $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, imgSrc: "/images/4.png"}));
         $("#btnOperation").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: false, width: 140, height: 28 }));
@@ -363,8 +363,8 @@
                     SetValueControls(3);
                 break;
                 case 3:
-                    $("#edNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150}));
-                    $("#edDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
+                    $("#edDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy', value: WHDocuments.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 120}));
                     $("#edWorkType4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
                     $("#edPrior4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
                     $("#edStorage4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
@@ -372,14 +372,14 @@
                     $("#edDeadline4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edPromiseDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.DatePromise , readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edAddress4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-                    $("#edRcrsName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 140}));
+                    $("#edRcrsName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 130}));
                     $("#edReceiptDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.ReceiptDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edReceiptNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100}));
-                    $("#edDmndEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
-                    $("#edPromiseEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
-                    $("#edCreateEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 120}));
+                    $("#edDmndEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edPromiseEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
+                    $("#edCreateEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
                     $("#edEmplChangeName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-                    $("#edLastChangeDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', value: WHDocuments.DateChange, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edLastChangeDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', value: WHDocuments.DateChange, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140}));
                     SetValueControls(4);
                 break;
                 case 4:
@@ -992,13 +992,11 @@
     });
 </script>    
 
-
 <style>
     .row {
-        margin-top: 0px;
+        margin-top: 7px;
     }
 </style>
-
 
 <?php
     $this->breadcrumbs=array(
@@ -1008,41 +1006,41 @@
     );
 ?>
 
-<div id='edTabs' style="margin-top: 5px;">
+<div id='edTabs'>
     <ul>
         <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
+            <div style="height: 15px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладная на приход</div>
                 
             </div>
         </li>
         <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
+            <div style="height: 15px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладная на возврат</div>
             </div>
         </li>
         <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
+            <div style="height: 15px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Накладная на возврат поставщику</div>
             </div>
         </li>
         <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
+            <div style="height: 15px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Требование на выдачу</div>
             </div>
         </li>
         <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
+            <div style="height: 15px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение с склада на склад</div>
             </div>
         </li>
         <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
+            <div style="height: 15px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение из ПРЦ на СКЛАД</div>
             </div>
         </li>
         <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
+            <div style="height: 15px; margin-top: 5px;">
                 <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Наклданая во возврат мастеру</div>
             </div>
         </li>
@@ -1136,28 +1134,27 @@
         </div>
     </div>
     <div style="overflow: hidden;">
-        <div style="padding: 10px;">
+        <div style="padding: 0 10px 0;">
             <div class="row">
-                <div class="row-column" style="width: 100px">Номер</div>
+                <div class="row-column">Номер:</div>
                 <div class="row-column"><input type="text" id="edNumber4" readonly="readonly" /></div>
-                <div class="row-column">Дата</div>
+                <div class="row-column">Дата:</div>
                 <div class="row-column"><div id="edDate4"></div></div>
                 <div class="row-column"><b><?php echo $model->status; ?></b></div>
                 <div class="row-column"><b><?php echo $model->state_prchs; ?></b></div>
             </div>
             <div class="row">
-                <div class="row-column" style="width: 100px">Вид работ</div>
+                <div class="row-column">Вид работ:</div>
                 <div class="row-column"><input type="text" id="edWorkType4" readonly="readonly" /></div>
-                <div class="row-column" style="width: 100px">Срочность</div>
+                <div class="row-column">Срочность:</div>
                 <div class="row-column"><input type="text" id="edPrior4" readonly="readonly" /></div>
-                <div class="row-column">Склад</div>
+                <div class="row-column">Склад:</div>
                 <div class="row-column"><input type="text" id="edStorage4" readonly="readonly" /></div>
             </div>
             <div class="row">
-                <div><div class="row-column">Дата получения</div></div>
-                <div style="clear: both"></div>
+                <div><div class="row-column">Дата получения: </div></div>
                 <div>
-                    <div class="row-column" style="width: 100px">Желаемая</div>
+                    <div class="row-column" style="margin-left: 15px;">Желаемая</div>
                     <div class="row-column"><div id="edBestDate4"></div></div>
                     <div class="row-column">Предельная</div>
                     <div class="row-column"><div id="edDeadline4"></div></div>
@@ -1166,29 +1163,27 @@
                 </div>
             </div>
             <div class="row">
-                
-                    
-                        <div class="row-column" style="width: 100px">Адрес объекта</div>
-                        <div class="row-column"><input type="text" id="edAddress4" readonly="readonly" /></div>
-                        <div class="row-column" style="width: 100px">Основание</div>
-                        <div class="row-column"><input type="text" id="edRcrsName4" readonly="readonly" /></div>
-                        <div class="row-column">Дата</div>
-                        <div class="row-column"><div id="edReceiptDate4"></div></div>
-                        <div class="row-column">Номер</div>
-                        <div class="row-column"><input type="text" id="edReceiptNumber4" readonly="readonly" /></div>
+                <div class="row-column" style="width: 100px">Адрес объекта:</div>
+                <div class="row-column"><input type="text" id="edAddress4" readonly="readonly" /></div>
+                <div class="row-column">Основание:</div>
+                <div class="row-column"><input type="text" id="edRcrsName4" readonly="readonly" /></div>
+                <div class="row-column">Дата:</div>
+                <div class="row-column"><div id="edReceiptDate4"></div></div>
+                <div class="row-column">Номер:</div>
+                <div class="row-column"><input type="text" id="edReceiptNumber4" readonly="readonly" /></div>
             </div>
             <div class="row">
-                        <div class="row-column">Затребовал</div>
-                        <div class="row-column"><input type="text" id="edDmndEmplName4" readonly="readonly" /></div>
-                        <div class="row-column">Разрешил</div>
-                        <div class="row-column"><input type="text" id="edPromiseEmplName4" readonly="readonly" /></div>
-                        <div class="row-column">Выписал</div>
-                        <div class="row-column"><input type="text" id="edCreateEmplName4" readonly="readonly" /></div>
+                <div class="row-column">Затребовал:</div>
+                <div class="row-column"><input type="text" id="edDmndEmplName4" readonly="readonly" /></div>
+                <div class="row-column">Разрешил:</div>
+                <div class="row-column"><input type="text" id="edPromiseEmplName4" readonly="readonly" /></div>
+                <div class="row-column">Выписал:</div>
+                <div class="row-column"><input type="text" id="edCreateEmplName4" readonly="readonly" /></div>
             </div>        
             <div class="row">
-                <div class="row-column">Последний изменивший</div>
+                <div class="row-column">Последний изменивший:</div>
                 <div class="row-column"><input type="text" id="edEmplChangeName4" readonly="readonly" /></div>
-                <div class="row-column">Дата посл. изменения</div>
+                <div class="row-column">Дата посл. изменения:</div>
                 <div class="row-column"><div id="edLastChangeDate4"></div></div>
             </div>    
         </div>
@@ -1252,10 +1247,10 @@
         </div>
     </div>
 </div>
-<div class="row" style="padding: 0px 2px 3px 0px">
+<div class="row" style="padding: 0; margin: 0;">
     <div>Примечание</div>    
-    <div><textarea id="edNote" ></textarea></div>
-    <div style="padding-right: 6px;"><input type="text" id="edMsg" /></div>
+    <div style="padding-right: 2px;"><textarea id="edNote" ></textarea></div>
+    <div style="padding-right: 8px;"><input type="text" id="edMsg" /></div>
 </div>
 <div class="row" style="padding: 0px 2px 3px 0px; margin-top: 3px;">
     <div class="row-column">
@@ -1278,10 +1273,10 @@
         <div class="row-column" style="margin-right: 0px;"><input type="button" value="Печать" id='btnPrint' /></div>
     </div>
 </div>
-<div class="row" style="padding: 6px 2px 3px 0px">
+<div class="row" style="padding: 0px 2px 0px 0px">
     <div id="GridDetails"></div>
 </div>
-<div class="row" style="padding: 6px 2px 3px 0px">
+<div class="row" style="padding: 0px 2px 0px 0px">
     <div class="row-column">В наличие на складе: новое:</div>
     <div class="row-column"><div id="edQuant" readonly="readonly"></div></div>
     <div class="row-column">Б\У:</div>
@@ -1295,7 +1290,7 @@
     <div class="row-column">Закупить:</div>
     <div class="row-column"><div id="edPurchase" readonly="readonly"></div></div>
 </div>
-<div class="row" style="padding: 6px 2px 3px 0px">
+<div class="row" style="padding: 0px 2px 0px 0px">
     <div class="row-column"><input type="button" value="Добавить" id='btnAddDetails' /></div>
     <div class="row-column"><input type="button" value="Изменить" id='btnEditDetails' /></div>
     <div class="row-column"><input type="button" value="Обновить" id='btnRefreshDetails' /></div>
@@ -1303,7 +1298,7 @@
     <div class="row-column"><input type="button" value="Наличие" id='btnInfoDetails' /></div>
     <div class="row-column" style="float: right"><input type="button" value="Удалить" id='btnDelDetails' /></div>
 </div>
-<div class="row" style="padding: 6px 2px 3px 0px">
+<div class="row" style="padding: 0px 2px 0px 0px">
     <div class="row-column">
         <div>
             <div class="row-column" style="width: 100px;">Кладовщик</div>

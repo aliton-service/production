@@ -151,6 +151,8 @@ class DemandsController extends Controller
 	public function actionIndex($ajax=false)
 	{
             $Filters2 = array();
+//            $this->title = 'Заявки';
+            $this->setPageTitle('Заявки');
             
             $this->gridFilters = '_filters';
             
