@@ -275,6 +275,12 @@
         $("#btnEditEvent").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
         $("#btnDelEvent").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
         $("#btnPrintEvent").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
+        $("#btnExportClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
+        
+        $('#btnExportClient').on('click', function() {
+            $("#EventsClientsGrid").jqxGrid('exportdata', 'xls', 'Список адресов', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+        });
+        
         $("#btnPrintEvent").on('click', function() {
             window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
                             'ReportName' => '/Графики/Графики',
@@ -419,6 +425,7 @@
     <div class="al-row-column" style="width: calc(100% - 456px)">
         <div class="al-row-column"><input type="button" value="Изменить" id='btnEditEvent' /></div>
         <div class="al-row-column"><input type="button" value="Печать" id='btnPrintEvent' /></div>
+        <div class="al-row-column"><input type="button" value="Экспорт" id='btnExportClient' /></div>
         <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='btnDelEvent' /></div>
     </div>
     <div style="clear: both"></div>
