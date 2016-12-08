@@ -111,6 +111,12 @@
             'bizRule' => null,
             'data' => null,
         ),
+        'WHDocuments6Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Расход товара за период',
+            'bizRule' => null,
+            'data' => null,
+        ),
         
         /* Кадры */
         'EmployeesReportAll' => array(
