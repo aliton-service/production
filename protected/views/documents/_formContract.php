@@ -153,7 +153,7 @@
 <div class="row">
     <div class="row-column" style="padding-top: 3px;">Срок действия с: </div><div class="row-column"><div id="ContrSDateStart3" name="Documents[ContrSDateStart]"></div><?php echo $form->error($model, 'ContrSDateStart'); ?></div>
     <div class="row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd3" name="Documents[ContrSDateEnd]"></div><?php echo $form->error($model, 'ContrSDateEnd'); ?></div>
-    <div class="row-column" style="padding-top: 3px;">Приложение: </div><div class="row-column"><div id="Prolong3" name="Documents[Prolong]" type="checkbox"></div></div>
+    <div class="row-column" style="padding-top: 3px;">Пролонгация: </div><div class="row-column"><div id="Prolong3" name="Documents[Prolong]" type="checkbox"></div></div>
     <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor3" name="Documents[Debtor]" type="checkbox"></div></div>
 </div>
 
