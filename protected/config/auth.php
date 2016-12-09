@@ -1097,6 +1097,7 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'SeniorDispatcher',
+                'AdminContractsDetails_v',
             ),
         ),
         
@@ -1109,6 +1110,7 @@ return array_merge(
             'defaultIndex' => 'object/index',
             'children' => array(
                 'StaffManager',
+                'AdminContractsDetails_v',
             ),
         ),
         
@@ -1121,6 +1123,7 @@ return array_merge(
             'defaultIndex' => 'object/index',
             'children' => array(
                 'StaffManager',
+                'AdminContractsDetails_v',
             ),
         ),
     )
