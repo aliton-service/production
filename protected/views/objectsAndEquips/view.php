@@ -383,7 +383,7 @@
      
 </style>
 
-<div class="al-row">
+<div class="al-row" style="padding: 0;">
     <div class="al-row-column" style="width: 60%">
         <div id="ObjectsGrid" class="jqxGridAliton"></div>
     </div>

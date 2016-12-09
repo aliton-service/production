@@ -112,7 +112,6 @@
         
         $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 570, width: 870}));
         
-    
         $("#EditContract").on('click', function () {
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('Documents/Update');?>",
@@ -157,7 +156,7 @@
         
 </script>
 
-<div class="row">
+<div class="row" style="margin: 0;">
     <div class="row-column">Номер: <input readonly id="ContrNumS7" type="text"></div>
     <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
     <div class="row-column" style="padding-top: 3px;">Дата выполнения работ по акту: </div><div class="row-column"><div id="date_doc" type="text"></div></div>

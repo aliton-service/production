@@ -493,22 +493,22 @@ $this->breadcrumbs=array(
     </div>
 
     <div style="overflow: hidden; height: calc(100% - 2px);">
-        <div id='content2' style="overflow: hidden; padding: 10px; height: calc(100% - 0px)"></div>
+        <div id='content2' style="overflow: hidden; margin: 5px; height: calc(100% - 0px)"></div>
     </div>
 
-    <div id='content3' style="overflow: hidden; margin-left: 10px; height: calc(100% - 2px);">
+    <div id='content3' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
         <div style="width: 100%; height: calc(100% - 2px)"></div>
     </div>
 
-    <div id='content4' style="overflow: hidden; padding: 10px; height: calc(100% - 2px);">
+    <div id='content4' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
         <div style="width: 100%; height: 100%"></div>
     </div>
 
-    <div id='content5' style="overflow: hidden; margin-left: 10px; height: calc(100% - 2px);">
+    <div id='content5' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
         <div style="width: 100%; height: 100%"></div>
     </div>
 
-    <div id='content6' style="overflow: hidden; margin-left: 10px; height: calc(100% - 2px);">
+    <div id='content6' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
         <div style="width: 100%; height: 100%"></div>
     </div>
 </div>

@@ -21,7 +21,7 @@
             $("#month_end").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataMonths, displayMember: "Month_name", valueMember: "Month_id", width: 120, autoDropDownHeight: true }));
             $("#year_start").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
             $("#year_end").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-            $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 260 }));
+            $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '99%', height: 100 }));
             
             $("#BtnOkDialogPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             $("#BtnCancelDialogPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -46,6 +46,7 @@
                         if (Res == '1' || Res == 1) {
                             $('#EditDialogPaymentHistory').jqxWindow('close');
                             $("#PaymentHistoryGrid").jqxGrid('updatebounddata');
+                            $("#PaymentHistoryGrid").jqxGrid('selectrow', 0);
                         } else {
                             $('#BodyDialogPaymentHistory').html(Res);
                         }
@@ -108,18 +109,20 @@
 
 <div class="row"><div class="row-column">Дата платежа: </div><div class="row-column"><div id="date" name="PaymentHistory[date]"><?php echo $form->error($model, 'date'); ?></div></div></div>
 <div class="row"><div class="row-column">Сумма: </div><div class="row-column"><div id="sum" name="PaymentHistory[sum]"><?php echo $form->error($model, 'sum'); ?></div></div></div>
-<div style="padding-bottom: 10px; margin-top: 10px; border: 1px solid #ddd;">
-    <h2 style="font-size: 0.9em; margin: 0 10px 0 5px;">Период оплаты</h2>
-    <div class="row">
-        <div class="row-column">с: </div><div class="row-column"><div id="month_start" name="PaymentHistory[month_start]"><?php echo $form->error($model, 'month_start'); ?></div></div>
+<div style="padding-bottom: 10px; margin-top: 10px; padding: 5px; border: 1px solid #ddd;">
+    <h2 style="font-size: 0.9em; margin: 0 10px 0 0;">Период оплаты:</h2>
+    <div class="row" style="padding-left: 10px;">
+        <div class="row-column">с </div><div class="row-column"><div id="month_start" name="PaymentHistory[month_start]"><?php echo $form->error($model, 'month_start'); ?></div></div>
         <div class="row-column"><div id="year_start" name="PaymentHistory[year_start]"  name="PaymentHistory[year_start]"></div></div>    
     </div>
     <div class="row">
-        <div class="row-column">по: </div><div class="row-column"><div id="month_end" name="PaymentHistory[month_end]"><?php echo $form->error($model, 'month_end'); ?></div></div>
+        <div class="row-column">по </div><div class="row-column"><div id="month_end" name="PaymentHistory[month_end]"><?php echo $form->error($model, 'month_end'); ?></div></div>
         <div class="row-column"><div id="year_end" name="PaymentHistory[year_end]"  name="PaymentHistory[year_end]"></div></div>    
     </div>
 </div>
-<div class="row"><div class="row-column">Примечание: <textarea type="text" id="note" name="PaymentHistory[note]"></textarea></div></div>
+<div class="row" style="width: 100%;">
+    <div class="row-column" style="width: 100%;">Примечание: <textarea type="text" id="note" name="PaymentHistory[note]"></textarea></div>
+</div>
 <div class="al-row">
     <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogPaymentHistory' /></div>
     <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='BtnCancelDialogPaymentHistory' /></div>
