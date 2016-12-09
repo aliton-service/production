@@ -123,6 +123,24 @@
             'bizRule' => null,
             'data' => null,
         ),
+        'WHDocuments8Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Возврат на склад от мастеров (суммарный)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'WHDocuments9Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Возврат на склад от мастеров (детальный)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'WHDocuments10Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Оборудование готовое к выдаче',
+            'bizRule' => null,
+            'data' => null,
+        ),
         
         /* Кадры */
         'EmployeesReportAll' => array(
