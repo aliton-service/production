@@ -61,8 +61,8 @@
                 showaggregates: true,
                 showfilterrow: false,
                 virtualmode: false,
-                width: 'calc(100% - 2px)',
-                height: 'calc(100% - 2px)',
+                width: '100%',
+                height: '100%',
                 source: ContractsSDataAdapter,
                 columns: [
                     { text: 'Вид документа', dataField: 'DocType_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
@@ -322,7 +322,7 @@
                         })
                     );
             
-                    $('#EditDialogContractPriceHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '600'}));
+                    $('#EditDialogContractPriceHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '280px', width: '600'}));
                     
                     $("#NewContractPriceHistory").on('click', function () {
                         if (CurrentRowData == undefined) return;
@@ -438,7 +438,7 @@
                     
                     $("#PaymentHistoryGrid").on('rowselect', function (event) {
                         CurrentRowDataPH = $('#PaymentHistoryGrid').jqxGrid('getrowdata', event.args.rowindex);
-                        if (CurrentRowDataPH.note != '') $("#NotePaymentHistory").jqxTextArea('val', CurrentRowDataPH.note);
+                        if (typeof CurrentRowDataPH.note !== undefined) $("#NotePaymentHistory").jqxTextArea('val', CurrentRowDataPH.note);
                     });
                     
                     $('#PaymentHistoryGrid').on('rowdoubleclick', function () { 
@@ -449,7 +449,7 @@
                     $("#NewPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
                     $("#EditPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
                     $("#DelPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-                    $('#EditDialogPaymentHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '430px', width: '300'}));
+                    $('#EditDialogPaymentHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '400px', width: '400'}));
         
                     
                     $("#PaymentHistoryGrid").jqxGrid(
@@ -642,7 +642,7 @@
     }
 </style>
 
-<div class="al-row" style="height: calc(100% - 396px)">
+<div class="al-row" style="height: calc(100% - 370px); padding: 0;">
     <div id="ContractsGrid" class="jqxGridAliton"></div>
 </div>
 
@@ -756,7 +756,7 @@
                 <div class="row-column" style="width: 280px;">
                     <div style="clear: both"></div>
                     <div class="al-row" style="padding: 0px">Примечание:</div>
-                    <div class="al-row" style="padding: 0px; height: calc(100% - 20px)"><textarea readonly id="NotePaymentHistory"></textarea></div>
+                    <div class="al-row" style="padding: 0px; height: 125px;"><textarea readonly id="NotePaymentHistory"></textarea></div>
                 </div>
                 <div style="clear: both"></div>
             </div>

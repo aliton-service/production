@@ -278,7 +278,7 @@
     }
 </style>
 
-<div class="row" style="height: calc(100% - 150px)">
+<div class="row" style="height: calc(100% - 150px); margin: 0;">
     <div id="CostCalculationsGrid" class="jqxGridAliton"></div>
 </div>
 

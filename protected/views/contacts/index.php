@@ -28,8 +28,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '99%',
-                height: '100%',
+                width: '99.5%',
+                height: '99.5%',
                 source: ContactsDataAdapter,
                 columns: [
                     { text: 'Отдел', columngroup: 'Current', dataField: 'GroupContact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
@@ -226,7 +226,7 @@
      
 </style>
 
-<div class="row" style="height: calc(100% - 270px);">
+<div class="row" style="height: calc(100% - 270px); margin: 0px;">
     <div id="ContactsGrid" class="jqxGridAliton"></div>
 </div>
 <div class="row" style="margin: 0; height: 202px;">
