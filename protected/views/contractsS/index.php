@@ -642,7 +642,7 @@
     }
 </style>
 
-<div class="al-row-label" style="height: calc(100% - 370px);">
+<div class="al-row-label" style="height: calc(100% - 370px); min-height: 200px;">
     <div id="ContractsGrid" class="jqxGridAliton"></div>
 </div>
 

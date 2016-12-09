@@ -500,7 +500,7 @@ $this->breadcrumbs=array(
         <div style="width: 100%; height: calc(100% - 2px)"></div>
     </div>
 
-    <div id='content4' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
+    <div id='content4' style="overflow: hidden; margin: 5px; height: calc(100% - 2px); overflow-y: visible;">
         <div style="width: 100%; height: 100%"></div>
     </div>
 

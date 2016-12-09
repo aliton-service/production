@@ -1065,6 +1065,8 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'ManagerPaymentHistory',
+                'AdminContractsDetails_v',
+                'UserContractEquips',
             ),
         ),
         
@@ -1078,6 +1080,8 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'ManagerPaymentHistory',
+                'AdminContractsDetails_v',
+                'UserContractEquips',
             ),
         ),
         
@@ -1091,8 +1095,11 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'ManagerPaymentHistory',
+                'AdminContractsDetails_v',
+                'UserContractEquips',
             ),
         ),
+        
         
         
         /* Руководитель отдела маркетинга */
