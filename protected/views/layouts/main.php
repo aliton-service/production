@@ -311,6 +311,10 @@
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Расход товара за период', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments6Report')
                                     ),
+                                    array('label' => 'Расход товара за период (суммарный)',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Расход товара за период (суммарный)', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments7Report')
+                                    ),
                                     array('label' => 'Выданное оборудование (детальный)',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Выданное оборудование (детальный)', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')

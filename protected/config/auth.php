@@ -480,6 +480,7 @@ return array_merge(
                 'WHDocuments4Report',
                 'WHDocuments5Report',
                 'WHDocuments6Report',
+                'WHDocuments7Report',
                 'WHDocuments1Report',
                 'Employee1Report',
                 'Employee2Report',
