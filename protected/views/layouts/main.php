@@ -319,6 +319,18 @@
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Выданное оборудование (детальный)', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
                                     ),
+                                    array('label' => 'Возврат на склад от мастеров (суммарный)',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Возврат на склад от мастеров (суммарный)', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments8Report')
+                                    ),
+                                    array('label' => 'Возврат на склад от мастеров (детальный)',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Возврат на склад от мастеров (детальный)', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments9Report')
+                                    ),
+                                    array('label' => 'Оборудование готовое к выдаче',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Оборудование готовое к выдаче', 'Render' => 1)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments10Report')
+                                    ),
                                     array('label' => 'Оборудование сичлящееся за мастерами',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Оборудование числящееся за мастерами', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
