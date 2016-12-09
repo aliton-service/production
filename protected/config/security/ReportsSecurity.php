@@ -141,6 +141,26 @@
             'bizRule' => null,
             'data' => null,
         ),
+        'WHDocuments11Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Нарушение сроков выполнения',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        /* Списание оборудования */
+        'WHActsAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Списание оборудования',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'WHActs1Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Отчет по списанию (детальный)',
+            'bizRule' => null,
+            'data' => null,
+        ),
         
         /* Кадры */
         'EmployeesReportAll' => array(

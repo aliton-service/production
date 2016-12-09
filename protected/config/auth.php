@@ -484,7 +484,12 @@ return array_merge(
                 'WHDocuments8Report',
                 'WHDocuments9Report',
                 'WHDocuments10Report',
+                'WHDocuments11Report',
                 'WHDocuments1Report',
+                
+                'WHActsAll',
+                'WHActs1Report',
+                
                 'Employee1Report',
                 'Employee2Report',
                 'Employee3Report',
@@ -1100,6 +1105,7 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'SeniorDispatcher',
+                'AdministartorDispatchers',
             ),
         ),
         

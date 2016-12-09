@@ -331,11 +331,21 @@
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Оборудование готовое к выдаче', 'Render' => 1)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments10Report')
                                     ),
+                                    array('label' => 'Нарушение сроков выполнения',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Нарушение сроков выполнения', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHDocuments11Report')
+                                    ),
                                     array('label' => 'Оборудование сичлящееся за мастерами',
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Оборудование числящееся за мастерами', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHDocuments1Report')
                                     ),
                                     
+                                )),
+                                array('label'=>'Списание оборудования', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('WHActsAll'), 'items'=>array(
+                                    array('label' => 'Отчет по списанию',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Списание оборудования/Отчет по списанию (детальный)', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHActs1Report')
+                                    ),
                                 )),
                                 array('label'=>'Кадры', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('EmployeesReportAll'), 'items'=>array(
                                     array('label' => 'Сотрудники',
