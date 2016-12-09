@@ -642,7 +642,7 @@
     }
 </style>
 
-<div class="al-row" style="height: calc(100% - 370px); padding: 0;">
+<div class="al-row-label" style="height: calc(100% - 370px);">
     <div id="ContractsGrid" class="jqxGridAliton"></div>
 </div>
 
@@ -728,7 +728,7 @@
         </ul>
         
         <div id='contentContractSystems' style="padding: 6px; overflow: hidden;">
-            <div class="al-row" style="height: calc(100% - 60px)">
+            <div class="al-row-label" style="height: 155px;">
                 <div id="ContractSystemsGrid" class="jqxGridAliton"></div>
             </div>
             <div class="al-row">
@@ -739,7 +739,7 @@
         </div>
         
         <div id='contentContractPriceHistory' style="padding: 6px; overflow: hidden;">
-            <div class="al-row" style="height: calc(100% - 60px)">
+            <div class="al-row-label" style="height: 155px;">
                 <div id="ContractPriceHistoryGrid" class="jqxGridAliton"></div>
             </div>
             <div class="al-row">
@@ -751,12 +751,12 @@
         </div>
         
         <div id='contentPaymentHistory' style="padding: 6px; overflow: hidden;">
-            <div class="al-row" style="height: calc(100% - 60px)">
+            <div class="al-row-label" style="height: 155px;">
                 <div class="row-column" style="width: calc(100% - 310px);"><div id="PaymentHistoryGrid" class="jqxGridAliton"></div></div>
                 <div class="row-column" style="width: 280px;">
                     <div style="clear: both"></div>
                     <div class="al-row" style="padding: 0px">Примечание:</div>
-                    <div class="al-row" style="padding: 0px; height: 125px;"><textarea readonly id="NotePaymentHistory"></textarea></div>
+                    <div class="al-row" style="padding: 0px; height: 135px;"><textarea readonly id="NotePaymentHistory"></textarea></div>
                 </div>
                 <div style="clear: both"></div>
             </div>
@@ -769,7 +769,7 @@
         </div>
         
         <div id='contentContractMasterHistory' style="padding: 6px; overflow: hidden;">
-            <div class="al-row" style="height: calc(100% - 60px)">
+            <div class="al-row-label" style="height: 155px;">
                 <div id="ContractMasterHistoryGrid" class="jqxGridAliton"></div>
             </div>
             <div class="al-row">
