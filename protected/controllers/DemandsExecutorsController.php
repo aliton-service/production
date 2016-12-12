@@ -50,4 +50,19 @@ class DemandsExecutorsController extends Controller
         }
     }
     
+    public function actionDelete() {
+        $model = new DemandsExecutors;
+        $this->title = 'Удаление исполнителя';
+		
+        
+        if(isset($_POST['DemandExecutor_id']))
+        {
+            $model->getModelPk($_POST['DemandExecutor_id']);
+            $model->EmplChange = Yii::app()->user->Employee_id;
+            
+            $model->Delete();
+            
+        }
+    }
+    
 }

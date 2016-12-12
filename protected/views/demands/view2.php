@@ -151,6 +151,12 @@
                     
                     break;
                 case 1:
+                    var Executor = {};
+                    
+                    $("#ExecutorsGrid").on('rowselect', function (event) {
+                        Executor = $('#ExecutorsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
                     var DataDemandsExecutors = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDemandsExecutors, {}), {
                         formatData: function (data) {
                             $.extend(data, {
@@ -181,6 +187,25 @@
                     $("#btnAddExecutor").jqxButton({ width: 120, height: 30 });
                     $("#btnChangeExecutor").jqxButton({ width: 180, height: 30 });
                     $("#btnDelExecutor").jqxButton({ width: 120, height: 30 });
+                    
+                    $("#btnDelExecutor").on('click', function() {
+                        if (Executor == undefined) return;
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('DemandsExecutors/Delete')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                DemandExecutor_id: Executor.DemandExecutor_id
+                            },
+                            success: function(Res) {
+                                $("#ExecutorsGrid").jqxGrid('updatebounddata');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
+                    
                     $("#btnAddExecutor").on('click', function(){
                     $('#ExecutorHeader').html('Добавление исполнителя');
                         ExecutorOperation = 'Insert';

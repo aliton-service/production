@@ -44,6 +44,7 @@ class DemandsExecutors extends MainFormModel
 
         $this->SP_INSERT_NAME = 'INSERT_DEMANDSEXECUTORS';
         $this->SP_UPDATE_NAME = 'CHANGE_DEMANDSEXECUTORS';
+        $this->SP_DELETE_NAME = 'DELETE_DEMANDSEXECUTORS';
         
         $Select = "\nSelect
                         de.DemandExecutor_id,
