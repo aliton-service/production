@@ -12,6 +12,7 @@ return array(
                 'ViewCostCalcWorks',
                 'CreateCostCalcWorks',
                 'UpdateCostCalcWorks',
+                'DeleteCostCalcWorks',
                 ),
         ),
 

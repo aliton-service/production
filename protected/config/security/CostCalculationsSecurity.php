@@ -18,6 +18,7 @@ return array(
                 'UndoReadyCostCalculations',
                 'CopyCostCalculations',
                 'ReestrCostCalculations',
+                
             ),
         ),
 
