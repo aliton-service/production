@@ -120,6 +120,10 @@ class ReportsController extends Controller
             return 'wh_report2';
         if ($ReportName == '/Склад/Нарушение сроков выполнения')
             return 'wh_report6';
+        if ($ReportName == '/Списание оборудования/Списание оборудования (детальный)')
+            return 'wh_report7';
+        if ($ReportName == '/Списание оборудования/Списание оборудования (суммарный)')
+            return 'wh_report7';
         else if ($ReportName == '/Заявки/Отчет по заявкам Call-центра')
             return 'demand_report1';
         else if ($ReportName == '/Заявки/Чужие и удаленные заявки СЦ')

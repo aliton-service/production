@@ -161,6 +161,19 @@
             'bizRule' => null,
             'data' => null,
         ),
+        'WHActs2Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Отчет по списанию (суммарный)',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'WHActs3Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Оборудование числящееся за мастерами',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
         
         /* Кадры */
         'EmployeesReportAll' => array(

@@ -489,6 +489,8 @@ return array_merge(
                 
                 'WHActsAll',
                 'WHActs1Report',
+                'WHActs2Report',
+                'WHActs3Report',
                 
                 'Employee1Report',
                 'Employee2Report',
@@ -697,7 +699,7 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'UserObjects',
+                'ManagerObjects',
                 'ManagerObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
@@ -796,7 +798,7 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'UserObjects',
+                'ManagerObjects',
                 'ManagerOfficeObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
