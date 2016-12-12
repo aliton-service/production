@@ -84,8 +84,8 @@
                                     array('label'=>'Структура организации', 'url'=>array('/organizationstructure/index'), 'visible'=>Yii::app()->user->checkAccess('ViewOrganizationStructure')),
                                 )
                             ),
-                            array('label'=>'Объекты', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('UserObjects'), 'items'=>array(
-                                array('label'=>'Список объектов', 'url'=>array('/Object/index'), 'visible'=>Yii::app()->user->checkAccess('UserObjects')),
+                            array('label'=>'Объекты', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewObjects'), 'items'=>array(
+                                array('label'=>'Список объектов', 'url'=>array('/Object/index'), 'visible'=>Yii::app()->user->checkAccess('ViewObjects')),
                                 array('label'=>'Подъезды и оборудование', 'url'=>array('/ObjectsAndEquips/view'), 'visible'=>false),
                                 array('label'=>'Контроль контактов', 'url'=>array('/ControlContacts/index'), 'visible'=>Yii::app()->user->checkAccess('ViewControlContacts')),
                                 array('label'=>'Перевод мастеров', 'url'=>array('/replaceMaster'), 'visible'=>Yii::app()->user->checkAccess('ViewReplaceMaster')),
