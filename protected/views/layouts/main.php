@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
     <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
     <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
+    
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
