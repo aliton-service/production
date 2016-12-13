@@ -517,7 +517,10 @@
                 var CheckAgreed = function() {
                     if (Administrator) return true;
                     var Type = parseInt(CostCalculations.type);
-                    var Chief = (find([37, 152], parseFloat(CostCalculations.Position_id)) != -1);
+                    var Chief = false;
+                    if ((parseInt(CostCalculations.Position_id) == 37) || (parseInt(CostCalculations.Position_id) == 152))
+                        Chief = true;
+                    //var Chief = (find([37, 152], parseFloat(CostCalculations.Position_id)) != -1);
                     var Marj = (parseFloat(CostCalcDetails.ProcMarj) >= parseFloat(CostCalculations.ccwt_proc));
                     var Discount15 = (parseFloat(CostCalcDetails.Discount) > 15);
                     var Marj20 = (parseFloat(CostCalcDetails.ProcMarj) >= 20);
