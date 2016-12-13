@@ -12,6 +12,7 @@ return array(
                 'ViewCostCalcEquips',
                 'CreateCostCalcEquips',
                 'UpdateCostCalcEquips',
+                'DeleteCostCalcEquips',
                 ),
         ),
 
