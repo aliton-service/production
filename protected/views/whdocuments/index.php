@@ -803,7 +803,7 @@
                             return '<div class="jqx-grid-cell-left-align" style="margin-top: 6px; overflow: hidden;">' +
                                         '<div style="float: left;">' + 
                                             '<img style="margin-left: 5px; margin-top: 0px;" height="16" width="16" src="/images/1.png"/>' + 
-                                        '</div>' +
+                                        '</div>' + '<div style="float: left;">Готово к выдаче</div>' +
                                     '</div>';
                         else if (value == 'Зарезервировано')
                             return '<div class="jqx-grid-cell-left-align" style="margin-top: 6px; overflow: hidden;">' +
@@ -821,6 +821,22 @@
                             return '<div class="jqx-grid-cell-left-align" style="margin-top: 6px;">' + value + '</div>';
                     }
                     
+                    var StatusFilters = [
+                        { value: 1, label: "Готово к выдаче" },
+                        { value: 2, label: "Зарезервировано" },
+                        { value: 3, label: "Выдано" },
+                    ];
+                    var StatusFiltersSource =
+                    {
+                         datatype: "array",
+                         datafields: [
+                             { name: 'label', type: 'string' },
+                             { name: 'value', type: 'int' }
+                         ],
+                         localdata: StatusFilters
+                    };
+                    //var StatusFiltersSource = new $.jqx.dataAdapter(StatusFiltersSource, {autoBind: true});
+                    
                     $("#Grid4").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 300,
@@ -832,7 +848,12 @@
                             columns:
                                 [
                                     { text: 'Контроль', filtertype: 'checkbox', columntype: 'checkbox', columngroup: 'Documents', datafield: 'control', width: 50 },
-                                    { text: 'Статус', columngroup: 'Documents', datafield: 'status', width: 34, cellsrenderer: statusrenderer },
+                                    { text: 'Статус', columntype: 'textbox', columngroup: 'Documents', datafield: 'status', width: 34, cellsrenderer: statusrenderer,
+                                        filtertype: 'list', filteritems: new $.jqx.dataAdapter(StatusFiltersSource), 
+                                                                            createfilterwidget: function (column, htmlElement, editor) {
+                                                                                editor.jqxDropDownList({ displayMember: "label", valueMember: "value" });
+                                                                            } 
+                                    },
                                     { text: 'Вид работ', columngroup: 'Documents', datafield: 'wrtp_name', width: 130 },
                                     { text: 'Номер', columngroup: 'Documents', datafield: 'number', width: 120 },
                                     { text: 'Дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date', cellsformat: 'dd.MM.yyyy', width: 100 },

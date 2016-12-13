@@ -966,7 +966,6 @@
         });
         
         SN.Add = function() {
-            console.log(CurrentRowDetails);
             if (CurrentRowDetails !== undefined) {
                 $('#WHDocumentsDialog').jqxWindow({width: 600, height: 440, position: 'center'});
                 $.ajax({

@@ -37,7 +37,7 @@ class Equips extends MainFormModel
     public $note;
     public $EmplChangeInventory;
     public $DateChangeInventory;
-    public $AddressStorage;
+    public $AddressedStorage;
     public $Replacement;
     public $Analogs;
     public $Sets;
@@ -89,7 +89,7 @@ class Equips extends MainFormModel
             e.note,
             e.EmplChangeInventory,
             e.DateChangeInventory,
-            '' as AddressStorage,
+            e.AddressedStorage,
             '' as Replacement,
             '' as Analogs,
             '' as [Sets]";

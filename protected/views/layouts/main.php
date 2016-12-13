@@ -351,6 +351,10 @@
                                         'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Склад/Оборудование числящееся за мастерами', 'Render' => 0)),
                                         'visible'=>Yii::app()->user->checkAccess('WHActs3Report')
                                     ),
+                                    array('label' => 'Движение ТМЦ',
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Списание оборудования/Движение ТМЦ', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('WHActs4Report')
+                                    ),
                                 )),
                                 array('label'=>'Кадры', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('EmployeesReportAll'), 'items'=>array(
                                     array('label' => 'Сотрудники',

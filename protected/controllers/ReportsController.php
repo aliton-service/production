@@ -124,6 +124,8 @@ class ReportsController extends Controller
             return 'wh_report7';
         if ($ReportName == '/Списание оборудования/Списание оборудования (суммарный)')
             return 'wh_report7';
+        if ($ReportName == '/Списание оборудования/Движение ТМЦ')
+            return 'wh_report7';
         else if ($ReportName == '/Заявки/Отчет по заявкам Call-центра')
             return 'demand_report1';
         else if ($ReportName == '/Заявки/Чужие и удаленные заявки СЦ')

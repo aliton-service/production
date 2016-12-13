@@ -50,6 +50,9 @@
         var items = $('#EquipGroupsGridEdit').jqxTree('getItems');
         $("#EquipGroupsGridEdit").jqxTree('expandItem', items[0]);
         
+        
+        
+        
         $("#edEquipNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'}));
         var DataUmNames = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceUnitMeasurement));        
         $("#edUmNameEdit").jqxComboBox($.extend(true, {}, InputDefaultSettings, {source: DataUmNames, width: '100', height: '25px', displayMember: "NameUnitMeasurement", valueMember: "UnitMeasurement_Id"}));

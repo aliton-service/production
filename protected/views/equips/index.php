@@ -58,6 +58,10 @@
             
         });
         
+        $("#EquipsGrid").on('dblclick', function() {
+            $("#btnEditEquip").click();
+        });
+        
         $("#EquipsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -79,7 +83,14 @@
                     { text: 'Подгруппа', columngroup: 'Generals', datafield: 'sgrp_name', filtercondition: 'STARTS_WITH', width: 110 },
                     { text: 'Тип системы', columngroup: 'Generals', datafield: 'SystemTypeName', filtercondition: 'STARTS_WITH', width: 110 },
                     { text: 'Время ТО', columngroup: 'Generals', datafield: 'ServicingTime', filtercondition: 'STARTS_WITH', width: 110 },
-                    { text: 'Адрес', columngroup: 'Generals', datafield: 'AddressStorage', filtercondition: 'STARTS_WITH', width: 110 },
+                    { text: 'Адрес', columngroup: 'Generals', datafield: 'AddressedStorage', filtercondition: 'STARTS_WITH', width: 110,
+                        cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+                                return '<div style=\'float: left; width: 80%; height: 100%;\'>' + value + ' </div>\n\
+                                            <div style=\'float: left; width: 20%\'>\n\
+                                                <button onclick=\'EquipsInfo.AddressStorage();\' style=\'float: right; margin-top: 4px;\'>...</button>\n\
+                                            </div>';
+                            }
+                    },
                     { text: 'Аналоги', columngroup: 'Generals', datafield: 'Analogs', filtercondition: 'STARTS_WITH', width: 110 },
                     { text: 'Замена', columngroup: 'Generals', datafield: 'Replacement', filtercondition: 'STARTS_WITH', width: 110 },
                     { text: 'Комплект', columngroup: 'Generals', datafield: 'Sets', filtercondition: 'STARTS_WITH', width: 110 },
@@ -201,6 +212,28 @@
         $('#EquipGroupsGrid').on('select',function (event) {
             Refresh();
         });
+        
+        EquipsInfo.AddressStorage = function() {
+            if (CurrentRowData !== undefined) {
+                $('#EquipsDialog').jqxWindow({width: 600, height: 440, position: 'center'});
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('AddressedStorage/Index')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Equip_id: CurrentRowData.Equip_id,
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#BodyEquipsDialog").html(Res.html);
+                        $('#EquipsDialog').jqxWindow('open');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            }
+        };
         
         Refresh();
         

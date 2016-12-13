@@ -4157,7 +4157,7 @@ Sources.SourceEquips =
         {name: 'note', type: 'string'},
         {name: 'EmplChangeInventory', type: 'string'},
         {name: 'DateChangeInventory', type: 'date'},
-        {name: 'AddressStorage', type: 'string'},
+        {name: 'AddressedStorage', type: 'string'},
         {name: 'Replacement', type: 'string'},
         {name: 'Analogs', type: 'string'},
         {name: 'Sets', type: 'string'},
@@ -4309,6 +4309,26 @@ Sources.SourceControlWHDocuments =
     async: true,
     pagenum: 0,
     pagesize: 500,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceAddressedStorage =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Adst_id', type: 'int'},
+        {name: 'Equip_id', type: 'int'},
+        {name: 'Adsys_id', type: 'int'},
+        {name: 'AddressSystem', type: 'string'},
+    ],
+    id: 'Adst_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AddressedStorage',
+    root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
     }

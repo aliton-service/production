@@ -1,3 +1,13 @@
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/'))?>
+        });
+    });
+    
+
+</script>    
+
 <?php
     if (Yii::app()->user->isGuest)
         echo '<p>Для авторизации кликните: <a href="' . Yii::app()->createUrl ('site/login') .'">здесь</a>.';
@@ -15,3 +25,8 @@
     </div>
 <?php endif; ?>
 
+
+<?php 
+
+    
+?>    

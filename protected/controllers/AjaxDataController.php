@@ -35,6 +35,44 @@ class AjaxDataController extends Controller
         echo json_encode($Data);
     }
     
+    public function actionDataJQXSimpleList() {
+        $Data = array();
+        $Models = array();
+        
+        if (isset($_POST['Models']))
+            $Models = $_POST['Models'];
+        if (isset($_GET['Models']))
+            $Models = $_GET['Models'];
+        
+        foreach ($Models as $key => $value) {
+            
+         
+            $model = new $value();
+        
+            $TopCount = -1;
+            $Variables = array();
+
+            
+
+            if(isset($_POST['Filters']))
+                $Result = $model->Find(array(), array(), null, null);
+            else if (isset($_GET['Filters']))
+                $Result = $model->Find(array(), array(), null, null);
+            else
+                $Result = $model->Find(array(), array(), null, null);
+
+            $CountRow = count($Result);
+            
+            array_push($Data, array(
+                'ModelName' => $value,
+                'Data' => $Result,
+                'TotalRows' => $CountRow));
+                     
+        }
+            
+        echo json_encode($Data);
+    }
+    
     public function actionDataJQX($ModelName) {
         $Model = new $ModelName();
         //$CountRow = $Model->getCountAllRow();

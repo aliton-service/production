@@ -243,6 +243,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'c_confirmname' => 'ac.ConfirmCancelName',
             'dmnd_empl_name' => 'd.dmnd_empl_id',
             'AddressForFind' => 'd.objc_id',
+            'status' => '(case when d.status = \'Готово к выдаче\' then 1 when d.status = \'Зарезервировано\' then 2 when d.status = \'Выдано\' then 3 end)',
         );
     }
     

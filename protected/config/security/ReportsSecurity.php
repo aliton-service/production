@@ -173,6 +173,12 @@
             'bizRule' => null,
             'data' => null,
         ),
+        'WHActs4Report' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Движение ТМЦ',
+            'bizRule' => null,
+            'data' => null,
+        ),
         
         
         /* Кадры */

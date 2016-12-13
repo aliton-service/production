@@ -36,6 +36,12 @@ class SiteController extends Controller
                 $this->redirect(Yii::app()->createUrl('Employees/index'));
             else if ($RoleName == 'StaffManager')
                 $this->redirect(Yii::app()->createUrl('Demands/index'));
+            else if ($RoleName == 'HeadLogistics')
+                $this->redirect(Yii::app()->createUrl('WHDocuments/Index'));
+            else if ($RoleName == 'LogisticsManager')
+                $this->redirect(Yii::app()->createUrl('WHDocuments/index'));
+            else if ($RoleName == 'Storeman')
+                $this->redirect(Yii::app()->createUrl('WHDocuments/index'));
             else
                 $this->title = 'Приветствие';
                 $this->render('index');

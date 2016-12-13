@@ -47,7 +47,11 @@ return array_merge(
     include(dirname(__FILE__).'/security/EquipDetailsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipRateDetailsSecurity.php'),
     include(dirname(__FILE__).'/security/EquipRatesSecurity.php'),
+    
     include(dirname(__FILE__).'/security/EquipsSecurity.php'),
+    include(dirname(__FILE__).'/security/AddressedStorageSecurity.php'),
+        
+        
     include(dirname(__FILE__).'/security/EquipsHistorySecurity.php'),
     include(dirname(__FILE__).'/security/EquipsRateSecurity.php'),
     include(dirname(__FILE__).'/security/EquipSubgroupsSecurity.php'),
@@ -393,6 +397,7 @@ return array_merge(
                 'AdminBanks',
                 'AdminAddressSystems',
                 'AdminEquips',
+                'AdminAddressedStorage',
                 'AdminEqipGroups',
                 'AdminCategories',
                 'AdminEquipGroups',
@@ -491,6 +496,7 @@ return array_merge(
                 'WHActs1Report',
                 'WHActs2Report',
                 'WHActs3Report',
+                'WHActs4Report',
                 
                 'Employee1Report',
                 'Employee2Report',
@@ -1022,10 +1028,14 @@ return array_merge(
                 'ManagerMonitoringDemands',
                 'ManagerPriceMonitoring',
                 'ManagerEquips',
+                'AdminAddressedStorage',
                 'ManagerSuppliers',
                 'ManagerAddressSystems',
                 'ManagerInventories',
                 'UserInventoryDetails',
+                'UserPriceList',
+                'UserPriceListDetails',
+                'ManagerControlWHDocuments',
                 'UserPriceList',
                 'UserPriceListDetails',
                 
@@ -1033,6 +1043,25 @@ return array_merge(
                 'DeliveryDemandsReportAll',
                 'DeliveryDemandsReport',
                 'DeliveryDemandsBrokenDeadlinesReport',
+                
+                'WHDocumentsReportAll',
+                'WHDocuments1Report',
+                'WHDocuments2Report',
+                'WHDocuments3Report',
+                'WHDocuments4Report',
+                'WHDocuments5Report',
+                'WHDocuments6Report',
+                'WHDocuments7Report',
+                'WHDocuments8Report',
+                'WHDocuments9Report',
+                'WHDocuments10Report',
+                'WHDocuments11Report',
+                
+                'WHActsAll',
+                'WHActs1Report',
+                'WHActs2Report',
+                'WHActs3Report',
+                'WHActs4Report',
                 
                 
             ),
