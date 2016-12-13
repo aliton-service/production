@@ -809,13 +809,13 @@
                             return '<div class="jqx-grid-cell-left-align" style="margin-top: 6px; overflow: hidden;">' +
                                         '<div style="float: left;">' + 
                                             '<img style="margin-left: 5px; margin-top: 0px;" height="16" width="16" src="/images/2.png"/>' + 
-                                        '</div>' +
+                                        '</div>' + '<div style="float: left;">Зарезервировано</div>' +
                                     '</div>';
                         else if (value == 'Выдано')
                             return '<div class="jqx-grid-cell-left-align" style="margin-top: 6px; overflow: hidden;">' +
                                         '<div style="float: left;">' + 
                                             '<img style="margin-left: 5px; margin-top: 0px;" height="16" width="16" src="/images/3.png"/>' + 
-                                        '</div>' +
+                                        '</div>' + '<div style="float: left;">Выдано</div>' +
                                     '</div>';
                         else
                             return '<div class="jqx-grid-cell-left-align" style="margin-top: 6px;">' + value + '</div>';
