@@ -24,7 +24,7 @@ class ObjectsGroupSystems extends MainFormModel
     public function rules() {
         return array(
             /* обязательные поля*/
-            array('Sttp_id, ObjectGr_id, Availability_id, count, Condition', 'required'),
+            array('Sttp_id, ObjectGr_id, Availability_id, count', 'required'),
             array('ObjectsGroupSystem_id,'
                 . 'SystemTypeName,'
                 . 'CustomerName,'
