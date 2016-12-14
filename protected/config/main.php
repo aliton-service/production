@@ -42,7 +42,7 @@ return array(
                     'class' => 'LockManager',
                 ),
                 'session' => array(
-                   'timeout' => 60*60,
+                   'timeout' => 60*60*2,
                    //'class' => 'CDbHttpSession',
                    'cookieMode' =>'only',
                    'cookieParams' => array('secure' => false, 'httponly' => false),

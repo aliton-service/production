@@ -24,13 +24,13 @@
         var FlagLog = Boolean(Number(<?php echo json_encode(Yii::app()->user->checkAccess('LogDeliveryDemands')) ?>));
         var DetailMode = '';
         
-        $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '120px', height: '25px', decimalDigits: 0 }));
-        $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edDeliveryType").jqxInput({height: 25, width: 200, minLength: 1});
-        $("#edPrior").jqxInput({height: 25, width: 200, minLength: 1});
-        $("#edBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edPromise").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.DatePromise, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '70px', height: '25px', decimalDigits: 0 }));
+        $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edDeliveryType").jqxInput({height: 25, width: 120, minLength: 1});
+        $("#edPrior").jqxInput({height: 25, width: 120, minLength: 1});
+        $("#edBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edPromise").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.DatePromise, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAddr").jqxInput({height: 25, width: 350, minLength: 1});
         $("#edMaster").jqxInput({height: 25, width: 150, minLength: 1});
         $("#edContactInfo").jqxInput({height: 25, width: 350, minLength: 1});
@@ -39,8 +39,8 @@
         $("#edDelayReason").jqxInput({height: 25, width: 250, minLength: 1});
         $("#edText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: 360}));
         $("#edNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: 360}));
-        $("#edSender").jqxInput({height: 25, width: 250, minLength: 1});
-        $("#edLogist").jqxInput({height: 25, width: 250, minLength: 1});
+        $("#edSender").jqxInput({height: 25, width: 130, minLength: 1});
+        $("#edLogist").jqxInput({height: 25, width: 130, minLength: 1});
         $('#btnEdit').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnAccept').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: (DeliveryDemands.DateLogist != null), width: 120, height: 30 }));
         $('#btnPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -79,9 +79,9 @@
                     });
                     $("#DeliveryCommentsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 200,
-                            width: '100%',
-                            showfilterrow: true,
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
+                            showfilterrow: false,
                             autoshowfiltericon: true,
                             source: DataComments,
                             pagesizeoptions: ['10', '200', '500', '1000'],
@@ -160,9 +160,9 @@
                     });
                     $("#DeliveryDetailsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 200,
-                            width: '100%',
-                            showfilterrow: true,
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
+                            showfilterrow: false,
                             autoshowfiltericon: true,
                             source: DataDetails,
                             pagesizeoptions: ['10', '200', '500', '1000'],
@@ -232,7 +232,7 @@
                     break;
             }
         };
-        $('#edTabs').jqxTabs({ width: '100%', height: 345, initTabContent: initWidgets});
+        $('#edTabs').jqxTabs({ width: '100%', height: 'calc(100% - 2px)', initTabContent: initWidgets});
         
         $('#EditDeliveryDetailDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '210px', width: '700px', position: 'center'}));
         $('#EditDeliveryDetailDialog').jqxWindow({initContent: function() {
@@ -345,98 +345,109 @@
     });
 </script>    
 
-<div class="row">
-    <div class="row-column">Номер</div>
-    <div class="row-column"><div id="edNumber"></div></div>
-    <div class="row-column">Подана</div>
-    <div class="row-column"><div id="edDate"></div></div>
+<div class="al-row">
+    <div class="al-row-column">Номер</div>
+    <div class="al-row-column"><div id="edNumber"></div></div>
+    <div class="al-row-column">Подана</div>
+    <div class="al-row-column"><div id="edDate"></div></div>
+    <div class="al-row-column">Вид доставки</div>
+    <div class="al-row-column"><input readonly="readonly" id="edDeliveryType" /></div>
+    <div class="al-row-column">Приоритет</div>
+    <div class="al-row-column"><input readonly="readonly" id="edPrior" /></div>
+    <div style="clear: both"></div>
 </div>    
-<div class="row">
-    <div class="row-column">Вид доставки</div>
-    <div class="row-column"><input readonly="readonly" id="edDeliveryType" /></div>
-    <div class="row-column">Приоритет</div>
-    <div class="row-column"><input readonly="readonly" id="edPrior" /></div>
-</div>
-<div class="row">
-    <div class="row-column">Желаемая</div>
-    <div class="row-column"><div id="edBestDate"></div></div>
-    <div class="row-column">Предельная</div>
-    <div class="row-column"><div id="edDeadline"></div></div>
-    <div class="row-column">Обещанная</div>
-    <div class="row-column"><div id="edPromise"></div></div>
+
+<div class="al-row">
+    <div class="al-row-column">Желаемая</div>
+    <div class="al-row-column"><div id="edBestDate"></div></div>
+    <div class="al-row-column">Предельная</div>
+    <div class="al-row-column"><div id="edDeadline"></div></div>
+    <div class="al-row-column">Обещанная</div>
+    <div class="al-row-column"><div id="edPromise"></div></div>
+    <div class="al-row-column">Мастер</div>
+    <div class="al-row-column"><input readonly="readonly" id="edMaster" /></div>
+    <div style="clear: both"></div>
 </div>    
-<div class="row">
-    <div class="row-column">Адрес объекта</div>
-    <div class="row-column"><input readonly="readonly" id="edAddr" /></div>
-    <div class="row-column">Мастер</div>
-    <div class="row-column"><input readonly="readonly" id="edMaster" /></div>
+<div class="al-row">
+    <div class="al-row-column">Адрес</div>
+    <div class="al-row-column"><input readonly="readonly" id="edAddr" /></div>
+    <div class="al-row-column">Конт. лицо</div>
+    <div class="al-row-column"><input readonly="readonly" id="edContactInfo" /></div>
+    <div style="clear: both"></div>
 </div>
-<div class="row">
-    <div class="row-column">Конт. лицо</div>
-    <div class="row-column"><input readonly="readonly" id="edContactInfo" /></div>
-    <div class="row-column">Телефон</div>
-    <div class="row-column"><input readonly="readonly" id="edPhonenumber" /></div>
+<div class="al-row">
+    <div class="al-row-column">Телефон</div>
+    <div class="al-row-column"><input readonly="readonly" id="edPhonenumber" /></div>
+    <div class="al-row-column">Курьер</div>
+    <div class="al-row-column"><input readonly="readonly" id="edDeliveryMan" /></div>
+    <div class="al-row-column">Причина просрочки</div>
+    <div class="al-row-column"><input readonly="readonly" id="edDelayReason" /></div>
+    <div style="clear: both"></div>
 </div>
-<div class="row">
-    <div class="row-column">Курьер</div>
-    <div class="row-column"><input readonly="readonly" id="edDeliveryMan" /></div>
-    <div class="row-column">Причина просрочки</div>
-    <div class="row-column"><input readonly="readonly" id="edDelayReason" /></div>
-</div>
-<div class="row">
-    <div class="row-column">
+<div class="al-row">
+    <div class="al-row-column">
         <div>Содержание заявки</div>
         <div><textarea id="edText"></textarea></div>
     </div>
-    <div class="row-column">
+    <div class="al-row-column">
         <div>Примечание</div>
         <div><textarea id="edNote"></textarea></div>
     </div>
+    <div class="al-row-column">
+        <div class="al-row" style="margin: 0; padding: 0;">Заявку подал</div>
+        <div class="al-row" style="margin: 0; padding: 0;"><input readonly="readonly" id="edSender" /></div>
+        <div class="al-row" style="margin: 0; padding: 0;">Заявку принял</div>
+        <div class="al-row" style="margin: 0; padding: 0;"><input readonly="readonly" id="edLogist" /></div>
+    </div>
+    <div style="clear: both"></div>
 </div>
-<div class="row">
-    <div class="row-column">Заявку подал</div>
-    <div class="row-column"><input readonly="readonly" id="edSender" /></div>
-    <div class="row-column">Заявку принял</div>
-    <div class="row-column"><input readonly="readonly" id="edLogist" /></div>
-</div>    
-<div class="row" style="width: 1024px">
-    <div class="row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
-    <div class="row-column"><input type="button" value="Принять" id='btnAccept' /></div>
-    <div class="row-column" style="float: right;"><input type="button" value="Печать" id='btnPrint' /></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
+    <div class="al-row-column"><input type="button" value="Принять" id='btnAccept' /></div>
+    <div class="al-row-column" style="float: right;"><input type="button" value="Печать" id='btnPrint' /></div>
+    <div style="clear: both"></div>
 </div>
-<div id='edTabs' style="margin-top: 5px;">
-    <ul>
-        <li style="margin-left: 20px;">
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ход работы</div>
+<div class="al-row" style="height: calc(100% - 286px)">
+    <div id='edTabs' style="margin-top: 5px;">
+        <ul>
+            <li style="margin-left: 20px;">
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ход работы</div>
+
+                </div>
+            </li>
+            <li>
+                <div style="height: 20px; margin-top: 5px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Оборудование</div>
+                </div>
+            </li>
+        </ul>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px;">
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="DeliveryCommentsGrid"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input id="edComment" type="text"/></div>
+                    <div class="al-row-column"><input type="button" value="Написать" id='btnSend' /></div>
+                    <div class="al-row-column" style="float: right;"><input type="button" value="Удалить" id='btnDelComment' /></div>
+                    <div style="clear: both;"></div>
+                </div>
                 
             </div>
-        </li>
-        <li>
-            <div style="height: 20px; margin-top: 5px;">
-                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Оборудование</div>
-            </div>
-        </li>
-    </ul>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="DeliveryCommentsGrid"></div>
-            <div style="clear: both;"></div>
-            <div style="margin-top: 6px;">
-                <div style="float: left"><input id="edComment" type="text"/></div>
-                <div style="float: left; margin-left: 6px;"><input type="button" value="Написать" id='btnSend' /></div>
-                <div style="float: right; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelComment' /></div>
-            </div>
         </div>
-    </div>
-    <div style="overflow: hidden;">
-        <div style="padding: 10px;">
-            <div id="DeliveryDetailsGrid"></div>
-            <div style="clear: both;"></div>
-            <div style="margin-top: 6px;">
-                <div style="float: left;"><input type="button" value="Добавить" id='btnAddEquip' /></div>
-                <div style="float: left; margin-left: 6px;"><input type="button" value="Изменить" id='btnEditEquip' /></div>
-                <div style="float: right; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelEquip' /></div>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px;">
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="DeliveryDetailsGrid"></div>
+                </div>
+                <div style="clear: both;"></div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type="button" value="Добавить" id='btnAddEquip' /></div>
+                    <div class="al-row-column"><input type="button" value="Изменить" id='btnEditEquip' /></div>
+                    <div class="al-row-column" style="float: right;"><input type="button" value="Удалить" id='btnDelEquip' /></div>
+                    <div style="clear: both;"></div>
+                </div>
             </div>
         </div>
     </div>

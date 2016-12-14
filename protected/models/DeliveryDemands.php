@@ -215,8 +215,16 @@ class DeliveryDemands extends MainFormModel
             'MasterName' => 'd.mstr_id',
             'date' => 'dbo.truncdate(d.date)',
             'DeliveryMan' => 'd.empl_dlvr_id',
+            'user_sender_name' => 'd.user_sender',
         );
         
         
+    }
+    
+    public function attributeSotrs() {
+        return array(
+            'user_sender_name' => 'e2.ShortName',
+            'MasterName' => 'm.ShortName',
+        );
     }
 }
