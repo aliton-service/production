@@ -24,7 +24,7 @@
         var FlagLog = Boolean(Number(<?php echo json_encode(Yii::app()->user->checkAccess('LogDeliveryDemands')) ?>));
         var DetailMode = '';
         
-        $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '70px', height: '25px', decimalDigits: 0 }));
+        $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '75px', height: '25px', decimalDigits: 0 }));
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDeliveryType").jqxInput({height: 25, width: 120, minLength: 1});
         $("#edPrior").jqxInput({height: 25, width: 120, minLength: 1});

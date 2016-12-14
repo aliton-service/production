@@ -299,3 +299,7 @@ Aliton.GetTabIndexFromURL = function (defaultTabIndex){
     var tabIndex = parseInt(tabIndexStr, 10);
     return tabIndex;
 };
+
+$(document).ready(function(){
+   console.log('!!'); 
+});

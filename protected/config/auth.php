@@ -680,6 +680,8 @@ return array_merge(
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
+                'ManagerEventOffers',
+                'ManagerOfferDemands',
                 'WhActsView',
                 
                 
