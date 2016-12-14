@@ -5,7 +5,7 @@
     <!-- Подключаем таблицу стилей -->
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/header.css">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet">-->
     <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
     <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
     <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
