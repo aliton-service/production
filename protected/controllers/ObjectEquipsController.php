@@ -22,7 +22,7 @@ class ObjectEquipsController extends Controller
                     'roles'=>array('ViewObjectEquips'),
             ),
             array('allow', 
-                    'actions'=>array('(Insert'),
+                    'actions'=>array('Insert'),
                     'roles'=>array('CreateObjectEquips'),
             ),
             array('allow', 
