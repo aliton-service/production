@@ -661,6 +661,7 @@ return array_merge(
                 'ManagerObjectsGroup',
                 'ManagerContactInfo',
                 'ManagerObjectsGroupSystems',
+                'ManagerSystemCompetitors',
                 'UserObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
