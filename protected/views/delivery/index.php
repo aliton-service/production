@@ -130,6 +130,20 @@
             $('#EditDeliveryDemandDialog').jqxWindow('open');
         });
         
+        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {async: false}));
+        
+        $("#DeliveryDemandsGrid").on("filter", function (event) 
+        {
+//            var filterinfo = $("#DeliveryDemandsGrid").jqxGrid('getfilterinformation');
+//            for (var i = 0; i < filterinfo.length; i++) {
+//                var f = filterinfo[i].filter.getfilters();
+//                f.condition = 'STR_EQUAL';
+//                filterinfo[i].filter.addfilter(f);
+//                console.log(f);
+//            }
+//            console.log(filterinfo);
+        });
+        
         $("#DeliveryDemandsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: 'calc(100% - 2px)',
@@ -145,10 +159,10 @@
                         { text: 'Номер', datafield: 'dldm_id', width: 60 },
                         { text: 'Вид доставок', columntype: 'textbox', filtercondition: 'CONTAINS', datafield: 'DeliveryType', width: 100 },
                         { text: 'Дата', filtertype: 'date', datafield: 'date', filtercondition: 'DATE_EQUAL', cellsformat: 'dd.MM.yyyy HH:mm', width: 130 },
-                        { text: 'Мастер', datafield: 'MasterName', filtertype: 'checkedlist', filteritems: [{label: 'Рогов П.Ю.', value: 274}, {label: 'Чупров М.Е.', value: 88}], sortable: false, width: 150,
-                                createfilterwidget: function (column, htmlElement, editor) {
-                                                                                editor.jqxDropDownList({ displayMember: "label", valueMember: "value" });
-                                                                            }},
+                        { text: 'Мастер', filtercondition: 'STR_EQUAL', datafield: 'MasterName', filtertype: 'list', filteritems: DataEmployees,
+                                                                            createfilterwidget: function (column, htmlElement, editor) {
+                                                                                editor.jqxDropDownList({ displayMember: "ShortName", valueMember: "Employee_id" });
+                                                                            }, sortable: false, width: 150},
                         { text: 'Подал', datafield: 'user_sender_name', filterable: false, sortable: false, width: 150 },
                         { text: 'Приоритет', datafield: 'DemandPrior', width: 100 },
                         { text: 'Предельная дата', datafield: 'deadline', filtertype: 'date', filtercondition: 'DATE_EQUAL', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
