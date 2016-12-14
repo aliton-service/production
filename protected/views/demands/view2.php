@@ -103,6 +103,50 @@
                         CurrentRowDataER = $('#ProgressGrid').jqxGrid('getrowdata', event.args.rowindex);
                     });
                     
+                    var ctrlDown = false;
+                    var ctrlKey = 17;
+                    var cmdKey = 91;
+                    var vKey = 86;
+                    var cKey = 67;
+                    var TextBuffer = '';
+                    var CopyGrid = false;
+
+                    $(document).keydown(function(e) {
+                        if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
+                    });
+                    $(document).keyup(function(e) {
+                        if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = false;
+                    });
+                    
+                    function getSelectedText(){
+                        var text = "";
+                        if (window.getSelection) {
+                            text = window.getSelection();
+                        }else if (document.getSelection) {
+                            text = document.getSelection();
+                        }else if (document.selection) {
+                            text = document.selection.createRange().text;
+                        }
+                        return text;
+                    };
+                    
+                    document.addEventListener('copy', function(e){
+                        if (TextBuffer == '') {
+                            TextBuffer = getSelectedText();
+                            TextBuffer = TextBuffer.toString();
+                        }
+                        e.clipboardData.setData('text/plain', TextBuffer);
+                        TextBuffer = '';
+                        e.preventDefault();
+                    });
+                    
+                    $("#ProgressGrid").keydown(function(e) {
+                        if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) {
+                            TextBuffer = getSelectedText();
+                            TextBuffer = TextBuffer.toString();
+                        }
+                    });
+                    
                     $("#ProgressGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 36px)',

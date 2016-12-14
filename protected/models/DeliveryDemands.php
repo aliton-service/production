@@ -208,4 +208,15 @@ class DeliveryDemands extends MainFormModel
                     'DelDate' => 'Del Date',
             );
     }
+    
+    public function attributeFilters()
+    {
+        return array(
+            'MasterName' => 'd.mstr_id',
+            'date' => 'dbo.truncdate(d.date)',
+            'DeliveryMan' => 'd.empl_dlvr_id',
+        );
+        
+        
+    }
 }

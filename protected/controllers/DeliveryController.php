@@ -3,6 +3,8 @@
 class DeliveryController extends Controller
 {
     public $title = '';
+    public $gridFilters = null;
+    public $filterDefaultValues = null;
     
     public function filters()
     {
@@ -48,6 +50,7 @@ class DeliveryController extends Controller
     public function actionIndex()
     {
         $this->title = 'Заявки на доставку';
+        $this->gridFilters = '_filters';
         $model = new DeliveryDemands();
         $this->render('index');
     }
