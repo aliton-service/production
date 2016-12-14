@@ -131,20 +131,28 @@
                     };
                     
                     document.addEventListener('copy', function(e){
-                        if (TextBuffer == '') {
-                            TextBuffer = getSelectedText();
-                            TextBuffer = TextBuffer.toString();
-                        }
-                        e.clipboardData.setData('text/plain', TextBuffer);
-                        TextBuffer = '';
-                        e.preventDefault();
+//                        console.log('TextBuffer:' + TextBuffer);
+//                        if (TextBuffer == '') {
+//                            TextBuffer = getSelectedText();
+//                            TextBuffer = TextBuffer.toString();
+//                        }
+//                        e.clipboardData.setData('text/plain', TextBuffer);
+//                        TextBuffer = '';
+//                        e.preventDefault();
                     });
                     
                     $("#ProgressGrid").keydown(function(e) {
-                        if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) {
-                            TextBuffer = getSelectedText();
-                            TextBuffer = TextBuffer.toString();
-                        }
+//                        if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) {
+//                            TextBuffer = getSelectedText();
+//                            TextBuffer = TextBuffer.toString();
+//                        }
+                    });
+                    
+                    document.addEventListener('keydown', function(e) {
+//                        if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) {
+//                            TextBuffer = getSelectedText();
+//                            TextBuffer = TextBuffer.toString();
+//                        }
                     });
                     
                     $("#ProgressGrid").jqxGrid(
