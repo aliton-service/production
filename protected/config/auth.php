@@ -657,10 +657,10 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'UserObjects',
+                'ManagerObjects',
                 'ManagerObjectsGroup',
                 'ManagerContactInfo',
-                'UserObjectsGroupSystems',
+                'ManagerObjectsGroupSystems',
                 'UserObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
@@ -679,6 +679,7 @@ return array_merge(
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'WhActsView',
+                
                 
                 /* Отчеты */
                 'DemandsReportAll',
