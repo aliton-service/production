@@ -808,7 +808,7 @@ return array_merge(
                 'ManagerOfficeObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
-                'UserObjectEquips',
+                'ManagerObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
                 'ManagerContacts',
