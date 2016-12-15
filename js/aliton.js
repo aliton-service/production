@@ -245,7 +245,7 @@ Aliton.UndoWorkedOut = function (Demand_id) {
 };
 
 Aliton.ViewDemand = function (Demand_id, Blank) {
-    if (Blank == undefined)
+    if (Blank == undefined || Blank == true)
         Blank = true;
     else Blank = false;
     if (Blank)

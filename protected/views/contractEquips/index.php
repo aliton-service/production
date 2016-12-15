@@ -20,25 +20,33 @@
         
         $("#CEquipsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
-                pagesizeoptions: ['10', '200', '500', '1000'],
-                pagesize: 200,
+//                pagesizeoptions: ['10', '200', '500', '1000'],
+//                pagesize: 200,
+                pageable: false,
+                showstatusbar: true,
+                statusbarheight: 29,
+                showaggregates: true,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '98%',
-                height: '99%',
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 source: ContractEquipsDataAdapter,
                 columns: [
-                    { text: 'Наименование', dataField: 'equipname', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
-                    { text: 'Количество', dataField: 'quant', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
-                    { text: 'Цена', dataField: 'price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120, decimalDigits: 2 },
-                    { text: 'Сумма', dataField: 'sum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Наименование', datafield: 'equipname', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
+                    { text: 'Количество', datafield: 'quant', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100, cellsformat: 'f2' },
+                    { text: 'Цена', datafield: 'price', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120, decimalDigits: 2, cellsformat: 'f2' },
+                    { text: 'Сумма', datafield: 'sum', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120, cellsformat: 'f2', aggregates: [{ 'Сумма':
+                                        function (aggregatedValue, currentValue) {
+                                            return aggregatedValue + currentValue;
+                                        }
+                                      }] },
                 ]
             })
         );
         var summaryData2 = $("#CEquipsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
         
-        $("#GridSum2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        if (summaryData2.sum != '') $("#GridSum2").jqxNumberInput('val', summaryData2.sum);
+//        $("#GridSum2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+//        if (summaryData2.sum != '') $("#GridSum2").jqxNumberInput('val', summaryData2.sum);
         
         $("#CEquipsGrid").on('rowselect', function (event) {
             var Temp = $('#CEquipsGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -87,7 +95,7 @@
                         $('#CEquipsEditDialog').jqxWindow('close');
                         $("#CEquipsGrid").jqxGrid('updatebounddata');
                         var summaryData = $("#CEquipsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
-                        $("#GridSum2").jqxNumberInput('val', summaryData.sum);
+//                        $("#GridSum2").jqxNumberInput('val', summaryData.sum);
                     } else {
                         $('#CEquipsBodyDialog').html(Res);
                     }
@@ -152,7 +160,7 @@
                     $("#CEquipsGrid").jqxGrid('updatebounddata');
                     $("#CEquipsGrid").jqxGrid('selectrow', 0);
                     var summaryData3 = $("#CEquipsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
-                    $("#GridSum2").jqxNumberInput('val', summaryData3.sum);
+//                    $("#GridSum2").jqxNumberInput('val', summaryData3.sum);
                 }
             });
         });
@@ -174,21 +182,21 @@
         
 </script>
 
-<div style="height: calc(100% - 60px);">
-    <div id="CEquipsGrid" class="jqxGridAliton" style="margin-top: 10px"></div>
+<div class="al-row" style="height: calc(100% - 46px);">
+    <div id="CEquipsGrid" class="jqxGridAliton"></div>
 </div>
 
-<div class="row">
-    <div class="row-column"><input type="button" value="Добавить" id='NewContractsEquips' /></div>
-    <div class="row-column"><input type="button" value="Изменить" id='EditContractsEquips' /></div>
-    <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsEquips' /></div>
-    <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum2"></div></div>
-    <div class="row-column" style="float: right; margin-right: 20px;"><input type="button" value="Удалить" id='DelContractsEquips' /></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Добавить" id='NewContractsEquips' /></div>
+    <div class="al-row-column"><input type="button" value="Изменить" id='EditContractsEquips' /></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='ReloadContractsEquips' /></div>
+    <!--<div class="al-row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum2"></div></div>-->
+    <div class="al-row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractsEquips' /></div>
 </div>
 
 
 
-<div id="CEquipsEditDialog">
+<div id="CEquipsEditDialog" style="display: none">
     <div id="CEquipsDialogHeader">
         <span id="CEquipsHeaderText">Вставка\Редактирование записи</span>
     </div>
