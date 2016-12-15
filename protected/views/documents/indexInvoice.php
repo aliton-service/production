@@ -57,7 +57,7 @@
         $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 360 }));
         $("#ExecDay").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Garant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-        $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)', height: 50 }));
+        $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)', height: 25 }));
         $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         
@@ -208,8 +208,8 @@
 </div>
 
 <div class="al-row">
-    <div>Примечание:</div>
-    <div><textarea readonly id="Note" ></textarea></div>
+    <div class="al-row-column">Примечание:</div>
+    <div class="al-row-column"><textarea readonly id="Note" ></textarea></div>
 </div>
 
 <div class="al-row">
