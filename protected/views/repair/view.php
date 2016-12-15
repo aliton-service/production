@@ -312,8 +312,8 @@
                     });
                     $("#GridComments").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 'calc(100% - 62px)',
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             autorowheight: true,
                             showfilterrow: false,
                             source: DataRepairComments, 
@@ -1302,7 +1302,10 @@
         </ul>
         <div style="overflow: hidden;">
             <div style="padding: 10px; height: 100%">
-                <div class="al-row"><div id="GridComments"></div></div>
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridComments"></div>
+                            
+                </div>
                 <div class="al-row">
                     <div class="al-row-column"><input id="edComment" /></div>
                     <div class="al-row-column">План. дата</div>
