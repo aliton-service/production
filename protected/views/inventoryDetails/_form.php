@@ -39,6 +39,7 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
+                        Indt_id = Res.id;
                         Aliton.SelectRowById('indt_id', Res.id, '#InventoryDetailsGrid', true);
                         $('#InventoryDetailsDialog').jqxWindow('close');
                     }

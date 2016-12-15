@@ -34,8 +34,8 @@
                 pagesize: 200,
                 sortable: true,
                 showfilterrow: true,
-                width: '100%',
-                height: '500',
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 source: InventoriesDataAdapter,
                 columns: [
                     { text: 'Склад', datafield: 'storage', filtercondition: 'CONTAINS', width: 150},
@@ -139,18 +139,20 @@
 ?>
 
 
-<div class="row">
+<div class="al-row" style="height: calc(100% - 84px)">
     <div id="InventoriesGrid" class="jqxGridAliton"></div>
 </div>
-<div class="row">
-    <div class="row-column"><input type="button" value="Рассчитать" id='btnAddInventory'/></div>
-    <div class="row-column"><input type="button" value="Просмотр" id='btnEditInventory'/></div>
-    <div class="row-column"><input type="button" value="Принять" id='btnAcceptInventory'/></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Рассчитать" id='btnAddInventory'/></div>
+    <div class="al-row-column"><input type="button" value="Просмотр" id='btnEditInventory'/></div>
+    <div class="al-row-column"><input type="button" value="Принять" id='btnAcceptInventory'/></div>
+    <div style="clear: both"></div>
 </div>    
-<div class="row">
-    <div class="row-column"><input type="button" value="Удалить" id='btnDelInventory'/></div>
-    <div class="row-column"><input type="button" value="Обновить" id='btnRefreshInventory'/></div>
-    <div class="row-column"><input type="button" value="Печатать" id='btnPrintInventory'/></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Удалить" id='btnDelInventory'/></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshInventory'/></div>
+    <div class="al-row-column"><input type="button" value="Печатать" id='btnPrintInventory'/></div>
+    <div style="clear: both"></div>
 </div>   
 
 

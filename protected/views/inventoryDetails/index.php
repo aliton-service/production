@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var Indt_id = 0;
     $(document).ready(function () {
         /* Текущая выбранная строка данных */
         var CurrentRowData;
@@ -7,7 +8,7 @@
             invn_id: '<?php echo $invn_id; ?>',
         };
 
-        var InventoryDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInventoryDetails, {}), {
+        var InventoryDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInventoryDetails, {async: true}), {
             formatData: function (data) {
                 $.extend(data, {
                     Filters: ["id.invn_id = " + InventoryDetails.invn_id],
@@ -36,14 +37,21 @@
             $('#btnEditInventoryDetails').click();
         });
         
+        $("#InventoryDetailsGrid").on("bindingcomplete", function (event) {
+            if (Indt_id > 0) {
+                Aliton.SelectRowByIdVirtual('indt_id', Indt_id, '#InventoryDetailsGrid', false);
+                Indt_id = 0;
+            }
+        });
+        
         $("#InventoryDetailsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
                 sortable: true,
                 showfilterrow: true,
-                width: '100%',
-                height: '500',
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 source: InventoryDetailsDataAdapter,
                 columns: [
                     { text: 'Оборудование', datafield: 'EquipName', filtercondition: 'CONTAINS', width: 300},
@@ -94,13 +102,14 @@
 ?>
 
 
-<div class="row">
+<div class="al-row" style="height: calc(100% - 46px)">
     <div id="InventoryDetailsGrid" class="jqxGridAliton"></div>
 </div>
-<div class="row">
-    <div class="row-column"><input type="button" value="Изменить" id='btnEditInventoryDetails'/></div>
-    <div class="row-column"><input type="button" value="Обновить" id='btnRefreshInventoryDetails'/></div>
-    <div class="row-column"><input type="button" value="Печатать" id='btnPrintInventoryDetails'/></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Изменить" id='btnEditInventoryDetails'/></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshInventoryDetails'/></div>
+    <div class="al-row-column"><input type="button" value="Печатать" id='btnPrintInventoryDetails'/></div>
+    <div style="clear: both"></div>
 </div>    
 
 <div id="InventoryDetailsDialog" style="display: none;">

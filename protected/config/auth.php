@@ -1029,6 +1029,8 @@ return array_merge(
             'children' => array(
                 'LogisticsManager',
                 'Storeman',
+                'ManagerInventoryDetails',
+                'ManagerInventories',
             ),
         ),
         
