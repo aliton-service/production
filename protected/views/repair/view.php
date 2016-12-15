@@ -1301,7 +1301,7 @@
             
         </ul>
         <div style="overflow: hidden;">
-            <div style="padding: 10px;">
+            <div style="padding: 10px; height: 100%">
                 <div class="al-row"><div id="GridComments"></div></div>
                 <div class="al-row">
                     <div class="al-row-column"><input id="edComment" /></div>
@@ -1313,7 +1313,7 @@
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px;">
+            <div style="padding: 10px; height: 100%">
                 <div class="al-row"><div id="GridEquips"></div></div>
                 <div class="al-row">
                     <div class="al-row-column"><input type="button" id="btnAddEquips" value="Добавить"/></div>

@@ -21,12 +21,13 @@
         
         $("#CDetailsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
-                pagesizeoptions: ['10', '200', '500', '1000'],
-                pagesize: 200,
+                //pagesizeoptions: ['10', '200', '500', '1000'],
+                //pagesize: 200,
+                pageable: false,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '98%',
-                height: '99%',
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 source: ContractsDetails_vDataAdapter,
                 columns: [
                     { text: 'Наименование', dataField: 'ItemName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
@@ -176,22 +177,23 @@
     
         
 </script>
-
-    <div style="height: calc(100% - 60px);">
-        <div id="CDetailsGrid" class="jqxGridAliton" style="margin-top: 10px;"></div>
+    
+    <div class="al-row" style="height: calc(100% - 42px);">
+        <div id="CDetailsGrid" class="jqxGridAliton"></div>
+    </div>
+    <div class="al-row">
+        <div class="al-row-column"><input type="button" value="Добавить" id='NewContractsDetails' /></div>
+        <div class="al-row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>
+        <div class="al-row-column"><input type="button" value="Обновить" id='ReloadContractsDetails' /></div>
+        <div class="al-row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum"></div></div>
+        <div class="al-row-column" style="float: right; margin-right: 20px;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
+        <div style="clear: both"></div>
+        
     </div>
 
-    <div class="row">
-        <div class="row-column"><input type="button" value="Добавить" id='NewContractsDetails' /></div>
-        <div class="row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>
-        <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsDetails' /></div>
-        <div class="row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum"></div></div>
-        <div class="row-column" style="float: right; margin-right: 20px;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
-    </div>
 
 
-
-<div id="CDetailsEditDialog">
+<div id="CDetailsEditDialog" style="display: none">
     <div id="CDetailsDialogHeader">
         <span id="CDetailsHeaderText">Вставка\Редактирование записи</span>
     </div>
