@@ -5,56 +5,56 @@
         var CurrentRowData;
         
         var CurrentContract = {
-            ContrS_id: '<?php echo $model->ContrS_id; ?>',
-            ContrNumS: '<?php echo $model->ContrNumS; ?>',
-            ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
-            JuridicalPerson: '<?php echo $model->JuridicalPerson; ?>',
-            ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
-            DateExecuting: Aliton.DateConvertToJs('<?php echo $model->DateExecuting; ?>'),
-            DatePay: Aliton.DateConvertToJs('<?php echo $model->DatePay; ?>'),
-            crtp_name: '<?php echo $model->crtp_name; ?>',
+            ContrS_id: <?php echo json_encode($model->ContrS_id); ?>,
+            ContrNumS: <?php echo json_encode($model->ContrNumS); ?>,
+            ObjectGr_id: <?php echo json_encode($model->ObjectGr_id); ?>,
+            JuridicalPerson: <?php echo json_encode($model->JuridicalPerson); ?>,
+            ContrDateS: Aliton.DateConvertToJs(<?php echo json_encode($model->ContrDateS); ?>),
+            DateExecuting: Aliton.DateConvertToJs(<?php echo json_encode($model->DateExecuting); ?>),
+            DatePay: Aliton.DateConvertToJs(<?php echo json_encode($model->DatePay); ?>),
+            crtp_name: <?php echo json_encode($model->crtp_name); ?>,
             Prolong: <?php echo json_encode($model->Prolong); ?>,
             Debtor: <?php echo json_encode($model->Debtor); ?>,
-            PaymentTypeName: '<?php echo $model->PaymentTypeName; ?>',
-            Price: '<?php echo $model->Price; ?>',
-            PriceMonth: '<?php echo $model->PriceMonth; ?>',
-            empl_name: '<?php echo $model->empl_name; ?>',
+            PaymentTypeName: <?php echo json_encode($model->PaymentTypeName); ?>,
+            Price: <?php echo json_encode($model->Price); ?>,
+            PriceMonth: <?php echo json_encode($model->PriceMonth); ?>,
+            empl_name: <?php echo json_encode($model->empl_name); ?>,
             SpecialCondition: <?php echo json_encode($model->SpecialCondition); ?>,
             Note: <?php echo json_encode($model->Note); ?>,
             date_checkup: Aliton.DateConvertToJs('<?php echo $model->date_checkup; ?>'),
-            user_checkup: '<?php echo $model->user_checkup; ?>',
-            EmplChange: '<?php echo $model->EmplChange; ?>',
-            ContrSDateStart: '<?php echo $model->ContrSDateStart; ?>',
-            ContrSDateEnd: '<?php echo $model->ContrSDateEnd; ?>',
-            PaymentName: '<?php echo $model->PaymentName; ?>',
-            MasterName: '<?php echo $model->MasterName; ?>',
-            ServiceType: '<?php echo $model->ServiceType; ?>',
-            date_doc: Aliton.DateConvertToJs('<?php echo $model->date_doc; ?>'),
+            user_checkup: <?php echo json_encode($model->user_checkup); ?>,
+            EmplChange: <?php echo json_encode($model->EmplChange); ?>,
+            ContrSDateStart: Aliton.DateConvertToJs(<?php echo json_encode($model->ContrSDateStart); ?>),
+            ContrSDateEnd: Aliton.DateConvertToJs(<?php echo json_encode($model->ContrSDateEnd); ?>),
+            PaymentName: <?php echo json_encode($model->PaymentName); ?>,
+            MasterName: <?php echo json_encode($model->MasterName); ?>,
+            ServiceType: <?php echo json_encode($model->ServiceType); ?>,
+            date_doc: Aliton.DateConvertToJs(<?php echo json_encode($model->date_doc); ?>),
         };
             
         
         $("#ContrNumS").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 260 }));
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
         $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
         $("#DateExecuting2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExecuting, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
         $("#DatePay").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DatePay, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
         $("#ContrSDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateStart, width: 102, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
         $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
         $("#ContrSDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.ContrSDateEnd, width: 102, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
-        $("#PaymentName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#PaymentName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
         $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#Prolong").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
         $("#Debtor").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
-        $("#PaymentTypeName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#PaymentTypeName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
         $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#PriceMonth").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
-        $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 430, height: 120 }));
-        $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 430, height: 120 }));
+        $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 430, height: 70 }));
+        $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 430, height: 70 }));
         $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
-        $("#MasterName2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
-        $("#ServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
+        //$("#MasterName2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
+        $("#ServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
         
         if (CurrentContract.ContrNumS != '') $("#ContrNumS").jqxInput('val', CurrentContract.ContrNumS);
         if (CurrentContract.JuridicalPerson != '') $("#JuridicalPerson").jqxInput('val', CurrentContract.JuridicalPerson);
@@ -69,7 +69,7 @@
         if (CurrentContract.SpecialCondition != '') $("#SpecialCondition1").jqxTextArea('val', CurrentContract.SpecialCondition);
         if (CurrentContract.Note != '') $("#Note").jqxTextArea('val', CurrentContract.Note);
         if (CurrentContract.user_checkup != '') $("#user_checkup").jqxInput('val', CurrentContract.user_checkup);
-        if (CurrentContract.MasterName != '') $("#MasterName2").jqxInput('val', CurrentContract.MasterName);
+//        if (CurrentContract.MasterName != '') $("#MasterName2").jqxInput('val', CurrentContract.MasterName);
         if (CurrentContract.ServiceType != '') $("#ServiceType").jqxInput('val', CurrentContract.ServiceType);
         
         $('#jqxTabsCurrentContract').jqxTabs({ width: '99%', height: '99%' });
@@ -89,8 +89,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '98%',
-                height: '98%',
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 source: MastersDataAdapter,
                 columns: [
                     { text: 'Сотрудник', dataField: 'EmployeeName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
@@ -178,6 +178,9 @@
                 success: function(Res) {
                     $('#MastersEditDialog').jqxWindow('open');
                     $('#MastersBodyDialog').html(Res);
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
                 }
             });
         });
@@ -193,6 +196,9 @@
                 success: function(Res) {
                     $('#MastersBodyDialog').html(Res);
                     $('#MastersEditDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
                 }
             });
         });
@@ -207,6 +213,9 @@
                 success: function(){
                     $("#MastersGrid").jqxGrid('updatebounddata');
                     $("#MastersGrid").jqxGrid('selectrow', 0);
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
                 }
             });
         });
@@ -229,62 +238,61 @@
     
 </script>
 
-<div class="row">
-    <div class="row-column">Номер: <input readonly id="ContrNumS" type="text"></div>
-    <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Дата проводки через ВЦКП: </div><div class="row-column"><div id="DateExecuting2" type="text"></div></div>
+<div class="al-row">
+    <div class="al-row-column">Номер: <input readonly id="ContrNumS" type="text"></div>
+    <div class="al-row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS" type="text"></div></div>
+    <div class="al-row-column" style="padding-top: 3px;">Дата проводки через ВЦКП: </div><div class="row-column"><div id="DateExecuting2" type="text"></div></div>
+    <div class="al-row-column" style="padding-top: 3px;">Пролонгация: </div><div class="row-column"><div id="Prolong" type="checkbox"></div></div>
+    <div class="al-row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor" type="checkbox"></div></div>
+    <div style="clear: both"></div>
 </div>
 
-<div class="row">
-    <div class="row-column" style="padding-top: 3px;">Срок действия с: </div><div class="row-column"><div id="ContrSDateStart" name="Documents[ContrSDateStart]" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd" name="Documents[ContrSDateEnd]" type="text"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Пролонгация: </div><div class="row-column"><div id="Prolong" type="checkbox"></div></div>
-    <div class="row-column" style="padding-top: 3px;">Долг: </div><div class="row-column"><div id="Debtor" type="checkbox"></div></div>
+<div class="al-row">
+    <div class="al-row-column" style="padding-top: 3px;">Срок действия с: </div>
+    <div class="al-row-column"><div id="ContrSDateStart" name="Documents[ContrSDateStart]" type="text"></div></div>
+    <div class="al-row-column" style="padding-top: 3px;">по: </div><div class="row-column"><div id="ContrSDateEnd" name="Documents[ContrSDateEnd]" type="text"></div></div>
+    <div class="al-row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
+    <div class="al-row-column">Тип контракта: <input readonly id="crtp_name" type="text"></div>
+    <div style="clear: both"></div>
 </div>
 
-<div class="row">
-    <div class="row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
-    <div class="row-column">Тип контракта: <input readonly id="crtp_name" type="text"></div>
+<div class="al-row">
+    <div class="al-row-column">Период. оплаты: <input readonly id="PaymentName" type="text"></div>
+    <div class="al-row-column">Вид оплаты: <input readonly id="PaymentTypeName" type="text"></div>
+    <div class="al-row-column">Ежем. начисления: </div><div class="row-column"><div id="PriceMonth" type="text"></div></div>
+    <div class="al-row-column">Расценка: </div><div class="row-column"><div id="Price" type="text"></div></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Оплачено по: </div><div class="row-column"><div id="DatePay" type="text"></div></div>
+    <!--<div class="al-row-column">Мастер: <input readonly id="MasterName2" type="text"></div>-->
+    <div class="al-row-column">Тариф: <input readonly id="ServiceType" type="text"></div>
+    <div class="al-row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
+    <div class="al-row-column" style="padding-top: 3px;">Дата прихода ориг. док.: </div>
+    <div class="al-row-column"><div id="date_doc" type="text"></div></div>
+    <div style="clear: both"></div>
 </div>
 
-<div class="row">
-    <div class="row-column">Периодичность оплаты: <input readonly id="PaymentName" type="text"></div>
-    <div class="row-column">Вид оплаты: <input readonly id="PaymentTypeName" type="text"></div>
+<div class="al-row">
+    <div class="al-row-column">Особые договоренности: <textarea readonly id="SpecialCondition1" ></textarea></div>
+    <div class="al-row-column">Примечание: <textarea readonly id="Note" ></textarea></div>
+    <div style="clear: both"></div>
 </div>
 
-<div class="row">
-    <div class="row-column">Ежемесячные начисления: </div><div class="row-column"><div id="PriceMonth" type="text"></div></div>
-    <div class="row-column">Расценка: </div><div class="row-column"><div id="Price" type="text"></div></div>
-    <div class="row-column">Оплачено по: </div><div class="row-column"><div id="DatePay" type="text"></div></div>
-</div>
-
-<div class="row">
-    <div class="row-column">Мастер: <input readonly id="MasterName2" type="text"></div>
-    <div class="row-column">Тариф: <input readonly id="ServiceType" type="text"></div>
-</div>
-
-<div class="row">
-    <div class="row-column">Особые договоренности: <textarea readonly id="SpecialCondition1" ></textarea></div>
-    <div class="row-column">Примечание: <textarea readonly id="Note" ></textarea></div>
-</div>
-
-<div class="row">
-    <div class="row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
-    <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала документа: </div><div class="row-column"><div id="date_doc" type="text"></div></div>
-</div>
-
-<div class="row">
-    <div class="row-column"><input type="button" value="Изменить" id='EditContract' /></div>
-    <div class="row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
-    <div class="row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
-    <div class="row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
-    <div class="row-column"><input type="button" value="Печатать" id='PrintContract' /></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Изменить" id='EditContract' /></div>
+    <div class="al-row-column">Дата утв-я: </div>
+    <div class="row-column"><div id="date_checkup"></div></div>
+    <div class="al-row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
+    <div class="al-row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
+    <div class="al-row-column" style="float: right;"><input type="button" value="Печатать" id='PrintContract' /></div>
+    <div style="clear: both"></div>
 </div>
 
 
-<div id='jqxWidgetCurrentContract' class="row" style="height: calc(100% - 465px); min-height: 270px;">
+<div class="al-row" style="height: calc(100% - 285px);">
     <div id='jqxTabsCurrentContract'>
-        <ul>
+        <ul style="margin-left: 20px">
             <li>
                 <div style="height: 15px; margin-top: 3px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
@@ -293,22 +301,25 @@
                 </div>
             </li>
         </ul>
-        <div id='contentContractDetails' style="overflow: hidden; margin-left: 10px; width: 100%; height: 100%;">
-            <div class="row" style="height: calc(100% - 60px);">
-                <div id="MastersGrid" class="jqxGridAliton"></div>
-            </div>
-            <div class="row">
-                <div class="row-column"><input type="button" value="Добавить" id='NewContractsMasters' /></div>
-                <div class="row-column"><input type="button" value="Изменить" id='EditContractsMasters' /></div>
-                <div class="row-column"><input type="button" value="Обновить" id='ReloadContractsMasters' /></div>
-                <div class="row-column" style="float: right; margin-right: 20px;"><input type="button" value="Удалить" id='DelContractsMasters' /></div>
+        <div id='contentContractDetails' style="overflow: hidden;">
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 62px);">
+                    <div id="MastersGrid" class="jqxGridAliton"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type="button" value="Добавить" id='NewContractsMasters' /></div>
+                    <div class="al-row-column"><input type="button" value="Изменить" id='EditContractsMasters' /></div>
+                    <div class="al-row-column"><input type="button" value="Обновить" id='ReloadContractsMasters' /></div>
+                    <div class="al-row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractsMasters' /></div>
+                    <div style="clear: both"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-<div id="EditContractDialog">
+<div id="EditContractDialog" style="display: none;">
     <div id="EditContractDialogHeader">
         <span id="EditContractHeaderText">Редактирование записи</span>
     </div>
@@ -318,7 +329,7 @@
 </div>
 
 
-<div id="MastersEditDialog">
+<div id="MastersEditDialog" style="display: none;">
     <div id="MastersDialogHeader">
         <span id="MastersHeaderText">Вставка\Редактирование записи</span>
     </div>

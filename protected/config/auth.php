@@ -617,6 +617,7 @@ return array_merge(
                 'ManagerContractsS',
                 'ManagerDocuments',
                 'ManagerContacts',
+                'ManagerContractMasterHistory',
                 'UserObjectsGroupCostCalculations',
                 'ManagerCostCalculations',
                 'ManagerCostCalcDocuments',
