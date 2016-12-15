@@ -1,8 +1,8 @@
 <script>
     $(document).ready(function() {
-        $.ajax({
-            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/'))?>
-        });
+//        $.ajax({
+//            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/'))?>
+//        });
     });
     
 
