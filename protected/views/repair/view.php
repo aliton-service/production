@@ -342,7 +342,7 @@
                         if ($("#edComment").val() == '' && $("#edPlanDate").val() == '') return;
                         
                         var CurrentDate = new Date();
-                        CurrentDate = CurrentDate.getDay() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear();
+                        CurrentDate = CurrentDate.getDay() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear() + ' ' + CurrentDate.getHours() + ':' + CurrentDate.getMinutes();
                         $.ajax({
                             url: <?php echo json_encode(Yii::app()->createUrl('RepairComments/Create')) ?>,
                             type: 'POST',
