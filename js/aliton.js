@@ -300,6 +300,3 @@ Aliton.GetTabIndexFromURL = function (defaultTabIndex){
     return tabIndex;
 };
 
-$(document).ready(function(){
-   console.log('!!'); 
-});
