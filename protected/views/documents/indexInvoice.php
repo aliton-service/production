@@ -209,7 +209,8 @@
 
 <div class="al-row">
     <div class="al-row-column">Примечание:</div>
-    <div class="al-row-column"><textarea readonly id="Note" ></textarea></div>
+    <div class="al-row-column" style="width: calc(100% - 92px)"><textarea readonly id="Note" ></textarea></div>
+    <div style="clear: both"></div>
 </div>
 
 <div class="al-row">
@@ -221,7 +222,7 @@
     <div style="clear: both"></div>
 </div>
 
-<div class="al-row" style="height: calc(100% - 356px); ">
+<div class="al-row" style="height: calc(100% - 312px); ">
     <div id='jqxTabsCurrentContract'>
         <ul style="margin-left: 20px">
             <li>

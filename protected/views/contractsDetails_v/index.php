@@ -24,6 +24,9 @@
                 //pagesizeoptions: ['10', '200', '500', '1000'],
                 //pagesize: 200,
                 pageable: false,
+                showstatusbar: true,
+                statusbarheight: 29,
+                showaggregates: true,
                 showfilterrow: false,
                 virtualmode: false,
                 width: 'calc(100% - 2px)',
@@ -33,14 +36,18 @@
                     { text: 'Наименование', dataField: 'ItemName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 400 },
                     { text: 'Кол-во', dataField: 'Quant', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
                     { text: 'Цена', datafield: 'price', columntype: 'textbox', cellsformat: 'f2', filtercondition: 'STARTS_WITH', width: 120 },
-                    { text: 'Сумма', dataField: 'sum', columntype: 'textbox', cellsformat: 'f2', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Сумма', dataField: 'sum', columntype: 'textbox', cellsformat: 'f2', filtercondition: 'STARTS_WITH', width: 120, aggregates: [{ 'Сумма':
+                                        function (aggregatedValue, currentValue) {
+                                            return aggregatedValue + currentValue;
+                                        }
+                                      }] },
                 ]
             })
         );
         var summaryData = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
         
-        $("#GridSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        if (summaryData.sum != '') $("#GridSum").jqxNumberInput('val', summaryData.sum);
+//        $("#GridSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+//        if (summaryData.sum != '') $("#GridSum").jqxNumberInput('val', summaryData.sum);
         
         $("#CDetailsGrid").on('rowselect', function (event) {
             var Temp = $('#CDetailsGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -91,7 +98,7 @@
                         $('#CDetailsEditDialog').jqxWindow('close');
                         $("#CDetailsGrid").jqxGrid('updatebounddata');
                         var summaryData = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
-                        $("#GridSum").jqxNumberInput('val', summaryData.sum);
+//                        $("#GridSum").jqxNumberInput('val', summaryData.sum);
                     } else {
                         $('#CDetailsBodyDialog').html(Res);
                     }
@@ -156,7 +163,7 @@
                     $("#CDetailsGrid").jqxGrid('updatebounddata');
                     $("#CDetailsGrid").jqxGrid('selectrow', 0);
                     var summaryData4 = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
-                    $("#GridSum").jqxNumberInput('val', summaryData4.sum);
+//                    $("#GridSum").jqxNumberInput('val', summaryData4.sum);
                 }
             });
         });
@@ -178,17 +185,16 @@
         
 </script>
     
-    <div class="al-row" style="height: calc(100% - 42px);">
+    <div class="al-row" style="height: calc(100% - 46px);">
         <div id="CDetailsGrid" class="jqxGridAliton"></div>
     </div>
-    <div class="al-row">
+    <div class="al-row" style="padding-top: 0">
         <div class="al-row-column"><input type="button" value="Добавить" id='NewContractsDetails' /></div>
         <div class="al-row-column"><input type="button" value="Изменить" id='EditContractsDetails' /></div>
         <div class="al-row-column"><input type="button" value="Обновить" id='ReloadContractsDetails' /></div>
-        <div class="al-row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum"></div></div>
-        <div class="al-row-column" style="float: right; margin-right: 20px;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
+        <!--<div class="al-row-column" style="padding-top: 5px;">Сумма: </div><div class="row-column"><div id="GridSum"></div></div>-->
+        <div class="al-row-column" style="float: right;"><input type="button" value="Удалить" id='DelContractsDetails' /></div>
         <div style="clear: both"></div>
-        
     </div>
 
 
