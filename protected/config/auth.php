@@ -732,6 +732,7 @@ return array_merge(
                 'ManagerDemands',
                 'ManagerExecuteReports',
                 'UserRepairs',
+                'ManagerRepairComments',
                 'UserDeliveryDemands',
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
