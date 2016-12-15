@@ -72,7 +72,7 @@
 //        if (CurrentContract.MasterName != '') $("#MasterName2").jqxInput('val', CurrentContract.MasterName);
         if (CurrentContract.ServiceType != '') $("#ServiceType").jqxInput('val', CurrentContract.ServiceType);
         
-        $('#jqxTabsCurrentContract').jqxTabs({ width: '99%', height: '99%' });
+        $('#jqxTabsCurrentContract').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)' });
         
         var MastersDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContractMasterHistory, {}), {
             formatData: function (data) {
