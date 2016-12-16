@@ -4,6 +4,8 @@ class WHDocumentsController extends Controller
 {
     public $layout = '//layouts/column2';
     public $title = '';
+    public $gridFilters = '_filters';
+    public $filterDefaultValues = null;
 
     public function filters()
     {
@@ -336,6 +338,7 @@ class WHDocumentsController extends Controller
     public function actionIndex()
     {
         $this->title = 'Склад - реестр документов';
+        
         $this->render('index');
     }
     

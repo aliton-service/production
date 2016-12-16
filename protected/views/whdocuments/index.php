@@ -12,117 +12,7 @@
         var CurrentRowDataDoc7;
         var CurrentRowDataDoc9;
         var Dctp_id;
-        var DateStart = new Date();
-        var DateEnd = new Date();
-        DateStart.setMonth(DateStart.getMonth() - 1);
-        
-        var DataSuppliers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListSuppliersMin));
-        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees));
-        var DataWHDocumentsAll = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsAllSource, {
-                        filter: function () {
-                            $("#GridAll").jqxGrid('updatebounddata', 'filter');
-                        },
-                        sort: function () {
-                            $("#GridAll").jqxGrid('updatebounddata', 'sort');
-                        },
-                        beforeSend: function(jqXHR, settings) {
-                            DisabledControls();
-                        },
-                        
-                    }));
-        var DataWHDocumentsDoc1 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc1Source, {
-                        filter: function () {
-                            $("#Grid1").jqxGrid('updatebounddata', 'filter');
-                        },
-                        sort: function () {
-                            $("#Grid1").jqxGrid('updatebounddata', 'sort');
-                        },
-                        beforeSend: function(jqXHR, settings) {
-                            DisabledControls();
-                        },
-                        
-                    }));
-        var DataWHDocumentsDoc2 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc2Source, {
-                        filter: function () {
-                            $("#Grid2").jqxGrid('updatebounddata', 'filter');
-                        },
-                        sort: function () {
-                            $("#Grid2").jqxGrid('updatebounddata', 'sort');
-                        },
-                        beforeSend: function(jqXHR, settings) {
-                            DisabledControls();
-                        },
-                        
-                    }));
-        var DataWHDocumentsDoc3 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc3Source, {
-                        filter: function () {
-                            $("#Grid3").jqxGrid('updatebounddata', 'filter');
-                        },
-                        sort: function () {
-                            $("#Grid3").jqxGrid('updatebounddata', 'sort');
-                        },
-                        beforeSend: function(jqXHR, settings) {
-                            DisabledControls();
-                        },
-                        
-                    }));
-        var DataWHDocumentsDoc4 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc4Source, {
-                        filter: function () {
-                            $("#Grid4").jqxGrid('updatebounddata', 'filter');
-                        },
-                        sort: function () {
-                            $("#Grid4").jqxGrid('updatebounddata', 'sort');
-                        },
-                        beforeSend: function(jqXHR, settings) {
-                            DisabledControls();
-                        },
-                    }));
-        var DataWHDocumentsDoc8 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc8Source, {
-                        filter: function () {
-                            $("#Grid5").jqxGrid('updatebounddata', 'filter');
-                        },
-                        sort: function () {
-                            $("#Grid5").jqxGrid('updatebounddata', 'sort');
-                        },
-                        beforeSend: function(jqXHR, settings) {
-                            DisabledControls();
-                        },
-                    }));
-        var DataWHDocumentsDoc7 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc7Source, {
-                        filter: function () {
-                            $("#Grid6").jqxGrid('updatebounddata', 'filter');
-                        },
-                        sort: function () {
-                            $("#Grid6").jqxGrid('updatebounddata', 'sort');
-                        },
-                        beforeSend: function(jqXHR, settings) {
-                            DisabledControls();
-                        },
-                    }));
-        var DataWHDocumentsDoc9 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc9Source, {
-                        filter: function () {
-                            $("#Grid7").jqxGrid('updatebounddata', 'filter');
-                        },
-                        sort: function () {
-                            $("#Grid7").jqxGrid('updatebounddata', 'sort');
-                        },
-                        beforeSend: function(jqXHR, settings) {
-                            DisabledControls();
-                        },
-                    }));            
-                    
-        $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 135} ));
-        $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: DateStart}));
-        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: DateEnd}));
-        $("#edDateCrStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: null}));
-        $("#edDateCrEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: null}));
-        $("#edDateAcStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: null}));
-        $("#edDateAcEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '120px', formatString: 'dd.MM.yyyy', value: null}));
-        $("#edSupplier").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSuppliers, width: '270', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id"}));
-        $("#edAddress").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
-        $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '150', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
-        $("#edControl").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 75}));
-        $("#edAcDateNull").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 120}));
+
         $('#btnRefresh').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnInfo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCreate').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, imgSrc: '/images/6.png' }));
@@ -172,274 +62,9 @@
         });
         
         $('#btnRefresh').on('click', function(){
-            Find();
+            $('#edFiltering').click();
         });
         
-        
-        var DisabledControls = function() {
-            $('#btnRefresh').jqxButton({disabled: true});
-            $('#btnInfo').jqxButton({disabled: true});
-            $('#btnCreate').jqxButton({disabled: true});
-        };
-         
-        var Find = function() {
-            var NumberFilterGroup = new $.jqx.filter();
-            if ($("#edNumber").val() != '') {
-                var FilterNumber = NumberFilterGroup.createfilter('stringfilter', $("#edNumber").val(), 'CONTAINS');
-                NumberFilterGroup.addfilter(1, FilterNumber);
-            }
-        
-            var DateFilterGroup = new $.jqx.filter();
-            if ($("#edDateStart").val() != '') {
-                var FilterDateStart = DateFilterGroup.createfilter('datefilter', $("#edDateStart").val(), 'DATE_GREATER_THAN_OR_EQUAL');   
-                DateFilterGroup.addfilter(1, FilterDateStart);
-            }
-            if ($("#edDateEnd").val() != '') {
-                var FilterDateEnd = DateFilterGroup.createfilter('datefilter', $("#edDateEnd").val(), 'DATE_LESS_THAN_OR_EQUAL');   
-                DateFilterGroup.addfilter(1, FilterDateEnd);
-            }
-            
-            var DateCrFilterGroup = new $.jqx.filter();
-            if ($("#edDateCrStart").val() != '') {
-                var FilterDateCrStart = DateCrFilterGroup.createfilter('datefilter', $("#edDateCrStart").val(), 'DATE_GREATER_THAN_OR_EQUAL');   
-                DateCrFilterGroup.addfilter(1, FilterDateCrStart);
-            }
-            if ($("#edDateCrEnd").val() != '') {
-                var FilterDateCrEnd = DateCrFilterGroup.createfilter('datefilter', $("#edDateCrEnd").val(), 'DATE_LESS_THAN_OR_EQUAL');   
-                DateCrFilterGroup.addfilter(1, FilterDateCrEnd);
-            }
-            
-            var DateAcFilterGroup = new $.jqx.filter();
-            if ($("#edDateAcStart").val() != '') {
-                var FilterDateAcStart = DateAcFilterGroup.createfilter('datefilter', $("#edDateAcStart").val(), 'DATE_GREATER_THAN_OR_EQUAL');   
-                DateAcFilterGroup.addfilter(1, FilterDateAcStart);
-            }
-            if ($("#edDateAcEnd").val() != '') {
-                var FilterDateAcEnd = DateAcFilterGroup.createfilter('datefilter', $("#edDateAcEnd").val(), 'DATE_LESS_THAN_OR_EQUAL');   
-                DateAcFilterGroup.addfilter(1, FilterDateAcEnd);
-            }
-
-            var SupplierFilterGroup = new $.jqx.filter();
-            if ($("#edSupplier").val() != '') {
-                var FilterSupplier = SupplierFilterGroup.createfilter('numericfilter', $("#edSupplier").val(), 'EQUAL');
-                SupplierFilterGroup.addfilter(1, FilterSupplier);
-            }
-            
-            var AddressFilterGroup = new $.jqx.filter();
-            if ($("#edAddress").val() != '') {
-                var FilterAddress = AddressFilterGroup.createfilter('stringfilter', $("#edAddress").val(), 'CONTAINS');
-                AddressFilterGroup.addfilter(1, FilterAddress);
-            }
-            
-            var ControlFilterGroup = new $.jqx.filter();
-            if ($("#edControl").val() != '') {
-                var FilterControl = ControlFilterGroup.createfilter('booleanfilter', 1, 'EQUAL');
-                ControlFilterGroup.addfilter(1, FilterControl);
-            }
-            
-            var AcDateNullFilterGroup = new $.jqx.filter();
-            if ($("#edAcDateNull").val() != '') {
-                var FilterAcDate = AcDateNullFilterGroup.createfilter('datefilter', Date(), 'NULL');
-                AcDateNullFilterGroup.addfilter(1, FilterAcDate);
-            }
-            
-            var MasterFilterGroup = new $.jqx.filter();
-            if ($("#edMaster").val() != '') {
-                var FilterMaster = MasterFilterGroup.createfilter('numericfilter', $("#edMaster").val(), 'EQUAL');
-                MasterFilterGroup.addfilter(1, FilterMaster);
-            }
-            
-            var Docm_id = 0;
-            
-            var TabIndex = $('#edTabs').jqxTabs('selectedItem');
-            switch (TabIndex) {
-                case 0:
-                    if (CurrentRowDataAll != undefined)
-                        Docm_id = CurrentRowDataAll.docm_id;
-                    
-                    /* Фильт номер */
-                    $('#GridAll').jqxGrid('removefilter', 'number', false);
-                    if ($("#edNumber").val() != '') $("#GridAll").jqxGrid('addfilter', 'number', NumberFilterGroup);
-                    /* Фильтр по дате */
-                    $('#GridAll').jqxGrid('removefilter', 'date', false);
-                    if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#GridAll").jqxGrid('addfilter', 'date', DateFilterGroup);
-                    /* Фильтр по дате создания */
-                    $('#GridAll').jqxGrid('removefilter', 'date_create', false);
-                    if ($("#edDateCrStart").val() != '' || $("#edDateCrEnd").val() != '') $("#GridAll").jqxGrid('addfilter', 'date_create', DateCrFilterGroup);
-                    /* Фильтр по дате подтверждения */
-                    $('#GridAll').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#GridAll").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
-                    
-                    DisabledControls();
-                    $("#GridAll").jqxGrid({source: DataWHDocumentsAll});
-                    
-                    break;
-                case 1:
-                    /* Фильт номер */
-                    $('#Grid1').jqxGrid('removefilter', 'number', false);
-                    if ($("#edNumber").val() != '') $("#Grid1").jqxGrid('addfilter', 'number', NumberFilterGroup);
-                    /* Фильтр по дате */
-                    $('#Grid1').jqxGrid('removefilter', 'date', false);
-                    if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#Grid1").jqxGrid('addfilter', 'date', DateFilterGroup);
-                    /* Фильтр по дате создания */
-                    $('#Grid1').jqxGrid('removefilter', 'date_create', false);
-                    if ($("#edDateCrStart").val() != '' || $("#edDateCrEnd").val() != '') $("#Grid1").jqxGrid('addfilter', 'date_create', DateCrFilterGroup);
-                    /* Фильтр по дате подтверждения */
-                    $('#Grid1').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#Grid1").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
-                    /* Фильтр поставщик */
-                    $('#Grid1').jqxGrid('removefilter', 'splr_name', false);
-                    if ($("#edSupplier").val() != '') $("#Grid1").jqxGrid('addfilter', 'splr_name', SupplierFilterGroup);
-                    
-                    DisabledControls();
-                    $("#Grid1").jqxGrid({source: DataWHDocumentsDoc1});
-                    break;
-                case 2:
-                    /* Фильт номер */
-                    $('#Grid2').jqxGrid('removefilter', 'number', false);
-                    if ($("#edNumber").val() != '') $("#Grid2").jqxGrid('addfilter', 'number', NumberFilterGroup);
-                    /* Фильтр по дате */
-                    $('#Grid2').jqxGrid('removefilter', 'date', false);
-                    if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#Grid2").jqxGrid('addfilter', 'date', DateFilterGroup);
-                    /* Фильтр по дате создания */
-                    $('#Grid2').jqxGrid('removefilter', 'date_create', false);
-                    if ($("#edDateCrStart").val() != '' || $("#edDateCrEnd").val() != '') $("#Grid2").jqxGrid('addfilter', 'date_create', DateCrFilterGroup);
-                    /* Фильтр по дате подтверждения */
-                    $('#Grid2').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#Grid2").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
-                    /* Фильтр поставщик */
-                    $('#Grid2').jqxGrid('removefilter', 'splr_name', false);
-                    if ($("#edSupplier").val() != '') $("#Grid2").jqxGrid('addfilter', 'splr_name', SupplierFilterGroup);
-                    /* Фильтр по адресу */
-                    $('#Grid2').jqxGrid('removefilter', 'Address', false);
-                    if ($("#edAddress").val() != '') $("#Grid2").jqxGrid('addfilter', 'Address', AddressFilterGroup);
-                    
-                    DisabledControls();
-                    $("#Grid2").jqxGrid({source: DataWHDocumentsDoc2});
-                    break;
-                case 3:
-                    
-                    /* Фильт номер */
-                    $('#Grid3').jqxGrid('removefilter', 'number', false);
-                    if ($("#edNumber").val() != '') $("#Grid3").jqxGrid('addfilter', 'number', NumberFilterGroup);
-                    /* Фильтр по дате */
-                    $('#Grid3').jqxGrid('removefilter', 'date', false);
-                    if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#Grid3").jqxGrid('addfilter', 'date', DateFilterGroup);
-                    /* Фильтр по дате создания */
-                    $('#Grid3').jqxGrid('removefilter', 'date_create', false);
-                    if ($("#edDateCrStart").val() != '' || $("#edDateCrEnd").val() != '') $("#Grid3").jqxGrid('addfilter', 'date_create', DateCrFilterGroup);
-                    /* Фильтр по дате подтверждения */
-                    $('#Grid3').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#Grid3").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
-                    /* Фильтр поставщик */
-                    $('#Grid3').jqxGrid('removefilter', 'splr_name', false);
-                    if ($("#edSupplier").val() != '') $("#Grid3").jqxGrid('addfilter', 'splr_name', SupplierFilterGroup);
-                    /* Фильтр по адресу */
-                    $('#Grid3').jqxGrid('removefilter', 'Address', false);
-                    if ($("#edAddress").val() != '') $("#Grid3").jqxGrid('addfilter', 'Address', AddressFilterGroup);
-                    
-                    DisabledControls();
-                    $("#Grid3").jqxGrid({source: DataWHDocumentsDoc3});
-                    
-                    break;
-                case 4:
-                    
-                    /* Фильт номер */
-                    $('#Grid4').jqxGrid('removefilter', 'number', false);
-                    if ($("#edNumber").val() != '') $("#Grid4").jqxGrid('addfilter', 'number', NumberFilterGroup);
-                    /* Фильтр по дате */
-                    $('#Grid4').jqxGrid('removefilter', 'date', false);
-                    if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#Grid4").jqxGrid('addfilter', 'date', DateFilterGroup);
-                    /* Фильтр по дате создания */
-                    $('#Grid4').jqxGrid('removefilter', 'date_create', false);
-                    if ($("#edDateCrStart").val() != '' || $("#edDateCrEnd").val() != '') $("#Grid4").jqxGrid('addfilter', 'date_create', DateCrFilterGroup);
-                    /* Фильтр по дате подтверждения */
-                    $('#Grid4').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#Grid4").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
-                    /* Фильтр поставщик */
-                    $('#Grid4').jqxGrid('removefilter', 'splr_name', false);
-                    if ($("#edSupplier").val() != '') $("#Grid4").jqxGrid('addfilter', 'splr_name', SupplierFilterGroup);
-                    /* Фильтр по адресу */
-                    $('#Grid4').jqxGrid('removefilter', 'Address', false);
-                    if ($("#edAddress").val() != '') $("#Grid4").jqxGrid('addfilter', 'Address', AddressFilterGroup);
-                    /* Контроль */
-                    $('#Grid4').jqxGrid('removefilter', 'control', false);
-                    if ($("#edControl").val() != '') $("#Grid4").jqxGrid('addfilter', 'control', ControlFilterGroup);
-                    /* Затребовал */
-                    $('#Grid4').jqxGrid('removefilter', 'dmnd_empl_name', false);
-                    if ($("#edMaster").val() != '') $("#Grid4").jqxGrid('addfilter', 'dmnd_empl_name', MasterFilterGroup);
-                    
-                    $('#Grid4').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edAcDateNull").val() != '') $("#Grid4").jqxGrid('addfilter', 'ac_date', AcDateNullFilterGroup);
-                    
-                    DisabledControls();
-                    $("#Grid4").jqxGrid({source: DataWHDocumentsDoc4});
-                    
-                    break;
-                case 5:
-                    /* Фильт номер */
-                    $('#Grid5').jqxGrid('removefilter', 'number', false);
-                    if ($("#edNumber").val() != '') $("#Grid5").jqxGrid('addfilter', 'number', NumberFilterGroup);
-                    /* Фильтр по дате */
-                    $('#Grid5').jqxGrid('removefilter', 'date', false);
-                    if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#Grid5").jqxGrid('addfilter', 'date', DateFilterGroup);
-                    /* Фильтр по дате создания */
-                    $('#Grid5').jqxGrid('removefilter', 'date_create', false);
-                    if ($("#edDateCrStart").val() != '' || $("#edDateCrEnd").val() != '') $("#Grid5").jqxGrid('addfilter', 'date_create', DateCrFilterGroup);
-                    /* Фильтр по дате подтверждения */
-                    $('#Grid5').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#Grid5").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
-                    /* Фильтр поставщик */
-                    $('#Grid5').jqxGrid('removefilter', 'splr_name', false);
-                    if ($("#edSupplier").val() != '') $("#Grid5").jqxGrid('addfilter', 'splr_name', SupplierFilterGroup);
-                    
-                    DisabledControls();
-                    $("#Grid5").jqxGrid({source: DataWHDocumentsDoc8 });
-                    break;
-                    
-                case 6:
-                    /* Фильт номер */
-                    $('#Grid6').jqxGrid('removefilter', 'number', false);
-                    if ($("#edNumber").val() != '') $("#Grid6").jqxGrid('addfilter', 'number', NumberFilterGroup);
-                    /* Фильтр по дате */
-                    $('#Grid6').jqxGrid('removefilter', 'date', false);
-                    if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#Grid6").jqxGrid('addfilter', 'date', DateFilterGroup);
-                    /* Фильтр по дате создания */
-                    $('#Grid6').jqxGrid('removefilter', 'date_create', false);
-                    if ($("#edDateCrStart").val() != '' || $("#edDateCrEnd").val() != '') $("#Grid6").jqxGrid('addfilter', 'date_create', DateCrFilterGroup);
-                    /* Фильтр по дате подтверждения */
-                    $('#Grid6').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#Grid6").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
-                    /* Фильтр поставщик */
-                    $('#Grid6').jqxGrid('removefilter', 'splr_name', false);
-                    if ($("#edSupplier").val() != '') $("#Grid6").jqxGrid('addfilter', 'splr_name', SupplierFilterGroup);
-                    
-                    DisabledControls();
-                    $("#Grid6").jqxGrid({source: DataWHDocumentsDoc7 });
-                    break;
-                
-                case 7:
-                    /* Фильт номер */
-                    $('#Grid7').jqxGrid('removefilter', 'number', false);
-                    if ($("#edNumber").val() != '') $("#Grid7").jqxGrid('addfilter', 'number', NumberFilterGroup);
-                    /* Фильтр по дате */
-                    $('#Grid7').jqxGrid('removefilter', 'date', false);
-                    if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#Grid7").jqxGrid('addfilter', 'date', DateFilterGroup);
-                    /* Фильтр по дате создания */
-                    $('#Grid7').jqxGrid('removefilter', 'date_create', false);
-                    if ($("#edDateCrStart").val() != '' || $("#edDateCrEnd").val() != '') $("#Grid7").jqxGrid('addfilter', 'date_create', DateCrFilterGroup);
-                    /* Фильтр по дате подтверждения */
-                    $('#Grid7').jqxGrid('removefilter', 'ac_date', false);
-                    if ($("#edDateAcStart").val() != '' || $("#edDateAcEnd").val() != '') $("#Grid7").jqxGrid('addfilter', 'ac_date', DateAcFilterGroup);
-                    /* Фильтр поставщик */
-                    $('#Grid7').jqxGrid('removefilter', 'splr_name', false);
-                    if ($("#edSupplier").val() != '') $("#Grid7").jqxGrid('addfilter', 'splr_name', SupplierFilterGroup);
-                    
-                    DisabledControls();
-                    $("#Grid7").jqxGrid({source: DataWHDocumentsDoc9 });
-                    break;
-            };
-        };
         
         var GetNotes = function(Docm_id) {
             var Result = '';
@@ -557,8 +182,8 @@
                     
                     $("#GridAll").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 300,
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
@@ -584,9 +209,11 @@
                                   
                                 ],
                             }));
-                    Find();
+//                    Find();
+                    $('#edFiltering').click();
                 break;
                 case 1:
+                    
                     $("#edNotes1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
                     
                     $("#Grid1").on('rowselect', function (event) {
@@ -618,8 +245,8 @@
                     
                     $("#Grid1").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 300,
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
@@ -649,7 +276,8 @@
                                   
                                 ],
                             }));
-                    Find();
+//                    Find();
+                    $('#edFiltering').click();
                 break;
                 case 2:
                     $("#edNotes2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
@@ -682,8 +310,8 @@
                     
                     $("#Grid2").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 300,
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
@@ -707,7 +335,8 @@
                                   { text: 'Принято на склад', align: 'center', name: 'Action' },
                                 ],
                             }));
-                    Find();
+//                    Find();
+                        $('#edFiltering').click();
                 break;
                 case 3:
                     $("#edNotes3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
@@ -742,8 +371,8 @@
                     
                     $("#Grid3").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 300,
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
@@ -765,7 +394,8 @@
                                   { text: 'Выдано со склада', align: 'center', name: 'Action' },
                                 ],
                             }));
-                    Find();
+//                    Find();
+                    $('#edFiltering').click();
                 break;
                 case 4:
                     $("#edNotes4").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
@@ -839,8 +469,8 @@
                     
                     $("#Grid4").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 300,
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
@@ -889,7 +519,8 @@
                                   { text: 'Закупка', align: 'center', name: 'Purchase' },
                                 ],
                             }));
-                    Find();
+//                    Find();
+                    $('#edFiltering').click();
                 break;
                 case 5:
                     $("#edNotes5").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
@@ -923,8 +554,8 @@
                     
                     $("#Grid5").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 300,
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
@@ -945,7 +576,8 @@
                                   { text: 'Принято на склад', align: 'center', name: 'Action' },
                                 ],
                             }));
-                    Find();
+//                    Find();
+                    $('#edFiltering').click();
                 break;
                 case 6:
                     $("#edNotes6").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
@@ -980,8 +612,8 @@
                     
                     $("#Grid6").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 300,
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
@@ -1003,7 +635,9 @@
                                   { text: 'Принято на склад', align: 'center', name: 'Action' },
                                 ],
                             }));
-                    Find();
+//                    Find();
+                    $('#edFiltering').click();
+                    
                 break;
                 case 7:
                     $("#edNotes7").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
@@ -1038,8 +672,8 @@
                     
                     $("#Grid7").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 300,
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
@@ -1063,13 +697,14 @@
                                   { text: 'Выдано', align: 'center', name: 'Action' },
                                 ],
                             }));
-                    Find();
+//                    Find();
+                    $('#edFiltering').click();
                 break;
             }
         };
         
         
-        $('#edTabs').jqxTabs({ width: '99.8%', height: 445, initTabContent: initWidgets });
+        $('#edTabs').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)', initTabContent: initWidgets });
         var defaultTabIndex = 4;
         var tabIndex = Aliton.GetTabIndexFromURL(defaultTabIndex);
         $('#edTabs').jqxTabs('select', tabIndex);
@@ -1227,64 +862,9 @@
     );
 ?>
 
-
-
-<div class="row">
-    <div class="row-column">
-        <div>
-            <div class="row-column">Номер</div>
-            <div class="row-column"><input type="text" autocomplete="off" id="edNumber"/></div>
-        </div>
-        <div>
-            <div class="row-column"><div id="edControl">Котроль</div></div>
-            <div class="row-column"><div id="edAcDateNull">Не выданные</div></div>
-        </div>
-    </div>
-    <div class="row-column">
-        <div>
-            <div class="row-column" style="width: 40px;">Дата с</div>
-            <div class="row-column"><div id="edDateStart"></div></div>
-        </div>
-        <div style="clear: both"></div>
-        <div style="margin-top: 4px;">
-            <div class="row-column" style="width: 40px; text-align: right;">по</div>
-            <div class="row-column"><div id="edDateEnd"></div></div>
-        </div>
-    </div>
-    <div class="row-column">
-        <div>
-            <div class="row-column" style="width: 60px;">Создан с</div>
-            <div class="row-column"><div id="edDateCrStart"></div></div>
-        </div>
-        <div style="clear: both"></div>
-        <div style="margin-top: 4px;">
-            <div class="row-column" style="width: 60px; text-align: right;">по</div>
-            <div class="row-column"><div id="edDateCrEnd"></div></div>
-        </div>
-    </div>
-    <div class="row-column">
-        <div>
-            <div class="row-column" style="width: 100px;">Подтвержден с</div>
-            <div class="row-column"><div id="edDateAcStart"></div></div>
-        </div>
-        <div style="clear: both"></div>
-        <div style="margin-top: 4px;">
-            <div class="row-column" style="width: 100px; text-align: right;">по</div>
-            <div class="row-column"><div id="edDateAcEnd"></div></div>
-        </div>
-    </div>
-</div>
-<div class="row" style="margin-top: 4px;">
-    <div class="row-column">Поставщик</div>
-    <div class="row-column"><div id="edSupplier"></div></div>
-    <div class="row-column">Адрес</div>
-    <div class="row-column"><input type="text" autocomplete="off" id="edAddress"/></div>
-    <div class="row-column">Затребовал</div>
-    <div class="row-column"><div id="edMaster"></div></div>
-</div>
-<div class="row">
+<div class="al-row" style="height: calc(100% - 46px)">
     <div id='edTabs'>
-        <ul>
+        <ul style="margin-left: 20px">
             <li>
                 <div style="height: 20px; margin-top: 5px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Все документы</div>
@@ -1328,81 +908,89 @@
             </li>
         </ul>
         <div style="overflow: hidden;">
-            <div style="padding: 5px;">
-                <div id="GridAll"></div>
-                <div><div class="row-column">Примечание</div></div>
-                <div><textarea id="edNotesAll" readonly="readonly"></textarea></div>
+            <div style="padding: 5px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 112px)">
+                    <div id="GridAll"></div>
+                </div>
+                <div class="al-row"><div class="row-column">Примечание</div></div>
+                <div class="al-row"><textarea id="edNotesAll" readonly="readonly"></textarea></div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 5px;">
-                <div id="Grid1"></div>
-                <div><div class="row-column">Примечание</div></div>
-                <div><textarea id="edNotes1" readonly="readonly"></textarea></div>
+            <div style="padding: 5px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 112px)">
+                    <div id="Grid1"></div>
+                </div>
+                <div class="al-row"><div class="row-column">Примечание</div></div>
+                <div class="al-row"><textarea id="edNotes1" readonly="readonly"></textarea></div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 5px;">
-                <div id="Grid2"></div>
-                <div><div class="row-column">Примечание</div></div>
-                <div><textarea id="edNotes2" readonly="readonly"></textarea></div>
+            <div style="padding: 5px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 112px)">
+                    <div id="Grid2"></div>
+                </div>
+                <div class="al-row"><div class="row-column">Примечание</div></div>
+                <div class="al-row"><textarea id="edNotes2" readonly="readonly"></textarea></div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 5px;">
-                <div id="Grid3"></div>
-                <div><div class="row-column">Примечание</div></div>
-                <div><textarea id="edNotes3" readonly="readonly"></textarea></div>
+            <div style="padding: 5px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 112px)">
+                    <div id="Grid3"></div>
+                </div>
+                <div class="al-row"><div class="row-column">Примечание</div></div>
+                <div class="al-row"><textarea id="edNotes3" readonly="readonly"></textarea></div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 5px;">
-                <div id="Grid4"></div>
+            <div style="padding: 5px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 112px)">
+                    <div id="Grid4"></div>
+                </div>
                 <div><div class="row-column">Примечание</div></div>
                 <div><textarea id="edNotes4" readonly="readonly"></textarea></div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 5px;">
-                <div id="Grid5"></div>
-                <div><div class="row-column">Примечание</div></div>
-                <div><textarea id="edNotes5" readonly="readonly"></textarea></div>
+            <div style="padding: 5px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 112px)">
+                    <div id="Grid5"></div>
+                </div>
+                <div class="al-row"><div class="row-column">Примечание</div></div>
+                <div class="al-row"><textarea id="edNotes5" readonly="readonly"></textarea></div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 5px;">
-                <div id="Grid6"></div>
-                <div><div class="row-column">Примечание</div></div>
-                <div><textarea id="edNotes6" readonly="readonly"></textarea></div>
+            <div style="padding: 5px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 112px)">
+                    <div id="Grid6"></div>
+                </div>
+                <div class="al-row"><div class="row-column">Примечание</div></div>
+                <div class="al-row"><textarea id="edNotes6" readonly="readonly"></textarea></div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 5px;">
-                <div id="Grid7"></div>
-                <div><div class="row-column">Примечание</div></div>
-                <div><textarea id="edNotes7" readonly="readonly"></textarea></div>
+            <div style="padding: 5px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 112px)">
+                    <div id="Grid7"></div>
+                </div>
+                <div class="al-row"><div class="row-column">Примечание</div></div>
+                <div class="al-row"><textarea id="edNotes7" readonly="readonly"></textarea></div>
             </div>
         </div>
     </div>
 </div>
-<div style="float: left">
-    <div class="row">
-        <div class="row-column"><input type="button" value="Дополнительно" id='btnInfo' /></div>
-        <div class="row-column"><input type="button" value="Создать" id='btnCreate' /></div>
-    </div>
-    <div class="row">
-        <div class="row-column"><input type="button" value="Обновить" id='btnRefresh' /></div>
-    </div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Дополнительно" id='btnInfo' /></div>
+    <div class="al-row-column"><input type="button" value="Создать" id='btnCreate' /></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefresh' /></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='btnDel' /></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Отменить подтв." id='btnUndo' /></div>
+    <div style="clear: both"></div>
 </div>
-<div style="float: right;">
-    <div class="row">
-        <div class="row-column"><input type="button" value="Удалить" id='btnDel' /></div>
-    </div>
-    <div class="row">
-        <div class="row-column"><input type="button" value="Отменить подтв." id='btnUndo' /></div>
-    </div>
-    
-</div>
+
+
 <div id="WHDocumentsDialog" style="display: none;">
     <div id="WHDocumentsDialogHeader">
         <span id="WHDocumentsHeaderText">Вставка\Редактирование записи</span>
