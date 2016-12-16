@@ -90,9 +90,7 @@
         });
         
         $('#btnRefreshEmpl').on('click', function(){
-            var rowindex = $('#EmployeesGrid').jqxGrid('getselectedrowindex');
             $('#EmployeesGrid').jqxGrid('updatebounddata');
-            $('#EmployeesGrid').jqxGrid('selectrow', rowindex);
         });
         
         $('#btnExportEmpl').on('click', function(){
@@ -306,7 +304,13 @@
             $("#btnEditEmpl").click();
         });
         
-        GridState.StateInitGrid('EmployeesGrid', 'EmployeesIndex_EmployeesGrid');
+        $("#EmployeesGrid").on("bindingcomplete", function (event) {
+            if (CurrentRowData != undefined) 
+                Aliton.SelectRowByIdVirtual('Employee_id', CurrentRowData.Employee_id, '#EmployeesGrid', false);
+            else
+                Aliton.SelectRowByIdVirtual('Employee_id', null, '#EmployeesGrid', false);
+        });
+        
         $("#EmployeesGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
