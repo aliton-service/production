@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var OpenCostCalc = true;
     $(document).ready(function () {
         var CurrentRowData;
         // Присваиваем значения по умолчанию для фильтров
@@ -313,7 +314,7 @@
                                     data: {
                                         Params: {
                                             ObjectGr_id: Demand.ObjectGr_id,
-                                            group_name: 'Pаявка №' + Demand.Demand_id,
+                                            name: 'Заявка №' + Demand.Demand_id,
                                             date: Demand.Date,
                                             Demand_id: Demand.Demand_id
                                         },

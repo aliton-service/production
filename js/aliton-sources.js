@@ -3033,6 +3033,7 @@ Sources.SourceObjectsGroupCostCalculations =
     datatype: "json",
     datafields: [
         {name: 'calc_id', type: 'int'},
+        {name: 'ObjectGr_id', type: 'int'},
         {name: 'cgrp_id', type: 'int'},
         {name: 'number', type: 'int'},
         {name: 'group_name', type: 'string'},

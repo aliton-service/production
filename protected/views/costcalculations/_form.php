@@ -8,7 +8,7 @@
             cgrp_id: <?php echo json_encode($model->calc_id); ?>,
             date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
             regs_id: '<?php echo $model->regs_id; ?>',
-            group_name: '<?php echo $model->group_name; ?>',
+            name: '<?php echo $model->name; ?>',
             ccwt_id: '<?php echo $model->ccwt_id; ?>',
             PaymentType_id: '<?php echo $model->PaymentType_id; ?>',
             ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
@@ -123,6 +123,10 @@
                             if ($('#GridDocuments').length>0)
                                 $('#GridDocuments').jqxGrid('updatebounddata');
                         }
+                        
+                        if (typeof(OpenCostCalc) != 'undefined')
+                            if (OpenCostCalc == true)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('CostCalculations/Index')); ?> + '&calc_id=' + Res.id);
                     }
                     else {
                         if ($('#CostCalculationsDialog').length>0)
@@ -138,7 +142,7 @@
         });
         
             
-        if (CostCalc.group_name !== '') $("#group_nameCC").jqxInput('val', CostCalc.group_name);
+        if (CostCalc.name !== '') $("#group_nameCC").jqxInput('val', CostCalc.name);
         if (CostCalc.regs_id !== '') $("#regsCC").jqxComboBox('val', CostCalc.regs_id);
         if (CostCalc.ccwt_id !== '') $("#workCC").jqxComboBox('val', CostCalc.ccwt_id);
         if (CostCalc.PaymentType_id !== '') $("#PaymentTypeCC").jqxComboBox('val', CostCalc.PaymentType_id);
@@ -168,6 +172,7 @@
 <input type="hidden" name="CostCalculations[cgrp_id]" value="<?php echo $model->cgrp_id; ?>"/>
 <input type="hidden" name="CostCalculations[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>"/>
 <input type="hidden" name="CostCalculations[repr_id]" value="<?php echo $model->repr_id; ?>"/>
+<input type="hidden" name="CostCalculations[koef_indirect]" value="<?php echo $model->koef_indirect; ?>"/>
 
 <div class="row">
     <div class="row-column" style="margin-top: 2px; width: 115px;">Дата: </div>
@@ -176,7 +181,7 @@
 
 <div class="row">
     <div class="row-column" style="width: 115px;">Наименование:</div> 
-    <div class="row-column"><input id='group_nameCC' type="text" name="CostCalculations[group_name]"><?php echo $form->error($model, 'group_name'); ?></div>
+    <div class="row-column"><input id='group_nameCC' type="text" name="CostCalculations[name]"><?php echo $form->error($model, 'name'); ?></div>
 </div>
 <div class="row">
     <div class="row-column" style="margin-top: 2px; width: 115px;">Оформление: </div>

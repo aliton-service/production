@@ -153,7 +153,7 @@
                 selectionmode: 'multiplerowsextended',
                 columns: [
                     { text: 'Клиент', datafield: 'Fullname', width: 150 },
-                    { text: 'Адрес', datafield: 'Addr', width: 100/* minwidth: 250*/ },
+                    { text: 'Адрес', datafield: 'Addr', width: 300/* minwidth: 250*/ },
                     { text: 'Запл.', datafield: 'EventCount', width: 50,
                                 
                                 aggregates: [{ 'Запл.':
@@ -394,10 +394,10 @@
     <div style="clear: both"></div>
 </div>
 <div class="al-row" style="height: calc(100% - 76px)">
-    <div class="al-row-column" style="width: 450px;">
+    <div class="al-row-column" style="width: 550px;">
         <div id="EventsClientsGrid" class="jqxGridAliton"></div>
     </div>
-    <div class="al-row-column" style="width: calc(100% - 456px)">
+    <div class="al-row-column" style="width: calc(100% - 556px)">
         <div style="">
             <div id='jqxTabsEvents'>
                 <ul>

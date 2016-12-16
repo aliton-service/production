@@ -125,6 +125,92 @@
             return StyleClass;
         }
         
+        var contextMenu = $("#ContextMenu").jqxMenu({ width: 200, height: 58, autoOpenPopup: false, mode: 'popup'});
+        $("#CostCalculationsGrid").on('contextmenu', function () {
+            return false;
+        });
+        
+        $("#CostCalculationsGrid").on('rowclick', function (event) {
+            if (event.args.rightclick) {
+                $("#CostCalculationsGrid").jqxGrid('selectrow', event.args.rowindex);
+                var scrollTop = $(window).scrollTop();
+                var scrollLeft = $(window).scrollLeft();
+                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+                return false;
+            }
+        });
+        
+        function getCookie(name) {
+          var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+          return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+        
+        function setCookie(name, value, options) {
+            options = options || {};
+
+            var expires = options.expires;
+
+            if (typeof expires == "number" && expires) {
+                var d = new Date();
+                d.setTime(d.getTime() + expires * 1000);
+                expires = options.expires = d;
+            }
+            if (expires && expires.toUTCString) {
+                options.expires = expires.toUTCString();
+            }
+
+            value = encodeURIComponent(value);
+
+            var updatedCookie = name + "=" + value;
+
+            for (var propName in options) {
+                updatedCookie += "; " + propName;
+                var propValue = options[propName];
+                if (propValue !== true) {
+                    updatedCookie += "=" + propValue;
+                }
+            }
+
+            document.cookie = updatedCookie;
+        }
+        
+        $("#ContextMenu").on('itemclick', function (event) {
+            var args = event.args;
+            var rowindex = $("#CostCalculationsGrid").jqxGrid('getselectedrowindex');
+            if ($.trim($(args).text()) == "Копировать смету") {
+                setCookie("CopyCostCalc_Calc_id", CurrentCostCalcRowData.calc_id, 3600);
+                setCookie("CopyCostCalc_ObjectGr_id", CurrentCostCalcRowData.ObjectGr_id, 3600);
+            }
+            if ($.trim($(args).text()) == "Вставить смету") {
+                var Calc_id = getCookie("CopyCostCalc_Calc_id");
+                var ObjectGr_id = getCookie("CopyCostCalc_ObjectGr_id");
+                if (Calc_id != undefined && ObjectGr_id != undefined) {
+                    PasteCostCalc(Calc_id, ObjectGr_id);
+                }
+            }
+        });
+        
+        function PasteCostCalc(FCalc_id, ObjectGr_id) {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl("CostCalculations/Paste")); ?>,
+                type: 'POST',
+                async: true,
+                data: {
+                   Calc_id: FCalc_id,
+                   ObjectGr_id: CurrentCostCalcRowData.ObjectGr_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    Calc_id = Res.id;
+                    $('#btnRefreshCostCalculations').click();
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+        
+            });
+        };
+        
         $("#CostCalculationsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -184,7 +270,7 @@
         
         $('#btnRefreshCostCalculations').on('click', function(){
             if ($('#btnRefreshCostCalculations').jqxButton('disabled')) return;
-        
+            console.log('Calc_id2:' + Calc_id);
             if (Calc_id == null) {
                 var RowIndex = $('#CostCalculationsGrid').jqxGrid('getselectedrowindex');
                 var Val = $('#CostCalculationsGrid').jqxGrid('getcellvalue', RowIndex, "calc_id");
@@ -316,4 +402,11 @@
     <div style="padding: 10px 20px;" id="DialogCostCalculationsContent">
         <div style="" id="BodyCostCalculationsDialog"></div>
     </div>
+</div>
+
+<div id='ContextMenu' style="display: none">
+    <ul>
+        <li>Копировать смету</li>
+        <li>Вставить смету</li>
+    </ul>
 </div>

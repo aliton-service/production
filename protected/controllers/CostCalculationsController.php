@@ -19,7 +19,7 @@ class CostCalculationsController extends Controller
     {
         return array(
                 array('allow',
-                'actions'=>array('index', 'view', 'GetModel', 'GetDetails'),
+                'actions'=>array('index', 'view', 'GetModel', 'GetDetails', 'Paste'),
                 'roles'=>array('ViewCostCalculations'),
             ),
             array('allow', 
@@ -109,6 +109,24 @@ class CostCalculationsController extends Controller
                 return;
             } 
         }
+        
+        $Default = new SQLQuery();
+        $Default->setSelect("\nSelect
+                                  c.jrdc_id,
+                                  c.ContrNumS,
+                                  c.ContrDateS");
+        $Default->setFrom("\nFrom ObjectsGroup og inner join Contracts_v c on (og.ObjectGr_id = c.ObjectGr_id)");
+        $Default->setWhere("\nWhere og.DelDate is null
+                                  and og.ObjectGr_id = :#ObjectGr_id 
+                                  and isnull(c.DocType_id, 4) = 4
+                                  and dbo.truncdate(getdate()) between c.ContrSDateStart and c.ContrSDateEnd");
+                                
+        $Default->bindParam('ObjectGr_id', $model->ObjectGr_id);
+        $Default = $Default->QueryRow();
+        $model->attributes = $Default;
+        $model->empl_id = Yii::app()->user->Employee_id;
+        $model->date = Date('d.m.Y');
+        $model->koef_indirect = 1.6;
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
@@ -514,6 +532,31 @@ class CostCalculationsController extends Controller
             
             $ObjectResult['result'] = 1;
             $ObjectResult['id'] = $Res['calc_id'];
+        }
+        
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionPaste() 
+    {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        if (isset($_POST['Calc_id']) && isset($_POST['ObjectGr_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'COPY_CostCalculations';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = null;
+            $sp->Parameters[1]['Value'] = $_POST['Calc_id'];
+            $sp->Parameters[2]['Value'] = $_POST['ObjectGr_id'];
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $Res['New_Calc_id'];
         }
         
         echo json_encode($ObjectResult);

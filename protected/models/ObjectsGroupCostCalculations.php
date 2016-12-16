@@ -3,6 +3,7 @@
 class ObjectsGroupCostCalculations extends MainFormModel
 {
     public $calc_id = null;
+    public $ObjectGr_id = null;
     public $cgrp_id = null;
     public $number = null;
     public $group_name = null;
@@ -31,6 +32,7 @@ class ObjectsGroupCostCalculations extends MainFormModel
 
         $Select = "\nSelect 
                         c.calc_id,
+                        c.ObjectGr_id,
                         ccg.cgrp_id,
                         ccg.number,
                         ccg.name as group_name,
