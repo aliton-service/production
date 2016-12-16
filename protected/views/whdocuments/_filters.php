@@ -380,6 +380,7 @@
                     break;
             };
         };
+        Find();
     });
 </script>
 
