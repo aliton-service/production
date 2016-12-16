@@ -11,7 +11,7 @@
         EventTypesDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventTypes));
         EventTypesDataAdapter.dataBind();
         
-        EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients, { id: 'Form_id' , url: '/index.php?r=Events/Clients'}), {
+        EventsClientsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEventsClients, { id: 'ObjectGr_id' , url: '/index.php?r=Events/Clients'}), {
             formatData: function (data) {
                 var Variables = {
                     EventType: '',
@@ -154,11 +154,13 @@
                 columns: [
                     { text: 'Клиент', datafield: 'Fullname', width: 150 },
                     { text: 'Адрес', datafield: 'Addr', width: 100/* minwidth: 250*/ },
-                    { text: 'Запл.', datafield: 'EventCount', width: 50, aggregates: [{ 'Запл.':
+                    { text: 'Запл.', datafield: 'EventCount', width: 50,
+                                
+                                aggregates: [{ 'Запл.':
                                         function (aggregatedValue, currentValue) {
                                             return aggregatedValue + currentValue;
                                         }
-                                      }] },
+                                      }]  },
                     { text: 'Невып.', datafield: 'NoExecEventCount', width: 60 },
                 ],
                 groups: ['Fullname']
