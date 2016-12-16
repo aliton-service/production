@@ -1,7 +1,15 @@
 <script>
     $(document).ready(function() {
 //        $.ajax({
-//            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/'))?>
+//            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+//            type: 'POST',
+//            data: {
+//                Models: ['Juridicals', 'Sections']
+//            },
+//            success: function(Res) {
+//                Res = JSON.parse(Res);
+//                console.log(Res);
+//            }
 //        });
     });
     

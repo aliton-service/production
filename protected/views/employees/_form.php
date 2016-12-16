@@ -36,24 +36,46 @@
             Information: <?php echo json_encode($model->Information); ?>,
         };
         
-        var DataPositions = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePositions));
-        var DataJuridiclas = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceJuridicalsMin));
-        var DataSections = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSections));
-        var DataDepartments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDepartments));
-        var DataTerritory = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceTerritory, {async: false}));
-        var DataRegions = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListRegionsMin));
-        var DataAreas = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAreas));
-        var DataStreets = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}), {
-            beforeLoadComplete: function (records) {
-                var value = Employee.Region_id;
-                var filteredRecords = new Array();
-                for (var i = 0; i < records.length; i++) {
-                    if (records[i].Region_id == parseInt(value)) 
-                        filteredRecords.push(records[i]);
-                }
-                return filteredRecords;
+        var DataPositions;
+        var DataJuridiclas;
+        var DataSections;
+        var DataDepartments;
+        var DataTerritory;
+        var DataRegions;
+        var DataAreas;
+        var DataStreets;
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['Positions', 'JuridicalsMin', 'Sections', 'Departments', 'Territory', 'Regions', 'Areas', 'Streets']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                DataPositions = Res[0].Data;
+                DataJuridiclas = Res[1].Data;
+                DataSections = Res[2].Data;
+                DataDepartments = Res[3].Data;
+                DataTerritory = Res[4].Data;
+                DataRegions = Res[5].Data;
+                DataAreas = Res[6].Data;
+                DataStreets = Res[7].Data;
             }
         });
+        
+        
+//        var DataStreets = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}), {
+//            beforeLoadComplete: function (records) {
+//                var value = Employee.Region_id;
+//                var filteredRecords = new Array();
+//                for (var i = 0; i < records.length; i++) {
+//                    if (records[i].Region_id == parseInt(value)) 
+//                        filteredRecords.push(records[i]);
+//                }
+//                return filteredRecords;
+//            }
+//        });
         
         $("#edEmployeeName").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "ФИО", width: 400}));
         $("#edPosition").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPositions, width: '290', height: '25px', displayMember: "PositionName", valueMember: "Position_id"}));

@@ -51,15 +51,7 @@ class AjaxDataController extends Controller
         
             $TopCount = -1;
             $Variables = array();
-
-            
-
-            if(isset($_POST['Filters']))
-                $Result = $model->Find(array(), array(), null, null);
-            else if (isset($_GET['Filters']))
-                $Result = $model->Find(array(), array(), null, null);
-            else
-                $Result = $model->Find(array(), array(), null, null);
+            $Result = $model->Find(array(), array(), $TopCount, $Variables);
 
             $CountRow = count($Result);
             
