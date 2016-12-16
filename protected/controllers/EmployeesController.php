@@ -5,6 +5,8 @@ class EmployeesController extends Controller
 
     public $layout='//layouts/column2';
     public $title = '';
+    public $gridFilters = null;
+    public $filterDefaultValues = null;
 
 
     public function filters()
@@ -106,6 +108,7 @@ class EmployeesController extends Controller
     public function actionIndex()
     {
         $this->title = 'Сотрудники';
+        $this->gridFilters = '_filters';
         $this->render('index');
     }
 }

@@ -3,24 +3,35 @@
         /* Текущая выбранная строка данных */
         var CurrentRowData;
         
-        var EmplDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEmployees, {
-            filter: function () {
-                $("#EmployeesGrid").jqxGrid('updatebounddata', 'filter');
-            },
-            sort: function () {
-                $("#EmployeesGrid").jqxGrid('updatebounddata', 'sort');
-            }
-        }));
-        
         var NoteRender = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#EmployeesGrid').jqxGrid('getrowdata', row);
             return Temp.Note;
         };
         
-        var SourceFilter = [{id: 1, Name: 'Работающие'}, {id: 2, Name: 'Уволенные'}];
+        var DataChilds = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceChildrens, {}), {
+            formatData: function (data) {
+                var Empl = 0;
+                if (CurrentRowData != undefined) Empl = CurrentRowData.Employee_id;
+                    
+                $.extend(data, {
+                    Filters: ["c.Employee_id = " + Empl],
+                });
+                return data;
+            },
+        });
         
-        $("#edFIO").jqxInput({height: 25, width: 234, minLength: 1}); 
-        $("#edFilter").jqxComboBox({ source: SourceFilter, width: '160', height: '25px', displayMember: "Name", valueMember: "id"}); // Фильтр тип заявки
+        var DataInstr = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInstructings, {}), {
+            formatData: function (data) {
+                var Empl = 0;
+                if (CurrentRowData != undefined) Empl = CurrentRowData.Employee_id;
+                
+                $.extend(data, {
+                    Filters: ["i.Employee_id = " + Empl],
+                });
+                return data;
+            },
+        });
+        
         $('#btnAddEmpl').jqxButton({ width: 120, height: 30 });
         $('#btnEditEmpl').jqxButton({ width: 120, height: 30 });
         $('#btnExportEmpl').jqxButton({ width: 120, height: 30 });
@@ -91,22 +102,44 @@
         var initWidgets = function(tab) {
             switch(tab) {
                 case 0:
-                    $("#edAddress").jqxInput({height: 25, width: 250, minLength: 1}); 
-                    $("#edAddr").jqxInput({height: 25, width: 250, minLength: 1}); 
+                    $("#edAddress").jqxInput({height: 25, width: 200, minLength: 1}); 
+                    $("#edAddr").jqxInput({height: 25, width: 200, minLength: 1}); 
                     $("#edTelHome").jqxInput({height: 25, width: 190, minLength: 1}); 
-                    $("#edTelWork").jqxInput({height: 25, width: 235, minLength: 1}); 
-                    $("#edTelOther").jqxInput({height: 25, width: 190, minLength: 1}); 
-                    $("#edWorkEmail").jqxInput({height: 25, width: 250, minLength: 1});
+                    $("#edTelWork").jqxInput({height: 25, width: 150, minLength: 1}); 
+                    $("#edTelOther").jqxInput({height: 25, width: 150, minLength: 1}); 
+                    $("#edWorkEmail").jqxInput({height: 25, width: 200, minLength: 1});
                     $("#edEmail").jqxInput({height: 25, width: 250, minLength: 1});
-                    $('#edInfo').jqxTextArea({ height: 50, width: '100%', minLength: 1 });
-                    $('#edDoc').jqxTextArea({ height: 50, width: '100%', minLength: 1 });
-                    $('#edNote').jqxTextArea({ height: 50, width: '100%', minLength: 1 });
+                    $('#edInfo').jqxTextArea({ height: 50, width: 'calc(100% - 2px)', minLength: 1 });
+                    $('#edDoc').jqxTextArea({ height: 50, width: 'calc(100% - 2px)', minLength: 1 });
+                    $('#edNote').jqxTextArea({ height: 50, width: 'calc(100% - 2px)', minLength: 1 });
                     break;
                 case 1:
                     $('#btnAddChildren').jqxButton({ width: 120, height: 30 });
                     $('#btnEditChildren').jqxButton({ width: 120, height: 30 });
                     $('#btnRefreshChildren').jqxButton({ width: 120, height: 30 });
                     $('#btnDelChildren').jqxButton({ width: 120, height: 30 });
+                    
+                    $('#ChildsGrid').on('rowdoubleclick', function (event) { 
+                        $("#btnEditChildren").click();
+                    });
+
+                    $("#ChildsGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            pageable: false,
+                            sortable: true,
+                            showfilterrow: false,
+                            virtualmode: false,
+                            width: 'calc(100% - 2px)',
+                            height: 'calc(100% - 2px)',
+                            source: DataChilds,
+                            columns: [
+                                { text: 'Дата добавления', filtertype: 'date', datafield: 'DateCreate', filtercondition: 'DATE_EQUAL', width: 120, cellsformat: 'dd.MM.yyyy HH:mm'},    
+                                { text: 'Фамилия Имя Отчество', dataField: 'ChildrenName', columntype: 'textbox', filtercondition: 'CONTAINS', width: 250},
+                                { text: 'Дата рождения', filtertype: 'date', datafield: 'BirthDay', filtercondition: 'DATE_EQUAL', width: 120, cellsformat: 'dd.MM.yyyy'},
+                                { text: 'Полных лет', dataField: 'Age', columntype: 'textbox', filtercondition: 'CONTAINS', width: 100},
+                            ]
+
+                    }));
                     
                     $('#btnAddChildren').on('click', function(){
                         if (CurrentRowData != undefined) {
@@ -160,6 +193,27 @@
                     $('#btnEditInstr').jqxButton({ width: 120, height: 30 });
                     $('#btnRefreshInstr').jqxButton({ width: 120, height: 30 });
                     $('#btnDelInstr').jqxButton({ width: 120, height: 30 });
+                    $('#InstrGrid').on('rowdoubleclick', function (event) { 
+                        $("#btnEditInstr").click();
+                    });
+
+                    $("#InstrGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            pageable: false,
+                            sortable: true,
+                            showfilterrow: false,
+                            virtualmode: false,
+                            source: DataInstr,
+                            width: 'calc(100% - 2px)',
+                            height: 'calc(100% - 2px)',
+                            columns: [
+                                { text: 'Дата проведения', filtertype: 'date', datafield: 'Date', filtercondition: 'DATE_EQUAL', width: 120, cellsformat: 'dd.MM.yyyy HH:mm'},    
+                                { text: 'Наименование', dataField: 'Name', columntype: 'textbox', filtercondition: 'CONTAINS', width: 250},
+                                { text: 'Исполнитель', datafield: 'EmployeeName', filtercondition: 'CONTAINS', width: 120},
+                                { text: 'Примечание', dataField: 'Note', columntype: 'textbox', filtercondition: 'CONTAINS', width: 100},
+                            ]
+
+                    }));
                     
                     $('#btnAddInstr').on('click', function(){
                         if (CurrentRowData != undefined) {
@@ -210,51 +264,14 @@
                 break;
             }
         };
-        $('#Tabs').jqxTabs({ width: '100%', height: 320, initTabContent: initWidgets});
         
-        $('#ChildsGrid').on('rowdoubleclick', function (event) { 
-            $("#btnEditChildren").click();
-        });
+        $('#Tabs').on('selected', function (event) { 
+            var selectedTab = event.args.item;
+            if (selectedTab == 1)
+                $("#ChildsGrid").jqxGrid('updatebounddata');
+        }); 
         
-        $("#ChildsGrid").jqxGrid(
-            $.extend(true, {}, GridDefaultSettings, {
-                pagesizeoptions: ['10', '200', '500', '1000'],
-                pagesize: 200,
-                sortable: true,
-                showfilterrow: false,
-                virtualmode: false,
-                width: '100%',
-                height: '218',
-                columns: [
-                    { text: 'Дата добавления', filtertype: 'date', datafield: 'DateCreate', filtercondition: 'DATE_EQUAL', width: 120, cellsformat: 'dd.MM.yyyy HH:mm'},    
-                    { text: 'Фамилия Имя Отчество', dataField: 'ChildrenName', columntype: 'textbox', filtercondition: 'CONTAINS', width: 250},
-                    { text: 'Дата рождения', filtertype: 'date', datafield: 'BirthDay', filtercondition: 'DATE_EQUAL', width: 120, cellsformat: 'dd.MM.yyyy'},
-                    { text: 'Полных лет', dataField: 'Age', columntype: 'textbox', filtercondition: 'CONTAINS', width: 100},
-                ]
-
-        }));
-        
-        $('#InstrGrid').on('rowdoubleclick', function (event) { 
-            $("#btnEditInstr").click();
-        });
-        
-        $("#InstrGrid").jqxGrid(
-            $.extend(true, {}, GridDefaultSettings, {
-                pagesizeoptions: ['10', '200', '500', '1000'],
-                pagesize: 200,
-                sortable: true,
-                showfilterrow: false,
-                virtualmode: false,
-                width: '100%',
-                height: '218',
-                columns: [
-                    { text: 'Дата проведения', filtertype: 'date', datafield: 'Date', filtercondition: 'DATE_EQUAL', width: 120, cellsformat: 'dd.MM.yyyy HH:mm'},    
-                    { text: 'Наименование', dataField: 'Name', columntype: 'textbox', filtercondition: 'CONTAINS', width: 250},
-                    { text: 'Исполнитель', datafield: 'EmployeeName', filtercondition: 'CONTAINS', width: 120},
-                    { text: 'Примечание', dataField: 'Note', columntype: 'textbox', filtercondition: 'CONTAINS', width: 100},
-                ]
-
-        }));
+        $('#Tabs').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)', initTabContent: initWidgets});
         
         $("#EmployeesGrid").on('rowselect', function (event) {
             CurrentRowData = $('#EmployeesGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -274,25 +291,14 @@
                 $('#edDoc').jqxTextArea('val', CurrentRowData.Documents); 
                 $('#edNote').jqxTextArea('val', CurrentRowData.Note); 
                 
-                var DataChilds = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceChildrens, {}), {
-                    formatData: function (data) {
-                        $.extend(data, {
-                            Filters: ["c.Employee_id = " + CurrentRowData.Employee_id],
-                        });
-                        return data;
-                    },
-                });
-                $("#ChildsGrid").jqxGrid({source: DataChilds});
-                
-                var DataInstr = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInstructings, {}), {
-                    formatData: function (data) {
-                        $.extend(data, {
-                            Filters: ["i.Employee_id = " + CurrentRowData.Employee_id],
-                        });
-                        return data;
-                    },
-                });
-                $("#InstrGrid").jqxGrid({source: DataInstr});
+                var SelectedTab = $('#Tabs').jqxTabs('selectedItem');
+                switch (SelectedTab) {
+                    case 1:
+                        $("#ChildsGrid").jqxGrid('updatebounddata');
+                    case 2:
+                        $("#InstrGrid").jqxGrid('updatebounddata');
+                    break;
+                }
             }
         });
         
@@ -307,9 +313,8 @@
                 pagesize: 200,
                 showfilterrow: true,
                 virtualmode: true,
-                width: '100%',
-                height: '300',
-                source: EmplDataAdapter,
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 columns: [
                     { text: 'Фамилия Имя Отчество', dataField: 'EmployeeName', columntype: 'textbox', filtercondition: 'CONTAINS', width: 250},
                     { text: 'Адрес', dataField: 'Address', columntype: 'textbox', filtercondition: 'CONTAINS', width: 250},
@@ -331,41 +336,12 @@
                 
         }));
         
-        GridFilters.AddControlFilter('edFIO', 'jqxInput', 'EmployeesGrid', 'EmployeeName', 'stringfilter', 1, 'CONTAINS', true);
-        $('#edFilter').on('keydown', function(event) {
-            var isCompleted = $('#EmployeesGrid').jqxGrid('isBindingCompleted');
-            var keyCode = event.keyCode;
-            if (keyCode == 13) {
-                var Value = $('#edFilter' ).val();
-                if (Value == ''|| Value == -1 || Value == null) {
-                    $('#edFilter').jqxComboBox('clearSelection');
-                    $('#EmployeesGrid').jqxGrid('removefilter', 'DateEnd');
-                }
-                else if (isCompleted) {
-                    if (Value == 1)
-                        GridFilters.AddFilter('EmployeesGrid', 'DateEnd', 'stringfilter', 1, Value, 'NULL', true, null);
-                    if (Value == 2)
-                        GridFilters.AddFilter('EmployeesGrid', 'DateEnd', 'stringfilter', 1, Value, 'NOT_NULL', true, null);
-                }
-                
-            }
-        });
-        
-        
-
-        
-        
     });
 </script>    
-
-<div class="row">
-    <div class="row-column">Сотрудник <input type="text" id="edFIO"/></div>
-    <div class="row-column"><div id="edFilter"></div></div>
-</div>
-<div class="row">
+<div class="al-row" style="height: calc(100% - 290px)">
     <div id="EmployeesGrid" class="jqxGridAliton"></div>
 </div>
-<div class="row">
+<div class="al-row" style="height: 230px">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 30px;">
@@ -386,74 +362,89 @@
         </ul>
         <div style="overflow: hidden;">
             <div style="padding: 10px;">
-                <div class="row">
-                    <div class="row-column">Адрес</div>
-                    <div class="row-column"><input type="text" id="edAddress"/></div>
-                    <div class="row-column">Нов. адрес</div>
-                    <div class="row-column"><input type="text" id="edAddr"/></div>
+                <div class="al-row">
+                    <div class="al-row-column">Адрес</div>
+                    <div class="al-row-column"><input type="text" id="edAddress"/></div>
+                    <div class="al-row-column">Нов. адрес</div>
+                    <div class="al-row-column"><input type="text" id="edAddr"/></div>
+                    <div class="al-row-column">Тел. дом.</div>
+                    <div class="al-row-column"><input type="text" id="edTelHome"/></div>
+                    <div style="clear: both"></div>
                 </div>
-                <div class="row">
-                    <div class="row-column">Тел. домашний</div>
-                    <div class="row-column"><input type="text" id="edTelHome"/></div>
-                    <div class="row-column">Тел. рабочий</div>
-                    <div class="row-column"><input type="text" id="edTelWork"/></div>
+                <div class="al-row">
+                    <div class="al-row-column">
+                        <div>Тел. рабочий</div>
+                        <div><input type="text" id="edTelWork"/></div>
+                    </div>
+                    <div class="al-row-column">
+                        <div>Другие тел.</div>
+                        <div><input type="text" id="edTelOther"/></div>
+                    </div>
+                    <div class="al-row-column">
+                        <div>Рабочий e-mail</div>
+                        <div><input type="text" id="edWorkEmail"/></div>
+                    </div>
+                    <div class="al-row-column">
+                        <div>Личный e-mail</div>
+                        <div><input type="text" id="edEmail"/></div>
+                    </div>
+                    <div style="clear: both"></div>
                 </div>
-                <div class="row">
-                    <div class="row-column">Другие тел.</div>
-                    <div class="row-column"><input type="text" id="edTelOther"/></div>
-                    <div class="row-column">Рабочий e-mail</div>
-                    <div class="row-column"><input type="text" id="edWorkEmail"/></div>
-                </div>
-                <div class="row">
-                    <div class="row-column">Личный e-mail</div>
-                    <div class="row-column"><input type="text" id="edEmail"/></div>
-                </div>
-                <div class="row" style="margin-top: 0px;">
-                    <div class="row-column" style="width: 300px">Информация</div>
-                    <div class="row-column" style="width: 300px">Документы</div>
-                    <div class="row-column" style="width: 300px">Примечание</div>
-                </div>
-                <div class="row" style="margin-top: 0px;">
-                    <div class="row-column" style="width: 300px"><textarea id="edInfo"></textarea></div>
-                    <div class="row-column" style="width: 300px"><textarea id="edDoc"></textarea></div>
-                    <div class="row-column" style="width: 300px"><textarea id="edNote"></textarea></div>
+                <div class="al-row">
+                    <div class="row-column" style="width: 250px">
+                        <div>Информация</div>
+                        <div><textarea id="edInfo"></textarea></div>
+                    </div>
+                    <div class="row-column" style="width: 250px">
+                        <div>Документы</div>
+                        <div><textarea id="edDoc"></textarea></div>
+                    </div>
+                    <div class="row-column" style="width: 250px">
+                        <div>Примечание</div>
+                        <div><textarea id="edNote"></textarea></div>
+                    </div>
+                    
+                    <div style="clear: both"></div>
                 </div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px;">
-                <div><div id="ChildsGrid" class="jqxGridAliton"></div></div>
-                <div style="margin-top: 10px;">
-                    <div class="row-column"><input type="button" value="Добавить" id='btnAddChildren'/></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='btnEditChildren'/></div>
-                    <div class="row-column"><input type="button" value="Обновить" id='btnRefreshChildren'/></div>
-                    <div class="row-column" style="float: right; margin: 0px"><input type="button" value="Удалить" id='btnDelChildren'/></div>
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 66px)">
+                    <div id="ChildsGrid" class="jqxGridAliton"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type="button" value="Добавить" id='btnAddChildren'/></div>
+                    <div class="al-row-column"><input type="button" value="Изменить" id='btnEditChildren'/></div>
+                    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshChildren'/></div>
+                    <div class="al-row-column" style="float: right; margin: 0px"><input type="button" value="Удалить" id='btnDelChildren'/></div>
+                    <div style="clear: both"></div>
                 </div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px;">
-                <div><div id="InstrGrid" class="jqxGridAliton"></div></div>
-                <div style="margin-top: 10px;">
-                    <div class="row-column"><input type="button" value="Добавить" id='btnAddInstr'/></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='btnEditInstr'/></div>
-                    <div class="row-column"><input type="button" value="Обновить" id='btnRefreshInstr'/></div>
-                    <div class="row-column" style="float: right; margin: 0px"><input type="button" value="Удалить" id='btnDelInstr'/></div>
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 66px)">
+                    <div id="InstrGrid" class="jqxGridAliton"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type="button" value="Добавить" id='btnAddInstr'/></div>
+                    <div class="al-row-column"><input type="button" value="Изменить" id='btnEditInstr'/></div>
+                    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshInstr'/></div>
+                    <div class="al-row-column" style="float: right; margin: 0px"><input type="button" value="Удалить" id='btnDelInstr'/></div>
+                    <div style="clear: both"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="row" style="margin: 0px; padding: 0px;">
-        <div class="row-column"><input type="button" value="Добавить" id='btnAddEmpl'/></div>
-        <div class="row-column"><input type="button" value="Изменить" id='btnEditEmpl'/></div>
-        <div class="row-column"><input type="button" value="Экспорт" id='btnExportEmpl'/></div>
-    </div>
-    <div class="row" style="padding: 0px;">
-        <div class="row-column"><input type="button" value="Удалить" id='btnDelEmpl'/></div>
-        <div class="row-column"><input type="button" value="Обновить" id='btnRefreshEmpl'/></div>
-    </div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Добавить" id='btnAddEmpl'/></div>
+    <div class="al-row-column"><input type="button" value="Изменить" id='btnEditEmpl'/></div>
+    <div class="al-row-column"><input type="button" value="Экспорт" id='btnExportEmpl'/></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshEmpl'/></div>
+    <div class="al-row-column"><input type="button" value="Удалить" id='btnDelEmpl'/></div>
+    <div style="clear: both"></div>
 </div>
 
 <div id="EmployeesDialog" style="display: none;">
