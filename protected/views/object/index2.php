@@ -7,6 +7,8 @@
         var ServiceTypesData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceServiceTypes));
         ServiceTypesData.dataBind();
         ServiceTypesData = ServiceTypesData.records;
+        var OrgData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceOrganizationsVMin));
+        //OrgData.dataBind();
         
         var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
             var Temp = $('#ObjectsGrid').jqxGrid('getrowdata', row);
@@ -60,14 +62,14 @@
 
                 },
                 columns: [
-                    { text: 'Адрес', dataField: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250, cellsrenderer: cellsrenderer},
-                    { text: 'Организация', dataField: 'FullName', width: 150, cellsrenderer: cellsrenderer },
-                    { text: 'Юр. лицо', dataField: 'JuridicalPerson', width: 100, cellsrenderer: cellsrenderer },
-                    { text: 'Район', dataField: 'AreaName', width: 100, cellsrenderer: cellsrenderer },
+                    { text: 'Адрес', datafield: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250, cellsrenderer: cellsrenderer},
+                    { text: 'Организация', datafield: 'FullName', width: 150, cellsrenderer: cellsrenderer },
+                    { text: 'Юр. лицо', datafield: 'JuridicalPerson', width: 100, cellsrenderer: cellsrenderer },
+                    { text: 'Район', datafield: 'AreaName', width: 100, cellsrenderer: cellsrenderer },
                     { text: 'Тип обслуживания', filtertype: 'checkedlist', filteritems: ServiceTypesData, dataField: 'ServiceType', width: 100, cellsrenderer: cellsrenderer },
-                    { text: 'Мастер', dataField: 'MasterName', width: 180, cellsrenderer: cellsrenderer },
-                    { text: 'Новостройка', dataField: 'year_construction', width: 180, cellsrenderer: cellsrenderer },
-                    { text: 'ВИП', dataField: 'VIP', width: 180, cellsrenderer: cellsrenderer },
+                    { text: 'Мастер', datafield: 'MasterName', width: 180, cellsrenderer: cellsrenderer },
+                    { text: 'Новостройка', datafield: 'year_construction', width: 180, cellsrenderer: cellsrenderer },
+                    { text: 'ВИП', datafield: 'VIP', width: 180, cellsrenderer: cellsrenderer },
                     { text: 'Участок', dataField: 'Territ_Name', width: 180, cellsrenderer: cellsrenderer },
                 ]
                 
@@ -150,9 +152,45 @@
         });
         
         $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 400}));
-        $("#edClient").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Клиент"}));
-        GridFilters.AddControlFilter('edAddr', 'jqxInput', 'ObjectsGrid', 'Addr', 'stringfilter', 1, 'CONTAINS', true);
-        GridFilters.AddControlFilter('edClient', 'jqxInput', 'ObjectsGrid', 'FullName', 'stringfilter', 1, 'CONTAINS', true);
+        $("#edClient").jqxInput($.extend(true, {}, InputDefaultSettings, {source: OrgData, searchMode: 'contains', displayMember: "FullName", valueMember: "FullName", placeHolder: "Клиент"}));
+        //
+        //GridFilters.AddControlFilter('edAddr', 'jqxInput', 'ObjectsGrid', 'Addr', 'stringfilter', 1, 'CONTAINS', true);
+        //GridFilters.AddControlFilter('edClient', 'jqxInput', 'ObjectsGrid', 'FullName', 'stringfilter', 1, 'CONTAINS', true);
+        $('#edAddr').on('keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                var AddressFilterGroup = new $.jqx.filter();
+                if ($("#edAddr").val() != '') {
+                    var FilterAddress = AddressFilterGroup.createfilter('stringfilter', $("#edAddr").val(), 'CONTAINS');
+                    AddressFilterGroup.addfilter(1, FilterAddress);
+                    
+                    
+                }
+                $('#ObjectsGrid').jqxGrid('removefilter', 'Addr', false);
+                if ($("#edAddr").val() != '') $("#ObjectsGrid").jqxGrid('addfilter', 'Addr', AddressFilterGroup);
+                $("#ObjectsGrid").jqxGrid('applyfilters');
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        $('#edClient').on('keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                var ClientFilterGroup = new $.jqx.filter();
+                if ($("#edClient").val() != '') {
+                    var FilterClient = ClientFilterGroup.createfilter('stringfilter', $("#edClient").val().value, 'CONTAINS');
+                    ClientFilterGroup.addfilter(1, FilterClient);
+                }
+                $('#ObjectsGrid').jqxGrid('removefilter', 'FullName', false);
+                if ($("#edClient").val() != '') $("#ObjectsGrid").jqxGrid('addfilter', 'FullName', ClientFilterGroup);
+                $("#ObjectsGrid").jqxGrid('applyfilters');
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        
         
         $('#ToDayDialog').jqxWindow(
             $.extend(true, DialogDefaultSettings, {
