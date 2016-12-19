@@ -370,18 +370,6 @@ return array_merge(
             ),
         ),
         
-        'SeniorEconomist' => array(
-            'type' => CAuthItem::TYPE_ROLE,
-            'description' => 'Старший экономист',
-            'bizRule' => null,
-            'data' => null,
-            'defaultIndex' => 'object/index',
-            'children' => array(
-                'AdminSystemComplexitys',
-                'AdminSystemStatements',
-            ),
-        ),
-
         'Administrator' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Administrator',
@@ -1201,6 +1189,40 @@ return array_merge(
                 'StaffManager',
             ),
         ),
+        
+        /* Старший экономист */
+        'SeniorEconomist' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Старший экономист',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'SeniorDispatcher',
+                'EconomistAccountant',
+                'OfficeManagerSalesDepartment',
+                'AccountManager',
+                'ManagerWhActs',
+                'ManagerContractPriceHistory',
+                'AdminSystemComplexitys',
+                'AdminSystemStatements',
+            ),
+        ),
+        
+        /* Менеджер по финансам */
+        'FinanceManager' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Менеджер по финансам',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'SeniorEconomist',
+            ),
+        ),
+        
+        
     )
 );
 
