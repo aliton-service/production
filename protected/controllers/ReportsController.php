@@ -63,6 +63,7 @@ class ReportsController extends Controller
        
         }
         
+        $ResultHtml = str_ireplace('<div dir="LTR" style="HEIGHT:100%;WIDTH:100%;direction:ltr" id="oReportDiv">', '<div dir="LTR" style="HEIGHT:calc(100% - 80px);WIDTH:100%;direction:ltr" id="oReportDiv">', $ResultHtml);
         $ResultHtml = str_ireplace('<div style="HEIGHT:100%;WIDTH:100%;" class="ap">', '<div class="ap">', $ResultHtml);
         
         if (!$Ajax)

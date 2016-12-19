@@ -108,6 +108,10 @@
             Calc();
         });
         
+        $("#edSumMaterialsLowEdit").on('change', function() {
+            $("#edSumMaterialsHighEdit").jqxNumberInput('val', $("#edSumMaterialsLowEdit").jqxNumberInput('val')*$("#edKoefIndirectEdit").jqxNumberInput('val'));
+        });
+        
         
         Calc();
     });
