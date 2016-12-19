@@ -161,7 +161,10 @@ class DemandsController extends Controller
                 $Filters2 = $this->GetFilters($_POST['DemFilters']);
             }
             else {
-                $Filters2 = $this->GetFilters(array());
+                if (isset($_GET['DemFilters']))
+                    $Filters2 = $this->GetFilters($_GET['DemFilters']);
+                else
+                    $Filters2 = $this->GetFilters(array());
             }
             
             $this->filterDefaultValues = $Filters2;

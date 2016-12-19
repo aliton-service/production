@@ -21,7 +21,9 @@
             ServiceManager: <?php echo json_encode($model->ServiceManager); ?>,
             SalesManager: <?php echo json_encode($model->SalesManager); ?>,
             ClientName: <?php echo json_encode($model->ClientName); ?>,
-            Telephone: <?php echo json_encode($model->Telephone); ?>
+            Telephone: <?php echo json_encode($model->Telephone); ?>,
+            House: <?php echo json_encode($model->House); ?>,
+            Street_id: <?php echo json_encode($model->Street_id); ?>
         };
         
         var SetValueOGControls = function() {
@@ -104,6 +106,15 @@
             $("#SalesManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
             
             $("#ChangeObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#ViewDemandsObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 200}));
+            
+            $("#ViewDemandsObjectsGroup").on('click', function () {
+                var Data = {
+                    ObjectGr_id: ObjectGroup.ObjectGr_id
+                };
+                
+                window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/Index')); ?> + '&DemFilters[ObjectGr_id]=' + ObjectGroup.ObjectGr_id + '&DemFilters[DemObjectGroup]=true' + '&DemFilters[House]=' + ObjectGroup.House + '&DemFilters[Street_id]=' + ObjectGroup.Street_id);
+            });
             
             $("#ChangeObjectsGroup").on('click', function ()
             {
@@ -477,7 +488,8 @@ $this->breadcrumbs=array(
                 <div style="clear: both"></div>
             </div>
             <div class="al-row" style="margin: 0;">
-                <input type="button" value="Изменить" id='ChangeObjectsGroup' />
+                <div class="al-row-column"><input type="button" value="Изменить" id='ChangeObjectsGroup' /></div>
+                <div class="al-row-column"><input type="button" value="Заявки по объекту" id='ViewDemandsObjectsGroup' /></div>
             </div>
         </div>
         <div style="padding: 10px; height: calc(100% - 323px)">
