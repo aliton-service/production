@@ -55,6 +55,16 @@ class CostCalcWorksController extends Controller
             $eqip_name = $_POST['eqip_name'];
         }
         
+        if (isset($_POST['koef_indirect'])) {
+            $model->koef = $_POST['koef_indirect'];
+        }
+        
+        if (isset($_POST['quant'])) {
+            $model->quant = $_POST['quant'];
+        }
+        else
+            $model->quant = 1;
+        
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,

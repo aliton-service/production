@@ -11,6 +11,8 @@ class CostCalcEquips extends MainFormModel
     public $sum_price = null;
     public $price_low = null;
     public $sum_low = null;
+    public $work_price = null;
+    public $work_sum = null;
     public $note = null;
     public $um_name = null;
     public $mntr = null;
@@ -34,9 +36,13 @@ class CostCalcEquips extends MainFormModel
                         isNull(t.sum_price_low2, t.sum_price_low) as sum_low, -- сумма себестоимости
                         t.note,
                         t.um_name,
-                        case when datediff(mm, t.last_date, getdate()) >= 3 then 1 else 0 end mntr";
+                        case when datediff(mm, t.last_date, getdate()) >= 3 then 1 else 0 end mntr,
+                        t.work_price,
+                        t.work_sum
+                        ";
         
         $From = "\nFrom CostCalcEquips_v t";
+          
         
 //        $Where = "\nWhere cc.DelDate is null";
         

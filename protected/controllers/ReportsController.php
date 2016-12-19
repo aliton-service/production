@@ -13,6 +13,10 @@ class ReportsController extends Controller
         );
     }
     
+    public function SetValidName($string) {
+        return str_ireplace(array("\\", "/", ":", "*", "?", "'", "\"", ">", "<", "|", "%", ";", " "), "_", $string);
+    }
+    
     public function accessRules()
     {
         return array(
@@ -209,6 +213,7 @@ class ReportsController extends Controller
         }
     }
     
+    
     public function actionReportExportXLS($ReportName = '') {
         if ($ReportName != '') {
             
@@ -230,7 +235,11 @@ class ReportsController extends Controller
                                  $Warnings,
                                  $StreamIds);
             
-            $this->UpLoadFile($ReportName, $ResultExcel, '.xls');
+                        
+            if (isset($_GET['FileName']))
+                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultExcel, '.xls');
+            else
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultExcel, '.xls');
             
         }
     }
@@ -256,7 +265,10 @@ class ReportsController extends Controller
                                  $Warnings,
                                  $StreamIds);
             
-            $this->UpLoadFile($ReportName, $ResultPDF, '.pdf');
+            if (isset($_GET['FileName']))
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultExcel, '.xls');
+            else
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultExcel, '.xls');
         }
     }
 }

@@ -258,6 +258,7 @@ class DemandsController extends Controller
         
         public function actionView($Demand_id){
             $this->title = 'Заявка №' . $Demand_id;
+            $this->setPageTitle('Заявка №' . $Demand_id);
             
             $Demand = new Demands();
             $Demand->getModelPk($Demand_id);

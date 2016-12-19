@@ -175,6 +175,7 @@
                     width: 'calc(100% - 2px)',
                     height: 'calc(100% - 2px)',
                     source: DataObjectsGroupsExecutors,
+                    enablebrowserselection: true,
                     columns: [
                         { text: 'ФИО', dataField: 'FIO', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
                         { text: 'Должность', dataField: 'CustomerName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
@@ -339,7 +340,7 @@
             }
         };
         
-        $('#jqxTabs').jqxTabs({ width: '100%', height: 'calc(100% - 2px)',  initTabContent: initWidgets });
+        $('#jqxTabs').jqxTabs({ width: '100%', height: 'calc(100% - 2px)', keyboardNavigation: false, initTabContent: initWidgets });
         var defaultTabIndex = 0;
         var tabIndex = Aliton.GetTabIndexFromURL(defaultTabIndex);
         $('#jqxTabs').jqxTabs('select', tabIndex);
@@ -481,7 +482,7 @@ $this->breadcrumbs=array(
         </div>
         <div style="padding: 10px; height: calc(100% - 323px)">
             <div class="al-row" style="padding: 0px; height: calc(100% - 12px)">
-                <div id="ContactInfoGrid" class="jqxGridAliton"></div>
+                <div id="ContactInfoGrid"></div>
             </div>
             <div class="al-row" style="padding: 6px 0px 0px 0px;">
                 <div class="al-row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>

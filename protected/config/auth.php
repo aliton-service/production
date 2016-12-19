@@ -669,7 +669,7 @@ return array_merge(
                 'ManagerContactInfo',
                 'ManagerObjectsGroupSystems',
                 'ManagerSystemCompetitors',
-                'UserObjectEquips',
+                'ManagerObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
                 'ManagerContacts',
@@ -693,6 +693,7 @@ return array_merge(
                 'ManagerEventOffers',
                 'ManagerOfferDemands',
                 'WhActsView',
+                'ManagerWHBuhActs',
                 
                 
                 /* Отчеты */
@@ -747,6 +748,7 @@ return array_merge(
                 'ManagerEvents',
                 'WhActsView',
                 'ManagerControlContacts',
+                'ManagerWHBuhActs',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -797,6 +799,7 @@ return array_merge(
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
+                'ManagerWHBuhActs',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -852,6 +855,8 @@ return array_merge(
                 'ManagerStreets',
                 'ManagerRegions',
                 'ManagerObjects',
+                'ManagerWHBuhActs',
+                
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -903,6 +908,8 @@ return array_merge(
                 'ManagerEvents',
                 'LogDeliveryDemands',
                 'WhActsView',
+                'ManagerWHBuhActs',
+                
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -951,6 +958,8 @@ return array_merge(
                 'ManagerEvents',
                 'LogDeliveryDemands',
                 'WhActsView',
+                'ManagerWHBuhActs',
+                
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',

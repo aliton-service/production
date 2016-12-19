@@ -38,9 +38,10 @@
             ContrDateS: <?php echo json_encode($model->ContrDateS); ?>,
             Position_id: <?php echo json_encode(Yii::app()->user->Position_id); ?>,
             ccwt_proc: <?php echo json_encode($model->ccwt_proc); ?>,
+            koef_indirect: <?php echo json_encode($model->koef_indirect); ?>,
         };
 
-        var Administrator = <?php echo json_encode(Yii::app()->user->checkAccess('ManagerEmployees')); ?>;
+        var Administrator = <?php echo json_encode(Yii::app()->user->checkAccess('Administrator')); ?>;
         
         CostCalcDetails = {
             StartingWork: 0,
@@ -94,6 +95,7 @@
                     CostCalculations.spec_condt = Res.spec_condt;
                     CostCalculations.note = Res.note;
                     CostCalculations.EmplAgreed = Res.EmplAgreed;
+                    CostCalculations.koef_indirect = Res.koef_indirect;
                     SetValueControls();
                     SetStateButtons();
                     $('#RefreshCostCalcEquips').click();
@@ -548,7 +550,7 @@
                                 return false;
                             }
                         } else {
-                            if (Marj) {
+                            if (!Marj) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%');
                                 return false;
                             }
@@ -580,7 +582,7 @@
                             }
                             
                         } else {
-                            if (Marj) {
+                            if (!Marj) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%');
                                 return false;
                             }
@@ -674,6 +676,7 @@
                             'ReportName' => '/Сметы/Смета',
                             'Ajax' => false,
                             'Render' => true,
+                            'FileName' => json_encode($model->group_name),
                         ))); ?> + '&Parameters[pCalc_id]=' + CostCalculations.calc_id);
         });
         $('#btnPrint2CostCalculations').on('click', function() {
@@ -681,6 +684,7 @@
                             'ReportName' => '/Сметы/Смета (для нас)',
                             'Ajax' => false,
                             'Render' => true,
+                            'FileName' => json_encode($model->group_name),
                         ))); ?> + '&Parameters[pCalc_id]=' + CostCalculations.calc_id);
         });
         
@@ -917,6 +921,8 @@
                                 calc_id: CostCalculations.calc_id,
                                 cceq_id: CurrentRowDataCCE.cceq_id,
                                 eqip_name: CurrentRowDataCCE.eqip_name,
+                                quant: CurrentRowDataCCE.quant,
+                                koef_indirect: CostCalculations.koef_indirect,
                             },
                             success: function(Res) {
                                 Res = JSON.parse(Res);
@@ -1020,7 +1026,8 @@
                             type: 'POST',
                             async: false,
                             data: {
-                                calc_id: CostCalculations.calc_id
+                                calc_id: CostCalculations.calc_id,
+                                koef_indirect: CostCalculations.koef_indirect,
                             },
                             success: function(Res) {
                                 Res = JSON.parse(Res);

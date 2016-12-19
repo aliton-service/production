@@ -266,8 +266,11 @@ Aliton.ExecDemand = function (Demand_id, Blank) {
 };
 
 /* Карточка клиента*/
-Aliton.ViewClient = function (ObjectGr_id) {
-    window.open('/index.php?r=ObjectsGroup/Index&ObjectGr_id=' + ObjectGr_id);
+Aliton.ViewClient = function (ObjectGr_id, Demand_id) {
+    if (Demand_id != undefined)
+        window.open('/index.php?r=ObjectsGroup/Index&ObjectGr_id=' + ObjectGr_id + '&Demand_id=' + Demand_id);
+    else
+        window.open('/index.php?r=ObjectsGroup/Index&ObjectGr_id=' + ObjectGr_id);
 };
 
 Aliton.EditDemand = function(Demand_id) {

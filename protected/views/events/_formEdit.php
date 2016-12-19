@@ -37,7 +37,7 @@
         $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 117, formatString: 'dd.MM.yyyy', value: null }));
         
         var ReportFormsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReportForms));
-        $("#ReportForms").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: ReportFormsDataAdapter, displayMember: "ReportForm", valueMember: "Rpfr_id", width: 150, autoDropDownHeight: true }));
+        $("#ReportForms").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: ReportFormsDataAdapter, displayMember: "ReportForm", valueMember: "rpfr_id", width: 150, autoDropDownHeight: true }));
         
         var ContactInfoDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContactInfo, {}), {
             formatData: function (data) {

@@ -7,14 +7,22 @@ class ObjectsgroupController extends Controller
     
     public function actionIndex($ObjectGr_id)
     {
+        
+        
+        
+        
         $model = new ObjectsGroup();
         $model->getModelPk($ObjectGr_id);
         
-        $this->title = 'Карточка объекта: ' . $model->Address;
+        if (isset($_GET['Demand_id']))
+            $this->title = 'Карточка объекта: ' . $model->Address . ' (Заявка №:' . $_GET['Demand_id'] .  ')';
+        else
+            $this->title = 'Карточка объекта: ' . $model->Address;
+        
         $this->setPageTitle('Карточка объекта');
         
         $this->render('index', array(
-            'model' => $model,
+            'model' => $model
         ));
     }
     

@@ -617,7 +617,7 @@
             Aliton.EditDemand(Demand.Demand_id);
         });
         $("#btnClient").on('click', function(){
-            Aliton.ViewClient(Demand.ObjectGr_id);
+            Aliton.ViewClient(Demand.ObjectGr_id, Demand.Demand_id);
         });
         $("#btnToMaster").on('click', function(){
             Aliton.ToMaster(Demand.Demand_id);

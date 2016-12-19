@@ -124,6 +124,7 @@
         if (CostCalcWork.note != '') $("#NoteCCW").jqxTextArea('val', CostCalcWork.note);
         if (CostCalcWork.eqip_name != '') $("#EquipsCCW").jqxInput('val', CostCalcWork.eqip_name);
         if (CostCalcWork.cw_name != '') $("#cw_name").jqxInput('val', CostCalcWork.cw_name);
+        if (CostCalcWork.koef != '') $("#KoefCCW").jqxNumberInput('val', CostCalcWork.koef);
         
         var HideQuant = function() {
             if (CostCalcWork.cceq_id != '' &&  CostCalcWork.cceq_id != null) {
@@ -150,8 +151,10 @@
                     }
                 }
                 $("#PriceLowCCW").jqxNumberInput('val', priceCCW);
-            }
+                $("#PriceCCW").jqxNumberInput('val', priceCCW*$("#KoefCCW").jqxNumberInput('val'));
                 
+            }
+            
             
         });
     });
