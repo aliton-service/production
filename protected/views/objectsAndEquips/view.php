@@ -346,7 +346,7 @@
                     { text: 'Число квартир', datafield: 'ObjectTypeName', width: 60 },
                     { text: 'Подъезд', datafield: 'Doorway', width: 70},
                     { text: 'Тип', datafield: 'ComplexityName', width: 40},
-                    { text: 'Условия', datafield: 'Condition', width: 100},
+                    { text: 'Условия', datafield: 'Condition', width: 600},
                     { text: 'Мастер ключ', datafield: 'MasterKey', width: 100},
                     { text: 'Код', datafield: 'Code', width: 100},
                     { text: 'Сигнал ОДС', datafield: 'Signal', width: 90},
