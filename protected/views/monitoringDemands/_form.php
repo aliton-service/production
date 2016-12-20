@@ -1,5 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         
         var MonitoringDemands3 = {
             mndm_id: '<?php echo $model->mndm_id; ?>',
@@ -43,9 +44,14 @@
         });
         $("#btnOk").on('click', function () {
             var Data = $('#MonitoringDemands').serialize();
-                
+            var Url = '';
+            if (StateInsert)
+                Url = <?php echo json_encode(Yii::app()->createUrl('MonitoringDemands/Insert')); ?>;
+            else
+                Url = <?php echo json_encode(Yii::app()->createUrl('MonitoringDemands/Update')); ?>;
+            
             $.ajax({
-                url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Insert');?>",
+                url: Url,
                 type: 'POST',
                 async: false,
                 data: Data,
@@ -54,8 +60,10 @@
                         
                         $('#' + MonitoringDemands3.DialogId).jqxWindow('close');
                         if (MonitoringDemands3.DialogId == 'EditDialog') {
-                            $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-                            $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
+                            if ($("#MonitoringDemandsGrid").length>0) {
+                                $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+                                $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
+                            }
                         } 
                         if (MonitoringDemands3.DialogId == 'CostCalculationsDialog') {
                             $('#RefreshCostCalcDocuments').click();
@@ -160,7 +168,7 @@
 </div>
 
 <div class="row">
-    <div class="row-column">Примечание: <textarea id="Description3" name="MonitoringDemands[Description]"></textarea></div>
+    <div class="row-column">Примечание: <textarea id="Description3" name="MonitoringDemands[Note]"></textarea></div>
 </div>
 
 <div class="row">

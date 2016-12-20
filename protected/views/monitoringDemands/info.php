@@ -6,7 +6,7 @@
         var MonitoringDemands2 = {
             mndm_id: '<?php echo $model->mndm_id; ?>',
             Prior: '<?php echo $model->DemandPrior; ?>',
-            Description: '<?php echo $model->Description; ?>',
+            Description: '<?php echo $model->Note; ?>',
             EmplNameAccept: '<?php echo $model->EmplNameAccept; ?>',
             UserName: '<?php echo $model->UserName; ?>',
             UserChange2: '<?php echo $model->UserChange2; ?>',
@@ -25,14 +25,14 @@
         $("#WishDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
         $("#DateAccept").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
         $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
-        $("#Description2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 590 }));
+        $("#Description2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)' }));
         
         
         $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '320px', width: '640'}));
         
         $('#EditDialog').jqxWindow({initContent: function() {
-            $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+//            $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+//            $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         }});
 
         $("#btnCancel").on('click', function () {
@@ -104,8 +104,8 @@
                 pagesize: 200,
                 showfilterrow: false,
                 virtualmode: false,
-                width: '99%',
-                height: '97%',
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 source: MonitoringDemandDetailsDataAdapter,
                 columns: [
                     { text: 'equip_id', dataField: 'equip_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80, hidden: true },
@@ -318,7 +318,6 @@
                 async: false,
                 data: { mndm_id: MonitoringDemands2.mndm_id },
                 success: function(Res) {
-                    console.log(Res);
                     $('#AcceptEmployeeName').jqxInput('val', Res);
                     $('#btnAcceptEmployeeName').jqxButton({disabled: true });
                     $('#btnExecute').jqxButton({disabled: false });
@@ -334,7 +333,6 @@
                 async: false,
                 data: { mndm_id: MonitoringDemands2.mndm_id },
                 success: function(Res) {
-                    console.log(Res);
                     $('#btnExecute').jqxButton({disabled: true });
                     $("#DateExec").jqxDateTimeInput('val', new Date());
                 }
@@ -360,76 +358,91 @@
 
 <?php $this->setPageTitle('Заявка на мониторинг'); ?>
 
-<div class="row">
-    <div class="row-column">Номер: <input readonly id="mndm_id2" type="text"></div>
-    <div class="row-column">Подана: </div><div class="row-column"><div id="Date2"></div></div>
+<div class="al-row">
+    <div class="al-row-column">Номер:</div>
+    <div class="al-row-column"><input readonly id="mndm_id2" type="text"></div>
+    <div class="al-row-column">Подана:</div>
+    <div class="al-row-column"><div id="Date2"></div></div>
+    <div class="al-row-column">Приоритет:</div>
+    <div class="al-row-column"><input readonly id="Prior2" type="text"></div>
+    <div style="clear: both"></div>
 </div>
 
-<div class="row">
-    <div class="row-column">Приоритет <br><input readonly id="Prior2" type="text"></div>
-    <div class="row-column">
-        <div class="row" style="margin: 0; padding-top: 0;">
-            <div class="row-column">Предельная дата: <div id="Deadline"></div></div>
-            <div class="row-column">Желаемая дата: <div id="WishDate"></div></div>
-        </div>
-        <div class="row">
-            <div class="row-column">Принята: <div id="DateAccept"></div></div>
-            <div class="row-column">Выполнена: <div id="DateExec"></div></div>
-        </div>
+<div class="al-row">
+    <div class="al-row-column">
+        <div>Предельная дата:</div>
+        <div><div id="Deadline"></div></div>
+    </div>    
+    <div class="al-row-column">
+        <div>Желаемая дата:</div>
+        <div><div id="WishDate"></div></div>
+    </div> 
+    <div class="al-row-column">
+        <div>Принята:</div>
+        <div><div id="DateAccept"></div></div>
+    </div> 
+    <div class="al-row-column">
+        <div>Выполнена:</div>
+        <div><div id="DateExec"></div></div>
     </div>
+    <div style="clear: both"></div>
 </div>
 
-<div class="row" style="margin: 0">
-    <div class="row-column">Примечание: <textarea readonly id="Description2"></textarea></div>
+<div class="al-row">
+    <div>Примечание:</div>
+    <div><textarea readonly id="Description2"></textarea></div>
 </div>
 
-<div class="row">
-    <div class="row-column"><input type="button" value="Изменить" id='EditMonitoringDemands'/></div>
-    <div style="margin-left: 310px;" class="row-column"><input type="button" value="Печатать" id='btnPrint'/></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Изменить" id='EditMonitoringDemands'/></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Печатать" id='btnPrint'/></div>
+    <div style="clear: both"></div>
 </div>
 
-<div style="overflow: hidden; width: 100%; height: 200px">
+<div class="al-row" style="height: calc(100% - 354px)">
     <div id="MonitoringDemandDetailsGrid" class="jqxGridAliton"></div>
 </div>
 
-<div class="row">
-    <div class="row-column"><input type="button" value="Добавить" id='NewMonitoringDemandDetails'/></div>
-    <div class="row-column"><input type="button" value="Изменить" id='EditMonitoringDemandDetails'/></div>
-    <div class="row-column"><input type="button" value="Обновить" id='ReloadMonitoringDemandDetails'/></div>
-    <div class="row-column"><input type="button" value="Ввести цену от поставщика" id='AddPriceMonitoringDemandDetails'/></div>
-    <div class="row-column" style="margin-left: 150px;"><input type="button" value="Удалить" id='DelMonitoringDemandDetails'/></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Добавить" id='NewMonitoringDemandDetails'/></div>
+    <div class="al-row-column"><input type="button" value="Изменить" id='EditMonitoringDemandDetails'/></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='ReloadMonitoringDemandDetails'/></div>
+    <div class="al-row-column"><input type="button" value="Ввести цену от поставщика" id='AddPriceMonitoringDemandDetails'/></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='DelMonitoringDemandDetails'/></div>
+    <div style="clear: both"></div>
 </div>
 
 <hr style="margin: 10px 5px; border-color: #ccc;">
 
-<div class="row">
-    <div class="row-column">Заявку принял: <input readonly type="text" id='AcceptEmployeeName'/></div>
-    <div class="row-column"><input type="button" value="Принять" id='btnAcceptEmployeeName'/></div>
+<div class="al-row">
+    <div class="al-row-column">Заявку принял:</div>
+    <div class="al-row-column"><input readonly type="text" id='AcceptEmployeeName'/></div>
+    <div class="al-row-column"><input type="button" value="Принять" id='btnAcceptEmployeeName'/></div>
+    <div class="al-row-column">Заявку подал:</div>
+    <div class="al-row-column"><input readonly type="text" id='CreateEmployeeName'/></div>
+    <div class="al-row-column"><input type="button" value="Выполнить" id='btnExecute'/></div>
+    <div style="clear: both"></div>
 </div>
 
-<div class="row" style="margin-left: 7px;">
-    <div class="row-column">Заявку подал: <input readonly type="text" id='CreateEmployeeName'/></div>
-    <div class="row-column"><input type="button" value="Выполнить" id='btnExecute'/></div>
-</div>
 
 
 
-<div id="EditDialog">
+<div id="EditDialog" style="display: none">
     <div id="DialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>
     <div style="padding: 10px;" id="DialogContent">
         <div id="BodyDialog"></div>
-        <div id="BottomDialog">
+<!--        <div id="BottomDialog">
             <div class="row">
                 <div class="row-column"><input type="button" value="Сохранить" id='btnOk'/></div>
                 <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel'/></div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 
-<div id="EditDialogMDDetails">
+<div id="EditDialogMDDetails" style="display: none">
     <div id="DialogHeaderMDDetails">
         <span id="HeaderTextMDDetails">Вставка\Редактирование записи</span>
     </div>
@@ -444,12 +457,13 @@
     </div>
 </div>
 
-<div id="EditDialogAddPrice">
+<div id="EditDialogAddPrice" style="display: none">
     <div id="DialogHeaderAddPrice">
         <span id="HeaderTextAddPrice">Вставка\Редактирование записи</span>
     </div>
     <div style="padding: 10px;" id="DialogContentAddPrice">
         <div id="BodyDialogAddPrice"></div>
+        
         <div id="BottomDialogAddPrice">
             <div class="row">
                 <div class="row-column"><input readonly type="button" value="Сохранить" id='btnOkAddPrice'/></div>

@@ -230,5 +230,14 @@ class MonitoringDemands extends MainFormModel
 		$this->Query->setWhere($this->where);
 	}
 
-
+    public function attributeFilters()
+    {
+        return array(
+            'UserName' => 'e.Employee_id',
+            'Date' => 'dbo.truncdate(m.Date)',
+            'DemandPrior' => 'm.Prior',
+        );
+        
+        
+    }
 }
