@@ -44,13 +44,14 @@
         var DataCloseReasons;
         var DataDelayReasons;
         var DataDemandResults;
+        var DataEmployees;
         
         $.ajax({
             url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
             type: 'POST',
             async: false,
             data: {
-                Models: ['DSystems', 'DEquips', 'DMalfunctions', 'DPriors', 'DTypes', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults']
+                Models: ['DSystems', 'DEquips', 'DMalfunctions', 'DPriors', 'DTypes', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults', 'ListEmployees']
             },
             success: function(Res) {
                 Res = JSON.parse(Res);
@@ -64,12 +65,13 @@
                 DataCloseReasons = Res[7].Data;
                 DataDelayReasons = Res[8].Data;
                 DataDemandResults = Res[9].Data;
+                DataEmployees = Res[10].Data;
             }
         });
 
         
         // Инициализация источников данных
-        var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
+//        var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
         var DataContactInfo = new $.jqx.dataAdapter(Sources.SourceContactInfo, {
             formatData: function (data) {
                 $.extend(data, {
