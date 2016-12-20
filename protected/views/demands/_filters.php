@@ -23,14 +23,27 @@
             }
         }));
         
-        // Инициализация источников данных
-        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {async: false}));
-        DataEmployees.dataBind();
-        DataEmployees = DataEmployees.records;
-        var DataDemandTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDemandTypes, {asnc: false}));
-        var DataStreets = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}));
-        var DataTerritory = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceTerritory, {async: false}));
+        var DataEmployees;
+        var DataDemandTypes;
+        var DataStreets;
+        var DataTerritory;
         
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['ListEmployees', 'DTypes', 'Streets', 'Territory']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                DataEmployees = Res[0].Data;
+                DataDemandTypes = Res[1].Data;
+                DataStreets = Res[2].Data;
+                DataTerritory = Res[3].Data;
+            }
+        });
+       
         // Инициализируем контролы фильтров
         $("#cmbMaster").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр по мастеру
         $("#chbNotDateExec").jqxCheckBox({ width: 160, height: 25, checked: true}); // Фильтр невыполненные

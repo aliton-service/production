@@ -37,11 +37,31 @@
                 return false;
             }
         });
+        var DataWorkTypes;
+        var DataStorages;
+        var DataReceiptReasons;
+        var EmplRecords;
         
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['WorkTypes', 'StoragesList', 'ReceiptReasons', 'ListEmployees']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                DataWorkTypes = Res[0].Data;
+                DataStorages = Res[1].Data;
+                DataReceiptReasons = Res[2].Data;
+                EmplRecords = Res[3].Data;
+                
+            }
+        });      
         
         // Инициализация источников данных
-        var DataWorkTypes = new $.jqx.dataAdapter(Sources.SourceWorkTypes);
-        var DataStorages = new $.jqx.dataAdapter(Sources.SourceStoragesList);
+//        var DataWorkTypes = new $.jqx.dataAdapter(Sources.SourceWorkTypes);
+//        var DataStorages = new $.jqx.dataAdapter(Sources.SourceStoragesList);
         var DataPrior = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDemandPriors), {
             formatData: function (data) {
                 var Filters = [];
@@ -52,10 +72,10 @@
                 return data;
             },
         });
-        var DataReceiptReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReceiptReasons)); 
-        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees)); 
-        DataEmployees.dataBind();
-        var EmplRecords  = DataEmployees.records;
+//        var DataReceiptReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceReceiptReasons)); 
+//        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees)); 
+//        DataEmployees.dataBind();
+//        var EmplRecords  = DataEmployees.records;
         $('#FindTrebsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings));
         $('#btnCancelWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnSaveWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: false}));

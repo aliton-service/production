@@ -34,59 +34,42 @@
             Demand.DateReg = new Date();
         };
 
+        var DataDemandTypesRecords;
+        var DataSystemTypesRecords;
+        var DataEquipTypesRecords;
+        var DataMalfunctionsRecords;
+        var DataPriorsRecords;
+        var DataDelayedClosureReasons;
+        var DataTransferReasons;
+        var DataCloseReasons;
+        var DataDelayReasons;
+        var DataDemandResults;
+        
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['DSystems', 'DEquips', 'DMalfunctions', 'DPriors', 'DTypes', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                DataSystemTypesRecords = Res[0].Data;
+                DataEquipTypesRecords = Res[1].Data;
+                DataMalfunctionsRecords = Res[2].Data;
+                DataPriorsRecords = Res[3].Data;
+                DataDemandTypesRecords = Res[4].Data;
+                DataDelayedClosureReasons = Res[5].Data;
+                DataTransferReasons = Res[6].Data;
+                DataCloseReasons = Res[7].Data;
+                DataDelayReasons = Res[8].Data;
+                DataDemandResults = Res[9].Data;
+            }
+        });
+
+        
         // Инициализация источников данных
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-        var DataDemandTypes = new $.jqx.dataAdapter(Sources.SourceDemandTypes);
-        var DataDelayedClosureReasons = new $.jqx.dataAdapter(Sources.SourceDelayedClosureReasons);
-        var DataTransferReasons = new $.jqx.dataAdapter(Sources.SourceTransferReasons);
-        var DataCloseReasons = new $.jqx.dataAdapter(Sources.SourceCloseReasons);
-        var DataDelayReasons = new $.jqx.dataAdapter(Sources.SourceDelayReasons);
-        var DataDemandResults = new $.jqx.dataAdapter(Sources.SourceDemandResults);
-        
-        var DataSystemTypes = new $.jqx.dataAdapter(Sources.SourceSystemTypes, {
-            beforeLoadComplete: function (records) {
-                var value = Demand.DType_id;
-                var filteredRecords = new Array();
-                for (var i = 0; i < records.length; i++) {
-                    if (records[i].DType_id == parseInt(value)) 
-                        filteredRecords.push(records[i]);
-                }
-                return filteredRecords;
-            }
-        });
-        var DataEquipTypes = new $.jqx.dataAdapter(Sources.SourceEquipTypes, {
-            beforeLoadComplete: function (records) {
-                var value = Demand.DSystem_id;
-                var filteredRecords = new Array();
-                for (var i = 0; i < records.length; i++) {
-                    if (records[i].DSystem_id == parseInt(value)) 
-                        filteredRecords.push(records[i]);
-                }
-                return filteredRecords;
-            }
-        });
-        var DataMalfunctions = new $.jqx.dataAdapter(Sources.SourceMalfunctions, {
-            beforeLoadComplete: function (records) {
-                var value = Demand.DEquip_id;
-                var filteredRecords = new Array();
-                for (var i = 0; i < records.length; i++) {
-                    if (records[i].DEquip_id == parseInt(value)) 
-                        filteredRecords.push(records[i]);
-                }
-                return filteredRecords;
-            }
-        });
-        var DataPriors = new $.jqx.dataAdapter(Sources.SourcePriors, {
-            beforeLoadComplete: function (records) {
-                var value = Demand.DMalfunction_id;;
-                var filteredRecords = new Array();
-                for (var i = 0; i < records.length; i++) {
-                    if (records[i].DMalfunction_id == parseInt(value))
-                        filteredRecords.push(records[i]);
-                }
-                return filteredRecords;
-            }
-        });
         var DataContactInfo = new $.jqx.dataAdapter(Sources.SourceContactInfo, {
             formatData: function (data) {
                 $.extend(data, {
@@ -104,11 +87,11 @@
         $("#chbDateMaster").jqxCheckBox({ width: 160, height: 25 });
         $("#chbOtherExecutor").jqxCheckBox({ width: 160, height: 25 });
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
-        $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '300', height: '25px', displayMember: "DemandType", valueMember: "DType_id"});
-        $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypes, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
-        $("#cmbEquipType").jqxComboBox({ disabled: false, source: DataEquipTypes, promptText: "Выберите тип системы...", width: '182', height: '25px', displayMember: "EquipType", valueMember: "DEquip_id"});
-        $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctions, promptText: "Выберите тип оборудования...", width: '300', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
-        $("#cmbPrior").jqxComboBox({ source: DataPriors, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: true });
+        $("#cmbDemandType").jqxComboBox({ source: DataDemandTypesRecords, width: '300', height: '25px', displayMember: "DemandType", valueMember: "DType_id"});
+        $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypesRecords, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
+        $("#cmbEquipType").jqxComboBox({ disabled: false, source: DataEquipTypesRecords, promptText: "Выберите тип системы...", width: '182', height: '25px', displayMember: "EquipType", valueMember: "DEquip_id"});
+        $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctionsRecords, promptText: "Выберите тип оборудования...", width: '300', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
+        $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: true });
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.AgreeDate, }));
         $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 300}));
@@ -142,29 +125,19 @@
         }
         // Проставляем знаячение
         if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
-        if (Demand.DType_id != '') $("#cmbDemandType").jqxComboBox('val', Demand.DType_id);
-        if (Demand.DSystem_id !== '') { $("#cmbSystemType").jqxComboBox('val', Demand.DSystem_id); } else { $("#cmbSystemType").jqxComboBox({disabled: true}); }
-        if (Demand.DEquip_id != '') $("#cmbEquipType").jqxComboBox('val', Demand.DEquip_id); else $("#cmbEquipType").jqxComboBox({disabled: false});
-        if (Demand.DMalfunction_id != '') $("#cmbMalfunction").jqxComboBox('val', Demand.DMalfunction_id); else $("#cmbMalfunction").jqxComboBox({disabled: false});
-        if (Demand.DPrior_id != '') { $("#cmbPrior").jqxComboBox('val', Demand.DPrior_id); $("#btnSave").jqxButton({ disabled: false });} else $("#cmbPrior").jqxComboBox({disabled: false});
+        
         
         // Инициализация событий
         $("#cmbDemandType").bind('select', function(event) {
             if (event.args) {
                 $("#cmbSystemType").jqxComboBox({ disabled: false, selectedIndex: -1});		
                 var value = event.args.item.value;
-                Sources.SourceSystemTypes.data = {DType_id: value};
-                DataSystemTypes = new $.jqx.dataAdapter(Sources.SourceSystemTypes, {
-                    beforeLoadComplete: function (records) {
-                        var filteredRecords = new Array();
-                        for (var i = 0; i < records.length; i++) {
-                            if (records[i].DType_id == value)
-                                filteredRecords.push(records[i]);
-                        }
-                        return filteredRecords;
-                    }
-                });
-                $("#cmbSystemType").jqxComboBox({source: DataSystemTypes, autoDropDownHeight: DataSystemTypes.records.length > 10 ? false : true});
+                var SystemSource = [];
+                for (var i = 0; i < DataSystemTypesRecords.length; i++) {
+                    if (DataSystemTypesRecords[i].DType_id == value)
+                        SystemSource.push(DataSystemTypesRecords[i]);
+                }
+                $("#cmbSystemType").jqxComboBox({source: SystemSource, autoDropDownHeight: SystemSource.length > 10 ? false : true});
                 $("#cmbSystemType").jqxComboBox('selectIndex', 0);
             }
         });  
@@ -175,18 +148,12 @@
                 $("#cmbEquipType").jqxComboBox({ disabled: false, selectedIndex: -1});		
                 if (event.args.item !== null) {
                     var value = event.args.item.value;
-                    Sources.SourceSystemTypes.data = {DSystem_id: value};
-                    DataEquipTypes = new $.jqx.dataAdapter(Sources.SourceEquipTypes, {
-                        beforeLoadComplete: function (records) {
-                            var filteredRecords = new Array();
-                            for (var i = 0; i < records.length; i++) {
-                                if (records[i].DSystem_id == value)
-                                    filteredRecords.push(records[i]);
-                            }
-                            return filteredRecords;
-                        }
-                    });
-                    $("#cmbEquipType").jqxComboBox({source: DataEquipTypes, autoDropDownHeight: DataEquipTypes.records.length > 10 ? false : true});
+                    var EquipsSource = [];
+                    for (var i = 0; i < DataEquipTypesRecords.length; i++) {
+                        if (DataEquipTypesRecords[i].DSystem_id == value)
+                            EquipsSource.push(DataEquipTypesRecords[i]);
+                    }
+                    $("#cmbEquipType").jqxComboBox({source: EquipsSource, autoDropDownHeight: EquipsSource.length > 10 ? false : true});
                     $("#cmbEquipType").jqxComboBox('selectIndex', 0);
                 }
             }
@@ -197,18 +164,12 @@
                 $("#cmbMalfunction").jqxComboBox({ disabled: false, selectedIndex: -1});		
                 if (event.args.item !== null) {
                     var value = event.args.item.value;
-                    Sources.SourceMalfunctions.data = {DEquip_id: value};
-                    DataMalfunctions = new $.jqx.dataAdapter(Sources.SourceMalfunctions, {
-                        beforeLoadComplete: function (records) {
-                            var filteredRecords = new Array();
-                            for (var i = 0; i < records.length; i++) {
-                                if (records[i].DEquip_id == value) 
-                                    filteredRecords.push(records[i]);
-                            }
-                            return filteredRecords;
-                        }
-                    });
-                    $("#cmbMalfunction").jqxComboBox({source: DataMalfunctions, autoDropDownHeight: DataEquipTypes.records.length > 10 ? false : true});
+                    var MalfunctionsSource = [];
+                    for (var i = 0; i < DataMalfunctionsRecords.length; i++) {
+                        if (DataMalfunctionsRecords[i].DEquip_id == value)
+                            MalfunctionsSource.push(DataMalfunctionsRecords[i]);
+                    }
+                    $("#cmbMalfunction").jqxComboBox({source: MalfunctionsSource, autoDropDownHeight: MalfunctionsSource.length > 10 ? false : true});
                     $("#cmbMalfunction").jqxComboBox('selectIndex', 0);
                 }
             }
@@ -219,20 +180,12 @@
                 $("#cmbPrior").jqxComboBox({ disabled: false, selectedIndex: -1});		
                 if (event.args.item !== null) {
                     var value = event.args.item.value;
-                    Sources.SourcePriors.data = {DMalfunction_id: value};
-                    DataPriors= new $.jqx.dataAdapter(Sources.SourcePriors, {
-                        beforeLoadComplete: function (records) {
-                            var filteredRecords = new Array();
-                            for (var i = 0; i < records.length; i++) {
-                                if (records[i].DMalfunction_id == value) {
-
-                                    filteredRecords.push(records[i]);
-                                }
-                            }
-                            return filteredRecords;
-                        }
-                    });
-                    $("#cmbPrior").jqxComboBox({source: DataPriors, autoDropDownHeight: DataEquipTypes.records.length > 10 ? false : true});
+                    var PriorsSource = [];
+                    for (var i = 0; i < DataPriorsRecords.length; i++) {
+                        if (DataPriorsRecords[i].DMalfunction_id == value)
+                            PriorsSource.push(DataPriorsRecords[i]);
+                    }
+                    $("#cmbPrior").jqxComboBox({source: PriorsSource, autoDropDownHeight: PriorsSource.length > 10 ? false : true});
                     $("#cmbPrior").jqxComboBox('selectIndex', 0);
                 }
             }
@@ -251,6 +204,11 @@
             }
         });
         
+        if (Demand.DType_id != '') $("#cmbDemandType").jqxComboBox('val', Demand.DType_id);
+        if (Demand.DSystem_id !== '') { $("#cmbSystemType").jqxComboBox('val', Demand.DSystem_id); } else { $("#cmbSystemType").jqxComboBox({disabled: true}); }
+        if (Demand.DEquip_id != '') $("#cmbEquipType").jqxComboBox('val', Demand.DEquip_id); else $("#cmbEquipType").jqxComboBox({disabled: false});
+        if (Demand.DMalfunction_id != '') $("#cmbMalfunction").jqxComboBox('val', Demand.DMalfunction_id); else $("#cmbMalfunction").jqxComboBox({disabled: false});
+        if (Demand.DPrior_id != '') { $("#cmbPrior").jqxComboBox('val', Demand.DPrior_id); $("#btnSave").jqxButton({ disabled: false });} else $("#cmbPrior").jqxComboBox({disabled: false});
         
         
         $('#cmbContactInfo').on('change', function (event) {
