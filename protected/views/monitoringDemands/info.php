@@ -4,12 +4,12 @@
         var CurrentRowData;
         
         var MonitoringDemands2 = {
-            mndm_id: '<?php echo $model->mndm_id; ?>',
-            Prior: '<?php echo $model->DemandPrior; ?>',
-            Description: '<?php echo $model->Note; ?>',
-            EmplNameAccept: '<?php echo $model->EmplNameAccept; ?>',
-            UserName: '<?php echo $model->UserName; ?>',
-            UserChange2: '<?php echo $model->UserChange2; ?>',
+            mndm_id: <?php echo json_encode($model->mndm_id); ?>,
+            Prior: <?php echo json_encode($model->DemandPrior); ?>,
+            Description: <?php echo json_encode($model->Note); ?>,
+            EmplNameAccept: <?php echo json_encode($model->EmplNameAccept); ?>,
+            UserName: <?php echo json_encode($model->UserName); ?>,
+            UserChange2: <?php echo json_encode($model->UserChange2); ?>,
             Deadline: Aliton.DateConvertToJs('<?php echo $model->Deadline; ?>'),
             Date: Aliton.DateConvertToJs('<?php echo $model->Date; ?>'),
             DateAccept: Aliton.DateConvertToJs('<?php echo $model->DateAccept; ?>'),
