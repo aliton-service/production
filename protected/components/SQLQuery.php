@@ -130,6 +130,13 @@ class SQLQuery
         {
             $this->order = $this->order . ", " . $sql;
         }
+        $this->createText();
+    }
+    
+    public function AddOffset($sql)
+    {
+        $this->order = $this->order . " " . $sql;
+        $this->createText();
     }
     
     public function AddWhere($sql, $operator='and')

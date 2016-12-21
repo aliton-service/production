@@ -280,6 +280,7 @@ class AjaxDataController extends Controller
             'TotalRows' => $CountRow,
             'Rows' => $Result['Data'],
             'Where' => $where,
+            'QueryText' => $Result['QueryText'],
             'InternalFilters' => $InternalFilters,
         );
         echo json_encode($Data);
