@@ -90,7 +90,7 @@
         $("#PrintContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#CheckupContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
-        $('#CheckupContract').jqxButton({disabled: false});
+        $('#CheckupContract').jqxButton({disabled: (CurrentContract.user_checkup != null)});
         
         $('#PrintContract').on('click', function() {
             window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(

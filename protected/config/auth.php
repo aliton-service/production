@@ -1208,6 +1208,7 @@ return array_merge(
                 'AdminSystemComplexitys',
                 'AdminSystemStatements',
                 'AdminDocuments',
+                'AdminWHBuhActs',
             ),
         ),
         
