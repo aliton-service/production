@@ -278,7 +278,7 @@
             
             $('#btnAddDocTreb').on('click', function() {
                 
-                $('#CostCalculationsDialog').jqxWindow({width: 700, height: 480, position: 'center', isModal: true});
+                $('#CostCalculationsDialog').jqxWindow({width: 720, height: 500, position: 'center', isModal: true});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
                     type: 'POST',
@@ -337,7 +337,7 @@
             });
             
             $('#btnAddDocContract1').on('click', function() {
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '530px', width: '870'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '560px', width: '870'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                     type: 'POST',
@@ -374,7 +374,7 @@
                 });
             });
             $('#btnAddDocContract2').on('click', function() {
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '540px', width: '870'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '560px', width: '870'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                     type: 'POST',
@@ -410,8 +410,28 @@
                     }
                 });
             });
+            $('#btnAddDocAct').on('click', function(){
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '480px', width: '940'}));
+                $.ajax({
+                    url: "<?php echo Yii::app()->createUrl('WHActs/Insert');?>",
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        DialogId: 'CostCalculationsDialog',
+                        BodyDialogId: 'BodyCostCalculationsDialog',
+                        Params: {
+                        }
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $('#BodyCostCalculationsDialog').html(Res.html);
+                        $('#CostCalculationsDialog').jqxWindow('open');
+                    }
+                });
+            });
+            
             $('#btnAddDocDelivery').on('click', function(){
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '420px', width: '740'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '470px', width: '740'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Delivery/Insert');?>",
                     type: 'POST',
@@ -433,7 +453,7 @@
             });
             
             $('#btnAddDocBuhAct').on('click', function(){
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 600, width: 750}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 540, width: 750}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('WHBuhActs/Create');?>",
                     type: 'POST',
@@ -1155,7 +1175,7 @@
                     $("#CostCalcDocumentsGrid").on('rowselect', function (event) {
                         CurrentRowDataCCD = $('#CostCalcDocumentsGrid').jqxGrid('getrowdata', event.args.rowindex);
                         CheckButtonCCD();
-                        console.log(CurrentRowDataCCD);
+//                        console.log(CurrentRowDataCCD);
                         if (CurrentRowDataCCD.DocType_id == 6) {
                             $('#DelCostCalcDocuments').jqxButton({ disabled: false })
                         } else {

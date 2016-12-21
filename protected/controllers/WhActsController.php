@@ -92,6 +92,9 @@ class WhActsController extends Controller
     public function actionInsert() {
         $model = new WhActs_v();
         
+        $DialogId = '';
+        $BodyDialogId = '';
+        
         $ObjectResult = array(
             'result' => 0,
             'id' => 0,
@@ -100,6 +103,13 @@ class WhActsController extends Controller
         
         if (isset($_POST['Params']))
             $model->attributes = $_POST['Params'];
+        
+        if (isset($_POST['DialogId']))
+            $DialogId = $_POST['DialogId'];
+        
+        if (isset($_POST['BodyDialogId']))
+            $BodyDialogId = $_POST['BodyDialogId'];
+        
         
         if (isset($_POST['WhActs'])) {
             $model->attributes = $_POST['WhActs'];
@@ -114,6 +124,8 @@ class WhActsController extends Controller
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
+            'DialogId' => $DialogId,
+            'BodyDialogId' => $BodyDialogId,
         ), true);
         echo json_encode($ObjectResult);
     }

@@ -1209,6 +1209,7 @@ return array_merge(
                 'AdminSystemStatements',
                 'AdminDocuments',
                 'AdminWHBuhActs',
+                'AdminContractMasterHistory',
             ),
         ),
         
