@@ -162,7 +162,13 @@ class MainFormModel extends CFormModel
         $Where = $this->Query->where;
         $Order = $this->Query->order;
         
-        $Select = "Select Count(*) CountAll \n";
+        $Idx = stripos($Select, "select");
+        if ($Idx !== false) {
+            $Select = substr($Select, 0, $Idx);
+            $Select .= " Select Count(*) CountAll \n";
+        }
+        
+        //$Select = "Select Count(*) CountAll \n";
         $QueryText = $Select . "\n" . $Form . "\n" . $Where;
         
         /*
@@ -239,9 +245,13 @@ class MainFormModel extends CFormModel
         }
         else
             $CountAllRow = $this->getCountAllRow();
-            
-        //$QueryText = str_ireplace('select', 'Select Top ' . $Top . ' ROW_NUMBER() OVER('.$this->Query->order.') as RowNumber,', $this->Query->text, $subject);
         
+        $this->Query->AddOffset("OFFSET " . $Start . " ROWS FETCH NEXT " . $Top . " ROWS ONLY");
+        $Result['Data'] = $this->Query->QueryAll();
+        $Result['QueryText'] = $this->Query->text; 
+        
+        //$QueryText = str_ireplace('select', 'Select Top ' . $Top . ' ROW_NUMBER() OVER('.$this->Query->order.') as RowNumber,', $this->Query->text, $subject);
+        /*
         $QueryText = $this->str_replace_once('select', 'Select Top ' . $Top . ' ROW_NUMBER() OVER('.$this->Query->order.') as RowNumber,', $this->Query->text);
         
         
@@ -258,10 +268,12 @@ class MainFormModel extends CFormModel
         
         $Result['Data'] = $NewQuery->QueryAll();
         $Result['QueryText'] = $NewQuery->text; 
+         * 
+         */
         //$Result['Data'] = Yii::app()->db->createCommand($QueryText)->queryAll();
         
         $PageCount = ceil($CountAllRow/$PageSize);
-        $Result['Details'] = array('Count' => $CountAllRow, 'PageCount' => $PageCount);
+        $Result['Details'] = array('Count' => $CountAllRow, 'PageCount' => $PageCount, 'QueryText' => $Result['QueryText']);
         return $Result;
     }
     

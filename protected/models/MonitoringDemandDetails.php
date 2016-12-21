@@ -33,7 +33,7 @@ class MonitoringDemandDetails extends MainFormModel
 	function __construct($scenario='') {
 		parent::__construct($scenario);
 
-		$select = "
+		$select = "\n Declare @Prlt_id int = dbo.get_price_list(GETDATE()) \n
                     Select
                         m.mndt_id,
                         m.mndm_id,
@@ -50,7 +50,7 @@ class MonitoringDemandDetails extends MainFormModel
 		$from = "
                     From MonitoringDemandDetails m left join Equips e on (m.equip_id = e.Equip_id)
                         left join UnitMeasurement_v u on (e.UnitMeasurement_id = u.UnitMeasurement_id)
-                        left join PriceListDetails_v p on (m.equip_id = p.eqip_id)
+                        left join PriceListDetails_v p on (m.equip_id = p.eqip_id and p.prlt_id = @Prlt_id)
 		";
 
 		$where = "

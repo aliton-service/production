@@ -94,32 +94,41 @@ class PriceMonitoringController extends Controller
                     return;
                 } 
             }
-            $this->render('create',array(
-                'model'=>$model,
-            ));
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
 	public function actionUpdate($mntr_id = false) {
             $model=new PriceMonitoring;
-            $model->getModelPk($mntr_id);
-
-            if ($mntr_id == null)
-                    throw new CHttpException(404, 'Не выбрана запись.');
-
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+            
+            if (isset($_POST['mntr_id']))
+                $model->getModelPk($_POST['mntr_id']);
+            
+            if (isset($_POST['Params']))
+                $model->attributes = $_POST['Params'];
+            
             if(isset($_POST['PriceMonitoring']))
             {
-                $model->attributes=$_POST['PriceMonitoring'];
-                $model->user_change_id = Yii::app()->user->Employee_id;
-
+                $model->attributes = $_POST['PriceMonitoring'];
                 if ($model->validate()) {
-                    $model->update();
-                    $this->redirect(Yii::app()->createUrl('PriceMonitoring/Index'));
-                }
+                    $Res = $model->Update();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $model->mntr_id;
+                    echo json_encode($ObjectResult);
+                    return;
+                } 
             }
-
-            $this->render('update',array(
-                    'model'=>$model,
-            )); 
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
 	public function actionDelete() {

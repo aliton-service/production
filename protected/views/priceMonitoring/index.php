@@ -57,7 +57,7 @@
         $("#DelPriceMonitoring").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#NewPriceMonitoring').on('click', function(){
-            $('#PriceMonitoringDialog').jqxWindow({width: 400, height: 160, position: 'center'});
+            $('#PriceMonitoringDialog').jqxWindow({width: 600, height: 360, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('PriceMonitoring/Create')) ?>,
                 type: 'POST',
@@ -73,14 +73,24 @@
             });
         });
         
-        $("#NewPriceMonitoring").on('click', function ()
-        {
-            window.open('/index.php?r=PriceMonitoring/Create');
-        });
-        
         $("#EditPriceMonitoring").on('click', function ()
         {
-            window.open('/index.php?r=PriceMonitoring/Update&mntr_id=' + CurrentRowData.mntr_id);
+            if (CurrentRowData == undefined) return;
+            $('#PriceMonitoringDialog').jqxWindow({width: 600, height: 260, position: 'center'});
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('PriceMonitoring/Update')) ?>,
+                type: 'POST',
+                async: false,
+                data: {mntr_id: CurrentRowData.mntr_id},
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyPriceMonitoringDialog").html(Res.html);
+                    $('#PriceMonitoringDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
         });
         
         $("#ReloadPriceMonitoring").on('click', function () {
