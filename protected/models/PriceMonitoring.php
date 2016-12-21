@@ -132,14 +132,7 @@ class PriceMonitoring extends MainFormModel
 		// will receive user inputs.
 		return array(
                     array('price, price_retail', 'fieldValidate'),
-                    array('date, eqip_id, splr_id, price, price_retail, delivery', 'required'),
-                    array('eqip_id, splr_id', 'numerical', 'integerOnly'=>true),
-                    array('price, price_retail', 'numerical'),
-                    array('user_create_id, user_change_id', 'length', 'max'=>50),
-                    array('date_create, date_change', 'safe'),
-                    // The following rule is used by search().
-                    // @todo Please remove those attributes that should not be searched.
-                    array('mntr_id, date, eqip_id, splr_id, price, price_retail, user_create_id, date_create, user_change_id, date_change, delivery', 'safe'),
+                    array('mntr_id, Mndm_id, date, eqip_id, splr_id, price, price_retail, user_create_id, date_create, user_change_id, date_change, delivery', 'safe'),
 		);
 	}
 
@@ -150,6 +143,7 @@ class PriceMonitoring extends MainFormModel
 	{
 		return array(
 			'mntr_id' => 'Mntr',
+                        'Mndm_id' => '',
 			'date' => 'Дата',
 			'eqip_id' => 'Оборудование',
 			'splr_id' => 'Поставщик',

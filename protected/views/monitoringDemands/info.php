@@ -247,10 +247,10 @@
         
         $('#EditDialogAddPrice').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '360px', width: '640'}));
         
-        $('#EditDialogAddPrice').jqxWindow({initContent: function() {
-            $("#btnOkAddPrice").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-            $("#btnCancelAddPrice").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        }});
+//        $('#EditDialogAddPrice').jqxWindow({initContent: function() {
+//            $("#btnOkAddPrice").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+//            $("#btnCancelAddPrice").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+//        }});
         
         $("#btnOkAddPrice").on('click', function () {
             var Data = $('#PriceMonitoring').serialize();
@@ -279,16 +279,21 @@
             if(CurrentRowData !== null) {
                 $('#EditDialogAddPrice').jqxWindow('open');
                 $.ajax({
-                    url: "<?php echo Yii::app()->createUrl('PriceMonitoring/Create'); ?>",
+                    url: <?php echo json_encode(Yii::app()->createUrl('PriceMonitoring/Create')); ?>,
                     type: 'POST',
                     async: false,
                     data: { 
-                        renderPartial: true,
-                        eqip_id: CurrentRowData.equip_id,
-                        Mndm_id: MonitoringDemands2.mndm_id
+                        Params: {
+                            eqip_id: CurrentRowData.equip_id,
+                            Mndm_id: MonitoringDemands2.mndm_id
+                        }
                     },
                     success: function(Res){
-                        $('#BodyDialogAddPrice').html(Res);
+                        Res = JSON.parse(Res);
+                        $('#BodyDialogAddPrice').html(Res.html);
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
                     }
                 });
             }
@@ -464,11 +469,11 @@
     <div style="padding: 10px;" id="DialogContentAddPrice">
         <div id="BodyDialogAddPrice"></div>
         
-        <div id="BottomDialogAddPrice">
+<!--        <div id="BottomDialogAddPrice">
             <div class="row">
                 <div class="row-column"><input readonly type="button" value="Сохранить" id='btnOkAddPrice'/></div>
                 <div style="float: right;" class="row-column"><input readonly type="button" value="Отменить" id='btnCancelAddPrice'/></div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
