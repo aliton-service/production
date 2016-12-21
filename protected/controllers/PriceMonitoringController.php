@@ -9,7 +9,7 @@
 class PriceMonitoringController extends Controller
 {
 	public $layout = '//layouts/column2';
-
+        public $title = '';
 	/**
 	 * @return array action filters
 	 */
@@ -68,46 +68,35 @@ class PriceMonitoringController extends Controller
 
 
 	public function actionIndex() {
+            $this->title = 'Мониторинг цен';
             $this->render('index');
 	}
 
 	public function actionCreate() {
             $model=new PriceMonitoring;
-
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+            
+            if (isset($_POST['Params']))
+                $model->attributes = $_POST['Params'];
+            
             if(isset($_POST['PriceMonitoring']))
             {
-                $model->attributes=$_POST['PriceMonitoring'];
-                $model->user_create_id = Yii::app()->user->Employee_id;
-                if (isset($_POST['PriceMonitoring']['Mndm_id'])) $model->Mndm_id = $_POST['PriceMonitoring']['Mndm_id'];
-                
-                if ($model->validate()) 
-                {
-                    if($model->Mndm_id !== NULL && $model->Mndm_id != '') {
-                        $model->insert();
-                        echo '1';
-                        return;
-                    } else {
-                        $model->insert();
-                        $this->redirect(Yii::app()->createUrl('PriceMonitoring/Index'));
-                    }
-                }
+                $model->attributes = $_POST['PriceMonitoring'];
+                if ($model->validate()) {
+                    $Res = $model->Insert();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $Res['mntr_id'];
+                    echo json_encode($ObjectResult);
+                    return;
+                } 
             }
-            
-            if (isset($_POST['Mndm_id']) || $model->Mndm_id !== NULL)
-            {
-                if (isset($_POST['eqip_id'])) $model->eqip_id = $_POST['eqip_id'];
-                if (isset($_POST['Mndm_id'])) $model->Mndm_id = $_POST['Mndm_id'];
-                
-                $this->renderPartial('_form', array(
-                    'model' => $model
-                ));
-                return;
-            }
-            else {
-                $this->render('create',array(
-                    'model'=>$model,
-                ));
-            }
+            $this->render('create',array(
+                'model'=>$model,
+            ));
 	}
 
 	public function actionUpdate($mntr_id = false) {

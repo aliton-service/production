@@ -12,25 +12,33 @@
                 $("#PriceMonitoringGrid").jqxGrid('updatebounddata', 'sort');
             }
         }));
-
+        
+        $('#PriceMonitoringDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '200px', width: '400', position: 'center'}));
+        
+        $('#PriceMonitoringGrid').on('rowdoubleclick', function (event) { 
+            $("#EditPriceMonitoring").click();
+        });
+        
+        $("#PriceMonitoringGrid").on("bindingcomplete", function (event) {
+            if (CurrentRowData != undefined) 
+                Aliton.SelectRowByIdVirtual('mntr_id', CurrentRowData.mntr_id, '#PriceMonitoringGrid', false);
+            else
+                Aliton.SelectRowByIdVirtual('mntr_id', null, '#PriceMonitoringGrid', false);
+        });
+        
+        $("#PriceMonitoringGrid").on('rowselect', function (event) {
+            CurrentRowData = $('#PriceMonitoringGrid').jqxGrid('getrowdata', event.args.rowindex);
+        });
+        
         $("#PriceMonitoringGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
                 showfilterrow: true,
                 virtualmode: true,
-                width: '100%',
-                height: '400',
+                width: 'calc(100% - 2px)',
+                height: 'calc(100% - 2px)',
                 source: DemDataAdapter,
-                /*
-                ready: function() {
-                    var State = $('#PriceMonitoringGrid').jqxGrid('getstate');
-                    var Columns = GridState.LoadGridSettings('#PriceMonitoringGrid', 'PriceMonitoringIndex_PriceMonitoringGrid');
-                    $.extend(true, State.columns, Columns);
-                    $('#PriceMonitoringGrid').jqxGrid('loadstate', State);    
-                    $('#PriceMonitoringGrid').jqxGrid({source: DemDataAdapter});
-                }
-            */
                 columns: [
                     { text: 'Дата', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Оборудование', dataField: 'EquipName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 600 },
@@ -48,19 +56,22 @@
         $("#ReloadPriceMonitoring").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelPriceMonitoring").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
-                
-        $("#PriceMonitoringGrid").on('rowselect', function (event) {
-            var Temp = $('#PriceMonitoringGrid').jqxGrid('getrowdata', event.args.rowindex);
-            if (Temp !== undefined) {
-                CurrentRowData = Temp;
-            } else {CurrentRowData = null};
-            console.log(CurrentRowData);
+        $('#NewPriceMonitoring').on('click', function(){
+            $('#PriceMonitoringDialog').jqxWindow({width: 400, height: 160, position: 'center'});
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('PriceMonitoring/Create')) ?>,
+                type: 'POST',
+                async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyPriceMonitoringDialog").html(Res.html);
+                    $('#PriceMonitoringDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
         });
-        
-        $('#PriceMonitoringGrid').on('rowdoubleclick', function (event) { 
-            $("#EditPriceMonitoring").click();
-        });
-        
         
         $("#NewPriceMonitoring").on('click', function ()
         {
@@ -72,16 +83,8 @@
             window.open('/index.php?r=PriceMonitoring/Update&mntr_id=' + CurrentRowData.mntr_id);
         });
         
-        $("#ReloadPriceMonitoring").on('click', function ()
-        {
-            $.ajax({
-                type: "POST",
-                url: "/index.php?r=PriceMonitoring/Index",
-                success: function(){
-                    $("#PriceMonitoringGrid").jqxGrid('updatebounddata');
-                    $("#PriceMonitoringGrid").jqxGrid('selectrow', 0);
-                }
-            });
+        $("#ReloadPriceMonitoring").on('click', function () {
+            $("#PriceMonitoringGrid").jqxGrid('updatebounddata');
         });
         
         $("#DelPriceMonitoring").on('click', function ()
@@ -96,30 +99,30 @@
                 }
             });
         });
-        
-        
-        $("#PriceMonitoringGrid").jqxGrid('selectrow', 0);
     });
     
 </script>
 
 <?php $this->setPageTitle('Мониторинг цен'); ?>
-<?php
-//    $this->breadcrumbs=array(
-//        'Склад'=>array('/reference/index'),
-//        'Мониторинг цен'=>array('index'),
-//    );
-//?>
 
-<h1>Мониторинг цен</h1>
 
-<div class="row">
+<div class="al-row" style="height: calc(100% - 58px)">
     <div id="PriceMonitoringGrid" class="jqxGridAliton"></div>
 </div>
 
-<div class="row">
-    <div class="row-column"><input type="button" value="Создать" id='NewPriceMonitoring' /></div>
-    <div class="row-column"><input type="button" value="Изменить" id='EditPriceMonitoring' /></div>
-    <div class="row-column"><input type="button" value="Обновить" id='ReloadPriceMonitoring' /></div>
-    <div class="row-column" style="margin-left: 200px;"><input type="button" value="Удалить" id='DelPriceMonitoring' /></div>
+<div class="al-row">
+    <div class="al-row-column"><input type="button" value="Создать" id='NewPriceMonitoring' /></div>
+    <div class="al-row-column"><input type="button" value="Изменить" id='EditPriceMonitoring' /></div>
+    <div class="al-row-column"><input type="button" value="Обновить" id='ReloadPriceMonitoring' /></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='DelPriceMonitoring' /></div>
+    <div style="clear: both"></div>
+</div>
+
+<div id="PriceMonitoringDialog" style="display: none;">
+    <div id="PriceMonitoringDialogHeader">
+        <span id="PriceMonitoringHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogPriceMonitoringContent">
+        <div style="" id="BodyPriceMonitoringDialog"></div>
+    </div>
 </div>
