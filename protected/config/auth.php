@@ -1207,6 +1207,7 @@ return array_merge(
                 'ManagerContractPriceHistory',
                 'AdminSystemComplexitys',
                 'AdminSystemStatements',
+                'AdminDocuments',
             ),
         ),
         
