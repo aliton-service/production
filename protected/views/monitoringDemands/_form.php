@@ -3,9 +3,9 @@
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         
         var MonitoringDemands3 = {
-            mndm_id: '<?php echo $model->mndm_id; ?>',
-            Prior: '<?php echo $model->Prior; ?>',
-            Description: '<?php echo $model->Description; ?>',
+            mndm_id: <?php echo json_encode($model->mndm_id); ?>,
+            Prior: <?php echo json_encode($model->Prior); ?>,
+            Description: <?php echo json_encode($model->Description); ?>,
             Deadline: Aliton.DateConvertToJs('<?php echo $model->Deadline; ?>'),
             Date: Aliton.DateConvertToJs('<?php echo $model->Date; ?>'),
             DateAccept: Aliton.DateConvertToJs('<?php echo $model->DateAccept; ?>'),

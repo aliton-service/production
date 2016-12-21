@@ -152,7 +152,7 @@
         });
         
         $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 400}));
-        $("#edClient").jqxInput($.extend(true, {}, InputDefaultSettings, {source: OrgData, searchMode: 'contains', displayMember: "FullName", valueMember: "FullName", placeHolder: "Клиент"}));
+        $("#edClient").jqxInput($.extend(true, {}, InputDefaultSettings, {source: OrgData, width: 400, searchMode: 'containsignorecase', displayMember: "FullName", valueMember: "FullName", placeHolder: "Клиент"}));
         //
         //GridFilters.AddControlFilter('edAddr', 'jqxInput', 'ObjectsGrid', 'Addr', 'stringfilter', 1, 'CONTAINS', true);
         //GridFilters.AddControlFilter('edClient', 'jqxInput', 'ObjectsGrid', 'FullName', 'stringfilter', 1, 'CONTAINS', true);
