@@ -97,7 +97,7 @@
         $("#MoreInformContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150, disabled: true }));
         $("#ReloadContracts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 580, width: 870}));
+        $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 600, width: 870}));
         $("#btnViewActs").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#btnViewActs").on('click', function() {
             var url = <?php echo json_encode(Yii::app()->createUrl('WhActs/Index')); ?>;
@@ -787,7 +787,7 @@
     <div id="NewContractDialogHeader">
         <span id="NewContractHeaderText"></span>
     </div>
-    <div style="overflow: hidden; padding: 10px; background-color: #F2F2F2;" id="NewContractDialogContent">
+    <div style="overflow-y: visible; padding: 10px; background-color: #F2F2F2;" id="NewContractDialogContent">
         <div style="overflow: hidden;" id="NewContractBodyDialog"></div>
     </div>
 </div>

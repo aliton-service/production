@@ -118,7 +118,7 @@
         $("#PrintContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#CheckupContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
-        $('#CheckupContract').jqxButton({disabled: (CurrentContract.user_checkup != '')});
+        $('#CheckupContract').jqxButton({disabled: (CurrentContract.user_checkup != null)});
         
         $("#CheckupContract").on('click', function () {
             $.ajax({
