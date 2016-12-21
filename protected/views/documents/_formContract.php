@@ -58,12 +58,12 @@
         $("#Master3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees3, displayMember: "ShortName", valueMember: "Employee_id", width: 180 }));
         $("#ServiceType3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataServiceTypes, displayMember: "ServiceType", valueMember: "ServiceType_id", width: 320 }));
         
-        $("#Price3").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#Price3").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         
         $("#SpecialCondition3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 840 }));
         $("#Note3").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 840 }));
         
-        $("#PriceMonth3").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#PriceMonth3").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         
         if (Document.ContrNumS != '') $("#ContrNumS3").jqxInput('val', Document.ContrNumS);
         if (Document.JuridicalPerson != '') $("#JuridicalPerson3").jqxComboBox('val', Document.JuridicalPerson);

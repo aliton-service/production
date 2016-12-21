@@ -380,7 +380,7 @@
         
         $('#btnEdit').on('click', function(){
             if ($('#btnEdit').jqxButton('disabled')) return;
-            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 470, width: 920, position: 'center' }));
+            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 490, width: 940, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WhActs/Update')) ?>,
                 type: 'POST',
