@@ -450,7 +450,8 @@
                         }
                     },
                     success: function(Res) {
-                        $('#BodyCostCalculationsDialog').html(Res);
+                        Res = JSON.parse(Res);
+                        $('#BodyCostCalculationsDialog').html(Res.html);
                         $('#CostCalculationsDialog').jqxWindow('open');
                     }
                 });

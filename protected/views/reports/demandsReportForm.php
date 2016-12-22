@@ -18,7 +18,7 @@
                 {id: 3, name: 'Невыполненные'},
             ];
             
-            $("#Address").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddresses, displayMember: "Addr", valueMember: "Address_id", width: 400 }));
+            $("#Address").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddresses, displayMember: "Addr", valueMember: "ObjectGr_id", width: 400 }));
             $("#Master").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmpl, displayMember: "ShortName", valueMember: "Employee_id", width: 200 }));
             $("#DemandType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataDemandType, displayMember: "DemandType", valueMember: "DemandType_id", width: 280 }));
             $("#SystemType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemType, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width: 280 }));
@@ -64,51 +64,60 @@
         ));
 ?>        
 
-<div class="row" style="margin-left: 20px;">
-    <div class="row">
-        <div class="row-column">Адрес объекта: </div>
-        <div class="row-column"><div id='Address' name="Parameters[prmObjectGr]"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Мастер: </div>
-        <div class="row-column"><div id='Master' name="Parameters[prmMaster]"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Тип заявки: </div>
-        <div class="row-column"><div id='DemandType' name="Parameters[prmDemandType]"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Тип системы: </div>
-        <div class="row-column"><div id='SystemType' name="Parameters[prmSystemType]"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Тип оборудования: </div>
-        <div class="row-column"><div id='EquipType' name="Parameters[prmEquipType]"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Неисправность: </div>
-        <div class="row-column"><div id='Malfunction' name="Parameters[prmMalfunction]"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Тариф: </div>
-        <div class="row-column"><div id='ServiceType' name="Parameters[prmServiceType]"></div></div>
-    </div>
-    
-    <div class="row">
-        <div class="row-column">Выполнение: </div>
-        <div class="row-column"><div id='Exec' name="Parameters[prmExec]"></div></div>
-    </div>
+<div class="al-row">
+    <div class="al-row-column">Адрес объекта: </div>
+    <div class="al-row-column"><div id='Address' name="Parameters[prmObjectGr]"></div></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Мастер: </div>
+    <div class="al-row-column"><div id='Master' name="Parameters[prmMaster]"></div></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Тип заявки: </div>
+    <div class="al-row-column"><div id='DemandType' name="Parameters[prmDemandType]"></div></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Тип системы: </div>
+    <div class="al-row-column"><div id='SystemType' name="Parameters[prmSystemType]"></div></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Тип оборудования: </div>
+    <div class="al-row-column"><div id='EquipType' name="Parameters[prmEquipType]"></div></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Неисправность: </div>
+    <div class="al-row-column"><div id='Malfunction' name="Parameters[prmMalfunction]"></div></div>
+    <div style="clear: both"></div>
+</div>
 
-    <div class="row">
-        <div class="row-column">Участок: </div>
-        <div class="row-column"><div id='Territory' name="Parameters[prmTerrit1]"></div></div>
-    </div>
+<div class="al-row">
+    <div class="al-row-column">Тариф: </div>
+    <div class="al-row-column"><div id='ServiceType' name="Parameters[prmServiceType]"></div></div>
+    <div style="clear: both"></div>
+</div>
+
+<div class="al-row">
+    <div class="al-row-column">Выполнение: </div>
+    <div class="al-row-column"><div id='Exec' name="Parameters[prmExec]"></div></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column">Участок: </div>
+    <div class="al-row-column"><div id='Territory' name="Parameters[prmTerrit1]"></div></div>
+    <div style="clear: both"></div>
+</div>
+
+    
+    
+    
+    
+    
+
 
     <div class="row" style="padding: 10px; width: 400px; border: 1px solid #ddd; background-color: #F2F2F2;">
         <div class="row">
@@ -132,7 +141,7 @@
         </div>
     </div>
 
-</div>
+
 <div style="clear: both; margin-top: 10px;"></div>
         
 <?php        

@@ -663,7 +663,8 @@
                                     }
                                 },
                                 success: function(Res) {
-                                    $('#BodyRepairsDialog').html(Res);
+                                    Res = JSON.parse(Res);
+                                    $('#BodyRepairsDialog').html(Res.html);
                                     $('#RepairsDialog').jqxWindow('open');
                                 }
                             });

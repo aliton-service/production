@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var DeliveryGO = {};
     $(document).ready(function(){
         var DeliveryDemands = {
             Dldm_id: <?php echo json_encode($model->dldm_id); ?>,
@@ -23,6 +24,57 @@
         };
         var FlagLog = Boolean(Number(<?php echo json_encode(Yii::app()->user->checkAccess('LogDeliveryDemands')) ?>));
         var DetailMode = '';
+        
+        var SetValueControls = function() {
+            $("#edNumber").jqxNumberInput('val', DeliveryDemands.Dldm_id); 
+            $("#edDeliveryType").jqxInput('val', DeliveryDemands.DeliveryType); 
+            $("#edPrior").jqxInput('val', DeliveryDemands.DemandPrior); 
+            $("#edAddr").jqxInput('val', DeliveryDemands.Address); 
+            $("#edMaster").jqxInput('val', DeliveryDemands.MasterName); 
+            $("#edContactInfo").jqxInput('val', DeliveryDemands.ContactInfo); 
+            $("#edPhonenumber").jqxInput('val', DeliveryDemands.PhoneNumber); 
+            $("#edDeliveryMan").jqxInput('val', DeliveryDemands.DeliveryMan); 
+            $("#edDelayReason").jqxInput('val', DeliveryDemands.DelayReasonName); 
+            $("#edText").jqxTextArea('val', DeliveryDemands.Text); 
+            $("#edNote").jqxTextArea('val', DeliveryDemands.Note); 
+            $("#edSender").jqxInput('val', DeliveryDemands.Sender); 
+            $("#edLogist").jqxInput('val', DeliveryDemands.Logist);
+        };
+        
+        DeliveryGO.Refresh = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Delivery/GetModel'))?>,
+                type: 'POST',
+                data: {
+                    Dldm_id: DeliveryDemands.Dldm_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    DeliveryDemands.Date = Aliton.DateConvertToJs(Res.date);
+                    DeliveryDemands.DateLogist = Aliton.DateConvertToJs(Res.date_logist);
+                    DeliveryDemands.DeliveryType = Res.DeliveryType;
+                    DeliveryDemands.DemandPrior = Res.DemandPrior;
+                    DeliveryDemands.BestDate = Aliton.DateConvertToJs(Res.bestdate);
+                    DeliveryDemands.Deadline = Aliton.DateConvertToJs(Res.deadline);
+                    DeliveryDemands.DatePromise = Aliton.DateConvertToJs(Res.date_promise);
+                    DeliveryDemands.Address = Res.Addr;
+                    DeliveryDemands.MasterName = Res.MasterName;
+                    DeliveryDemands.ContactInfo = Res.contact_info;
+                    DeliveryDemands.PhoneNumber = Res.phonenumber;
+                    DeliveryDemands.DeliveryMan = Res.DeliveryMan;
+                    DeliveryDemands.DelayReasonName = Res.delayreasonname;
+                    DeliveryDemands.Text = Res.text;
+                    DeliveryDemands.Note = Res.note;
+                    DeliveryDemands.Sender = Res.user_sender_name;
+                    DeliveryDemands.Logist = Res.user_logist_name;
+                    SetValueControls();
+                    //SetStateButtons();
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        };
         
         $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '75px', height: '25px', decimalDigits: 0 }));
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
@@ -286,40 +338,9 @@
             
         });
         $('#EditDeliveryDemandDialog').on('open', function(){
-            $('#btnDeliveryDemOk').jqxButton({disabled: true});
+//            $('#btnDeliveryDemOk').jqxButton({disabled: true});
         });
         $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '800px', width: '740', position: 'center'}));
-        $('#EditDeliveryDemandDialog').jqxWindow({initContent: function() {
-            $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
-            $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-            $('#btnDeliveryDemAccept').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: (DeliveryDemands.DateLogist != null), width: 120, height: 30 }));
-            
-            $('#btnDeliveryDemAccept').on('click', function(){
-                var Tmp = new Date();
-                $('#edEditDateLogist').jqxDateTimeInput({value: Tmp});
-                $('#edUserLogist').val(DeliveryDemands.CurrentUser);
-            });
-            
-            $('#btnDeliveryDemCancel').on('click', function(){
-                $('#EditDeliveryDemandDialog').jqxWindow('close');
-            });
-            
-            $('#btnDeliveryDemOk').on('click', function(){
-                $.ajax({
-                    url: '<?php echo Yii::app()->createUrl('Delivery/Update'); ?>',
-                    type: 'POST',
-                    data: $('#DeliveryDemands').serialize(),
-                    success: function(Res) {
-                        if (Res == '1') {
-                            $('#EditDeliveryDemandDialog').jqxWindow('close');
-                            location.reload();
-                        }
-                        else
-                            $('#BodyDeliveryDetailDialog').html(Res);
-                    }
-                });
-            });
-        }});
         
         LoadEditForm = function(Url, Data, Type) {
             if (FlagLog)
@@ -331,9 +352,10 @@
                 url: Url,
                 type: Type,
                 data: Data,
-                async: false,
+                async: true,
                 success: function(Res) {
-                    $('#BodyDeliveryDemDialog').html(Res);
+                    Res = JSON.parse(Res);
+                    $('#BodyDeliveryDemDialog').html(Res.html);
                     $('#EditDeliveryDemandDialog').jqxWindow('open');
                 },
                 error: function(Res) {

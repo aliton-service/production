@@ -42,17 +42,39 @@
         var StateInsert = <?php echo json_encode((Yii::app()->controller->action->id == 'Insert')); ?>;
         var Log = <?php echo json_encode(Yii::app()->user->checkAccess('LogDeliveryDemands')); ?>;
         
-        var DataDeliveryTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDeliveryTypes, {}));
-        var DataDemandPriors = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDemandPriors, {}), {
-                        formatData: function (data) {
-                            $.extend(data, {
-                                Filters: ["dp.for_dd = 1"],
-                            });
-                            return data;
-                        },});
+        var DataDeliveryTypes = [];
+        var DataEmployees = [];
+        var DataDemandPriors = [];
+        var DataDelayReasonsLogistik = [];
+        var DataAddress = [];
+        
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['DeliveryTypes', 'ListEmployees', 'DeliveryDemandPriors', 'DelayReasonsLogistik']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                DataDeliveryTypes = Res[0].Data;
+                DataEmployees = Res[1].Data;
+                DataDemandPriors = Res[2].Data;
+                DataDelayReasonsLogistik = Res[3].Data;
+            }
+        });
+        
+//        var DataDeliveryTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDeliveryTypes, {}));
+//        var DataDemandPriors = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDemandPriors, {}), {
+//                        formatData: function (data) {
+//                            $.extend(data, {
+//                                Filters: ["dp.for_dd = 1"],
+//                            });
+//                            return data;
+//                        },});
         var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {async: true}));
-        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {async: false}));
-        DataEmployees.dataBind();
+//        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {async: false}));
+//        DataEmployees.dataBind();
         var find = function(id) {
             for (var i = 0; i < DataAddress.records.length; i++) {
                 if (DataAddress.records[i].Object_id == id) {
@@ -128,7 +150,7 @@
         $("#edEditBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.BestDate}));
         $("#edEditPromiseDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.DatePromise}));
         $("#edEditAddress").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataAddress, width: '460', height: '25px', displayMember: "Addr", valueMember: "Object_id"}));
-        $("#edEditMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees.records, width: '210', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
+        $("#edEditMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees, width: '210', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
         $("#edEditContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контакты", width: 230}));
         $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '210', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
         $("#edEditPhoneNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Телефон", width: 200}));
@@ -149,12 +171,19 @@
                 type: 'POST',
                 data: $('#DeliveryDemands').serialize() + "&DialogId=" + DeliveryDemands.DialogId + "&BodyDialogId=" + DeliveryDemands.BodyDialogId,
                 success: function(Res) {
-                    if (Res == '1') {
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
                         
                         $('#' + DeliveryDemands.DialogId).jqxWindow('close');
                         if (DeliveryDemands.DialogId == 'EditDeliveryDemandDialog') {
                             $('#EditDeliveryDemandDialog').jqxWindow('close');
-                            $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
+                            if (typeof(Dldm_id) != 'undefined') 
+                                Dldm_id = Res.id;
+                            if ($("#DeliveryDemandsGrid").length>0)
+                                $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
+                            
+                            if (typeof(DeliveryGO) != 'undefined')
+                                DeliveryGO.Refresh();
                         }
                         if (DeliveryDemands.DialogId == 'CostCalculationsDialog')
                             $('#RefreshCostCalcDocuments').click();
@@ -162,17 +191,17 @@
                             $('#GridDocuments').jqxGrid('updatebounddata');
                     }
                     else
-                        $('#' + DeliveryDemands.BodyDialogId).html(Res);
+                        $('#' + DeliveryDemands.BodyDialogId).html(Res.html);
                 }
             });
         });
         
         
         if ((Log) && (!StateInsert)) {
-            $("#edEditDeliveryMan").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees.records, width: '210', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
+            $("#edEditDeliveryMan").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees, width: '210', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
             if (DeliveryDemands.empl_dlvr_id != '') $("#edEditDeliveryMan").jqxComboBox("val", DeliveryDemands.empl_dlvr_id);
-            var DataDelayReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDelayReasonsLogistik, {async: false}));
-            $("#edEditDelayReason").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataDelayReasons, width: '470', height: '25px', displayMember: "name", valueMember: "dlrs_id"}));
+            //var DataDelayReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDelayReasonsLogistik, {async: false}));
+            $("#edEditDelayReason").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataDelayReasonsLogistik, width: '470', height: '25px', displayMember: "name", valueMember: "dlrs_id"}));
             if (DeliveryDemands.Dlrs_id != '') $("#edEditDelayReason").jqxComboBox("val", DeliveryDemands.Dlrs_id);
             if (DeliveryDemands.empl_dlvr_id != '') $("#edEditDelayReason").jqxComboBox("val", DeliveryDemands.empl_dlvr_id);
             $("#edEditNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
