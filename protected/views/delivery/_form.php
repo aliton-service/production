@@ -149,12 +149,16 @@
                 type: 'POST',
                 data: $('#DeliveryDemands').serialize() + "&DialogId=" + DeliveryDemands.DialogId + "&BodyDialogId=" + DeliveryDemands.BodyDialogId,
                 success: function(Res) {
-                    if (Res == '1') {
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
                         
                         $('#' + DeliveryDemands.DialogId).jqxWindow('close');
                         if (DeliveryDemands.DialogId == 'EditDeliveryDemandDialog') {
                             $('#EditDeliveryDemandDialog').jqxWindow('close');
-                            $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
+                            if (typeof(Dldm_id) != 'undefined') 
+                                Dldm_id = Res.id;
+                            if ($("#DeliveryDemandsGrid").length>0)
+                                $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
                         }
                         if (DeliveryDemands.DialogId == 'CostCalculationsDialog')
                             $('#RefreshCostCalcDocuments').click();
@@ -162,7 +166,7 @@
                             $('#GridDocuments').jqxGrid('updatebounddata');
                     }
                     else
-                        $('#' + DeliveryDemands.BodyDialogId).html(Res);
+                        $('#' + DeliveryDemands.BodyDialogId).html(Res.html);
                 }
             });
         });

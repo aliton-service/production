@@ -93,7 +93,7 @@
         $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypesRecords, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
         $("#cmbEquipType").jqxComboBox({ disabled: false, source: DataEquipTypesRecords, promptText: "Выберите тип системы...", width: '182', height: '25px', displayMember: "EquipType", valueMember: "DEquip_id"});
         $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctionsRecords, promptText: "Выберите тип оборудования...", width: '300', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
-        $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: true });
+        $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: false });
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.AgreeDate, }));
         $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 300}));
@@ -117,7 +117,7 @@
             $("#cmbSystemType").jqxComboBox({disabled: ReadOnly});
             $("#cmbEquipType").jqxComboBox({disabled: ReadOnly});
             $("#cmbMalfunction").jqxComboBox({disabled: ReadOnly});
-            $("#cmbPrior").jqxComboBox({disabled: ReadOnly});
+            //$("#cmbPrior").jqxComboBox({disabled: ReadOnly});
             // Проставляем знаячение
             if (Demand.DelayedClosureReason_id != '') $("#cmbDelayedClosureReason").jqxComboBox('val', Demand.DelayedClosureReason_id);
             if (Demand.TransferReason != '') $("#cmbTransferReason").jqxComboBox('val', Demand.TransferReason);
@@ -187,7 +187,7 @@
                         if (DataPriorsRecords[i].DMalfunction_id == value)
                             PriorsSource.push(DataPriorsRecords[i]);
                     }
-                    $("#cmbPrior").jqxComboBox({source: PriorsSource, autoDropDownHeight: PriorsSource.length > 10 ? false : true});
+                    $("#cmbPrior").jqxComboBox({source: PriorsSource, autoDropDownHeight: false});
                     $("#cmbPrior").jqxComboBox('selectIndex', 0);
                 }
             }
@@ -211,6 +211,9 @@
         if (Demand.DEquip_id != '') $("#cmbEquipType").jqxComboBox('val', Demand.DEquip_id); else $("#cmbEquipType").jqxComboBox({disabled: false});
         if (Demand.DMalfunction_id != '') $("#cmbMalfunction").jqxComboBox('val', Demand.DMalfunction_id); else $("#cmbMalfunction").jqxComboBox({disabled: false});
         if (Demand.DPrior_id != '') { $("#cmbPrior").jqxComboBox('val', Demand.DPrior_id); $("#btnSave").jqxButton({ disabled: false });} else $("#cmbPrior").jqxComboBox({disabled: false});
+        
+        if (!StateInsert)
+            $("#cmbMalfunction").select();
         
         
         $('#cmbContactInfo').on('change', function (event) {

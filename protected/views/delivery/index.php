@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var Dldm_id = 0;
     $(document).ready(function(){
         var DeliveryDemand = {};
         
@@ -67,8 +68,13 @@
             $('#btnUndoExec').jqxButton({disabled: ((DeliveryDemand == undefined) || (DeliveryDemand.date_delivery == null))});
         });
         
-        $("#DeliveryDemandsGrid").on('bindingcomplete', function(){
-            $("#DeliveryDemandsGrid").jqxGrid('selectrow', 0);
+        $("#DeliveryDemandsGrid").on("bindingcomplete", function (event) {
+            if (Dldm_id != 0)
+                Aliton.SelectRowByIdVirtual('dldm_id', Dldm_id, '#DeliveryDemandsGrid', false);
+            else if (DeliveryDemand != undefined) 
+                Aliton.SelectRowByIdVirtual('dldm_id', DeliveryDemand.dldm_id, '#DeliveryDemandsGrid', false);
+            else
+                Aliton.SelectRowByIdVirtual('dldm_id', null, '#DeliveryDemandsGrid', false);
         });
         
         $('#btnRefresh').on('click', function(){
@@ -84,50 +90,28 @@
         });
         
         $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '460px', width: '740'}));
-        $('#EditDeliveryDemandDialog').jqxWindow({initContent: function() {
-            $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
-            $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-            
-            $('#btnDeliveryDemCancel').on('click', function(){
-                $('#EditDeliveryDemandDialog').jqxWindow('close');
-            });
-            
-            $('#btnDeliveryDemOk').on('click', function(){
-                $.ajax({
-                    url: '<?php echo Yii::app()->createUrl('Delivery/Insert'); ?>',
-                    type: 'POST',
-                    data: $('#DeliveryDemands').serialize(),
-                    success: function(Res) {
-                        if (Res == '1') {
-                            $('#EditDeliveryDemandDialog').jqxWindow('close');
-                            $("#DeliveryDemandsGrid").jqxGrid('updatebounddata');
-                        }
-                        else
-                            $('#BodyDeliveryDemDialog').html(Res);
-                    }
-                });
-            });
-        }});
         
         LoadEditForm = function(Url, Data, Type) {
             $.ajax({
                 url: Url,
                 type: Type,
                 data: Data,
-                async: false,
+                async: true,
                 success: function(Res) {
-                    $('#BodyDeliveryDemDialog').html(Res);
+                    Res = JSON.parse(Res);
+                    $('#BodyDeliveryDemDialog').html(Res.html);
+                    $('#EditDeliveryDemandDialog').jqxWindow('open');
                 }
             });
         };
         
         $('#EditDeliveryDemandDialog').on('open', function (event) {
-            $('#btnDeliveryDemOk').jqxButton({disabled: true});
+//            $('#btnDeliveryDemOk').jqxButton({disabled: true});
         }); 
         
         $('#btnNew').on('click', function(){
             LoadEditForm('<?php echo Yii::app()->createUrl('Delivery/Insert'); ?>', null, 'POST');
-            $('#EditDeliveryDemandDialog').jqxWindow('open');
+            
         });
         
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {async: false}));
