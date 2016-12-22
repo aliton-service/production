@@ -1438,6 +1438,26 @@ Sources.SourceDemandPriors =
     }
 };
 
+Sources.SourceDeliveryDemandPriors =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'DemandPrior_id', type: 'int'},
+        {name: 'DemandPrior', type: 'string'},
+    ],
+    id: 'DemandPrior_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DeliveryDemandPriors',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 300,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
 Sources.SourceDelayReasons =
 {
     datatype: "json",

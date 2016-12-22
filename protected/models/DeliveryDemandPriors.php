@@ -1,6 +1,6 @@
 <?php
 
-class DemandPriors extends MainFormModel
+class DeliveryDemandPriors extends MainFormModel
 {
 	public $DemandPrior_id = null;
 	public $DemandPrior = null;
@@ -28,7 +28,7 @@ class DemandPriors extends MainFormModel
 
 		$select = " Select dp.* ";
 		$from = " From DemandPriors dp ";
-		$where = " Where dp.DelDate is null ";
+		$where = " Where dp.DelDate is null and dp.for_dd = 1";
 		$order = " Order By dp.DemandPrior ";
 
 		$this->Query->setSelect($select);
@@ -39,17 +39,6 @@ class DemandPriors extends MainFormModel
 	}
 
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'DemandPriors';
-	}
-
-	/**
-	 * @return array validation rules for model attributes.
-	 */
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
@@ -65,9 +54,7 @@ class DemandPriors extends MainFormModel
 		);
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
+	
 	public function attributeLabels()
 	{
 		return array(
@@ -92,45 +79,5 @@ class DemandPriors extends MainFormModel
 			'DelDate' => 'Del Date',
 		);
 	}
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return DemandPriors the static model class
-	 */
-	 public function deleteCount($id, $empl_id) {
-	 
-		$Command = Yii::app()->db->createCommand(''
-                . "UPDATE DemandPriors SET EmplDel = {$empl_id}, DelDate = '".date('m.d.y H:i:s')."' WHERE DemandPrior_id = {$id}
-                ");
-        
-        return $Command->queryAll();
-	}
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
-
-//	static function all() {
-//		return CHtml::listData(self::model()->findAll(), 'DemandPrior_id', 'DemandPrior');
-//
-//	}
-
-	static function getData() {
-		$q = new SQLQuery();
-		$q->setSelect("Select DemandPrior_id, DemandPrior");
-		$q->setFrom("\nFrom DemandPriors");
-		$q->setWhere("\nWhere DelDate is Null");
-		return $q->QueryAll();
-	}
-        
-        static function getDataForDemandEdit() {
-		$q = new SQLQuery();
-		$q->setSelect("Select p.Demandet_id, p.DemandType_id, p.SystemType_id, p.EquipType_id, p.Malfunction_id, p.DemandPrior_id, d.DemandPrior, case when d.DemandPrior = 'Срочная, платная' then 1 else 0 end as sort_1");
-		$q->setFrom("\nFrom DemandsExecTime p left join DemandPriors d on (p.DemandPrior_id = d.DemandPrior_id)");
-		$q->setWhere("\nWhere p.DelDate is null");
-                $q->setOrder("\nOrder By sort_1, d.Sort, DemandPrior");
-		return $q->QueryAll();
-	}
 }
+

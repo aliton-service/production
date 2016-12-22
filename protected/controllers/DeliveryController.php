@@ -18,7 +18,7 @@ class DeliveryController extends Controller
     {
         return array(
                 array('allow',  // allow all users to perform 'index' and 'view' actions
-                        'actions'=>array('View', 'Index', 'GetDeadline'),
+                        'actions'=>array('View', 'Index', 'GetDeadline', 'GetModel'),
                         'roles'=>array('ViewDeliveryDemands'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -46,7 +46,18 @@ class DeliveryController extends Controller
                 ),
         );
     }
-	
+
+    public function actionGetModel()
+    {
+        $model = array();
+        if (isset($_POST['Dldm_id'])) {
+            $model = new DeliveryDemands();
+            $model->getModelPk($_POST['Dldm_id']);
+        }
+        
+        echo json_encode($model);
+    }
+    
     public function actionIndex()
     {
         $this->title = 'Заявки на доставку';
