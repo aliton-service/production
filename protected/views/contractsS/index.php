@@ -29,6 +29,7 @@
             CurrentRowData = $('#ContractsGrid').jqxGrid('getrowdata', event.args.rowindex);
             
             if (CurrentRowData != undefined) {
+                $("#MoreInformContract").jqxButton({ disabled: false });
                 if (CurrentRowData.MasterName != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
                 if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
                 if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxDateTimeInput('val', CurrentRowData.DateExecuting);

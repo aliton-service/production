@@ -44,6 +44,7 @@ return array(
             'DeleteDemands',
             'ChangeType',
             'WorkedOut',
+            'UndoDemands',
         ),
     ),
 

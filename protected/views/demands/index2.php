@@ -285,7 +285,7 @@
     <div class="al-row-column"><input type="button" value="Доп-но" id='btnDemView' /></div>
     <div class="al-row-column"><input type="button" value="Обновить" id='btnRefreshDemands' /></div>
     <div class="al-row-column"><input type="button" value="Карточка" id='btnObjectInfo' /></div>
-    <div class="al-row-column" style="float: right"><input type="button" value="Отменить вып." id='btnUndoDemands' /></div>
+    <div class="al-row-column" style="float: right"><input type="button" value="Отменить" id='btnUndoDemands' /></div>
     
 </div>    
 <div style="clear: both;"></div>
