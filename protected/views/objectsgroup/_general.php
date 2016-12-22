@@ -52,7 +52,7 @@
             if (ObjectGroup.PropForm_id !== '') $("#edFullNameGrEdit").jqxComboBox('val', ObjectGroup.PropForm_id);
             $("#SaveNewObjectsGroup").jqxButton({disabled: false});
         });
-        $("#edFullNameGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrg, width: 300, displayMember: "FullName", valueMember: "Form_id" }));
+        $("#edFullNameGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataOrg, width: 340, displayMember: "FullName", valueMember: "Form_id", searchMode: 'contains' }));
       
         
         $("#edJAddressGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 365 }));
@@ -262,25 +262,25 @@
         </div>
         <div class="al-row">
             <div class="al-row-column" style="width: 110px;">Юр.адрес:</div>
-            <div class="al-row-column"><input type="text" id="edJAddressGrEdit"></div>
+            <div class="al-row-column"><input readonly type="text" id="edJAddressGrEdit"></div>
             <div class="al-row-column">ИНН:</div>
-            <div class="al-row-column"><input type="text" id="edInnGrEdit"></div>
+            <div class="al-row-column"><input readonly type="text" id="edInnGrEdit"></div>
             <div style="clear: both"></div>
         </div>
         <div class="al-row">
             <div class="al-row-column" style="width: 110px;">Факт.адрес:</div>
-            <div class="al-row-column"><input type="text" id="edFAddressGrEdit"></div>
+            <div class="al-row-column"><input readonly type="text" id="edFAddressGrEdit"></div>
             <div class="al-row-column">Р/Счет:</div>
-            <div class="al-row-column"><input type="text" id="edAccountGrEdit"></div>
+            <div class="al-row-column"><input readonly type="text" id="edAccountGrEdit"></div>
             <div style="clear: both"></div>
         </div>
         <div class="al-row">
             <div class="al-row-column" style="width: 110px;">Банк:</div>
-            <div class="al-row-column"><input type="text" id="edBankNameGrEdit"></div>
+            <div class="al-row-column"><input readonly type="text" id="edBankNameGrEdit"></div>
             <div class="al-row-column">Бик:</div>
-            <div class="al-row-column"><input type="text" id="edBikGrEdit"></div>
+            <div class="al-row-column"><input readonly type="text" id="edBikGrEdit"></div>
             <div class="al-row-column">Кор/Счет:</div>
-            <div class="al-row-column"><input type="text" id="edCorAccountGrEdit"></div>
+            <div class="al-row-column"><input readonly type="text" id="edCorAccountGrEdit"></div>
             <div style="clear: both"></div>
         </div>
     </div>
