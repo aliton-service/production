@@ -411,15 +411,19 @@
                 });
             });
             $('#btnAddDocAct').on('click', function(){
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '480px', width: '940'}));
+                var SumHightFullValue = $('#edSumHightFull').jqxNumberInput('val');
+                console.log('SumHightFullValue = ' + SumHightFullValue);
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '510', width: '960'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('WHActs/Insert');?>",
                     type: 'POST',
                     async: false,
                     data: {
-                        DialogId: 'CostCalculationsDialog',
-                        BodyDialogId: 'BodyCostCalculationsDialog',
                         Params: {
+                            calc_id: CostCalculations.calc_id,
+                            objc_id: CostCalculations.Object_id,
+                            jrdc_id: CostCalculations.Jrdc_id,
+                            sum: SumHightFullValue,
                         }
                     },
                     success: function(Res) {
@@ -689,7 +693,7 @@
         $("#dropDownBtnCostCalculations").jqxDropDownButton('setContent', dropDownBtnCostCalculations);
         
         $('#btnPrint1CostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $('#btnPrint2CostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnPrint2CostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 100 }));
         
         $('#btnPrint1CostCalculations').on('click', function() {
             window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
@@ -1184,11 +1188,14 @@
                     });
                     $('#MoreInfoCostCalcDocuments').on('click', function(){
                         if (CurrentRowDataCCD != undefined) {
+                            console.log('CurrentRowDataCCD.DocType_id = ' + CurrentRowDataCCD.DocType_id);
                             var Type = parseInt(CurrentRowDataCCD.DocType_id);
                             if (Type == 0)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('MonitoringDemands/Index')); ?> + "&mndm_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 1)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View')); ?> + "&Docm_id=" + CurrentRowDataCCD.Docid);
+                            if (Type == 2)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHActs/View')); ?> + "&docm_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 3)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Documents/Index')); ?> + "&ContrS_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 4)
@@ -1441,7 +1448,7 @@
     <div class="row-column" style="margin-top: 3px;">Согласовал: <input readonly id='EmplAgreed' type="text"></div>
 </div>
 <div class="row" style="margin-top: 3px;">
-    <div class="row-column"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>
+    <div class="row-column" style="margin: 0 5px 0 0"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>
     <div style='float: left;' id="dropDownBtnCostCalculations">
         <div style="padding: 2px"><input type="button" value="Согласовано с рук." id='btnAgreedCostCalculations'/></div>
         <div style="clear: both"></div>
@@ -1451,7 +1458,7 @@
         <div style="clear: both"></div>
         <div style="padding: 2px"><input type="button" value="Отмена согл. клиента" id='btnUndoReadyCostCalculations'/></div>
     </div>
-    <div style='float: left; margin-left: 10px;' id="ddbtnDocuments">
+    <div style='float: left; margin-left: 5px;' id="ddbtnDocuments">
         <div style="padding: 2px"><input type="button" value="Смета" id='btnAddDocSmets'/></div>
         <div style="clear: both"></div>
         <div style="padding: 2px"><input type="button" value="Доп. смета" id='btnAddDocDopSmets'/></div>
@@ -1473,8 +1480,8 @@
         <div style="padding: 2px"><input type="button" value="Счет заказ" id='btnAddDocContract3'/></div>
     </div>
     <div>
-        <div class="row-column" style="margin-left: 100px;"><input type="button" value="Для заказчика" id='btnPrint1CostCalculations'/></div>
-        <div class="row-column"><input type="button" value="Печатать" id='btnPrint2CostCalculations'/></div>
+        <div class="row-column" style="float: right; margin: 0 0 0 5px;"><input type="button" value="Печатать" id='btnPrint2CostCalculations'/></div>
+        <div class="row-column" style="float: right;"><input type="button" value="Для заказчика" id='btnPrint1CostCalculations'/></div>
     </div>
 </div>   
 <div class="row">

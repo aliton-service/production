@@ -363,11 +363,11 @@
         $("#edPaymentType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.PaymentType}));
         $("#edBill").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts.Bill}));
         $("#edDatePay").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts.DatePay, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $('#edNotePayment').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 32, width: 'calc(100% - 2px)', minLength: 1}));
-        $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $('#edNotePayment').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 38, width: 'calc(100% - 2px)', minLength: 1}));
+        $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 130 }));
         $("#edWorkType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.WorkType}));
         $("#edJobType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.JobType}));
-        $('#edWorkList').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 32, width: 'calc(100% - 2px)', minLength: 1}));
+        $('#edWorkList').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
         $("#edJuridical").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.Juridical}));
         $("#edUserCreate").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
         $("#edMaster").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
@@ -380,7 +380,7 @@
         
         $('#btnEdit').on('click', function(){
             if ($('#btnEdit').jqxButton('disabled')) return;
-            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 490, width: 940, position: 'center' }));
+            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 510, width: 960, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WhActs/Update')) ?>,
                 type: 'POST',
@@ -464,10 +464,10 @@
         padding-bottom: 0px;
     }
 </style>
-<div class="al-data-nb" style="width: 900px; height: 230px;">
+<div class="al-data-nb" style="width: 950px;">
     <div class="al-row-column">
         <div class="al-row">
-            <div class="al-data" style="width: 552px">
+            <div class="al-data" style="width: 552px; padding: 7px;">
                 <!--<div class="al-row-label"><b>Объект</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Адрес</div>
@@ -485,7 +485,7 @@
             <div style="clear: both"></div>
         </div>
         <div class="al-row">
-            <div class="al-data" style="width: 552px">
+            <div class="al-data" style="width: 557px; padding: 7px;">
                 <!--<div class="al-row-label"><b>Документ</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Тип</div>
@@ -495,7 +495,7 @@
                 </div>
                 <div class="al-row">
                     <div class="al-row-label">Примечание</div>
-                    <div class="al-row"><textarea id="edNote"></textarea></div>
+                    <div class="al-row"><textarea readonly id="edNote"></textarea></div>
                 </div>
             </div>
             <div style="clear: both"></div>
@@ -503,7 +503,7 @@
     </div>
     <div class="al-row-column">
         <div class="al-row">
-            <div class="al-data" style="width: 298px; height: 200px;">
+            <div class="al-data" style="width: 298px; padding: 7px;">
                 <!--<div class="al-row-label"><b>Оплата</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Сумма по акту</div>
@@ -525,9 +525,9 @@
                     <div class="al-row-column"><div id="edDatePay"></div></div>
                     <div style="clear: both"></div>
                 </div>
-               <div class="al-row">
+                <div class="al-row" style="padding: 0;">
                     <div class="al-row-label">Примечание</div>
-                    <div class="al-row"><textarea id="edNotePayment"></textarea></div>
+                    <div class="al-row" style="padding: 0;"><textarea readonly id="edNotePayment"></textarea></div>
                     <div style="clear: both"></div>
                 </div> 
             </div>
@@ -537,8 +537,8 @@
     </div>
 </div>
 <div style="clear: both"></div>
-<div class="al-data-nb" style="width: 900px; height: 146px;">
-    <div class="al-data">
+<div class="al-data-nb" style="width: 900px;">
+    <div class="al-data" style="padding: 7px;">
         <!--<div class="al-row-label"><b>Выполненные работы</b></div>-->
         <div class="al-row">
             <div class="al-row-column">Дата выпонения работ</div>
@@ -549,8 +549,10 @@
             <div class="al-row-column"><input id="edJobType" /></div>
             <div style="clear: both"></div>
         </div>
-        <div class="al-row-label">Перечень работ</div>
-        <div class="al-row"><textarea id="edWorkList"></textarea></div>
+        <div class="row" style="margin: 0;">
+            <div class="row-column" style="width: 103px;">Перечень работ</div>
+            <div class="row-column" style="width: calc(100% - 120px);"><textarea readonly id="edWorkList"></textarea></div>
+        </div>
         <div class="al-row">
             <div class="al-row-column">Юр. лицо</div>
             <div class="al-row-column"><input id="edJuridical" /></div>
@@ -569,22 +571,12 @@
         <div style="clear: both"></div>
     </div>
 </div>    
-<div class="al-data-nb" style="width: 100%; height: calc(100% - 414px);">
+<div class="al-data-nb" style="width: 100%; height: calc(100% - 414px); min-height: 300px;">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 30px;">
                 <div style="height: 20px; margin-top: 5px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Оборудование</div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 20px; margin-top: 5px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Дополнительные соглашения</div>
-                </div>
-            </li>
-            <li>
-                <div style="height: 20px; margin-top: 5px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Заявки</div>
                 </div>
             </li>
         </ul>
@@ -601,16 +593,6 @@
                     <div class="al-row-column"><input type="button" id="btnFindTreb" value="Найти требование" /></div>
                     <div class="al-row-column" style="float: right;"><input type="button" id="btnDelEquips" value="Удалить" /></div>
                 </div>
-            </div>
-        </div>
-        <div style="overflow: hidden;">
-            <div style="padding: 10px;">
-                
-            </div>
-        </div>
-        <div style="overflow: hidden;">
-            <div style="padding: 10px;">
-                
             </div>
         </div>
     </div>

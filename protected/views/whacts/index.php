@@ -66,13 +66,13 @@
                 virtualmode: true,
                 columns:
                     [
-                        { text: 'Дата работ', filtertype: 'date', datafield: 'date', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
+                        { text: 'Дата работ', filtertype: 'date', datafield: 'date', width: 130, cellsformat: 'dd.MM.yyyy HH:mm'},
                         { text: 'Исполнитель', datafield: 'master', width: 130},
-                        { text: 'Адрес', datafield: 'Address', width: 200},
-                        { text: 'Дата оплаты', filtertype: 'date', datafield: 'date_payment', width: 120, cellsformat: 'dd.MM.yyyy'},
+                        { text: 'Адрес', datafield: 'Address', width: 270},
+                        { text: 'Дата оплаты', filtertype: 'date', datafield: 'date_payment', width: 100, cellsformat: 'dd.MM.yyyy'},
                         { text: 'Сумма по акту', datafield: 'sum', width: 110, cellsformat: 'f2'},
-                        { text: 'Подписан', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'signed_yn', width: 80 },
-                        { text: 'Подтвержден', filtertype: 'date', datafield: 'ac_date', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
+                        { text: 'Подписан', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'signed_yn', width: 75 },
+                        { text: 'Подтвержден', filtertype: 'date', datafield: 'ac_date', width: 130, cellsformat: 'dd.MM.yyyy HH:mm'},
                         { text: 'Клиент', datafield: 'cstn_name', width: 150},
                         { text: 'Дата отмены', filtertype: 'date', datafield: 'c_date', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
                         { text: 'Отменил', datafield: 'c_name', width: 130},
@@ -145,13 +145,14 @@
         
         $('#btnAdd').on('click', function() {
             if ($('#btnAdd').jqxButton('disabled')) return;
-            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 470, width: 920, position: 'center' }));
+            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 510, width: 960, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WhActs/Insert')) ?>,
                 type: 'POST',
                 async: false,
                 data: {
-                    docm_id: CurrentRowData.docm_id,
+                    DialogId: 'WHDocumentsDialog',
+                    BodyDialogId: 'BodyWHDocumentsDialog',
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);

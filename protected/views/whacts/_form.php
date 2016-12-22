@@ -18,7 +18,6 @@
             Sum: <?php echo json_encode($model->sum); ?>,
             Pmtp_id: <?php echo json_encode($model->pmtp_id); ?>,
             PaymentType: <?php echo json_encode($model->pmtp_name); ?>,
-            Pmtp_id: <?php echo json_encode($model->pmtp_id); ?>,
             Bill: <?php echo json_encode($model->bill); ?>,
             DatePay: Aliton.DateConvertToJs(<?php echo json_encode($model->date_payment); ?>),
             NotePayment: <?php echo json_encode($model->note_payment); ?>,
@@ -90,23 +89,23 @@
             $('#btnSave').jqxButton({disabled: false});
             if (Acts2.Object_id !== null) $("#edAddressEdit").jqxComboBox('val', Acts2.Object_id);
         });
-        $("#edAddressEdit").jqxComboBox({ source: DataAddress, width: '500', height: '25px', displayMember: "Addr", valueMember: "Object_id"});
+        $("#edAddressEdit").jqxComboBox({ source: DataAddress, width: '525', height: '25px', displayMember: "Addr", valueMember: "Object_id"});
         $("#edClientEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 250, minLength: 1, value: Acts2.Client}));
-        $("#edServiceEdit").jqxComboBox({ width: '182', height: '25px', displayMember: "ServiceType", valueMember: "ContrS_id"});
-        $("#edDcknNameEdit").jqxComboBox({source: DataWHDocKinds, width: '182', height: '25px', displayMember: "name", valueMember: "dckn_id"});
+        $("#edServiceEdit").jqxComboBox({ width: '203', height: '25', displayMember: "ServiceType", valueMember: "ContrS_id", autoDropDownHeight: true});
+        $("#edDcknNameEdit").jqxComboBox({source: DataWHDocKinds, width: '182', height: '25px', displayMember: "name", valueMember: "dckn_id", autoDropDownHeight: true});
         $("#edSignedYnEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Acts2.SignedYn}));
-        $("#edCstmNameEdit").jqxComboBox({source: DataCustomers, width: '182', height: '25px', displayMember: "CustomerName", valueMember: "Customer_Id"});
+        $("#edCstmNameEdit").jqxComboBox({source: DataCustomers, width: '240', height: '25px', displayMember: "CustomerName", valueMember: "Customer_Id"});
         $('#edNoteEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
         $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Acts2.Sum}));
-        $("#edPaymentTypeEdit").jqxComboBox({source: DataPaymentTypes, width: '182', height: '25px', displayMember: "PaymentTypeName", valueMember: "PaymentType_Id"});
+        $("#edPaymentTypeEdit").jqxComboBox({source: DataPaymentTypes, width: '182', height: '25px', displayMember: "PaymentTypeName", valueMember: "PaymentType_Id", autoDropDownHeight: true});
         $("#edBillEdit").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Acts2.Bill}));
         $("#edDatePayEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts2.DatePay}));
         $('#edNotePaymentEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 32, width: 'calc(100% - 2px)', minLength: 1}));
-        $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts2.Date}));
-        $("#edWorkTypeEdit").jqxComboBox({source: DataWorkTypes, width: '182', height: '25px', displayMember: "name", valueMember: "wrtp_id"});
-        $("#edJobTypeEdit").jqxComboBox({source: DataJobTypes, width: '182', height: '25px', displayMember: "JobType_Name", valueMember: "JobType_Id"});
-        $('#edWorkListEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 32, width: 'calc(100% - 2px)', minLength: 1}));
-        $("#edJuridicalEdit").jqxComboBox({source: DataJuridicals, width: '182', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
+        $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: new Date(), width: 160 }));
+        $("#edWorkTypeEdit").jqxComboBox({source: DataWorkTypes, width: '182', height: '25px', displayMember: "name", valueMember: "wrtp_id", autoDropDownHeight: true });
+        $("#edJobTypeEdit").jqxComboBox({source: DataJobTypes, width: '245', height: '25px', displayMember: "JobType_Name", valueMember: "JobType_Id", autoDropDownHeight: true });
+        $('#edWorkListEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
+        $("#edJuridicalEdit").jqxComboBox({source: DataJuridicals, width: '220', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
         $("#edMasterEdit").jqxComboBox({source: DataEmployees, width: '282', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"});
         
         $('#btnSave').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
@@ -114,6 +113,8 @@
         $('#btnCancel').on('click', function() {
             if ($('#WHDocumentsDialog').length>0)
                 $('#WHDocumentsDialog').jqxWindow('close');
+            if ($('#CostCalculationsDialog').length>0)
+                $('#CostCalculationsDialog').jqxWindow('close');
             if ($('#RepairsDialog').length>0)
                 $('#RepairsDialog').jqxWindow('close');
         });
@@ -145,16 +146,22 @@
                             }
                             if ($('#GridDocuments').length>0)
                                 $('#GridDocuments').jqxGrid('updatebounddata');
+                            if ($('#CostCalcDocumentsGrid').length>0)
+                                $('#CostCalcDocumentsGrid').jqxGrid('updatebounddata');
                             
                         }
                         if ($('#WHDocumentsDialog').length>0)
                             $('#WHDocumentsDialog').jqxWindow('close');
+                        if ($('#CostCalculationsDialog').length>0)
+                            $('#CostCalculationsDialog').jqxWindow('close');
                         if ($('#RepairsDialog').length>0)
                             $('#RepairsDialog').jqxWindow('close');
                     }
                     else {
                         if ($('#WHDocumentsDialog').length>0)
                             $('#BodyWHDocumentsDialog').html(Res.html);
+                        if ($('#CostCalculationsDialog').length>0)
+                            $('#BodyCostCalculationsDialog').html(Res.html);
                         if ($('#RepairsDialog').length>0)
                             $('#BodyRepairsDialog').html(Res.html);
                     };
@@ -170,7 +177,11 @@
         if (Acts2.WorkList != null) $('#edWorkListEdit').val(Acts2.WorkList);
         if (Acts2.Dckn_id != null) $('#edDcknNameEdit').val(Acts2.Dckn_id);
         if (Acts2.Cstm_id != null) $('#edCstmNameEdit').val(Acts2.Cstm_id);
-        if (Acts2.Pmtp_id != null) $('#edPaymentTypeEdit').val(Acts2.Pmtp_id);
+        if (Acts2.Pmtp_id != null) {
+            $('#edPaymentTypeEdit').val(Acts2.Pmtp_id);
+        } else {
+            $("#edPaymentTypeEdit").jqxComboBox({selectedIndex: 0 });
+        }    
         if (Acts2.Wrtp_id != null) $('#edWorkTypeEdit').val(Acts2.Wrtp_id);
         if (Acts2.Jbtp_id != null) $('#edJobTypeEdit').val(Acts2.Jbtp_id);
         if (Acts2.Jrdc_id != null) $('#edJuridicalEdit').val(Acts2.Jrdc_id);
@@ -192,10 +203,10 @@
 <input type="hidden" name="WhActs[calc_id]" value="<?php echo $model->calc_id; ?>"/>
 <input type="hidden" name="WhActs[repr_id]" value="<?php echo $model->repr_id; ?>"/>
 
-<div class="al-data-nb" style="width: 920px; height: 230px;">
+<div class="al-data-nb" style="height: 230px;">
     <div class="al-row-column">
         <div class="al-row">
-            <div class="al-data" style="width: 552px">
+            <div class="al-data">
                 <!--<div class="al-row-label"><b>Объект</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Адрес</div>
@@ -213,7 +224,7 @@
             <div style="clear: both"></div>
         </div>
         <div class="al-row">
-            <div class="al-data" style="width: 552px">
+            <div class="al-data">
                 <!--<div class="al-row-label"><b>Документ</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Тип</div>
@@ -265,7 +276,7 @@
     </div>
 </div>
 <div style="clear: both"></div>
-<div class="al-data-nb" style="width: 920px; height: 146px;">
+<div class="al-data-nb" style="width: 920px;">
     <div class="al-data">
         <!--<div class="al-row-label"><b>Выполненные работы</b></div>-->
         <div class="al-row">
@@ -291,7 +302,7 @@
 <div class="al-data-nb" style="width: 100%; height: 38px;">
     <div class="al-row">
         <div class="al-row-column"><input type="button" id="btnSave" value="Сохранить"/></div>
-        <div class="al-row-column" style="float: right"><input type="button" id="btnCancel" value="Отмена"/></div>
+        <div class="al-row-column" style="float: right; margin-right: 20px;"><input type="button" id="btnCancel" value="Отмена"/></div>
         <div style="clear: both"></div>
     </div>
 </div>
