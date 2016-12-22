@@ -374,7 +374,7 @@
         background-color: #A7D2BB !important;
         color: black;
     }
-     
+    
 </style>
 
 <?php
