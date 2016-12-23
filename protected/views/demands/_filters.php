@@ -46,8 +46,8 @@
        
         // Инициализируем контролы фильтров
         $("#cmbMaster").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр по мастеру
-        $("#chbNotDateExec").jqxCheckBox({ width: 160, height: 25, checked: true}); // Фильтр невыполненные
         $("#chbNotDateMaster").jqxCheckBox({ width: 160, height: 25, checked: Filters.NoDateMaster}); // Фильтр непереданные
+        $("#chbNotDateExec").jqxCheckBox({ width: 160, height: 25, checked: true}); // Фильтр невыполненные
         $("#chbNotWorkedOut").jqxCheckBox({ width: 160, height: 25, checked: false}); // Фильтр неотработанные
         $("#edDemand_id").jqxInput({height: 25, width: 200, minLength: 1, value: Filters.Demand_id}); // Фильтр номер
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '200', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"}); // Фильтр тип заявки
@@ -57,9 +57,9 @@
         $("#cmbStreet").jqxComboBox({ source: DataStreets, width: '200', height: '25px', displayMember: "StreetName", valueMember: "Street_id", dropDownVerticalAlignment: 'top' }); // Фильтр улицы
         $("#edHouse").jqxInput({height: 25, width: 60, minLength: 1, value: Filters.House}); // Фильтр ДОМ
         
-        $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: Filters.DateReg })); // Фильтр дата регистрации
-        $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
-        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
+        $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '140px', formatString: 'dd.MM.yyyy', value: Filters.DateReg })); // Фильтр дата регистрации
+        $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '140px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
+        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '140px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
 
         $('#btnClearFilters').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 200, imgSrc: '/images/7.png', imgPosition: "left", textPosition: "left", textImageRelation: "imageBeforeText" }));
         $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { imgSrc: '/images/1.png', imgPosition: "left", textPosition: "left", textImageRelation: "imageBeforeText" }));
@@ -75,7 +75,22 @@
         });
         
         $('#btnClearFilters').on('click', function(){
-            $("#DemandsGrid").jqxGrid('clearfilters');
+            $("#cmbMaster").jqxComboBox('clearSelection');
+            $('#chbNotDateMaster').jqxCheckBox('uncheck');
+            $('#chbNotWorkedOut').jqxCheckBox('uncheck');
+            $('#edDemand_id').jqxInput('val', '');
+            $("#cmbDemandType").jqxComboBox('clearSelection');
+            $("#cmbExecutor").jqxComboBox('clearSelection');
+            $('#edAddr').jqxInput('val', '');
+            $("#cmbTerrit").jqxComboBox('clearSelection');
+            $("#cmbStreet").jqxComboBox('clearSelection');
+            $('#edHouse').jqxInput('val', '');
+            
+            $('#edDate').jqxDateTimeInput('val', null);
+            $('#edDateStart').jqxDateTimeInput('val', null);
+            $('#edDateEnd').jqxDateTimeInput('val', null);
+            
+            Find();
         });
         
         $('#edFiltering').on('click', function(){
