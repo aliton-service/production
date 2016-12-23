@@ -50,25 +50,50 @@
         var items = $('#EquipGroupsGridEdit').jqxTree('getItems');
         $("#EquipGroupsGridEdit").jqxTree('expandItem', items[0]);
         
-        
+        var DataUmNames;
+        var DataSuppliers;
+        var DataAccountingTypes;
+        var DataCategories;
+        var DataGroups;
+        var DataEquipSubgroups;
+        var DataSystemTypes;
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['UnitMeasurement', 'Suppliers', 'AccountingTypes', 'Categories', 'EquipGroupsListMin', 'EquipSubgroups', 'SystemTypes']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                DataUmNames = Res[0].Data;
+                DataSuppliers = Res[1].Data;
+                DataAccountingTypes = Res[2].Data;
+                DataCategories = Res[3].Data;
+                DataGroups = Res[4].Data;
+                DataEquipSubgroups = {records: Res[5].Data};
+                DataSystemTypes = Res[6].Data;
+                
+            }
+        });
         
         
         $("#edEquipNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'}));
-        var DataUmNames = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceUnitMeasurement));        
+//        var DataUmNames = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceUnitMeasurement));        
         $("#edUmNameEdit").jqxComboBox($.extend(true, {}, InputDefaultSettings, {source: DataUmNames, width: '100', height: '25px', displayMember: "NameUnitMeasurement", valueMember: "UnitMeasurement_Id"}));
         $("#edServiceTimeEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '150px'}));
-        var DataSuppliers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliers, {async: false, id: 'Supplier_id'}));        
+//        var DataSuppliers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliers, {async: false, id: 'Supplier_id'}));        
         $("#edSupplierEdit").jqxComboBox($.extend(true, {}, InputDefaultSettings, {source: DataSuppliers, width: 'calc(100% - 2px)', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id"}));
-        var DataAccountingTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAccountingTypes));        
+//        var DataAccountingTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAccountingTypes));        
         $("#edAccountingTypeEdit").jqxComboBox($.extend(true, {}, InputDefaultSettings, {source: DataAccountingTypes, width: 'calc(100% - 2px)', height: '25px', displayMember: "name", valueMember: "actp_id"}));
-        var DataCategories = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCategories));        
+//        var DataCategories = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCategories));        
         $("#edCategoryEdit").jqxComboBox($.extend(true, {}, InputDefaultSettings, {source: DataCategories, width: 'calc(100% - 2px)', height: '25px', displayMember: "name", valueMember: "ctgr_id"}));
-        var DataGroups = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEquipGroupsListMin));        
+//        var DataGroups = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEquipGroupsListMin));        
         $("#edGroupEdit").jqxComboBox($.extend(true, {}, InputDefaultSettings, {source: DataGroups, width: 'calc(100% - 2px)', height: '25px', displayMember: "name", valueMember: "grp_id"}));
-        var DataEquipSubgroups = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEquipSubgroups));
-        DataEquipSubgroups.dataBind();
+//        var DataEquipSubgroups = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceEquipSubgroups));
+//        DataEquipSubgroups.dataBind();
         $("#edDiscontinuedEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Equips.discontinued, formatString: 'dd.MM.yyyy'}));
-        var DataSystemTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSystemTypeList));        
+//        var DataSystemTypes = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSystemTypeList));        
         $("#edSystemTypeEdit").jqxComboBox($.extend(true, {}, InputDefaultSettings, {source: DataSystemTypes, width: 'calc(100% - 2px)', height: '25px', displayMember: "SystemTypeName", valueMember: "SystemType_Id"}));
         $("#edDescriptionEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'}));
         $("#edNoteEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'}));

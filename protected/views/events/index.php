@@ -397,7 +397,7 @@
     <div class="al-row-column" style="width: 550px;">
         <div id="EventsClientsGrid" class="jqxGridAliton"></div>
     </div>
-    <div class="al-row-column" style="width: calc(100% - 556px)">
+    <div class="al-row-column" style="height: 100%; width: calc(100% - 556px);">
         <div style="">
             <div id='jqxTabsEvents'>
                 <ul>
