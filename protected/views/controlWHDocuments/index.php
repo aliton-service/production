@@ -76,8 +76,8 @@
         });
         
         
-        $('#ControlWHDocumentsGrid').on('rowdoubleclick', function () {
-            window.open('/index.php?r=Documents/Index&ContrS_id=' + CurrentRowData.ContrS_id + PropForm_id);
+        $('#ControlWHDocumentsGrid').on('rowdoubleclick', function (event) { 
+            $('#btnOpenObjectGroup').click();
         });
 
         $("#ControlWHDocumentsGrid").on('bindingcomplete', function () {

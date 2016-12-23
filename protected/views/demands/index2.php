@@ -45,7 +45,7 @@
                             columns:
                             [
                                 { text: 'Дата сообщения', datafield: 'date', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
-                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 100 },
+                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 140 },
                                 { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 150, cellsformat: 'dd.MM.yyyy' },
                                 { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' },
                                 { text: 'Действие', filtertype: 'range', datafield: 'report', width: 250 },
