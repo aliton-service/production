@@ -19,7 +19,7 @@
         $("#BtnCancelDialogContractMasterHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $("#BtnCancelDialogContractMasterHistory").on('click', function () {
-            $('#MastersEditDialog').jqxWindow('close');
+            $('#EditDialogContractMasterHistory').jqxWindow('close');
         });
 
         if (ContractMasterHistory.Master !== null) $("#Master2").jqxComboBox('val', ContractMasterHistory.Master);
@@ -39,10 +39,10 @@
                 data: $('#ContractMasterHistory').serialize(),
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
-                        $('#MastersEditDialog').jqxWindow('close');
-                        $("#MastersGrid").jqxGrid('updatebounddata');
+                        $('#EditDialogContractMasterHistory').jqxWindow('close');
+                        $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
                     } else {
-                        $('#MastersBodyDialog').html(Res);
+                        $('#BodyDialogContractMasterHistory').html(Res);
                     }
                 }
             });

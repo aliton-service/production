@@ -15,6 +15,8 @@ class PaymentHistory extends MainFormModel
     public $note;
     public $user_create;
     public $user_change;
+    public $EmplCreate;
+    public $EmplChange;
 
 
     public $SP_INSERT_NAME = '';

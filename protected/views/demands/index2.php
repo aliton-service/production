@@ -233,7 +233,7 @@
     }
     
     .backlight_pink {
-        color: #FF00FF;
+        color: #E000E0;
     }
     
     .jqx-fill-state-pressed .backlight_pink,
