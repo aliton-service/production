@@ -39,7 +39,7 @@
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
         $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
         $("#Annex").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
         $("#Debtor").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
         $("#DocNumber").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 90 }));
@@ -53,7 +53,7 @@
         $("#dmnd_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
         $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#date_act").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_act, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420, height: 50 }));
+        $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420, height: 57 }));
         $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 360 }));
         $("#ExecDay").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Garant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
@@ -157,18 +157,18 @@
 
 <div class="al-row">
     <div class="al-row-column">Номер: <input readonly id="ContrNumS7" type="text"></div>
-    <div class="al-row-column" style="padding-top: 3px;">Дата: </div><div class="al-row-column"><div id="ContrDateS" type="text"></div></div>
-    <div class="al-row-column" style="padding-top: 3px;">Дата вып. работ по акту: </div><div class="row-column"><div id="date_doc" type="text"></div></div>
+    <div class="al-row-column" style="padding: 3px 0 0 5px;">Дата: </div><div class="al-row-column"><div id="ContrDateS" type="text"></div></div>
+    <div class="al-row-column" style="padding: 3px 5px 0 5px;">Дата вып. работ по акту: </div><div class="row-column"><div id="date_doc" type="text"></div></div>
     <div class="al-row-column" style="padding-top: 3px;">Долг: </div><div class="al-row-column"><div id="Debtor" type="checkbox"></div></div>
     <div class="al-row-column" style="padding-top: 3px;">Приложение: </div><div class="al-row-column"><div id="Annex" type="checkbox"></div></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
-    <div class="al-row-column">Юр. лицо:<input readonly id="JuridicalPerson" type="text"></div>
-    <div class="al-row-column">Тип контракта:<input readonly id="crtp_name" type="text"></div>
-    <div class="al-row-column">Договор №:<input readonly id="DocNumber" type="text"></div>
-    <div class="al-row-column" style="padding-top: 3px;">Дата: </div><div class="al-row-column"><div id="DocDate"></div></div>
-    <div class="al-row-column">Оплата:<input readonly id="PaymentTypeName" type="text"></div>
+    <div class="al-row-column">Юр. лицо:</div><div class="al-row-column"><input readonly id="JuridicalPerson" type="text"></div>
+    <div class="al-row-column">Тип контракта:</div><div class="al-row-column"><input readonly id="crtp_name" type="text"></div>
+    <div class="al-row-column">Договор №:</div><div class="al-row-column"><input readonly id="DocNumber" type="text"></div>
+    <div class="al-row-column">Дата: </div><div class="al-row-column"><div id="DocDate"></div></div>
+    <div class="al-row-column">Оплата:</div><div class="al-row-column"><input readonly id="PaymentTypeName" type="text"></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
@@ -180,19 +180,19 @@
     <div class="al-row-column"><div id="PrePayment" type="text"></div></div>
     <div class="al-row-column">Оплата:</div>
     <div class="al-row-column"><div id="summa" type="text"></div></div>
-    <div class="al-row-column">Менеджер:<input readonly id="empl_name" type="text"></div>
+    <div class="al-row-column">Менеджер:</div><div class="al-row-column"><input readonly id="empl_name" type="text"></div>
     <div style="clear: both"></div>
 </div>
-<div class="al-data">
-    <div class="al-row">
+<div class="al-data" style="padding: 7px; margin: 5px 0;">
+    <div class="al-row" style="padding-bottom: 2px;">
         <div class="al-row-column" style="font-weight: 500;">Выполненные работы</div>
-        <div class="al-row-column">Заявка: <input readonly id="dmnd_id" type="text"></div>
-        <div class="al-row-column">Дата вып. работ: </div><div class="row-column"><div id="DateExec"></div></div>
-        <div class="al-row-column">Дата прихода ориг. акта: </div><div class="row-column"><div id="date_act"></div></div>
+        <div class="al-row-column" style="margin-right: 3px;">Заявка: <input readonly id="dmnd_id" type="text"></div>
+        <div class="al-row-column" style="padding-right: 3px;">Дата вып. работ: </div><div class="row-column"><div id="DateExec"></div></div>
+        <div class="al-row-column" style="padding-right: 3px;">Дата прихода ориг. акта: </div><div class="row-column"><div id="date_act"></div></div>
         <div class="al-row-column"><input type="button" value="Заявка" id='btnDemandView' /></div>
         <div style="clear: both"></div>
     </div>
-    <div class="al-row">
+    <div class="al-row" style="padding: 0;">
         <div class="al-row-column" >
             <div>Перечень работ:</div>
             <div><textarea readonly id="SpecialCondition1" ></textarea></div>
@@ -200,7 +200,7 @@
         <div class="al-row-column">
             <div>Контактное лицо:</div>
             <div><input readonly id="FIO" type="text"></div>
-            <div>
+            <div style="padding-top: 5px;">
                 <div class="al-row-column">Срок:</div>
                 <div class="al-row-column"><div id="ExecDay" type="text"></div></div>
                 <div class="al-row-column">Гарантия:</div>
@@ -220,7 +220,7 @@
 
 <div class="al-row">
     <div class="al-row-column"><input type="button" value="Изменить" id='EditContract' /></div>
-    <div class="al-row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
+    <div class="al-row-column" style="padding: 3px 3px 0 0;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
     <div class="al-row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
     <div class="al-row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
     <div class="al-row-column" style="float: right"><input type="button" value="Печатать" id='PrintContract' /></div>

@@ -104,6 +104,8 @@ class ContractsS extends MainFormModel
                         c.ContrSDateEnd,
                         c.Reason_id,
                         c.Price,
+                        c.DatePay,
+                        c.Debtor,
                         c.PriceMonth,
                         c.LastChangeDate,
                         pp.PaymentName,

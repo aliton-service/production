@@ -66,24 +66,24 @@
                 height: '100%',
                 source: ContractsSDataAdapter,
                 columns: [
-                    { text: 'Вид документа', dataField: 'DocType_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
-                    { text: 'Тип договора', dataField: 'crtp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
-                    { text: 'Подписание акта', dataField: 'date_doc', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 150 },
-                    { text: 'Номер', dataField: 'ContrNumS', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'Вид документа', dataField: 'DocType_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Тип договора', dataField: 'crtp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Подписание акта', dataField: 'date_doc', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 135 },
+                    { text: 'Номер', dataField: 'ContrNumS', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90 },
                     { text: 'Дата', dataField: 'ContrDateS', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
                     { text: 'Действует с', dataField: 'ContrSDateStart', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
-                    { text: 'по', dataField: 'ContrSDateEnd', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                    { text: 'по', dataField: 'ContrSDateEnd', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 90 },
                     { text: 'Сумма долга', cellsalign: 'right', datafield: 'Debt', cellsformat: 'f2', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100, aggregates: [{ 'Сумма':
                                         function (aggregatedValue, currentValue) {
                                             return aggregatedValue + currentValue;
                                         }
                                       }] },
-                    { text: 'Периодичность оплаты', dataField: 'PaymentName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 170 },
+                    { text: 'Период оплаты', dataField: 'PaymentName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
                     { text: 'Вид оплаты', dataField: 'PaymentTypeName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
-                    { text: 'Оплачено по', dataField: 'DatePay', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
-                    { text: 'Долг', datafield: 'Debtor', columntype: 'checkbox', filtercondition: 'STARTS_WITH', width: 80 },
-                    { text: 'Оплачено', datafield: 'CalcSum', cellsalign: 'right',  cellsformat: 'f2', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
-                    { text: 'MasterName', dataField: 'MasterName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                    { text: 'Оплачено по', dataField: 'DatePay', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 105 },
+                    { text: 'Долг', datafield: 'Debtor', columntype: 'checkbox', filtercondition: 'STARTS_WITH', width: 50 },
+                    { text: 'Оплачено', datafield: 'CalcSum', cellsalign: 'right', cellsformat: 'f2', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90 },
+                    { text: 'MasterName', dataField: 'MasterName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120, hidden: true },
                 ]
             })
         );
@@ -232,6 +232,10 @@
                             ]
                         })
                     );
+            
+                    $("#ContractSystemsGrid").on('bindingcomplete', function (event) {
+                        $("#ContractSystemsGrid").jqxGrid('selectrow', 0);
+                    });
 
                     $("#ContractSystemsGrid").on('rowselect', function (event) {
                         CurrentRowDataCS = $('#ContractSystemsGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -322,6 +326,10 @@
                             ]
                         })
                     );
+                    
+                    $("#ContractPriceHistoryGrid").on('bindingcomplete', function (event) {
+                        $("#ContractPriceHistoryGrid").jqxGrid('selectrow', 0);
+                    });
             
                     $('#EditDialogContractPriceHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '280px', width: '600'}));
                     
@@ -439,7 +447,8 @@
                     
                     $("#PaymentHistoryGrid").on('rowselect', function (event) {
                         CurrentRowDataPH = $('#PaymentHistoryGrid').jqxGrid('getrowdata', event.args.rowindex);
-                        if (typeof CurrentRowDataPH.note !== undefined) $("#NotePaymentHistory").jqxTextArea('val', CurrentRowDataPH.note);
+                        console.log(typeof CurrentRowDataPH);
+                        if (CurrentRowDataPH != undefined) $("#NotePaymentHistory").jqxTextArea('val', CurrentRowDataPH.note);
                     });
                     
                     $('#PaymentHistoryGrid').on('rowdoubleclick', function () { 
@@ -464,8 +473,8 @@
                             width: 'calc(100% - 2px)',
                             height: 'calc(100% - 2px)',
                             columns: [
-                                { text: 'Дата', columngroup: 'Payment', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 120 },
-                                { text: 'Сумма', columngroup: 'Payment', datafield: 'sum', cellsformat: 'f2', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
+                                { text: 'Дата', columngroup: 'Payment', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 100 },
+                                { text: 'Сумма', columngroup: 'Payment', datafield: 'sum', cellsformat: 'f2', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
                                 { text: 'Месяц с', columngroup: 'PaymentPeriod', dataField: 'month_start_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
                                 { text: 'Год с', columngroup: 'PaymentPeriod', dataField: 'year_start', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
                                 { text: 'Месяц по', columngroup: 'PaymentPeriod', dataField: 'month_end_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
@@ -478,6 +487,8 @@
                             ]
                         })
                     );
+            
+                    $("#PaymentHistoryGrid").jqxGrid('selectrow', 0);
             
                     $("#NewPaymentHistory").on('click', function ()
                     {
@@ -583,6 +594,10 @@
                         })
                     );
             
+                    $("#ContractMasterHistoryGrid").on('bindingcomplete', function (event) {
+                        $("#ContractMasterHistoryGrid").jqxGrid('selectrow', 0);
+                    });
+            
                     $("#NewContractMasterHistory").on('click', function () {
                         if (CurrentRowData == undefined) return;
                         $.ajax({
@@ -616,7 +631,7 @@
                                 url: "/index.php?r=ContractMasterHistory/Delete",
                                 data: { History_id: CurrentRowDataMH.History_id},
                                 success: function(){
-                                    $("#ReloadContractMasterHistory").clic();
+                                    $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
                                 }
                             });
                         }
