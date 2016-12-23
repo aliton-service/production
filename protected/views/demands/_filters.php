@@ -53,15 +53,16 @@
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '200', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"}); // Фильтр тип заявки
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр исполнитель
         $("#edAddr").jqxInput({height: 25, width: 200, minLength: 1}); // Фильтр по адресу
-        $("#cmbTerrit").jqxComboBox({ source: DataTerritory, width: '200', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id"}); // Фильтр участок
-        $("#cmbStreet").jqxComboBox({ source: DataStreets, width: '200', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}); // Фильтр улицы
+        $("#cmbTerrit").jqxComboBox({ source: DataTerritory, width: '200', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id", autoDropDownHeight: true, dropDownVerticalAlignment: 'top' }); // Фильтр участок
+        $("#cmbStreet").jqxComboBox({ source: DataStreets, width: '200', height: '25px', displayMember: "StreetName", valueMember: "Street_id", dropDownVerticalAlignment: 'top' }); // Фильтр улицы
         $("#edHouse").jqxInput({height: 25, width: 60, minLength: 1, value: Filters.House}); // Фильтр ДОМ
         
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: Filters.DateReg })); // Фильтр дата регистрации
         $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
         $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
 
-        $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnClearFilters').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 200, imgSrc: '/images/7.png', imgPosition: "left", textPosition: "left", textImageRelation: "imageBeforeText" }));
+        $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { imgSrc: '/images/1.png', imgPosition: "left", textPosition: "left", textImageRelation: "imageBeforeText" }));
         
         $('#GroupFilters').on('keyup keypress', function(e) {
             var keyCode = e.keyCode || e.which;
@@ -71,6 +72,10 @@
                     Find();
                 return false;
             }
+        });
+        
+        $('#btnClearFilters').on('click', function(){
+            $("#DemandsGrid").jqxGrid('clearfilters');
         });
         
         $('#edFiltering').on('click', function(){
@@ -235,32 +240,34 @@
     });
 </script>
 
-<div id="GroupFilters">
+<div style="margin-top: 4px;"><input type="button" value="Сбросиь все фильтры" id="btnClearFilters"/></div>
 
-    <div>Мастер</div>
+<div id="GroupFilters">
+    <div>Мастер: </div>
     <div><div id='cmbMaster'><?php echo $filterDefaultValues['Master']; ?></div></div>
     <div id='chbNotDateMaster' style="color: white;">Непереданные</div>
     <div id='chbNotDateExec' style="color: white;">Невыполненные</div>
     <div id='chbNotWorkedOut' style="color: white;">Неотработанные</div>
-    <div>Номер</div>
+    <div>Номер: </div>
     <div><input name="Demands[Demand_id]" id="edDemand_id" type="text" value="<?php echo $filterDefaultValues['Demand_id'];?>"/></div>
-    <div>Дата регистрации</div>
+    <div>Дата регистрации: </div>
     <div><div id='edDate' name="Demands[DateReg]"></div></div>
-    <div>Тип заявки</div>
+    <div>Тип заявки: </div>
     <div id='cmbDemandType' name="Demands[DType_id]"><?php echo $filterDefaultValues['DemandType_id']; ?></div>
-    <div>Исполнитель</div>
+    <div>Исполнитель: </div>
     <div><div id='cmbExecutor'><?php echo $filterDefaultValues['Executor']; ?></div></div>
-    <div>Адрес</div>
+    <div>Адрес: </div>
     <div><input id="edAddr" type="text" /></div>
-    <div>Участок</div>
+    <div>Участок: </div>
     <div><div id='cmbTerrit'></div></div>
-    <div>Улица</div>
+    <div>Улица: </div>
     <div><div id='cmbStreet'></div></div>
-    <div>Дом</div>
+    <div>Дом: </div>
     <div><input name="Demands[Demand_id]" id="edHouse" type="text" value="<?php echo $filterDefaultValues['House'];?>"/></div>
-    <div>Период с</div>
+    <div>Период с: </div>
     <div><div id='edDateStart'></div></div>
-    <div>по</div>
+    <div>по: </div>
     <div><div id='edDateEnd'></div></div>
 </div>
+
 <div style="margin-top: 4px;"><input type="button" value="Фильтр" id="edFiltering"/></div>
