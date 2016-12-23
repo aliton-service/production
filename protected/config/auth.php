@@ -523,6 +523,13 @@ return array_merge(
                 'DeliveryDemandsBrokenDeadlinesReport',
                 'AdminRepairDetails',
                 'AdminSystemCompetitors',
+                
+                'ObjectReportAll',
+                'ObjectReport1',
+                'ObjectReport2',
+                'ObjectReport3',
+                'ObjectReport4',
+                'ObjectReport5',
                 ),
         ),
         
