@@ -832,7 +832,7 @@
                             showaggregates: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '200',
+                            height: '227',
                             source: CostCalcEquipsDataAdapter,
                             columns: [
                                 { text: 'Наименование', datafield: 'eqip_name', columngroup: 'Equips', filtercondition: 'CONTAINS', width: 250},    
@@ -1012,15 +1012,15 @@
                             showaggregates: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '200',
+                            height: '227',
                             source: CostCalcWorksDataAdapter,
                             columns: [
                                 { text: 'Вид работ', datafield: 'cwrt_name', columngroup: 'Works', filtercondition: 'CONTAINS', width: 250},
-                                { text: 'Коэф.', datafield: 'koef', columngroup: 'Works', filtercondition: 'CONTAINS', width: 60},
+                                { text: 'Коэф.', datafield: 'koef', columngroup: 'Works', cellsformat: 'f2', filtercondition: 'CONTAINS', width: 60},
                                 { text: 'Оборудование', datafield: 'EquipName', columngroup: 'Works', filtercondition: 'CONTAINS', width: 250},
                                 { text: 'Кол-во', datafield: 'quant', columngroup: 'Works', filtercondition: 'CONTAINS', width: 60},
-                                { text: 'Цена', datafield: 'price', columngroup: 'Works', filtercondition: 'CONTAINS', width: 60},
-                                { text: 'Сумма', datafield: 'sum_high', columngroup: 'Works', filtercondition: 'CONTAINS', width: 110, aggregates: [
+                                { text: 'Цена', datafield: 'price', columngroup: 'Works', cellsformat: 'f2', filtercondition: 'CONTAINS', width: 70},
+                                { text: 'Сумма', datafield: 'sum_high', columngroup: 'Works', cellsformat: 'f2', filtercondition: 'CONTAINS', width: 110, aggregates: [
                                       { 'Сумма':
                                         function (aggregatedValue, currentValue) {
                                             return aggregatedValue + currentValue;
@@ -1028,8 +1028,8 @@
                                       }
                                   ]},
 
-                                { text: 'Цена', datafield: 'price_low', columngroup: 'WorkPrice', filtercondition: 'CONTAINS', width: 130},
-                                { text: 'Итого', datafield: 'sum_low', columngroup: 'WorkPrice', filtercondition: 'CONTAINS', width: 110, aggregates: [
+                                { text: 'Цена', datafield: 'price_low', columngroup: 'WorkPrice', cellsformat: 'f2', filtercondition: 'CONTAINS', width: 130},
+                                { text: 'Итого', datafield: 'sum_low', columngroup: 'WorkPrice', cellsformat: 'f2', filtercondition: 'CONTAINS', width: 110, aggregates: [
                                       { 'Сумма':
                                         function (aggregatedValue, currentValue) {
                                             return aggregatedValue + currentValue;
@@ -1157,7 +1157,7 @@
                             sortable: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '200',
+                            height: '227',
                             source: CostCalcDocumentsDataAdapter,
                             columns: [
                                 { text: 'Наименование', datafield: 'DocName',  filtercondition: 'CONTAINS', width: 190},
@@ -1254,7 +1254,7 @@
                             sortable: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '200',
+                            height: '227',
                             source: CostCalcSalarysDataAdapter,
                             columns: [
                                 { text: 'Сотрудник', datafield: 'EmployeeName', filtercondition: 'CONTAINS', width: 300},
@@ -1385,7 +1385,7 @@
             }
         };
 
-        $('#jqxTabsCostCalculations').jqxTabs({ width: '100%', height: 287, initTabContent: initWidgets});
+        $('#jqxTabsCostCalculations').jqxTabs({ width: '100%', height: 310, initTabContent: initWidgets});
 
         
         
