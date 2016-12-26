@@ -24,7 +24,7 @@
             JobType: <?php echo json_encode($model->jbtp_name); ?>,
             WorkList: <?php echo json_encode($model->work_list); ?>,
             Juridical: <?php echo json_encode($model->JuridicalPerson); ?>,
-            UserCreate: <?php echo json_encode($model->UserCreate); ?>,
+            UserCreate: <?php echo json_encode($model->EmployeeName); ?>,
             edMaster: <?php echo json_encode($model->master); ?>,
         };
         
@@ -369,8 +369,8 @@
         $("#edJobType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 230, minLength: 1, value: Acts.JobType}));
         $('#edWorkList').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
         $("#edJuridical").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.Juridical}));
-        $("#edUserCreate").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 245, minLength: 1, value: Acts.UserCreate}));
-        $("#edMaster").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
+        $("#edUserCreate").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 220, minLength: 1, value: Acts.UserCreate}));
+        $("#edMaster").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 225, minLength: 1, value: Acts.UserCreate}));
         $('#btnEdit').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         if (Acts.Note != null) $('#edNote').val(Acts.Note);
@@ -434,7 +434,7 @@
     .al-data-nb {
         float: left;
         overflow: auto;
-        width: 100%
+        width: 100%;
     }
     .al-row {
         width: 100%;
@@ -465,6 +465,7 @@
         padding-bottom: 0px;
     }
 </style>
+
 <div class="al-data-nb" style="width: 950px;">
     <div class="al-row-column">
         <div class="al-row">
