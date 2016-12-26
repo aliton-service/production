@@ -95,6 +95,7 @@
         
         $('#btnExportEmpl').on('click', function(){
             //$("#EmployeesGrid").jqxGrid('exportdata', 'xls', 'EmployeesGrid');
+            $("#EmployeesGrid").jqxGrid('exportdata', 'xls', 'Сотрудники', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
         });
         
         var initWidgets = function(tab) {
