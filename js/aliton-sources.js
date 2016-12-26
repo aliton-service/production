@@ -646,7 +646,6 @@ Sources.SourceListPriceMonitoringMin =
     datatype: "json",
     datafields: [
         {name: 'mntr_id', type: 'int'},
-        
         {name: 'date', type: 'date'},
         {name: 'eqip_id', type: 'int'},
         {name: 'EquipName', type: 'string'},
