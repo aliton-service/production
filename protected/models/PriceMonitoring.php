@@ -20,13 +20,13 @@
  */
 class PriceMonitoring extends MainFormModel
 {
-	protected $table = 'PriceMonitoring';
+	//protected $table = 'PriceMonitoring';
 
 	public $mntr_id = null;
 	public $date = null;
 	public $eqip_id = null;
 	public $EquipName = null;
-	public $Mndm_id = null;
+	public $mndm_id = null;
 	public $UnitMeasurement_Id = null;
 	public $NameUnitMeasurement = null;
 	public $splr_id = null;
@@ -71,7 +71,7 @@ class PriceMonitoring extends MainFormModel
                         pm.mntr_id, 
                         pm.date, 
                         pm.eqip_id, 
-                        pm.Mndm_id, 
+                        pm.mndm_id, 
                         eqps.EquipName, 
                         unms.UnitMeasurement_Id, 
                         unms.NameUnitMeasurement, 

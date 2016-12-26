@@ -663,9 +663,9 @@ Sources.SourceListPriceMonitoringMin =
         {name: 'user_change', type: 'string'},
         {name: 'date_change', type: 'date'},
         {name: 'delivery', type: 'string'},
-        {name: 'Mndm_id', type: 'int'}
+        {name: 'mndm_id', type: 'int'}
     ],
-    id: 'mntr_id',
+    id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=PriceMonitoring',
     root: 'Rows',
     cache: false,

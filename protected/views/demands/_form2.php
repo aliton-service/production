@@ -180,7 +180,7 @@
                     var value = event.args.item.value;
                     var PriorsSource = [];
                     for (var i = 0; i < DataPriorsRecords.length; i++) {
-                        if (StateInsert) {
+                        if (StateInsert || (ReadOnly == false)) {
                             if (DataPriorsRecords[i].DMalfunction_id == value)
                                 PriorsSource.push(DataPriorsRecords[i]);
                         }
