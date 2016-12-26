@@ -170,7 +170,7 @@
 <div class="row" style="margin-top: 10px;">
     <div class="row-column" style="margin-top: 3px;">Основание: </div><div class="row-column"><div id="ReceiptReasonsWHBA2" name="WHBuhActs[rcrs_id]"></div></div>
     <div class="row-column" style="margin-top: 3px;">Дата: </div><div class="row-column"><div id="ReceiptDateWHBA2" name="WHBuhActs[ReceiptDate]"></div></div>
-    <div class="row-column">Номер: <input type="text" id="ReceiptNumberWHBA2"></div>
+    <div class="row-column">Номер: <input type="text" id="ReceiptNumberWHBA2" name="WHBuhActs[ReceiptNumber]"></div>
 </div>
 
 <div class="row" style="margin-top: 10px; padding-bottom: 5px; border: 1px solid #ddd;">

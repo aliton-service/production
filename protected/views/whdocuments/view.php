@@ -880,10 +880,10 @@
         $('#btnDemandView').on('click', function(){
             $('#btnOperation').jqxDropDownButton('close');
             var D = 0;
-            if (WHDocuemnts.Dmnd_id != null)
-                D = WHDocuemnts.Dmnd_id;
-            if (WHDocuemnts.Demand_id != null)
-                D = WHDocuemnts.Demand_id;
+            if (WHDocuments.Dmnd_id != null)
+                D = WHDocuments.Dmnd_id;
+            if (WHDocuments.Demand_id != null)
+                D = WHDocuments.Demand_id;
             if (D > 0)
                 window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + D);
                 

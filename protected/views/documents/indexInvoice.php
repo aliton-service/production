@@ -117,6 +117,7 @@
         $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 570, width: 870}));
         
         $("#EditContract").on('click', function () {
+            $('#NewContractDialog').jqxWindow({resizable: true, height: 600, width: 870});
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('Documents/Update');?>",
                 type: 'POST',

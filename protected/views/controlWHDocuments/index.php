@@ -133,6 +133,50 @@
             window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + CurrentRowData.docm_id);
         });
         
+        $('#btnExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnExport').on('click', function() {
+            $("#ControlWHDocumentsGrid").jqxGrid('exportdata', 'xls', 'Контроль возвратов', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+        });
+        
+        var Init = function() {
+            var ListSource = [
+                { label: 'Наименование оборудования', value: 'equipname', checked: true },
+                { label: 'Ед.изм.', value: 'um_name', checked: true },
+                { label: 'Кол-во', value: 'quant', checked: true },
+                { label: 'Б/У', value: 'used', checked: true },
+                { label: 'Адрес', value: 'Addr', checked: true },
+                { label: 'Дата возврата', value: 'plan_date', checked: true },
+                { label: 'Заявка', value: 'demand_id', checked: true },
+                { label: 'Кому выдано', value: 'dmnd_empl_name', checked: true },
+                { label: 'Дата выдачи', value: 'ac_date', checked: true },
+                { label: 'Номер', value: 'number', checked: true },
+                { label: 'Выписал', value: 'empl_name', checked: true },
+                { label: 'Предельная дата', value: 'deadline', checked: true },
+                { label: 'Пр-ка', value: 'overday', checked: true },
+                { label: 'Серийный номер', value: 'SN', checked: true },
+                { label: 'Затребовал', value: 'dmnd_empl_id', checked: false },
+            ];
+            
+            $("#ColumnsList").jqxListBox({ source: ListSource, width: 'calc(100% - 2px)', height: 'calc(100% - 2px)',  checkboxes: true });
+            $("#ColumnsList").on('checkChange', function (event) {
+                $("#ControlWHDocumentsGrid").jqxGrid('beginupdate');
+                if (event.args.checked) {
+                    $("#ControlWHDocumentsGrid").jqxGrid('showcolumn', event.args.value);
+                }
+                else {
+                    $("#ControlWHDocumentsGrid").jqxGrid('hidecolumn', event.args.value);
+                }
+                $("#ControlWHDocumentsGrid").jqxGrid('endupdate');
+            });
+        };
+        
+        $('#SettingsColumnsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 400, height: 300, position: 'center', isModal: true, initContent: Init()}));
+        
+        $("#btnSittings").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 180, disabled: false }));
+        $("#btnSittings").on('click', function() {
+            $('#SettingsColumnsDialog').jqxWindow('open');
+        });
+        
     });
 </script> 
 
@@ -144,4 +188,19 @@
     <div class="row-column" style="width: calc(100% - 263px);"><input type="text" id='inputNewNote' /></div>
     <div class="row-column"><input type="button" value="Добавить запись в ход работ" id='btnNewNote' /></div>
 </div>
-<div class="row"><input type="button" value="Открыть требование" id='btnOpenObjectGroup' /></div>
+<div class="row">
+    <input type="button" value="Открыть требование" id='btnOpenObjectGroup' />
+    <input type="button" value="Экспорт" id='btnExport' />
+    <input type="button" value="Настройка колонок" id='btnSittings' />
+</div>
+
+<div id="SettingsColumnsDialog" style="display: none;">
+    <div id="SettingsColumnsDialogHeader">
+        <span id="SettingsColumnsHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogSettingsColumnsContent">
+        <div style="" id="BodySettingsColumnsDialog">
+            <div style="float: left;" id="ColumnsList"></div>
+        </div>
+    </div>
+</div>

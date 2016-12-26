@@ -200,7 +200,7 @@
                             )
                             ),
 
-                            array('label'=>'Заявки на доставку', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('UserDeliveryDemands'), 'items'=>array(
+                            array('label'=>'Заявки на доставку', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewDeliveryDemands'), 'items'=>array(
                                 array('label'=>'Просмотр и создание заявок', 'url'=>array('/delivery/index')),
                                 array('label'=>'Отчеты', 'url'=>'#', 'items'=>array(
                                     array('label'=>'Заявки на доставку', 'url'=>array('/delivery/repDelivery')),

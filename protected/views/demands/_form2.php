@@ -113,10 +113,6 @@
             $("#cmbCloseReason").jqxComboBox({ source: DataCloseReasons, width: '220', height: '25px', displayMember: "CloseReason", valueMember: "CloseReason_id", autoDropDownHeight: true });
             $("#cmbDelayReason").jqxComboBox({ source: DataDelayReasons, width: '420', height: '25px', displayMember: "name", valueMember: "dlrs_id"});
             $("#cmbDemandResult").jqxComboBox({ source: DataDemandResults, width: '140', height: '25px', displayMember: "ResultName", valueMember: "Result_id", autoDropDownHeight: true});
-            $("#cmbDemandType").jqxComboBox({disabled: ReadOnly});
-            $("#cmbSystemType").jqxComboBox({disabled: ReadOnly});
-            $("#cmbEquipType").jqxComboBox({disabled: ReadOnly});
-            $("#cmbMalfunction").jqxComboBox({disabled: ReadOnly});
             //$("#cmbPrior").jqxComboBox({disabled: ReadOnly});
             // Проставляем знаячение
             if (Demand.DelayedClosureReason_id != '') $("#cmbDelayedClosureReason").jqxComboBox('val', Demand.DelayedClosureReason_id);
@@ -184,9 +180,18 @@
                     var value = event.args.item.value;
                     var PriorsSource = [];
                     for (var i = 0; i < DataPriorsRecords.length; i++) {
-                        if (DataPriorsRecords[i].DMalfunction_id == value)
-                            PriorsSource.push(DataPriorsRecords[i]);
+                        if (StateInsert) {
+                            if (DataPriorsRecords[i].DMalfunction_id == value)
+                                PriorsSource.push(DataPriorsRecords[i]);
+                        }
+                        else {
+                            if ((DataPriorsRecords[i].DMalfunction_id == value) && (DataPriorsRecords[i].DemandPrior_id == 10 || DataPriorsRecords[i].DemandPrior_id == 11 || DataPriorsRecords[i].DPrior_id == Demand.DPrior_id))
+                                PriorsSource.push(DataPriorsRecords[i]);
+                        }
+                        
+                        
                     }
+                    
                     $("#cmbPrior").jqxComboBox({source: PriorsSource, autoDropDownHeight: false});
                     $("#cmbPrior").jqxComboBox('selectIndex', 0);
                 }
@@ -212,8 +217,17 @@
         if (Demand.DMalfunction_id != '') $("#cmbMalfunction").jqxComboBox('val', Demand.DMalfunction_id); else $("#cmbMalfunction").jqxComboBox({disabled: false});
         if (Demand.DPrior_id != '') { $("#cmbPrior").jqxComboBox('val', Demand.DPrior_id); $("#btnSave").jqxButton({ disabled: false });} else $("#cmbPrior").jqxComboBox({disabled: false});
         
-        if (!StateInsert)
+        
+            
+        
+        if (!StateInsert) {
             $("#cmbMalfunction").select();
+            
+            $("#cmbDemandType").jqxComboBox({disabled: ReadOnly});
+            $("#cmbSystemType").jqxComboBox({disabled: ReadOnly});
+            $("#cmbEquipType").jqxComboBox({disabled: ReadOnly});
+            $("#cmbMalfunction").jqxComboBox({disabled: ReadOnly});
+        }
         
         
         $('#cmbContactInfo').on('change', function (event) {

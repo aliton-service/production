@@ -138,7 +138,7 @@
             if (First)
                 $('#EventsGrid').jqxGrid({source: EventsFiltersDataAdapter});
             else
-                $('#EventsGrid').jqxGrid('updatebounddata', 'cells');
+                $('#EventsGrid').jqxGrid('updatebounddata', 'data');
             First = false;
             
         };
