@@ -42,6 +42,7 @@
         };
 
         var Administrator = <?php echo json_encode(Yii::app()->user->checkAccess('Administrator')); ?>;
+        var CurrentUser = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
         
         CostCalcDetails = {
             StartingWork: 0,
@@ -364,7 +365,7 @@
                             DocDate: CostCalculations.ContrDateS, 
                             ObjectGr_id: CostCalculations.ObjectGr_id,
                             WorkText: CostCalculations.Name,
-                            empl_id: CostCalculations.empl_id
+                            empl_id: CurrentUser,
                         }
                     },
                     success: function(Res) {
@@ -401,7 +402,7 @@
                             DocDate: CostCalculations.ContrDateS, 
                             ObjectGr_id: CostCalculations.ObjectGr_id,
                             WorkText: CostCalculations.Name,
-                            empl_id: CostCalculations.empl_id
+                            empl_id: CurrentUser,
                         }
                     },
                     success: function(Res) {
@@ -510,7 +511,7 @@
                             DocDate: CostCalculations.ContrDateS, 
                             ObjectGr_id: CostCalculations.ObjectGr_id,
                             WorkText: CostCalculations.Name,
-                            empl_id: CostCalculations.empl_id
+                            empl_id: CurrentUser
                         }
                     },
                     success: function(Res) {
