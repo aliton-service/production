@@ -133,6 +133,10 @@
             window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + CurrentRowData.docm_id);
         });
         
+        $('#btnExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnExport').on('click', function() {
+            $("#ControlWHDocumentsGrid").jqxGrid('exportdata', 'xls', 'Контроль возвратов', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+        });
     });
 </script> 
 
@@ -144,4 +148,18 @@
     <div class="row-column" style="width: calc(100% - 263px);"><input type="text" id='inputNewNote' /></div>
     <div class="row-column"><input type="button" value="Добавить запись в ход работ" id='btnNewNote' /></div>
 </div>
-<div class="row"><input type="button" value="Открыть требование" id='btnOpenObjectGroup' /></div>
+<div class="row">
+    <input type="button" value="Открыть требование" id='btnOpenObjectGroup' />
+    <input type="button" value="Экспорт" id='btnExport' />
+</div>
+
+<div id="SettingsColumnsDialog" style="display: none;">
+    <div id="SettingsColumnsDialogHeader">
+        <span id="SettingsColumnsHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogSettingsColumnsContent">
+        <div style="" id="BodySettingsColumnsDialog">
+            <div style="float: left;" id="ColumnsList"></div>
+        </div>
+    </div>
+</div>
