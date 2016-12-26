@@ -39,7 +39,7 @@ class WhActs_v extends MainFormModel
     public $dlrs_id;
     public $calc_id;
     public $repr_id;
-    public $UserCreate;
+    public $EmployeeName;
     public $DelDate;
     
     public function rules()
@@ -84,7 +84,7 @@ class WhActs_v extends MainFormModel
                         dlrs_id,
                         calc_id,
                         repr_id,
-                        UserCreate,
+                        EmployeeName,
                         DelDate', 'safe'),
         );
     }
@@ -151,7 +151,7 @@ class WhActs_v extends MainFormModel
             'dlrs_id' => 'dlrs_id',
             'calc_id' => 'calc_id',
             'repr_id' => 'repr_id',
-            'UserCreate' => 'UserCreate',
+            'EmployeeName' => 'EmployeeName',
             'DelDate' => 'DelDate',
         );
     }
