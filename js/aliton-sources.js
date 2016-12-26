@@ -646,6 +646,7 @@ Sources.SourceListPriceMonitoringMin =
     datatype: "json",
     datafields: [
         {name: 'mntr_id', type: 'int'},
+        
         {name: 'date', type: 'date'},
         {name: 'eqip_id', type: 'int'},
         {name: 'EquipName', type: 'string'},
@@ -663,6 +664,7 @@ Sources.SourceListPriceMonitoringMin =
         {name: 'user_change', type: 'string'},
         {name: 'date_change', type: 'date'},
         {name: 'delivery', type: 'string'},
+        {name: 'Mndm_id', type: 'int'}
     ],
     id: 'mntr_id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=PriceMonitoring',

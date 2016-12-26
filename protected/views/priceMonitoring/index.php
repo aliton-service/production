@@ -40,6 +40,7 @@
                 height: 'calc(100% - 2px)',
                 source: DemDataAdapter,
                 columns: [
+                    { text: '№ Заявки', datafield: 'mndm_id', columntype: 'textbox', width: 100 },
                     { text: 'Дата', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
                     { text: 'Оборудование', dataField: 'EquipName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 600 },
                     { text: 'Ед.изм.', dataField: 'NameUnitMeasurement', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 60 },

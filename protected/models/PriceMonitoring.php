@@ -178,7 +178,7 @@ class PriceMonitoring extends MainFormModel
 
 	public function getMonitoringPrice($q=null, $date_begin = 'dateadd(mm, -3, getdate())', $date_end = 'getdate()') {
 		$this->select = "
-                    select pm.mntr_id, pm.date, pm.eqip_id, eqps.EquipName, unms.UnitMeasurement_Id, unms.NameUnitMeasurement, pm.splr_id, splrs.NameSupplier, 
+                    select pm.mntr_id, pm.Mndm_id, pm.date, pm.eqip_id, eqps.EquipName, unms.UnitMeasurement_Id, unms.NameUnitMeasurement, pm.splr_id, splrs.NameSupplier, 
                         pm.price, pm.price_retail, pm.user_create_id, empl.EmployeeName, pm.delivery
 		";
 
