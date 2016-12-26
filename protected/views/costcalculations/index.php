@@ -412,7 +412,6 @@
             });
             $('#btnAddDocAct').on('click', function(){
                 var SumHightFullValue = $('#edSumHightFull').jqxNumberInput('val');
-                console.log('SumHightFullValue = ' + SumHightFullValue);
                 $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '510', width: '960'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('WHActs/Insert');?>",
@@ -737,7 +736,7 @@
         
         $('#btnEditDetailsCostCalc').on('click', function(){
             if ($('#btnEditDetailsCostCalc').jqxButton('disabled')) return;
-            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 370, width: 680, position: 'center' }));
+            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 390, width: 680, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/UpdateDetails')) ?>,
                 type: 'POST',
@@ -1189,7 +1188,6 @@
                     });
                     $('#MoreInfoCostCalcDocuments').on('click', function(){
                         if (CurrentRowDataCCD != undefined) {
-                            console.log('CurrentRowDataCCD.DocType_id = ' + CurrentRowDataCCD.DocType_id);
                             var Type = parseInt(CurrentRowDataCCD.DocType_id);
                             if (Type == 0)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('MonitoringDemands/Index')); ?> + "&mndm_id=" + CurrentRowDataCCD.Docid);
@@ -1258,7 +1256,7 @@
                             source: CostCalcSalarysDataAdapter,
                             columns: [
                                 { text: 'Сотрудник', datafield: 'EmployeeName', filtercondition: 'CONTAINS', width: 300},
-                                { text: 'Сумма', datafield: 'price', filtercondition: 'CONTAINS', width: 100},
+                                { text: 'Сумма', datafield: 'price', cellsformat: 'f2', filtercondition: 'CONTAINS', width: 100},
                                 { text: 'Утвержден', dataField: 'date_accept', columntype: 'date', cellsformat: 'dd.MM.yyyy H:mm', filtercondition: 'STARTS_WITH', width: 140 },
                             ]
                         })
@@ -1271,16 +1269,15 @@
                     $('#DelCostCalcSalarys').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
 
                     var CheckButtonCCS = function() {
-                        $('#EditCostCalcSalarys').jqxButton({disabled: !(CurrentRowDataCCS != undefined)})
-                        $('#DelCostCalcSalarys').jqxButton({disabled: !(CurrentRowDataCCS != undefined)})
+                        $('#DelCostCalcSalarys').jqxButton({disabled: !(CurrentRowDataCCS != undefined)});
                     };
                     var CheckButtonAcceptCCS = function() {
-                        if (CurrentRowDataCCS != undefined && CurrentRowDataCCS.date_accept != undefined) {
-                            $('#AcceptCostCalcSalarys').jqxButton({disabled: false})
-                            $('#EditCostCalcSalarys').jqxButton({disabled: false})
+                        if (CurrentRowDataCCS != undefined && CurrentRowDataCCS.date_accept == null) {
+                            $('#AcceptCostCalcSalarys').jqxButton({disabled: false});
+                            $('#EditCostCalcSalarys').jqxButton({disabled: !(CurrentRowDataCCS != undefined)});
                         } else {
-                            $('#AcceptCostCalcSalarys').jqxButton({disabled: true})
-                            $('#EditCostCalcSalarys').jqxButton({disabled: true})
+                            $('#AcceptCostCalcSalarys').jqxButton({disabled: true});
+                            $('#EditCostCalcSalarys').jqxButton({disabled: !(CurrentRowDataCCS != undefined)});
                         }
                     };
 
@@ -1288,6 +1285,8 @@
                         CurrentRowDataCCS = $('#CostCalcSalarysGrid').jqxGrid('getrowdata', event.args.rowindex);
                         CheckButtonCCS();
                         CheckButtonAcceptCCS();
+//                        console.log(CurrentRowDataCCS);
+//                        console.log(CurrentRowDataCCS.date_accept);
                     });
 
                     $('#AddCostCalcSalarys').on('click', function(){
@@ -1345,8 +1344,8 @@
                             },
                             success: function(Res) {
                                 var RowIndex = $('#CostCalcSalarysGrid').jqxGrid('getselectedrowindex');
-                                var Val = $('#CostCalcSalarysGrid').jqxGrid('getcellvalue', RowIndex, "ccsl_id");
-                                Aliton.SelectRowById('ccsl_id', Val, '#CostCalcSalarysGrid', true);
+                                $('#CostCalcSalarysGrid').jqxGrid('updatebounddata');
+                                $('#CostCalcSalarysGrid').jqxGrid('selectrow', RowIndex -1);
                             },
                             error: function(Res) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);

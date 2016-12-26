@@ -42,7 +42,7 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         Aliton.SelectRowById('ccsl_id', Res.id, '#CostCalcSalarysGrid', true);
-                        $('#CostCalcDetailsDialog').jqxWindow('close');
+                        $('#CostCalculationsDialog').jqxWindow('close');
                     }
                     else {
                         $('#BodyCostCalcDetailsDialog').html(Res.html);

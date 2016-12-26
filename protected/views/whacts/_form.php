@@ -106,7 +106,7 @@
         $("#edJobTypeEdit").jqxComboBox({source: DataJobTypes, width: '245', height: '25px', displayMember: "JobType_Name", valueMember: "JobType_Id", autoDropDownHeight: true });
         $('#edWorkListEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
         $("#edJuridicalEdit").jqxComboBox({source: DataJuridicals, width: '220', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
-        $("#edMasterEdit").jqxComboBox({source: DataEmployees, width: '282', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"});
+        $("#edMasterEdit").jqxComboBox({source: DataEmployees, width: '430', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id", dropDownVerticalAlignment: 'top'});
         
         $('#btnSave').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
         $('#btnCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));

@@ -132,7 +132,7 @@
 <input type="hidden" name="CostCalculations[calc_id]" value="<?php echo $model->calc_id; ?>"/>
 
 
-<div class="row" style="border-bottom: 1px solid #e0e0e0">
+<div class="row" style="border-bottom: 1px solid #e0e0e0; margin: 0; padding-bottom: 5px;">
     <div style="float: left">
         <div class="row-column" >Расходные материалы</div>
         <div class="row-column" ><div id="edSumMaterialsLowEdit" name="CostCalculations[sum_materials_low]"></div></div>

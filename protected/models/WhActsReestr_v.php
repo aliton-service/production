@@ -58,7 +58,7 @@ class WhActsReestr_v extends MainFormModel
         );
     }
     
-     public function attributeFilters()
+    public function attributeFilters()
     {
         return array(
             'master' => 'w.dmnd_empl_id',

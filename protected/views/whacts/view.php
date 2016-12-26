@@ -366,10 +366,10 @@
         $('#edNotePayment').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 38, width: 'calc(100% - 2px)', minLength: 1}));
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Acts.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 130 }));
         $("#edWorkType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.WorkType}));
-        $("#edJobType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.JobType}));
+        $("#edJobType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 230, minLength: 1, value: Acts.JobType}));
         $('#edWorkList').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
         $("#edJuridical").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.Juridical}));
-        $("#edUserCreate").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
+        $("#edUserCreate").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 245, minLength: 1, value: Acts.UserCreate}));
         $("#edMaster").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.UserCreate}));
         $('#btnEdit').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -377,6 +377,7 @@
         if (Acts.NotePayment != null) $('#edNotePayment').val(Acts.NotePayment);
         if (Acts.WorkList != null) $('#edWorkList').val(Acts.WorkList);
         
+        SetValueControls();
         
         $('#btnEdit').on('click', function(){
             if ($('#btnEdit').jqxButton('disabled')) return;

@@ -53,7 +53,7 @@ class CostCalcSalarys extends MainFormModel
     public function rules()
     {
         return array(
-            array('calc_id', 'required'),
+            array('empl_id, calc_id', 'required'),
             array('ccsl_id, calc_id, empl_id', 'numerical', 'integerOnly'=>true),
             array('ccsl_id, calc_id, empl_id, price, date_accept, EmployeeName', 'safe'),
         );
@@ -67,8 +67,8 @@ class CostCalcSalarys extends MainFormModel
         return array(
             'ccsl_id' => 'ccsl_id',
             'calc_id' => 'calc_id',
-            'empl_id' => 'empl_id',
-            'price' => 'price',
+            'empl_id' => 'Сотрудник',
+            'price' => 'Сумма',
             'date_accept' => 'date_accept',
             'EmployeeName' => 'EmployeeName',
         );

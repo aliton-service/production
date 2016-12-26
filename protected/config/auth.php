@@ -1218,6 +1218,7 @@ return array_merge(
                 'AdminWHBuhActs',
                 'AdminContractMasterHistory',
                 'AdminDemands',
+                'AdminCostCalcSalarys',
             ),
         ),
         
