@@ -1094,7 +1094,7 @@ return array_merge(
                 'LogisticsManager',
                 'Storeman',
                 'ManagerInventoryDetails',
-                'ManagerInventories',
+                'AdminInventories',
             ),
         ),
         
