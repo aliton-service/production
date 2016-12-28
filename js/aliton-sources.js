@@ -3581,7 +3581,7 @@ Sources.SourceRepairs =
         {name: 'date_plan', type: 'date'},
         {name: 'wrnt', type: 'bool'},
         {name: 'splr_id', type: 'int'},
-        {name: 'namesupplier', type: 'string'},
+        {name: 'NameSupplier', type: 'string'},
         {name: 'delayreason', type: 'string'},
         {name: 'resultname', type: 'string'},
         {name: 'date_undo', type: 'date'},

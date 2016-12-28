@@ -408,8 +408,8 @@
                     
                     $("#GridEquips").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 'calc(100% - 62px)',
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             source: DataRepairDetails, 
                             autoshowfiltericon: true,
@@ -857,8 +857,8 @@
                     
                     $("#GridDocuments").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 'calc(100% - 62px)',
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             source: DataRepairDocuments, 
                             autoshowfiltericon: true,
@@ -1318,7 +1318,10 @@
         </div>
         <div style="overflow: hidden;">
             <div style="padding: 10px; height: 100%">
-                <div class="al-row"><div id="GridEquips"></div></div>
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridEquips"></div>
+                            
+                </div>
                 <div class="al-row">
                     <div class="al-row-column"><input type="button" id="btnAddEquips" value="Добавить"/></div>
                     <div class="al-row-column"><input type="button" id="btnEditEquips" value="Изменить"/></div>
@@ -1329,8 +1332,11 @@
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px;">
-                <div class="al-row"><div id="GridDocuments"></div></div>
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridDocuments"></div>
+                            
+                </div>
                 <div class="al-row">
                     <div class="al-row-column">
                             <div style='float: left;' id="DocsPanel">
