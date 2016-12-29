@@ -683,8 +683,8 @@ Sources.SourceListEquipsMin =
         {name: 'Equip_id', type: 'int'},
         {name: 'EquipName', type: 'string'},
         {name: 'NameUM', type: 'string'},
-        {name: 'discontinued', type: 'date'}
-        
+        {name: 'discontinued', type: 'date'},
+        {name: 'EmplChangeInventory', type: 'int'}
     ],
     id: 'Equip_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipsListAll',
