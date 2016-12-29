@@ -823,6 +823,9 @@ return array_merge(
                 'WhActsView',
                 'ManagerControlContacts',
                 'ManagerWHBuhActs',
+                'ManagerInventories',
+                'UserInventoryDetails',
+                'ManagerEquips',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -841,6 +844,15 @@ return array_merge(
                 'DebtorsReportAll',
                 'Debt1Report',
                 'Debt2Report',
+                
+                'ObjectReportAll',
+                'ObjectReport1',
+                'ObjectReport2',
+                'ObjectReport3',
+                'ObjectReport4',
+                'ObjectReport5',
+                'ObjectReport6',
+                
             ),
         ),
         
@@ -1187,6 +1199,7 @@ return array_merge(
                 'ManagerAddressSystems',
                 'ManagerInventories',
                 'UserInventoryDetails',
+                'AdminDocmAchsDetails',
                 
             ),
         ),

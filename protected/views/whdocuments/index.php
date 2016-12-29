@@ -227,6 +227,8 @@
                         SetStateButton();
                     });
                     
+                    
+                    
                     $("#Grid1").on("bindingcomplete", function (event) {
                         if (WHReestr.Docm_id > 0) {
                             Aliton.SelectRowByIdVirtual('docm_id', WHReestr.Docm_id, '#Grid1', false);
@@ -243,6 +245,13 @@
                         $('#btnInfo').click();
                     });
                     
+                    $('#Grid1').on("columnreordered", function (event) { 
+                        GridState.SaveGridSettings('Grid1', 'WHDoc1Grid1');
+                    });
+                    $('#Grid1').on("columnresized", function (event) {
+                        GridState.SaveGridSettings('Grid1', 'WHDoc1Grid1');
+                    });
+                    
                     $("#Grid1").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -251,6 +260,12 @@
                             autoshowfiltericon: true,
                             pagesize: 200,
                             virtualmode: true,
+                            ready: function() {
+                                var State = $('#Grid1').jqxGrid('getstate');
+                                var Columns = GridState.LoadGridSettings('#Grid1', 'WHDoc1Grid1');
+                                $.extend(true, State.columns, Columns);
+                                $('#Grid1').jqxGrid('loadstate', State);    
+                            },
                             columns:
                                 [
                                     { text: 'Вид работ', columngroup: 'Documents', datafield: 'wrtp_name', width: 130 },
@@ -399,6 +414,8 @@
                 break;
                 case 4:
                     $("#edNotes4").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
+                    $("#btnReady").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 180}));
+                    $("#btnUndoReady").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 180}));
                     
                     $("#Grid4").on('rowselect', function (event) {
                         CurrentRowDataDoc4 = $('#Grid4').jqxGrid('getrowdata', event.args.rowindex);
@@ -958,8 +975,12 @@
         </div>
         <div style="overflow: hidden;">
             <div style="padding: 5px; height: 100%">
-                <div class="al-row" style="height: calc(100% - 112px)">
+                <div class="al-row" style="height: calc(100% - 150px)">
                     <div id="Grid4"></div>
+                </div>
+                <div>
+                    <input type="button" id="btnReady" value="Готово к выдаче"/>
+                    <input type="button" id="btnUndoReady" value="Снять готовность"/>
                 </div>
                 <div><div class="row-column">Примечание</div></div>
                 <div><textarea id="edNotes4" readonly="readonly"></textarea></div>

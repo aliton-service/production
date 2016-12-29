@@ -16,6 +16,8 @@
                 'PurchaseWHDocuments',
                 'Confirm1WHDocuments',
                 'AddNoteWHDocuments',
+                'ReadyWHDocuments',
+                'UndoReadyWHDocuments',
             ),
         ),
 
@@ -35,6 +37,8 @@
                 'PurchaseWHDocuments',
                 'Confirm1WHDocuments',
                 'AddNoteWHDocuments',
+                'ReadyWHDocuments',
+                'UndoReadyWHDocuments',
             ),
         ),
         
@@ -125,6 +129,20 @@
         'AddNoteWHDocuments' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'AddNoteWHDocuments',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'ReadyWHDocuments' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'ReadyWHDocuments',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'UndoReadyWHDocuments' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'UndoReadyWHDocuments',
             'bizRule' => null,
             'data' => null,
         ),
