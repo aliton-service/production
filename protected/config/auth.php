@@ -798,7 +798,7 @@ return array_merge(
                 'ManagerObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
-                'UserObjectEquips',
+                'ManagerObjectEquips',
                 'ManagerContractsS',
                 'ManagerContractMasterHistory',
                 'ManagerContractsDetails_v',
