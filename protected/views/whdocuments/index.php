@@ -467,6 +467,13 @@
                     };
                     //var StatusFiltersSource = new $.jqx.dataAdapter(StatusFiltersSource, {autoBind: true});
                     
+                    $('#Grid4').on("columnreordered", function (event) { 
+                        GridState.SaveGridSettings('Grid4', 'TrebGrid4');
+                    });
+                    $('#Grid4').on("columnresized", function (event) {
+                        GridState.SaveGridSettings('Grid4', 'TrebGrid4');
+                    });
+                    
                     $("#Grid4").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -475,6 +482,12 @@
                             autoshowfiltericon: true,
                             pagesize: 200,
                             virtualmode: true,
+                            ready: function() {
+                                var State = $('#Grid4').jqxGrid('getstate');
+                                var Columns = GridState.LoadGridSettings('#Grid4', 'TrebGrid4');
+                                $.extend(true, State.columns, Columns);
+                                $('#Grid4').jqxGrid('loadstate', State);    
+                            },
                             columns:
                                 [
                                     { text: 'Контроль', filtertype: 'checkbox', columntype: 'checkbox', columngroup: 'Documents', datafield: 'control', width: 50 },

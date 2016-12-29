@@ -221,6 +221,7 @@
                 autoshowfiltericon: true,
                 pagesize: 200,
                 virtualmode: false,
+                enablebrowserselection: true,
                 columns:
                     [
                         { text: 'Оборудование', datafield: 'EquipName', width: 200 },
