@@ -191,6 +191,19 @@
             CurrentRowDetails = $('#GridDetails').jqxGrid('getrowdata', event.args.rowindex);
             SetStateDetailsButtons();
             SetInvInfo();
+            
+            if (CurrentRowDetails != undefined) {
+                if (typeof(CurrentRowDetails.EmplChangeInventory) != 'undefined') {
+                    if (CurrentRowDetails.EmplChangeInventory != null) {
+                        $("#edQuant input").css({'background-color': '#00FF00'});
+                        $("#edUsedQuant input").css({'background-color': '#00FF00'});
+                    }
+                    else {
+                        $("#edQuant input").css({'background-color': 'white'});
+                        $("#edUsedQuant input").css({'background-color': 'white'});
+                    }
+                }
+            }
         });
                     
         $("#GridDetails").on("bindingcomplete", function (event) {

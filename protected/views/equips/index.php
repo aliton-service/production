@@ -47,6 +47,15 @@
             if (CurrentRowData != undefined) {
                 $("#edDescription").jqxInput('val', CurrentRowData.Description); 
                 window.setTimeout("EquipsInfo.GetInventory(" + CurrentRowData.Equip_id + ")", 600);
+                
+                if (CurrentRowData.EmplChangeInventory != null) {
+                    $("#edStorage1InvQuant input").css({'background-color': '#00FF00'});
+                    $("#edStorage1InvQuantUsed input").css({'background-color': '#00FF00'});
+                }
+                else {
+                    $("#edStorage1InvQuant input").css({'background-color': 'white'});
+                    $("#edStorage1InvQuantUsed input").css({'background-color': 'white'});
+                }
             }
         });
         

@@ -2631,6 +2631,8 @@ Sources.DocmAchsDetailsSource =
         { name: 'SN', type: 'string' },
         { name: 'color', type: 'bool' },
         { name: 'no_price_list', type: 'bool' },
+        { name: 'EmplChangeInventory', type: 'int' },
+        
     ],
     id: 'dadt_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DocmAchsDetails',
