@@ -32,6 +32,7 @@
             count_type1: <?php echo json_encode($count_type1); ?>,
             Object_id: <?php echo json_encode($model->Object_id); ?>,
             Addr: <?php echo json_encode($model->Addr); ?>,
+            FullName: <?php echo json_encode($model->FullName); ?>,
             Name: <?php echo json_encode($model->name); ?>,
             Info_id: <?php echo json_encode($model->info_id); ?>,
             ContrNumS: <?php echo json_encode($model->ContrNumS); ?>,
@@ -473,6 +474,7 @@
                             wrtp_id: CostCalculations.wrtp_id,
                             calc_id: CostCalculations.calc_id,
                             sum: CostCalcDetails.SumHighFull,
+                            org_name: CostCalculations.FullName
                         }
                     },
                     success: function(Res) {
@@ -566,7 +568,7 @@
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%');
                                 return false;
                             }
-                            if (!Marj30) {
+                            if (!Marj30 && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
                                 return false;
                             }
@@ -575,7 +577,8 @@
                                 return false;
                             }
                         } else {
-                            if (!Marj) {
+                            
+                            if (!Marj && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%');
                                 return false;
                             }
@@ -593,7 +596,7 @@
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%');
                                 return false;
                             }
-                            if (!Marj30) {
+                            if (!Marj30 && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
                                 return false;
                             }
@@ -607,8 +610,12 @@
                             }
                             
                         } else {
-                            if (!Marj) {
+                            if (!Marj && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
                                 return false;
                             }
                             

@@ -49,7 +49,7 @@
         };
         // Инициализация источников данных
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-        
+        var CurrentUser = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
         // Инициализируем контролы
         $("#edNumber").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
         $("#edAddr").jqxInput({height: 25, width: 400, minLength: 1, value: Demand.Address});
@@ -398,9 +398,9 @@
                                         dmnd_id: Demand.Demand_id,
                                         date: Demand.DateReg,
                                         prty_id: 8,
-                                        rcrs_id: 2,
                                         dmnd_empl_id: Demand.Master,
-                                        Address: Demand.Address
+                                        Address: Demand.Address,
+                                        empl_id: CurrentUser
                                     },
                                 },
                                 success: function(Res) {

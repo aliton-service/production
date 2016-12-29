@@ -82,6 +82,8 @@
         });
         // Инициализируем контроды
         $("#btnSave").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        $("#btnCancelSave").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
+        
         $("#edDemand_id").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "-НОМЕР-", width: 100}));
         $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 300, value: Demand.Address}));
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
@@ -243,6 +245,10 @@
             }
         });
         
+        $("#btnCancelSave").on('click', function () {
+            history.back();
+        });
+        
         $("#btnSave").on('click', function () {
             //$("#Demands").submit();
             
@@ -395,9 +401,10 @@
     </div>
 <?php } ?>
 
-<div class="row" style="margin-top: 5px;">
+<div class="row" style="margin-top: 5px; width: 800px">
     <div class="row-column"><input type="button" value="Сохранить" id='btnSave' /></div>
     <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
+    <div class="row-column" style="float: right"><input type="button" value="Отмена" id='btnCancelSave' /></div>
 </div>
 
 <?php $this->endWidget(); ?>

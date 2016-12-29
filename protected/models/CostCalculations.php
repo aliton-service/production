@@ -7,6 +7,7 @@ class CostCalculations extends MainFormModel
     public $ObjectGr_id = null;
     public $group_name = null;
     public $Addr = null;
+    public $FullName = null;
     public $date = null;
     public $empl_id = null;
     public $empl_name = null;
@@ -63,6 +64,7 @@ class CostCalculations extends MainFormModel
                         cc.ObjectGr_id,
                         g.name as group_name,
                         a.Addr,
+                        p.FullName,
                         cc.date,
                         cc.empl_id,
                         dbo.FIO(e.EmployeeName) empl_name,
@@ -116,7 +118,8 @@ class CostCalculations extends MainFormModel
                     left join ObjectsGroup og on (cc.ObjectGr_id = og.ObjectGr_id)
                     inner join Addresses_v a on (a.Address_id = og.Address_id)
                     left join CostCalcWorkTypes cwt on (cc.ccwt_id = cwt.ccwt_id)
-                    left join Employees e2 on (cc.user_agreed = e2.employee_id)";
+                    left join Employees e2 on (cc.user_agreed = e2.employee_id)
+                    left join Organizations_v p on (og.PropForm_id = p.Form_id)";
         
         $Where = "\nWhere cc.DelDate is null";
         

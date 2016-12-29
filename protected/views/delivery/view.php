@@ -76,7 +76,7 @@
             });
         };
         
-        $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: true, width: '75px', height: '25px', decimalDigits: 0 }));
+        $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { disabled: false, width: '75px', height: '25px', decimalDigits: 0 }));
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDeliveryType").jqxInput({height: 25, width: 120, minLength: 1});
         $("#edPrior").jqxInput({height: 25, width: 120, minLength: 1});
@@ -369,7 +369,7 @@
 
 <div class="al-row">
     <div class="al-row-column">Номер</div>
-    <div class="al-row-column"><div id="edNumber"></div></div>
+    <div class="al-row-column"><div readonly="readonly" id="edNumber"></div></div>
     <div class="al-row-column">Подана</div>
     <div class="al-row-column"><div id="edDate"></div></div>
     <div class="al-row-column">Вид доставки</div>
