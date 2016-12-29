@@ -207,7 +207,6 @@
         });
                     
         $("#GridDetails").on("bindingcomplete", function (event) {
-            console.log(CurrentRowDetails);
             if (CurrentRowDetails != undefined) {
                 Aliton.SelectRowById('dadt_id', CurrentRowDetails.dadt_id, '#GridDetails', false);
             }
