@@ -417,6 +417,46 @@
                     $("#btnReady").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 180}));
                     $("#btnUndoReady").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 180}));
                     
+                    $("#btnReady").on('click', function() {
+                        if (CurrentRowDataDoc4 != undefined) {
+                            if (CurrentRowDataDoc4.date_ready == null )
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Ready')) ?>,
+                                    type: 'POST',
+                                    data: {Docm_id: CurrentRowDataDoc4.docm_id},
+                                    success: function(Res){
+                                        Res = JSON.parse(Res);
+                                        if (Res.result == 1)
+                                            $('#edFiltering').click();
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                        }
+                        
+                    });
+                    
+                    $("#btnUndoReady").on('click', function() {
+                        if (CurrentRowDataDoc4 != undefined) {
+                            if (CurrentRowDataDoc4.date_ready != null )
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Undo')) ?>,
+                                    type: 'POST',
+                                    data: {Docm_id: CurrentRowDataDoc4.docm_id},
+                                    success: function(Res){
+                                        Res = JSON.parse(Res);
+                                        if (Res.result == 1)
+                                            $('#edFiltering').click();
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                        }
+                        
+                    });
+                    
                     $("#Grid4").on('rowselect', function (event) {
                         CurrentRowDataDoc4 = $('#Grid4').jqxGrid('getrowdata', event.args.rowindex);
                         

@@ -535,6 +535,56 @@ class WHDocumentsController extends Controller
         echo json_encode($ObjectResult);
     }
     
+    public function actionReady() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Docm_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'Ready_WHDocuments';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Docm_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionUndo() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Docm_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'UNDO_Ready_WHDocuments';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Docm_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
     public function actionConfirm() {
         $ObjectResult = array(
                 'result' => 0,
