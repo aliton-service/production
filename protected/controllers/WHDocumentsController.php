@@ -154,6 +154,7 @@ class WHDocumentsController extends Controller
                     $model->objc_id = 7337;
                     $model->Address = 'ЗИП ул., д.нет , СПб';
                 }
+                $model->date = Date('d.m.Y');
                 $ObjectResult['html'] = $this->renderPartial('_formDoc4', array(
                     'model' => $model,
                     'DialogId' => $DialogId,

@@ -385,6 +385,9 @@
                         
                         $('#btnAddTreb').on('click', function() {
                             $('#CostCalculationsDialog').jqxWindow({width: 700, height: 500, position: 'center', isModal: true});
+                            var CurrentDate = new Date();
+                            var CurrentDateStr = '';
+                            CurrentDateStr = CurrentDate.getDay() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear();
                             $.ajax({
                                 url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
                                 type: 'POST',
@@ -396,7 +399,7 @@
                                     Params: {
                                         objc_id: Demand.Object_id,
                                         dmnd_id: Demand.Demand_id,
-                                        date: Demand.DateReg,
+                                        date: CurrentDateStr,
                                         prty_id: 8,
                                         dmnd_empl_id: Demand.Master,
                                         Address: Demand.Address,
