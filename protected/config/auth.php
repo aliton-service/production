@@ -655,6 +655,7 @@ return array_merge(
                 'ManagerEvents',
                 'LogDeliveryDemands',
                 'WhActsView',
+                'ManagerWHBuhActs',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
