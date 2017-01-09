@@ -21,6 +21,9 @@
                 'ViewMonitoringDemands',
                 'InsretMonitoringDemands',
                 'UpdateMonitoringDemands',
+                'AcceptMonitoringDemands',
+                'ExecuteMonitoringDemands',
+                'CancelAcceptanceMonitoringDemands',
             ),
         ),
         'AdminMonitoringDemands' => array(
