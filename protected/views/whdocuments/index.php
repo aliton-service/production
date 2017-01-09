@@ -275,7 +275,7 @@
                                     { text: 'Дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Дата создания', columngroup: 'Documents', filtertype: 'date', datafield: 'date_create', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Поставщик', columngroup: 'Documents', filterable: false, datafield: 'splr_name', width: 130 },
-                                    { text: 'Сумма', columngroup: 'Documents', datafield: 'summa', cellsformat: 'f2', width: 100 },
+                                    { text: 'Сумма', columngroup: 'Documents', datafield: 'summa', cellsformat: 'f4', width: 100 },
                                     { text: 'Склад', columngroup: 'Documents', datafield: 'storage', width: 130 },
                                     { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ac_date', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Кладовщик', columngroup: 'Action', datafield: 'strm_name', width: 120 },

@@ -240,8 +240,8 @@
                         { text: 'Ед. изм.', datafield: 'NameUnitMeasurement', width: 80 },
                         { text: 'Кол-во', datafield: 'docm_quant', width: 120, cellsformat: 'f2' },
                         { text: 'Факт кол-во', datafield: 'fact_quant', width: 120, cellsformat: 'f2' },
-                        { text: 'Цена', datafield: 'price', width: 120, cellsformat: 'f2' },
-                        { text: 'Сумма', datafield: 'sum', width: 180, cellsformat: 'f2', aggregates: [{ 'Сумма':
+                        { text: 'Цена', datafield: 'price', width: 120, cellsformat: 'f4' },
+                        { text: 'Сумма', datafield: 'sum', width: 180, cellsformat: 'f4', aggregates: [{ 'Сумма':
                             function (aggregatedValue, currentValue) {
                                 return aggregatedValue + currentValue;
                             }

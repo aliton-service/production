@@ -84,7 +84,7 @@
         $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '300', height: '25px', displayMember: "EquipName", valueMember: "Equip_id" /*, renderer: EquipRenderer */}));
         $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
-        $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px'}));
+        $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', decimalDigits: 4}));
         $("#edFactQuantEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
         $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
         $("#edInvQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
@@ -113,7 +113,12 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('dadt_id', Res.id, '#GridDetails', true);
+                        if ($('#GridDetails').length>0) {
+                            if ($('#btnRefreshDetails').length>0)
+                                $('#btnRefreshDetails').click();
+                            else
+                                Aliton.SelectRowById('dadt_id', Res.id, '#GridDetails', true);
+                        }
                         $('#WHDocumentsDialog').jqxWindow('close');
                     }
                     else {
