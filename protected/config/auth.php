@@ -631,6 +631,7 @@ return array_merge(
                 'UserObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
+                'UserEquips',
                 'UserObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
