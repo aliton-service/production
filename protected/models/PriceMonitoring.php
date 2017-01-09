@@ -132,7 +132,7 @@ class PriceMonitoring extends MainFormModel
 		// will receive user inputs.
 		return array(
                     array('price, price_retail', 'fieldValidate'),
-                    array('mntr_id, Mndm_id, date, eqip_id, splr_id, price, price_retail, user_create_id, date_create, user_change_id, date_change, delivery', 'safe'),
+                    array('mntr_id, mndm_id, date, eqip_id, splr_id, price, price_retail, user_create_id, date_create, user_change_id, date_change, delivery', 'safe'),
 		);
 	}
 
@@ -143,7 +143,7 @@ class PriceMonitoring extends MainFormModel
 	{
 		return array(
 			'mntr_id' => 'Mntr',
-                        'Mndm_id' => '',
+                        'mndm_id' => '',
 			'date' => 'Дата',
 			'eqip_id' => 'Оборудование',
 			'splr_id' => 'Поставщик',

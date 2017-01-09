@@ -49,6 +49,8 @@
                         }
                         if ($('#EditDialogAddPrice').length>0)
                             $('#EditDialogAddPrice').jqxWindow('close');
+                        if ($("#MonitoringDemandDetailsGrid").length>0)
+                            $("#ReloadMonitoringDemandDetails").click();
                     }
                     else {
                         $('#BodyPriceMonitoringDialog').html(Res.html);
@@ -62,12 +64,12 @@
         
         var Demand = {
             date: '<?php echo $model->date; ?>',
-            eqip_id: '<?php echo $model->eqip_id; ?>',
-            splr_id: '<?php echo $model->splr_id; ?>',
-            price: '<?php echo $model->price; ?>',
-            price_retail: '<?php echo $model->price_retail; ?>',
+            eqip_id: <?php echo json_encode($model->eqip_id); ?>,
+            splr_id: <?php echo json_encode($model->splr_id); ?>,
+            price: <?php echo json_encode($model->price); ?>,
+            price_retail: <?php echo json_encode($model->price_retail); ?>,
             delivery: <?php echo json_encode($model->delivery); ?>,
-            Mndm_id: '<?php echo $model->Mndm_id; ?>',
+            mndm_id: <?php echo json_encode($model->mndm_id); ?>,
         };
 
         if (Demand.date != '') $("#date").jqxDateTimeInput('val', Demand.date);
@@ -75,7 +77,7 @@
         if (Demand.price != '') $("#price").jqxNumberInput('val', Demand.price);
         if (Demand.price_retail != '') $("#price_retail").jqxNumberInput('val', Demand.price_retail);
         if (Demand.delivery != '') $("#delivery").jqxInput('val', Demand.delivery);
-        if (Demand.Mndm_id != '') $("#Mndm_id").jqxInput('val', Demand.Mndm_id);
+        if (Demand.mndm_id != '') $("#Mndm_id").jqxInput('val', Demand.mndm_id);
         
     });   
 </script>

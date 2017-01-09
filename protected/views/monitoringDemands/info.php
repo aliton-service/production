@@ -285,7 +285,7 @@
                     data: { 
                         Params: {
                             eqip_id: CurrentRowData.equip_id,
-                            Mndm_id: MonitoringDemands2.mndm_id
+                            mndm_id: MonitoringDemands2.mndm_id
                         }
                     },
                     success: function(Res){
