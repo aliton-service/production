@@ -267,9 +267,9 @@ class ReportsController extends Controller
                                  $StreamIds);
             
             if (isset($_GET['FileName']))
-                $this->UpLoadFile($this->SetValidName($ReportName), $ResultExcel, '.xls');
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, '.pdf');
             else
-                $this->UpLoadFile($this->SetValidName($ReportName), $ResultExcel, '.xls');
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, '.pdf');
         }
     }
 }
