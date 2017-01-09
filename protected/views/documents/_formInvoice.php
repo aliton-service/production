@@ -68,7 +68,7 @@
         
         $("#Price4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#CalcSum4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
-        $("#PrePayment4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#PrePayment4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#dmnd_id4").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
         $("#DateExec4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DateExec, width: 102}));
         $("#date_act4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.date_act, width: 102}));
