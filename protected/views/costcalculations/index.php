@@ -22,7 +22,7 @@
             RegistrationName: '<?php echo $model->RegistrationName; ?>',
             best_date: Aliton.DateConvertToJs('<?php echo $model->best_date; ?>'),
             Demand_id: '<?php echo $model->Demand_id; ?>',
-            sum_materials_low: '<?php echo $model->sum_materials_low; ?>',
+            sum_materials_low: <?php echo json_encode($model->sum_materials_low); ?>,
             date_ready: Aliton.DateConvertToJs('<?php echo $model->date_ready; ?>'),
             date_agreed: Aliton.DateConvertToJs('<?php echo $model->date_agreed; ?>'),
             spec_condt: <?php echo json_encode($model->spec_condt); ?>,
@@ -794,7 +794,7 @@
         if (CostCalculations.jrdc_name !== '') $("#jrdc_name").jqxInput('val', CostCalculations.jrdc_name);
         if (CostCalculations.RegistrationName !== '') $("#RegistrationName").jqxInput('val', CostCalculations.RegistrationName);
         if (CostCalculations.Demand_id !== '') $("#Demand_id").jqxInput('val', CostCalculations.Demand_id);
-        if (CostCalculations.sum_materials_low !== '') $("#sum_materials_low").jqxInput('val', CostCalculations.sum_materials_low);
+        if (CostCalculations.sum_materials_low !== '') $("#sum_materials_low").jqxNumberInput('val', CostCalculations.sum_materials_low);
         if (CostCalculations.spec_condt !== '') $("#spec_condt").jqxTextArea('val', CostCalculations.spec_condt);
         if (CostCalculations.note !== '') $("#note").jqxTextArea('val', CostCalculations.note);
         if (CostCalculations.EmplAgreed !== '') $("#EmplAgreed").jqxInput('val', CostCalculations.EmplAgreed);

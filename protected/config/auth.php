@@ -1087,6 +1087,7 @@ return array_merge(
             'defaultIndex' => 'object/index',
             'children' => array(
                 'StaffManager',
+                'ManagerObjectEquips',
             ),
         ),
         
