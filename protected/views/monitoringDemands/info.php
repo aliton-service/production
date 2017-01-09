@@ -301,7 +301,7 @@
         
         
         $("#btnAcceptEmployeeName").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        if(MonitoringDemands2.EmplNameAccept !== '') { $('#btnAcceptEmployeeName').jqxButton({disabled: true }); }
+        if(MonitoringDemands2.EmplNameAccept !== '' &&  MonitoringDemands2.EmplNameAccept !== null) { $('#btnAcceptEmployeeName').jqxButton({disabled: true }); }
         
         $("#btnExecute").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         

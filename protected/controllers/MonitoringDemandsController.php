@@ -176,20 +176,12 @@ class MonitoringDemandsController extends Controller
                 $sp->ProcedureName = 'ACCEPT_MonitoringDemands';
                 $sp->ParametersRefresh();
                 $sp->Parameters[0]['Value'] = $_POST['mndm_id'];
-                
-                $Employee_id = Yii::app()->user->Employee_id;
-                $Query = new SQLQuery();
-                $Query->setSelect("Select Alias, ShortName from Employees where Employee_id = " . $Employee_id);
-                $Result = $Query->QueryRow();
-                $Employee_Alias = $Result['Alias'];
-                
-                $sp->Parameters[1]['Value'] = $Employee_Alias;
+                $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
                 
                 $sp->CheckParam = true;
                 $sp->Execute();
                 
-                $ShortName = $Result['ShortName'];
-                echo $ShortName;
+                echo Yii::app()->user->fullname;
             }
         }
     }
@@ -222,14 +214,7 @@ class MonitoringDemandsController extends Controller
                 $sp->ProcedureName = 'EXEC_MonitoringDemands';
                 $sp->ParametersRefresh();
                 $sp->Parameters[0]['Value'] = $_POST['mndm_id'];
-                
-                $Employee_id = Yii::app()->user->Employee_id;
-                $Query = new SQLQuery();
-                $Query->setSelect("Select Alias, ShortName from Employees where Employee_id = " . $Employee_id);
-                $Result = $Query->QueryRow();
-                $Employee_Alias = $Result['Alias'];
-                
-                $sp->Parameters[1]['Value'] = $Employee_Alias;
+                $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
                 
                 $sp->CheckParam = true;
                 $sp->Execute();
