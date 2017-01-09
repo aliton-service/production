@@ -24,10 +24,10 @@ class RepairPriors extends MainFormModel
 
 	function __construct() {
 		parent::__construct();
-		$select = "Select * ";
-		$from = " From RepairPriors rp ";
-		$where = " Where rp.DelDate is null ";
-		$order = " Order by rp.RepairPrior";
+		$select = "\nSelect * ";
+		$from = "\nFrom RepairPriors rp ";
+		$where = "\nWhere rp.DelDate is null ";
+		$order = "\nOrder by rp.RepairPrior";
 
 		$this->Query->setSelect($select);
 		$this->Query->setFrom($from);

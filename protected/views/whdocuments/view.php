@@ -503,7 +503,7 @@
                     $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
                     $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
                     $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
-                    $("#btnPurchase").jqxButton({disabled: true});
+                    $("#btnPurchase").jqxButton({disabled: false});
                     $("#btnPrint").jqxButton({disabled: false});
                     $("#btnPrintClient").jqxButton({disabled: true});
                     $("#edMaster").jqxComboBox({disabled: true});
