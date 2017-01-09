@@ -1958,7 +1958,7 @@ Sources.SourceMonitoringDemandDetails =
     datatype: "json",
     datafields: [
         { name: 'mndt_id',  type: 'int' },
-        { name: 'EquipName',  type: 'date' },
+        { name: 'EquipName',  type: 'string' },
         { name: 'equip_id',  type: 'int' },
         { name: 'price',  type: 'int' },
         { name: 'quant',  type: 'int' },
