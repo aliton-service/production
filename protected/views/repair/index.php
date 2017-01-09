@@ -81,7 +81,7 @@
                         { text: 'Серийный номер', datafield: 'SN', width: 110},
                         { text: 'Возврат', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'Return', width: 80 },
                         { text: 'СРМ', datafield: 'NameSupplier', width: 110},
-                        { text: 'План. дата', filtertype: 'date', datafield: 'date_plan', width: 110, cellsformat: 'dd.MM.yyyy'},
+                        { text: 'План. дата', filtertype: 'date', datafield: 'DatePlan', width: 110, cellsformat: 'dd.MM.yyyy'},
                         { text: 'Мастер', datafield: 'mstr_empl_name', width: 110},
                         { text: 'Инженер', datafield: 'egnr_empl_name', width: 110},
                         { text: 'Гарантия', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'wrnt', width: 80 },
