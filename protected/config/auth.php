@@ -973,14 +973,18 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'UserObjects',
+                'ManagerObjects',
+                'ManagerOfficeObjectsGroup',
                 'UserObjectsGroup',
                 'ManagerContactInfo',
-                'UserObjectsGroupSystems',
+                'ManagerObjectsGroupSystems',
                 'UserObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
                 'ManagerContacts',
+                'ManagerObjectEquips',
+                'ManagerContractsS',
+                'ManagerDocuments',
                 'UserObjectsGroupCostCalculations',
                 'ManagerCostCalculations',
                 'ManagerCostCalcDocuments',
@@ -1047,6 +1051,7 @@ return array_merge(
                 'LogDeliveryDemands',
                 'WhActsView',
                 'ManagerWHBuhActs',
+                'SalesManager',
                 
                 /* Отчеты */
                 'DemandsReportAll',
