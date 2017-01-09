@@ -209,7 +209,7 @@ class MonitoringDemandsController extends Controller
         if (isset($_POST['mndm_id'])) {
             $model = new MonitoringDemands();
             $model->getModelPk($_POST['mndm_id']);
-            if ($model->UserAccept2 !== null && $model->DateExec == null && $model->UserChange2 == null) {
+            if ($model->UserAccept2 !== null && $model->DateExec == null) {
                 $sp = new StoredProc();
                 $sp->ProcedureName = 'EXEC_MonitoringDemands';
                 $sp->ParametersRefresh();
