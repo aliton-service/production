@@ -125,7 +125,8 @@ class DeliveryController extends Controller
     
     public function actionInsert() {
         $model = new DeliveryDemands();
-        
+        $model->date = Date('d.m.Y H:m');
+                
         $DialogId = '';
         $BodyDialogId = '';
         

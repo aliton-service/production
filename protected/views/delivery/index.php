@@ -133,7 +133,13 @@
              localdata: EmployeesFilters
         };
         
-        
+        $('#DeliveryDemandsGrid').on("columnreordered", function (event) { 
+            GridState.SaveGridSettings('DeliveryDemandsGrid', 'Delivery_DeliveryDemandsGrid');
+        });
+        $('#DeliveryDemandsGrid').on("columnresized", function (event) {
+            GridState.SaveGridSettings('DeliveryDemandsGrid', 'Delivery_DeliveryDemandsGrid');
+        });
+                    
         $("#DeliveryDemandsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: 'calc(100% - 2px)',
@@ -143,6 +149,12 @@
                 //source: DeliveryDemandsAdapter,
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize:200,
+                ready: function() {
+                    var State = $('#DeliveryDemandsGrid').jqxGrid('getstate');
+                    var Columns = GridState.LoadGridSettings('#DeliveryDemandsGrid', 'Delivery_DeliveryDemandsGrid');
+                    $.extend(true, State.columns, Columns);
+                    $('#DeliveryDemandsGrid').jqxGrid('loadstate', State);    
+                },
                 virtualmode: true,
                 columns:
                     [

@@ -538,6 +538,7 @@
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
+                            columnsreorder: true,
                             virtualmode: true,
                             ready: function() {
                                 var State = $('#Grid4').jqxGrid('getstate');
@@ -558,6 +559,7 @@
                                     { text: 'Номер', columngroup: 'Documents', datafield: 'number', width: 120 },
                                     { text: 'Дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Дата создания', columngroup: 'Documents', filtertype: 'date', datafield: 'date_create', cellsformat: 'dd.MM.yyyy', width: 100 },
+                                    { text: 'Основание', columngroup: 'Documents', datafield: 'rcrs_name2', width: 100 },
                                     { text: 'Затребовал', columngroup: 'Documents', filterable: false, datafield: 'dmnd_empl_name', width: 120 },
                                     { text: 'Выписал', columngroup: 'Documents', datafield: 'empl_name', width: 120 },
                                     { text: 'Срочность', columngroup: 'Documents', datafield: 'prty_name', width: 100 },
@@ -568,6 +570,7 @@
                                     { text: 'Обещенная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date_promise', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Склад', columngroup: 'Documents', datafield: 'storage', width: 100 },
                                     { text: 'Пр-ка', columngroup: 'Documents', datafield: 'overday', width: 50 },
+                                    
                                     { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ac_date', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Кладовщик', columngroup: 'Action', datafield: 'strm_name', width: 130 },
                                     { text: 'Кому', columngroup: 'Action', datafield: 'mstr_name', width: 130 },

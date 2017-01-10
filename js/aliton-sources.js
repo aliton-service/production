@@ -2476,6 +2476,7 @@ Sources.WHDocumentsDoc4Source =
         { name: 'strm_name', type: 'string'},
         { name: 'mstr_name', type: 'string'},
         { name: 'rcrs_name', type: 'string'},
+        { name: 'rcrs_name2', type: 'string'},
         { name: 'StatusFull', type: 'string'},
         { name: 'status', type: 'int'},
         { name: 'date_promise', type: 'date'},
