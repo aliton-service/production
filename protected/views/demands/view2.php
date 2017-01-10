@@ -85,6 +85,8 @@
         $("#btnWorkOut").jqxButton({ width: 120, height: 30, disabled: !(Demand.WorkedOut == null)});
         $("#btnNotWork").jqxButton({ width: 140, height: 30, disabled: (Demand.WorkedOut == null)});
         $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
+        var CD = Date();
+        $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 100, formatString: 'dd.MM.yyyy'}));
         
         
         var initWidgets = function (tab) {
@@ -542,8 +544,6 @@
         $('#Tabs').jqxTabs({ width: '100%', height: '100%', keyboardNavigation: false, initTabContent: initWidgets});
         
         
-        
-        
         $('#SMSDialog').jqxWindow(
             $.extend(true, DialogDefaultSettings, {
                 width: 500,
@@ -642,7 +642,8 @@
         });
         
         $("#btnExec").on('click', function(){
-            Aliton.ExecDemand(Demand.Demand_id, false);
+            //Aliton.ExecDemand(Demand.Demand_id, false);
+            location.href = '/index.php?r=Demands/DemandExec&id=' + Demand.Demand_id + '&DateExec=' + $('#edColumnDateExec').val();
         });
         
         function Comment() {
@@ -876,7 +877,10 @@
     <div class="row-column"><input type="button" value="Текст СМС" id='btnSMS' /></div>
     <div class="row-column" style="margin-left: 60px"><input type="button" value="Отработано" id='btnWorkOut' /></div>
     <div class="row-column"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
-    <div class="row-column" style="float: right;"><input type="button" value="Выполнено" id='btnExec' /></div>
+    <div class="row-column" style="float: right;">
+        <div class="row-column"><div id="edColumnDateExec"></div></div>
+        <div class="row-column"><input type="button" value="Выполнено" id='btnExec' /></div>
+    </div>
 </div>    
 <div style="clear: both;"></div>
 <div id="demandTabs" style="float: left; width: 100%; margin-top: 5px;">

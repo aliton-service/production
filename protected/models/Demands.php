@@ -144,26 +144,46 @@ class Demands extends MainFormModel
 				
 	$this->Query->setSelect($select);
         $this->Query->setFrom($from);
-        $this->Query->setOrder(" order by
-                                  case when WorkedOut is Null
-                                    then 0
-                                    else 1
-                                  end,
-				  case when DateExec is Null
-				    then 0
-				    else 1
-				  end,
-				  case when DateExec is Null
-				    then case when DateMaster is Null
-				           then 0
-				           else 1 end
-				    else 0
-				  end,
-				  case when DateExec is Null
-				    then Sort
-				    else 0
-				  end,
-				  demand_id desc ");
+        
+        if (Yii::app()->user->checkAccess('SeniorDispatcher') || Yii::app()->user->checkAccess('Dispatcher'))
+            $this->Query->setOrder(" order by
+                                      case when WorkedOut is Null
+                                        then 0
+                                        else 1
+                                      end,
+                                      case when DateExec is Null
+                                        then 0
+                                        else 1
+                                      end,
+                                      case when DateExec is Null
+                                        then case when DateMaster is Null
+                                               then 0
+                                               else 1 end
+                                        else 0
+                                      end,
+                                      case when DateExec is Null
+                                        then Sort
+                                        else 0
+                                      end,
+                                      demand_id desc ");
+        else
+            $this->Query->setOrder(" order by
+                                      case when DateExec is Null
+                                        then 0
+                                        else 1
+                                      end,
+                                      case when DateExec is Null
+                                        then case when DateMaster is Null
+                                               then 0
+                                               else 1 end
+                                        else 0
+                                      end,
+                                      case when DateExec is Null
+                                        then Sort
+                                        else 0
+                                      end,
+                                      demand_id desc ");
+        
 
             $this->KeyFiled = 'd.Demand_id';
             $this->PrimaryKey = 'Demand_id';
