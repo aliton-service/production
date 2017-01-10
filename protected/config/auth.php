@@ -674,6 +674,26 @@ return array_merge(
             ),
         ),
         
+        'StaffManagerSouth' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель СЦ',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'ManagerWHDocuments',
+                'ObjectReportAll',
+                'ObjectReport1',
+                'ObjectReport2',
+                'ObjectReport3',
+                'ObjectReport4',
+                'ObjectReport5',
+            ),
+        ),
+        
+        
+        
         /* ПМ */
         'AccountManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
