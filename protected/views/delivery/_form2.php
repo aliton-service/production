@@ -215,6 +215,10 @@
     )); 
 ?>
 
+<input type="hidden" name="DeliveryDemands[calc_id]" value="<?php echo $model->calc_id; ?>" />
+<input type="hidden" name="DeliveryDemands[repr_id]" value="<?php echo $model->repr_id; ?>" />
+<input type="hidden" name="DeliveryDemands[dmnd_id]" value="<?php echo $model->dmnd_id; ?>" />
+
 <div class="row">
     <div class="row-column">
         <div>Номер</div>
