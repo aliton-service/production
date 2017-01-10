@@ -906,6 +906,12 @@
             $('#btnOperation').jqxDropDownButton('close');
             if (WHDocuments.Docm_id !== null) {
                 $('#WHDocumentsDialog').jqxWindow({width:740, height: 390, position: 'center'});
+                var D = null;
+                if (WHDocuments.Dmnd_id != null)
+                    D = WHDocuments.Dmnd_id;
+                else if (WHDocuments.Demand_id != null)
+                    D = WHDocuments.Demand_id;
+                
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('Delivery/Create')) ?>,
                     type: 'POST',
@@ -914,7 +920,8 @@
                         Params: {
                             docm_id: WHDocuments.Docm_id,
                             prty_id: 1,
-                            objc_id: WHDocuments.Object_id
+                            objc_id: WHDocuments.Object_id,
+                            dmnd_id: D,
                         }
                     },
                     success: function(Res) {
