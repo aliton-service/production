@@ -1340,6 +1340,11 @@ return array_merge(
                 'AdminContractMasterHistory',
                 'AdminDemands',
                 'AdminCostCalcSalarys',
+                'AdminContactInfo',
+                'AdminObjectsGroupSystems',
+                'AdminObjectsGroupSystemComplexitys',
+                'AdminSystemCompetitors',
+                
             ),
         ),
         
