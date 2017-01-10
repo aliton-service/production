@@ -71,6 +71,10 @@ class ContractsSController extends Controller
 
             if (isset($_POST['ContractsS'])) {
                     $model->attributes = $_POST['ContractsS'];
+                    
+                    if ($model->DocType_id == 3)
+                        $model->ContrSDateStart = $model->ContrDateS;
+                    
                     $model->EmplCreate = Yii::app()->user->Employee_id;
                     if ($model->validate()) {
                             $model->insert();
