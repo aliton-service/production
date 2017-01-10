@@ -18,7 +18,7 @@
                     $("#MonitoringDemandsGrid").on('rowselect', function (event) {
                         CurrentRowData = $('#MonitoringDemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
                         if (CurrentRowData != undefined) {
-                            $("#Description").jqxTextArea('val', CurrentRowData.Description);
+                            $("#Description").jqxTextArea('val', CurrentRowData.Note);
                         }
                     });
                     
