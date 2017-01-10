@@ -657,6 +657,8 @@ return array_merge(
                 'LogDeliveryDemands',
                 'WhActsView',
                 'ManagerWHBuhActs',
+                'FindTreb',
+                'FindWHDoc1',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -683,6 +685,8 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'ManagerWHDocuments',
+                'FindTreb',
+                'FindWHDoc1',
                 'ObjectReportAll',
                 'ObjectReport1',
                 'ObjectReport2',
