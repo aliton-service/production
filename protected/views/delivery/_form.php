@@ -122,9 +122,10 @@
             if (args) {
                 var item = args.item;
                 var ParamPrty_id = item.value;
-                var ParamDate = new Date();
-                var DateStr = ('0' + ParamDate.getDate()).slice(-2) + '.' + ('0' + (ParamDate.getMonth() + 1)).slice(-2) + '.' + ParamDate.getFullYear();
-
+                //var ParamDate = new Date();
+                var DateStr = $("#edEditDate").val();
+                //var DateStr = ('0' + ParamDate.getDate()).slice(-2) + '.' + ('0' + (ParamDate.getMonth() + 1)).slice(-2) + '.' + ParamDate.getFullYear();
+                
                 $.ajax({
                     url: '<?php echo Yii::app()->createUrl('Delivery/GetDeadline'); ?>',
                     type: 'POST',

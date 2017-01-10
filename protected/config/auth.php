@@ -1174,6 +1174,7 @@ return array_merge(
                 'StaffManager',
                 'ManagerWHDocuments',
                 'ManagerDeliveryDemands',
+                'ManagerDeliveryComments', 
                 'ManagerMonitoringDemands',
                 'ManagerMonitoringDemandDetails',
                 'ManagerPriceMonitoring',

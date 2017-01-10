@@ -81,7 +81,7 @@
         $("#edDeliveryType").jqxInput({height: 25, width: 120, minLength: 1});
         $("#edPrior").jqxInput({height: 25, width: 120, minLength: 1});
         $("#edBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edPromise").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: DeliveryDemands.DatePromise, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAddr").jqxInput({height: 25, width: 350, minLength: 1});
         $("#edMaster").jqxInput({height: 25, width: 150, minLength: 1});
