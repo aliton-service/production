@@ -205,7 +205,13 @@ class MonitoringDemandsController extends Controller
     
     
     public function actionExecute() 
-    {
+    {   
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
         if (isset($_POST['mndm_id'])) {
             $model = new MonitoringDemands();
             $model->getModelPk($_POST['mndm_id']);
@@ -218,8 +224,14 @@ class MonitoringDemandsController extends Controller
                 
                 $sp->CheckParam = true;
                 $sp->Execute();
+                $ObjectResult['result'] = 1;
+                
             }
+            
         }
+        
+        
+        echo json_encode($ObjectResult);
     }
     
 

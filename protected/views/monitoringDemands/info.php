@@ -338,9 +338,17 @@
                 async: false,
                 data: { mndm_id: MonitoringDemands2.mndm_id },
                 success: function(Res) {
-                    $('#btnExecute').jqxButton({disabled: true });
-                    $("#DateExec").jqxDateTimeInput('val', new Date());
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        $('#btnExecute').jqxButton({disabled: true });
+                        $("#DateExec").jqxDateTimeInput('val', new Date());
+                    } else
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], 'Ошибка, возможно заявка не принята');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
+                
             });
         });
         
