@@ -544,10 +544,10 @@
         
         $("#dropDownBtnCostCalculations").jqxDropDownButton({initContent: function(){
                 var CheckAgreed = function() {
-                    if (Administrator) return true;
+                    if (Administrator || (parseInt(CostCalculations.Position_id) == 150)) return true;
                     var Type = parseInt(CostCalculations.type);
                     var Chief = false;
-                    if ((parseInt(CostCalculations.Position_id) == 37) || (parseInt(CostCalculations.Position_id) == 152) || (parseInt(CostCalculations.Position_id) == 150))
+                    if ((parseInt(CostCalculations.Position_id) == 37) || (parseInt(CostCalculations.Position_id) == 152))
                         Chief = true;
                     //var Chief = (find([37, 152], parseFloat(CostCalculations.Position_id)) != -1);
                     var Marj = (parseFloat(CostCalcDetails.ProcMarj) >= parseFloat(CostCalculations.ccwt_proc));
