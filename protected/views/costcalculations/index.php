@@ -14,6 +14,7 @@
             wrtp_id: <?php echo json_encode($model->wrtp_id); ?>,
             date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
             group_name: '<?php echo $model->group_name; ?>',
+            PaymentType_id: <?php echo json_encode($model->PaymentType_id); ?>,
             workname: '<?php echo $model->workname; ?>',
             empl_name: '<?php echo $model->empl_name; ?>',
             empl_id: <?php echo json_encode($model->empl_id); ?>,
@@ -300,7 +301,7 @@
                             ReceiptNumber: CostCalculations.calc_id,
                             dmnd_empl_id: CostCalculations.empl_id,
                             prms_empl_id: CostCalculations.empl_id,
-                            empl_id: CostCalculations.empl_id,
+                            empl_id: CurrentUser,
                             Address: CostCalculations.Addr
                         },
                     },

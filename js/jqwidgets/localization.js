@@ -9,7 +9,7 @@ var getLocalization = function (culture) {
                 // separator of parts of a time (e.g. ':' in 05:44 PM)
                 ':': ":",
                 // the first day of the week (0 = Sunday, 1 = Monday, etc)
-                firstDay: 0,
+                firstDay: 1,
                 days: {
                     // full day names
                     //names: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -17,7 +17,7 @@ var getLocalization = function (culture) {
                     //namesAbbr: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
                     // shortest day names
                     //namesShort: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
-                    names: ["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"],
+                    names: ["вскресенье","пнедельник","вторник","среда","чтверг","птница","сббота"],
                     namesAbbr: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
                     namesShort: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"]
                 },

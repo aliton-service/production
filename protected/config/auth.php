@@ -708,8 +708,10 @@ return array_merge(
             'children' => array(
                 'ManagerObjects',
                 'ManagerObjectsGroup',
+                'ManagerOfficeObjectsGroup',
                 'ManagerContactInfo',
                 'ManagerObjectsGroupSystems',
+                'DeleteDocmAchsDetails',
                 'ManagerSystemCompetitors',
                 'ManagerObjectEquips',
                 'ManagerContractsS',

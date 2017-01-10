@@ -272,12 +272,16 @@ class Demands extends MainFormModel
         
         public function DeadlineValidate($attribute, array $params = array()) {
             $Deadline = 0;
-            if ($this->Deadline === '')
+            if ($this->Deadline === '' || $this->Deadline == null)
                 $Deadline = strtotime('01.01.2999');
             else    
                 $Deadline = strtotime($this->Deadline);
             
             $DateExec = strtotime($this->DateExec);
+            if ($Deadline == '')
+                return;
+            
+            
             if (($DateExec > $Deadline) && ($this->dlrs_id === ''))
                 $this->addError($attribute, 'Заполните причину просрочки');
         }

@@ -14,7 +14,7 @@
             Debtor: <?php echo json_encode($model->Debtor); ?>,
             DocNumber: '<?php echo $model->DocNumber; ?>',
             DocDate: Aliton.DateConvertToJs('<?php echo $model->DocDate; ?>'),
-            PaymentType: '<?php echo $model->PaymentType_id; ?>',
+            PaymentType: <?php echo json_encode($model->PaymentType_id); ?>,
             Price: '<?php echo $model->Price; ?>',
             CalcSum: '<?php echo $model->CalcSum; ?>',
             PrePayment: '<?php echo $model->PrePayment; ?>',
