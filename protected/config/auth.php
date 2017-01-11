@@ -1137,6 +1137,7 @@ return array_merge(
                 'StaffManager',
                 'AdminRepairs',
                 'AdminWhActs',
+                'AdminRepairDocs',
             ),
         ),
         
