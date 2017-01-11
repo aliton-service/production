@@ -25,6 +25,23 @@
             $("#btnDocInfo").click();
         });
         
+        var StatusFilters = [
+            { value: 0, label: "Остатки" },
+            { value: 1, label: "Приход" },
+            { value: 2, label: "Возврат" },
+            { value: 3, label: "Возврат (П)" },
+            { value: 3, label: "Требование" },
+        ];
+        var StatusFiltersSource =
+        {
+             datatype: "array",
+             datafields: [
+                 { name: 'label', type: 'string' },
+                 { name: 'value', type: 'int' }
+             ],
+             localdata: StatusFilters
+        };
+        
         $("#HistoryGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -48,6 +65,10 @@
                             if (value == '4') 
                                 return 'Требование';
                         },
+//                        filtertype: 'list', filteritems: new $.jqx.dataAdapter(StatusFiltersSource), 
+//                        createfilterwidget: function (column, htmlElement, editor) {
+//                            editor.jqxDropDownList({ displayMember: "label", valueMember: "value" });
+//                        }
                     },
                     { text: 'Дата', columngroup: 'Generals', datafield: 'achs_date', filtercondition: 'CONTRAINS', width: 100, cellsformat: 'dd.MM.yyyy' },
                     { text: 'Номер', columngroup: 'Generals', datafield: 'number', filtercondition: 'CONTRAINS', width: 100 },

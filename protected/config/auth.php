@@ -785,6 +785,7 @@ return array_merge(
                 'ManagerExecuteReports',
                 'UserRepairs',
                 'ManagerRepairComments',
+                'ManagerDeliveryComments',
                 'UserDeliveryDemands',
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',

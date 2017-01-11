@@ -4280,7 +4280,7 @@ Sources.SourceEquipHistory =
         {name: 'SN', type: 'string'}
         
     ],
-    id: 'docm_id',
+    id: 'id',
     url: '/index.php?r=Equips/DocHistory',
     root: 'Rows',
     cache: false,
