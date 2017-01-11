@@ -1004,7 +1004,7 @@
                     
                     var CheckButtonCCW = function() {
                         $('#AddCostCalcWorks').jqxButton({disabled: !(CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
-                        $('#EditCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCE != undefined && CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
+                        $('#EditCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined && CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
                         $('#RefreshCostCalcWorks').jqxButton({disabled: false})
                         $('#btnPrintCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
                         $('#btnPrintForUsCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})

@@ -136,6 +136,27 @@
             }
         }
         HideQuant();
+        
+        var ReCalc = function() {
+            var Val = $('#PriceLowCCW').val();
+            var Koef = $('#KoefCCW').val();
+            var Count = $('#QuantCCW').val();
+            $('#PriceCCW').jqxNumberInput('val', Val*Koef*Count);
+        };
+        
+        $('#PriceLowCCW').on('keyup', function() {
+            ReCalc();
+        });
+        
+        $('#QuantCCW').on('keyup', function() {
+            ReCalc();
+        });
+        
+        $('#EquipQuantCCW').on('keyup', function() {
+            ReCalc();
+        });
+        
+        
         $('#CСWorkTypeDetails').on('select', function (event) 
         {
             var args = event.args;
