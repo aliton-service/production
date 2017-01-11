@@ -151,7 +151,7 @@
                     Repairs.Addr = Res.Addr;
                     Repairs.RepairPay = Boolean(Number(Res.repair_pay));
                     Repairs.Return = Boolean(Number(Res.Return));
-                    Repairs.WorkOk = Boolean(Number(Res.number));
+                    Repairs.WorkOk = Boolean(Number(Res.work_ok));
                     Repairs.Wrnt = Boolean(Number(Res.wrnt));
                     Repairs.Equip = Res.EquipName;
                     Repairs.SN = Res.SN;
@@ -197,7 +197,7 @@
                     $("#edAddress").jqxInput($.extend(true, {}, {height: 25, width: 340, minLength: 1}));
                     $("#edRepairPay").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repairs.RepairPay}));
                     $("#edReturn").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repairs.Return}));
-                    $("#edWorkOk").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repairs.work_ok}));
+                    $("#edWorkOk").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repairs.WorkOk}));
                     $("#edWrnt").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 220, checked: Repairs.Wrnt}));
                     $("#edEquip").jqxInput($.extend(true, {}, {height: 25, width: 300, minLength: 1}));
                     $("#edSerialNumber").jqxInput($.extend(true, {}, {height: 25, width: 200, minLength: 1}));

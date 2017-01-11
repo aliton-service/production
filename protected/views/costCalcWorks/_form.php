@@ -55,7 +55,7 @@
         $("#edWorkFilter").on('change', function(e){
             WorkTypeDetailsDataAdapter.dataBind();
         });
-        $("#CСWorkTypeDetails").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: WorkTypeDetailsDataAdapter, displayMember: "name", valueMember: "cwdt_id", searchMode: 'contains', width: 400 }));
+        $("#CСWorkTypeDetails").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: WorkTypeDetailsDataAdapter, dropDownWidth: 800, displayMember: "name", valueMember: "cwdt_id", searchMode: 'contains', width: 400 }));
         $("#QuantCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, min: 0, decimalDigits: 2 }));
         $("#KoefCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, min: 0, decimalDigits: 2, readOnly: true }));
         $("#PriceCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2 }));
