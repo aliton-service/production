@@ -85,6 +85,10 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         Aliton.SelectRowById('ccwr_id', Res.id, '#CostCalcWorksGrid', true);
+                        
+                        if ($('#RefreshCostCalcEquips').length>0)
+                            $('#RefreshCostCalcEquips').click();
+                        
                         CostCalcDetails.DetailsRefresh();
                         if (toggled && StateInsert) {
                             $("#CСWorkTypeDetails").jqxComboBox('clearSelection');
