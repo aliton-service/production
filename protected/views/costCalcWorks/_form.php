@@ -140,8 +140,8 @@
         var ReCalc = function() {
             var Val = $('#PriceLowCCW').val();
             var Koef = $('#KoefCCW').val();
-            var Count = $('#QuantCCW').val();
-            $('#PriceCCW').jqxNumberInput('val', Val*Koef*Count);
+            //var Count = $('#QuantCCW').val();
+            $('#PriceCCW').jqxNumberInput('val', Val*Koef);
         };
         
         $('#PriceLowCCW').on('keyup', function() {

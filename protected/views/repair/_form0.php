@@ -28,6 +28,7 @@
             Reg: <?php echo json_encode($model->reg_empl_id); ?>,
             Cur: <?php echo json_encode($model->cur_empl_id); ?>,
         };
+
         
         $("#edNumberEdit").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
         $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Repair.Date, formatString: 'dd.MM.yyyy H:mm', showTimeButton: true, width: 180}));
@@ -111,7 +112,7 @@
         if (Repair.Jrdc_id != '') $("#edJrdcEdit").jqxInput('val', Repair.Jrdc_id);
         if (Repair.Quant != '') $("#edQuantEdit").jqxNumberInput('val', Repair.Quant);
         if (Repair.Used != '') $("#edUsedEdit").jqxCheckBox('val', Boolean(Number(Repair.Used)));
-        if (Repair.SN != '') $("#edSerialNumberEdit").jqxCheckBox('val', Boolean(Number(Repair.SN)));
+        if (Repair.SN != '') $("#edSerialNumberEdit").jqxInput('val', Repair.SN);
         if (Repair.Set != '') $("#edSetEdit").jqxTextArea('val', Repair.Set);
         if (Repair.Defect != '') $("#edDefectEdit").jqxTextArea('val', Repair.Defect);
         if (Repair.Note != '') $("#edNoteEdit").jqxTextArea('val', Repair.Note);
