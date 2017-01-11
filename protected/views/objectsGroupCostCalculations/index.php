@@ -130,6 +130,13 @@
             return false;
         });
         
+        $("#CostCalculationsGrid").on("columnclick", function (event) {
+            var scrollTop = $(window).scrollTop();
+            var scrollLeft = $(window).scrollLeft();
+            contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+            return false;
+        });
+        
         $("#CostCalculationsGrid").on('rowclick', function (event) {
             if (event.args.rightclick) {
                 $("#CostCalculationsGrid").jqxGrid('selectrow', event.args.rowindex);
@@ -215,7 +222,7 @@
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
-                sortable: true,
+                sortable: false,
                 showfilterrow: false,
                 groupable: true,
                 pageable: false,
