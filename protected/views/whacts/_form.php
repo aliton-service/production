@@ -27,7 +27,7 @@
             JobType: <?php echo json_encode($model->jbtp_name); ?>,
             WorkList: <?php echo json_encode($model->work_list); ?>,
             Juridical: <?php echo json_encode($model->work_list); ?>,
-            UserCreate: <?php echo json_encode($model->UserCreate); ?>,
+            
             edMaster: <?php echo json_encode($model->master); ?>,
             Cntr_id: <?php echo json_encode($model->cntr_id); ?>,
             Dckn_id: <?php echo json_encode($model->dckn_id); ?>,
