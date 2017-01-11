@@ -68,7 +68,7 @@
         $("#edUsedEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 60, checked: Repair.Used}));
         $("#edRepairPayEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repair.RepairPay}));
         $("#edReturnEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repair.Return}));
-        $("#edWorkOkEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repair.work_ok}));
+        $("#edWorkOkEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repair.WorkOk}));
         $("#edWrntEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 220, checked: Repair.Wrnt}));
         $('#edSetEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: '300px', minLength: 1}));
         var DataRepairDelayReasons = new $.jqx.dataAdapter(Sources.SourceRepairDelayReasons);
