@@ -46,6 +46,7 @@
             upg_note: <?php echo json_encode($model->upg_note); ?>,
             competitive: <?php echo json_encode($model->competitive); ?>,
             clrs_id: <?php echo json_encode($model->clrs_id); ?>,
+            StatusOP: <?php echo json_encode($model->StatusOP); ?>,
         };
         // Инициализация источников данных
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
@@ -86,7 +87,7 @@
         $("#btnNotWork").jqxButton({ width: 140, height: 30, disabled: (Demand.WorkedOut == null)});
         $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
         var CD = Date();
-        $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 100, formatString: 'dd.MM.yyyy'}));
+        $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 150, formatString: 'dd.MM.yyyy HH:mm'}));
         
         
         var initWidgets = function (tab) {
@@ -504,6 +505,10 @@
                         $("#edCompetitive").jqxComboBox('val', Demand.competitive);
                         $("#edClrs_id").jqxComboBox({source: [{id: 0, name: 'Отказ клиента'}, {id: 1, name: 'Фактическое исполнение'}, {id: 2, name: 'Дублирующая заявка'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"});
                         $("#edClrs_id").jqxComboBox('val', Demand.clrs_id);
+                        $("#edStatusOP").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: ''}, {id: 1, name: 'Холодный'}, {id: 2, name: 'Теплый'}, {id: 3, name: 'Горячий'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
+                        $("#edStatusOP").jqxComboBox('val', Demand.StatusOP);
+                        
+                        
                         $('#btnSaveDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                         $('#btnSaveDetails').on('click', function() {
                             $.ajax({
@@ -526,7 +531,8 @@
                                         clrs_id: $('#edClrs_id').val(),
                                         upg_note: $('#edUpgNote').val(),
                                         date_calc: $('#edDateCalc').val(),
-                                        calc_accept: $('#edCalcAccept').val()
+                                        calc_accept: $('#edCalcAccept').val(),
+                                        StatusOP: $('#edStatusOP').val()
                                     }
                                 },
                                 success: function(Res) {
@@ -746,6 +752,7 @@
         <div class="row-column"><input readonly id="edNumber" type="text"/></div>
         <div class="row-column">Адрес</div>
         <div class="row-column"><input readonly id="edAddr" type="text"/></div>
+        <div class="row-column"><b>Статус ОП: <?php echo $model->StatusOPName; ?></b></div>
     </div>
     <div style="clear: both;"></div>
     <div style="float: left; width: 100%; height: 32px">
@@ -1029,6 +1036,10 @@
                             <div class="al-row-column">
                                 <div>Причина закрытия</div>
                                 <div><div id='edClrs_id' name='DemandDetails[clrs_id]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div><b>Статус ОП</b></div>
+                                <div><div id='edStatusOP' name='DemandDetails[StatusOP]'></div></div>
                             </div>
                             <div style="clear: both"></div>
                         </div>

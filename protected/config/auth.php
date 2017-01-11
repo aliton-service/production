@@ -760,7 +760,7 @@ return array_merge(
         /* Офис менеджер */
         'OfficeManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
-            'description' => 'Руководитель СЦ',
+            'description' => 'Офис менеджер',
             'bizRule' => null,
             'data' => null,
             'defaultIndex' => 'object/index',
@@ -793,6 +793,7 @@ return array_merge(
                 'WhActsView',
                 'ManagerControlContacts',
                 'ManagerWHBuhActs',
+                'UserPropForms',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -1069,6 +1070,7 @@ return array_merge(
                 'ManagerDemands',
                 'ManagerExecuteReports',
                 'UserRepairs',
+                'ManagerDeliveryComments',
                 'UserDeliveryDemands',
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
@@ -1351,6 +1353,7 @@ return array_merge(
                 'AdminObjectsGroupSystems',
                 'AdminObjectsGroupSystemComplexitys',
                 'AdminSystemCompetitors',
+                'AdminContractsS',
                 
             ),
         ),

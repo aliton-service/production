@@ -84,7 +84,7 @@ return array(
 			'class' => 'WebUser',
                         // enable cookie-based authentication
 			'allowAutoLogin'=>true,
-                        'authTimeout' => 60*60,
+                        'authTimeout' => 60*60*2,
 		),
                 
             

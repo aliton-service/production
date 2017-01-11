@@ -104,6 +104,8 @@ class Demands extends MainFormModel
         public $FullOverDay = null;
         public $WorkedOut = null;
         public $WorkedOutStatus = null;
+        public $StatusOP;
+        public $StatusOPName;
 
 	//------executorreport
 	public $exrp_id = null;
@@ -139,6 +141,11 @@ class Demands extends MainFormModel
                         case when d.WorkedOut is not null then 'Отработано' else 'Не отработано' end WorkedOutStatus,
                         d.DateExec as DateExecFilter,
                         case when d.VIP = 1 then 'VIP' else '' end  as VIPName,
+                        Case when d.StatusOP = 0 then ''
+                            when d.StatusOP = 1 then 'Холодный'
+                            when d.StatusOP = 2 then 'Теплый'
+                            when d.StatusOP = 3 then 'Горячий'
+                            end as StatusOPName,
                         dbo.get_overday(d.Deadline, isnull(d.DateExec, getdate()), d.DemandEt_id) + isnull(d.overday, 0) as FullOverDay";
         $from = "\nFrom FullDemands d with (nolock) ";
 				

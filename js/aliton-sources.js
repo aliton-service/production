@@ -285,6 +285,10 @@ Sources.DemandsSource =
         { name: 'Street_id', type: 'int'},
         { name: 'House', type: 'string'},
         { name: 'Contacts', type: 'string'},
+        { name: 'StatusOP', type: 'int'},
+        { name: 'StatusOPName', type: 'string'},
+        { name: 'FirstDemandPrior', type: 'string'},
+        
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=Demands',
