@@ -1136,6 +1136,7 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'AdminRepairs',
+                'AdminWhActs',
             ),
         ),
         
