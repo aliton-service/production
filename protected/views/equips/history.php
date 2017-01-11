@@ -70,7 +70,7 @@
 //                            editor.jqxDropDownList({ displayMember: "label", valueMember: "value" });
 //                        }
                     },
-                    { text: 'Дата', columngroup: 'Generals', datafield: 'achs_date', filtercondition: 'CONTRAINS', width: 100, cellsformat: 'dd.MM.yyyy' },
+                    { text: 'Дата', columngroup: 'Generals', datafield: 'achs_date', filtercondition: '', width: 100, cellsformat: 'dd.MM.yyyy' },
                     { text: 'Номер', columngroup: 'Generals', datafield: 'number', filtercondition: 'CONTRAINS', width: 100 },
                     { text: 'Адрес', columngroup: 'Generals', datafield: 'Addr', filtercondition: 'CONTRAINS', width: 200 },
                     { text: 'Мастер', columngroup: 'Generals', datafield: 'MasterName', filtercondition: 'CONTRAINS', width: 150 },
