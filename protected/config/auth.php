@@ -1126,6 +1126,7 @@ return array_merge(
                 'StaffManager',
                 'ManagerObjectEquips',
                 'AdminContractEquips',
+                'AdminContractsDetails_v',
             ),
         ),
         
