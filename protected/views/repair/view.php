@@ -98,8 +98,8 @@
             if (Repairs.Status == 5) ChangeMode = 4;
             if (Repairs.Status in {7:null, 8:null, 9:null, 10:null, 11:null, 12:null}) {
                 if (Repairs.Rslt_id == 1) ChangeMode = 2;
-                if (Repairs.Rslt_id == 2) ChangeMode = 4;
-                if (Repairs.Rslt_id == 3) ChangeMode = 3;
+                if (Repairs.Rslt_id == 2) ChangeMode = 3;
+                if (Repairs.Rslt_id == 3) ChangeMode = 4;
                 if (Repairs.Rslt_id == 4) ChangeMode = 0;
             }
             
