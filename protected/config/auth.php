@@ -1125,6 +1125,7 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'ManagerObjectEquips',
+                'AdminContractEquips',
             ),
         ),
         
