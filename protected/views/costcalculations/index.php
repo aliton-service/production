@@ -1008,7 +1008,7 @@
                         $('#RefreshCostCalcWorks').jqxButton({disabled: false})
                         $('#btnPrintCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
                         $('#btnPrintForUsCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
-                        $('#DelCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCE != undefined && CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
+                        $('#DelCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined && CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
                     };
                     
                     $("#CostCalcWorksGrid").jqxGrid(
