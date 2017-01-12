@@ -51,7 +51,7 @@ class WHDocumentsController extends Controller
                     'roles'=>array('UndoReadyWHDocuments'),
             ),
             array('allow', 
-                    'actions'=>array('Action', 'ConfirmCancel', 'Confirm'),
+                    'actions'=>array('Action', 'ConfirmCancel', 'Confirm', 'CheckDocuments'),
                     'users'=>array('*'),
             ),
             array('allow', 
@@ -617,6 +617,23 @@ class WHDocumentsController extends Controller
             return;
         }
 
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionCheckDocuments() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        $Query = new SQLQuery();
+        $Query->text = "\nSelect max(Docm_id) as Mid From WHDocuments";
+        $Res = $Query->QueryRow();
+        
+        $ObjectResult['result'] = 1;
+        $ObjectResult['id'] = $Res['Mid'];
+        
         echo json_encode($ObjectResult);
     }
 }

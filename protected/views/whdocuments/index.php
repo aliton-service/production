@@ -1,6 +1,7 @@
 <script type="text/javascript">
     var WHReestr = {};
     WHReestr.Docm_id = 0;
+    var WHDocCount = 0;
     $(document).ready(function () {
         /* Текущая выбранная строка данных */
         var CurrentRowDataAll;
@@ -12,7 +13,7 @@
         var CurrentRowDataDoc7;
         var CurrentRowDataDoc9;
         var Dctp_id;
-
+        
         $('#btnRefresh').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnInfo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCreate').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, imgSrc: '/images/6.png' }));
@@ -20,6 +21,28 @@
         $('#btnUndo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, height: 30, imgSrc: '/images/3.png' }));
         $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings));
         
+        var CheckDocs = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/CheckDocuments'))?>,
+                type: 'POST',
+                async: true,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        if (WHDocCount == 0)
+                            WHDocCount = parseInt(Res.id);
+                        if (parseInt(Res.id) > parseInt(WHDocCount)) {
+                            $('h1').html('Склад - реестр документов ******************* Выборка устарела');
+                        }
+                        
+                    }
+                        
+                }
+            });
+        };
+        
+        window.setInterval(CheckDocs, 1000*60*5);
+
         
         var SelectTab = function() {
             var SelectedTab = $('#edTabs').jqxTabs('selectedItem');

@@ -28,7 +28,7 @@
             date_agreed: Aliton.DateConvertToJs('<?php echo $model->date_agreed; ?>'),
             spec_condt: <?php echo json_encode($model->spec_condt); ?>,
             note: <?php echo json_encode($model->note); ?>,
-            EmplAgreed: '<?php echo $model->EmplAgreed; ?>',
+            EmplAgreed: <?php echo json_encode($model->EmplAgreed); ?>,
             count_type0: <?php echo json_encode($count_type0); ?>,
             count_type1: <?php echo json_encode($count_type1); ?>,
             Object_id: <?php echo json_encode($model->Object_id); ?>,
@@ -71,7 +71,7 @@
             if (CostCalculations.date_ready != null) $("#date_ready").jqxDateTimeInput('val', CostCalculations.date_ready);
             if (CostCalculations.spec_condt != null) $("#spec_condt").jqxTextArea('val', CostCalculations.spec_condt);
             if (CostCalculations.note != null) $("#note").jqxTextArea('val', CostCalculations.note);
-            if (CostCalculations.EmplAgreed != null) $("#EmplAgreed").jqxTextArea('val', CostCalculations.EmplAgreed);
+            if (CostCalculations.EmplAgreed != null) $("#EmplAgreed").jqxInput('val', CostCalculations.EmplAgreed);
         };
         
         CostCalculations.Refresh = function() {
@@ -99,6 +99,8 @@
                     CostCalculations.note = Res.note;
                     CostCalculations.EmplAgreed = Res.EmplAgreed;
                     CostCalculations.koef_indirect = Res.koef_indirect;
+                    CostCalculations.count_type0 = parseInt(Res.count_type0);
+                    CostCalculations.count_type1 = parseInt(Res.count_type1);
                     SetValueControls();
                     SetStateButtons();
                     $('#RefreshCostCalcEquips').click();
@@ -216,6 +218,7 @@
             $('#btnAddDocContract3').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
             
             $('#btnAddDocSmets').on('click', function(){
+                console.log(CostCalculations);
                 if ((CostCalculations.count_type0 > 0) && (CostCalculations.count_type1 == 0)) {
                     $.ajax({
                         url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Add')) ?>,

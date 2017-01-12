@@ -3252,7 +3252,7 @@ Sources.SourceCostCalcDocuments =
         {name: 'Docid', type: 'int'},
         {name: 'DocType_id', type: 'int'},
         {name: 'DocName', type: 'string'},
-        {name: 'DocNumber', type: 'int'},
+        {name: 'DocNumber', type: 'string'},
         {name: 'DocDate', type: 'date'},
         {name: 'DocSum', type: 'float'},
         {name: 'DocState', type: 'string'},

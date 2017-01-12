@@ -629,6 +629,7 @@ return array_merge(
             'children' => array(
                 'UserObjects',
                 'UserObjectsGroup',
+                'UpdateObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
                 'UserEquips',

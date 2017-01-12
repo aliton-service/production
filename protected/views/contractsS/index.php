@@ -30,11 +30,11 @@
             
             if (CurrentRowData != undefined) {
                 $("#MoreInformContract").jqxButton({ disabled: false });
-                if (CurrentRowData.MasterName != '') $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
-                if (CurrentRowData.MasterName != '') $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
-                if (CurrentRowData.DateExecuting != '') $("#DateExecuting").jqxDateTimeInput('val', CurrentRowData.DateExecuting);
-                if (CurrentRowData.SpecialCondition != '') $("#SpecialCondition").jqxTextArea('val', CurrentRowData.SpecialCondition);
-                if (CurrentRowData.ContrNote != '') $("#ContrNote").jqxTextArea('val', CurrentRowData.ContrNote);
+                $("#JuridicalPerson").jqxInput('val', CurrentRowData.JuridicalPerson);
+                $("#MasterName").jqxInput('val', CurrentRowData.MasterName);
+                $("#DateExecuting").jqxDateTimeInput('val', CurrentRowData.DateExecuting);
+                $("#SpecialCondition").jqxTextArea('val', CurrentRowData.SpecialCondition);
+                $("#ContrNote").jqxTextArea('val', CurrentRowData.ContrNote);
                 
                 var TabIndex = $('#jqxTabsContracts').jqxTabs('selectedItem');
                 switch(parseInt(TabIndex)) {

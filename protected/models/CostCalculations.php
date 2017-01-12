@@ -118,7 +118,7 @@ class CostCalculations extends MainFormModel
                     left join ObjectsGroup og on (cc.ObjectGr_id = og.ObjectGr_id)
                     inner join Addresses_v a on (a.Address_id = og.Address_id)
                     left join CostCalcWorkTypes cwt on (cc.ccwt_id = cwt.ccwt_id)
-                    left join Employees e2 on (cc.user_agreed = e2.employee_id)
+                    left join Employees e2 on (isnull(cc.user_ready, cc.user_agreed)  = e2.employee_id)
                     left join Organizations_v p on (og.PropForm_id = p.Form_id)";
         
         $Where = "\nWhere cc.DelDate is null";

@@ -168,6 +168,13 @@ class MonitoringDemandsController extends Controller
     
     public function actionAccept() 
     {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        
         if (isset($_POST['mndm_id'])) {
             $model = new MonitoringDemands();
             $model->getModelPk($_POST['mndm_id']);
@@ -181,9 +188,14 @@ class MonitoringDemandsController extends Controller
                 $sp->CheckParam = true;
                 $sp->Execute();
                 
-                echo Yii::app()->user->fullname;
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = 0;
+                echo json_encode($ObjectResult);
+                return;
             }
         }
+        
+        echo json_encode($ObjectResult);
     }
     
     public function actionCancelAcceptance() 

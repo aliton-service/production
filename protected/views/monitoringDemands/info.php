@@ -323,10 +323,19 @@
                 async: false,
                 data: { mndm_id: MonitoringDemands2.mndm_id },
                 success: function(Res) {
-                    $('#AcceptEmployeeName').jqxInput('val', Res);
-                    $('#btnAcceptEmployeeName').jqxButton({disabled: true });
-                    $('#btnExecute').jqxButton({disabled: false });
-                    $("#DateAccept").jqxDateTimeInput('val', new Date());
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        $('#AcceptEmployeeName').jqxInput('val', <?php echo json_encode(Yii::app()->user->fullname); ?>);
+                        $('#btnAcceptEmployeeName').jqxButton({disabled: true });
+                        $('#btnExecute').jqxButton({disabled: false });
+                        $("#DateAccept").jqxDateTimeInput('val', new Date());
+                    } else {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], 'Ошибка');
+                        $('#btnAcceptEmployeeName').jqxButton({disabled: true });
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
                 }
             });
         });
