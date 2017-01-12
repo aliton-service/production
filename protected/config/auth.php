@@ -288,7 +288,7 @@ return array_merge(
                 'WHDocuments1Report',
                 'WHActsAll',
                 'WHActs3Report',
-                'ManagerEmployees',
+                'AdminEmployees',
                 'AdminOrganizationStructure',
             ),
         ),
