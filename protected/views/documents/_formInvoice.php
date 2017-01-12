@@ -20,7 +20,7 @@
             PrePayment: '<?php echo $model->PrePayment; ?>',
             empl: '<?php echo $model->empl_id; ?>',
             dmnd_id: '<?php echo $model->dmnd_id; ?>',
-            DateExec: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
+            DateExec: Aliton.DateConvertToJs('<?php echo $model->DateExec; ?>'),
             date_act: Aliton.DateConvertToJs('<?php echo $model->date_act; ?>'),
             SpecialCondition: <?php echo json_encode($model->SpecialCondition); ?>,
             ContactInfo: '<?php echo $model->Info; ?>',

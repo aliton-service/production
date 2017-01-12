@@ -22,7 +22,7 @@
             summa: <?php echo json_encode($model->summa); ?>,
             empl_name: <?php echo json_encode($model->empl_name); ?>,
             dmnd_id: <?php echo json_encode($model->dmnd_id); ?>,
-            DateExec: Aliton.DateConvertToJs(<?php echo json_encode($model->ContrDateS); ?>),
+            DateExec: Aliton.DateConvertToJs(<?php echo json_encode($model->DateExec); ?>),
             date_act: Aliton.DateConvertToJs(<?php echo json_encode($model->date_act); ?>),
             SpecialCondition: <?php echo json_encode($model->SpecialCondition); ?>,
             FIO: <?php echo json_encode($model->FIO); ?>,
