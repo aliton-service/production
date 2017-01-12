@@ -198,7 +198,7 @@
             $('#btnAddDocAct').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocDelivery').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocContract3').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
-            $('#btnAddDocBuhAct').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
+            $('#btnAddDocBuhAct').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
         };
         $("#ddbtnDocuments").on('open', function(){
             CheckBtnDocuments();
