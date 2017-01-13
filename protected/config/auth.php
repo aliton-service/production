@@ -917,6 +917,8 @@ return array_merge(
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'ManagerWHBuhActs',
+                'ManagerEventOffers',
+                'ManagerOfferDemands',
                 
                 /* Отчеты */
                 'DemandsReportAll',
