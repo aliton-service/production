@@ -467,7 +467,7 @@ return array_merge(
                 'AdminObjectsGroupSystemComplexitys',
                 'AdminOfferDemands',
                 'AdminControlWHDocuments',
-                
+                'HeadLogistics',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

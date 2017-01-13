@@ -18,7 +18,7 @@ class DeliveryController extends Controller
     {
         return array(
                 array('allow',  // allow all users to perform 'index' and 'view' actions
-                        'actions'=>array('View', 'Index', 'GetDeadline', 'GetModel'),
+                        'actions'=>array('View', 'Index', 'GetDeadline', 'GetModel', 'GetComments'),
                         'roles'=>array('ViewDeliveryDemands'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -242,6 +242,19 @@ class DeliveryController extends Controller
             }
         }
         echo '0';
+    }
+    
+    public function actionGetComments() {
+        $Result = '';
+        if (isset($_POST['Dldm_id'])) {
+            $Query = new SQLQuery();
+            $Query->text = "\nSelect dbo.get_delivery_comments(" . $_POST['Dldm_id'] . ") note";
+            $Row = $Query->QueryRow();
+            
+            $Result = $Row['note'];
+        }
+        
+        echo json_encode($Result);
     }
     
 }

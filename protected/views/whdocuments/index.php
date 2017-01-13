@@ -554,6 +554,23 @@
                         GridState.SaveGridSettings('Grid4', 'TrebGrid4');
                     });
                     
+                    var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+                        var Temp = $('#Grid4').jqxGrid('getrowdata', row);
+                        var column = $("#Grid4").jqxGrid('getcolumn', columnfield);
+                            if (column.cellsformat != '') {
+                                if ($.jqx.dataFormat) {
+                                    if ($.jqx.dataFormat.isDate(value)) {
+                                        value = $.jqx.dataFormat.formatdate(value, column.cellsformat);
+                                    }   
+                                    else if ($.jqx.dataFormat.isNumber(value)) {
+                                        value = $.jqx.dataFormat.formatnumber(value, column.cellsformat);
+                                    }
+                                }
+                            }
+                        if ((Temp["prty_name"] == "Срочная")) 
+                            return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                    }
+                    
                     $("#Grid4").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -571,41 +588,41 @@
                             },
                             columns:
                                 [
-                                    { text: 'Контроль', filtertype: 'checkbox', columntype: 'checkbox', columngroup: 'Documents', datafield: 'control', width: 50 },
+                                    { text: 'Контроль', filtertype: 'checkbox', columntype: 'checkbox', columngroup: 'Documents', datafield: 'control', width: 50},
                                     { text: 'Статус', columntype: 'textbox', columngroup: 'Documents', datafield: 'status', width: 34, cellsrenderer: statusrenderer,
                                         filtertype: 'list', filteritems: new $.jqx.dataAdapter(StatusFiltersSource), 
                                                                             createfilterwidget: function (column, htmlElement, editor) {
                                                                                 editor.jqxDropDownList({ displayMember: "label", valueMember: "value" });
                                                                             } 
                                     },
-                                    { text: 'Вид работ', columngroup: 'Documents', datafield: 'wrtp_name', width: 130 },
-                                    { text: 'Номер', columngroup: 'Documents', datafield: 'number', width: 120 },
-                                    { text: 'Дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Дата создания', columngroup: 'Documents', filtertype: 'date', datafield: 'date_create', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Основание', columngroup: 'Documents', datafield: 'rcrs_name2', width: 100 },
-                                    { text: 'Затребовал', columngroup: 'Documents', filterable: false, datafield: 'dmnd_empl_name', width: 120 },
-                                    { text: 'Выписал', columngroup: 'Documents', datafield: 'empl_name', width: 120 },
-                                    { text: 'Срочность', columngroup: 'Documents', datafield: 'prty_name', width: 100 },
-                                    { text: 'Статус', columngroup: 'Documents', datafield: 'StatusFull', width: 100 },
-                                    { text: 'Адрес', columngroup: 'Documents', datafield: 'Address', width: 200 },
-                                    { text: 'Желаемая дата', columngroup: 'Documents', filtertype: 'date', datafield: 'best_date', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Предельная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'deadline', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Обещенная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date_promise', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Склад', columngroup: 'Documents', datafield: 'storage', width: 100 },
-                                    { text: 'Пр-ка', columngroup: 'Documents', datafield: 'overday', width: 50 },
+                                    { text: 'Вид работ', columngroup: 'Documents', datafield: 'wrtp_name', width: 130, cellsrenderer: cellsrenderer },
+                                    { text: 'Номер', columngroup: 'Documents', datafield: 'number', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Дата создания', columngroup: 'Documents', filtertype: 'date', datafield: 'date_create', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Основание', columngroup: 'Documents', datafield: 'rcrs_name2', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Затребовал', columngroup: 'Documents', filterable: false, datafield: 'dmnd_empl_name', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Выписал', columngroup: 'Documents', datafield: 'empl_name', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Срочность', columngroup: 'Documents', datafield: 'prty_name', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Статус', columngroup: 'Documents', datafield: 'StatusFull', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Адрес', columngroup: 'Documents', datafield: 'Address', width: 200, cellsrenderer: cellsrenderer },
+                                    { text: 'Желаемая дата', columngroup: 'Documents', filtertype: 'date', datafield: 'best_date', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Предельная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'deadline', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Обещенная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date_promise', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Склад', columngroup: 'Documents', datafield: 'storage', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Пр-ка', columngroup: 'Documents', datafield: 'overday', width: 50, cellsrenderer: cellsrenderer },
                                     
-                                    { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ac_date', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Кладовщик', columngroup: 'Action', datafield: 'strm_name', width: 130 },
-                                    { text: 'Кому', columngroup: 'Action', datafield: 'mstr_name', width: 130 },
-                                    { text: 'Основание', columngroup: 'Action', datafield: 'rcrs_name', width: 100 },
-                                    { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ReceiptDate', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Номер', columngroup: 'Action', datafield: 'ReceiptNumber', width: 100 },
-                                    { text: 'Дата', columngroup: 'Cancel', filtertype: 'date', datafield: 'c_date',cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Отменил', columngroup: 'Cancel', datafield: 'c_name', width: 120 },
-                                    { text: 'Основание', columngroup: 'Cancel', datafield: 'c_confirmname', width: 120 },
-                                    { text: 'Дата', columngroup: 'Purchase', filtertype: 'date', datafield: 'date_prchs',cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Статус', columngroup: 'Purchase', datafield: 'state_prchs', width: 120 },
-                                    { text: 'Сотрудник', columngroup: 'Purchase', datafield: 'name_prchs', width: 120 },
+                                    { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ac_date', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Кладовщик', columngroup: 'Action', datafield: 'strm_name', width: 130, cellsrenderer: cellsrenderer },
+                                    { text: 'Кому', columngroup: 'Action', datafield: 'mstr_name', width: 130, cellsrenderer: cellsrenderer },
+                                    { text: 'Основание', columngroup: 'Action', datafield: 'rcrs_name', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ReceiptDate', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Номер', columngroup: 'Action', datafield: 'ReceiptNumber', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Дата', columngroup: 'Cancel', filtertype: 'date', datafield: 'c_date',cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Отменил', columngroup: 'Cancel', datafield: 'c_name', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Основание', columngroup: 'Cancel', datafield: 'c_confirmname', width: 120 , cellsrenderer: cellsrenderer},
+                                    { text: 'Дата', columngroup: 'Purchase', filtertype: 'date', datafield: 'date_prchs',cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Статус', columngroup: 'Purchase', datafield: 'state_prchs', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Сотрудник', columngroup: 'Purchase', datafield: 'name_prchs', width: 120, cellsrenderer: cellsrenderer },
                                 ],
                             columngroups: 
                                 [
@@ -948,6 +965,12 @@
     });
 </script>
 
+
+<style>
+    .backlight_pink {
+        color: #E000E0;
+    }
+</style> 
 
 <?php $this->setPageTitle('Склад - реестр документов'); ?>
 

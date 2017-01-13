@@ -133,6 +133,10 @@
         
         var CalcSum = function() {
             var Quant = $("#edQuantEdit").jqxNumberInput('val');
+            var Quant2 = $("#edFactQuantEdit").val();
+            if (Quant2 !== '')
+                   Quant = parseFloat(Quant2);
+               
             var Price = $("#edPriceEdit").jqxNumberInput('val');
             $("#edSumEdit").jqxNumberInput('val', Quant*Price);
             
@@ -148,7 +152,12 @@
         
         $('#edQuantEdit').on('valueChanged', function (event) {
             CalcSum();
-        }); 
+        });
+        
+        $("#edFactQuantEdit").on('keyup', function(event) {
+            CalcSum();
+        });
+        
         $('#edPriceEdit').on('valueChanged', function (event) {
             CalcSum();
         });
