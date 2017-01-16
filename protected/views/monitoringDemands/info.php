@@ -174,7 +174,10 @@
         $("#DelMonitoringDemandDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#ReloadMonitoringDemandDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#AddPriceMonitoringDemandDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 250 }));
-        
+        $("#btnExport").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnExport').on('click', function() {
+            $("#MonitoringDemandDetailsGrid").jqxGrid('exportdata', 'xls', 'Позиции мониторинга', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+        });
 //        $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
         
         $('#MonitoringDemandDetailsGrid').on('rowdoubleclick', function () { 
@@ -429,6 +432,7 @@
     <div class="al-row-column"><input type="button" value="Добавить" id='NewMonitoringDemandDetails'/></div>
     <div class="al-row-column"><input type="button" value="Изменить" id='EditMonitoringDemandDetails'/></div>
     <div class="al-row-column"><input type="button" value="Обновить" id='ReloadMonitoringDemandDetails'/></div>
+    <div class="al-row-column"><input type="button" value="Экспорт" id='btnExport'/></div>
     <div class="al-row-column"><input type="button" value="Ввести цену от поставщика" id='AddPriceMonitoringDemandDetails'/></div>
     <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='DelMonitoringDemandDetails'/></div>
     <div style="clear: both"></div>
