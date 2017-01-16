@@ -4362,3 +4362,38 @@ Sources.SourceAddressedStorage =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+
+Sources.SourceWHControls =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'id', type: 'string'},
+        {name: 'docm_id', type: 'int'},
+        {name: 'dctp_id', type: 'int'},
+        {name: 'DocTypeName', type: 'string'},
+        {name: 'Employee_id', type: 'int'},
+        {name: 'MasterName', type: 'string'},
+        {name: 'Equip_id', type: 'int'},
+        {name: 'EquipName', type: 'string'},
+        {name: 'NameUnitMeasurement', type: 'string'},
+        {name: 'docm_quant', type: 'float'},
+        {name: 'fact_quant', type: 'float'},
+        {name: 'Quant', type: 'float'},
+        {name: 'direct', type: 'int'},
+        {name: 'Price', type: 'float'},
+        {name: 'SumPrice', type: 'float'},
+        {name: 'number', type: 'string'},
+        {name: 'Addr', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHControls_v',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 500,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
