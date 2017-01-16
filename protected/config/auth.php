@@ -739,7 +739,7 @@ return array_merge(
                 'ManagerOfferDemands',
                 'WhActsView',
                 'ManagerWHBuhActs',
-                
+                'UserPropForms',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -857,7 +857,7 @@ return array_merge(
                 'ManagerInventories',
                 'UserInventoryDetails',
                 'ManagerEquips',
-                
+                'UserPropForms',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -975,7 +975,7 @@ return array_merge(
                 'ManagerRegions',
                 'ManagerObjects',
                 'ManagerWHBuhActs',
-                
+                'UserPropForms',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
