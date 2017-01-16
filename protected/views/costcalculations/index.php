@@ -198,8 +198,8 @@
             $('#btnAddDocContract1').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocContract2').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocAct').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
-            $('#btnAddDocDelivery').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
-            $('#btnAddDocContract3').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
+            $('#btnAddDocDelivery').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
+            $('#btnAddDocContract3').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocBuhAct').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
         };
         $("#ddbtnDocuments").on('open', function(){
@@ -218,7 +218,7 @@
             $('#btnAddDocContract3').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
             
             $('#btnAddDocSmets').on('click', function(){
-                console.log(CostCalculations);
+                
                 if ((CostCalculations.count_type0 > 0) && (CostCalculations.count_type1 == 0)) {
                     $.ajax({
                         url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Add')) ?>,
