@@ -196,7 +196,7 @@
         var CheckBtnDocuments = function(){
             $('#btnAddDocTreb').jqxButton({disabled: (CostCalculations.date_ready == null || parseInt(CostCalculations.type == 0))});
             $('#btnAddDocContract1').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
-            $('#btnAddDocContract2').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
+            $('#btnAddDocContract2').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocAct').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocDelivery').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocContract3').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
