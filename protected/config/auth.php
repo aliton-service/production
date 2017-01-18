@@ -654,6 +654,7 @@ return array_merge(
                 'MSWHDocuments',
                 'AdminSerialNumbers',
                 'ManagerDocmAchsDetails',
+                'ManagerMonitoringDemandDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'LogDeliveryDemands',
