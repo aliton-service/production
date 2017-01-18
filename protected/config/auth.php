@@ -650,6 +650,7 @@ return array_merge(
                 'UserRepairs',
                 'ManagerRepairComments',
                 'UserDeliveryDemands',
+                'ManagerDeliveryComments',
                 'MSWHDocuments',
                 'AdminSerialNumbers',
                 'ManagerDocmAchsDetails',
@@ -1130,6 +1131,7 @@ return array_merge(
                 'ManagerObjects',
                 'AdminContractEquips',
                 'AdminContractsDetails_v',
+                
             ),
         ),
         
