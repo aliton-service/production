@@ -381,6 +381,7 @@ return array_merge(
                 'AdminDemands',
                 'Storekeeper',
                 'AdminObjects',
+                'AdminObjectsGroup',
                 'AdminWhActs',
                 'AdminPriceMonitoring',
                 'AdminWHDocuments',
@@ -627,7 +628,7 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'UserObjects',
+                'ManagerObjects',
                 'UserObjectsGroup',
                 'UpdateObjectsGroup',
                 'ManagerContactInfo',
