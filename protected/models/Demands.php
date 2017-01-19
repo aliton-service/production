@@ -152,7 +152,7 @@ class Demands extends MainFormModel
 	$this->Query->setSelect($select);
         $this->Query->setFrom($from);
         
-        if (Yii::app()->user->checkAccess('SeniorDispatcher') || Yii::app()->user->checkAccess('Dispatcher'))
+        if (Yii::app()->user->checkAccess('SeniorDispatcher') || Yii::app()->user->checkAccess('Dispatcher') || Yii::app()->user->checkAccess('AdministartorDispatchers'))
             $this->Query->setOrder(" order by
                                       case when WorkedOut is Null
                                         then 0

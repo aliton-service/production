@@ -628,8 +628,7 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'ManagerObjects',
-                'UserObjectsGroup',
+                'ManagerObjects','UserObjectsGroup',
                 'UpdateObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
