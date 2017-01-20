@@ -168,6 +168,7 @@
         <div class="al-row-column"><div id='SystemType2' name="ObjectsGroupSystems[Sttp_id]"></div><?php echo $form->error($model, 'Sttp_id'); ?></div>
         <div style="clear: both"></div>
     </div>
+    
     <div class="al-row">
         <div class="al-row-column" style="width: 100px">Наличие:</div>
         <div class="al-row-column"><div id='Availability2' name="ObjectsGroupSystems[Availability_id]"></div><?php echo $form->error($model, 'Availability_id'); ?></div>

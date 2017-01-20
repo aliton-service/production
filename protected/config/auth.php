@@ -680,6 +680,10 @@ return array_merge(
                 'DemandsReport10',
                 'DemandsReport11',
                 'DemandsReport12',
+                
+                'EquipsReportAll',
+                'ObjectEquipsReport',
+                'ObjectEquipsReport2'
             ),
         ),
         
