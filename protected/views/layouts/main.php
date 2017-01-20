@@ -101,6 +101,7 @@
                                         array('label'=>'Участки', 'url'=>array('/territory/index'), 'visible'=>Yii::app()->user->checkAccess('ViewTerritory')),
                                         array('label'=>'Сложность системы', 'url'=>array('/systemComplexitys/index'), 'visible'=>Yii::app()->user->checkAccess('ViewSystemComplexitys')),
                                         array('label'=>'Сосотояние системы', 'url'=>array('/systemStatements/index'), 'visible'=>Yii::app()->user->checkAccess('ViewSystemStatements')),
+                                        array('label'=>'Наценки по оборудованию', 'url'=>array('/AreaPrices/index'), 'visible'=>Yii::app()->user->checkAccess('ViewAreaPrices')),
                                         array('label'=>'Типы улиц', 'url'=>array('/streetTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewStreetTypes')),
                                         array('label'=>'Должности', 'url'=>array('/customers/index'), 'visible'=>Yii::app()->user->checkAccess('ViewCustomers')),
                                         array('label'=>'Организации', 'url'=>array('/propForms/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPropForms')),

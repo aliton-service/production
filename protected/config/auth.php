@@ -231,6 +231,9 @@ return array_merge(
     /* Контроль возвратов */
     include(dirname(__FILE__).'/security/ControlWHDocumentsSecurity.php'),
         
+    /* Цены за площадь*/
+    include(dirname(__FILE__).'/security/AreaPricesSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -469,6 +472,7 @@ return array_merge(
                 'AdminOfferDemands',
                 'AdminControlWHDocuments',
                 'HeadLogistics',
+                'AdminAreaPrices',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',

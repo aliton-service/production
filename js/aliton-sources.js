@@ -4397,3 +4397,32 @@ Sources.SourceWHControls =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceAreaPrices =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'AreaPrice_id', type: 'int'},
+        {name: 'StartArea', type: 'int'},
+        {name: 'EndArea', type: 'int'},
+        {name: 'Price', type: 'float'},	
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'DateCreate', type: 'date'},
+        {name: 'EmplChange', type: 'int'},
+        {name: 'DateChange', type: 'date'},
+        {name: 'Lock', type: 'int'},
+        {name: 'DateLock', type: 'date'},
+        {name: 'EmplLock', type: 'int'},
+        {name: 'DelDate', type: 'date'},
+    ],
+    id: 'AreaPrice_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AreaPrices',
+    root: 'Rows',
+    async: false,
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
