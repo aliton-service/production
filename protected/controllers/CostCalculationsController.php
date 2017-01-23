@@ -321,6 +321,7 @@ class CostCalculationsController extends Controller
         
         $Filters = array();
         $this->title = 'Сметы - реестр';
+        $this->setPageTitle('Сметы - реестр');
         $this->gridFilters = '_filters';
         $this->filterDefaultValues = $Filters;
         
