@@ -1127,6 +1127,20 @@ return array_merge(
             ),
         ),
         
+        /* Руководитель направления ПБ и ИТП*/
+        'HeadAPPZ' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель направления ПБ и ИТП',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'ProjectManager',
+                'AdminObjectsGroupSystems',
+                'AdminObjectsGroupSystemComplexitys',
+            ),
+        ),
+        
         /* Менеджер проектов */
         'ProjectManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -1259,6 +1273,11 @@ return array_merge(
                 'UserInventoryDetails',
                 'AdminDocmAchsDetails',
                 
+                'WHActsAll',
+                'WHActs1Report',
+                'WHActs2Report',
+                'WHActs3Report',
+                'WHActs4Report',
             ),
         ),
         
