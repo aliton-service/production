@@ -744,7 +744,7 @@ return array_merge(
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
-                'ManagerEvents',
+                'AdminEvents',
                 'ManagerEventOffers',
                 'ManagerOfferDemands',
                 'WhActsView',
