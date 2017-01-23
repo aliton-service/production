@@ -104,6 +104,7 @@ class WHBuhActs extends MainFormModel
                     ReceiptDate,
                     rcrs_name,
                     number,
+                    org_name,
                     rcrs_id,
                     signed_yn,
                     date_ready,

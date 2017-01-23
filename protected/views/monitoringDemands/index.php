@@ -18,9 +18,26 @@
                     $("#MonitoringDemandsGrid").on('rowselect', function (event) {
                         CurrentRowData = $('#MonitoringDemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
                         if (CurrentRowData != undefined) {
-                            $("#Description").jqxTextArea('val', CurrentRowData.Description);
+                            $("#Description").jqxTextArea('val', CurrentRowData.Note);
                         }
                     });
+                    
+                    var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+                        var Temp = $('#MonitoringDemandsGrid').jqxGrid('getrowdata', row);
+                        var column = $("#MonitoringDemandsGrid").jqxGrid('getcolumn', columnfield);
+                            if (column.cellsformat != '') {
+                                if ($.jqx.dataFormat) {
+                                    if ($.jqx.dataFormat.isDate(value)) {
+                                        value = $.jqx.dataFormat.formatdate(value, column.cellsformat);
+                                    }   
+                                    else if ($.jqx.dataFormat.isNumber(value)) {
+                                        value = $.jqx.dataFormat.formatnumber(value, column.cellsformat);
+                                    }
+                                }
+                            }
+                        if ((Temp["DemandPrior"] == "Срочная")) 
+                            return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                    }
                     
                     $("#MonitoringDemandsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
@@ -32,16 +49,16 @@
                             height: 'calc(100% - 2px)',
                             //source: MonitoringDemandsDataAdapter,
                             columns: [
-                                { text: 'Номер', dataField: 'mndm_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
-                                { text: 'Дата', dataField: 'Date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
-                                { text: 'Подал', dataField: 'UserName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 170, filterable: false, sortable: false },
-                                { text: 'Prior', dataField: 'Prior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50, hidden: true },
-                                { text: 'Employee_id', dataField: 'e.Employee_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50, hidden: true },
-                                { text: 'Приоритет', dataField: 'DemandPrior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
-                                { text: 'Дата принятия', dataField: 'DateAccept', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
-                                { text: 'Принял', dataField: 'EmplNameAccept', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
-                                { text: 'Дата выполнения', dataField: 'DateExec', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140 },
-                                { text: 'Просрочка', dataField: 'OverDays', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80 },
+                                { text: 'Номер', dataField: 'mndm_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70, cellsrenderer: cellsrenderer },
+                                { text: 'Дата', dataField: 'Date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140, cellsrenderer: cellsrenderer },
+                                { text: 'Подал', dataField: 'UserName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 170, filterable: false, sortable: false, cellsrenderer: cellsrenderer },
+                                { text: 'Prior', dataField: 'Prior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50, hidden: true, cellsrenderer: cellsrenderer },
+                                { text: 'Employee_id', dataField: 'e.Employee_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 50, hidden: true, cellsrenderer: cellsrenderer },
+                                { text: 'Приоритет', dataField: 'DemandPrior', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150, cellsrenderer: cellsrenderer },
+                                { text: 'Дата принятия', dataField: 'DateAccept', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140, cellsrenderer: cellsrenderer },
+                                { text: 'Принял', dataField: 'EmplNameAccept', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150, cellsrenderer: cellsrenderer },
+                                { text: 'Дата выполнения', dataField: 'DateExec', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140, cellsrenderer: cellsrenderer },
+                                { text: 'Просрочка', dataField: 'OverDays', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 80, cellsrenderer: cellsrenderer },
                             ]
                         })
                     );
@@ -219,6 +236,12 @@
 </script>
 
 <?php $this->setPageTitle('Заявки на мониторинг'); ?>
+
+<style>
+    .backlight_pink {
+        color: #E000E0;
+    }
+</style>    
 
 
 <div class="al-row" style="height: calc(100% - 150px)">

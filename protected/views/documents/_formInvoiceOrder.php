@@ -117,6 +117,7 @@
 <input type="hidden" name="Documents[ContrS_id]" value="<?php echo $model->ContrS_id; ?>">
 <input type="hidden" name="Documents[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>">
 <input type="hidden" name="Documents[DocType_id]" value="<?php echo $model->DocType_id; ?>">
+<input type="hidden" name="Documents[Calc_id]" value="<?php echo $model->Calc_id; ?>">
 
 <div class="row">
     <div class="row-column">Номер: <input id="ContrNumS6" name="Documents[ContrNumS]" type="text"></div>

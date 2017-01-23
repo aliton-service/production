@@ -22,15 +22,51 @@
         });
         
         var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
+        
+        var SetInvInfo = function(Equip_id, Strg_id) {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Equips/GetInvInfo')); ?>,
+                type: 'POST',
+                data: {
+                    Equip_id: Equip_id,
+                    Strg_id: Strg_id
+                },
+                async: true,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result = 1) {
+                        $("#edInvQuant").jqxNumberInput('val', Res.inv_quant);
+                        $("#edInvQuantUsed").jqxNumberInput('val', Res.inv_quant_used);
+                    }
+                },
+                error: function(Res) {
+                    //Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        };
+        
         $("#edEquip").on('select', function(event) {
             var args = event.args;
             if (args) {
                 var Item = args.item;
                 var Value = Item.value;
+                
                 var Row = Aliton.FindArray(DataEquips.records, 'Equip_id', Value);
-                if (Row != null)
+                if (Row != null) {
                     $("#edUmName").val(Row.NameUM);
                     
+                    if (Row.EmplChangeInventory != null) {
+                        $("#edInvQuant input").css({'background-color': '#00FF00'});
+                        $("#edInvQuantUsed input").css({'background-color': '#00FF00'});
+                    }
+                    else {
+                        $("#edInvQuant input").css({'background-color': 'white'});
+                        $("#edInvQuantUsed input").css({'background-color': 'white'});
+                    }
+                }
+                
+                
+                SetInvInfo(Value, 1);
             }
         });
         
@@ -48,9 +84,12 @@
         $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '300', height: '25px', displayMember: "EquipName", valueMember: "Equip_id" /*, renderer: EquipRenderer */}));
         $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
-        $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px'}));
+        $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', decimalDigits: 4}));
         $("#edFactQuantEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
         $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
+        $("#edInvQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
+        $("#edInvQuantUsed").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
+        
         $("#edUsedEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '50px'}));
         $("#edToProductionEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '130px'}));
         $("#edNoPriceListEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '150px'}));
@@ -74,7 +113,12 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('dadt_id', Res.id, '#GridDetails', true);
+                        if ($('#GridDetails').length>0) {
+                            if ($('#btnRefreshDetails').length>0)
+                                $('#btnRefreshDetails').click();
+                            else
+                                Aliton.SelectRowById('dadt_id', Res.id, '#GridDetails', true);
+                        }
                         $('#WHDocumentsDialog').jqxWindow('close');
                     }
                     else {
@@ -89,8 +133,13 @@
         
         var CalcSum = function() {
             var Quant = $("#edQuantEdit").jqxNumberInput('val');
+            var Quant2 = $("#edFactQuantEdit").val();
+            if (Quant2 !== '')
+                   Quant = parseFloat(Quant2);
+               
             var Price = $("#edPriceEdit").jqxNumberInput('val');
             $("#edSumEdit").jqxNumberInput('val', Quant*Price);
+            
         };
         
         if (DocmAchsDetail.docm_quant != null) $("#edQuantEdit").jqxNumberInput('val', DocmAchsDetail.docm_quant);
@@ -103,7 +152,12 @@
         
         $('#edQuantEdit').on('valueChanged', function (event) {
             CalcSum();
-        }); 
+        });
+        
+        $("#edFactQuantEdit").on('keyup', function(event) {
+            CalcSum();
+        });
+        
         $('#edPriceEdit').on('valueChanged', function (event) {
             CalcSum();
         });
@@ -154,6 +208,12 @@
     </div>
 </div>
 <div class="row">
+    <div style="float: left">
+        <div class="row-column">Наличие:</div>
+        <div class="row-column"><div type="text" id="edInvQuant"></div></div>
+        <div class="row-column">Б\У:</div>
+        <div class="row-column"><div type="text" id="edInvQuantUsed"></div></div>
+    </div>
     <div style="float: right">
         <div class="row-column">Сумма:</div>
         <div class="row-column"><div type="text" id="edSumEdit" name="DocmAchsDetails[sum]"></div><?php echo $form->error($model, 'sum'); ?></div>

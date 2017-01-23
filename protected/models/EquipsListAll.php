@@ -6,6 +6,7 @@ class EquipsListAll extends MainFormModel
     public $EquipName;
     public $NameUM;
     public $discontinued;
+    public $EmplChangeInventory;
     
     public function rules() {
         return array(
@@ -24,6 +25,7 @@ class EquipsListAll extends MainFormModel
         $Select = "\nSelect
                     e.Equip_id,
                     e.EquipName,
+                    e.EmplChangeInventory,
                     um.NameUnitMeasurement NameUM";
         
         $From = "\nFrom Equips e

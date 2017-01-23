@@ -285,6 +285,10 @@ Sources.DemandsSource =
         { name: 'Street_id', type: 'int'},
         { name: 'House', type: 'string'},
         { name: 'Contacts', type: 'string'},
+        { name: 'StatusOP', type: 'int'},
+        { name: 'StatusOPName', type: 'string'},
+        { name: 'FirstDemandPrior', type: 'string'},
+        
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=Demands',
@@ -683,8 +687,8 @@ Sources.SourceListEquipsMin =
         {name: 'Equip_id', type: 'int'},
         {name: 'EquipName', type: 'string'},
         {name: 'NameUM', type: 'string'},
-        {name: 'discontinued', type: 'date'}
-        
+        {name: 'discontinued', type: 'date'},
+        {name: 'EmplChangeInventory', type: 'int'}
     ],
     id: 'Equip_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EquipsListAll',
@@ -1958,7 +1962,7 @@ Sources.SourceMonitoringDemandDetails =
     datatype: "json",
     datafields: [
         { name: 'mndt_id',  type: 'int' },
-        { name: 'EquipName',  type: 'date' },
+        { name: 'EquipName',  type: 'string' },
         { name: 'equip_id',  type: 'int' },
         { name: 'price',  type: 'int' },
         { name: 'quant',  type: 'int' },
@@ -2476,6 +2480,7 @@ Sources.WHDocumentsDoc4Source =
         { name: 'strm_name', type: 'string'},
         { name: 'mstr_name', type: 'string'},
         { name: 'rcrs_name', type: 'string'},
+        { name: 'rcrs_name2', type: 'string'},
         { name: 'StatusFull', type: 'string'},
         { name: 'status', type: 'int'},
         { name: 'date_promise', type: 'date'},
@@ -2631,6 +2636,8 @@ Sources.DocmAchsDetailsSource =
         { name: 'SN', type: 'string' },
         { name: 'color', type: 'bool' },
         { name: 'no_price_list', type: 'bool' },
+        { name: 'EmplChangeInventory', type: 'int' },
+        
     ],
     id: 'dadt_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=DocmAchsDetails',
@@ -3245,7 +3252,7 @@ Sources.SourceCostCalcDocuments =
         {name: 'Docid', type: 'int'},
         {name: 'DocType_id', type: 'int'},
         {name: 'DocName', type: 'string'},
-        {name: 'DocNumber', type: 'int'},
+        {name: 'DocNumber', type: 'string'},
         {name: 'DocDate', type: 'date'},
         {name: 'DocSum', type: 'float'},
         {name: 'DocState', type: 'string'},
@@ -3581,7 +3588,7 @@ Sources.SourceRepairs =
         {name: 'date_plan', type: 'date'},
         {name: 'wrnt', type: 'bool'},
         {name: 'splr_id', type: 'int'},
-        {name: 'namesupplier', type: 'string'},
+        {name: 'NameSupplier', type: 'string'},
         {name: 'delayreason', type: 'string'},
         {name: 'resultname', type: 'string'},
         {name: 'date_undo', type: 'date'},
@@ -4273,7 +4280,7 @@ Sources.SourceEquipHistory =
         {name: 'SN', type: 'string'}
         
     ],
-    id: 'docm_id',
+    id: 'id',
     url: '/index.php?r=Equips/DocHistory',
     root: 'Rows',
     cache: false,
@@ -4348,6 +4355,70 @@ Sources.SourceAddressedStorage =
     id: 'Adst_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AddressedStorage',
     root: 'Rows',
+    cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+
+Sources.SourceWHControls =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'id', type: 'string'},
+        {name: 'docm_id', type: 'int'},
+        {name: 'dctp_id', type: 'int'},
+        {name: 'DocTypeName', type: 'string'},
+        {name: 'Employee_id', type: 'int'},
+        {name: 'MasterName', type: 'string'},
+        {name: 'Equip_id', type: 'int'},
+        {name: 'EquipName', type: 'string'},
+        {name: 'NameUnitMeasurement', type: 'string'},
+        {name: 'docm_quant', type: 'float'},
+        {name: 'fact_quant', type: 'float'},
+        {name: 'Quant', type: 'float'},
+        {name: 'direct', type: 'int'},
+        {name: 'Price', type: 'float'},
+        {name: 'SumPrice', type: 'float'},
+        {name: 'number', type: 'string'},
+        {name: 'Addr', type: 'string'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=WHControls_v',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 500,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceAreaPrices =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'AreaPrice_id', type: 'int'},
+        {name: 'StartArea', type: 'int'},
+        {name: 'EndArea', type: 'int'},
+        {name: 'Price', type: 'float'},	
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'DateCreate', type: 'date'},
+        {name: 'EmplChange', type: 'int'},
+        {name: 'DateChange', type: 'date'},
+        {name: 'Lock', type: 'int'},
+        {name: 'DateLock', type: 'date'},
+        {name: 'EmplLock', type: 'int'},
+        {name: 'DelDate', type: 'date'},
+    ],
+    id: 'AreaPrice_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AreaPrices',
+    root: 'Rows',
+    async: false,
     cache: false,
     pagenum: 0,
     pagesize: 200,

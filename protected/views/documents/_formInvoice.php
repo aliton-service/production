@@ -14,13 +14,13 @@
             Debtor: <?php echo json_encode($model->Debtor); ?>,
             DocNumber: '<?php echo $model->DocNumber; ?>',
             DocDate: Aliton.DateConvertToJs('<?php echo $model->DocDate; ?>'),
-            PaymentType: '<?php echo $model->PaymentType_id; ?>',
+            PaymentType: <?php echo json_encode($model->PaymentType_id); ?>,
             Price: '<?php echo $model->Price; ?>',
             CalcSum: '<?php echo $model->CalcSum; ?>',
             PrePayment: '<?php echo $model->PrePayment; ?>',
             empl: '<?php echo $model->empl_id; ?>',
             dmnd_id: '<?php echo $model->dmnd_id; ?>',
-            DateExec: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
+            DateExec: Aliton.DateConvertToJs('<?php echo $model->DateExec; ?>'),
             date_act: Aliton.DateConvertToJs('<?php echo $model->date_act; ?>'),
             SpecialCondition: <?php echo json_encode($model->SpecialCondition); ?>,
             ContactInfo: '<?php echo $model->Info; ?>',
@@ -66,9 +66,9 @@
         $("#DocDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DocDate, width: 102}));
         $("#PaymentType4").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPaymentTypes, displayMember: "PaymentTypeName", valueMember: "PaymentType_Id", width: 130, autoDropDownHeight: true }));
         
-        $("#Price4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#CalcSum4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#PrePayment4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#Price4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
+        $("#CalcSum4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
+        $("#PrePayment4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#dmnd_id4").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
         $("#DateExec4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DateExec, width: 102}));
         $("#date_act4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.date_act, width: 102}));

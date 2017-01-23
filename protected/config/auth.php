@@ -231,6 +231,9 @@ return array_merge(
     /* Контроль возвратов */
     include(dirname(__FILE__).'/security/ControlWHDocumentsSecurity.php'),
         
+    /* Цены за площадь*/
+    include(dirname(__FILE__).'/security/AreaPricesSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -288,7 +291,7 @@ return array_merge(
                 'WHDocuments1Report',
                 'WHActsAll',
                 'WHActs3Report',
-                'ManagerEmployees',
+                'AdminEmployees',
                 'AdminOrganizationStructure',
             ),
         ),
@@ -381,6 +384,7 @@ return array_merge(
                 'AdminDemands',
                 'Storekeeper',
                 'AdminObjects',
+                'AdminObjectsGroup',
                 'AdminWhActs',
                 'AdminPriceMonitoring',
                 'AdminWHDocuments',
@@ -467,7 +471,8 @@ return array_merge(
                 'AdminObjectsGroupSystemComplexitys',
                 'AdminOfferDemands',
                 'AdminControlWHDocuments',
-                
+                'HeadLogistics',
+                'AdminAreaPrices',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
@@ -627,10 +632,11 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'UserObjects',
-                'UserObjectsGroup',
+                'ManagerObjects','UserObjectsGroup',
+                'UpdateObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
+                'UserEquips',
                 'UserObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
@@ -648,13 +654,18 @@ return array_merge(
                 'UserRepairs',
                 'ManagerRepairComments',
                 'UserDeliveryDemands',
+                'ManagerDeliveryComments',
                 'MSWHDocuments',
                 'AdminSerialNumbers',
                 'ManagerDocmAchsDetails',
+                'ManagerMonitoringDemandDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'LogDeliveryDemands',
                 'WhActsView',
+                'ManagerWHBuhActs',
+                'FindTreb',
+                'FindWHDoc1',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -669,8 +680,34 @@ return array_merge(
                 'DemandsReport10',
                 'DemandsReport11',
                 'DemandsReport12',
+                
+                'EquipsReportAll',
+                'ObjectEquipsReport',
+                'ObjectEquipsReport2'
             ),
         ),
+        
+        'StaffManagerSouth' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель СЦ',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'StaffManager',
+                'ManagerWHDocuments',
+                'FindTreb',
+                'FindWHDoc1',
+                'ObjectReportAll',
+                'ObjectReport1',
+                'ObjectReport2',
+                'ObjectReport3',
+                'ObjectReport4',
+                'ObjectReport5',
+            ),
+        ),
+        
+        
         
         /* ПМ */
         'AccountManager' => array(
@@ -682,8 +719,10 @@ return array_merge(
             'children' => array(
                 'ManagerObjects',
                 'ManagerObjectsGroup',
+                'ManagerOfficeObjectsGroup',
                 'ManagerContactInfo',
                 'ManagerObjectsGroupSystems',
+                'DeleteDocmAchsDetails',
                 'ManagerSystemCompetitors',
                 'ManagerObjectEquips',
                 'ManagerContractsS',
@@ -705,12 +744,12 @@ return array_merge(
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
-                'ManagerEvents',
+                'AdminEvents',
                 'ManagerEventOffers',
                 'ManagerOfferDemands',
                 'WhActsView',
                 'ManagerWHBuhActs',
-                
+                'UserPropForms',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -732,7 +771,7 @@ return array_merge(
         /* Офис менеджер */
         'OfficeManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
-            'description' => 'Руководитель СЦ',
+            'description' => 'Офис менеджер',
             'bizRule' => null,
             'data' => null,
             'defaultIndex' => 'object/index',
@@ -741,7 +780,7 @@ return array_merge(
                 'ManagerObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
-                'UserObjectEquips',
+                'ManagerObjectEquips',
                 'ManagerContractsS',
                 'ManagerContractMasterHistory',
                 'ManagerContractsDetails_v',
@@ -757,6 +796,7 @@ return array_merge(
                 'ManagerExecuteReports',
                 'UserRepairs',
                 'ManagerRepairComments',
+                'ManagerDeliveryComments',
                 'UserDeliveryDemands',
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
@@ -765,6 +805,7 @@ return array_merge(
                 'WhActsView',
                 'ManagerControlContacts',
                 'ManagerWHBuhActs',
+                'UserPropForms',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -798,7 +839,7 @@ return array_merge(
                 'ManagerObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
-                'UserObjectEquips',
+                'ManagerObjectEquips',
                 'ManagerContractsS',
                 'ManagerContractMasterHistory',
                 'ManagerContractsDetails_v',
@@ -823,7 +864,10 @@ return array_merge(
                 'WhActsView',
                 'ManagerControlContacts',
                 'ManagerWHBuhActs',
-                
+                'ManagerInventories',
+                'UserInventoryDetails',
+                'ManagerEquips',
+                'UserPropForms',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -841,6 +885,15 @@ return array_merge(
                 'DebtorsReportAll',
                 'Debt1Report',
                 'Debt2Report',
+                
+                'ObjectReportAll',
+                'ObjectReport1',
+                'ObjectReport2',
+                'ObjectReport3',
+                'ObjectReport4',
+                'ObjectReport5',
+                'ObjectReport6',
+                
             ),
         ),
         
@@ -874,6 +927,8 @@ return array_merge(
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'ManagerWHBuhActs',
+                'ManagerEventOffers',
+                'ManagerOfferDemands',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -930,7 +985,7 @@ return array_merge(
                 'ManagerRegions',
                 'ManagerObjects',
                 'ManagerWHBuhActs',
-                
+                'UserPropForms',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -959,14 +1014,18 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'UserObjects',
+                'ManagerObjects',
+                'ManagerOfficeObjectsGroup',
                 'UserObjectsGroup',
                 'ManagerContactInfo',
-                'UserObjectsGroupSystems',
+                'ManagerObjectsGroupSystems',
                 'UserObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
                 'ManagerContacts',
+                'ManagerObjectEquips',
+                'ManagerContractsS',
+                'ManagerDocuments',
                 'UserObjectsGroupCostCalculations',
                 'ManagerCostCalculations',
                 'ManagerCostCalcDocuments',
@@ -1025,6 +1084,7 @@ return array_merge(
                 'ManagerDemands',
                 'ManagerExecuteReports',
                 'UserRepairs',
+                'ManagerDeliveryComments',
                 'UserDeliveryDemands',
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
@@ -1033,6 +1093,7 @@ return array_merge(
                 'LogDeliveryDemands',
                 'WhActsView',
                 'ManagerWHBuhActs',
+                'SalesManager',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -1066,6 +1127,20 @@ return array_merge(
             ),
         ),
         
+        /* Руководитель направления ПБ и ИТП*/
+        'HeadAPPZ' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Руководитель направления ПБ и ИТП',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'object/index',
+            'children' => array(
+                'ProjectManager',
+                'AdminObjectsGroupSystems',
+                'AdminObjectsGroupSystemComplexitys',
+            ),
+        ),
+        
         /* Менеджер проектов */
         'ProjectManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -1075,6 +1150,11 @@ return array_merge(
             'defaultIndex' => 'object/index',
             'children' => array(
                 'StaffManager',
+                'ManagerObjectEquips',
+                'ManagerObjects',
+                'AdminContractEquips',
+                'AdminContractsDetails_v',
+                
             ),
         ),
         
@@ -1088,6 +1168,8 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'AdminRepairs',
+                'AdminWhActs',
+                'AdminRepairDocs',
             ),
         ),
         
@@ -1115,7 +1197,7 @@ return array_merge(
                 'LogisticsManager',
                 'Storeman',
                 'ManagerInventoryDetails',
-                'ManagerInventories',
+                'AdminInventories',
             ),
         ),
         
@@ -1130,7 +1212,9 @@ return array_merge(
                 'StaffManager',
                 'ManagerWHDocuments',
                 'ManagerDeliveryDemands',
+                'ManagerDeliveryComments', 
                 'ManagerMonitoringDemands',
+                'ManagerMonitoringDemandDetails',
                 'ManagerPriceMonitoring',
                 'ManagerEquips',
                 'AdminAddressedStorage',
@@ -1187,7 +1271,13 @@ return array_merge(
                 'ManagerAddressSystems',
                 'ManagerInventories',
                 'UserInventoryDetails',
+                'AdminDocmAchsDetails',
                 
+                'WHActsAll',
+                'WHActs1Report',
+                'WHActs2Report',
+                'WHActs3Report',
+                'WHActs4Report',
             ),
         ),
         
@@ -1298,6 +1388,12 @@ return array_merge(
                 'AdminContractMasterHistory',
                 'AdminDemands',
                 'AdminCostCalcSalarys',
+                'AdminContactInfo',
+                'AdminObjectsGroupSystems',
+                'AdminObjectsGroupSystemComplexitys',
+                'AdminSystemCompetitors',
+                'AdminContractsS',
+                
             ),
         ),
         

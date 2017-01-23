@@ -203,7 +203,7 @@
                 </div>
             </div>
         </div>
-        <div id="content_report" class="content" style="float: left; width: 100%; overflow: auto; margin-top: 10px;"><?php echo $content ?></div>
+        <div id="content_report" class="content" style="float: left; width: 100%;margin-top: 10px;"><?php echo $content ?></div>
         <div id="MainDialog" style="display: none;">
             <div id="MainDialogHeader">
                 <span id="MainDialogHeaderText">Вставка\Редактирование записи</span>

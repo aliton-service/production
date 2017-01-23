@@ -174,7 +174,10 @@
         $("#DelMonitoringDemandDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#ReloadMonitoringDemandDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#AddPriceMonitoringDemandDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 250 }));
-        
+        $("#btnExport").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnExport').on('click', function() {
+            $("#MonitoringDemandDetailsGrid").jqxGrid('exportdata', 'xls', 'Позиции мониторинга', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+        });
 //        $("#MonitoringDemandDetailsGrid").jqxGrid('selectrow', 0);
         
         $('#MonitoringDemandDetailsGrid').on('rowdoubleclick', function () { 
@@ -285,7 +288,7 @@
                     data: { 
                         Params: {
                             eqip_id: CurrentRowData.equip_id,
-                            Mndm_id: MonitoringDemands2.mndm_id
+                            mndm_id: MonitoringDemands2.mndm_id
                         }
                     },
                     success: function(Res){
@@ -301,7 +304,7 @@
         
         
         $("#btnAcceptEmployeeName").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        if(MonitoringDemands2.EmplNameAccept !== '') { $('#btnAcceptEmployeeName').jqxButton({disabled: true }); }
+        if(MonitoringDemands2.EmplNameAccept !== '' &&  MonitoringDemands2.EmplNameAccept !== null) { $('#btnAcceptEmployeeName').jqxButton({disabled: true }); }
         
         $("#btnExecute").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
@@ -323,10 +326,19 @@
                 async: false,
                 data: { mndm_id: MonitoringDemands2.mndm_id },
                 success: function(Res) {
-                    $('#AcceptEmployeeName').jqxInput('val', Res);
-                    $('#btnAcceptEmployeeName').jqxButton({disabled: true });
-                    $('#btnExecute').jqxButton({disabled: false });
-                    $("#DateAccept").jqxDateTimeInput('val', new Date());
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        $('#AcceptEmployeeName').jqxInput('val', <?php echo json_encode(Yii::app()->user->fullname); ?>);
+                        $('#btnAcceptEmployeeName').jqxButton({disabled: true });
+                        $('#btnExecute').jqxButton({disabled: false });
+                        $("#DateAccept").jqxDateTimeInput('val', new Date());
+                    } else {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], 'Ошибка');
+                        $('#btnAcceptEmployeeName').jqxButton({disabled: true });
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
                 }
             });
         });
@@ -338,9 +350,17 @@
                 async: false,
                 data: { mndm_id: MonitoringDemands2.mndm_id },
                 success: function(Res) {
-                    $('#btnExecute').jqxButton({disabled: true });
-                    $("#DateExec").jqxDateTimeInput('val', new Date());
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        $('#btnExecute').jqxButton({disabled: true });
+                        $("#DateExec").jqxDateTimeInput('val', new Date());
+                    } else
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], 'Ошибка, возможно заявка не принята');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                 }
+                
             });
         });
         
@@ -412,6 +432,7 @@
     <div class="al-row-column"><input type="button" value="Добавить" id='NewMonitoringDemandDetails'/></div>
     <div class="al-row-column"><input type="button" value="Изменить" id='EditMonitoringDemandDetails'/></div>
     <div class="al-row-column"><input type="button" value="Обновить" id='ReloadMonitoringDemandDetails'/></div>
+    <div class="al-row-column"><input type="button" value="Экспорт" id='btnExport'/></div>
     <div class="al-row-column"><input type="button" value="Ввести цену от поставщика" id='AddPriceMonitoringDemandDetails'/></div>
     <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='DelMonitoringDemandDetails'/></div>
     <div style="clear: both"></div>

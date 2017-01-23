@@ -91,7 +91,9 @@ class DocumentsController extends Controller
                     case 8: $model->setScenario('Счет'); break;
                     case 4: $model->setScenario('Договор'); break;
                     case 5: $model->setScenario('Доп.соглашение'); break;
-                    case 3: $model->setScenario('Счет-заказ'); break;
+                    case 3: $model->setScenario('Счет-заказ');
+                        $model->ContrSDateStart = $model->ContrDateS;
+                        break;
                 }
                 
                 if ($model->validate())

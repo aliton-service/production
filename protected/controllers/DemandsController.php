@@ -565,18 +565,28 @@ class DemandsController extends Controller
 			'data' => $data[0]
 		));
 	}
-
+        
+        
 	public function actionDemandExec($id) {
             $model = new Demands();
             $model->getModelPk($id);
             $Object = new Objects();
             $Object->getModelPk($model->Object_id);
             
+            $DE = null;
+            if (isset($_GET['DateExec'])) {
+                $DE = $_GET['DateExec'];
+            }
+            
             if (($model->DateExec === "") || ($model->DateExec === null)) {
                 
                 $model->setScenario('Exec');
                 $model->EmplChange = Yii::app()->user->Employee_id;
-                $model->DateExec = date('d.m.Y H:i');
+                
+                if ($DE !== null)
+                    $model->DateExec = $DE;
+                else
+                    $model->DateExec = date('d.m.Y H:i');
                 
                 if ($model->validate()) {
                     $model->callProc('DEMAND_EXEC');
@@ -757,6 +767,7 @@ class DemandsController extends Controller
             $sp->Parameters[12]['Value'] = $_POST['DemandsDetails']['upg_note'];
             $sp->Parameters[13]['Value'] = $_POST['DemandsDetails']['date_calc'];
             $sp->Parameters[14]['Value'] = $_POST['DemandsDetails']['calc_accept'];
+            $sp->Parameters[15]['Value'] = $_POST['DemandsDetails']['StatusOP'];
             $sp->CheckParam = true;
             $Res = $sp->Execute();
             

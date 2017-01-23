@@ -47,6 +47,15 @@
             if (CurrentRowData != undefined) {
                 $("#edDescription").jqxInput('val', CurrentRowData.Description); 
                 window.setTimeout("EquipsInfo.GetInventory(" + CurrentRowData.Equip_id + ")", 600);
+                
+                if (CurrentRowData.EmplChangeInventory != null) {
+                    $("#edStorage1InvQuant input").css({'background-color': '#00FF00'});
+                    $("#edStorage1InvQuantUsed input").css({'background-color': '#00FF00'});
+                }
+                else {
+                    $("#edStorage1InvQuant input").css({'background-color': 'white'});
+                    $("#edStorage1InvQuantUsed input").css({'background-color': 'white'});
+                }
             }
         });
         
@@ -130,7 +139,7 @@
         $("#btnMerge").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
         
         $("#btnHistory").on('click', function() {
-            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 500, position: 'center'}));
+            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, resizable: true, height: 500, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Equips/History')); ?>,
                 type: 'POST',

@@ -29,7 +29,7 @@ class Repairs extends MainFormModel {
     public $date_plan;
     public $wrnt;
     public $splr_id;
-    public $namesupplier;
+    public $NameSupplier;
     public $delayreason;
     public $resultname;
     public $date_undo;
@@ -66,7 +66,7 @@ class Repairs extends MainFormModel {
                     date_plan,
                     wrnt,
                     splr_id,
-                    namesupplier,
+                    NameSupplier,
                     delayreason,
                     resultname,
                     date_undo,
@@ -111,7 +111,7 @@ class Repairs extends MainFormModel {
                             r.date_plan,
                             r.wrnt,
                             r.splr_id,
-                            r.namesupplier,
+                            r.NameSupplier,
                             r.delayreason,
                             r.resultname,
                             r.date_undo,
@@ -164,7 +164,7 @@ class Repairs extends MainFormModel {
                     'date_plan' => '',
                     'wrnt' => '',
                     'splr_id' => '',
-                    'namesupplier' => '',
+                    'NameSupplier' => '',
                     'delayreason' => '',
                     'resultname' => '',
                     'date_undo' => '',

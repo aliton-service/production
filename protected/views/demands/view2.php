@@ -46,10 +46,11 @@
             upg_note: <?php echo json_encode($model->upg_note); ?>,
             competitive: <?php echo json_encode($model->competitive); ?>,
             clrs_id: <?php echo json_encode($model->clrs_id); ?>,
+            StatusOP: <?php echo json_encode($model->StatusOP); ?>,
         };
         // Инициализация источников данных
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
-        
+        var CurrentUser = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
         // Инициализируем контролы
         $("#edNumber").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
         $("#edAddr").jqxInput({height: 25, width: 400, minLength: 1, value: Demand.Address});
@@ -85,6 +86,8 @@
         $("#btnWorkOut").jqxButton({ width: 120, height: 30, disabled: !(Demand.WorkedOut == null)});
         $("#btnNotWork").jqxButton({ width: 140, height: 30, disabled: (Demand.WorkedOut == null)});
         $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
+        var CD = Date();
+        $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 150, formatString: 'dd.MM.yyyy HH:mm'}));
         
         
         var initWidgets = function (tab) {
@@ -385,6 +388,9 @@
                         
                         $('#btnAddTreb').on('click', function() {
                             $('#CostCalculationsDialog').jqxWindow({width: 700, height: 500, position: 'center', isModal: true});
+                            var CurrentDate = new Date();
+                            var CurrentDateStr = '';
+                            CurrentDateStr = CurrentDate.getDay() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear();
                             $.ajax({
                                 url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
                                 type: 'POST',
@@ -396,11 +402,11 @@
                                     Params: {
                                         objc_id: Demand.Object_id,
                                         dmnd_id: Demand.Demand_id,
-                                        date: Demand.DateReg,
+                                        date: CurrentDateStr,
                                         prty_id: 8,
-                                        rcrs_id: 2,
                                         dmnd_empl_id: Demand.Master,
-                                        Address: Demand.Address
+                                        Address: Demand.Address,
+                                        empl_id: CurrentUser
                                     },
                                 },
                                 success: function(Res) {
@@ -499,6 +505,10 @@
                         $("#edCompetitive").jqxComboBox('val', Demand.competitive);
                         $("#edClrs_id").jqxComboBox({source: [{id: 0, name: 'Отказ клиента'}, {id: 1, name: 'Фактическое исполнение'}, {id: 2, name: 'Дублирующая заявка'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"});
                         $("#edClrs_id").jqxComboBox('val', Demand.clrs_id);
+                        $("#edStatusOP").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: ''}, {id: 1, name: 'Холодный'}, {id: 2, name: 'Теплый'}, {id: 3, name: 'Горячий'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
+                        $("#edStatusOP").jqxComboBox('val', Demand.StatusOP);
+                        
+                        
                         $('#btnSaveDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                         $('#btnSaveDetails').on('click', function() {
                             $.ajax({
@@ -521,7 +531,8 @@
                                         clrs_id: $('#edClrs_id').val(),
                                         upg_note: $('#edUpgNote').val(),
                                         date_calc: $('#edDateCalc').val(),
-                                        calc_accept: $('#edCalcAccept').val()
+                                        calc_accept: $('#edCalcAccept').val(),
+                                        StatusOP: $('#edStatusOP').val()
                                     }
                                 },
                                 success: function(Res) {
@@ -537,8 +548,6 @@
         };
         
         $('#Tabs').jqxTabs({ width: '100%', height: '100%', keyboardNavigation: false, initTabContent: initWidgets});
-        
-        
         
         
         $('#SMSDialog').jqxWindow(
@@ -639,7 +648,8 @@
         });
         
         $("#btnExec").on('click', function(){
-            Aliton.ExecDemand(Demand.Demand_id, false);
+            //Aliton.ExecDemand(Demand.Demand_id, false);
+            location.href = '/index.php?r=Demands/DemandExec&id=' + Demand.Demand_id + '&DateExec=' + $('#edColumnDateExec').val();
         });
         
         function Comment() {
@@ -742,6 +752,7 @@
         <div class="row-column"><input readonly id="edNumber" type="text"/></div>
         <div class="row-column">Адрес</div>
         <div class="row-column"><input readonly id="edAddr" type="text"/></div>
+        <div class="row-column"><b>Статус ОП: <?php echo $model->StatusOPName; ?></b></div>
     </div>
     <div style="clear: both;"></div>
     <div style="float: left; width: 100%; height: 32px">
@@ -873,7 +884,10 @@
     <div class="row-column"><input type="button" value="Текст СМС" id='btnSMS' /></div>
     <div class="row-column" style="margin-left: 60px"><input type="button" value="Отработано" id='btnWorkOut' /></div>
     <div class="row-column"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
-    <div class="row-column" style="float: right;"><input type="button" value="Выполнено" id='btnExec' /></div>
+    <div class="row-column" style="float: right;">
+        <div class="row-column"><div id="edColumnDateExec"></div></div>
+        <div class="row-column"><input type="button" value="Выполнено" id='btnExec' /></div>
+    </div>
 </div>    
 <div style="clear: both;"></div>
 <div id="demandTabs" style="float: left; width: 100%; margin-top: 5px;">
@@ -1022,6 +1036,10 @@
                             <div class="al-row-column">
                                 <div>Причина закрытия</div>
                                 <div><div id='edClrs_id' name='DemandDetails[clrs_id]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div><b>Статус ОП</b></div>
+                                <div><div id='edStatusOP' name='DemandDetails[StatusOP]'></div></div>
                             </div>
                             <div style="clear: both"></div>
                         </div>

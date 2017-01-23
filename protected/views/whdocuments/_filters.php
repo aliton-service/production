@@ -117,6 +117,8 @@
         
         $('#edFiltering').on('click', function(){
             Find();
+            WHDocCount = 0;
+            $('h1').html('Склад - реестр документов');
         });
         
         var DisabledControls = function() {

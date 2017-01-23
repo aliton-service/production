@@ -28,6 +28,7 @@
             Reg: <?php echo json_encode($model->reg_empl_id); ?>,
             Cur: <?php echo json_encode($model->cur_empl_id); ?>,
         };
+
         
         $("#edNumberEdit").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
         $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Repair.Date, formatString: 'dd.MM.yyyy H:mm', showTimeButton: true, width: 180}));
@@ -67,7 +68,7 @@
         $("#edUsedEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 60, checked: Repair.Used}));
         $("#edRepairPayEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repair.RepairPay}));
         $("#edReturnEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repair.Return}));
-        $("#edWorkOkEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repair.work_ok}));
+        $("#edWorkOkEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repair.WorkOk}));
         $("#edWrntEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 220, checked: Repair.Wrnt}));
         $('#edSetEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: '300px', minLength: 1}));
         var DataRepairDelayReasons = new $.jqx.dataAdapter(Sources.SourceRepairDelayReasons);
@@ -111,7 +112,7 @@
         if (Repair.Jrdc_id != '') $("#edJrdcEdit").jqxInput('val', Repair.Jrdc_id);
         if (Repair.Quant != '') $("#edQuantEdit").jqxNumberInput('val', Repair.Quant);
         if (Repair.Used != '') $("#edUsedEdit").jqxCheckBox('val', Boolean(Number(Repair.Used)));
-        if (Repair.SN != '') $("#edSerialNumberEdit").jqxCheckBox('val', Boolean(Number(Repair.SN)));
+        if (Repair.SN != '') $("#edSerialNumberEdit").jqxInput('val', Repair.SN);
         if (Repair.Set != '') $("#edSetEdit").jqxTextArea('val', Repair.Set);
         if (Repair.Defect != '') $("#edDefectEdit").jqxTextArea('val', Repair.Defect);
         if (Repair.Note != '') $("#edNoteEdit").jqxTextArea('val', Repair.Note);

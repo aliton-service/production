@@ -31,6 +31,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $mstr_name;
     public $rcrs_id;
     public $rcrs_name;
+    public $rcrs_name2;
     public $StatusFull;
     public $status;
     public $date_promise;
@@ -89,6 +90,7 @@ class WHDocumentsDoc4 extends MainFormModel
                         dbo.FIO(a.empl_to_name) as mstr_name,
                         d.rcrs_id,
                         d.rcrs_name,
+                        d.rcrs_name as rcrs_name2,
                         d.StatusFull,
                         d.status,
                         d.date_promise,

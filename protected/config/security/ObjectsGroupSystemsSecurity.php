@@ -34,6 +34,7 @@
                 'InsretObjectsGroupSystems',
                 'UpdateObjectsGroupSystems',
                 'DeleteObjectsGroupSystems',
+                'StateObjectsGroupSystems',
             ),
         ),
         
@@ -59,6 +60,12 @@
         'DeleteObjectsGroupSystems' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'Удаление',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'StateObjectsGroupSystems' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Проставлять состояние системы',
             'bizRule' => null,
             'data' => null,
         ),

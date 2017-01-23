@@ -41,6 +41,8 @@
             DateChange: Aliton.DateConvertToJs('<?php echo $model->date_change; ?>'),
         };
         
+        var Admin = Boolean(Number(<?php echo json_encode(Yii::app()->user->checkAccess('HeadLogistics')); ?>));
+        
         WHDoc.Refresh = function() {
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/GetModel'))?>,
@@ -119,9 +121,9 @@
         $("#btnDelDetails").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/7.png"}));
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees));
         DataEmployees.dataBind();
-        $("#edStoreman").jqxComboBox({ source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#edStoreman").jqxComboBox({ dropDownVerticalAlignment: 'top', source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
         $("#edStoreman").jqxComboBox('val', WHDoc.Employee_id);
-        $("#edMaster").jqxComboBox({ source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id", disabled: true});
+        $("#edMaster").jqxComboBox({ dropDownVerticalAlignment: 'top', source: DataEmployees.records, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id", disabled: true});
         var DataDelayReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDelayReasonsLogistik));
         $("#edDelayReason").jqxComboBox({ source: DataDelayReasons, width: '200', height: '25px', displayMember: "name", valueMember: "dlrs_id", disabled: true});
         $("#btnAction").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, imgSrc: "/images/8.png", width: 130}));
@@ -191,10 +193,22 @@
             CurrentRowDetails = $('#GridDetails').jqxGrid('getrowdata', event.args.rowindex);
             SetStateDetailsButtons();
             SetInvInfo();
+            
+            if (CurrentRowDetails != undefined) {
+                if (typeof(CurrentRowDetails.EmplChangeInventory) != 'undefined') {
+                    if (CurrentRowDetails.EmplChangeInventory != null) {
+                        $("#edQuant input").css({'background-color': '#00FF00'});
+                        $("#edUsedQuant input").css({'background-color': '#00FF00'});
+                    }
+                    else {
+                        $("#edQuant input").css({'background-color': 'white'});
+                        $("#edUsedQuant input").css({'background-color': 'white'});
+                    }
+                }
+            }
         });
                     
         $("#GridDetails").on("bindingcomplete", function (event) {
-            console.log(CurrentRowDetails);
             if (CurrentRowDetails != undefined) {
                 Aliton.SelectRowById('dadt_id', CurrentRowDetails.dadt_id, '#GridDetails', false);
             }
@@ -211,7 +225,7 @@
         
         $("#GridDetails").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
-                height: 200,
+                height: 260,
                 width: '100%',
                 source: DataDetails,
                 showstatusbar: true,
@@ -219,16 +233,18 @@
                 showaggregates: true,
                 showfilterrow: false,
                 autoshowfiltericon: true,
-                pagesize: 200,
+                //pagesize: 200,
+                pageable: false,
                 virtualmode: false,
+                enablebrowserselection: true,
                 columns:
                     [
                         { text: 'Оборудование', datafield: 'EquipName', width: 200 },
                         { text: 'Ед. изм.', datafield: 'NameUnitMeasurement', width: 80 },
                         { text: 'Кол-во', datafield: 'docm_quant', width: 120, cellsformat: 'f2' },
                         { text: 'Факт кол-во', datafield: 'fact_quant', width: 120, cellsformat: 'f2' },
-                        { text: 'Цена', datafield: 'price', width: 120, cellsformat: 'f2' },
-                        { text: 'Сумма', datafield: 'sum', width: 180, cellsformat: 'f2', aggregates: [{ 'Сумма':
+                        { text: 'Цена', datafield: 'price', width: 120, cellsformat: 'f4' },
+                        { text: 'Сумма', datafield: 'sum', width: 180, cellsformat: 'f4', aggregates: [{ 'Сумма':
                             function (aggregatedValue, currentValue) {
                                 return aggregatedValue + currentValue;
                             }
@@ -375,11 +391,11 @@
                     $("#edRcrsName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 130}));
                     $("#edReceiptDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: WHDocuments.ReceiptDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edReceiptNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100}));
-                    $("#edDmndEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-                    $("#edPromiseEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-                    $("#edCreateEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-                    $("#edEmplChangeName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-                    $("#edLastChangeDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', value: WHDocuments.DateChange, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140}));
+                    $("#edDmndEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 160}));
+                    $("#edPromiseEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 160}));
+                    $("#edCreateEmplName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 160}));
+                    $("#edEmplChangeName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100}));
+                    $("#edLastChangeDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', value: WHDocuments.DateChange, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100}));
                     SetValueControls(4);
                 break;
                 case 4:
@@ -421,10 +437,8 @@
             case 9: DefaultTabIndex = 6; break;
         }
         
-        $('#edTabs').jqxTabs({ width: '100%', height: 250, initTabContent: initWidgets, selectedItem: DefaultTabIndex });
+        $('#edTabs').jqxTabs({ width: '100%', height: 230, initTabContent: initWidgets, selectedItem: DefaultTabIndex });
         
-        if (DefaultTabIndex == 3)
-            $('#edTabs').jqxTabs({ height: 280});
         $("#edTabs .jqx-tabs-title:eq(0)").css("display", "none");
         $("#edTabs .jqx-tabs-title:eq(1)").css("display", "none");
         $("#edTabs .jqx-tabs-title:eq(2)").css("display", "none");
@@ -477,10 +491,10 @@
                     $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
                     $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
                 case 3:
-                    $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
+                    $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null && (Admin == false))});
                     $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
                     $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
-                    $("#btnPurchase").jqxButton({disabled: true});
+                    $("#btnPurchase").jqxButton({disabled: false});
                     $("#btnPrint").jqxButton({disabled: false});
                     $("#btnPrintClient").jqxButton({disabled: true});
                     $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
@@ -490,7 +504,7 @@
                     $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
                     $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
                     $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
-                    $("#btnPurchase").jqxButton({disabled: true});
+                    $("#btnPurchase").jqxButton({disabled: false});
                     $("#btnPrint").jqxButton({disabled: false});
                     $("#btnPrintClient").jqxButton({disabled: true});
                     $("#edMaster").jqxComboBox({disabled: true});
@@ -893,6 +907,12 @@
             $('#btnOperation').jqxDropDownButton('close');
             if (WHDocuments.Docm_id !== null) {
                 $('#WHDocumentsDialog').jqxWindow({width:740, height: 390, position: 'center'});
+                var D = null;
+                if (WHDocuments.Dmnd_id != null)
+                    D = WHDocuments.Dmnd_id;
+                else if (WHDocuments.Demand_id != null)
+                    D = WHDocuments.Demand_id;
+                
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('Delivery/Create')) ?>,
                     type: 'POST',
@@ -901,7 +921,8 @@
                         Params: {
                             docm_id: WHDocuments.Docm_id,
                             prty_id: 1,
-                            objc_id: WHDocuments.Object_id
+                            objc_id: WHDocuments.Object_id,
+                            dmnd_id: D,
                         }
                     },
                     success: function(Res) {
@@ -1178,13 +1199,17 @@
                 <div class="row-column"><input type="text" id="edPromiseEmplName4" readonly="readonly" /></div>
                 <div class="row-column">Выписал:</div>
                 <div class="row-column"><input type="text" id="edCreateEmplName4" readonly="readonly" /></div>
+                <div class="row-column">Посл. изм.:</div>
+                <div class="row-column"><input type="text" id="edEmplChangeName4" readonly="readonly" /></div>
+                <div class="row-column">Дата изм.:</div>
+                <div class="row-column"><div id="edLastChangeDate4"></div></div>
             </div>        
-            <div class="row">
+<!--            <div class="row">
                 <div class="row-column">Последний изменивший:</div>
                 <div class="row-column"><input type="text" id="edEmplChangeName4" readonly="readonly" /></div>
                 <div class="row-column">Дата посл. изменения:</div>
                 <div class="row-column"><div id="edLastChangeDate4"></div></div>
-            </div>    
+            </div>    -->
         </div>
     </div>
     <div style="overflow: hidden;">

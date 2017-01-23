@@ -22,7 +22,7 @@
             summa: <?php echo json_encode($model->summa); ?>,
             empl_name: <?php echo json_encode($model->empl_name); ?>,
             dmnd_id: <?php echo json_encode($model->dmnd_id); ?>,
-            DateExec: Aliton.DateConvertToJs(<?php echo json_encode($model->ContrDateS); ?>),
+            DateExec: Aliton.DateConvertToJs(<?php echo json_encode($model->DateExec); ?>),
             date_act: Aliton.DateConvertToJs(<?php echo json_encode($model->date_act); ?>),
             SpecialCondition: <?php echo json_encode($model->SpecialCondition); ?>,
             FIO: <?php echo json_encode($model->FIO); ?>,
@@ -45,9 +45,9 @@
         $("#DocNumber").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 90 }));
         $("#DocDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DocDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#PaymentTypeName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 60 }));
-        $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#CalcSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
-        $("#PrePayment").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
+        $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 2 }));
+        $("#CalcSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 2 }));
+        $("#PrePayment").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#summa").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
         $("#dmnd_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));

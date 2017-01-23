@@ -98,8 +98,8 @@
             if (Repairs.Status == 5) ChangeMode = 4;
             if (Repairs.Status in {7:null, 8:null, 9:null, 10:null, 11:null, 12:null}) {
                 if (Repairs.Rslt_id == 1) ChangeMode = 2;
-                if (Repairs.Rslt_id == 2) ChangeMode = 4;
-                if (Repairs.Rslt_id == 3) ChangeMode = 3;
+                if (Repairs.Rslt_id == 2) ChangeMode = 3;
+                if (Repairs.Rslt_id == 3) ChangeMode = 4;
                 if (Repairs.Rslt_id == 4) ChangeMode = 0;
             }
             
@@ -151,7 +151,7 @@
                     Repairs.Addr = Res.Addr;
                     Repairs.RepairPay = Boolean(Number(Res.repair_pay));
                     Repairs.Return = Boolean(Number(Res.Return));
-                    Repairs.WorkOk = Boolean(Number(Res.number));
+                    Repairs.WorkOk = Boolean(Number(Res.work_ok));
                     Repairs.Wrnt = Boolean(Number(Res.wrnt));
                     Repairs.Equip = Res.EquipName;
                     Repairs.SN = Res.SN;
@@ -197,7 +197,7 @@
                     $("#edAddress").jqxInput($.extend(true, {}, {height: 25, width: 340, minLength: 1}));
                     $("#edRepairPay").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repairs.RepairPay}));
                     $("#edReturn").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repairs.Return}));
-                    $("#edWorkOk").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repairs.work_ok}));
+                    $("#edWorkOk").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repairs.WorkOk}));
                     $("#edWrnt").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 220, checked: Repairs.Wrnt}));
                     $("#edEquip").jqxInput($.extend(true, {}, {height: 25, width: 300, minLength: 1}));
                     $("#edSerialNumber").jqxInput($.extend(true, {}, {height: 25, width: 200, minLength: 1}));
@@ -408,8 +408,8 @@
                     
                     $("#GridEquips").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 'calc(100% - 62px)',
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             source: DataRepairDetails, 
                             autoshowfiltericon: true,
@@ -857,8 +857,8 @@
                     
                     $("#GridDocuments").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
-                            height: 'calc(100% - 62px)',
-                            width: '100%',
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             source: DataRepairDocuments, 
                             autoshowfiltericon: true,
@@ -1305,7 +1305,6 @@
             <div style="padding: 10px; height: 100%">
                 <div class="al-row" style="height: calc(100% - 62px)">
                     <div id="GridComments"></div>
-                            
                 </div>
                 <div class="al-row">
                     <div class="al-row-column"><input id="edComment" /></div>
@@ -1318,7 +1317,10 @@
         </div>
         <div style="overflow: hidden;">
             <div style="padding: 10px; height: 100%">
-                <div class="al-row"><div id="GridEquips"></div></div>
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridEquips"></div>
+                            
+                </div>
                 <div class="al-row">
                     <div class="al-row-column"><input type="button" id="btnAddEquips" value="Добавить"/></div>
                     <div class="al-row-column"><input type="button" id="btnEditEquips" value="Изменить"/></div>
@@ -1329,8 +1331,11 @@
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px;">
-                <div class="al-row"><div id="GridDocuments"></div></div>
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridDocuments"></div>
+                            
+                </div>
                 <div class="al-row">
                     <div class="al-row-column">
                             <div style='float: left;' id="DocsPanel">

@@ -104,6 +104,8 @@ class Demands extends MainFormModel
         public $FullOverDay = null;
         public $WorkedOut = null;
         public $WorkedOutStatus = null;
+        public $StatusOP;
+        public $StatusOPName;
 
 	//------executorreport
 	public $exrp_id = null;
@@ -139,31 +141,56 @@ class Demands extends MainFormModel
                         case when d.WorkedOut is not null then 'Отработано' else 'Не отработано' end WorkedOutStatus,
                         d.DateExec as DateExecFilter,
                         case when d.VIP = 1 then 'VIP' else '' end  as VIPName,
+                        Case when d.StatusOP = 0 then ''
+                            when d.StatusOP = 1 then 'Холодный'
+                            when d.StatusOP = 2 then 'Теплый'
+                            when d.StatusOP = 3 then 'Горячий'
+                            end as StatusOPName,
                         dbo.get_overday(d.Deadline, isnull(d.DateExec, getdate()), d.DemandEt_id) + isnull(d.overday, 0) as FullOverDay";
         $from = "\nFrom FullDemands d with (nolock) ";
 				
 	$this->Query->setSelect($select);
         $this->Query->setFrom($from);
-        $this->Query->setOrder(" order by
-                                  case when WorkedOut is Null
-                                    then 0
-                                    else 1
-                                  end,
-				  case when DateExec is Null
-				    then 0
-				    else 1
-				  end,
-				  case when DateExec is Null
-				    then case when DateMaster is Null
-				           then 0
-				           else 1 end
-				    else 0
-				  end,
-				  case when DateExec is Null
-				    then Sort
-				    else 0
-				  end,
-				  demand_id desc ");
+        
+        if (Yii::app()->user->checkAccess('SeniorDispatcher') || Yii::app()->user->checkAccess('Dispatcher') || Yii::app()->user->checkAccess('AdministartorDispatchers'))
+            $this->Query->setOrder(" order by
+                                      case when WorkedOut is Null
+                                        then 0
+                                        else 1
+                                      end,
+                                      case when DateExec is Null
+                                        then 0
+                                        else 1
+                                      end,
+                                      case when DateExec is Null
+                                        then case when DateMaster is Null
+                                               then 0
+                                               else 1 end
+                                        else 0
+                                      end,
+                                      case when DateExec is Null
+                                        then Sort
+                                        else 0
+                                      end,
+                                      demand_id desc ");
+        else
+            $this->Query->setOrder(" order by
+                                      case when DateExec is Null
+                                        then 0
+                                        else 1
+                                      end,
+                                      case when DateExec is Null
+                                        then case when DateMaster is Null
+                                               then 0
+                                               else 1 end
+                                        else 0
+                                      end,
+                                      case when DateExec is Null
+                                        then Sort
+                                        else 0
+                                      end,
+                                      demand_id desc ");
+        
 
             $this->KeyFiled = 'd.Demand_id';
             $this->PrimaryKey = 'Demand_id';
@@ -252,12 +279,16 @@ class Demands extends MainFormModel
         
         public function DeadlineValidate($attribute, array $params = array()) {
             $Deadline = 0;
-            if ($this->Deadline === '')
+            if ($this->Deadline === '' || $this->Deadline == null)
                 $Deadline = strtotime('01.01.2999');
             else    
                 $Deadline = strtotime($this->Deadline);
             
             $DateExec = strtotime($this->DateExec);
+            if ($Deadline == '')
+                return;
+            
+            
             if (($DateExec > $Deadline) && ($this->dlrs_id === ''))
                 $this->addError($attribute, 'Заполните причину просрочки');
         }

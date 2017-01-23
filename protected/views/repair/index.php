@@ -55,6 +55,23 @@
             $('#btnInfo').click();
         });
         
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+            var Temp = $('#RepairsGrid').jqxGrid('getrowdata', row);
+            var column = $("#RepairsGrid").jqxGrid('getcolumn', columnfield);
+                if (column.cellsformat != '') {
+                    if ($.jqx.dataFormat) {
+                        if ($.jqx.dataFormat.isDate(value)) {
+                            value = $.jqx.dataFormat.formatdate(value, column.cellsformat);
+                        }   
+                        else if ($.jqx.dataFormat.isNumber(value)) {
+                            value = $.jqx.dataFormat.formatnumber(value, column.cellsformat);
+                        }
+                    }
+                }
+            if ((Temp["RepairPrior"] == "Срочная")) 
+                return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+        };
+        
         $("#RepairsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: 'calc(100% - 12px)',
@@ -66,29 +83,29 @@
                 virtualmode: true,
                 columns:
                     [
-                        { text: 'Статус', datafield: 'status_name', width: 130},
-                        { text: 'Номер', datafield: 'number', width: 130},
-                        { text: 'Дата пол. оборуд.', filtertype: 'date', datafield: 'date', width: 110, cellsformat: 'dd.MM.yyyy'},
-                        { text: 'Дата рег.', filtertype: 'date', datafield: 'date_create', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
-                        { text: 'Оборудование', datafield: 'EquipName', width: 150},
-                        { text: 'Адрес', datafield: 'Addr', width: 150},
-                        { text: 'Начало диагн.', filtertype: 'date', datafield: 'date_accept', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
-                        { text: 'Результат диагн.', datafield: 'resultname', width: 150},
-                        { text: 'Приоритет', datafield: 'RepairPrior', width: 110},
-                        { text: 'Предельная дата', filtertype: 'date', datafield: 'deadline', width: 130, cellsformat: 'dd.MM.yyyy HH:mm'},
-                        { text: 'Пр-ка', datafield: 'overday', width: 80},
-                        { text: 'Зарегистрировал', datafield: 'reg_empl_name', width: 110},
-                        { text: 'Серийный номер', datafield: 'SN', width: 110},
-                        { text: 'Возврат', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'Return', width: 80 },
-                        { text: 'СРМ', datafield: 'namsupplier', width: 110},
-                        { text: 'План. дата', filtertype: 'date', datafield: 'date_plan', width: 110, cellsformat: 'dd.MM.yyyy'},
-                        { text: 'Мастер', datafield: 'mstr_empl_name', width: 110},
-                        { text: 'Инженер', datafield: 'egnr_empl_name', width: 110},
-                        { text: 'Гарантия', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'wrnt', width: 80 },
-                        { text: 'Неисправность', datafield: 'defect', width: 110},
-                        { text: 'Причина просрочки', datafield: 'delayreason', width: 110},
-                        { text: 'Дата вып. ремонта', filtertype: 'date', datafield: 'date_ready', width: 110, cellsformat: 'dd.MM.yyyy'},
-                        { text: 'Дата закрытия', filtertype: 'date', datafield: 'date_exec', width: 110, cellsformat: 'dd.MM.yyyy'},
+                        { text: 'Статус', datafield: 'status_name', width: 130, cellsrenderer: cellsrenderer},
+                        { text: 'Номер', datafield: 'number', width: 130, cellsrenderer: cellsrenderer},
+                        { text: 'Дата пол. оборуд.', filtertype: 'date', datafield: 'date', width: 110, cellsformat: 'dd.MM.yyyy', cellsrenderer: cellsrenderer},
+                        { text: 'Дата рег.', filtertype: 'date', datafield: 'date_create', width: 150, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer},
+                        { text: 'Оборудование', datafield: 'EquipName', width: 150, cellsrenderer: cellsrenderer},
+                        { text: 'Адрес', datafield: 'Addr', width: 150, cellsrenderer: cellsrenderer},
+                        { text: 'Начало диагн.', filtertype: 'date', datafield: 'date_accept', width: 150, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer},
+                        { text: 'Результат диагн.', datafield: 'resultname', width: 150, cellsrenderer: cellsrenderer},
+                        { text: 'Приоритет', datafield: 'RepairPrior', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'Предельная дата', filtertype: 'date', datafield: 'deadline', width: 130, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer},
+                        { text: 'Пр-ка', datafield: 'overday', width: 80, cellsrenderer: cellsrenderer},
+                        { text: 'Зарегистрировал', datafield: 'reg_empl_name', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'Серийный номер', datafield: 'SN', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'Возврат', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'Return', width: 80, cellsrenderer: cellsrenderer },
+                        { text: 'СРМ', datafield: 'NameSupplier', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'План. дата', filtertype: 'date', datafield: 'DatePlan', width: 110, cellsformat: 'dd.MM.yyyy', cellsrenderer: cellsrenderer},
+                        { text: 'Мастер', datafield: 'mstr_empl_name', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'Инженер', datafield: 'egnr_empl_name', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'Гарантия', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'wrnt', width: 80, cellsrenderer: cellsrenderer },
+                        { text: 'Неисправность', datafield: 'defect', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'Причина просрочки', datafield: 'delayreason', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'Дата вып. ремонта', filtertype: 'date', datafield: 'date_ready', width: 110, cellsformat: 'dd.MM.yyyy', cellsrenderer: cellsrenderer},
+                        { text: 'Дата закрытия', filtertype: 'date', datafield: 'date_exec', width: 110, cellsformat: 'dd.MM.yyyy', cellsrenderer: cellsrenderer},
                     ]
         }));
         
@@ -181,6 +198,13 @@
         });
     });
 </script>
+
+
+<style>
+    .backlight_pink {
+        color: #E000E0;
+    }
+</style> 
 
 <div id="GridContainer" style="float: left; width: 100%; height: calc(100% - 178px)">
     <div id="RepairsGrid"></div>

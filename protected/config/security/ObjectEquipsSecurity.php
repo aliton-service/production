@@ -12,6 +12,7 @@ return array(
                 'ViewObjectEquips',
                 'CreateObjectEquips',
                 'UpdateObjectEquips',
+                'DeleteObjectEquips',
                 ),
         ),
 

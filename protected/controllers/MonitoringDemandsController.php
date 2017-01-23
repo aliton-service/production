@@ -168,6 +168,13 @@ class MonitoringDemandsController extends Controller
     
     public function actionAccept() 
     {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        
         if (isset($_POST['mndm_id'])) {
             $model = new MonitoringDemands();
             $model->getModelPk($_POST['mndm_id']);
@@ -176,22 +183,19 @@ class MonitoringDemandsController extends Controller
                 $sp->ProcedureName = 'ACCEPT_MonitoringDemands';
                 $sp->ParametersRefresh();
                 $sp->Parameters[0]['Value'] = $_POST['mndm_id'];
-                
-                $Employee_id = Yii::app()->user->Employee_id;
-                $Query = new SQLQuery();
-                $Query->setSelect("Select Alias, ShortName from Employees where Employee_id = " . $Employee_id);
-                $Result = $Query->QueryRow();
-                $Employee_Alias = $Result['Alias'];
-                
-                $sp->Parameters[1]['Value'] = $Employee_Alias;
+                $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
                 
                 $sp->CheckParam = true;
                 $sp->Execute();
                 
-                $ShortName = $Result['ShortName'];
-                echo $ShortName;
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = 0;
+                echo json_encode($ObjectResult);
+                return;
             }
         }
+        
+        echo json_encode($ObjectResult);
     }
     
     public function actionCancelAcceptance() 
@@ -213,28 +217,33 @@ class MonitoringDemandsController extends Controller
     
     
     public function actionExecute() 
-    {
+    {   
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
         if (isset($_POST['mndm_id'])) {
             $model = new MonitoringDemands();
             $model->getModelPk($_POST['mndm_id']);
-            if ($model->UserAccept2 !== null && $model->DateExec == null && $model->UserChange2 == null) {
+            if ($model->UserAccept2 !== null && $model->DateExec == null) {
                 $sp = new StoredProc();
                 $sp->ProcedureName = 'EXEC_MonitoringDemands';
                 $sp->ParametersRefresh();
                 $sp->Parameters[0]['Value'] = $_POST['mndm_id'];
-                
-                $Employee_id = Yii::app()->user->Employee_id;
-                $Query = new SQLQuery();
-                $Query->setSelect("Select Alias, ShortName from Employees where Employee_id = " . $Employee_id);
-                $Result = $Query->QueryRow();
-                $Employee_Alias = $Result['Alias'];
-                
-                $sp->Parameters[1]['Value'] = $Employee_Alias;
+                $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
                 
                 $sp->CheckParam = true;
                 $sp->Execute();
+                $ObjectResult['result'] = 1;
+                
             }
+            
         }
+        
+        
+        echo json_encode($ObjectResult);
     }
     
 

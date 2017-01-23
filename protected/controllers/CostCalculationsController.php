@@ -80,6 +80,21 @@ class CostCalculationsController extends Controller
             }
         }
         
+        $query = new SQLQuery();
+        $query->text = "  Select
+                            sum(case when type = 0 and date_annul is null and date_ready is not null then 1 else 0 end) over(partition by ccg.cgrp_id) count_type0,
+                            sum(case when type = 1 and date_annul is null then 1 else 0 end) over(partition by ccg.cgrp_id) count_type1
+                        From CostCalcGroups ccg left join CostCalculations c on (ccg.cgrp_id = c.cgrp_id)
+                        Where ccg.cgrp_id = " . $model->cgrp_id;
+        $Res = $query->QueryRow();
+        
+        $Mas = $model->attributes;
+        
+        $model = array_merge($Mas, array(
+            'count_type0' => $Res['count_type0'],
+            'count_type1' => $Res['count_type1'],
+        ));
+                
         echo json_encode($model);
     }
 

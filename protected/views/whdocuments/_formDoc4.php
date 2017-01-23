@@ -119,18 +119,18 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null) {
-                            $('#' + WHDocuments.DialogId).jqxWindow('close');
-                            
-                            return;
-                        }
+//                        if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null) {
+//                            $('#' + WHDocuments.DialogId).jqxWindow('close');
+//                            
+//                            return;
+//                        }
                         
                         if (!StateInsert) 
                             WHDoc.Refresh();
                         
                         if (StateInsert) {
-                            WHReestr.Docm_id = Res.id;
-                            $('#Grid4').jqxGrid('updatebounddata');
+                            if (typeof(WHReestr) != 'undefined') WHReestr.Docm_id = Res.id;
+                            if ($('#Grid4').length > 0) $('#Grid4').jqxGrid('updatebounddata');
                             window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
                         }
                         if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null)

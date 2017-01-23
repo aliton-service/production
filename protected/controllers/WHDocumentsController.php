@@ -43,7 +43,15 @@ class WHDocumentsController extends Controller
                     'roles'=>array('AuditEquipsWHDocuments'),
             ),
             array('allow', 
-                    'actions'=>array('Action', 'ConfirmCancel', 'Confirm'),
+                    'actions'=>array('Ready'),
+                    'roles'=>array('ReadyWHDocuments'),
+            ),
+            array('allow', 
+                    'actions'=>array('Undo'),
+                    'roles'=>array('UndoReadyWHDocuments'),
+            ),
+            array('allow', 
+                    'actions'=>array('Action', 'ConfirmCancel', 'Confirm', 'CheckDocuments'),
                     'users'=>array('*'),
             ),
             array('allow', 
@@ -146,6 +154,7 @@ class WHDocumentsController extends Controller
                     $model->objc_id = 7337;
                     $model->Address = 'ЗИП ул., д.нет , СПб';
                 }
+                $model->date = Date('d.m.Y');
                 $ObjectResult['html'] = $this->renderPartial('_formDoc4', array(
                     'model' => $model,
                     'DialogId' => $DialogId,
@@ -527,6 +536,56 @@ class WHDocumentsController extends Controller
         echo json_encode($ObjectResult);
     }
     
+    public function actionReady() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Docm_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'Ready_WHDocuments';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Docm_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionUndo() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Docm_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'UNDO_Ready_WHDocuments';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Docm_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
     public function actionConfirm() {
         $ObjectResult = array(
                 'result' => 0,
@@ -558,6 +617,23 @@ class WHDocumentsController extends Controller
             return;
         }
 
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionCheckDocuments() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        $Query = new SQLQuery();
+        $Query->text = "\nSelect max(Docm_id) as Mid From WHDocuments";
+        $Res = $Query->QueryRow();
+        
+        $ObjectResult['result'] = 1;
+        $ObjectResult['id'] = $Res['Mid'];
+        
         echo json_encode($ObjectResult);
     }
 }

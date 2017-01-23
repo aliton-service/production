@@ -24,6 +24,7 @@ class Events extends MainFormModel
     public $EmplChange;
     public $datestart;
     public $dateend;
+    public $EmplDel;
 
     public $KeyFiled = 'e.Evnt_id';
     public $PrimaryKey = 'Evnt_id';

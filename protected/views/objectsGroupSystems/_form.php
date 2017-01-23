@@ -168,6 +168,7 @@
         <div class="al-row-column"><div id='SystemType2' name="ObjectsGroupSystems[Sttp_id]"></div><?php echo $form->error($model, 'Sttp_id'); ?></div>
         <div style="clear: both"></div>
     </div>
+    
     <div class="al-row">
         <div class="al-row-column" style="width: 100px">Наличие:</div>
         <div class="al-row-column"><div id='Availability2' name="ObjectsGroupSystems[Availability_id]"></div><?php echo $form->error($model, 'Availability_id'); ?></div>
@@ -197,7 +198,14 @@
         </div>
         <div class="al-row-column" style="width: calc(50% - 6px)">
             <div class="al-row" style="padding: 0px">Состояние системы</div>
-            <div class="al-row" style="padding: 0px"><div id="edSystemStatements" name="ObjectsGroupSystems[SysSttmnt_id]" type="text"></div><?php echo $form->error($model, 'SysSttmnt_id'); ?></div>
+            <div class="al-row" style="padding: 0px">
+                <?php if (Yii::app()->user->checkAccess('StateObjectsGroupSystems')) { ?>
+                    <div id="edSystemStatements" name="ObjectsGroupSystems[SysSttmnt_id]" type="text"></div>
+                <?php } else { ?>
+                    <div id="edSystemStatements" name="" type="text"></div>
+                <?php } ?>
+                    <?php echo $form->error($model, 'SysSttmnt_id'); ?>
+            </div>
         </div>
         <div style="clear: both"></div>
     </div>

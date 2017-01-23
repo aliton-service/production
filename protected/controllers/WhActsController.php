@@ -27,7 +27,7 @@ class WhActsController extends Controller
                     'roles'=>array('ConfirmWhActs'),
             ),
             array('allow',  
-                    'actions'=>array('index', 'view', 'GetContracts', 'GetModel'),
+                    'actions'=>array('index', 'view', 'GetContracts', 'GetModel', 'Control'),
                     'roles'=>array('ViewWhActs'),
             ),
             array('allow',  
@@ -50,6 +50,14 @@ class WhActsController extends Controller
                     'users'=>array('*'),
             ),
         );
+    }
+    
+    public function actionControl() {
+        $this->title = 'Контроль списания';
+        $this->setPageTitle('Контроль списания');
+        $this->gridFilters = '_filters2';
+        
+        $this->render('control');
     }
     
     public function actionIndex() {

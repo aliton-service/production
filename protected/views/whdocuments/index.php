@@ -1,6 +1,7 @@
 <script type="text/javascript">
     var WHReestr = {};
     WHReestr.Docm_id = 0;
+    var WHDocCount = 0;
     $(document).ready(function () {
         /* Текущая выбранная строка данных */
         var CurrentRowDataAll;
@@ -12,7 +13,7 @@
         var CurrentRowDataDoc7;
         var CurrentRowDataDoc9;
         var Dctp_id;
-
+        
         $('#btnRefresh').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnInfo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCreate').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, imgSrc: '/images/6.png' }));
@@ -20,6 +21,28 @@
         $('#btnUndo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, height: 30, imgSrc: '/images/3.png' }));
         $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings));
         
+        var CheckDocs = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/CheckDocuments'))?>,
+                type: 'POST',
+                async: true,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        if (WHDocCount == 0)
+                            WHDocCount = parseInt(Res.id);
+                        if (parseInt(Res.id) > parseInt(WHDocCount)) {
+                            $('h1').html('Склад - реестр документов ******************* Выборка устарела');
+                        }
+                        
+                    }
+                        
+                }
+            });
+        };
+        
+        window.setInterval(CheckDocs, 1000*60*5);
+
         
         var SelectTab = function() {
             var SelectedTab = $('#edTabs').jqxTabs('selectedItem');
@@ -227,6 +250,8 @@
                         SetStateButton();
                     });
                     
+                    
+                    
                     $("#Grid1").on("bindingcomplete", function (event) {
                         if (WHReestr.Docm_id > 0) {
                             Aliton.SelectRowByIdVirtual('docm_id', WHReestr.Docm_id, '#Grid1', false);
@@ -243,6 +268,13 @@
                         $('#btnInfo').click();
                     });
                     
+                    $('#Grid1').on("columnreordered", function (event) { 
+                        GridState.SaveGridSettings('Grid1', 'WHDoc1Grid1');
+                    });
+                    $('#Grid1').on("columnresized", function (event) {
+                        GridState.SaveGridSettings('Grid1', 'WHDoc1Grid1');
+                    });
+                    
                     $("#Grid1").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -251,6 +283,12 @@
                             autoshowfiltericon: true,
                             pagesize: 200,
                             virtualmode: true,
+                            ready: function() {
+                                var State = $('#Grid1').jqxGrid('getstate');
+                                var Columns = GridState.LoadGridSettings('#Grid1', 'WHDoc1Grid1');
+                                $.extend(true, State.columns, Columns);
+                                $('#Grid1').jqxGrid('loadstate', State);    
+                            },
                             columns:
                                 [
                                     { text: 'Вид работ', columngroup: 'Documents', datafield: 'wrtp_name', width: 130 },
@@ -260,7 +298,7 @@
                                     { text: 'Дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Дата создания', columngroup: 'Documents', filtertype: 'date', datafield: 'date_create', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Поставщик', columngroup: 'Documents', filterable: false, datafield: 'splr_name', width: 130 },
-                                    { text: 'Сумма', columngroup: 'Documents', datafield: 'summa', cellsformat: 'f2', width: 100 },
+                                    { text: 'Сумма', columngroup: 'Documents', datafield: 'summa', cellsformat: 'f4', width: 100 },
                                     { text: 'Склад', columngroup: 'Documents', datafield: 'storage', width: 130 },
                                     { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ac_date', cellsformat: 'dd.MM.yyyy', width: 100 },
                                     { text: 'Кладовщик', columngroup: 'Action', datafield: 'strm_name', width: 120 },
@@ -399,6 +437,48 @@
                 break;
                 case 4:
                     $("#edNotes4").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
+                    $("#btnReady").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 180}));
+                    $("#btnUndoReady").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 180}));
+                    
+                    $("#btnReady").on('click', function() {
+                        if (CurrentRowDataDoc4 != undefined) {
+                            if (CurrentRowDataDoc4.date_ready == null )
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Ready')) ?>,
+                                    type: 'POST',
+                                    data: {Docm_id: CurrentRowDataDoc4.docm_id},
+                                    success: function(Res){
+                                        Res = JSON.parse(Res);
+                                        if (Res.result == 1)
+                                            $('#edFiltering').click();
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                        }
+                        
+                    });
+                    
+                    $("#btnUndoReady").on('click', function() {
+                        if (CurrentRowDataDoc4 != undefined) {
+                            if (CurrentRowDataDoc4.date_ready != null )
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Undo')) ?>,
+                                    type: 'POST',
+                                    data: {Docm_id: CurrentRowDataDoc4.docm_id},
+                                    success: function(Res){
+                                        Res = JSON.parse(Res);
+                                        if (Res.result == 1)
+                                            $('#edFiltering').click();
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                        }
+                        
+                    });
                     
                     $("#Grid4").on('rowselect', function (event) {
                         CurrentRowDataDoc4 = $('#Grid4').jqxGrid('getrowdata', event.args.rowindex);
@@ -467,6 +547,30 @@
                     };
                     //var StatusFiltersSource = new $.jqx.dataAdapter(StatusFiltersSource, {autoBind: true});
                     
+                    $('#Grid4').on("columnreordered", function (event) { 
+                        GridState.SaveGridSettings('Grid4', 'TrebGrid4');
+                    });
+                    $('#Grid4').on("columnresized", function (event) {
+                        GridState.SaveGridSettings('Grid4', 'TrebGrid4');
+                    });
+                    
+                    var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+                        var Temp = $('#Grid4').jqxGrid('getrowdata', row);
+                        var column = $("#Grid4").jqxGrid('getcolumn', columnfield);
+                            if (column.cellsformat != '') {
+                                if ($.jqx.dataFormat) {
+                                    if ($.jqx.dataFormat.isDate(value)) {
+                                        value = $.jqx.dataFormat.formatdate(value, column.cellsformat);
+                                    }   
+                                    else if ($.jqx.dataFormat.isNumber(value)) {
+                                        value = $.jqx.dataFormat.formatnumber(value, column.cellsformat);
+                                    }
+                                }
+                            }
+                        if ((Temp["prty_name"] == "Срочная")) 
+                            return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                    }
+                    
                     $("#Grid4").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -474,42 +578,51 @@
                             showfilterrow: false,
                             autoshowfiltericon: true,
                             pagesize: 200,
+                            columnsreorder: true,
                             virtualmode: true,
+                            ready: function() {
+                                var State = $('#Grid4').jqxGrid('getstate');
+                                var Columns = GridState.LoadGridSettings('#Grid4', 'TrebGrid4');
+                                $.extend(true, State.columns, Columns);
+                                $('#Grid4').jqxGrid('loadstate', State);    
+                            },
                             columns:
                                 [
-                                    { text: 'Контроль', filtertype: 'checkbox', columntype: 'checkbox', columngroup: 'Documents', datafield: 'control', width: 50 },
+                                    { text: 'Контроль', filtertype: 'checkbox', columntype: 'checkbox', columngroup: 'Documents', datafield: 'control', width: 50},
                                     { text: 'Статус', columntype: 'textbox', columngroup: 'Documents', datafield: 'status', width: 34, cellsrenderer: statusrenderer,
                                         filtertype: 'list', filteritems: new $.jqx.dataAdapter(StatusFiltersSource), 
                                                                             createfilterwidget: function (column, htmlElement, editor) {
                                                                                 editor.jqxDropDownList({ displayMember: "label", valueMember: "value" });
                                                                             } 
                                     },
-                                    { text: 'Вид работ', columngroup: 'Documents', datafield: 'wrtp_name', width: 130 },
-                                    { text: 'Номер', columngroup: 'Documents', datafield: 'number', width: 120 },
-                                    { text: 'Дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Дата создания', columngroup: 'Documents', filtertype: 'date', datafield: 'date_create', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Затребовал', columngroup: 'Documents', filterable: false, datafield: 'dmnd_empl_name', width: 120 },
-                                    { text: 'Выписал', columngroup: 'Documents', datafield: 'empl_name', width: 120 },
-                                    { text: 'Срочность', columngroup: 'Documents', datafield: 'prty_name', width: 100 },
-                                    { text: 'Статус', columngroup: 'Documents', datafield: 'StatusFull', width: 100 },
-                                    { text: 'Адрес', columngroup: 'Documents', datafield: 'Address', width: 200 },
-                                    { text: 'Желаемая дата', columngroup: 'Documents', filtertype: 'date', datafield: 'best_date', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Предельная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'deadline', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Обещенная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date_promise', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Склад', columngroup: 'Documents', datafield: 'storage', width: 100 },
-                                    { text: 'Пр-ка', columngroup: 'Documents', datafield: 'overday', width: 50 },
-                                    { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ac_date', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Кладовщик', columngroup: 'Action', datafield: 'strm_name', width: 130 },
-                                    { text: 'Кому', columngroup: 'Action', datafield: 'mstr_name', width: 130 },
-                                    { text: 'Основание', columngroup: 'Action', datafield: 'rcrs_name', width: 100 },
-                                    { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ReceiptDate', cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Номер', columngroup: 'Action', datafield: 'ReceiptNumber', width: 100 },
-                                    { text: 'Дата', columngroup: 'Cancel', filtertype: 'date', datafield: 'c_date',cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Отменил', columngroup: 'Cancel', datafield: 'c_name', width: 120 },
-                                    { text: 'Основание', columngroup: 'Cancel', datafield: 'c_confirmname', width: 120 },
-                                    { text: 'Дата', columngroup: 'Purchase', filtertype: 'date', datafield: 'date_prchs',cellsformat: 'dd.MM.yyyy', width: 100 },
-                                    { text: 'Статус', columngroup: 'Purchase', datafield: 'state_prchs', width: 120 },
-                                    { text: 'Сотрудник', columngroup: 'Purchase', datafield: 'name_prchs', width: 120 },
+                                    { text: 'Вид работ', columngroup: 'Documents', datafield: 'wrtp_name', width: 130, cellsrenderer: cellsrenderer },
+                                    { text: 'Номер', columngroup: 'Documents', datafield: 'number', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Дата создания', columngroup: 'Documents', filtertype: 'date', datafield: 'date_create', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Основание', columngroup: 'Documents', datafield: 'rcrs_name2', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Затребовал', columngroup: 'Documents', filterable: false, datafield: 'dmnd_empl_name', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Выписал', columngroup: 'Documents', datafield: 'empl_name', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Срочность', columngroup: 'Documents', datafield: 'prty_name', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Статус', columngroup: 'Documents', datafield: 'StatusFull', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Адрес', columngroup: 'Documents', datafield: 'Address', width: 200, cellsrenderer: cellsrenderer },
+                                    { text: 'Желаемая дата', columngroup: 'Documents', filtertype: 'date', datafield: 'best_date', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Предельная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'deadline', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Обещенная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date_promise', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Склад', columngroup: 'Documents', datafield: 'storage', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Пр-ка', columngroup: 'Documents', datafield: 'overday', width: 50, cellsrenderer: cellsrenderer },
+                                    
+                                    { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ac_date', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Кладовщик', columngroup: 'Action', datafield: 'strm_name', width: 130, cellsrenderer: cellsrenderer },
+                                    { text: 'Кому', columngroup: 'Action', datafield: 'mstr_name', width: 130, cellsrenderer: cellsrenderer },
+                                    { text: 'Основание', columngroup: 'Action', datafield: 'rcrs_name', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ReceiptDate', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Номер', columngroup: 'Action', datafield: 'ReceiptNumber', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Дата', columngroup: 'Cancel', filtertype: 'date', datafield: 'c_date',cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Отменил', columngroup: 'Cancel', datafield: 'c_name', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Основание', columngroup: 'Cancel', datafield: 'c_confirmname', width: 120 , cellsrenderer: cellsrenderer},
+                                    { text: 'Дата', columngroup: 'Purchase', filtertype: 'date', datafield: 'date_prchs',cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
+                                    { text: 'Статус', columngroup: 'Purchase', datafield: 'state_prchs', width: 120, cellsrenderer: cellsrenderer },
+                                    { text: 'Сотрудник', columngroup: 'Purchase', datafield: 'name_prchs', width: 120, cellsrenderer: cellsrenderer },
                                 ],
                             columngroups: 
                                 [
@@ -853,6 +966,12 @@
 </script>
 
 
+<style>
+    .backlight_pink {
+        color: #E000E0;
+    }
+</style> 
+
 <?php $this->setPageTitle('Склад - реестр документов'); ?>
 
 <?php
@@ -945,8 +1064,12 @@
         </div>
         <div style="overflow: hidden;">
             <div style="padding: 5px; height: 100%">
-                <div class="al-row" style="height: calc(100% - 112px)">
+                <div class="al-row" style="height: calc(100% - 150px)">
                     <div id="Grid4"></div>
+                </div>
+                <div>
+                    <input type="button" id="btnReady" value="Готово к выдаче"/>
+                    <input type="button" id="btnUndoReady" value="Снять готовность"/>
                 </div>
                 <div><div class="row-column">Примечание</div></div>
                 <div><textarea id="edNotes4" readonly="readonly"></textarea></div>

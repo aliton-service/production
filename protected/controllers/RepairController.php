@@ -103,6 +103,7 @@ class RepairController extends Controller {
                 return;
             } 
         }
+        else {$model->reg_empl_id = Yii::app()->user->Employee_id; }
         
         $ObjectResult['html'] = $this->renderPartial('_form0', array(
             'model' => $model,

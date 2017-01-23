@@ -55,7 +55,7 @@
         $("#edWorkFilter").on('change', function(e){
             WorkTypeDetailsDataAdapter.dataBind();
         });
-        $("#CСWorkTypeDetails").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: WorkTypeDetailsDataAdapter, displayMember: "name", valueMember: "cwdt_id", searchMode: 'contains', width: 400 }));
+        $("#CСWorkTypeDetails").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: WorkTypeDetailsDataAdapter, dropDownWidth: 800, displayMember: "name", valueMember: "cwdt_id", searchMode: 'contains', width: 400 }));
         $("#QuantCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, min: 0, decimalDigits: 2 }));
         $("#KoefCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, min: 0, decimalDigits: 2, readOnly: true }));
         $("#PriceCCW").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2 }));
@@ -85,6 +85,10 @@
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
                         Aliton.SelectRowById('ccwr_id', Res.id, '#CostCalcWorksGrid', true);
+                        
+                        if ($('#RefreshCostCalcEquips').length>0)
+                            $('#RefreshCostCalcEquips').click();
+                        
                         CostCalcDetails.DetailsRefresh();
                         if (toggled && StateInsert) {
                             $("#CСWorkTypeDetails").jqxComboBox('clearSelection');
@@ -136,6 +140,27 @@
             }
         }
         HideQuant();
+        
+        var ReCalc = function() {
+            var Val = $('#PriceLowCCW').val();
+            var Koef = $('#KoefCCW').val();
+            //var Count = $('#QuantCCW').val();
+            $('#PriceCCW').jqxNumberInput('val', Val*Koef);
+        };
+        
+        $('#PriceLowCCW').on('keyup', function() {
+            ReCalc();
+        });
+        
+        $('#QuantCCW').on('keyup', function() {
+            ReCalc();
+        });
+        
+        $('#EquipQuantCCW').on('keyup', function() {
+            ReCalc();
+        });
+        
+        
         $('#CСWorkTypeDetails').on('select', function (event) 
         {
             var args = event.args;

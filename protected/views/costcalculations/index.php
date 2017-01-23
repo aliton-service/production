@@ -14,6 +14,7 @@
             wrtp_id: <?php echo json_encode($model->wrtp_id); ?>,
             date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
             group_name: '<?php echo $model->group_name; ?>',
+            PaymentType_id: <?php echo json_encode($model->PaymentType_id); ?>,
             workname: '<?php echo $model->workname; ?>',
             empl_name: '<?php echo $model->empl_name; ?>',
             empl_id: <?php echo json_encode($model->empl_id); ?>,
@@ -22,16 +23,17 @@
             RegistrationName: '<?php echo $model->RegistrationName; ?>',
             best_date: Aliton.DateConvertToJs('<?php echo $model->best_date; ?>'),
             Demand_id: '<?php echo $model->Demand_id; ?>',
-            sum_materials_low: '<?php echo $model->sum_materials_low; ?>',
+            sum_materials_low: <?php echo json_encode($model->sum_materials_low); ?>,
             date_ready: Aliton.DateConvertToJs('<?php echo $model->date_ready; ?>'),
             date_agreed: Aliton.DateConvertToJs('<?php echo $model->date_agreed; ?>'),
             spec_condt: <?php echo json_encode($model->spec_condt); ?>,
             note: <?php echo json_encode($model->note); ?>,
-            EmplAgreed: '<?php echo $model->EmplAgreed; ?>',
+            EmplAgreed: <?php echo json_encode($model->EmplAgreed); ?>,
             count_type0: <?php echo json_encode($count_type0); ?>,
             count_type1: <?php echo json_encode($count_type1); ?>,
             Object_id: <?php echo json_encode($model->Object_id); ?>,
             Addr: <?php echo json_encode($model->Addr); ?>,
+            FullName: <?php echo json_encode($model->FullName); ?>,
             Name: <?php echo json_encode($model->name); ?>,
             Info_id: <?php echo json_encode($model->info_id); ?>,
             ContrNumS: <?php echo json_encode($model->ContrNumS); ?>,
@@ -69,7 +71,7 @@
             if (CostCalculations.date_ready != null) $("#date_ready").jqxDateTimeInput('val', CostCalculations.date_ready);
             if (CostCalculations.spec_condt != null) $("#spec_condt").jqxTextArea('val', CostCalculations.spec_condt);
             if (CostCalculations.note != null) $("#note").jqxTextArea('val', CostCalculations.note);
-            if (CostCalculations.EmplAgreed != null) $("#EmplAgreed").jqxTextArea('val', CostCalculations.EmplAgreed);
+            if (CostCalculations.EmplAgreed != null) $("#EmplAgreed").jqxInput('val', CostCalculations.EmplAgreed);
         };
         
         CostCalculations.Refresh = function() {
@@ -97,6 +99,8 @@
                     CostCalculations.note = Res.note;
                     CostCalculations.EmplAgreed = Res.EmplAgreed;
                     CostCalculations.koef_indirect = Res.koef_indirect;
+                    CostCalculations.count_type0 = parseInt(Res.count_type0);
+                    CostCalculations.count_type1 = parseInt(Res.count_type1);
                     SetValueControls();
                     SetStateButtons();
                     $('#RefreshCostCalcEquips').click();
@@ -192,11 +196,11 @@
         var CheckBtnDocuments = function(){
             $('#btnAddDocTreb').jqxButton({disabled: (CostCalculations.date_ready == null || parseInt(CostCalculations.type == 0))});
             $('#btnAddDocContract1').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
-            $('#btnAddDocContract2').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
+            $('#btnAddDocContract2').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
             $('#btnAddDocAct').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
-            $('#btnAddDocDelivery').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
-            $('#btnAddDocContract3').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
-            $('#btnAddDocBuhAct').jqxButton({disabled: ( CostCalculations.date_ready == null || parseInt(CostCalculations.type) == 0)});
+            $('#btnAddDocDelivery').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
+            $('#btnAddDocContract3').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
+            $('#btnAddDocBuhAct').jqxButton({disabled: (parseInt(CostCalculations.type) == 0)});
         };
         $("#ddbtnDocuments").on('open', function(){
             CheckBtnDocuments();
@@ -214,6 +218,7 @@
             $('#btnAddDocContract3').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
             
             $('#btnAddDocSmets').on('click', function(){
+                
                 if ((CostCalculations.count_type0 > 0) && (CostCalculations.count_type1 == 0)) {
                     $.ajax({
                         url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Add')) ?>,
@@ -299,7 +304,7 @@
                             ReceiptNumber: CostCalculations.calc_id,
                             dmnd_empl_id: CostCalculations.empl_id,
                             prms_empl_id: CostCalculations.empl_id,
-                            empl_id: CostCalculations.empl_id,
+                            empl_id: CurrentUser,
                             Address: CostCalculations.Addr
                         },
                     },
@@ -473,6 +478,7 @@
                             wrtp_id: CostCalculations.wrtp_id,
                             calc_id: CostCalculations.calc_id,
                             sum: CostCalcDetails.SumHighFull,
+                            org_name: CostCalculations.FullName
                         }
                     },
                     success: function(Res) {
@@ -542,7 +548,7 @@
         
         $("#dropDownBtnCostCalculations").jqxDropDownButton({initContent: function(){
                 var CheckAgreed = function() {
-                    if (Administrator) return true;
+                    if (Administrator || (parseInt(CostCalculations.Position_id) == 150)) return true;
                     var Type = parseInt(CostCalculations.type);
                     var Chief = false;
                     if ((parseInt(CostCalculations.Position_id) == 37) || (parseInt(CostCalculations.Position_id) == 152))
@@ -566,7 +572,7 @@
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%');
                                 return false;
                             }
-                            if (!Marj30) {
+                            if (!Marj30 && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
                                 return false;
                             }
@@ -575,7 +581,8 @@
                                 return false;
                             }
                         } else {
-                            if (!Marj) {
+                            
+                            if (!Marj && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%');
                                 return false;
                             }
@@ -593,7 +600,7 @@
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%');
                                 return false;
                             }
-                            if (!Marj30) {
+                            if (!Marj30 && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
                                 return false;
                             }
@@ -607,8 +614,12 @@
                             }
                             
                         } else {
-                            if (!Marj) {
+                            if (!Marj && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
                                 return false;
                             }
                             
@@ -787,7 +798,7 @@
         if (CostCalculations.jrdc_name !== '') $("#jrdc_name").jqxInput('val', CostCalculations.jrdc_name);
         if (CostCalculations.RegistrationName !== '') $("#RegistrationName").jqxInput('val', CostCalculations.RegistrationName);
         if (CostCalculations.Demand_id !== '') $("#Demand_id").jqxInput('val', CostCalculations.Demand_id);
-        if (CostCalculations.sum_materials_low !== '') $("#sum_materials_low").jqxInput('val', CostCalculations.sum_materials_low);
+        if (CostCalculations.sum_materials_low !== '') $("#sum_materials_low").jqxNumberInput('val', CostCalculations.sum_materials_low);
         if (CostCalculations.spec_condt !== '') $("#spec_condt").jqxTextArea('val', CostCalculations.spec_condt);
         if (CostCalculations.note !== '') $("#note").jqxTextArea('val', CostCalculations.note);
         if (CostCalculations.EmplAgreed !== '') $("#EmplAgreed").jqxInput('val', CostCalculations.EmplAgreed);
@@ -996,11 +1007,11 @@
                     
                     var CheckButtonCCW = function() {
                         $('#AddCostCalcWorks').jqxButton({disabled: !(CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
-                        $('#EditCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCE != undefined && CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
+                        $('#EditCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined && CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
                         $('#RefreshCostCalcWorks').jqxButton({disabled: false})
                         $('#btnPrintCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
                         $('#btnPrintForUsCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined)})
-                        $('#DelCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCE != undefined && CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
+                        $('#DelCostCalcWorks').jqxButton({disabled: !(CurrentRowDataCCW != undefined && CostCalculations.date_agreed == null && CostCalculations.date_ready == null)})
                     };
                     
                     $("#CostCalcWorksGrid").jqxGrid(

@@ -48,6 +48,22 @@
         });
         
         
+        GetComments = function(Dldm_id) {
+            if (Dldm_id == DeliveryDemand.dldm_id) 
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Delivery/GetComments')); ?>,
+                    type: 'POST',
+                    async: true,
+                    data: {
+                        Dldm_id: DeliveryDemand.dldm_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#edNote").val(Res);
+                    }
+                });
+        };
+        
         $("#DeliveryDemandsGrid").on('rowselect', function (event) {
             DeliveryDemand = $('#DeliveryDemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
             if (DeliveryDemand != undefined) {
@@ -57,8 +73,9 @@
                     $("#edText").jqxTextArea('val', DeliveryDemand.text);
                 if (DeliveryDemand.DeliveryMan != undefined)
                     $("#edDelivery").jqxInput('val', DeliveryDemand.DeliveryMan);
-                if (DeliveryDemand.note != undefined)
-                    $("#edNote").jqxTextArea('val', DeliveryDemand.note);
+//                if (DeliveryDemand.note != undefined)
+//                    $("#edNote").jqxTextArea('val', DeliveryDemand.note);
+                window.setTimeout("GetComments(" + DeliveryDemand.dldm_id + ")", 600);
             }
             
             $('#btnAccept').jqxButton({disabled: ((DeliveryDemand == undefined) || (DeliveryDemand.date_logist != null))});
@@ -133,6 +150,29 @@
              localdata: EmployeesFilters
         };
         
+        $('#DeliveryDemandsGrid').on("columnreordered", function (event) { 
+            GridState.SaveGridSettings('DeliveryDemandsGrid', 'Delivery_DeliveryDemandsGrid');
+        });
+        $('#DeliveryDemandsGrid').on("columnresized", function (event) {
+            GridState.SaveGridSettings('DeliveryDemandsGrid', 'Delivery_DeliveryDemandsGrid');
+        });
+        
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+                        var Temp = $('#DeliveryDemandsGrid').jqxGrid('getrowdata', row);
+                        var column = $("#DeliveryDemandsGrid").jqxGrid('getcolumn', columnfield);
+                            if (column.cellsformat != '') {
+                                if ($.jqx.dataFormat) {
+                                    if ($.jqx.dataFormat.isDate(value)) {
+                                        value = $.jqx.dataFormat.formatdate(value, column.cellsformat);
+                                    }   
+                                    else if ($.jqx.dataFormat.isNumber(value)) {
+                                        value = $.jqx.dataFormat.formatnumber(value, column.cellsformat);
+                                    }
+                                }
+                            }
+                        if ((Temp["DemandPrior"] == "Срочная") || (Temp["DemandPrior"] == "Аварийная")) 
+                            return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                    }
         
         $("#DeliveryDemandsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
@@ -143,32 +183,38 @@
                 //source: DeliveryDemandsAdapter,
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize:200,
+                ready: function() {
+                    var State = $('#DeliveryDemandsGrid').jqxGrid('getstate');
+                    var Columns = GridState.LoadGridSettings('#DeliveryDemandsGrid', 'Delivery_DeliveryDemandsGrid');
+                    $.extend(true, State.columns, Columns);
+                    $('#DeliveryDemandsGrid').jqxGrid('loadstate', State);    
+                },
                 virtualmode: true,
                 columns:
                     [
-                        { text: 'Номер', datafield: 'dldm_id', width: 60 },
-                        { text: 'Вид доставок', columntype: 'textbox', filtercondition: 'CONTAINS', datafield: 'DeliveryType', width: 100 },
-                        { text: 'Дата', filtertype: 'date', datafield: 'date', filtercondition: 'DATE_EQUAL', cellsformat: 'dd.MM.yyyy HH:mm', width: 130 },
+                        { text: 'Номер', datafield: 'dldm_id', width: 60, cellsrenderer: cellsrenderer },
+                        { text: 'Вид доставок', columntype: 'textbox', filtercondition: 'CONTAINS', datafield: 'DeliveryType', width: 100, cellsrenderer: cellsrenderer },
+                        { text: 'Дата', filtertype: 'date', datafield: 'date', filtercondition: 'DATE_EQUAL', cellsformat: 'dd.MM.yyyy HH:mm', width: 130, cellsrenderer: cellsrenderer },
                         { text: 'Мастер', datafield: 'MasterName', filtertype: 'list', filteritems: new $.jqx.dataAdapter(EmployeesFiltersSource),
                                                                             createfilterwidget: function (column, htmlElement, editor) {
                                                                                 editor.jqxDropDownList({ displayMember: "label", valueMember: "value" });
-                                                                            }, sortable: true, width: 150},
+                                                                            }, sortable: true, width: 150, cellsrenderer: cellsrenderer},
                         { text: 'Подал', datafield: 'user_sender_name', filtertype: 'list', filteritems: new $.jqx.dataAdapter(EmployeesFiltersSource),
                                                                             createfilterwidget: function (column, htmlElement, editor) {
                                                                                 editor.jqxDropDownList({ displayMember: "label", valueMember: "value" });
-                                                                            }, width: 150 },
-                        { text: 'Приоритет', datafield: 'DemandPrior', width: 100 },
-                        { text: 'Предельная дата', datafield: 'deadline', filtertype: 'date', filtercondition: 'DATE_EQUAL', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
-                        { text: 'Желаемая дата', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'bestdate', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
-                        { text: 'Адрес', datafield: 'Addr', width: 260 },
-                        { text: 'Принял', datafield: 'user_logist_name', filterable: false, sortable: false, width: 150 },
-                        { text: 'Дата принятия', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'date_logist', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
-                        { text: 'План. дата', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'plandate', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
-                        { text: 'Дата вып.', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'date_delivery', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
-                        { text: 'Просрочено', datafield: 'overday', width: 100 },
-                        { text: 'Обещанная дата', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'date_promise', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
-                        { text: 'Заявка', datafield: 'dmnd_id', width: 100 },
-                        { text: 'Курьер', datafield: 'DeliveryMan', width: 150 },
+                                                                            }, width: 150, cellsrenderer: cellsrenderer },
+                        { text: 'Приоритет', datafield: 'DemandPrior', width: 100, cellsrenderer: cellsrenderer },
+                        { text: 'Предельная дата', datafield: 'deadline', filtertype: 'date', filtercondition: 'DATE_EQUAL', width: 130, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer },
+                        { text: 'Желаемая дата', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'bestdate', width: 130, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer },
+                        { text: 'Адрес', datafield: 'Addr', width: 260, cellsrenderer: cellsrenderer },
+                        { text: 'Принял', datafield: 'user_logist_name', filterable: false, sortable: false, width: 150, cellsrenderer: cellsrenderer },
+                        { text: 'Дата принятия', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'date_logist', width: 130, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer },
+                        { text: 'План. дата', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'plandate', width: 130, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer },
+                        { text: 'Дата вып.', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'date_delivery', width: 130, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer },
+                        { text: 'Просрочено', datafield: 'overday', width: 100, cellsrenderer: cellsrenderer },
+                        { text: 'Обещанная дата', filtertype: 'date', filtercondition: 'DATE_EQUAL', datafield: 'date_promise', width: 130, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer },
+                        { text: 'Заявка', datafield: 'dmnd_id', width: 100, cellsrenderer: cellsrenderer },
+                        { text: 'Курьер', datafield: 'DeliveryMan', width: 150, cellsrenderer: cellsrenderer },
                         { text: 'mstr_id', datafield: 'mstr_id', width: 120, hidden: true },
                         { text: 'empl_dlvr_id', datafield: 'empl_dlvr_id', width: 120, hidden: true },
                         { text: 'street_id', datafield: 'street_id', width: 120, hidden: true },
@@ -179,6 +225,12 @@
         
         
 </script>    
+
+<style>
+    .backlight_pink {
+        color: #E000E0;
+    }
+</style> 
 
 <?php $this->setPageTitle('Заявки на доставку') ?>
 

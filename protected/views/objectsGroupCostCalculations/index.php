@@ -84,6 +84,17 @@
         $('#btnCopyCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, imgSrc: '/images/10.png'}));
         $('#btnEditCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {imgSrc: '/images/4.png'}));
         $('#btnAnnulCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160, imgSrc: '/images/3.png'}));
+        $('#btnCopyBuffer').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 230}));
+        
+        $('#btnCopyBuffer').on('click', function() {
+            var Calc_id = getCookie("CopyCostCalc_Calc_id");
+            var ObjectGr_id = getCookie("CopyCostCalc_ObjectGr_id");
+            if (Calc_id != undefined && ObjectGr_id != undefined) {
+                PasteCostCalc(Calc_id, ObjectGr_id);
+            }
+        });
+        
+        
         
         $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 500, position: 'center'}));
         
@@ -127,6 +138,13 @@
         
         var contextMenu = $("#ContextMenu").jqxMenu({ width: 200, height: 58, autoOpenPopup: false, mode: 'popup'});
         $("#CostCalculationsGrid").on('contextmenu', function () {
+            return false;
+        });
+        
+        $("#CostCalculationsGrid").on("columnclick", function (event) {
+            var scrollTop = $(window).scrollTop();
+            var scrollLeft = $(window).scrollLeft();
+            contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
             return false;
         });
         
@@ -197,7 +215,7 @@
                 async: true,
                 data: {
                    Calc_id: FCalc_id,
-                   ObjectGr_id: CurrentCostCalcRowData.ObjectGr_id
+                   ObjectGr_id: CostCalculations.ObjectGr_id
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
@@ -215,7 +233,7 @@
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
-                sortable: true,
+                sortable: false,
                 showfilterrow: false,
                 groupable: true,
                 pageable: false,
@@ -391,7 +409,8 @@
     <div class="row-column"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>
     <div class="row-column"><input type="button" value="Копировать" id='btnCopyCostCalculations'/></div>
     <div class="row-column"><input type="button" value="Обновить" id='btnRefreshCostCalculations'/></div>
-    <div class="row-column" style="margin-left: 300px;"><input type="button" value="Аннулировать" id='btnAnnulCostCalculations'/></div>
+    <div class="row-column"><input type="button" value="Вставить КП из буфера" id='btnCopyBuffer'/></div>
+    <div class="row-column" style="float: right;"><input type="button" value="Аннулировать" id='btnAnnulCostCalculations'/></div>
 </div>   
 
 

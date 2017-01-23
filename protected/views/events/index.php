@@ -111,12 +111,12 @@
         
         var updateEventsClientsGrid = function (checked) {
             if (checked) {
-                $('#EventsClientsGrid').jqxGrid('hidecolumn', 'fullname');
+                $('#EventsClientsGrid').jqxGrid('hidecolumn', 'Fullname');
                 $('#EventsClientsGrid').jqxGrid({ groupable: true });
                 $('#EventsClientsGrid').jqxGrid('expandallgroups');
             } 
             else if (!checked) {
-                $('#EventsClientsGrid').jqxGrid('showcolumn', 'fullname');
+                $('#EventsClientsGrid').jqxGrid('showcolumn', 'Fullname');
                 $('#EventsClientsGrid').jqxGrid({ groupable: false }); 
             }
         };
@@ -152,16 +152,16 @@
                 virtualmode: false,
                 selectionmode: 'multiplerowsextended',
                 columns: [
-                    { text: 'Клиент', datafield: 'Fullname', width: 150 },
+                    { text: 'Клиент', datafield: 'Fullname', width: 150, hidden: true },
                     { text: 'Адрес', datafield: 'Addr', width: 300/* minwidth: 250*/ },
-                    { text: 'Запл.', datafield: 'EventCount', width: 50,
+                    { text: 'Запл.', datafield: 'EventCount', width: 100,
                                 
                                 aggregates: [{ 'Запл.':
                                         function (aggregatedValue, currentValue) {
                                             return aggregatedValue + currentValue;
                                         }
                                       }]  },
-                    { text: 'Невып.', datafield: 'NoExecEventCount', width: 60 },
+                    { text: 'Невып.', datafield: 'NoExecEventCount', width: 100 },
                 ],
                 groups: ['Fullname']
         }));

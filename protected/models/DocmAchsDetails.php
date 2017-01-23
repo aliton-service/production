@@ -24,6 +24,7 @@ class DocmAchsDetails extends MainFormModel
     public $SN;
     public $color;
     public $no_price_list;
+    public $EmplChangeInventory;
 
     function __construct($scenario='') {
         parent::__construct($scenario);
@@ -54,7 +55,8 @@ class DocmAchsDetails extends MainFormModel
                         d.discontinued,
                         d.SN,
                         d.color,
-                        d.no_price_list";
+                        d.no_price_list,
+                        d.EmplChangeInventory";
         $From = "\nFrom DocmAchsDetails_v d";
         $Order = "\nOrder by d.docm_id";
 
@@ -93,7 +95,8 @@ class DocmAchsDetails extends MainFormModel
                     discontinued,
                     SN,
                     color,
-                    no_price_list', 'safe'),
+                    no_price_list,
+                    EmplChangeInventory', 'safe'),
         );
     }
 
@@ -122,6 +125,7 @@ class DocmAchsDetails extends MainFormModel
             'discontinued' => 'discontinued',
             'SN' => 'SN',
             'color' => 'color',
+            'EmplChangeInventory' => 'EmplChangeInventory',
         );
     }
 	
