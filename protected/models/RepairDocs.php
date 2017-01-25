@@ -20,7 +20,7 @@ class RepairDocs extends MainFormModel
     
     public function rules() {
         return array(
-                array('number, date', 'required'),
+                array('date', 'required'),
                 array('rpdoc_id,
                         repr_id,
                         dctp_id,

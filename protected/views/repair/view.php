@@ -255,10 +255,17 @@
         $('#btnPrint').on('click', function() {
             var url = '';
             var CurrentTabIndex = $('#Tabs').jqxTabs('selectedItem');
-            url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+            if (CurrentTabIndex == 3){
+                url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                    'ReportName' => '/Ремонт/Сопроводительная накладная'
+                ))); ?>;
+                url += '&Parameters[p_rpdoc_id]=' + CurrentRowDoc.docid + '&Parameters[repr_id]=' + Repairs.Repr_id;
+            } else {
+                url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
                     'ReportName' => '/Ремонт/Приходная_накладная_в_ПРЦ'
                 ))); ?>;
-            url += '&Parameters[Repr_id]=' + Repairs.Repr_id;
+                url += '&Parameters[Repr_id]=' + Repairs.Repr_id;
+            }
             window.open(url);
         });
         
@@ -292,9 +299,6 @@
             });
         });
         
-        var initWidgets2 = function (tab) {
-            switch (tab) {
-                case 0:
                     $("#edComment").jqxInput($.extend(true, {}, {height: 25, width: 440, minLength: 1}));
                     $("#edPlanDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: null, dropDownVerticalAlignment: 'top'}));
                     $('#btnAddComment').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -368,8 +372,7 @@
                             }
                         });
                     });
-                break;
-                case 1:
+                    
                     $('#btnAddEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnEditEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnRefreshEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -512,8 +515,7 @@
                             });
                         }
                     });
-                break;
-                case 2:
+
 
                     $("#DocsPanel").on('open', function(){
                         SetStateButtons();
@@ -788,7 +790,8 @@
                     $("#DocsPanel").jqxDropDownButton('setContent', DD);
                     
                     $('#btnDelDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-                    var DataRepairDocuments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairDocuments), { async: true,
+                    
+                    var DataRepairDocuments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairDocuments), { async: false,
                         formatData: function (data) {
                                     $.extend(data, {
                                         Variables: {Repr_id: Repairs.Repr_id}
@@ -801,6 +804,10 @@
                     });
                     
                     var CurrentRowDoc;
+                    
+                    $("#GridDocuments").on("bindingcomplete", function (event) {
+                        $('#GridDocuments').jqxGrid('selectrow', 0);
+                    });  
                     
                     $("#GridDocuments").on('rowselect', function (event) {
                         CurrentRowDoc = $('#GridDocuments').jqxGrid('getrowdata', event.args.rowindex);
@@ -874,11 +881,9 @@
                                     { text: 'Примечание', datafield: 'note', width: 120},
                                 ]
                     }));
-                break;
-            }
-        };
+
         
-        $('#Tabs2').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)', initTabContent: initWidgets2});
+        $('#Tabs2').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)'});
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
         DataEmployees.dataBind();
         DataEmployees = DataEmployees.records;
