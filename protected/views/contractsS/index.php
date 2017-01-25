@@ -302,6 +302,8 @@
                     $("#ContractPriceHistoryGrid").on('rowselect', function (event) {
                         CurrentRowDataCPH = $('#ContractPriceHistoryGrid').jqxGrid('getrowdata', event.args.rowindex);
                     });
+                    
+                    
 
                     $("#NewContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
                     $("#EditContractPriceHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -447,12 +449,17 @@
                     
                     $("#PaymentHistoryGrid").on('rowselect', function (event) {
                         CurrentRowDataPH = $('#PaymentHistoryGrid').jqxGrid('getrowdata', event.args.rowindex);
-                        console.log(typeof CurrentRowDataPH);
+                        
                         if (CurrentRowDataPH != undefined) $("#NotePaymentHistory").jqxTextArea('val', CurrentRowDataPH.note);
+                        
                     });
                     
                     $('#PaymentHistoryGrid').on('rowdoubleclick', function () { 
                         $("#EditPaymentHistory").click();
+                    });
+                    
+                    $("#PaymentHistoryGrid").on('bindingcomplete', function() {
+                        $("#PaymentHistoryGrid").jqxGrid('selectrow', 0);
                     });
                     
                     $("#NotePaymentHistory").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 'calc(100% - 2px)' }));
