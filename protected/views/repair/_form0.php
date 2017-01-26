@@ -9,7 +9,7 @@
             Prior_id: <?php echo json_encode($model->prtp_id); ?>,
             BestDate: Aliton.DateConvertToJs(<?php echo json_encode($model->best_date); ?>),
             Deadline: Aliton.DateConvertToJs(<?php echo json_encode($model->deadline); ?>),
-            DatePlan: Aliton.DateConvertToJs(<?php echo json_encode($model->date_plan); ?>),
+            DatePlan: Aliton.DateConvertToJs(<?php echo json_encode($model->DatePlan); ?>),
             Jrdc_id: <?php echo json_encode($model->jrdc_id); ?>,
             Equip_id: <?php echo json_encode($model->eqip_id); ?>,
             Quant: <?php echo json_encode($model->docm_quant); ?>,
@@ -35,9 +35,9 @@
         var PriorsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairPriors));
         $("#edPriorEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: PriorsDataAdapter, displayMember: "RepairPrior", valueMember: "prtp_id", autoDropDownHeight: true, width: 150 }));
         $("#edDemandEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 140 }));
-        $("#edBestDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.BestDate}));
-        $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.Deadline}));
-        $("#edDatePlanEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.DatePlan}));
+        $("#edBestDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: Repair.BestDate}));
+        $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.Deadline, formatString: 'dd.MM.yyyy'}));
+        $("#edDatePlanEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.DatePlan, formatString: 'dd.MM.yyyy'}));
         var DataAddress = new $.jqx.dataAdapter(Sources.SourceListAddresses);
         $("#edAddrEdit").on('bindingComplete', function(){
             $('#btnSaveRepairs').jqxButton({disabled: false});
@@ -216,7 +216,7 @@
         </div>
         <div class="al-row">
             <div class="al-row-column">
-                <div class="al-row" style="padding: 0px;">Жедаемая дата</div>
+                <div class="al-row" style="padding: 0px;">Желаемая дата</div>
                 <div style="clear: both"></div>
                 <div class="al-row" style="padding: 0px;"><div id="edBestDateEdit" name="Repairs[best_date]"></div></div>
             </div>
