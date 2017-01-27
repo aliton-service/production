@@ -14,7 +14,7 @@
             Prior: <?php echo json_encode($model->RepairPrior); ?>,
             BestDate: Aliton.DateConvertToJs(<?php echo json_encode($model->best_date); ?>),
             Deadline: Aliton.DateConvertToJs(<?php echo json_encode($model->deadline); ?>),
-            DatePlan: Aliton.DateConvertToJs(<?php echo json_encode($model->date_plan); ?>),
+            DatePlan: Aliton.DateConvertToJs(<?php echo json_encode($model->DatePlan); ?>),
             Demand_id: <?php echo json_encode($model->dmnd_id); ?>,
             Addr: <?php echo json_encode($model->Addr); ?>,
             RepairPay: Boolean(Number(<?php echo json_encode($model->repair_pay); ?>)),
@@ -40,7 +40,7 @@
             Master_id: <?php echo json_encode($model->mstr_empl_id); ?>,
             Egnr_id: <?php echo json_encode($model->egnr_empl_id); ?>,
             EDefect: <?php echo json_encode($model->edefect); ?>,
-            DatePlanAction1: Aliton.DateConvertToJs(<?php echo json_encode($model->date_plan); ?>),
+            DatePlanAction1: Aliton.DateConvertToJs(<?php echo json_encode($model->DatePlan); ?>),
             DateFactAction1: Aliton.DateConvertToJs(<?php echo json_encode($model->date_fact); ?>),
             ExecHour: <?php echo json_encode($model->exechour); ?>,
             Jrdc_id: <?php echo json_encode($model->jrdc_id); ?>,
@@ -146,7 +146,7 @@
                     Repairs.Prior = Res.RepairPrior;
                     Repairs.BestDate = Aliton.DateConvertToJs(Res.best_date);
                     Repairs.Deadline = Aliton.DateConvertToJs(Res.deadline);
-                    Repairs.DatePlan = Aliton.DateConvertToJs(Res.date_plan);
+                    Repairs.DatePlan = Aliton.DateConvertToJs(Res.DatePlan);
                     Repairs.Demand_id = Res.dmnd_id;
                     Repairs.Addr = Res.Addr;
                     Repairs.RepairPay = Boolean(Number(Res.repair_pay));
@@ -169,7 +169,7 @@
                     Repairs.Rslt_id = Res.rslt_id;
                     Repairs.ResultName = Res.resultname;
                     Repairs.EDefect = Res.edefect;
-                    Repairs.DatePlanAction1 = Aliton.DateConvertToJs(Res.date_plan);
+                    Repairs.DatePlanAction1 = Aliton.DateConvertToJs(Res.DatePlan);
                     Repairs.DateFactAction1 = Aliton.DateConvertToJs(Res.date_fact);
                     Repairs.ExecHour = Res.exechour;
                     SetValueControls();
@@ -190,9 +190,9 @@
                     $("#edNumber").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
                     $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edPrior").jqxInput($.extend(true, {}, {height: 25, width: 150, minLength: 1}));
-                    $("#edBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-                    $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-                    $("#edDatePlan").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: Repairs.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
+                    $("#edDatePlan").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
                     $("#edDemand").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
                     $("#edAddress").jqxInput($.extend(true, {}, {height: 25, width: 340, minLength: 1}));
                     $("#edRepairPay").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repairs.RepairPay}));
@@ -255,10 +255,17 @@
         $('#btnPrint').on('click', function() {
             var url = '';
             var CurrentTabIndex = $('#Tabs').jqxTabs('selectedItem');
-            url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+            if (CurrentTabIndex == 3){
+                url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                    'ReportName' => '/Ремонт/Сопроводительная накладная'
+                ))); ?>;
+                url += '&Parameters[p_rpdoc_id]=' + CurrentRowDoc.docid + '&Parameters[repr_id]=' + Repairs.Repr_id;
+            } else {
+                url = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
                     'ReportName' => '/Ремонт/Приходная_накладная_в_ПРЦ'
                 ))); ?>;
-            url += '&Parameters[Repr_id]=' + Repairs.Repr_id;
+                url += '&Parameters[Repr_id]=' + Repairs.Repr_id;
+            }
             window.open(url);
         });
         
@@ -292,9 +299,6 @@
             });
         });
         
-        var initWidgets2 = function (tab) {
-            switch (tab) {
-                case 0:
                     $("#edComment").jqxInput($.extend(true, {}, {height: 25, width: 440, minLength: 1}));
                     $("#edPlanDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: null, dropDownVerticalAlignment: 'top'}));
                     $('#btnAddComment').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -343,17 +347,21 @@
                         
                         var CurrentDate = new Date();
                         CurrentDate = CurrentDate.getDay() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear() + ' ' + CurrentDate.getHours() + ':' + CurrentDate.getMinutes();
+                        var NewComment = {
+                            Repr_id: Repairs.Repr_id,
+                            Date: CurrentDate,
+                            Comment: $("#edComment").val()
+                        };
+                        $("#edPlanDate").val() != "" 
+                            ? NewComment.DatePlan = $("#edPlanDate").val()
+                            : NewComment.DatePlan = null;
+                            
                         $.ajax({
                             url: <?php echo json_encode(Yii::app()->createUrl('RepairComments/Create')) ?>,
                             type: 'POST',
                             async: false,
                             data: {
-                                RepairComments: {
-                                    Repr_id: Repairs.Repr_id,
-                                    Date: CurrentDate,
-                                    DatePlan: $("#edPlanDate").val(),
-                                    Comment: $("#edComment").val()
-                                }
+                                RepairComments: NewComment
                             },
                             success: function(Res) {
                                 Res = JSON.parse(Res);
@@ -368,8 +376,7 @@
                             }
                         });
                     });
-                break;
-                case 1:
+                    
                     $('#btnAddEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnEditEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnRefreshEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -512,8 +519,7 @@
                             });
                         }
                     });
-                break;
-                case 2:
+
 
                     $("#DocsPanel").on('open', function(){
                         SetStateButtons();
@@ -788,7 +794,8 @@
                     $("#DocsPanel").jqxDropDownButton('setContent', DD);
                     
                     $('#btnDelDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
-                    var DataRepairDocuments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairDocuments), { async: true,
+                    
+                    var DataRepairDocuments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairDocuments), { async: false,
                         formatData: function (data) {
                                     $.extend(data, {
                                         Variables: {Repr_id: Repairs.Repr_id}
@@ -801,6 +808,10 @@
                     });
                     
                     var CurrentRowDoc;
+                    
+                    $("#GridDocuments").on("bindingcomplete", function (event) {
+                        $('#GridDocuments').jqxGrid('selectrow', 0);
+                    });  
                     
                     $("#GridDocuments").on('rowselect', function (event) {
                         CurrentRowDoc = $('#GridDocuments').jqxGrid('getrowdata', event.args.rowindex);
@@ -874,11 +885,9 @@
                                     { text: 'Примечание', datafield: 'note', width: 120},
                                 ]
                     }));
-                break;
-            }
-        };
+
         
-        $('#Tabs2').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)', initTabContent: initWidgets2});
+        $('#Tabs2').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)'});
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
         DataEmployees.dataBind();
         DataEmployees = DataEmployees.records;
@@ -1155,7 +1164,7 @@
                         <div class="al-row" style="padding: 0px;"><input type="text" readonly="readonly" id="edAddress" /></div>
                     </div>
                     <div class="al-row-column">
-                        <div class="al-row" style="padding: 0px;">Жедаемая дата</div>
+                        <div class="al-row" style="padding: 0px;">Желаемая дата</div>
                         <div style="clear: both"></div>
                         <div class="al-row" style="padding: 0px;"><div id="edBestDate"></div></div>
                     </div>

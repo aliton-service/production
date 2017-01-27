@@ -33,10 +33,10 @@
         $("#edContactPersonDocEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees)); 
         $("#edFromEmplDocEdit").jqxComboBox({ source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
-        $('#edDiagnostiсsDocEdit').jqxCheckBox($.extend(true, CheckBoxDefaultSettings, { height: 80, width: '150px'}));
+        $('#edDiagnostiсsDocEdit').jqxCheckBox($.extend(true, CheckBoxDefaultSettings, { height: 25, width: 180}));
         $("#edSumDiagnostiсsDocEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '120px'}));
         $("#edSumDocEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '120px'}));
-        $('#edNoteDocEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 50, width: 'calc(100% - 2px)', minLength: 1}));
+        $('#edNoteDocEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 100, width: 'calc(100% - 2px)', minLength: 1}));
         
         
         $('#btnSaveRepairDocs').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: false }));

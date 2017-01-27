@@ -206,6 +206,8 @@
     }
 </style> 
 
+<?php $this->setPageTitle('Ремонт - реестр оборудвания'); ?>
+
 <div id="GridContainer" style="float: left; width: 100%; height: calc(100% - 178px)">
     <div id="RepairsGrid"></div>
 </div>    
