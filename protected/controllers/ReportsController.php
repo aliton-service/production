@@ -21,7 +21,7 @@ class ReportsController extends Controller
     {
         return array(
             array('allow', 
-                    'actions'=>array('ReportOpen'),
+                    'actions'=>array('ReportOpen, ReportOpenNewWindow'),
                     'users'=>array('*'),
             ),
         );
@@ -78,6 +78,60 @@ class ReportsController extends Controller
                 'ReportName' => $ReportName,
                 'Ajax' => $Ajax,
             ));
+    }
+    
+    public function actionReportOpenNewWindow($ReportName = '', $Ajax = false, $Render = true) {
+        
+        if ($ReportName == '') {
+            $ResultHtml = 'Не выбран отчет.';
+            $this->render('standart', array(
+                'ResultHtml' => $ResultHtml,
+            ));
+            return;
+        }
+        else
+            $ReportName = urldecode ($ReportName);
+        
+        $ResultHtml = '';
+        if ($Render)  {
+        
+            require_once 'SSRSReport.php';
+            define("REPORT", $ReportName);
+            $Settings = parse_ini_file("/protected/config/app.config", 1);
+
+            $RS = new SSRSReport(new Credentials($Settings["UID"], $Settings["PASWD"]),$Settings["SERVICE_URL"]);
+            $ExecutionInfo = $RS->LoadReport2(REPORT, NULL);
+
+            $RS->SetExecutionParameters2($this->SetParameters());
+
+            $renderAsHTML = new RenderAsHTML();
+
+            $ResultHtml = $RS->Render2($renderAsHTML,
+                             PageCountModeEnum::$Estimate,
+                             $Extension,
+                             $MimeType,
+                             $Encoding,
+                             $Warnings,
+                             $StreamIds);
+       
+        }
+        
+        //$ResultHtml = str_ireplace('<div dir="LTR" style="HEIGHT:100%;WIDTH:100%;direction:ltr" id="oReportDiv">', '<div dir="LTR" style="HEIGHT:calc(100% - 80px);WIDTH:100%;direction:ltr" id="oReportDiv">', $ResultHtml);
+        //$ResultHtml = str_ireplace('<div style="HEIGHT:100%;WIDTH:100%;" class="ap">', '<div class="ap">', $ResultHtml);
+        
+//        if (!$Ajax)
+//            $this->render($this->GetViewForReport($ReportName), array(
+//                'ResultHtml' => $ResultHtml,
+//                'ReportName' => $ReportName,
+//                'Ajax' => $Ajax,
+//            ));
+//        else
+//            $this->renderPartial($this->GetViewForReport($ReportName), array(
+//                'ResultHtml' => $ResultHtml,
+//                'ReportName' => $ReportName,
+//                'Ajax' => $Ajax,
+//            ));
+        echo $ResultHtml;
     }
     
     public function SetParameters() {
