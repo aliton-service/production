@@ -312,6 +312,9 @@ return array_merge(
                 'UserDeliveryDemands',
                 'ManagerContacts',
                 'UserContractsS',
+                'ManagerEvents',
+                'AdminEventOffers',
+                'AdminOfferDemands',
             ),
         ),
         
