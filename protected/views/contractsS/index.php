@@ -82,7 +82,7 @@
                     { text: 'Вид оплаты', dataField: 'PaymentTypeName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
                     { text: 'Оплачено по', dataField: 'DatePay', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 105 },
                     { text: 'Долг', datafield: 'Debtor', columntype: 'checkbox', filtercondition: 'STARTS_WITH', width: 50 },
-                    { text: 'Оплачено', datafield: 'CalcSum', cellsalign: 'right', cellsformat: 'f2', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90 },
+                    { text: 'Оплачено', datafield: 'SumPay', cellsalign: 'right', cellsformat: 'f2', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90 },
                     { text: 'MasterName', dataField: 'MasterName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120, hidden: true },
                 ]
             })

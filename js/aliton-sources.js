@@ -1513,6 +1513,7 @@ Sources.SourceContractsS =
         {name: 'Reason_id', type: 'int'},
         {name: 'PropForm_id', type: 'int'},
         {name: 'LastChangeDate', type: 'date'},
+        {name: 'SumPay', type: 'float'},
     ],
     id: 'ContrS_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ContractsS',

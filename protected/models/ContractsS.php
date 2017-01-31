@@ -62,6 +62,7 @@ class ContractsS extends MainFormModel
     public $JuridicalPerson = null;
     public $MasterName = null;
     public $PropForm_id = null;
+    public $SumPay;
 
 
 
@@ -105,6 +106,7 @@ class ContractsS extends MainFormModel
                         c.Reason_id,
                         c.Price,
                         c.DatePay,
+                        dbo.get_sumpayments(c.ContrS_id) as SumPay,
                         c.Debtor,
                         c.PriceMonth,
                         c.LastChangeDate,
