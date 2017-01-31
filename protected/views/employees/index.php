@@ -342,7 +342,14 @@
         }));
         
     });
-</script>    
+</script> 
+
+<style>
+    #EmployeesGrid {
+        cursor: default;
+    }
+</style>    
+
 <div class="al-row" style="height: calc(100% - 290px)">
     <div id="EmployeesGrid" class="jqxGridAliton"></div>
 </div>

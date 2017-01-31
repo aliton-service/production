@@ -21,7 +21,7 @@
         
         $("#ContrNumS").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#WorkText").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 335 }));
-        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
         $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#PaymentTypeName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));

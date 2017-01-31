@@ -36,8 +36,9 @@
                 formatData: function (data) {
                     var Value = $('#FilterEquipsCCE').val();
                     var Filters = [];
-                    Filters[0] = "e.ctgr_id <> 7";
+                    Filters[0] = "c.ctgr_id <> 7";
                     Filters[1] = "e.equipname like '%" + Value + "%'"
+                    Filters[2] = "e.discontinued is null"
                     $.extend(data, {
                         Filters: Filters
                     });

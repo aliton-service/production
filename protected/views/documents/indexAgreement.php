@@ -36,7 +36,7 @@
             
         
         $("#ContrNumS7").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
-        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
         $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
