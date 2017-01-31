@@ -293,6 +293,11 @@ return array_merge(
                 'WHActs3Report',
                 'AdminEmployees',
                 'AdminOrganizationStructure',
+                
+                'EmployeesReportAll',
+                'Employee1Report',
+                'Employee2Report',
+                'Employee3Report',
             ),
         ),
         
