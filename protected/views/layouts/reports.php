@@ -103,7 +103,7 @@
                     var Str = '';
                     var FileName = '';
                     Params = <?php if (isset($_GET['Parameters'])) echo json_encode($_GET['Parameters']); else echo json_encode(''); ?>;
-                    FileName = <?php if (isset($_GET['FileName'])) echo json_encode('&FileName=' . urlencode (json_decode ($_GET['FileName']))); else echo json_encode('') ?>;
+                    FileName = <?php if (isset($_GET['FileName'])) echo json_encode('&FileName=' . $_GET['FileName']); else echo json_encode('') ?>;
                     
                     if ($('#Parameters').length>0)
                         Data = $('#Parameters').serialize();
@@ -120,7 +120,9 @@
                     var Data = null;
                     var Params = {};
                     var Str = '';
+                    var FileName = '';
                     Params = <?php if (isset($_GET['Parameters'])) echo json_encode($_GET['Parameters']); else echo json_encode(''); ?>;
+                    FileName = <?php if (isset($_GET['FileName'])) echo json_encode('&FileName=' . $_GET['FileName']); else echo json_encode('') ?>;
                     if ($('#Parameters').length>0)
                         Data = $('#Parameters').serialize();
                     
@@ -128,7 +130,7 @@
                         Str += '&Parameters[' + key + ']=' + Params[key];
                     }
                     
-                    window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportExportPDF')); ?> + '&ReportName=' + ReportName + '&' + Data + Str);
+                    location.href = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportExportPDF')); ?> + '&ReportName=' + ReportName + '&' + Data + Str + FileName;
                     
                 });
                 

@@ -14,7 +14,7 @@ class ReportsController extends Controller
     }
     
     public function SetValidName($string) {
-        return str_ireplace(array("\\", "/", ":", "*", "?", "'", "\"", ">", "<", "|", "%", ";", " "), "_", $string);
+        return str_ireplace(array("\\", "/", ":", "*", "?", "'", "\"", ">", "<", "|", "%", ";", " ", ","), "_", $string);
     }
     
     public function accessRules()
@@ -321,7 +321,7 @@ class ReportsController extends Controller
                                  $StreamIds);
             
             if (isset($_GET['FileName']))
-                $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, '.pdf');
+                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultPDF, '.pdf');
             else
                 $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, '.pdf');
         }

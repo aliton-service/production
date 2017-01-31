@@ -712,8 +712,7 @@
                             'ReportName' => '/Сметы/Смета',
                             'Ajax' => false,
                             'Render' => true,
-                            'FileName' => json_encode($model->group_name),
-                        ))); ?> + '&Parameters[pCalc_id]=' + CostCalculations.calc_id);
+                        ))); ?> + '&Parameters[pCalc_id]=' + CostCalculations.calc_id + '&FileName=' + <?php echo json_encode($model->group_name)?>);
         });
         $('#btnPrint2CostCalculations').on('click', function() {
             window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
@@ -1407,6 +1406,8 @@
 
 
 <?php $this->setPageTitle($model->CostCalcType); ?>
+
+<?php echo $model->group_name; ?>
 
 <?php
     $this->breadcrumbs=array(
