@@ -27,6 +27,7 @@ class CostCalculations_v extends MainFormModel
     public $Number;
     public $ProcPay;
     public $ObjectGr_id;
+    public $DateExec;
                 
     public function rules()
     {
@@ -91,9 +92,11 @@ class CostCalculations_v extends MainFormModel
                         d.Date as TrebDate,
                         d.Number,
                         c.ObjectGr_id,
+                        dm.DateExec,
                         Case When c.Sum_High_Full > 0 Then round(c.SumPay/c.Sum_High_Full*100, 2) Else 0 End as ProcPay";
         $From = "\nFrom CostCalculations_v c left join WHDocuments d on (c.Treb_id = d.Docm_id)
-                        left join Employees e on (e.Employee_id = d.Empl_id)";
+                        left join Employees e on (e.Employee_id = d.Empl_id)
+                        left join Demands dm on (c.Demand_id = dm.Demand_id)";
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
         

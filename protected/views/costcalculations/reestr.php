@@ -55,6 +55,7 @@
                                 { text: 'Адрес', datafield: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150 },
                                 { text: 'Менеджер', datafield: 'MngrShortName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 120 },
                                 { text: 'Заявка №', datafield: 'Demand_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90 },
+                                { text: 'Выполнение заявки', datafield: 'DateExec', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', filtercondition: 'STARTS_WITH', width: 110 },
                                 { text: 'Сумма', datafield: 'Sum_High_Full', cellsformat: 'f2', filtercondition: 'STARTS_WITH', width: 110, cellsalign: 'right' },
                                 { text: 'Оплата', datafield: 'SumPay', cellsformat: 'f2', filtercondition: 'STARTS_WITH', width: 110, cellsalign: 'right' },
                                 { text: 'Оплата %', datafield: 'ProcPay', cellsformat: 'f2', filtercondition: 'STARTS_WITH', width: 110, cellsalign: 'right' },

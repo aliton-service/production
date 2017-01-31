@@ -4087,6 +4087,7 @@ Sources.SourceCostCalculations_v =
         {name: 'Number', type: 'string'},
         {name: 'ProcPay', type: 'float'},
         {name: 'ObjectGr_id', type: 'int'},
+        {name: 'DateExec', type: 'date'},
     ],
     id: 'Calc_id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=CostCalculations_v',
