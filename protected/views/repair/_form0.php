@@ -36,7 +36,7 @@
         $("#edPriorEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: PriorsDataAdapter, displayMember: "RepairPrior", valueMember: "prtp_id", autoDropDownHeight: true, width: 150 }));
         $("#edDemandEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 140 }));
         $("#edBestDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: Repair.BestDate}));
-        $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.Deadline, formatString: 'dd.MM.yyyy'}));
+        $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: Repair.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
         $("#edDatePlanEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.DatePlan, formatString: 'dd.MM.yyyy'}));
         var DataAddress = new $.jqx.dataAdapter(Sources.SourceListAddresses);
         $("#edAddrEdit").on('bindingComplete', function(){
@@ -61,7 +61,7 @@
         $("#edEquipEdit").on('bindingComplete', function(event){
             if (Repair.Equip_id != '') $("#edEquipEdit").jqxComboBox('val', Repair.Equip_id);
         });
-        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '250', height: '25px', displayMember: "EquipName", valueMember: "Equip_id"}));
+        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: 350, height: 25, displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: true}));
         $("#edSerialNumberEdit").jqxInput($.extend(true, {}, {height: 25, width: 200, minLength: 1}));
         $("#edUmNameEdit").jqxInput($.extend(true, {}, {height: 25, width: 60, minLength: 1}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Repair.Quant, decimalDigits: 0}));

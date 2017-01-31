@@ -188,7 +188,7 @@
             switch (tab) {
                 case 0:
                     $("#edNumber").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
-                    $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Repairs.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edPrior").jqxInput($.extend(true, {}, {height: 25, width: 150, minLength: 1}));
                     $("#edBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: Repairs.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
@@ -275,7 +275,7 @@
             var CurrentTabIndex = $('#Tabs').jqxTabs('selectedItem');
             
             if (CurrentTabIndex == 0)
-                $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 660, width: 780, position: 'center' }));
+                $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 660, width: 850, position: 'center' }));
             if (CurrentTabIndex == 1)
                 $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 140, width: 500, position: 'center' }));
             if (CurrentTabIndex == 2)
