@@ -234,6 +234,9 @@ return array_merge(
     /* Цены за площадь*/
     include(dirname(__FILE__).'/security/AreaPricesSecurity.php'),
         
+    /* Реестр клиентов */
+    include(dirname(__FILE__).'/security/SalesDepClientsSecurity.php'),
+        
     array(    
         'guest' => array(
             'type' => CAuthItem::TYPE_ROLE,
@@ -994,6 +997,9 @@ return array_merge(
                 'ManagerObjects',
                 'ManagerWHBuhActs',
                 'UserPropForms',
+                /**/
+                'ManagerSalesDepClients',
+                
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
