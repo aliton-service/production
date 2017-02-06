@@ -233,6 +233,8 @@ return array_merge(
         
     /* Цены за площадь*/
     include(dirname(__FILE__).'/security/AreaPricesSecurity.php'),
+    /* Цены за площадь*/
+    include(dirname(__FILE__).'/security/AreaObjectPricesSecurity.php'),
         
     /* Реестр клиентов */
     include(dirname(__FILE__).'/security/SalesDepClientsSecurity.php'),
@@ -484,6 +486,7 @@ return array_merge(
                 'AdminControlWHDocuments',
                 'HeadLogistics',
                 'AdminAreaPrices',
+                'AdminAreaObjectPrices',
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
