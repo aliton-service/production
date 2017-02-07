@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
     <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
     <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -185,7 +187,12 @@
                                 )
                             )
                             ),
-
+                            
+                            array('label'=>'Реестр клиентов', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewSalesDepClients'), 'items'=>array(
+                                    array('label'=>'Реестр клиентов', 'url'=>array('/SalesDepClients')),
+                                )
+                            ),
+                            
                             array('label'=>'Ремонт', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewRepairs'), 'items'=>array(
                                     array('label'=>'Реестр оборудования', 'url'=>array('/Repair')),
                                 )
