@@ -49,7 +49,8 @@ Sources.SourceListObjectsMin =
         { name: 'VIP' },
         { name: 'Territ_Name' },
         { name: 'ContrS_id' },
-        { name: 'Status' }
+        { name: 'Status' },
+        { name: 'ServiceManager', type: 'string'}
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ListObjectsMin',
@@ -4451,6 +4452,42 @@ Sources.SourceAreaObjectPrices =
     root: 'Rows',
     async: false,
     cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceClients =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Form_id', type: 'int'},
+        {name: 'Number', type: 'string'},
+        {name: 'FullName', type: 'string'},
+        {name: 'Demands', type: 'int'},
+        {name: 'SegmentName', type: 'string'},
+        {name: 'SubSegmentName', type: 'string'},
+        {name: 'SourceInfoName', type: 'string'},
+        {name: 'SubSourceInfoName', type: 'string'},
+        {name: 'BrandName', type: 'string'},
+        {name: 'Address', type: 'string'},
+        {name: 'WWW', type: 'string'},
+        {name: 'CountObjects', type: 'int'},
+        {name: 'SalesManager', type: 'string'},
+        {name: 'ServiceManager', type: 'string'},
+        {name: 'StatusName', type: 'string'},
+        {name: 'NextAction', type: 'string'},
+        {name: 'LastDateContact', type: 'date'},
+        {name: 'DateChangeSalesManager', type: 'date'},
+        {name: 'DateCreate', type: 'date'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=Clients',
+    root: 'Rows',
+    cache: false,
+    async: true,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {

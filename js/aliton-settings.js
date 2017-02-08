@@ -136,7 +136,9 @@ var ToggleButtonDefaultSettings = {
     height: 30,
 };
 
-
+var CalendarDefaultSettings = {
+    culture: 'ru-RU'
+};
 
 var GridFilters = {};
 

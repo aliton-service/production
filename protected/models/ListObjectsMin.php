@@ -21,6 +21,7 @@ class ListObjectsMin extends MainFormModel
     public $VIP;
     public $Territ_Name;
     public $ServiceType;
+    public $ServiceManager;
     
     public function rules() {
         return array(
@@ -77,12 +78,14 @@ class ListObjectsMin extends MainFormModel
                         a.Street_id,
                         a.House, 
                         case when p.sum_price > 7500 then 'VIP' else '' end AS VIP,
-                        c.Territ_Name";
+                        c.Territ_Name,
+                        dbo.FIO(e.EmployeeName) as ServiceManager";
         $From =     "\nFrom dbo.Objects AS o inner join dbo.ObjectsGroup AS og ON o.ObjectGr_id = og.ObjectGr_id 
                         left join dbo.Addresses_v AS a ON og.Address_id = a.Address_id 
                         left join dbo.Contracts_v AS C ON o.ObjectGr_id = C.ObjectGr_id AND dbo.truncdate(GETDATE()) BETWEEN C.ContrSDateStart AND C.ContrSDateEnd AND ISNULL(C.DocType_id, 4) = 4
                         left join dbo.Organizations_v AS p ON og.PropForm_id = p.Form_id
-                        left join dbo.Areas AS ar ON og.Area_id = ar.Area_id";
+                        left join dbo.Areas AS ar ON og.Area_id = ar.Area_id
+                        left join dbo.Employees e on og.Srmg_id = e.Employee_id";
         $Where =    "\nWhere (o.DelDate IS NULL)
                         AND (og.DelDate IS NULL)
                         AND (o.Doorway <> 'Общее')

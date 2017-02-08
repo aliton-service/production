@@ -4,6 +4,7 @@ class SalesDepClientsController extends Controller
 {
     public $layout = '//layouts/column2';
     public $title = '';
+    public $gridFilters;
 
     public function filters()
     {
@@ -25,6 +26,7 @@ class SalesDepClientsController extends Controller
     public function actionIndex()
     {
         $this->title = 'Клиенты - реестр';
+        $this->gridFilters = '_filters';
         $this->render('index');
     }
 }

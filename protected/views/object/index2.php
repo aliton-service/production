@@ -71,6 +71,7 @@
                     { text: 'Новостройка', datafield: 'year_construction', width: 180, cellsrenderer: cellsrenderer },
                     { text: 'ВИП', datafield: 'VIP', width: 180, cellsrenderer: cellsrenderer },
                     { text: 'Участок', dataField: 'Territ_Name', width: 180, cellsrenderer: cellsrenderer },
+                    { text: 'ПМ', dataField: 'ServiceManager', width: 180, cellsrenderer: cellsrenderer },
                 ]
                 
         }));
