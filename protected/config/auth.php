@@ -1223,6 +1223,7 @@ return array_merge(
                 'Storeman',
                 'ManagerInventoryDetails',
                 'AdminInventories',
+                'ManagerMaterialLogistics',
             ),
         ),
         
