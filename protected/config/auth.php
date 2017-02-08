@@ -958,6 +958,14 @@ return array_merge(
                 'DemandsReport10',
                 'DemandsReport11',
                 'DemandsReport12',
+                
+                'ObjectReportAll',
+                'ObjectReport1',
+                'ObjectReport2',
+                'ObjectReport3',
+                'ObjectReport4',
+                'ObjectReport5',
+                
             ),
         ),
         
