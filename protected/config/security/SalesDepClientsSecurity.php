@@ -10,6 +10,8 @@ return array(
             'defaultIndex' => 'streets/index',
              'children' => array(
                 'ViewSalesDepClients',
+                'SetSalesManager',
+                'AttachObjects',
                 ),
         ),
 
@@ -21,6 +23,8 @@ return array(
             'defaultIndex' => 'streets/index',
             'children' => array(
                 'ViewSalesDepClients',
+                'SetSalesManager',
+                'AttachObjects',
                 ),
         ),
 
@@ -38,6 +42,27 @@ return array(
         'ViewSalesDepClients' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'ViewSalesDepClients',
+            'bizRule' => null,
+            'data' => null,
+        ),
+    
+        'SetSalesManager' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'SetSalesManager',
+            'bizRule' => null,
+            'data' => null,
+        ),
+    
+        'SelectObjects' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'SelectObjects',
+            'bizRule' => null,
+            'data' => null,
+        ),
+    
+        'AttachObjects' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'AttachObjects',
             'bizRule' => null,
             'data' => null,
         ),

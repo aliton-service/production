@@ -42,7 +42,17 @@ class OrganizationsV extends MainFormModel
         public $EmplChange;
         public $date_create;
         public $date_change;
-                
+        public $Number;
+        public $Status_id;
+        public $Segment_id;
+        public $SubSegment_id;
+        public $SourceInfo_id;
+        public $SubSourceInfo_id;
+        public $BrandName;
+        public $WWW;
+        public $CountObjects;
+        
+        
 	public function rules()
 	{
             return array(
@@ -82,7 +92,16 @@ class OrganizationsV extends MainFormModel
                             sum_price, 
                             sum_appz_price,
                             JAddress,
-                            FAddress,', 'safe'),
+                            FAddress,
+                            Number,
+                            Status_id,
+                            Segment_id,
+                            SubSegment_id,
+                            SourceInfo_id,
+                            SubSourceInfo_id,
+                            BrandName,
+                            WWW,
+                            CountObjects', 'safe'),
             );
 	}
         

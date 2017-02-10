@@ -59,7 +59,7 @@ Sources.SourceListObjectsMin =
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
-        Sources.SourceListObjects.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -901,6 +901,15 @@ Sources.SourceOrganizationsV =
         { name: 'sum_appz_price',  type: 'string' },
         { name: 'sum_appz_price',  type: 'string' },
         { name: 'telephone',  type: 'string' },
+        {name: 'Number', type: 'string'},
+        {name: 'Status_id', type: 'int'},
+        {name: 'Segment_id', type: 'int'},
+        {name: 'SubSegment_id', type: 'int'},
+        {name: 'SourceInfo_id', type: 'int'},
+        {name: 'SubSourceInfo_id', type: 'int'},
+        {name: 'BrandName', type: 'string'},
+        {name: 'WWW', type: 'string'},
+        {name: 'CountObjects', type: 'int'},
     ],
     id: 'Form_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OrganizationsV',
@@ -4485,6 +4494,59 @@ Sources.SourceClients =
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=Clients',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceClientStatus =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Status_id',  type: 'int' },
+        { name: 'StatusName',  type: 'string' },
+    ],
+    id: 'Status_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ClientStatus',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceClientActions =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Exrp_id', type: 'int'},
+        {name: 'Date', type: 'date'},
+        {name: 'FullName', type: 'string'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'ContactType_id', type: 'int'},
+        {name: 'ContactName', type: 'string'},
+        {name: 'ActionStage_id', type: 'int'},
+        {name: 'StageName', type: 'string'},
+        {name: 'Report', type: 'string'},
+        {name: 'NextDate', type: 'date'},
+        {name: 'NextAction', type: 'string'},
+        {name: 'SegmentName', type: 'string'},
+        {name: 'SubSegmentName', type: 'string'},
+        {name: 'Address', type: 'string'},
+        {name: 'Date', type: 'date'},
+    ],
+    id: 'Exrp_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ClientActions',
+    type: 'POST',
     root: 'Rows',
     cache: false,
     async: true,

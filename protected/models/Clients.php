@@ -120,6 +120,18 @@ class Clients extends MainFormModel
             'DateCreate' => '',
         );
     }
+    
+    public function attributeFilters()
+    {
+        return array(
+            'SalesManager' => 'dbo.FIO(e.EmployeeName)',
+            'SegmentName' => 'cg.ClientGroup',
+            'SubSegmentName' => 'scg.ClientGroup',
+            'SourceInfoName' => 'si.SourceInfo_name',
+            'SubSourceInfoName' => 'ssi.SourceInfo_name',
+            'FullName' => '(ISNULL(fo.Name + \' \', \'\') + p.FormName)',
+        );
+    }
 }
 
 
