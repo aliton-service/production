@@ -23,7 +23,7 @@ class DemandsController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut'),
+                'actions' => array('index', 'view', 'SalesView', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut'),
                 'roles' => array(
                     'ViewDemands',
                 ),
@@ -270,6 +270,23 @@ class DemandsController extends Controller
             $Object->getModelPk($Demand->Object_id);
             
             $this->render('view2', array(
+			'model'=>$Demand,
+                        'SpecCondition' => $Object->Condition,
+                    )
+		);
+        }
+        
+        public function actionSalesView($Demand_id){
+            $this->title = 'Заявка №' . $Demand_id;
+            $this->setPageTitle('Заявка №' . $Demand_id);
+            
+            $Demand = new SalesDemand();
+            $Demand->getModelPk($Demand_id);
+            
+            $Object = new Objects();
+            $Object->getModelPk($Demand->Object_id);
+            
+            $this->render('sales_view', array(
 			'model'=>$Demand,
                         'SpecCondition' => $Object->Condition,
                     )

@@ -109,6 +109,21 @@ class DiaryActions extends MainFormModel
             'ResponsibleName' => '',
         );
     }
+    
+    public function attributeFilters()
+    {
+        return array(
+            'ResponsibleName' => 'dbo.FIO(e.EmployeeName)',
+        );
+        
+        
+    }
+    
+    public function attributeSotrs() {
+        return array(
+            'ResponsibleName' => 'dbo.FIO(e.EmployeeName)',
+        );
+    }
 }
 
 

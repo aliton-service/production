@@ -81,6 +81,7 @@ class SalesDepClientsController extends Controller
             $sp->Parameters[1]['Value'] = $_POST['Params']['Empl_id'];
             $sp->Parameters[2]['Value'] = $_POST['Params']['Date'];
             $sp->Parameters[3]['Value'] = $_POST['Params']['Flag'];
+            $sp->Parameters[4]['Value'] = Yii::app()->user->Employee_id;
             $sp->CheckParam = true;
             $Res = $sp->Execute();
             

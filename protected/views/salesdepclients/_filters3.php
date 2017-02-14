@@ -73,6 +73,9 @@
                     $('#ActionsGrid').jqxGrid({source: DiaryActionsAdapter});
                     break;
                 case 1:
+                    $('#ReservActionsGrid').jqxGrid('removefilter', 'ResponsibleName', false);
+                    if ($("#cmbExecutor").val() != '') $("#ReservActionsGrid").jqxGrid('addfilter', 'ResponsibleName', ExecutorFilterGroup);
+                    
                     $('#ReservActionsGrid').jqxGrid({source: ReservDiaryActionsAdapter});
                     break;
             };

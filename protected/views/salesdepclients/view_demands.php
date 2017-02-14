@@ -25,7 +25,7 @@
         
         $('#btnDemandView').on('click', function(){
             if (CurrentRowData != undefined)
-                window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + CurrentRowData.Demand_id );
+                window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/SalesView')); ?> + '&Demand_id=' + CurrentRowData.Demand_id );
         });
         $('#btnClientView').on('click', function(){
             if (CurrentRowData != undefined)

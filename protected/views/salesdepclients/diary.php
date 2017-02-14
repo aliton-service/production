@@ -2,6 +2,7 @@
     var DataEmployees;
     var Statistics = {};
     $(document).ready(function () {
+        var CurrentUserShortName = <?php echo json_encode(Yii::app()->user->fullname); ?>;
         $.ajax({
             url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
             type: 'POST',
@@ -32,6 +33,7 @@
         };
         
         $("#cmbExecutor").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "ShortName"}));
+        $("#cmbExecutor").jqxComboBox('val', CurrentUserShortName);
         $('#edStatisticsInfo1').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
         $('#edStatisticsInfo2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
         $('#edStatisticsInfo3').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
@@ -98,6 +100,7 @@
                                     },
                                     { text: 'Дата', filtertype: 'date', datafield: 'NextDate', width: 110, cellsformat: 'dd.MM.yyyy'},
                                     { text: 'Наименование', datafield: 'FullName', width: 250},
+                                    { text: 'Ответственный', datafield: 'ResponsibleName', width: 150},
                                     { text: 'Сегмент', datafield: 'SegmentName', width: 150},
                                     { text: 'ПОДСегмент', datafield: 'SubSegmentName', width: 150},
                                     { text: 'Адрес', datafield: 'Address', width: 250},
@@ -157,7 +160,7 @@
     <div style="clear: both"></div>
 </div>
 
-<div class="al-row" style="height: calc(100% - 120px)">
+<div class="al-row" style="height: calc(100% - 82px)">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 30px;">

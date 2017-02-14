@@ -4612,7 +4612,7 @@ Sources.SourceDiaryActions =
     ],
     id: 'Exrp_id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=DiaryActions',
-    type: 'POST',
+    //type: 'POST',
     root: 'Rows',
     cache: false,
     async: true,

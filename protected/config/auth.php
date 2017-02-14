@@ -764,7 +764,8 @@ return array_merge(
                 'ManagerOfferDemands',
                 'WhActsView',
                 'ManagerWHBuhActs',
-                'UserPropForms',
+                'ManagerPropForms',
+                
                 
                 /* Отчеты */
                 'DemandsReportAll',
