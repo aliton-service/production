@@ -4556,3 +4556,67 @@ Sources.SourceClientActions =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceClientDemands =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Exrp_id', type: 'int'},
+        {name: 'Date', type: 'date'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'Address', type: 'string'},
+        {name: 'DemandType', type: 'string'},
+        {name: 'StageName', type: 'string'},
+        {name: 'ActionOperationName', type: 'string'},
+        {name: 'EmplName', type: 'string'},
+        {name: 'ActionResultName', type: 'string'},
+        {name: 'FIO', type: 'string'},
+        {name: 'NextDate', type: 'date'},
+        {name: 'Report', type: 'string'},
+        {name: 'OtherName', type: 'string'},
+        {name: 'ObjectGr_id', type: 'int'},
+    ],
+    id: 'Demand_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=ClientDemands',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDiaryActions =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Exrp_id', type: 'int'},
+        {name: 'Date', type: 'date'},
+        {name: 'FullName', type: 'string'},
+        {name: 'SegmentName', type: 'string'},
+        {name: 'SubSegmentName', type: 'string'},
+        {name: 'Address', type: 'string'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'ContactName', type: 'string'},
+        {name: 'StageName', type: 'string'},
+        {name: 'DIFF_STR', type: 'string'},
+        {name: 'LastDateContact', type: 'date'},
+        {name: 'StatusOP', type: 'string'},
+        {name: 'NextAction', type: 'string'},
+        {name: 'NextDate', type: 'date'}
+    ],
+    id: 'Exrp_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=DiaryActions',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

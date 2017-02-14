@@ -281,6 +281,12 @@
                             }
                         });
                     });
+                    
+                    $('#btnViewDemands').on('click', function() {
+                        if (CurrentRowData != undefined)
+                            window.open(<?php echo json_encode(Yii::app()->createUrl('SalesDepClients/ViewDemands')) ?> + '&Form_id=' + CurrentRowData.Form_id + '&FullName=' + CurrentRowData.FullName);
+                    });
+                    
                 break;
                 case 1:
                     CurrentFormTabs[1] = 0;

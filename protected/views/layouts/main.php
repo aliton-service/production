@@ -190,6 +190,7 @@
                             
                             array('label'=>'Реестр клиентов', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('ViewSalesDepClients'), 'items'=>array(
                                     array('label'=>'Реестр клиентов', 'url'=>array('/SalesDepClients')),
+                                    array('label'=>'Ежедневник', 'url'=>array('/SalesDepClients/Diary')),
                                 )
                             ),
                             

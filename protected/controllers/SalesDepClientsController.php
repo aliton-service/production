@@ -17,6 +17,14 @@ class SalesDepClientsController extends Controller
     {
         return array(
             array('allow',
+                    'actions'=>array('Diary, Statistics'),
+                    'roles'=>array('DiarySalesDepClients'),
+            ),
+            array('allow',
+                    'actions'=>array('ViewDemands'),
+                    'roles'=>array('ViewDemands'),
+            ),
+            array('allow',
                     'actions'=>array('index, StatisticsInfo'),
                     'roles'=>array('ViewSalesDepClients'),
             ),
@@ -123,5 +131,69 @@ class SalesDepClientsController extends Controller
         }
 
         echo json_encode($ObjectResult);
+    }
+    
+    public function actionViewDemands()
+    {
+        $this->title = 'Заявки клиента';
+        if (isset($_GET['FullName']))
+            $this->title = $this->title . ' ' . $_GET['FullName'];
+        $this->gridFilters = '_filters2';
+        
+        
+        // Последнее действие по клиенту
+        $Query = new SQLQuery();
+        $Query->setSelect("\nSelect
+                                p.LastAction_id,
+                                er.[Date],
+                                o.ActionOperationName,
+                                ar.ActionResultName,
+                                er.NextAction,
+                                er.NextDate,
+                                er.OtherName,
+                                er.Report");
+        $Query->setFrom("\nFrom PropForms p left join ExecutorReports er on (p.LastAction_id = er.Exrp_id)
+                                left join ActionOperations o on (er.ActionOperation_id = o.Operation_id)
+                                left join ActionResults ar on (er.ActionResult_id = ar.Result_id)");
+        $Query->setWhere("\nWhere p.Form_id = " . $_GET['Form_id']);
+        $LastContact = $Query->QueryRow();
+        
+        $this->render('view_demands', array(
+            'Form_id' => $_GET['Form_id'],
+            'FullName' => $_GET['FullName'],
+            'LastContact' => $LastContact,
+        ));
+    }
+    
+    public function actionDiary(){
+        $this->title = 'Ежедневник';
+        $this->gridFilters = '_filters3';
+        $this->render('diary', array());
+    }
+    
+    
+    public function actionStatistics() {
+        $Statistics = array(
+            'Statistics1' => 0,
+            'Statistics2' => 0,
+            'Statistics3' => 0,
+            'Statistics4' => 0,
+        );
+        
+        $Query = new SQLQuery();
+        $Query->setSelect("\nSelect
+                                SUM(CASE WHEN d.StatusOP = 3 Then 1 ELSE 0 END) as StatisticsInfo1,
+                                SUM(CASE WHEN d.StatusOP = 2 Then 1 ELSE 0 END) as StatisticsInfo2,
+                                SUM(CASE WHEN d.StatusOP = 1 Then 1 ELSE 0 END) as StatisticsInfo3,
+                                SUM(CASE WHEN d.StatusOP = 4 Then 1 ELSE 0 END) as StatisticsInfo4");
+        $Query->setWhere("\nFrom PropForms p inner join ExecutorReports er on (p.LastAction_id = er.Exrp_id)
+                                inner join FullDemands d on (er.Demand_id = d.Demand_id)");
+        $Result = $Query->QueryRow();
+        $Statistics['Statistics1'] = $Result['StatisticsInfo1'];
+        $Statistics['Statistics2'] = $Result['StatisticsInfo2'];
+        $Statistics['Statistics3'] = $Result['StatisticsInfo3'];
+        $Statistics['Statistics4'] = $Result['StatisticsInfo4'];
+        
+        echo json_encode($Statistics);
     }
 }

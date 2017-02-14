@@ -755,6 +755,7 @@ return array_merge(
                 'UserRepairs',
                 'ManagerRepairComments',
                 'UserDeliveryDemands',
+                'ManagerDeliveryComments',
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',

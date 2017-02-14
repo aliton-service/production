@@ -12,6 +12,8 @@ return array(
                 'ViewSalesDepClients',
                 'SetSalesManager',
                 'AttachObjects',
+                'ViewDemands',
+                'DiarySalesDepClients',
                 ),
         ),
 
@@ -25,6 +27,8 @@ return array(
                 'ViewSalesDepClients',
                 'SetSalesManager',
                 'AttachObjects',
+                'ViewDemands',
+                'DiarySalesDepClients',
                 ),
         ),
 
@@ -35,7 +39,8 @@ return array(
             'data' => null,
             'defaultIndex' => 'streets/index',
             'children' => array(
-                'ViewSalesDepClients'
+                'ViewSalesDepClients',
+                'DiarySalesDepClients',
                 ),
         ),
 
@@ -63,6 +68,20 @@ return array(
         'AttachObjects' => array(
             'type' => CAuthItem::TYPE_OPERATION,
             'description' => 'AttachObjects',
+            'bizRule' => null,
+            'data' => null,
+        ),
+    
+        'ViewDemands' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'ViewDemands',
+            'bizRule' => null,
+            'data' => null,
+        ),
+    
+        'DiarySalesDepClients' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'DiarySalesDepClients',
             'bizRule' => null,
             'data' => null,
         ),
