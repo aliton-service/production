@@ -28,6 +28,7 @@
         var CurrentUser = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
         // Инициализируем контролы
         $("#edNumber").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
+        $("#edDateReg").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAddr").jqxInput({height: 25, width: 400, minLength: 1, value: Demand.Address});
         $("#edStage").jqxInput({height: 25, width: 150, minLength: 1, value: Demand.StageName});
         $("#edDiffStr").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DIFF_STR});
@@ -38,9 +39,15 @@
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edSegment").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SegmentName});
         $("#edSubSegment").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SegmentName});
-        $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edContacts").jqxInput({height: 25, width: 514, minLength: 1, value: Demand.Contacts});
+        $("#btnCall").jqxButton({ width: 120, height: 40 });
+        $("#btnMail").jqxButton({ width: 120, height: 40 });
+        $("#btnPresentation").jqxButton({ width: 120, height: 40 });
+        $("#btnKP").jqxButton({ width: 120, height: 40 });
+        $("#btnArchive").jqxButton({ width: 246, height: 40 });
         
-        $("#edDateReg").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        
         $("#edServiceType").jqxInput({height: 25, width: 200, minLength: 1, value: Demand.ServiceType});
         $("#edMasterName").jqxInput({height: 25, width: 210, minLength: 1, value: Demand.MasterName});
         
@@ -48,7 +55,7 @@
         $("#edEquipType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.EquipType});
         $("#edMalfunction").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.Malfunction});
         
-        $("#edContacts").jqxInput({height: 25, width: 280, minLength: 1, value: Demand.Contacts});
+        
         $("#edCloseReason").jqxInput({height: 25, width: 300, minLength: 1, value: Demand.CloseReason});
         $("#edRepMaster").jqxTextArea({height: '100%', width: '100%', minLength: 1});
         
@@ -784,6 +791,7 @@
                     <div>Пред. дата</div>
                     <div><div id='edDeadline'></div></div>
                 </div>
+                <div style="clear: both;"></div>
             </div>
             <div class="al-row">
                 <div class="al-row-column">
@@ -798,18 +806,36 @@
                     <div>Дата вып.</div>
                     <div><div id='edDateExec'></div></div>
                 </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="al-row">
+                <div>Контактное лицо</div>
+                <div><input readonly id="edContacts" type="text"/></div>
             </div>
         </div>
-        
+        <div class="al-row-column">
+            <div style="margin-top: 23px;">
+                <div class="al-row-column"><input type="button" id="btnCall" value="Звонок"/></div>
+                <div class="al-row-column"><input type="button" id="btnMail" value="Письмо"/></div>
+                <div style="clear: both;"></div>
+            </div>
+            <div>
+                <div class="al-row-column"><input type="button" id="btnPresentation" value="Презентация"/></div>
+                <div class="al-row-column"><input type="button" id="btnKP" value="КП"/></div>
+                <div style="clear: both;"></div>
+            </div>
+            <div>
+                <div class="al-row-column"><input type="button" id="btnArchive" value="Архив звукозаписей"/></div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
         
     </div>
     <div style="clear: both;"></div>
     <div style="float: left; width: 100%; height: 50px">
         
         <div class="row-column" style="width: 280px;">
-            <div>Контактное лицо</div>
-            <div style="clear: both;"></div>
-            <div><input readonly id="edContacts" type="text"/></div>
+            
         </div>
         <div class="row-column" style="width: 300px;">
             <div>Причина несвоевременного закрытия заявки</div>

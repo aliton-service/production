@@ -765,7 +765,7 @@ return array_merge(
                 'WhActsView',
                 'ManagerWHBuhActs',
                 'ManagerPropForms',
-                
+                'ManagerBanks',
                 
                 /* Отчеты */
                 'DemandsReportAll',
