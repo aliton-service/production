@@ -60,6 +60,7 @@
                                     },
                                     { text: 'Дата', filtertype: 'date', datafield: 'NextDate', width: 110, cellsformat: 'dd.MM.yyyy'},
                                     { text: 'Наименование', datafield: 'FullName', width: 250},
+                                    { text: 'Ответственный', datafield: 'ResponsibleName', width: 150},
                                     { text: 'Сегмент', datafield: 'SegmentName', width: 150},
                                     { text: 'ПОДСегмент', datafield: 'SubSegmentName', width: 150},
                                     { text: 'Адрес', datafield: 'Address', width: 250},

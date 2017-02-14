@@ -46,7 +46,10 @@
                     Variables.EventExec = " and e.date_exec is not null";
                 
                 if ($("#chbVipFilter").val() != false)
-                    Variables.Vip = " and o.sum_price > 7500";
+                    Variables.Vip = " and o.sum_price >= 7500";
+                
+                if ($("#chbNoVipFilter").val() != false)
+                    Variables.Vip = " and o.sum_price < 7500";
                 
                 if ($("#chbCount1Filter").val() != false)
                     Variables.Count1 = " and e.Evnt_id is Not Null";

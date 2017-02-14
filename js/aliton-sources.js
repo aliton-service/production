@@ -4606,7 +4606,9 @@ Sources.SourceDiaryActions =
         {name: 'LastDateContact', type: 'date'},
         {name: 'StatusOP', type: 'string'},
         {name: 'NextAction', type: 'string'},
-        {name: 'NextDate', type: 'date'}
+        {name: 'NextDate', type: 'date'},
+        {name: 'Responsible_id', type: 'int'},
+        {name: 'ResponsibleName', type: 'string'}
     ],
     id: 'Exrp_id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=DiaryActions',

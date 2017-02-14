@@ -22,10 +22,10 @@
         
         var ReservDiaryActionsAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDiaryActions, {
             filter: function () {
-                $("#ActionsGrid").jqxGrid('updatebounddata', 'filter');
+                $("#ReservActionsGrid").jqxGrid('updatebounddata', 'filter');
             },
             sort: function () {
-                $("#ActionsGrid").jqxGrid('updatebounddata', 'sort');
+                $("#ReservActionsGrid").jqxGrid('updatebounddata', 'sort');
             },
             beforeSend: function(jqXHR, settings) {
                 //DisabledControls();
@@ -38,7 +38,6 @@
                 return data;
             },
         });
-        $("#cmbSalesManager").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "ShortName"}));
         $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#edFiltering').on('click', function(){
@@ -56,17 +55,30 @@
         });
         
         var Find = function() {
-            if ($("#cmbSalesManager").val() != '') {
-                var FilterSalesManager2 = SalesManagerFilterGroup.createfilter('stringfilter', $("#cmbSalesManager").val(), 'STR_EQUAL');
-                SalesManagerFilterGroup.addfilter(1, FilterSalesManager2);
+            var ExecutorFilterGroup = new $.jqx.filter();
+            if ($("#cmbExecutor").val() != '') {
+                var FilterExecutor = ExecutorFilterGroup.createfilter('stringfilter', $("#cmbExecutor").val(), 'STR_EQUAL');
+                ExecutorFilterGroup.addfilter(1, FilterExecutor);
             }
             
-            
             var selectedItem = $('#Tabs').jqxTabs('selectedItem'); 
-            if (selectedItem == 0)
-                $('#ActionsGrid').jqxGrid({source: DiaryActionsAdapter});
-            else
-                $('#ReservActionsGrid').jqxGrid({source: ReservDiaryActionsAdapter});
+            
+            
+            switch (selectedItem) {
+                case 0:
+                    
+                    $('#ActionsGrid').jqxGrid('removefilter', 'ResponsibleName', false);
+                    if ($("#cmbExecutor").val() != '') $("#ActionsGrid").jqxGrid('addfilter', 'ResponsibleName', ExecutorFilterGroup);
+            
+                    $('#ActionsGrid').jqxGrid({source: DiaryActionsAdapter});
+                    break;
+                case 1:
+                    $('#ReservActionsGrid').jqxGrid({source: ReservDiaryActionsAdapter});
+                    break;
+            };
+            
+            
+                
             Statistics.Refresh();
         };
         Find();
