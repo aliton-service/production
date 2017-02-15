@@ -46,42 +46,10 @@
         $("#btnPresentation").jqxButton({ width: 120, height: 40 });
         $("#btnKP").jqxButton({ width: 120, height: 40 });
         $("#btnArchive").jqxButton({ width: 246, height: 40 });
-        
-        
-        $("#edServiceType").jqxInput({height: 25, width: 200, minLength: 1, value: Demand.ServiceType});
-        $("#edMasterName").jqxInput({height: 25, width: 210, minLength: 1, value: Demand.MasterName});
-        
-        
-        $("#edEquipType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.EquipType});
-        $("#edMalfunction").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.Malfunction});
-        
-        
-        $("#edCloseReason").jqxInput({height: 25, width: 300, minLength: 1, value: Demand.CloseReason});
-        $("#edRepMaster").jqxTextArea({height: '100%', width: '100%', minLength: 1});
-        
-        $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.AgreeDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        
-        $("#edDateOfTrans").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTrans, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 150 }));
-        $("#edTransferReason").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.TransferReason});
-        $("#edDelayReason").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.DelayReason});
-        $("#edResultName").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.ResultName});
-        $("#edDemandText").jqxTextArea({height: '100%', width: '100%', minLength: 1});
-        $("#edSpecCondition").jqxTextArea({height: 71, width: '100%', minLength: 1});
-        $("#edUCreateName").jqxInput({height: 25, width: 110, minLength: 1, value: Demand.UCreateName});
-        $("#edUChangeName").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.UChangeName});
-        
-        
+        $("#edInformation").jqxTextArea({height: '30px', width: '500px', minLength: 1});
+        $("#edSourceInfo").jqxTextArea({height: '30px', width: '200px', minLength: 1});
         $("#btnEdit").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" });
         $("#btnClient").jqxButton({ width: 120, height: 30 });
-        $("#btnToMaster").jqxButton({ width: 170, height: 30, imgSrc: "/images/ok2.png", imgPosition: "left", disabled: !(Demand.DateMaster == null) });
-        $("#btnSMS").jqxButton({ width: 120, height: 30 });
-        $("#btnWorkOut").jqxButton({ width: 120, height: 30, disabled: !(Demand.WorkedOut == null)});
-        $("#btnNotWork").jqxButton({ width: 140, height: 30, disabled: (Demand.WorkedOut == null)});
-        $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
-        var CD = Date();
-        $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 150, formatString: 'dd.MM.yyyy HH:mm'}));
-        
         
         var initWidgets = function (tab) {
             switch (tab) {
@@ -127,30 +95,7 @@
                         return text;
                     };
                     
-                    document.addEventListener('copy', function(e){
-//                        console.log('TextBuffer:' + TextBuffer);
-//                        if (TextBuffer == '') {
-//                            TextBuffer = getSelectedText();
-//                            TextBuffer = TextBuffer.toString();
-//                        }
-//                        e.clipboardData.setData('text/plain', TextBuffer);
-//                        TextBuffer = '';
-//                        e.preventDefault();
-                    });
                     
-                    $("#ProgressGrid").keydown(function(e) {
-//                        if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) {
-//                            TextBuffer = getSelectedText();
-//                            TextBuffer = TextBuffer.toString();
-//                        }
-                    });
-                    
-                    document.addEventListener('keydown', function(e) {
-//                        if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) {
-//                            TextBuffer = getSelectedText();
-//                            TextBuffer = TextBuffer.toString();
-//                        }
-                    });
                     
                     $("#ProgressGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
@@ -594,23 +539,7 @@
         );
         
 
-        $('#WorkOutDialog').jqxWindow(
-            $.extend(true, DialogDefaultSettings, {
-                width: 500,
-                height: 170,
-                initContent: function () {
-                    $("#btnYesDialog").jqxButton({ width: 120, height: 30 });
-                    $("#btnNoDialog").jqxButton({ width: 120, height: 30 });
-                    $("#btnNoDialog").on('click', function(){
-                        $('#WorkOutDialog').jqxWindow('close');
-                    });
-                    $("#btnYesDialog").on('click', function(){
-                        Aliton.WorkedOut(Demand.Demand_id);
-                        $('#WorkOutDialog').jqxWindow('close');
-                    });
-                }
-            })
-        );
+        
         $("#ProgressGrid").on('rowselect', function (event) {
             CurrentRowData = $('#ProgressGrid').jqxGrid('getrowdata', event.args.rowindex);
         });
@@ -622,28 +551,6 @@
         $("#btnClient").on('click', function(){
             Aliton.ViewClient(Demand.ObjectGr_id, Demand.Demand_id);
         });
-        $("#btnToMaster").on('click', function(){
-            Aliton.ToMaster(Demand.Demand_id);
-        });
-        
-        $('#SMSDialog').on('open', function() {
-            $("#edTextSMS").jqxTextArea('selectAll');
-        });
-        
-        $("#btnWorkOut").on('click', function(){
-            $('#WorkOutDialog').jqxWindow('open');
-        });
-        
-        
-        
-        $("#btnNotWork").on('click', function(){
-            Aliton.UndoWorkedOut(Demand.Demand_id);
-        });
-        
-        $("#btnExec").on('click', function(){
-            //Aliton.ExecDemand(Demand.Demand_id, false);
-            location.href = '/index.php?r=Demands/DemandExec&id=' + Demand.Demand_id + '&DateExec=' + $('#edColumnDateExec').val();
-        });
         
         function Comment() {
             if (Aliton.NewComment(Demand.Demand_id, $("#edComment").jqxInput('val'), $("#edPlanDateExec").jqxDateTimeInput('val'))) {
@@ -654,272 +561,122 @@
         }
         
         
-        
-        $("#btnSMS").on('click', function(){
-            var Message = (Demand.DemandType === 'Снят с обслуживания') ? Demand.DemandType + ';' : '';
-            Message += (Demand.Address !== null) ? Demand.Address + ';' : '';
-            Message += (Demand.EquipType !== null) ? Demand.EquipType + ';' : '';
-            Message += (Demand.Malfunction !== null) ? Demand.Malfunction + ';' : '';
-            Message += (Demand.DemandText !== null) ? Demand.DemandText + ';' : '';
-            Message += (Demand.Contacts !== null) ? Demand.Contacts + ';' : '';
-            Message += (Demand.DemandPrior !== null) ? Demand.DemandPrior + ';' : '';
-            $('#SMSDialog').jqxWindow('open');
-            $("#edTextSMS").val(Message);
-            
-        });
-        
         $("#ProgressGrid").on('bindingcomplete', function(){
             $("#ProgressGrid").jqxGrid('selectrow', 0);
         });
     });
 </script>
 
-<style>
-    
-    #demandInputs {
-        height: 310px;
-    }
-    #demandTabs {
-        height: calc(100% - 347px);
-    }
-    #MalfunctionWrapper {
-        width: 180px;
-        height: 70px;
-    }
-    #RepMasterWrapper {
-        width: 180px;
-        height: 70px;
-    }
-    #SpecConditionWrapper {
-        width: 180px;
-        height: 70px;
-    }
-        
-    @media screen and (max-height: 800px) { 
-        #demandInputs {
-            height: 160px;
-            overflow-x: hidden;
-        }
-        #demandTabs {
-            height: calc(100% - 197px);
-        }
-    }
-    
-    @media screen and (min-width: 1300px) { 
-        #MalfunctionWrapper {
-            position: relative;
-            left: 850;
-            top: -270;
-            width: 300px;
-            height: 110px;
-        }
-        #RepMasterWrapper {
-            position: relative;
-            left: 15;
-            top: -35;
-            width: 300px;
-            height: 105px;
-        }
-        #SpecConditionWrapper {
-            width: 400px;
-        }
-    }
-    @media screen and (min-width: 1500px) { 
-        #MalfunctionWrapper,
-        #RepMasterWrapper {
-            width: 500px;
-        }
-    }
-    @media screen and (min-width: 1700px) { 
-        #MalfunctionWrapper,
-        #RepMasterWrapper {
-            width: 700px;
-        }
-    }
-    
-</style>
-
-<div id='demandInputs' style="float: left; width: 100%;">
-    <div class="al-row">
-        <div class="al-row-column">
-            <div>Номер</div>
-            <div><input readonly id="edNumber" type="text"/></div>
-        </div>
-        <div class="al-row-column">
-            <div>Дата и время</div>
-            <div><div id='edDateReg'></div></div>
-        </div>
-        <div class="al-row-column">
-            <div>Адрес</div>
-            <div><input readonly id="edAddr" type="text"/></div>
-        </div>
-        <div style="clear: both"></div>
+<div class="al-row" style="padding: 0px">
+    <div class="al-row-column">
+        <div>Номер</div>
+        <div><input readonly id="edNumber" type="text"/></div>
     </div>
-    <div style="clear: both;"></div>
-    <div class="al-row">
-        <div class="al-row-column">
-            <div>Этап</div>
-            <div><input readonly id="edStage" type="text"/></div>
-        </div>
-        <div class="al-row-column">
-            <div>Продолжительность этапа</div>
-            <div><input readonly id="edDiffStr" type="text"/></div>
-        </div>
-        <div class="al-row-column">
-            <div>Статус ОП</div>
-            <div><input readonly id="edStatusOP" type="text"/></div>
-        </div>
-        <div class="al-row-column">
-            <div>Приоритет</div>
-            <div><input readonly id="edDemandPrior" type="text"/></div>
-        </div>
-        <div style="clear: both;"></div>
+    <div class="al-row-column">
+        <div>Дата и время</div>
+        <div><div id='edDateReg'></div></div>
     </div>
-    <div style="clear: both;"></div>
-    <div class="al-row" style="padding: 0px">
-        <div class="al-row-column">
-            <div class="al-row">
-                <div class="al-row-column">
-                    <div>Тип заявки</div>
-                    <div><input readonly id="edDemandType" type="text"/></div>
-                </div>
-                <div class="al-row-column">
-                    <div>Тип системы</div>
-                    <div><input readonly id="edSystemType" type="text"/></div>
-                </div>
-                <div class="al-row-column">
-                    <div>Пред. дата</div>
-                    <div><div id='edDeadline'></div></div>
-                </div>
-                <div style="clear: both;"></div>
-            </div>
-            <div class="al-row">
-                <div class="al-row-column">
-                    <div>Сегмент</div>
-                    <div><input readonly id="edSegment" type="text"/></div>
-                </div>
-                <div class="al-row-column">
-                    <div>ПОДСегмент</div>
-                    <div><input readonly id="edSubSegment" type="text"/></div>
-                </div>
-                <div class="al-row-column">
-                    <div>Дата вып.</div>
-                    <div><div id='edDateExec'></div></div>
-                </div>
-                <div style="clear: both;"></div>
-            </div>
-            <div class="al-row">
-                <div>Контактное лицо</div>
-                <div><input readonly id="edContacts" type="text"/></div>
-            </div>
-        </div>
-        <div class="al-row-column">
-            <div style="margin-top: 23px;">
-                <div class="al-row-column"><input type="button" id="btnCall" value="Звонок"/></div>
-                <div class="al-row-column"><input type="button" id="btnMail" value="Письмо"/></div>
-                <div style="clear: both;"></div>
-            </div>
-            <div>
-                <div class="al-row-column"><input type="button" id="btnPresentation" value="Презентация"/></div>
-                <div class="al-row-column"><input type="button" id="btnKP" value="КП"/></div>
-                <div style="clear: both;"></div>
-            </div>
-            <div>
-                <div class="al-row-column"><input type="button" id="btnArchive" value="Архив звукозаписей"/></div>
-                <div style="clear: both;"></div>
-            </div>
-        </div>
-        
+    <div class="al-row-column">
+        <div>Адрес</div>
+        <div><input readonly id="edAddr" type="text"/></div>
     </div>
-    <div style="clear: both;"></div>
-    <div style="float: left; width: 100%; height: 50px">
-        
-        <div class="row-column" style="width: 280px;">
-            
-        </div>
-        <div class="row-column" style="width: 300px;">
-            <div>Причина несвоевременного закрытия заявки</div>
-            <div style="clear: both;"></div>
-            <div><input readonly id="edCloseReason" type="text"/></div>
-        </div>
-    </div>
-    <div style="clear: both;"></div>
-    <div style="float: left; width: 100%; height: 96px">
-        <div class="row-column">
-            <div class="row-column">
-                
-                <div>Передано мастеру</div>
-                <div style="clear: both;"></div>
-                <div><div id='edDateMaster'></div></div>
-            </div>
-            <div class="row-column">
-                <div>Согласованная дата</div>
-                <div style="clear: both;"></div>
-                <div><div id='edAgreeDate'></div></div>
-                <div>Выполнено</div>
-                <div style="clear: both;"></div>
-                <div></div>
-            </div>
-        </div>
-        <div id="SpecConditionWrapper" class="row-column">
-            <div>Особые условия</div>
-            <div style="clear: both;"></div>
-            <div><textarea readonly id="edSpecCondition"><?php echo $SpecCondition; ?></textarea></div>
-        </div>
-        
-        
-    </div>
-    <div style="clear: both;"></div>
-    
-    <div style="float: left; width: 100%; height: 50px">
-        <div class="row-column" style="width: 150px;">
-            <div>Дата перевода заявки</div>
-            <div style="clear: both;"></div>
-            <div><div id='edDateOfTrans'></div></div>
-        </div>
-        <div class="row-column" style="width: 180px;">
-            <div>Причина перевода заявки</div>
-            <div style="clear: both;"></div>
-            <div><input readonly id="edTransferReason" type="text"/></div>
-        </div>
-        <div class="row-column" style="width: 160px;">
-            <div>Причина просрочки</div>
-            <div style="clear: both;"></div>
-            <div><input readonly id="edDelayReason" type="text"/></div>
-        </div>
-        <div class="row-column" style="width: 140px;">
-            <div>Результат</div>
-            <div style="clear: both;"></div>
-            <div><input readonly id="edResultName" type="text"/></div>
-        </div>
-        <div class="row-column" style="width: 110px;">
-            <div>Зарегистрировал</div>
-            <div style="clear: both;"></div>
-            <div><input readonly id="edUCreateName" type="text"/></div>
-        </div>
-        <div class="row-column" style="width: 100px;">
-            <div>Посл. изм.</div>
-            <div style="clear: both;"></div>
-            <div><input readonly id="edUChangeName" type="text"/></div>
-        </div>
-    </div>
-  
+    <div style="clear: both"></div>
 </div>
+<div style="clear: both;"></div>
+<div class="al-row" style="padding: 0px">
+    <div class="al-row-column">
+        <div>Этап</div>
+        <div><input readonly id="edStage" type="text"/></div>
+    </div>
+    <div class="al-row-column">
+        <div>Продолжительность этапа</div>
+        <div><input readonly id="edDiffStr" type="text"/></div>
+    </div>
+    <div class="al-row-column">
+        <div>Статус ОП</div>
+        <div><input readonly id="edStatusOP" type="text"/></div>
+    </div>
+    <div class="al-row-column">
+        <div>Приоритет</div>
+        <div><input readonly id="edDemandPrior" type="text"/></div>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+<div style="clear: both;"></div>
+<div class="al-row" style="padding: 0px">
+    <div class="al-row-column">
+        <div class="al-row" style="padding: 0px">
+            <div class="al-row-column">
+                <div>Тип заявки</div>
+                <div><input readonly id="edDemandType" type="text"/></div>
+            </div>
+            <div class="al-row-column">
+                <div>Тип системы</div>
+                <div><input readonly id="edSystemType" type="text"/></div>
+            </div>
+            <div class="al-row-column">
+                <div>Пред. дата</div>
+                <div><div id='edDeadline'></div></div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="al-row" style="padding: 0px">
+            <div class="al-row-column">
+                <div>Сегмент</div>
+                <div><input readonly id="edSegment" type="text"/></div>
+            </div>
+            <div class="al-row-column">
+                <div>ПОДСегмент</div>
+                <div><input readonly id="edSubSegment" type="text"/></div>
+            </div>
+            <div class="al-row-column">
+                <div>Дата вып.</div>
+                <div><div id='edDateExec'></div></div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="al-row" style="padding: 0px">
+            <div>Контактное лицо</div>
+            <div><input readonly id="edContacts" type="text"/></div>
+        </div>
+    </div>
+    <div class="al-row-column">
+        <div style="margin-top: 23px;">
+            <div class="al-row-column"><input type="button" id="btnCall" value="Звонок"/></div>
+            <div class="al-row-column"><input type="button" id="btnMail" value="Письмо"/></div>
+            <div style="clear: both;"></div>
+        </div>
+        <div>
+            <div class="al-row-column"><input type="button" id="btnPresentation" value="Презентация"/></div>
+            <div class="al-row-column"><input type="button" id="btnKP" value="КП"/></div>
+            <div style="clear: both;"></div>
+        </div>
+        <div>
+            <div class="al-row-column"><input type="button" id="btnArchive" value="Архив звукозаписей"/></div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+</div>
+<div style="clear: both;"></div>
+<div class="al-row" style="padding: 0px">
+    <div class="al-row-column">
+        <div>Информация</div>
+        <div><textarea id="edInformation"></textarea></div>
+    </div>
+    <div class="al-row-column">
+        <div>Источник</div>
+        <div><textarea id="edSourceInfo"></textarea></div>
+    </div>
+</div>
+    
 <div style="clear: both"></div>
 <div style="float: left; width: 100%; height: 32px">
     <div class="row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
     <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
-    <div class="row-column"><input type="button" value="Передать мастеру" id='btnToMaster' /></div>
-    <div class="row-column"><input type="button" value="Текст СМС" id='btnSMS' /></div>
-    <div class="row-column" style="margin-left: 60px"><input type="button" value="Отработано" id='btnWorkOut' /></div>
-    <div class="row-column"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
-    <div class="row-column" style="float: right;">
-        <div class="row-column"><div id="edColumnDateExec"></div></div>
-        <div class="row-column"><input type="button" value="Выполнено" id='btnExec' /></div>
-    </div>
 </div>    
 <div style="clear: both;"></div>
-<div id="demandTabs" style="float: left; width: 100%; margin-top: 5px;">
+<div class="al-row" style="height: calc(100% - 334px)">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 20px;">

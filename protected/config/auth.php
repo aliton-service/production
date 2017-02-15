@@ -325,6 +325,7 @@ return array_merge(
                 'ManagerEvents',
                 'AdminEventOffers',
                 'AdminOfferDemands',
+                'AllLoadObjects',
             ),
         ),
         
@@ -345,7 +346,7 @@ return array_merge(
                 'ChangeType',
                 'ManagerContacts',
                 'UserContractsS',
-                
+                'AllLoadObjects',
                 /* Отчеты*/
                 'Demand1Report',
             ),
@@ -367,6 +368,7 @@ return array_merge(
                 'UserDeliveryDemands',
                 'ManagerContacts',
                 'UserContractsS',
+                'AllLoadObjects',
             ),
         ),
 
