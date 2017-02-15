@@ -395,7 +395,7 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'SeniorDispatcher',
+                //'SeniorDispatcher',
                 'AdminDemands',
                 'Storekeeper',
                 'AdminObjects',
