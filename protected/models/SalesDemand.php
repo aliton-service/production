@@ -23,6 +23,8 @@ class SalesDemand extends MainFormModel {
     public $Note;
     public $Deadline;
     public $DateExec;
+    public $DemandText;
+    public $ExecutorsName;
     
     function __construct($scenario='') {
         parent::__construct($scenario);
@@ -53,7 +55,9 @@ class SalesDemand extends MainFormModel {
                         cg.ClientGroup as SegmentName,
                         scg.ClientGroup as SubSegmentName,
                         d.Contacts,
-                        d.Note";
+                        d.Note,
+                        d.DemandText,
+                        d.ExecutorsName";
         $From = "\nFrom FullDemands d left join Organizations_v p on (d.PropForm_id = p.Form_id)
                         left join ExecutorReports er on (d.LastAction_id = er.Exrp_id)
                         left join ActionStages s on (er.ActionStage_id = s.Stage_id)
@@ -87,7 +91,9 @@ class SalesDemand extends MainFormModel {
                     SegmentName,
                     SubSegmentName,
                     Contacts,
-                    Note,','safe'),
+                    Note,
+                    DemandText,
+                    ExecutorsName','safe'),
         );
     }
 
@@ -113,6 +119,7 @@ class SalesDemand extends MainFormModel {
             'SubSegmentName' => '',
             'Contacts' => '',
             'Note' => '',
+            'DemandText' => '',
         );
     }
 }

@@ -9,6 +9,7 @@ class DiaryActions extends MainFormModel
     public $SubSegmentName;
     public $Address;
     public $Demand_id;
+    public $Form_id;
     public $ContactName;
     public $StageName;
     public $DIFF_STR;
@@ -18,6 +19,7 @@ class DiaryActions extends MainFormModel
     public $NextDate;
     public $Responsible_id;
     public $ResponsibleName;
+    public $EmployeeName;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -34,6 +36,7 @@ class DiaryActions extends MainFormModel
                         ss.SegmentName as SubSegmentName,
                         case when er.Demand_id = 0 then dbo.address(p.jregion, p.jstreet, p.jhouse, p.jcorp, p.jroom) else d.[Address] end [Address],
                         er.Demand_id,
+                        er.Form_id,
                         ct.ContactName,
                         stg.StageName,
                         dbo.GET_DATEDIFF_STR(er.[Date], GETDATE()) as DIFF_STR,
@@ -44,7 +47,8 @@ class DiaryActions extends MainFormModel
                         er.NextAction,
                         er.NextDate,
                         er.Responsible_id,
-                        dbo.FIO(e.EmployeeName) ResponsibleName";
+                        dbo.FIO(e.EmployeeName) ResponsibleName,
+                        dbo.FIO(e2.EmployeeName) EmployeeName";
         $From = "\nFrom ExecutorReports er left join Organizations_v p on (er.Form_id = p.Form_id)
                         left join Segments s on (p.Segment_id = s.Segment_id)
                         left join Segments ss on (p.SubSegment_id = ss.Segment_id)
@@ -52,7 +56,8 @@ class DiaryActions extends MainFormModel
                         left join ContactTypes ct on (er.ContactType_id = ct.Contact_id)
                         left join ActionStages stg on (er.ActionStage_id = stg.Stage_id)
                         left join Contacts c on (p.LastCont_id = c.Cont_id)
-                        left join Employees e on (er.Responsible_id = e.Employee_id)";
+                        left join Employees e on (er.Responsible_id = e.Employee_id)
+                        left join Employees e2 on (er.Empl_id = e2.Employee_id)";
         $Where = "\nWhere er.DelDate is Null"
                 . " and er.NextDate is not  Null";
         $Order = "\nOrder by er.NextDate DESC";

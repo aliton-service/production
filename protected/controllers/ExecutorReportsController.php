@@ -105,11 +105,31 @@ class ExecutorReportsController extends Controller
             return;
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+	public function actionInsert() {
+            $model = new ClientActions();
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['ClientActions'])) {
+                $model->attributes = $_POST['ClientActions'];
+                if ($model->validate()) {
+                    $Res = $model->Insert();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $Res['Exrp_id'];
+                    echo json_encode($ObjectResult);
+                    return;
+                } 
+            }
+
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+            ), true);
+            echo json_encode($ObjectResult);
+        }
+        
+        
 	public function actionUpdate($id)
 	{
 	$model=new ExecutorReports;
@@ -166,14 +186,31 @@ class ExecutorReportsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model=new ExecutorReports('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ExecutorReports']))
-			$model->attributes=$_GET['ExecutorReports'];
-
-		$this->render('index',array(
-			'model'=>$model,
-		));
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+            $Form_id = null;
+            $Demand_id = null;
+            
+            $model = new SalesDemand();
+            
+            if (isset($_POST['Form_id']))
+                $Form_id = $_POST['Form_id'];
+            if (isset($_POST['Demand_id'])) {
+                $Demand_id = $_POST['Demand_id'];
+                $model->getModelPk($Demand_id);
+            }
+            
+            $ObjectResult['html'] = $this->renderPartial('index', array(
+                    'Form_id' => $Form_id,
+                    'Demand_id' => $model->Demand_id,
+                    'model' => $model,
+                ), true);
+            
+            echo json_encode($ObjectResult);
 	}
 
 	/**

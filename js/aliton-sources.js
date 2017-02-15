@@ -4543,6 +4543,16 @@ Sources.SourceClientActions =
         {name: 'SubSegmentName', type: 'string'},
         {name: 'Address', type: 'string'},
         {name: 'Date', type: 'date'},
+        {name: 'EmployeeName', type: 'string'},
+        {name: 'PlanDateExec', type: 'date'},
+        {name: 'ActionOperationName', type: 'string'},
+        {name: 'ActionResultName', type: 'string'},
+        {name: 'ResponsibleName', type: 'string'},
+        {name: 'FIO', type: 'string'},
+        {name: 'OtherName', type: 'string'},
+        {name: 'Report', type: 'string'},
+        
+        
     ],
     id: 'Exrp_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ClientActions',
@@ -4600,6 +4610,7 @@ Sources.SourceDiaryActions =
         {name: 'SubSegmentName', type: 'string'},
         {name: 'Address', type: 'string'},
         {name: 'Demand_id', type: 'int'},
+        {name: 'Form_id', type: 'int'},
         {name: 'ContactName', type: 'string'},
         {name: 'StageName', type: 'string'},
         {name: 'DIFF_STR', type: 'string'},
@@ -4608,7 +4619,9 @@ Sources.SourceDiaryActions =
         {name: 'NextAction', type: 'string'},
         {name: 'NextDate', type: 'date'},
         {name: 'Responsible_id', type: 'int'},
-        {name: 'ResponsibleName', type: 'string'}
+        {name: 'ResponsibleName', type: 'string'},
+        {name: 'EmployeeName', type: 'string'}
+        
     ],
     id: 'Exrp_id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=DiaryActions',

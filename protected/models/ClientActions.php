@@ -17,6 +17,13 @@ class ClientActions extends MainFormModel
     public $SubSegmentName;
     public $Address;
     public $LastDateContact;
+    public $EmployeeName;
+    public $PlanDateExec;
+    public $ActionOperationName;
+    public $ActionResultName;
+    public $ResponsibleName;
+    public $FIO;
+    public $OtherName;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -40,14 +47,27 @@ class ClientActions extends MainFormModel
                         s.ClientGroup SegmentName,
                         s2.ClientGroup SubSegmentName,
                         d.[Address],
-                        c.[Date] as LastDateContact";
+                        c.[Date] as LastDateContact,
+                        dbo.FIO(e.EmployeeName) as EmployeeName,
+                        er.PlanDateExec,
+                        o.ActionOperationName,
+                        ar.ActionResultName,
+                        dbo.FIO(e2.EmployeeName) as ResponsibleName,
+                        ci.FIO,
+                        er.OtherName,
+                        er.Report";
         $From = "\nFrom ExecutorReports er left join ContactTypes ct on (er.ContactType_id = ct.Contact_id)
                         left join ActionStages acs on (er.ActionStage_id = acs.Stage_id)
                         left join Organizations_v p on (er.Form_id = p.Form_id)
                         left join ClientGroups s on (s.Clgr_id  = p.Segment_id)
                         left join ClientGroups s2 on (s2.Clgr_id  = p.SubSegment_id)
                         left join FullDemands d on (er.Demand_id = d.Demand_id)
-                        left join Contacts c on (p.LastCont_id = c.Cont_id)";
+                        left join Contacts c on (p.LastCont_id = c.Cont_id)
+                        left join Employees e on (er.Empl_id = e.Employee_id)
+                        left join ActionOperations o on (er.ActionOperation_id = o.Operation_id)
+                        left join ActionResults ar on (er.ActionResult_id = ar.Result_id)
+                        left join Employees e2 on (er.Responsible_id = e2.Employee_id)
+                        left join ContactInfo ci on (er.ContactInfo_id = ci.Info_id)";
         $Order = "\nOrder by er.NextDate desc, er.Exrp_id desc";
 
         $this->Query->setSelect($Select);

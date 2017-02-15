@@ -39,10 +39,16 @@
         $('#edStatisticsInfo3').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
         $('#edStatisticsInfo4').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
         
+        $('#DiaryDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 600, width: 1000, position: 'center' }));
         
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
+                    var ActionsGridCurrentRow;
+                    $("#ActionsGrid").on('rowselect', function (event) {
+                        ActionsGridCurrentRow = $('#ActionsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
                     $("#ActionsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -78,6 +84,28 @@
                     $('#btnProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnProgress').on('click', function() {
+                        $("#DiaryHeaderText").html("Ход работы");
+
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Index')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Form_id: ActionsGridCurrentRow.Form_id,
+                                Demand_id: ActionsGridCurrentRow.Demand_id
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyDiaryDialog").html(Res.html);
+                                $('#DiaryDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
                     
                     break;
                 case 1:
@@ -217,4 +245,13 @@
         </div>
     </div>
     
+</div>
+
+<div id="DiaryDialog" style="display: none;">
+    <div id="DiaryDialogHeader">
+        <span id="DiaryHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogDiaryContent">
+        <div style="" id="BodyDiaryDialog"></div>
+    </div>
 </div>
