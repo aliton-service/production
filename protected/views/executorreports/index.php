@@ -32,9 +32,16 @@
         $("#ProgGrid").on('rowselect', function (event) {
             CurrentRowDataER = $('#ProgGrid').jqxGrid('getrowdata', event.args.rowindex);
         });
-
+        
+        $("#ProgGrid").on("bindingcomplete", function (event) {
+            if (CurrentRowDataER != undefined) 
+                Aliton.SelectRowByIdVirtual('Exrp_id', CurrentRowDataER.Exrp_id, '#ProgGrid', false);
+            else
+                Aliton.SelectRowByIdVirtual('Exrp_id', null, '#ProgGrid', false);
+        });
+        
         $("#ProgGrid").on('rowdoubleclick', function(){
-            $('#ActionsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 824, position: 'center'}));
+            $('#ActionsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update')) ?>,
                 type: 'POST',
@@ -94,7 +101,7 @@
         });
         
         $('#btnNewAction').on('click', function() {
-            $('#ActionsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 824, position: 'center'}));
+            $('#ActionsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
                 type: 'POST',

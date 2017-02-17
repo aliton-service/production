@@ -71,7 +71,7 @@ class CostCalcEquips extends MainFormModel
     {
         return array(
             array('calc_id, eqip_id, quant', 'required'),
-            array('quant', 'numerical', 'min' => 1),
+            array('quant', 'numerical', 'min' => 0.01),
             array('cceq_id, calc_id, eqip_id, eqip_name, quant, price, sum_price, price_low, sum_low, note, um_name, mntr', 'safe'),
         );
     }

@@ -3113,7 +3113,7 @@ Sources.SourceCostCalcEquips =
         {name: 'calc_id', type: 'int'},
         {name: 'eqip_id', type: 'int'},
         {name: 'eqip_name', type: 'string'},
-        {name: 'quant', type: 'int'},
+        {name: 'quant', type: 'float'},
         {name: 'price', type: 'float'},
         {name: 'sum_price', type: 'float'},
         {name: 'price_low', type: 'float'},

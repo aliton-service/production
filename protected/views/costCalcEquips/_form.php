@@ -70,7 +70,7 @@
             width: 490,
         }));
         $("#UnitMeasurementCCE").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 } ));
-        $("#QuantCCE").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, min: 0, decimalDigits: 0 }));
+        $("#QuantCCE").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, min: 0, decimalDigits: 2 }));
         $("#PriceCCE").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2 }));
         $("#PriceLowCCE").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 120, min: 0, decimalDigits: 2, readOnly: true, spinButtonsStep: 0 }));
         $("#NoteCCE").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 90 }));
