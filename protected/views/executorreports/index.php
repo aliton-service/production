@@ -33,6 +33,28 @@
             CurrentRowDataER = $('#ProgGrid').jqxGrid('getrowdata', event.args.rowindex);
         });
 
+        $("#ProgGrid").on('rowdoubleclick', function(){
+            $('#ActionsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 824, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Exrp_id: CurrentRowDataER.Exrp_id,
+                    Form_id: Demand.Form_id,
+                    Demand_id: Demand.Demand_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyActionsDialog").html(Res.html);
+                    $('#ActionsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+
         $("#ProgGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: 'calc(100% - 2px)',
@@ -72,7 +94,24 @@
         });
         
         $('#btnNewAction').on('click', function() {
-            
+            $('#ActionsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 824, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Form_id: Demand.Form_id,
+                    Demand_id: Demand.Demand_id,
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyActionsDialog").html(Res.html);
+                    $('#ActionsDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
         });
         
         
@@ -134,6 +173,14 @@
     <div class="al-row-column" style="float: right;"><input type="button" id="btnCloseProg" value="Закрыть"/></div>
 </div>
 
+<div id="ActionsDialog" style="display: none;">
+    <div id="ActionsDialogHeader">
+        <span id="ActionsHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogActionsContent">
+        <div style="" id="BodyActionsDialog"></div>
+    </div>
+</div>
 
 
 

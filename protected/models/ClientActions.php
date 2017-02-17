@@ -4,6 +4,8 @@ class ClientActions extends MainFormModel
 {
     public $Exrp_id;
     public $Date;
+    public $Empl_id;
+    public $Form_id;
     public $FullName;
     public $Demand_id;
     public $ContactType_id;
@@ -24,17 +26,26 @@ class ClientActions extends MainFormModel
     public $ResponsibleName;
     public $FIO;
     public $OtherName;
+    public $DateExec;
+    public $ContactInfo_id;
+    public $ActionStatus_id;
+    public $ActionOperation_id;
+    public $ActionResult_id;
+    public $Responsible_id;
+    public $NextContactInfo;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
 
-        $this->SP_INSERT_NAME = '';
-        $this->SP_UPDATE_NAME = '';
+        $this->SP_INSERT_NAME = 'INSERT_ClientActions';
+        $this->SP_UPDATE_NAME = 'UPDATE_ClientActions';
         $this->SP_DELETE_NAME = '';
 
         $Select = "\nSelect
                         er.Exrp_id,
                         er.[Date],
+                        er.Empl_id,
+                        er.Form_id,
                         p.FullName,
                         er.Demand_id,
                         er.ContactType_id,
@@ -55,7 +66,14 @@ class ClientActions extends MainFormModel
                         dbo.FIO(e2.EmployeeName) as ResponsibleName,
                         ci.FIO,
                         er.OtherName,
-                        er.Report";
+                        er.Report,
+                        er.DateExec,
+                        er.ContactInfo_id,
+                        er.ActionStatus_id,
+                        er.ActionOperation_id,
+                        er.ActionResult_id,
+                        er.Responsible_id,
+                        er.NextContactInfo";
         $From = "\nFrom ExecutorReports er left join ContactTypes ct on (er.ContactType_id = ct.Contact_id)
                         left join ActionStages acs on (er.ActionStage_id = acs.Stage_id)
                         left join Organizations_v p on (er.Form_id = p.Form_id)
@@ -83,6 +101,8 @@ class ClientActions extends MainFormModel
         return array(
             array('Exrp_id,
                     Date,
+                    Empl_id,
+                    Form_id,
                     FullName,
                     Demand_id,
                     ContactType_id,
@@ -95,7 +115,13 @@ class ClientActions extends MainFormModel
                     SegmentName,
                     SubSegmentName,
                     Address,
-                    LastDateContact', 'safe'),
+                    LastDateContact,
+                    DateExec,
+                    ContactInfo_id,
+                    ActionStatus_id,
+                    ActionOperation_id,
+                    ActionResult_id,
+                    Responsible_id', 'safe'),
         );
     }
     
@@ -104,6 +130,8 @@ class ClientActions extends MainFormModel
         return array(
             'Exrp_id' => '',
             'Date' => '',
+            'Empl_id' => '',
+            'Form_id' => '',
             'FullName' => '',
             'Demand_id' => '',
             'ContactType_id' => '',
@@ -117,6 +145,13 @@ class ClientActions extends MainFormModel
             'SubSegmentName' => '',
             'Address' => '',
             'LastDateContact' => '',
+            'DateExec' => '',
+            'ContactInfo_id' => '',
+            'ActionStatus_id' => '',
+            'ActionOperation_id' => '',
+            'ActionResult_id' => '',
+            'Responsible_id' => '',
+            'NextContactInfo' => '',
         );
     }
 }

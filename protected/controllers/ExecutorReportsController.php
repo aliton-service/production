@@ -37,7 +37,7 @@ class ExecutorReportsController extends Controller
 				),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create'),
+				'actions'=>array('create', 'Insert'),
 				'roles'=>array(
 					
 					'CreateExecuteReports',
@@ -107,6 +107,47 @@ class ExecutorReportsController extends Controller
 
 	public function actionInsert() {
             $model = new ClientActions();
+            
+            $LastAction = array(
+                'Address' => null,
+                'StageName' => null,
+                'Date' => null,
+                'ResultName' => null,
+                'NextAction' => null
+            );
+            
+            if (isset($_POST['Demand_id']))
+                $model->Demand_id = $_POST['Demand_id'];
+            
+            if (isset($_POST['Form_id'])) {
+                $model->Form_id = $_POST['Form_id'];
+                $Query = new SQLQuery();
+                $Query->setSelect("\nSelect
+                                        er.Exrp_id,
+                                        d.[Address],
+                                        s.StageName,
+                                        er.[Date],
+                                        r.ActionResultName,
+                                        er.NextAction");
+                $Query->setFrom("\nFrom PropForms p left join ExecutorReports er on (p.LastAction_id = er.Exrp_id)
+                                        left join FullDemands d on (er.Demand_id = d.Demand_id)
+                                        left join ActionStages s on (er.ActionStage_id = s.Stage_id)
+                                        left join ActionResults r on (er.ActionResult_id = r.Result_id)");
+                $Query->setWhere("\nWhere p.Form_id = " . $_POST['Form_id']);
+                $Result = $Query->QueryRow();
+                $LastAction['Address'] = $Result['Address'];
+                $LastAction['StageName'] = $Result['StageName'];
+                $LastAction['Date'] = $Result['Date'];
+                $LastAction['ResultName'] = $Result['ActionResultName'];
+                $LastAction['NextAction'] = $Result['NextAction'];
+                
+                $ContactInfo = new ContactInfo();
+                $ContactInfo = $ContactInfo->Find(array(), array(
+                    'og.PropForm_id = ' . $_POST['Form_id'],
+                ));
+                    
+            }
+            
             $ObjectResult = array(
                     'result' => 0,
                     'id' => 0,
@@ -114,6 +155,11 @@ class ExecutorReportsController extends Controller
                 );
             if (isset($_POST['ClientActions'])) {
                 $model->attributes = $_POST['ClientActions'];
+                $model->Empl_id = Yii::app()->user->Employee_id;
+                $model->Date = date('d.m.Y H:i');
+                if ($model->Demand_id == '')
+                    $model->Demand_id = 0;
+                
                 if ($model->validate()) {
                     $Res = $model->Insert();
                     $ObjectResult['result'] = 1;
@@ -125,40 +171,99 @@ class ExecutorReportsController extends Controller
 
             $ObjectResult['html'] = $this->renderPartial('_form', array(
                 'model' => $model,
+                'LastAction' => $LastAction,
+                'ContactInfo' => $ContactInfo,
             ), true);
             echo json_encode($ObjectResult);
         }
         
         
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-	$model=new ExecutorReports;
-		 if ($id == null)
-                        throw new CHttpException(404, 'Не выбран сотрудник.');
-                
-                
-                $model=$this->loadModel($id);
+            $model = new ClientActions();
             
+            if (isset($_POST['Exrp_id']))
+                $model->getModelPk ($_POST['Exrp_id']);
+            
+            $LastAction = array(
+                'Address' => null,
+                'StageName' => null,
+                'Date' => null,
+                'ResultName' => null,
+                'NextAction' => null
+            );
+            
+            $MarketingSolutions = new MarketingSolutions();
+            
+            
+            if (isset($_POST['Demand_id']))
+                $model->Demand_id = $_POST['Demand_id'];
+            
+            if (isset($_POST['Form_id'])) {
+                $model->Form_id = $_POST['Form_id'];
+                $Query = new SQLQuery();
+                $Query->setSelect("\nSelect
+                                        er.Exrp_id,
+                                        d.[Address],
+                                        s.StageName,
+                                        er.[Date],
+                                        r.ActionResultName,
+                                        er.NextAction,
+                                        ms.Solution_id");
+                $Query->setFrom("\nFrom PropForms p left join ExecutorReports er on (p.LastAction_id = er.Exrp_id)
+                                        left join FullDemands d on (er.Demand_id = d.Demand_id)
+                                        left join ActionStages s on (er.ActionStage_id = s.Stage_id)
+                                        left join ActionResults r on (er.ActionResult_id = r.Result_id)
+                                        left join MarketingSolutions ms on (p.Form_id = ms.Form_id)
+                                        ");
+                $Query->setWhere("\nWhere p.Form_id = " . $_POST['Form_id']);
+                $Result = $Query->QueryRow();
+                $LastAction['Address'] = $Result['Address'];
+                $LastAction['StageName'] = $Result['StageName'];
+                $LastAction['Date'] = $Result['Date'];
+                $LastAction['ResultName'] = $Result['ActionResultName'];
+                $LastAction['NextAction'] = $Result['NextAction'];
                 
-                if (!Yii::app()->LockManager->LockRecord('ExecutorReports', $model->tableSchema->primaryKey, $id))
-                    throw new CHttpException(404, 'Запись заблокирована другим пользователем');
+                $ContactInfo = new ContactInfo();
+                $ContactInfo = $ContactInfo->Find(array(), array(
+                    'og.PropForm_id = ' . $_POST['Form_id'],
+                ));
+                
+                if ($Result['Solution_id'] != '')
+                    $MarketingSolutions->getModelPk ($Result['Solution_id']);
+                    
+            }
+            
+            $ObjectResult = array(
+                    'result' => 0,
+                    'id' => 0,
+                    'html' => '',
+                );
+            if (isset($_POST['ClientActions'])) {
+                $model->getModelPk($_POST['ClientActions']['Exrp_id']);
+                $model->attributes = $_POST['ClientActions'];
+                $model->Empl_id = Yii::app()->user->Employee_id;
+                
+                $model->Date = date('d.m.Y H:i');
+                if ($model->Demand_id == '')
+                    $model->Demand_id = 0;
+                
+                if ($model->validate()) {
+                    $Res = $model->Update();
+                    $ObjectResult['result'] = 1;
+                    $ObjectResult['id'] = $Res['Exrp_id'];
+                    echo json_encode($ObjectResult);
+                    return;
+                } 
+            }
 
-		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
-
-		if(isset($_POST['ExecutorReports']))
-		{
-			$model->attributes=$_POST['ExecutorReports'];
-			$model->DateChange = date('m.d.y H:i:s');
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->exrp_id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-                        'locktime'=>Yii::app()->LockManager->getLockTime($model->tableName()),
-                        'id'=>$id,
-		)); 
+            $ObjectResult['html'] = $this->renderPartial('_form', array(
+                'model' => $model,
+                'LastAction' => $LastAction,
+                'ContactInfo' => $ContactInfo,
+                'MarketingSolutions' => $MarketingSolutions,
+            ), true);
+            echo json_encode($ObjectResult);
 	}
 
 	/**

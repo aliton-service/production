@@ -77,7 +77,8 @@ class ContactInfo extends MainFormModel
                     ."  ISNULL(c.Reduction + ' - ', '') + isNull(ci.FIO, '') +
                             case when isNull(ci.telephone, '') <> '' or isNull(ci.ctelephone, '') <> ''
                             then ', тел.:' + isNull(ci.telephone + '', '') + isNull(ci.ctelephone, '') else '' end CName";
-        $From =     "\nFrom ContactInfo ci left join Customers c on (ci.Cstm_id = c.Customer_Id)";
+        $From =     "\nFrom ContactInfo ci left join Customers c on (ci.Cstm_id = c.Customer_Id)"
+                    . "     left join ObjectsGroup og on (ci.ObjectGr_id = og.ObjectGr_id)";
         $Where =    "\nWhere ci.DelDate is Null";
         $Order =    "\nOrder by ci.Info_id";
         

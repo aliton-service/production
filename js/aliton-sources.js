@@ -4635,3 +4635,63 @@ Sources.SourceDiaryActions =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceActionStages =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Stage_id',  type: 'int' },
+        { name: 'StageName',  type: 'string' },
+    ],
+    id: 'Stage_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ActionStages',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceActionOperations =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Operation_id',  type: 'int' },
+        { name: 'ActionOperationName',  type: 'string' },
+    ],
+    id: 'Operation_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ActionOperations',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceActionResults =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Result_id',  type: 'int' },
+        { name: 'ActionResultName',  type: 'string' },
+    ],
+    id: 'Result_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ActionResults',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

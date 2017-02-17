@@ -768,6 +768,8 @@ return array_merge(
                 'ManagerWHBuhActs',
                 'ManagerPropForms',
                 'ManagerBanks',
+                'ManagerObjectsGroupSystems',
+                'ManagerSystemCompetitors',
                 
                 /* Отчеты */
                 'DemandsReportAll',
