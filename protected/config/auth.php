@@ -826,6 +826,8 @@ return array_merge(
                 'ManagerControlContacts',
                 'ManagerWHBuhActs',
                 'UserPropForms',
+                'ManagerObjectsGroupSystems',
+                'ManagerSystemCompetitors',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -889,6 +891,8 @@ return array_merge(
                 'UserInventoryDetails',
                 'ManagerEquips',
                 'UserPropForms',
+                'ManagerObjectsGroupSystems',
+                'ManagerSystemCompetitors',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
