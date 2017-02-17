@@ -769,6 +769,12 @@ class DemandsController extends Controller
             $sp = new StoredProc();
             $sp->ProcedureName = 'UPDATE_DEMANDDETAILS';
             $sp->ParametersRefresh();
+            
+            foreach ($_POST['DemandsDetails'] as $key => $value) {
+                if ($value == '')
+                    $_POST['DemandsDetails'][$key] = null;
+            }
+            
             $sp->Parameters[0]['Value'] = $_POST['DemandsDetails']['Demand_id'];
             $sp->Parameters[1]['Value'] = $_POST['DemandsDetails']['GoCalc'];
             $sp->Parameters[2]['Value'] = $_POST['DemandsDetails']['WorkExec'];
