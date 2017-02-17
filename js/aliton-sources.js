@@ -289,6 +289,8 @@ Sources.DemandsSource =
         { name: 'StatusOP', type: 'int'},
         { name: 'StatusOPName', type: 'string'},
         { name: 'FirstDemandPrior', type: 'string'},
+        { name: 'Initiator_id', type: 'int'},
+        { name: 'InitiatorName', type: 'string'},
         
     ],
     id: 'id',

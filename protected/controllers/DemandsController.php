@@ -785,6 +785,7 @@ class DemandsController extends Controller
             $sp->Parameters[13]['Value'] = $_POST['DemandsDetails']['date_calc'];
             $sp->Parameters[14]['Value'] = $_POST['DemandsDetails']['calc_accept'];
             $sp->Parameters[15]['Value'] = $_POST['DemandsDetails']['StatusOP'];
+            $sp->Parameters[16]['Value'] = $_POST['DemandsDetails']['Initiator_id'];
             $sp->CheckParam = true;
             $Res = $sp->Execute();
             

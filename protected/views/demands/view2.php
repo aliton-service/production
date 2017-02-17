@@ -47,6 +47,7 @@
             competitive: <?php echo json_encode($model->competitive); ?>,
             clrs_id: <?php echo json_encode($model->clrs_id); ?>,
             StatusOP: <?php echo json_encode($model->StatusOP); ?>,
+            Initiator_id: <?php echo json_encode($model->Initiator_id); ?>,
         };
         // Инициализация источников данных
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
@@ -508,6 +509,8 @@
                         $("#edStatusOP").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: ''}, {id: 1, name: 'Холодный'}, {id: 2, name: 'Теплый'}, {id: 3, name: 'Горячий'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
                         $("#edStatusOP").jqxComboBox('val', Demand.StatusOP);
                         
+                        $("#edInitiator").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: DataEmployees, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ShortName", valueMember: "Employee_id"}));
+                        $("#edInitiator").jqxComboBox('val', Demand.Initiator_id);
                         
                         $('#btnSaveDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                         $('#btnSaveDetails').on('click', function() {
@@ -532,7 +535,8 @@
                                         upg_note: $('#edUpgNote').val(),
                                         date_calc: $('#edDateCalc').val(),
                                         calc_accept: $('#edCalcAccept').val(),
-                                        StatusOP: $('#edStatusOP').val()
+                                        StatusOP: $('#edStatusOP').val(),
+                                        Initiator_id: $('#edInitiator').val(),
                                     }
                                 },
                                 success: function(Res) {
@@ -1040,6 +1044,10 @@
                             <div class="al-row-column">
                                 <div><b>Статус ОП</b></div>
                                 <div><div id='edStatusOP' name='DemandDetails[StatusOP]'></div></div>
+                            </div>
+                            <div class="al-row-column">
+                                <div><b>Инициатор</b></div>
+                                <div><div id='edInitiator' name='DemandDetails[Initiator_id]'></div></div>
                             </div>
                             <div style="clear: both"></div>
                         </div>
