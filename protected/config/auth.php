@@ -769,7 +769,7 @@ return array_merge(
                 'ManagerPropForms',
                 'ManagerBanks',
                 'ManagerObjectsGroupSystems',
-                'ManagerSystemCompetitors',
+                'AdminSystemCompetitors',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -827,7 +827,7 @@ return array_merge(
                 'ManagerWHBuhActs',
                 'UserPropForms',
                 'ManagerObjectsGroupSystems',
-                'ManagerSystemCompetitors',
+                'AdminSystemCompetitors',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -892,7 +892,7 @@ return array_merge(
                 'ManagerEquips',
                 'UserPropForms',
                 'ManagerObjectsGroupSystems',
-                'ManagerSystemCompetitors',
+                'AdminSystemCompetitors',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
