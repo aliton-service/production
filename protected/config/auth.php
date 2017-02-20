@@ -314,6 +314,7 @@ return array_merge(
             'defaultIndex' => 'object/index',
             'children' => array(
                 'UserObjects',
+                'ManagerObjects',
                 'ManagerObjectsGroup',
                 'SeniorDemands',
                 'AdminExecuteReports',
@@ -326,6 +327,8 @@ return array_merge(
                 'AdminEventOffers',
                 'AdminOfferDemands',
                 'AllLoadObjects',
+                'ManagerStreets',
+                
             ),
         ),
         
