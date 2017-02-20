@@ -310,11 +310,12 @@ class CostCalculationsController extends Controller
 
                                         Set @DateEnd = DATEADD(DD, -1, DATEADD(MONTH, 1, @DateStart))
                                         Select
-                                            Round(Sum(c.Sum_high_full), 2) as Sum_high_full
+                                            Round(ISNULL(Sum(c.Sum_high_full), 0), 2) as Sum_high_full
                                         From CostCalculations_v c
                                         Where c.Date_Agreed between @DateStart and @DateEnd
                                             and isNull(c.SumPay, 0)  = 0
-                                            and (c.type = 1 or c.type = 2)");
+                                            and (c.type = 1 or c.type = 2)
+                                            and c.User_Agreed = " . Yii::app()->user->Employee_id);
             $R = $SumPayNoAvans->QueryRow();
             $Result['SumPayNoAvans'] = $R['Sum_high_full'];
         }
