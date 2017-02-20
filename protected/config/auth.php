@@ -748,7 +748,7 @@ return array_merge(
                 'ManagerDocuments',
                 'ManagerContacts',
                 'ManagerContractMasterHistory',
-                'ManagerContractsDetails_v',
+                'AdminContractsDetails_v',
                 'AdminContractEquips',
                 'UserObjectsGroupCostCalculations',
                 'ManagerCostCalculations',
