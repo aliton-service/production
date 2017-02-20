@@ -643,7 +643,6 @@
                         
                     }
                     if (Type == 1 || Type == 2) { // Смета
-                        console.log(PM);
                         if (PM) {
                             if (!Marj30 && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
