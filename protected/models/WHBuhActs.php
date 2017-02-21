@@ -31,6 +31,7 @@ class WHBuhActs extends MainFormModel
     public $date_act;
     public $state;
     public $EmplCreate;
+    public $Form_id;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -67,6 +68,7 @@ class WHBuhActs extends MainFormModel
                         d.signed_yn,
                         d.date_ready,
                         d.date_act,
+                        d.Form_id,
                         case when d.achs_id is null then 'Не утвержден' else 'Утвержден' end as state";
         $From = "\nFrom WHBuhActs d";
         
@@ -108,7 +110,8 @@ class WHBuhActs extends MainFormModel
                     rcrs_id,
                     signed_yn,
                     date_ready,
-                    date_act', 'safe'),
+                    date_act,
+                    Form_id', 'safe'),
         );
     }
     
@@ -144,6 +147,7 @@ class WHBuhActs extends MainFormModel
             'date_ready' => '',
             'date_act' => '',
             'date_act' => '',
+            'Form_id' => '',
         );
     }
 }

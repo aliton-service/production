@@ -19,17 +19,26 @@
             signed_yn: <?php echo json_encode($model->signed_yn); ?>,
             info_id: <?php echo json_encode($model->info_id); ?>,
             sum: <?php echo json_encode($model->sum); ?>,
-            
+            Form_id: <?php echo json_encode($model->Form_id); ?>,
             date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
             date_act: Aliton.DateConvertToJs('<?php echo $model->date_act; ?>'),
             ReceiptDate: Aliton.DateConvertToJs('<?php echo $model->ReceiptDate; ?>'),
         };
-            
+
+        
+
         $("#numberWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
-        $("#org_nameWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
+//        $("#org_nameWHBA2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 350 }));
+        var DataClients = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceOrganizationsVMin, {}));
+        $("#org_nameWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataClients, width: 250, displayMember: "FullName", valueMember: "Form_id"}));
+        $("#org_nameWHBA2").on('bindingComplete', function (event) {
+            if (WHBuhActs2.Form_id !== '') $("#org_nameWHBA2").jqxComboBox('val', WHBuhActs2.Form_id);
+            $("#btnOk").jqxButton({disabled: false});
+        });
+        
         
         var DataAddresses = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {}));
-        $("#AddressWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddresses, width: 350, displayMember: "Addr", valueMember: "Object_id", disabled: true }));
+        $("#AddressWHBA2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAddresses, width: 350, displayMember: "Addr", valueMember: "Object_id", disabled: false }));
         $("#AddressWHBA2").on('bindingComplete', function (event) {
             if (WHBuhActs2.objc_id !== '') $("#AddressWHBA2").jqxComboBox('val', WHBuhActs2.objc_id);
             $("#btnOk").jqxButton({disabled: false});
@@ -155,7 +164,13 @@
 </div>
 
 <div class="row" style="margin-top: 10px;">
-    <div class="row-column">Клиент: <input readonly type="text" id="org_nameWHBA2" name="WHBuhActs[org_name]"></div>
+    <div class="row-column">
+        <div class="al-row-column">Клиент:</div>
+        <div class="al-row-column"><div id="org_nameWHBA2" name="WHBuhActs[org_name]"></div></div>
+            
+    </div>
+        
+        <!--<input readonly type="text" id="org_nameWHBA2" name="WHBuhActs[org_name]"></div>-->
 </div>
 
 <div class="row" style="margin-top: 10px;">
