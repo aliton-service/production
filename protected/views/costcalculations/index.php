@@ -560,10 +560,13 @@
                     var Chief = false;
                     var PM = false;
                     var RSC = false;
+                    var ROPR = false;
                     if (parseInt(CostCalculations.Position_id) == 37)
                         RSC = true;
                     if (parseInt(CostCalculations.Position_id) == 86)
                         PM = true;
+                    if (parseInt(CostCalculations.Position_id) == 31)
+                        ROPR = true;
                     
                     
                     
@@ -587,7 +590,17 @@
                     var Pay50 = (parseFloat(ProcPay) >= 50);
                     
                     if (Type == 0) {// КП
-                        if (PM) {
+                        if (ROPR) {
+                            if (!Marj20 && !NotWorks) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
+                                return false;
+                            }
+                        }
+                        else if (PM) {
                             if (!Marj30 && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
                                 return false;
@@ -643,7 +656,21 @@
                         
                     }
                     if (Type == 1 || Type == 2) { // Смета
-                        if (PM) {
+                        if (ROPR) {
+                            if (!Marj20 && !NotWorks) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
+                                return false;
+                            }
+                            
+                            if (parseFloat(CostCalcDetails.SumHighFull) >= 10000 && !Pay50) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Если сумма сметы больше 10000р., счет должен быть оплачен на 50% или более.');
+                                return false;
+                            }
+                        } else if (PM) {
                             if (!Marj30 && !NotWorks) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
                                 return false;
