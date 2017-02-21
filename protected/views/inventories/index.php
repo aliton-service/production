@@ -10,8 +10,59 @@
         $('#btnRefreshInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnPrintInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnAcceptInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+        $('#btnEditTime').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 180}));
         $('#btnDelInventory').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#InventoriesDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 320, width: 310, position: 'center'}));
+        $('#EditTimeDialog').on('open', function() {
+            var D = new Date(CurrentRowData.date);
+            var Min = new Date(D.getFullYear(), D.getMonth(), D.getDate(), 0, 0);
+            var Max = new Date(Min.getFullYear(), Min.getMonth(), Min.getDate(), 23, 59);
+            
+            $("#edTime").jqxDateTimeInput({value: D, min: Min, max: Max});
+        });
+        $('#EditTimeDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 180, width: 310, position: 'center', initContent: function() {
+                $("#edTime").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentRowData.date, formatString: 'dd.MM.yyyy HH:mm', showCalendarButton: false, showTimeButton: true, width: 180}));
+                $('#btnTimeSave').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+                $('#btnTimeCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings));
+                
+                $('#btnTimeCancel').on('click', function() {
+                    $('#EditTimeDialog').jqxWindow('close');
+                });
+                
+                $('#btnTimeSave').on('click', function(){
+                    $.ajax({
+                        url: <?php echo json_encode(Yii::app()->createUrl('Inventories/ChangeTime')) ?>,
+                        type: 'POST',
+                        async: false,
+                        data: {
+                            Inventories: {
+                                Invn_id: CurrentRowData.invn_id,
+                                Date: $("#edTime").val(),
+                            }
+                        },
+                        success: function(Res) {
+                            Res = JSON.parse(Res);
+                            if (Res.result == 1) {
+                                $('#btnRefreshInventory').click();
+                                $('#btnTimeCancel').click();
+                            }
+                            else
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            
+                            
+                        },
+                        error: function(Res) {
+                            Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                        }
+                    });
+                });
+            }
+        }));
+        
+        $('#btnEditTime').on('click', function() {
+            $('#EditTimeDialog').jqxWindow('open');
+        });
+        
         
         var CheckButton = function() {
             $('#btnEditInventory').jqxButton({disabled: !(CurrentRowData != undefined)})
@@ -146,6 +197,7 @@
     <div class="al-row-column"><input type="button" value="Рассчитать" id='btnAddInventory'/></div>
     <div class="al-row-column"><input type="button" value="Просмотр" id='btnEditInventory'/></div>
     <div class="al-row-column"><input type="button" value="Принять" id='btnAcceptInventory'/></div>
+    <div class="al-row-column"><input type="button" value="Изменить время расчета" id='btnEditTime'/></div>
     <div style="clear: both"></div>
 </div>    
 <div class="al-row">
@@ -162,5 +214,22 @@
     </div>
     <div style="padding: 10px;" id="DialogInventoriesContent">
         <div style="" id="BodyInventoriesDialog"></div>
+    </div>
+</div>
+
+
+<div id="EditTimeDialog" style="display: none;">
+    <div id="EditTimeDialogHeader">
+        <span id="EditTimeHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogEditTimeContent">
+        <div style="" id="BodyEditTimeDialog">
+            <div class="al-row">Выберите время</div>
+            <div class="al-row"><div id="edTime"></div></div>
+            <div class="al-row">
+                <div class="al-row-column"><input type="button" id="btnTimeSave" value="Сохранить"/></div>
+                <div class="al-row-column"><input type="button" id="btnTimeCancel" value="Отмена"/></div>
+            </div>
+        </div>
     </div>
 </div>
