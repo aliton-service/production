@@ -146,7 +146,8 @@ class Repair extends MainFormModel {
                         r.DatePlan,
                         r.price_low";
 
-        $From = "\nFrom Repairs_v r left join PriceListDetails_v pl on (pl.prlt_id = @Prlt_id and pl.eqip_id = r.eqip_id)";
+        $From = "\nFrom Repairs_v r
+                    left join PriceListDetails_v pl on (pl.prlt_id = @Prlt_id and pl.eqip_id = r.eqip_id)";
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
 

@@ -258,6 +258,8 @@ return array_merge(
                 'AdminActEquips',
                 'FindTreb',
                 'FindWHDoc1',
+                'WHDocuments8Report',
+                'WHDocuments9Report',
             ),
         ),
         
@@ -1187,6 +1189,8 @@ return array_merge(
                 'AdminRepairs',
                 'AdminWhActs',
                 'AdminRepairDocs',
+                'WHDocuments8Report',
+                'WHDocuments9Report',
             ),
         ),
         
@@ -1218,7 +1222,7 @@ return array_merge(
             ),
         ),
         
-        /* Менеджер по логиcтике */
+        /* Менеджер по логистике */
         'LogisticsManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Менеджер по логитике',
@@ -1289,12 +1293,13 @@ return array_merge(
                 'ManagerInventories',
                 'UserInventoryDetails',
                 'AdminDocmAchsDetails',
-                
                 'WHActsAll',
                 'WHActs1Report',
                 'WHActs2Report',
                 'WHActs3Report',
                 'WHActs4Report',
+                'WHDocuments8Report',
+                'WHDocuments9Report',
             ),
         ),
         

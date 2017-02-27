@@ -25,7 +25,7 @@
             DateMaster: Aliton.DateConvertToJs('<?php echo $model->DateMaster; ?>'),
             DateExec: Aliton.DateConvertToJs('<?php echo $model->DateExec; ?>'),
             DateOfTrans: Aliton.DateConvertToJs('<?php echo $model->DateOfTransfer; ?>'),
-            TransferReason: <?php echo json_encode($model->TransferReason); ?>,
+            TransferReason: <?php echo json_encode($model->TransfReason); ?>,
             DelayReason: <?php echo json_encode($model->DelayReason); ?>,
             ResultName: <?php echo json_encode($model->ResultName); ?>,
             DemandText: <?php echo json_encode($model->DemandText); ?>,

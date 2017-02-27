@@ -43,6 +43,7 @@ class Demands extends MainFormModel
 	public $Malfunction_id = null;
 	public $RemarkDemand = null;
 	public $AgreeDate = null;
+	public $TransfReason = null;
 	public $TransferReason = null;
 	public $DateOfHelpRequest = null;
 	public $DateOfTransfer = null;
@@ -653,7 +654,7 @@ Order by [Address]";
 				  d.TransfReason,
 				  d.TransferReason,
 				  d.DelayReason,
-				 d.dlrs_id,
+				  d.dlrs_id,
 				  d.DateExec,
 				  d.DateMaster,
 				  d.Refusers,

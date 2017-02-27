@@ -3595,7 +3595,7 @@ Sources.SourceRepairs =
         {name: 'date_undo', type: 'date'},
         {name: 'undo_empl_name', type: 'int'},
         {name: 'reason_name', type: 'string'},
-        {name: 'DatePlan', type: 'date'}
+        {name: 'DatePlan', type: 'date'},
     ],
     id: 'Repr_id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=Repairs',

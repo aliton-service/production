@@ -75,8 +75,8 @@
                     { text: 'Адрес', columngroup: 'Generals', datafield: 'Addr', filtercondition: 'CONTRAINS', width: 200 },
                     { text: 'Мастер', columngroup: 'Generals', datafield: 'MasterName', filtercondition: 'CONTRAINS', width: 150 },
                     { text: 'Серийный номер', columngroup: 'Generals', datafield: 'SN', filtercondition: 'CONTRAINS', width: 100 },
-                    { text: 'Новое', columngroup: 'Quant', datafield: 'quant', cellsformat: 'f2', filtercondition: 'CONTRAINS', width: 100 },
-                    { text: 'Б\У', columngroup: 'Quant', datafield: 'quant_used', cellsformat: 'f2', filtercondition: 'CONTRAINS', width: 100 },
+                    { text: 'Новое', columngroup: 'Quant', datafield: 'quant', cellsformat: 'f2', filtercondition: 'CONTRAINS', width: 85 },
+                    { text: 'Б\У', columngroup: 'Quant', datafield: 'quant_used', cellsformat: 'f2', filtercondition: 'CONTRAINS', width: 85 },
                 ],
                 columngroups: 
                 [
@@ -103,11 +103,11 @@
     });
 </script>    
 
-<div class="al-row" style="height: calc(100% - 158px)">
+<div class="al-row" style="height: calc(100% - 140px); padding: 0;">
     <div id="HistoryGrid"></div>
 </div>
-<div class="al-row" >
-    <div class="al-row">Примечание</div>
+<div class="al-row" style="padding-bottom: 0;">
+    <div class="al-row" style="padding: 0;">Примечание</div>
     <div class="al-row"><textarea id="edNote"></textarea></div>
 </div>
 <div class="al-row">

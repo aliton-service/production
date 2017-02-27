@@ -275,7 +275,7 @@
             var CurrentTabIndex = $('#Tabs').jqxTabs('selectedItem');
             
             if (CurrentTabIndex == 0)
-                $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 660, width: 850, position: 'center' }));
+                $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 660, width: 780, position: 'center' }));
             if (CurrentTabIndex == 1)
                 $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 140, width: 500, position: 'center' }));
             if (CurrentTabIndex == 2)

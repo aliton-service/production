@@ -139,7 +139,7 @@
         $("#btnMerge").jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
         
         $("#btnHistory").on('click', function() {
-            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, resizable: true, height: 500, position: 'center'}));
+            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 970, resizable: true, height: 713, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Equips/History')); ?>,
                 type: 'POST',

@@ -97,7 +97,7 @@
                         { text: 'Зарегистрировал', datafield: 'reg_empl_name', width: 110, cellsrenderer: cellsrenderer},
                         { text: 'Серийный номер', datafield: 'SN', width: 110, cellsrenderer: cellsrenderer},
                         { text: 'Возврат', filtertype: 'checkbox', columntype: 'checkbox', datafield: 'Return', width: 80, cellsrenderer: cellsrenderer },
-                        { text: 'СРМ', datafield: 'NameSupplier', width: 110, cellsrenderer: cellsrenderer},
+                        { text: 'СРМ', datafield: 'splr_id', width: 110, cellsrenderer: cellsrenderer},
                         { text: 'План. дата', filtertype: 'date', datafield: 'DatePlan', width: 110, cellsformat: 'dd.MM.yyyy', cellsrenderer: cellsrenderer},
                         { text: 'Мастер', datafield: 'mstr_empl_name', width: 110, cellsrenderer: cellsrenderer},
                         { text: 'Инженер', datafield: 'egnr_empl_name', width: 110, cellsrenderer: cellsrenderer},

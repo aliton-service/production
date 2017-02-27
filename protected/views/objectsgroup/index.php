@@ -98,9 +98,9 @@
             $("#Journal").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 90, formatString: 'dd.MM.yyyy', readonly: true, showCalendarButton: false, allowKeyboardDelete: false }));
             $("#PostalAddress").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
             
-            $("#Refusers").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 250}));
-            $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: 250}));
-            $("#Information").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 250}));
+            $("#Refusers").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: '100%'}));
+            $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {width: '100%'}));
+            $("#Information").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: '100%'}));
             
             $("#ServiceManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
             $("#SalesManager").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
@@ -186,7 +186,7 @@
                     width: 'calc(100% - 2px)',
                     height: 'calc(100% - 2px)',
                     source: DataObjectsGroupsExecutors,
-                    enablebrowserselection: true,
+//                    enablebrowserselection: true,
                     columns: [
                         { text: 'ФИО', dataField: 'FIO', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
                         { text: 'Должность', dataField: 'CustomerName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
@@ -370,6 +370,43 @@
 
 <style>
     
+
+    #RefusersWrapper {
+        width: 250px;
+    }
+
+    #NoteWrapper {
+        width: 310px;
+    }
+
+    #InformationWrapper {
+        width: 290px;
+        height: 70px;
+    }
+    
+    @media screen and (min-width: 1300px) { 
+        #RefusersWrapper {
+            width: 360px;
+        }
+
+        #NoteWrapper {
+            width: 440px;
+        }
+    
+        #InformationWrapper {
+            position: absolute;
+            left: 850px;
+            top: 50px;
+            width: 340px;
+            height: 212px;
+        }
+    }
+    @media screen and (min-width: 1400px) { 
+        #InformationWrapper {
+            width: 400px;
+        }
+    }
+    
     #ContactInfoGrid .jqx-fill-state-pressed {
         background-color: #A7D2BB !important;
         color: black;
@@ -386,7 +423,6 @@ $this->breadcrumbs=array(
 
 ?>
 
-    
 <div id='jqxTabs' style="">
     <ul>
         <li style="margin-left: 20px;">
@@ -433,7 +469,7 @@ $this->breadcrumbs=array(
         </li>
     </ul>
     <div style="overflow: auto; height: calc(100% - 2px); background-color: #F2F2F2;">
-        <div style="overflow: auto; padding: 5 10px 0;">
+        <div style="overflow: auto; padding: 5px 10px 0;">
             <div class="al-row">
                 <div class="al-row-column" style="width: 60px">Клиент:</div>
                 <div class="al-row-column"><input readonly type="text" id="FullName"></div>
@@ -473,17 +509,17 @@ $this->breadcrumbs=array(
                 <div style="clear: both"></div>
             </div>
             <div class="al-row" style="padding: 0">
-                <div class="al-row-column">
+                <div class="al-row-column" id="RefusersWrapper">
                     <div class="al-row"><div class="al-row-column">Отказники:</div><div style="clear: both"></div></div>
-                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Refusers"></textarea></div><div style="clear: both"></div></div>
+                    <textarea readonly type="text" id="Refusers"></textarea>
                 </div>
-                <div class="al-row-column">
+                <div class="al-row-column" id="NoteWrapper">
                     <div class="al-row"><div class="al-row-column">Примечание:</div><div style="clear: both"></div></div>
-                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Note"></textarea></div><div style="clear: both"></div></div>
+                    <textarea readonly type="text" id="Note"></textarea>
                 </div>
-                <div class="al-row-column">
+                <div class="al-row-column" id="InformationWrapper">
                     <div class="al-row"><div class="al-row-column">Общая информация:</div><div style="clear: both"></div></div>
-                    <div class="al-row" style="padding: 0"><div class="al-row-column"><textarea readonly type="text" id="Information"></textarea></div><div style="clear: both"></div></div>
+                    <textarea readonly type="text" id="Information"></textarea>
                 </div>
                 <div style="clear: both"></div>
             </div>
@@ -494,7 +530,7 @@ $this->breadcrumbs=array(
         </div>
         <div style="padding: 10px; height: calc(100% - 323px)">
             <div class="al-row" style="padding: 0px; height: calc(100% - 12px)">
-                <div id="ContactInfoGrid"></div>
+                <div id="ContactInfoGrid" class="jqxGridAliton"></div>
             </div>
             <div class="al-row" style="padding: 6px 0px 0px 0px;">
                 <div class="al-row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>

@@ -165,15 +165,15 @@
                 columns:
                     [
                         { text: 'Зарегистрировал', datafield: 'UCreateName', width: 150, cellsrenderer: cellsrenderer },
-                        { text: 'Номер', datafield: 'Demand_id', width: 100, cellsrenderer: cellsrenderer },
-                        { text: 'Адрес', datafield: 'Address', width: 200, cellsrenderer: cellsrenderer },
-                        { text: 'ВИП', datafield: 'VIPName', width: 50, cellsrenderer: cellsrenderer },
+                        { text: 'Номер', datafield: 'Demand_id', width: 75, cellsrenderer: cellsrenderer },
+                        { text: 'Адрес', datafield: 'Address', width: 250, cellsrenderer: cellsrenderer },
+                        { text: 'ВИП', datafield: 'VIPName', width: 45, cellsrenderer: cellsrenderer },
                         { text: 'Регистрация', filtertype: 'date', datafield: 'DateReg', width: 150, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer },
                         { text: 'Передача мастеру', filtertype: 'date', datafield: 'DateMaster', width: 150, cellsformat: 'dd.MM.yyyy HH:mm', cellsrenderer: cellsrenderer }, // 5
                         { text: 'Выполнение', filtertype: 'date', datafield: 'DateExec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'DATE_EQUAL', cellsrenderer: cellsrenderer },
                         { text: 'Время на вып.', datafield: 'ExceedDays', width: 50, cellsrenderer: cellsrenderer },
                         { text: 'Просрочка', datafield: 'FullOverDay', width: 80, cellsrenderer: cellsrenderer },
-                        { text: 'Тип заявки', datafield: 'DemandType', width: 120, cellsrenderer: cellsrenderer },
+                        { text: 'Тип заявки', datafield: 'DemandType', width: 205, cellsrenderer: cellsrenderer },
                         { text: 'Тип заявки ID', datafield: 'DemandType_id', width: 120, hidden: true }, //10
                         { text: 'Тип оборудования', datafield: 'EquipType', width: 120, cellsrenderer: cellsrenderer },
                         { text: 'Неисправность', datafield: 'Malfunction', width: 120, cellsrenderer: cellsrenderer },
@@ -182,9 +182,9 @@
                         { text: 'Запл. дата выпол.', filtertype: 'date', datafield: 'PlanDateExec', cellsformat: 'dd.MM.yyyy HH:mm', width: 150, cellsrenderer: cellsrenderer},
                         { text: 'Исполнитель', datafield: 'ExecutorsName', width: 120, cellsrenderer: cellsrenderer },
                         { text: 'Тип обслуживания', datafield: 'ServiceType', width: 120, cellsrenderer: cellsrenderer }, 
-                        { text: 'Первоначальный тип', datafield: 'FirstDemandType', width: 120, cellsrenderer: cellsrenderer }, 
-                        { text: 'Контакт', datafield: 'Contacts', width: 120, cellsrenderer: cellsrenderer }, // 20
-                        { text: 'Неисправность', datafield: 'DemandText', width: 120, cellsrenderer: cellsrenderer },
+                        { text: 'Первоначальный тип', datafield: 'FirstDemandType', width: 203, cellsrenderer: cellsrenderer }, 
+                        { text: 'Контакт', datafield: 'Contacts', width: 600, cellsrenderer: cellsrenderer }, // 20
+                        { text: 'Неисправность', datafield: 'DemandText', width: 650, cellsrenderer: cellsrenderer },
                         { text: 'Примечание', datafield: 'Note', width: 120, cellsrenderer: cellsrenderer },
                         { text: 'Район', datafield: 'AreaName', width: 120, cellsrenderer: cellsrenderer }, 
                         { text: 'Изменил', datafield: 'UChangeName', width: 120, cellsrenderer: cellsrenderer },
