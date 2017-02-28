@@ -50,6 +50,7 @@ class CostCalculations extends MainFormModel
     public $ccwt_proc = null;
     public $repr_id = null;
     public $EmplChange = null;
+    public $GarantMail;
 
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -107,7 +108,8 @@ class CostCalculations extends MainFormModel
                         cc.free_work,
                         cc.ccwt_id,
                         isnull(cwt.ccwt_proc, 35) ccwt_proc,
-                        cc.repr_id";
+                        cc.repr_id,
+                        cc.GarantMail";
         
         $From = "\nFrom CostCalculations cc 
                     inner join Employees e on (cc.empl_id = e.Employee_id)
@@ -184,7 +186,8 @@ class CostCalculations extends MainFormModel
                     ccwt_id,
                     ccwt_proc,
                     repr_id,
-                    EmplChange', 'safe'),
+                    EmplChange,
+                    GarantMail', 'safe'),
         );
     }
 
@@ -238,6 +241,7 @@ class CostCalculations extends MainFormModel
             'ccwt_id' => 'ccwt_id',
             'ccwt_proc' => 'ccwt_proc',
             'repr_id' => 'repr_id',
+            'GarantMail' => 'GarantMail',
         );
     }
 

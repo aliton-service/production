@@ -47,14 +47,14 @@
         });
         
         var Demand = {
-            FIO: '<?php echo $model->FIO; ?>',
+            FIO: <?php echo json_encode($model->FIO); ?>,
             Birthday: Aliton.DateConvertToJs('<?php echo $model->Birthday; ?>'),
             Main: <?php echo json_encode($model->Main); ?>,
             ForReport: <?php echo json_encode($model->ForReport); ?>,
-            Telephone: '<?php echo $model->Telephone; ?>',
-            CTelephone: '<?php echo $model->CTelephone; ?>',
-            Cstm_id: '<?php echo $model->Cstm_id; ?>',
-            Email: '<?php echo $model->Email; ?>',
+            Telephone: <?php echo json_encode($model->Telephone); ?>,
+            CTelephone: <?php echo json_encode($model->CTelephone); ?>,
+            Cstm_id: <?php echo json_encode($model->Cstm_id); ?>,
+            Email: <?php echo json_encode($model->Email); ?>,
             NoSend: <?php echo json_encode($model->NoSend); ?>,
             ClientName: <?php echo json_encode($ClientName); ?>,
             OGTelephone: <?php echo json_encode($Telephone); ?>,

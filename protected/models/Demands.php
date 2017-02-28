@@ -107,7 +107,8 @@ class Demands extends MainFormModel
         public $WorkedOutStatus = null;
         public $StatusOP;
         public $StatusOPName;
-
+        public $Initiator_id;
+        public $InitiatorName;
 	//------executorreport
 	public $exrp_id = null;
 	public $empl_id = null;

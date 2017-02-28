@@ -23,7 +23,7 @@ class DemandsController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut'),
+                'actions' => array('index', 'view', 'SalesView', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut'),
                 'roles' => array(
                     'ViewDemands',
                 ),
@@ -270,6 +270,23 @@ class DemandsController extends Controller
             $Object->getModelPk($Demand->Object_id);
             
             $this->render('view2', array(
+			'model'=>$Demand,
+                        'SpecCondition' => $Object->Condition,
+                    )
+		);
+        }
+        
+        public function actionSalesView($Demand_id){
+            $this->title = 'Заявка №' . $Demand_id;
+            $this->setPageTitle('Заявка №' . $Demand_id);
+            
+            $Demand = new SalesDemand();
+            $Demand->getModelPk($Demand_id);
+            
+            $Object = new Objects();
+            $Object->getModelPk($Demand->Object_id);
+            
+            $this->render('sales_view', array(
 			'model'=>$Demand,
                         'SpecCondition' => $Object->Condition,
                     )
@@ -752,6 +769,12 @@ class DemandsController extends Controller
             $sp = new StoredProc();
             $sp->ProcedureName = 'UPDATE_DEMANDDETAILS';
             $sp->ParametersRefresh();
+            
+            foreach ($_POST['DemandsDetails'] as $key => $value) {
+                if ($value == '')
+                    $_POST['DemandsDetails'][$key] = null;
+            }
+            
             $sp->Parameters[0]['Value'] = $_POST['DemandsDetails']['Demand_id'];
             $sp->Parameters[1]['Value'] = $_POST['DemandsDetails']['GoCalc'];
             $sp->Parameters[2]['Value'] = $_POST['DemandsDetails']['WorkExec'];
@@ -768,6 +791,7 @@ class DemandsController extends Controller
             $sp->Parameters[13]['Value'] = $_POST['DemandsDetails']['date_calc'];
             $sp->Parameters[14]['Value'] = $_POST['DemandsDetails']['calc_accept'];
             $sp->Parameters[15]['Value'] = $_POST['DemandsDetails']['StatusOP'];
+            $sp->Parameters[16]['Value'] = $_POST['DemandsDetails']['Initiator_id'];
             $sp->CheckParam = true;
             $Res = $sp->Execute();
             

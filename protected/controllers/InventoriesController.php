@@ -24,7 +24,7 @@ class InventoriesController extends Controller
                     'roles'=>array('CreateInventories'),
             ),
             array('allow', 
-                    'actions'=>array('update'),
+                    'actions'=>array('update', 'ChangeTime'),
                     'roles'=>array('UpdateInventories'),
             ),
             array('allow', 
@@ -66,7 +66,30 @@ class InventoriesController extends Controller
         echo json_encode($ObjectResult);
     }
 
-
+    public function actionChangeTime() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        if (isset($_POST['Inventories'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'UPDATE_Inventory';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Inventories']['Invn_id'];
+            $sp->Parameters[1]['Value'] = $_POST['Inventories']['Date'];
+            $sp->CheckParam = true;
+            $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $_POST['Inventories']['Invn_id'];
+        }
+        
+        echo json_encode($ObjectResult);
+    }
+    
+    
     public function actionUpdate()
     {
         $model = new Inventories();

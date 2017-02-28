@@ -41,6 +41,7 @@
             Position_id: <?php echo json_encode(Yii::app()->user->Position_id); ?>,
             ccwt_proc: <?php echo json_encode($model->ccwt_proc); ?>,
             koef_indirect: <?php echo json_encode($model->koef_indirect); ?>,
+            GarantMail: Boolean(Number(<?php echo json_encode($model->GarantMail); ?>))
         };
 
         var Administrator = <?php echo json_encode(Yii::app()->user->checkAccess('Administrator')); ?>;
@@ -56,7 +57,8 @@
             SumHighFull: 0,
             Discount: 0,
             SumMarj: 0,
-            ProcMarj: 0
+            ProcMarj: 0,
+            SumPayNoAvans: 0
         };
 
         var SetValueControls = function() {
@@ -72,6 +74,7 @@
             if (CostCalculations.spec_condt != null) $("#spec_condt").jqxTextArea('val', CostCalculations.spec_condt);
             if (CostCalculations.note != null) $("#note").jqxTextArea('val', CostCalculations.note);
             if (CostCalculations.EmplAgreed != null) $("#EmplAgreed").jqxInput('val', CostCalculations.EmplAgreed);
+            $("#chbGarantMail").jqxCheckBox({checked: CostCalculations.GarantMail});
         };
         
         CostCalculations.Refresh = function() {
@@ -101,6 +104,7 @@
                     CostCalculations.koef_indirect = Res.koef_indirect;
                     CostCalculations.count_type0 = parseInt(Res.count_type0);
                     CostCalculations.count_type1 = parseInt(Res.count_type1);
+                    CostCalculations.GarantMail = Boolean(Number(parseInt(Res.GarantMail)));
                     SetValueControls();
                     SetStateButtons();
                     $('#RefreshCostCalcEquips').click();
@@ -135,25 +139,25 @@
                 success: function(Res) {
                     Res = JSON.parse(Res);
                     
-                    CostCalcDetails.StartingWork = Res.StartingWork,
-                    CostCalcDetails.Expences =  Res.Expences,
-                    CostCalcDetails.TotalWork = Res.TotalWork;
-                    CostCalcDetails.StartingWorkLow = Res.StartingWorkLow;
-                    CostCalcDetails.Koef = Res.Koef;
-                    CostCalcDetails.SumLowFull = Res.SumLowFull;
-                    CostCalcDetails.SumHighFull = Res.SumHighFull;
-                    CostCalcDetails.Discount = Res.Discount;
-                    CostCalcDetails.SumMarj = Res.SumMarj;
-                    CostCalcDetails.ProcMarj = Res.ProcMarj;
-                    CostCalcDetails.SumEquipsLow = Res.SumEquipsLow;
-                    CostCalcDetails.SumEquipsHigh = Res.SumEquipsHigh;
-                    CostCalcDetails.SumEquipsHighDefault = Res.SumEquipsHighDefault;
-                    CostCalcDetails.SumWorkLow = Res.SumWorkLow;
-                    CostCalcDetails.SumWorkHigh = Res.SumWorkHigh;
-                    CostCalcDetails.SumMaterialsLow = Res.SumMaterialsLow;
-                    CostCalcDetails.SumMaterialsHigh = Res.SumMaterialsHigh;
-                    CostCalcDetails.SumPay = Res.SumPay;
-                    
+                    CostCalcDetails.StartingWork = parseFloat(Res.StartingWork),
+                    CostCalcDetails.Expences =  parseFloat(Res.Expences),
+                    CostCalcDetails.TotalWork = parseFloat(Res.TotalWork);
+                    CostCalcDetails.StartingWorkLow = parseFloat(Res.StartingWorkLow);
+                    CostCalcDetails.Koef = parseFloat(Res.Koef);
+                    CostCalcDetails.SumLowFull = parseFloat(Res.SumLowFull);
+                    CostCalcDetails.SumHighFull = parseFloat(Res.SumHighFull);
+                    CostCalcDetails.Discount = parseFloat(Res.Discount);
+                    CostCalcDetails.SumMarj = parseFloat(Res.SumMarj);
+                    CostCalcDetails.ProcMarj = parseFloat(Res.ProcMarj);
+                    CostCalcDetails.SumEquipsLow = parseFloat(Res.SumEquipsLow);
+                    CostCalcDetails.SumEquipsHigh = parseFloat(Res.SumEquipsHigh);
+                    CostCalcDetails.SumEquipsHighDefault = parseFloat(Res.SumEquipsHighDefault);
+                    CostCalcDetails.SumWorkLow = parseFloat(Res.SumWorkLow);
+                    CostCalcDetails.SumWorkHigh = parseFloat(Res.SumWorkHigh);
+                    CostCalcDetails.SumMaterialsLow = parseFloat(Res.SumMaterialsLow);
+                    CostCalcDetails.SumMaterialsHigh = parseFloat(Res.SumMaterialsHigh);
+                    CostCalcDetails.SumPay = parseFloat(Res.SumPay);
+                    CostCalcDetails.SumPayNoAvans = parseFloat(Res.SumPayNoAvans);
                     CostCalcDetails.SetValue();
                 },
                 error: function(Res) {
@@ -175,6 +179,9 @@
         $("#spec_condt").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '350px', height: 42 }));
         $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '350px', height: 42 }));
         $("#EmplAgreed").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
+        $("#chbGarantMail").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 200, checked: CostCalculations.GarantMail}));
+        
+        
         $("#edIntogoStartingWork").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 150, readOnly: true, spinButtonsStep: 0 }));
         $("#edItogoExpences").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 150, readOnly: true, spinButtonsStep: 0 }));
         $("#edItogoTotalWork").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 150, readOnly: true, spinButtonsStep: 0 }));
@@ -551,23 +558,77 @@
                     if (Administrator || (parseInt(CostCalculations.Position_id) == 150)) return true;
                     var Type = parseInt(CostCalculations.type);
                     var Chief = false;
+                    var PM = false;
+                    var RSC = false;
+                    var ROPR = false;
+                    if (parseInt(CostCalculations.Position_id) == 37)
+                        RSC = true;
+                    if (parseInt(CostCalculations.Position_id) == 86)
+                        PM = true;
+                    if (parseInt(CostCalculations.Position_id) == 31)
+                        ROPR = true;
+                    
+                    
+                    
                     if ((parseInt(CostCalculations.Position_id) == 37) || (parseInt(CostCalculations.Position_id) == 152))
                         Chief = true;
                     //var Chief = (find([37, 152], parseFloat(CostCalculations.Position_id)) != -1);
                     var Marj = (parseFloat(CostCalcDetails.ProcMarj) >= parseFloat(CostCalculations.ccwt_proc));
                     var Discount15 = (parseFloat(CostCalcDetails.Discount) > 15);
+                    var Discount5 = (parseFloat(CostCalcDetails.Discount) > 5);
                     var Marj20 = (parseFloat(CostCalcDetails.ProcMarj) >= 20);
                     var Marj30 = (parseFloat(CostCalcDetails.ProcMarj) >= 30);
                     var NotWorks = (parseFloat(CostCalcDetails.SumWorkLow) == 0);
                     var CheckEquips = (parseFloat(CostCalcDetails.SumEquipsHigh) >= parseFloat(CostCalcDetails.SumEquipsHighDefault));
                     var Discount0 = (parseFloat(CostCalcDetails.Discount) == 0);
+                    var SumNoAvans = parseFloat(CostCalcDetails.SumPayNoAvans) + CostCalcDetails.SumHighFull;
+                    var GarantMail = CostCalculations.GarantMail;
+                    
                     var ProcPay = 0;
                     if (CostCalcDetails.SumHighFull > 0)
                         ProcPay = (parseFloat(CostCalcDetails.SumPay)*100)/CostCalcDetails.SumHighFull;
                     var Pay50 = (parseFloat(ProcPay) >= 50);
                     
                     if (Type == 0) {// КП
-                        if (Chief) {
+                        if (ROPR) {
+                            if (!Marj20 && !NotWorks) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
+                                return false;
+                            }
+                        }
+                        else if (PM) {
+                            if (!Marj30 && !NotWorks) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
+                                return false;
+                            }
+                            if (Discount5) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 5%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
+                                return false;
+                            }
+                        }
+                        else if (RSC) {
+                            if (!Marj20 && !NotWorks) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
+                                return false;
+                            }
+                            if (Discount15) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 15%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
+                                return false;
+                            }
+                        }
+                        else if (Chief) {
                             if (Discount15 && !Marj20) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%');
                                 return false;
@@ -580,6 +641,7 @@
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
                                 return false;
                             }
+                            
                         } else {
                             
                             if (!Marj && !NotWorks) {
@@ -593,9 +655,87 @@
                         }
                         
                     }
-                    
                     if (Type == 1 || Type == 2) { // Смета
-                        if (Chief) {
+                        if (ROPR) {
+                            if (!Marj20 && !NotWorks) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
+                                return false;
+                            }
+                            
+                            if (parseFloat(CostCalcDetails.SumHighFull) >= 10000 && !Pay50) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Если сумма сметы больше 10000р., счет должен быть оплачен на 50% или более.');
+                                return false;
+                            }
+                        } else if (PM) {
+                            if (!Marj30 && !NotWorks) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
+                                return false;
+                            }
+                            if (Discount5) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 5%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
+                                return false;
+                            }
+                            if (!Pay50) {
+                                if (SumNoAvans >= 50000) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется аванс более 50%, лимит в 50000р. превышен.');
+                                    return false;
+                                }
+                                else {
+                                    console.log(GarantMail);
+                                    if (GarantMail && CostCalcDetails.SumHighFull >= 20000) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Без 50% аванса и с гарантийным письмом, можно согласовать смету только если сумма не превышает 20000р.');
+                                        return false;
+                                    }
+                                    if (!GarantMail && CostCalcDetails.SumHighFull >= 10000) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Без 50% аванса и без гарантийного письма, можно согласовать смету только если сумма не превышает 10000р.');
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                        else if (RSC) {
+                            if (!Marj20 && !NotWorks) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
+                                return false;
+                            }
+                            if (Discount15) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 15%');
+                                return false;
+                            }
+                            if (!CheckEquips && NotWorks && Discount0) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
+                                return false;
+                            }
+                            
+                            if (!Pay50) {
+                                if (SumNoAvans >= 200000) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется аванс более 50%, лимит в 200000р. превышен.');
+                                    return false;
+                                }
+                                else {
+                                    console.log(GarantMail);
+                                    if (GarantMail && CostCalcDetails.SumHighFull >= 50000) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Без 50% аванса и с гарантийным письмом, можно согласовать смету только если сумма не превышает 50000р.');
+                                        return false;
+                                    }
+                                    if (!GarantMail && CostCalcDetails.SumHighFull >= 30000) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Без 50% аванса и без гарантийного письма, можно согласовать смету только если сумма не превышает 30000р.');
+                                        return false;
+                                    }
+                                }
+                            }
+                                    
+                            
+                        }
+                        else if (Chief) {
                             if (Discount15 && !Marj20) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%');
                                 return false;
@@ -847,7 +987,7 @@
                             columns: [
                                 { text: 'Наименование', datafield: 'eqip_name', columngroup: 'Equips', filtercondition: 'CONTAINS', width: 250},    
                                 { text: 'Ед.изм', datafield: 'um_name', columngroup: 'Equips', filtercondition: 'CONTAINS', width: 60},    
-                                { text: 'Кол-во', datafield: 'quant', columngroup: 'Equips', filtercondition: 'CONTAINS', width: 60},    
+                                { text: 'Кол-во', datafield: 'quant', columngroup: 'Equips', filtercondition: 'CONTAINS', width: 60, cellsformat: 'f2'},    
                                 { text: 'Цена за единицу', datafield: 'price', columngroup: 'Equips', filtercondition: 'CONTAINS', width: 130, cellsformat: 'f2'},    
                                 { text: 'Стоимость', datafield: 'sum_price', columngroup: 'Equips', filtercondition: 'CONTAINS', cellsformat: 'f2', width: 110, aggregates: [
                                       { 'Сумма':
@@ -1459,6 +1599,7 @@
     <div class="row-column"><div id='sum_materials_low' readonly="readonly"></div></div>
     <div class="row-column" style="margin-top: 2px;">Дата согл. с рук.: </div><div class="row-column"><div id='date_ready'></div></div>
     <div class="row-column" style="margin-top: 3px;">Согласовал: <input readonly id='EmplAgreed' type="text"></div>
+    <div class="row-column" style="margin-top: 3px;"><div id="chbGarantMail">Гарантийное письмо</div></div>
 </div>
 <div class="row" style="margin-top: 3px;">
     <div class="row-column" style="margin: 0 5px 0 0"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>

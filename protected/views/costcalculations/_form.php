@@ -20,6 +20,7 @@
             ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
             spec_condt: <?php echo json_encode($model->spec_condt); ?>,
             note: <?php echo json_encode($model->note); ?>,
+            GarantMail: Boolean(Number(<?php echo json_encode($model->GarantMail); ?>)),
         };
         
         $('#CostCalculationDetails').on('keyup keypress', function(e) {
@@ -87,6 +88,7 @@
         $("#ContrDateCC").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalc.ContrDateS, formatString: 'dd.MM.yyyy H:mm', showTimeButton: true, width: 180}));
         $("#spec_condtCC").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 100 }));
         $("#noteCC").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 100 }));
+        $("#chbGarantMailEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 200 }));
         $('#btnSaveCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $('#btnCancelCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
@@ -153,6 +155,7 @@
         if (CostCalc.ContrNumS !== '') $("#ContrNumCC").jqxInput('val', CostCalc.ContrNumS);
         if (CostCalc.spec_condt !== '') $("#spec_condtCC").jqxTextArea('val', CostCalc.spec_condt);
         if (CostCalc.note !== '') $("#noteCC").jqxTextArea('val', CostCalc.note);
+        $("#chbGarantMailEdit").jqxCheckBox('val', CostCalc.GarantMail);
     });
 </script>        
 
@@ -203,6 +206,7 @@
 <div class="row">
     <div class="row-column" style="margin-top: 2px; width: 115px;">Сотрудник:</div>
     <div class="row-column"><div id='empl_nameCC' name="CostCalculations[empl_id]"></div><?php echo $form->error($model, 'empl_id'); ?></div>
+    <div class="row-column"><div id="chbGarantMailEdit" name="CostCalculations[GarantMail]">Гарантийное письмо</div></div>
 </div>
 
 <div class="row">

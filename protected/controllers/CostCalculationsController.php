@@ -244,6 +244,7 @@ class CostCalculationsController extends Controller
             'SumMaterialsHigh' => 0,
             'SumEquipsHighDefault' => 0,
             'SumPay' => 0,
+            'SumPayNoAvans' => 0,
         );
         
         if (isset($_POST['calc_id'])) {
@@ -301,6 +302,22 @@ class CostCalculationsController extends Controller
             $Result['SumEquipsHighDefault'] = $Res['sum_equips_high_standart'];
             $Result['SumPay'] = $Res['SumPay'];
             
+            // Общая сумма закупок без аванса
+            $SumPayNoAvans = new SQLQuery();
+            $SumPayNoAvans->setSelect("Declare
+                                            @DateStart datetime = dbo.EncodeDate(1, Month(GETDATE()), Year(GETDATE())),
+                                            @DateEnd datetime
+
+                                        Set @DateEnd = DATEADD(DD, -1, DATEADD(MONTH, 1, @DateStart))
+                                        Select
+                                            Round(ISNULL(Sum(c.Sum_high_full), 0), 2) as Sum_high_full
+                                        From CostCalculations_v c
+                                        Where c.Date_Agreed between @DateStart and @DateEnd
+                                            and isNull(c.SumPay, 0)  = 0
+                                            and (c.type = 1 or c.type = 2)
+                                            and c.User_Agreed = " . Yii::app()->user->Employee_id);
+            $R = $SumPayNoAvans->QueryRow();
+            $Result['SumPayNoAvans'] = $R['Sum_high_full'];
         }
         
         echo json_encode($Result);

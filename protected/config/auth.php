@@ -316,6 +316,7 @@ return array_merge(
             'defaultIndex' => 'object/index',
             'children' => array(
                 'UserObjects',
+                'ManagerObjects',
                 'ManagerObjectsGroup',
                 'SeniorDemands',
                 'AdminExecuteReports',
@@ -327,6 +328,9 @@ return array_merge(
                 'ManagerEvents',
                 'AdminEventOffers',
                 'AdminOfferDemands',
+                'AllLoadObjects',
+                'ManagerStreets',
+                
             ),
         ),
         
@@ -347,7 +351,7 @@ return array_merge(
                 'ChangeType',
                 'ManagerContacts',
                 'UserContractsS',
-                
+                'AllLoadObjects',
                 /* Отчеты*/
                 'Demand1Report',
             ),
@@ -369,6 +373,7 @@ return array_merge(
                 'UserDeliveryDemands',
                 'ManagerContacts',
                 'UserContractsS',
+                'AllLoadObjects',
             ),
         ),
 
@@ -395,7 +400,7 @@ return array_merge(
             'data' => null,
             'defaultIndex' => 'object/index',
             'children' => array(
-                'SeniorDispatcher',
+                //'SeniorDispatcher',
                 'AdminDemands',
                 'Storekeeper',
                 'AdminObjects',
@@ -653,7 +658,7 @@ return array_merge(
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
                 'UserEquips',
-                'UserObjectEquips',
+                'ManagerObjectEquips',
                 'ManagerContractsS',
                 'ManagerDocuments',
                 'ManagerContacts',
@@ -745,7 +750,7 @@ return array_merge(
                 'ManagerDocuments',
                 'ManagerContacts',
                 'ManagerContractMasterHistory',
-                'ManagerContractsDetails_v',
+                'AdminContractsDetails_v',
                 'AdminContractEquips',
                 'UserObjectsGroupCostCalculations',
                 'ManagerCostCalculations',
@@ -757,6 +762,7 @@ return array_merge(
                 'UserRepairs',
                 'ManagerRepairComments',
                 'UserDeliveryDemands',
+                'ManagerDeliveryComments',
                 'MSWHDocuments',
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
@@ -765,7 +771,10 @@ return array_merge(
                 'ManagerOfferDemands',
                 'WhActsView',
                 'ManagerWHBuhActs',
-                'UserPropForms',
+                'ManagerPropForms',
+                'ManagerBanks',
+                'ManagerObjectsGroupSystems',
+                'AdminSystemCompetitors',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -822,6 +831,8 @@ return array_merge(
                 'ManagerControlContacts',
                 'ManagerWHBuhActs',
                 'UserPropForms',
+                'ManagerObjectsGroupSystems',
+                'AdminSystemCompetitors',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -874,6 +885,7 @@ return array_merge(
                 'AdminDeliveryDemands',
                 'ManagerDeliveryComments',
                 'MSWHDocuments',
+                'AdminSerialNumbers',
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
@@ -884,6 +896,8 @@ return array_merge(
                 'UserInventoryDetails',
                 'ManagerEquips',
                 'UserPropForms',
+                'ManagerObjectsGroupSystems',
+                'AdminSystemCompetitors',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -960,6 +974,14 @@ return array_merge(
                 'DemandsReport10',
                 'DemandsReport11',
                 'DemandsReport12',
+                
+                'ObjectReportAll',
+                'ObjectReport1',
+                'ObjectReport2',
+                'ObjectReport3',
+                'ObjectReport4',
+                'ObjectReport5',
+                
             ),
         ),
         
@@ -1219,6 +1241,7 @@ return array_merge(
                 'Storeman',
                 'ManagerInventoryDetails',
                 'AdminInventories',
+                'ManagerMaterialLogistics',
             ),
         ),
         

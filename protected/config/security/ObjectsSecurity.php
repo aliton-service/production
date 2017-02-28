@@ -67,6 +67,13 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        'AllLoadObjects' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Удаление',
+            'bizRule' => null,
+            'data' => null,
+        ),
     );
 ?>
 

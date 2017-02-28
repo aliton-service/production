@@ -28,7 +28,8 @@ class CostCalculations_v extends MainFormModel
     public $ProcPay;
     public $ObjectGr_id;
     public $DateExec;
-                
+    public $GarantMail;
+    
     public function rules()
     {
         return array(
@@ -53,7 +54,8 @@ class CostCalculations_v extends MainFormModel
                     TrebShortName,
                     Date,
                     Number,
-                    ProcPay,', 'safe'),
+                    ProcPay,
+                    GarantMail', 'safe'),
         );
             
     }
@@ -130,6 +132,7 @@ class CostCalculations_v extends MainFormModel
                     'Date' => '',
                     'Number' => '',
                     'ProcPay' => '',
+                    'GarantMail' => 'GarantMail',
             );
     }
     

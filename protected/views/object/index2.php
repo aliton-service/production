@@ -2,8 +2,20 @@
     var CurrentRowObjectsData = {};
     var RefObjects = 0;
     $(document).ready(function () {
+        var LoadAllObjects = <?php echo json_encode(Yii::app()->user->checkAccess('AllLoadObjects')); ?>;
+        if (LoadAllObjects)
+            var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListObjectsMin));
+        else
+            var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListObjectsMin, {
+                url: '/index.php?r=AjaxData/DataJQX&ModelName=ListObjectsMin',
+                filter: function () {
+                    $("#ObjectsGrid").jqxGrid('updatebounddata', 'filter');
+                },
+                sort: function () {
+                    $("#ObjectsGrid").jqxGrid('updatebounddata', 'sort');
+                }
+            }));
         
-        var DemDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListObjectsMin));
         var ServiceTypesData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceServiceTypes));
         ServiceTypesData.dataBind();
         ServiceTypesData = ServiceTypesData.records;
@@ -52,6 +64,7 @@
                 virtualmode: false,
                 width: '100%',
                 height: 'calc(100% - 12px)',
+                virtualmode: !LoadAllObjects,
                 //source: DemDataAdapter,
                 ready: function() {
                     var State = $('#ObjectsGrid').jqxGrid('getstate');
@@ -71,6 +84,7 @@
                     { text: 'Новостройка', datafield: 'year_construction', width: 180, cellsrenderer: cellsrenderer },
                     { text: 'ВИП', datafield: 'VIP', width: 180, cellsrenderer: cellsrenderer },
                     { text: 'Участок', dataField: 'Territ_Name', width: 180, cellsrenderer: cellsrenderer },
+                    { text: 'ПМ', dataField: 'ServiceManager', width: 180, cellsrenderer: cellsrenderer },
                 ]
                 
         }));

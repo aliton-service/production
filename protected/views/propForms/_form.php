@@ -7,6 +7,7 @@
             fown_id: <?php echo json_encode($model->fown_id); ?>,
             FownName: <?php echo json_encode($model->FownName); ?>,
             FullName: <?php echo json_encode($model->FullName); ?>,
+            Number: <?php echo json_encode($model->Number); ?>,
             lph_id: <?php echo json_encode($model->lph_id); ?>,
             TaxNumber: <?php echo json_encode($model->TaxNumber); ?>,
             SettlementAccount: <?php echo json_encode($model->SettlementAccount); ?>,
@@ -37,7 +38,15 @@
             sum_price: <?php echo json_encode($model->sum_price); ?>, 
             sum_appz_price: <?php echo json_encode($model->sum_appz_price); ?>,
             JAddress: <?php echo json_encode($model->JAddress); ?>,
-            FAddress: <?php echo json_encode($model->FAddress); ?>
+            FAddress: <?php echo json_encode($model->FAddress); ?>,
+            Status_id: <?php echo json_encode($model->Status_id); ?>,
+            Segment_id: <?php echo json_encode($model->Segment_id); ?>,
+            SubSegment_id: <?php echo json_encode($model->SubSegment_id); ?>,
+            SourceInfo_id: <?php echo json_encode($model->SourceInfo_id); ?>,
+            SubSourceInfo_id: <?php echo json_encode($model->SubSourceInfo_id); ?>,
+            CountObjects: <?php echo json_encode($model->CountObjects); ?>,
+            BrandName: <?php echo json_encode($model->BrandName); ?>,
+            WWW: <?php echo json_encode($model->WWW); ?>
         };
         
         $('#Organizations').on('keyup keypress', function(e) {
@@ -48,24 +57,53 @@
             }
         });
         
-        var FormsOfOwnershipVDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceFormsOfOwnership));
-        var RegionsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListRegionsMin));
-        RegionsDataAdapter.dataBind();
-        RegionsDataAdapter = RegionsDataAdapter.records;
-        var AreasDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAreas));
-        AreasDataAdapter.dataBind();
-        AreasDataAdapter = AreasDataAdapter.records;
-        var StreetsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}));
-        StreetsDataAdapter.dataBind();
-        StreetsDataAdapter = StreetsDataAdapter.records;
+        var FormsOfOwnershipVDataAdapter;
+        var RegionsDataAdapter;
+        var AreasDataAdapter;
+        var StreetsDataAdapter;
+        //var BanksDataAdapter;
+        var StatusAdapter;
+        var ClientGroupsAdapter;
+        var SourceInfoAdapter;
+        
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['FormsOfOwnership', 'Regions', 'Areas', 'Streets', 'ClientStatus', 'ClientGroups', 'SourceInfo']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                FormsOfOwnershipVDataAdapter = Res[0].Data;
+                RegionsDataAdapter = Res[1].Data;
+                AreasDataAdapter = Res[2].Data;
+                StreetsDataAdapter = Res[3].Data;
+                //BanksDataAdapter = Res[4].Data;
+                StatusAdapter = Res[4].Data;
+                ClientGroupsAdapter = Res[5].Data;
+                SourceInfoAdapter = Res[6].Data;
+            }
+        });
+        
         var BanksDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceBanks, {async: true}));
         
         $("#edFormNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 300} ));
+        $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
+        $("#edStatusEdit").jqxComboBox({ source: StatusAdapter, width: '250', height: '25px', displayMember: "StatusName", valueMember: "Status_id"});
         $("#edFownEdit").jqxComboBox({ source: FormsOfOwnershipVDataAdapter, width: '200', height: '25px', displayMember: "name", valueMember: "fown_id"});
         $("#edLphEdit").jqxComboBox({ source: [{id: 1, name: 'Юридическое лицо'}, {id: 2, name: 'Физическое лицо'}], width: '200', height: '25px', displayMember: "name", valueMember: "id"});
+        $("#edCountObjectsEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {placeHolder: "", width: 100, decimalDigits: 0} ));
+        $("#edSegmentEdit").jqxComboBox({ source: ClientGroupsAdapter, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "clgr_id"});
+        $("#edSubSegmentEdit").jqxComboBox({ source: ClientGroupsAdapter, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "clgr_id"});
+        $("#edSourceInfoEdit").jqxComboBox({ source: SourceInfoAdapter, width: '200', height: '25px', displayMember: "SourceInfo_name", valueMember: "SourceInfo_id"});
+        $("#edSubSourceInfoEdit").jqxComboBox({ source: SourceInfoAdapter, width: '200', height: '25px', displayMember: "SourceInfo_name", valueMember: "SourceInfo_id"});
         $("#edInnEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
         $("#edAccountEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 200} ));
         $("#edKppEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
+        $("#edBrandNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 250} ));
+        $("#edWWWEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 250} ));
+        $("#edCountObjectsEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edJRegionEdit").jqxComboBox({ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"});
         $("#edJAreaEdit").jqxComboBox({ source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"});
         $("#edJStreetEdit").jqxComboBox({ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"});
@@ -103,7 +141,10 @@
         $('#btnCancelOrganization').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#btnCancelOrganization').on('click', function(){
-            $('#OrganizationsDialog').jqxWindow('close');
+            if ($('#OrganizationsDialog').length>0)
+                $('#OrganizationsDialog').jqxWindow('close');
+            if ($('#EditFormDialog').length>0)
+                $('#EditFormDialog').jqxWindow('close');
         });
         
         $('#btnSupplierFindBank').on('click', function(){
@@ -137,8 +178,15 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('Form_id', Res.id, '#OrganizationsGrid', true);
-                        $('#OrganizationsDialog').jqxWindow('close');
+                        if ($('#OrganizationsDialog').length>0) {
+                            Aliton.SelectRowById('Form_id', Res.id, '#OrganizationsGrid', true);
+                            $('#OrganizationsDialog').jqxWindow('close');
+                        }
+                        if ($('#EditFormDialog').length>0) {
+                            //Aliton.SelectRowById('Form_id', Res.id, '#ClientsGrid', true);
+                            $('#edFiltering').click();
+                            $('#EditFormDialog').jqxWindow('close');
+                        }
                     }
                     else {
                         $('#BodyOrganizationsDialog').html(Res.html);
@@ -151,11 +199,21 @@
         });
         
         if (Organization.FormName != '') $("#edFormNameEdit").jqxInput('val', Organization.FormName);
+        if (Organization.Number != '') $("#edNumberEdit").jqxInput('val', Organization.Number);
+        if (Organization.Status_id != '') $("#edStatusEdit").jqxComboBox('val', Organization.Status_id);
         if (Organization.fown_id != '') $("#edFownEdit").jqxComboBox('val', Organization.fown_id);
         if (Organization.lph_id != '') $("#edLphEdit").jqxComboBox('val', Organization.lph_id);
+        if (Organization.CountObjects != '') $("#edCountObjectsEdit").jqxNumberInput('val', Organization.CountObjects);
+        if (Organization.Segment_id != '') $("#edSegmentEdit").jqxComboBox('val', Organization.Segment_id);
+        if (Organization.SubSegment_id != '') $("#edSubSegmentEdit").jqxComboBox('val', Organization.SubSegment_id);
+        if (Organization.SourceInfo_id != '') $("#edSourceInfoEdit").jqxComboBox('val', Organization.SourceInfo_id);
+        if (Organization.SubSourceInfo_id != '') $("#edSubSourceInfoEdit").jqxComboBox('val', Organization.SubSourceInfo_id);
         if (Organization.inn != '') $("#edInnEdit").jqxInput('val', Organization.inn);
         if (Organization.account != '') $("#edAccountEdit").jqxInput('val', Organization.account);
         if (Organization.kpp != '') $("#edKppEdit").jqxInput('val', Organization.kpp);
+        if (Organization.BrandName != '') $("#edBrandNameEdit").jqxInput('val', Organization.BrandName);
+        if (Organization.WWW != '') $("#edWWWEdit").jqxInput('val', Organization.WWW);
+        if (Organization.CountObjects != '') $("#edCountObjectsEdit").jqxInput('val', Organization.CountObjects);
         if (Organization.jregion != '') $("#edJRegionEdit").jqxComboBox('val', Organization.jregion);
         if (Organization.jarea != '') $("#edJAreaEdit").jqxComboBox('val', Organization.jarea);
         if (Organization.jstreet != '') $("#edJStreetEdit").jqxComboBox('val', Organization.jstreet);
@@ -186,16 +244,36 @@
 <div class="al-row">
     <div class="al-row-column" style="width: 150px">Наименование:</div>
     <div class="al-row-column"><input type="text" name="Organizations[FormName]" autocomplete="off" id="edFormNameEdit"/><?php echo $form->error($model, 'FormName'); ?></div>
+    <div class="al-row-column" style="">Номер:</div>
+    <div class="al-row-column"><input type="text" name="Organizations[Number]" autocomplete="off" id="edNumberEdit"/><?php echo $form->error($model, 'Number'); ?></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
     <div class="al-row-column" style="width: 150px">Форма собственности:</div>
     <div class="al-row-column"><div name="Organizations[fown_id]" id="edFownEdit"></div><?php echo $form->error($model, 'fown_id'); ?></div>
+    <div class="al-row-column" style="">Статус:</div>
+    <div class="al-row-column"><div name="Organizations[Status_id]" id="edStatusEdit"></div><?php echo $form->error($model, 'Status_id'); ?></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
     <div class="al-row-column" style="width: 150px">Тип:</div>
     <div class="al-row-column"><div name="Organizations[lph_id]" id="edLphEdit"></div><?php echo $form->error($model, 'lph_id'); ?></div>
+    <div class="al-row-column" style="">Кол-во объектов:</div>
+    <div class="al-row-column"><div name="Organizations[CountObjects]" id="edCountObjectsEdit"></div><?php echo $form->error($model, 'CountObjects'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 150px">Сегмент:</div>
+    <div class="al-row-column"><div name="Organizations[Segment_id]" id="edSegmentEdit"></div><?php echo $form->error($model, 'Segment_id'); ?></div>
+    <div class="al-row-column" style="">ПОДСегмент:</div>
+    <div class="al-row-column"><div name="Organizations[SubSegment_id]" id="edSubSegmentEdit"></div><?php echo $form->error($model, 'SubSegment_id'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 150px">Источник:</div>
+    <div class="al-row-column"><div name="Organizations[SourceInfo_id]" id="edSourceInfoEdit"></div><?php echo $form->error($model, 'SourceInfo_id'); ?></div>
+    <div class="al-row-column" style="">ПОДИсточник:</div>
+    <div class="al-row-column"><div name="Organizations[SubSourceInfo_id]" id="edSubSourceInfoEdit"></div><?php echo $form->error($model, 'SubSourceInfo_id'); ?></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
@@ -205,6 +283,13 @@
     <div class="al-row-column"><input type="text" name="Organizations[account]" id="edAccountEdit" /><?php echo $form->error($model, 'account'); ?></div>
     <div class="al-row-column" >КПП:</div>
     <div class="al-row-column"><input type="text" name="Organizations[kpp]" id="edKppEdit" /><?php echo $form->error($model, 'kpp'); ?></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row">
+    <div class="al-row-column" style="width: 150px">Бренд:</div>
+    <div class="al-row-column"><input type="text" name="Organizations[BrandName]" id="edBrandNameEdit" /><?php echo $form->error($model, 'BrandName'); ?></div>
+    <div class="al-row-column" style="">Сайт:</div>
+    <div class="al-row-column"><input type="text" name="Organizations[WWW]" id="edWWWEdit" /><?php echo $form->error($model, 'WWW'); ?></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">

@@ -49,7 +49,8 @@ Sources.SourceListObjectsMin =
         { name: 'VIP' },
         { name: 'Territ_Name' },
         { name: 'ContrS_id' },
-        { name: 'Status' }
+        { name: 'Status' },
+        { name: 'ServiceManager', type: 'string'}
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ListObjectsMin',
@@ -58,7 +59,7 @@ Sources.SourceListObjectsMin =
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
-        Sources.SourceListObjects.totalrecords = data[0].TotalRows;
+        this.totalrecords = data[0].TotalRows;
     }
 };
 
@@ -288,6 +289,8 @@ Sources.DemandsSource =
         { name: 'StatusOP', type: 'int'},
         { name: 'StatusOPName', type: 'string'},
         { name: 'FirstDemandPrior', type: 'string'},
+        { name: 'Initiator_id', type: 'int'},
+        { name: 'InitiatorName', type: 'string'},
         
     ],
     id: 'id',
@@ -900,6 +903,15 @@ Sources.SourceOrganizationsV =
         { name: 'sum_appz_price',  type: 'string' },
         { name: 'sum_appz_price',  type: 'string' },
         { name: 'telephone',  type: 'string' },
+        {name: 'Number', type: 'string'},
+        {name: 'Status_id', type: 'int'},
+        {name: 'Segment_id', type: 'int'},
+        {name: 'SubSegment_id', type: 'int'},
+        {name: 'SourceInfo_id', type: 'int'},
+        {name: 'SubSourceInfo_id', type: 'int'},
+        {name: 'BrandName', type: 'string'},
+        {name: 'WWW', type: 'string'},
+        {name: 'CountObjects', type: 'int'},
     ],
     id: 'Form_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=OrganizationsV',
@@ -3103,7 +3115,7 @@ Sources.SourceCostCalcEquips =
         {name: 'calc_id', type: 'int'},
         {name: 'eqip_id', type: 'int'},
         {name: 'eqip_name', type: 'string'},
-        {name: 'quant', type: 'int'},
+        {name: 'quant', type: 'float'},
         {name: 'price', type: 'float'},
         {name: 'sum_price', type: 'float'},
         {name: 'price_low', type: 'float'},
@@ -4451,6 +4463,234 @@ Sources.SourceAreaObjectPrices =
     root: 'Rows',
     async: false,
     cache: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceClients =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Form_id', type: 'int'},
+        {name: 'Number', type: 'string'},
+        {name: 'FullName', type: 'string'},
+        {name: 'Demands', type: 'int'},
+        {name: 'SegmentName', type: 'string'},
+        {name: 'SubSegmentName', type: 'string'},
+        {name: 'SourceInfoName', type: 'string'},
+        {name: 'SubSourceInfoName', type: 'string'},
+        {name: 'BrandName', type: 'string'},
+        {name: 'Address', type: 'string'},
+        {name: 'WWW', type: 'string'},
+        {name: 'CountObjects', type: 'int'},
+        {name: 'SalesManager', type: 'string'},
+        {name: 'ServiceManager', type: 'string'},
+        {name: 'StatusName', type: 'string'},
+        {name: 'NextAction', type: 'string'},
+        {name: 'LastDateContact', type: 'date'},
+        {name: 'DateChangeSalesManager', type: 'date'},
+        {name: 'DateCreate', type: 'date'},
+    ],
+    id: 'id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=Clients',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceClientStatus =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Status_id',  type: 'int' },
+        { name: 'StatusName',  type: 'string' },
+    ],
+    id: 'Status_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ClientStatus',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceClientActions =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Exrp_id', type: 'int'},
+        {name: 'Date', type: 'date'},
+        {name: 'FullName', type: 'string'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'ContactType_id', type: 'int'},
+        {name: 'ContactName', type: 'string'},
+        {name: 'ActionStage_id', type: 'int'},
+        {name: 'StageName', type: 'string'},
+        {name: 'Report', type: 'string'},
+        {name: 'NextDate', type: 'date'},
+        {name: 'NextAction', type: 'string'},
+        {name: 'SegmentName', type: 'string'},
+        {name: 'SubSegmentName', type: 'string'},
+        {name: 'Address', type: 'string'},
+        {name: 'Date', type: 'date'},
+        {name: 'EmployeeName', type: 'string'},
+        {name: 'PlanDateExec', type: 'date'},
+        {name: 'ActionOperationName', type: 'string'},
+        {name: 'ActionResultName', type: 'string'},
+        {name: 'ResponsibleName', type: 'string'},
+        {name: 'FIO', type: 'string'},
+        {name: 'OtherName', type: 'string'},
+        {name: 'Report', type: 'string'},
+        
+        
+    ],
+    id: 'Exrp_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ClientActions',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceClientDemands =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Exrp_id', type: 'int'},
+        {name: 'Date', type: 'date'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'Address', type: 'string'},
+        {name: 'DemandType', type: 'string'},
+        {name: 'StageName', type: 'string'},
+        {name: 'ActionOperationName', type: 'string'},
+        {name: 'EmplName', type: 'string'},
+        {name: 'ActionResultName', type: 'string'},
+        {name: 'FIO', type: 'string'},
+        {name: 'NextDate', type: 'date'},
+        {name: 'Report', type: 'string'},
+        {name: 'OtherName', type: 'string'},
+        {name: 'ObjectGr_id', type: 'int'},
+    ],
+    id: 'Demand_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=ClientDemands',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceDiaryActions =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Exrp_id', type: 'int'},
+        {name: 'Date', type: 'date'},
+        {name: 'FullName', type: 'string'},
+        {name: 'SegmentName', type: 'string'},
+        {name: 'SubSegmentName', type: 'string'},
+        {name: 'Address', type: 'string'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'Form_id', type: 'int'},
+        {name: 'ContactName', type: 'string'},
+        {name: 'StageName', type: 'string'},
+        {name: 'DIFF_STR', type: 'string'},
+        {name: 'LastDateContact', type: 'date'},
+        {name: 'StatusOP', type: 'string'},
+        {name: 'NextAction', type: 'string'},
+        {name: 'NextDate', type: 'date'},
+        {name: 'Responsible_id', type: 'int'},
+        {name: 'ResponsibleName', type: 'string'},
+        {name: 'EmployeeName', type: 'string'}
+        
+    ],
+    id: 'Exrp_id',
+    url: '/index.php?r=AjaxData/DataJQX&ModelName=DiaryActions',
+    //type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceActionStages =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Stage_id',  type: 'int' },
+        { name: 'StageName',  type: 'string' },
+    ],
+    id: 'Stage_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ActionStages',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceActionOperations =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Operation_id',  type: 'int' },
+        { name: 'ActionOperationName',  type: 'string' },
+    ],
+    id: 'Operation_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ActionOperations',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceActionResults =
+{
+    datatype: "json",
+    datafields: [
+        { name: 'Result_id',  type: 'int' },
+        { name: 'ActionResultName',  type: 'string' },
+    ],
+    id: 'Result_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ActionResults',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: false,
     pagenum: 0,
     pagesize: 200,
     beforeprocessing: function (data) {
