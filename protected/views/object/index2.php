@@ -128,7 +128,7 @@
         
         $("#btnAddObject").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140}));
         $("#btnAddObject").on('click', function() {
-            $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings,{width: 830, height: 730, position: 'center'}));
+            $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings,{width: 850, height: 750, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/Create')) ?>,
                 type: 'POST',

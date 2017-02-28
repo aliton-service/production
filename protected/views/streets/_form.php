@@ -5,8 +5,8 @@
         var DataRegionName = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListRegionsMin, {}));
         var DataStreetType = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListStreetTypesMin, {}));
         
-        $("#cmbRegionName").jqxComboBox({ source: DataRegionName, width: '300', height: '25px', displayMember: "RegionName", valueMember: "Region_id" });
-        $("#cmbStreetType").jqxComboBox({ source: DataStreetType, width: '300', height: '25px', displayMember: "StreetType", valueMember: "StreetType_id" });
+        $("#cmbRegionName").jqxComboBox({ source: DataRegionName, width: '320', height: '25px', displayMember: "RegionName", valueMember: "Region_id" });
+        $("#cmbStreetType").jqxComboBox({ source: DataStreetType, width: '200', height: '25px', displayMember: "StreetType", valueMember: "StreetType_id" });
         
         $("#StreetName").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Название улицы"}));
         
@@ -41,8 +41,8 @@
      )); 
 ?>
 
-    <div class="row" style="width: 300px;">
-        Регион: 
+    <div class="row">
+        Регион: <br/>
         <div id='cmbRegionName' name="Streets[Region_id]"  class="row-column"></div>
         <?php echo $form->error($model, 'Region_id'); ?>
     </div>
@@ -53,8 +53,8 @@
         <?php echo $form->error($model, 'StreetName'); ?>
     </div>
 
-    <div class="row" style="width: 300px;">
-        Тип улицы: 
+    <div class="row">
+        Тип улицы: <br/>
         <div id='cmbStreetType' name="Streets[StreetType_id]" class="row-column"></div>
         <?php echo $form->error($model, 'StreetType_id'); ?>
     </div>

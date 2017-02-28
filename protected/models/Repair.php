@@ -62,6 +62,7 @@ class Repair extends MainFormModel {
     public $sum_repairs;
     public $sum_diagnostics;
     public $splr_id;
+    public $NameSupplier;
     public $exechour;
     public $jrdc_id;
     public $dlrs_id;
@@ -140,6 +141,7 @@ class Repair extends MainFormModel {
                         r.sum_repairs,
                         r.sum_diagnostics,
                         r.splr_id,
+                        r.NameSupplier,
                         r.exechour,
                         r.jrdc_id,
                         r.dlrs_id,

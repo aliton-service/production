@@ -87,7 +87,7 @@
         $("#edBestDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.BestDate, formatString: 'dd.MM.yyyy'}));
         $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.Deadline, formatString: 'dd.MM.yyyy'}));
         $("#edAddressEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 550} ));
-        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '100%', minLength: 1});
+        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '99.5%', minLength: 1});
         $("#edReceiptReasonEdit").jqxComboBox({ source: DataReceiptReasons, width: '200', height: '25px', displayMember: "name", valueMember: "rcrs_id"});
         $("#edReceiptDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.ReceiptDate, formatString: 'dd.MM.yyyy'}));
         $("#edReceiptNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100} ));

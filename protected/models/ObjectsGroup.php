@@ -47,7 +47,7 @@ class ObjectsGroup extends MainFormModel
     {
         return array(
             /* Обязательные поля для заполнения*/
-            array('Entrance', 'required', 'on' => 'Insert'),
+            array('PropForm_id, Entrance', 'required', 'on' => 'Insert'),
             array('Region_id, Street_id, House', 'required', 'on' => 'Update, Insert'),
             /* Любое заполнение */
             array('PropForm_id,'

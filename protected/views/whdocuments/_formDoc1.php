@@ -57,7 +57,7 @@
         $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
         $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.Date, formatString: 'dd.MM.yyyy'}));
         $("#edJrdcEdit").jqxComboBox({ source: DataJuridicals, width: '300', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
-        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '100%', minLength: 1});
+        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '99.5%', minLength: 1});
         
         $('#btnSaveWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnCancelWHDocuments').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));

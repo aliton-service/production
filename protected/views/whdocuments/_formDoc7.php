@@ -23,10 +23,10 @@
         var DataStorages = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStoragesList));
         var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses));
         
-        $("#edStorageEdit").jqxComboBox({ source: DataStorages, width: '200', height: '25px', displayMember: "storage", valueMember: "storage_id"});
+        $("#edStorageEdit").jqxComboBox({ source: DataStorages, width: '200', height: '25px', displayMember: "storage", valueMember: "storage_id", autoDropDownHeight: true});
         $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150} ));
         $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.Date, formatString: 'dd.MM.yyyy'}));
-        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '100%', minLength: 1});
+        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '99.5%', minLength: 1});
         $("#edAddressEdit").on('bindingComplete', function(){
             if (WHDocuments.Objc_id !== null) $("#edAddressEdit").jqxComboBox('val', WHDocuments.Objc_id);
             console.log(WHDocuments.Objc_id);
@@ -109,7 +109,6 @@
 
 <input type="hidden" name="WHDocuments[docm_id]" value="<?php echo $model->docm_id; ?>" />
 <input type="hidden" name="WHDocuments[dctp_id]" value="<?php echo $model->dctp_id; ?>" />
-<input type="hidden" name="WHDocuments[repr_id]" value="<?php echo $model->repr_id; ?>" />
 
 
 <div class="row">

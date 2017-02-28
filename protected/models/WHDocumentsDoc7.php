@@ -20,7 +20,6 @@ class WHDocumentsDoc7 extends MainFormModel
     public $overday;
     public $strg_id;
     public $storage;
-    public $repr_id;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -47,8 +46,7 @@ class WHDocumentsDoc7 extends MainFormModel
                         d.wrtp_name,
                         dbo.get_wdays_diff(d.date_create + 3, isnull(a.ac_date, getdate())) overday,
                         d.strg_id,
-                        d.storage,
-                        d.repr_id";
+                        d.storage";
         $From = "\nFrom WHDocuments_NonTreb_v d left join ActionHistory_v a on (d.achs_id = a.achs_id)";
         $Where = "\nWhere d.dctp_id = 7";
         $Order = "\nOrder by a.ac_date";
@@ -83,8 +81,7 @@ class WHDocumentsDoc7 extends MainFormModel
                     wrtp_name,
                     overday,
                     strg_id,
-                    storage,
-                    repr_id', 'safe'),
+                    storage', 'safe'),
         );
     }
     
@@ -109,7 +106,6 @@ class WHDocumentsDoc7 extends MainFormModel
             'overday' => '',
             'strg_id' => 'Склад',
             'storage' => '',
-            'repr_id' => '',
         );
     }
     

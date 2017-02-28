@@ -1199,7 +1199,7 @@ return array_merge(
             ),
         ),
         
-        /* Менеджер ОМТО */
+        /* Менеджер ОМТО - 24 */
         'ManagerMaterialLogistics' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Менеджер ОМТО',
@@ -1211,6 +1211,8 @@ return array_merge(
                 'AdminRepairs',
                 'AdminWhActs',
                 'AdminRepairDocs',
+                'ManagerEquips',
+                'AdminSuppliers',
                 'WHDocuments8Report',
                 'WHDocuments9Report',
             ),
@@ -1229,7 +1231,7 @@ return array_merge(
             ),
         ),
         
-        /* Руководитель логистики */
+        /* Руководитель логистики - 26 */
         'HeadLogistics' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Руководитель логистики',
@@ -1242,6 +1244,7 @@ return array_merge(
                 'ManagerInventoryDetails',
                 'AdminInventories',
                 'ManagerMaterialLogistics',
+                'AdminWHDocuments',
             ),
         ),
         
@@ -1454,6 +1457,17 @@ return array_merge(
             ),
         ),
         
+        /* Инженер ИТП */
+//        'EngineerITP' => array(
+//            'type' => CAuthItem::TYPE_ROLE,
+//            'description' => 'Инженер ИТП',
+//            'bizRule' => null,
+//            'data' => null,
+//            'defaultIndex' => 'object/index',
+//            'children' => array(
+//                'UserObjects',
+//            ),
+//        ),
         
     )
 );

@@ -130,7 +130,7 @@
             valueMember: "docm_id",
         });
         
-        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '100%', minLength: 1});
+        $('#edNoteEdit').jqxTextArea({ disabled: false, placeHolder: '', height: 50, width: '99.5%', minLength: 1});
         
         $('#btnCancelWHDocuments').on('click', function(){
             $('#WHDocumentsDialog').jqxWindow('close');

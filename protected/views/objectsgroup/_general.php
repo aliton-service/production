@@ -65,7 +65,7 @@
         
         $("#edRegionGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataRegion, width: 110, displayMember: "RegionName", valueMember: "Region_id" }));
         $("#edAreaGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataArea, width: 150, displayMember: "AreaName", valueMember: "Area_id" }));
-        $("#edStreetGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataStreet, width: 240, displayMember: "StreetName", valueMember: "Street_id" }));
+        $("#edStreetGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { width: 240, placeHolder: "Выберите регион", disabled: true }));
         
         $("#edHouseGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 40 }));
         $("#edCorpGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 60 }));
@@ -132,7 +132,7 @@
                         return data;
                     },
                 });
-                $("#edStreetGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: NewDataStreet, width: 240, displayMember: "StreetName", valueMember: "Street_id" }));
+                $("#edStreetGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { disabled: false, placeHolder: "", source: NewDataStreet, width: 240, displayMember: "StreetName", valueMember: "Street_id" }));
                 if(itemId != ObjectGroup.edRegionGrEdit) {
                     $("#edAreaGrEdit").jqxComboBox('val', '');
                     $("#edStreetGrEdit").jqxComboBox('val', '');
@@ -256,7 +256,7 @@
         <div class="al-row" style="padding: 0px;"><b>Клиент</b></div>
         <div class="al-row">
             <div class="al-row-column" style="width: 110px;">Наименование:</div>
-            <div class="al-row-column"><div id="edFullNameGrEdit" name="ObjectsGroup[PropForm_id]"></div></div>
+            <div class="al-row-column"><div id="edFullNameGrEdit" name="ObjectsGroup[PropForm_id]"></div><?php echo $form->error($model, 'PropForm_id'); ?></div>
             <div class="al-row-column"><input type="button" id="edFindOrg" value="Поиск"/></div>
             <div style="clear: both"></div>
         </div>
@@ -290,7 +290,7 @@
     <div class="al-row">
         <div class="al-row-column">
             <div class="al-row" style="padding: 0px;">Регион:</div>
-            <div class="al-row"><div id="edRegionGrEdit" name="ObjectsGroup[Region_id]"></div></div>
+            <div class="al-row"><div id="edRegionGrEdit" name="ObjectsGroup[Region_id]"></div><?php echo $form->error($model, 'Region_id'); ?></div>
         </div>
         <div class="al-row-column">
             <div class="al-row" style="padding: 0px;">Район:</div>
@@ -298,11 +298,11 @@
         </div>
         <div class="al-row-column">
             <div class="al-row" style="padding: 0px;">Улица:</div>
-            <div class="al-row"><div id="edStreetGrEdit" name="ObjectsGroup[Street_id]"></div><?php echo $form->error($model, 'StreetName'); ?></div>
+            <div class="al-row"><div id="edStreetGrEdit" name="ObjectsGroup[Street_id]"></div><?php echo $form->error($model, 'Street_id'); ?></div>
         </div>
         <div class="al-row-column">
             <div class="al-row" style="padding: 0px;">Дом:</div>
-            <div class="al-row"><input type="text" id="edHouseGrEdit" name="ObjectsGroup[House]"></div>
+            <div class="al-row"><input type="text" id="edHouseGrEdit" name="ObjectsGroup[House]"><?php echo $form->error($model, 'House'); ?></div>
         </div>
         <div class="al-row-column">
             <div class="al-row" style="padding: 0px;">Корпус:</div>
@@ -346,7 +346,7 @@
     </div>
     <div class="al-row">
         <div class="al-row-column">Подъезды:</div>
-        <div class="al-row-column"><input type="text" id="edDoorwayListGrEdit" name="ObjectsGroup[Entrance]"></div>
+        <div class="al-row-column"><input type="text" id="edDoorwayListGrEdit" name="ObjectsGroup[Entrance]"></div><?php echo $form->error($model, 'Entrance'); ?></div>
         <div class="al-row-column">Площадь АППЗ:</div>
         <div class="al-row-column"><div id='edAreaSizeGrEdit' name="ObjectsGroup[AreaSize]"></div></div>
         <div style="clear: both"></div>

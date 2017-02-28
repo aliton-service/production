@@ -190,9 +190,9 @@
                     $("#edNumber").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
                     $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Repairs.Date, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edPrior").jqxInput($.extend(true, {}, {height: 25, width: 150, minLength: 1}));
-                    $("#edBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: Repairs.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+                    $("#edBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.BestDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
                     $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
-                    $("#edDatePlan").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
+                    $("#edDatePlan").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 90, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
                     $("#edDemand").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
                     $("#edAddress").jqxInput($.extend(true, {}, {height: 25, width: 340, minLength: 1}));
                     $("#edRepairPay").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repairs.RepairPay}));
@@ -892,8 +892,8 @@
         DataEmployees.dataBind();
         DataEmployees = DataEmployees.records;
         
-        $("#edMaster").jqxComboBox({source: DataEmployees, width: '150', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"});
-        $("#edEngineer").jqxComboBox({source: DataEmployees, width: '150', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"});
+        $("#edMaster").jqxComboBox({source: DataEmployees, width: '150', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id", dropDownVerticalAlignment: 'top'});
+        $("#edEngineer").jqxComboBox({source: DataEmployees, width: '150', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id", dropDownVerticalAlignment: 'top'});
         $('#btnReturn').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 220, height: 30 }));
         $('#btnReturn').on('click', function() {
             $.ajax({
@@ -947,12 +947,12 @@
         });
         
         $("#ActionPanel").jqxDropDownButton({initContent: function(){
-            $('#btnAccept').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: true }));
-            $('#btnSendAgree').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: true }));
-            $('#btnAgree').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: true }));
-            $('#btnNoAgree').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: true }));
-            $('#btnReady').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: true }));
-            $('#btnExec').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: true }));
+            $('#btnAccept').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 196, height: 30, disabled: true }));
+            $('#btnSendAgree').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 196, height: 30, disabled: true }));
+            $('#btnAgree').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 196, height: 30, disabled: true }));
+            $('#btnNoAgree').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 196, height: 30, disabled: true }));
+            $('#btnReady').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 196, height: 30, disabled: true }));
+            $('#btnExec').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 196, height: 30, disabled: true }));
             
             $('#btnAccept').on('click', function() {
                 $("#ActionPanel").jqxDropDownButton('close');
@@ -1106,7 +1106,7 @@
             
         }});
         
-        $("#ActionPanel").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { dropDownVerticalAlignment: 'top', autoOpen: false, width: 260, height: 28 }));
+        $("#ActionPanel").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { dropDownVerticalAlignment: 'top', autoOpen: false, width: 200, height: 28 }));
         var DD = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 6px;">Операция</div>';
         $("#ActionPanel").jqxDropDownButton('setContent', DD);
         CheckTabs();
