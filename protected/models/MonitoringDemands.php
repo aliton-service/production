@@ -94,7 +94,7 @@ class MonitoringDemands extends MainFormModel
 
 		$from = "
 		From MonitoringDemands m left join DemandPriors dp on (m.Prior = dp.DemandPrior_id)
-                    left join Employees e on (e.Alias = m.User2)
+                    left join Employees e on (e.Employee_id = m.EmplCreate)
                     left join Employees e2 on (e2.Alias = m.UserAccept2)
 		";
 
