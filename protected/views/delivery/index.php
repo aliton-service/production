@@ -49,7 +49,7 @@
         
         
         GetComments = function(Dldm_id) {
-            if (Dldm_id == DeliveryDemand.dldm_id) 
+            if (Dldm_id == DeliveryDemand.dldm_id) {
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('Delivery/GetComments')); ?>,
                     type: 'POST',
@@ -62,6 +62,7 @@
                         $("#edNote").val(Res);
                     }
                 });
+            }
         };
         
         $("#DeliveryDemandsGrid").on('rowselect', function (event) {

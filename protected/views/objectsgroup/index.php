@@ -186,7 +186,7 @@
                     width: 'calc(100% - 2px)',
                     height: 'calc(100% - 2px)',
                     source: DataObjectsGroupsExecutors,
-//                    enablebrowserselection: true,
+                    enablebrowserselection: true,
                     columns: [
                         { text: 'ФИО', dataField: 'FIO', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 250 },
                         { text: 'Должность', dataField: 'CustomerName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
