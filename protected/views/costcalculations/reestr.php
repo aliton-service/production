@@ -71,6 +71,10 @@
                             ]
                         })
                     );
+                    
+                    $('#CostCalcGrid').on('rowdoubleclick', function (event) { 
+                        $("#btnInfo").click();
+                    });
                     break;
             }
         };

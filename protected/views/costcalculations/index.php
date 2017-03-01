@@ -1338,6 +1338,7 @@
                         }
                     });
                     $('#MoreInfoCostCalcDocuments').on('click', function(){
+                        console.log(CurrentRowDataCCD.DocType_id);
                         if (CurrentRowDataCCD != undefined) {
                             var Type = parseInt(CurrentRowDataCCD.DocType_id);
                             if (Type == 0)
@@ -1354,6 +1355,8 @@
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Delivery/View')); ?> + "&Dldm_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 6)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Index')); ?> + "&docm_id=" + CurrentRowDataCCD.Docid);
+                            if (Type == 7)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('Documents/Index')); ?> + "&ContrS_id=" + CurrentRowDataCCD.Docid);
                         }
                     });
 
