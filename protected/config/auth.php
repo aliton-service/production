@@ -1415,7 +1415,7 @@ return array_merge(
             ),
         ),
         
-        /* Старший экономист */
+        /* Старший экономист - 12 */
         'SeniorEconomist' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Старший экономист',
@@ -1442,7 +1442,6 @@ return array_merge(
                 'AdminObjectsGroupSystemComplexitys',
                 'AdminSystemCompetitors',
                 'AdminContractsS',
-                
             ),
         ),
         
