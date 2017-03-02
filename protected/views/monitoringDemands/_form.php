@@ -60,10 +60,11 @@
                         
                         $('#' + MonitoringDemands3.DialogId).jqxWindow('close');
                         if (MonitoringDemands3.DialogId == 'EditDialog') {
-                            if ($("#MonitoringDemandsGrid").length>0) {
-                                $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
-                                $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
-                            }
+//                            if ($("#MonitoringDemandsGrid").length>0) {
+//                                $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
+//                                $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
+//                            }
+                            location.reload(true);
                         } 
                         if (MonitoringDemands3.DialogId == 'CostCalculationsDialog') {
                             $('#RefreshCostCalcDocuments').click();

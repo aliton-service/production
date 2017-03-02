@@ -95,9 +95,9 @@
 <div class="al-row"><div id='cmbTerrit'></div></div>
 <div class="al-row">Адрес</div>
 <div class="al-row"><input type="text" id="edAddrFilter" /></div>
-<div>Период с</div>
+<div class="al-row">Период с</div>
 <div><div id='edDateStart'></div></div>
-<div>по</div>
+<div class="al-row">по</div>
 <div><div id='edDateEnd'></div></div>
 <div class="al-row">
     <input type="button" value="Фильтр" id="edFiltering"/>

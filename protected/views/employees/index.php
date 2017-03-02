@@ -324,7 +324,7 @@
                     { text: 'Фамилия Имя Отчество', dataField: 'EmployeeName', columntype: 'textbox', filtercondition: 'CONTAINS', width: 250},
                     { text: 'Адрес', dataField: 'Address', columntype: 'textbox', filtercondition: 'CONTAINS', width: 250},
                     { text: 'Дата рождения', filtertype: 'date', datafield: 'Birthday', filtercondition: 'DATE_EQUAL', width: 120, cellsformat: 'dd.MM.yyyy'},
-                    { text: 'Должность', dataField: 'PositionName', columntype: 'textbox', filtercondition: 'CONTAINS', width: 120},
+                    { text: 'Должность', dataField: 'PositionName', columntype: 'textbox', filtercondition: 'CONTAINS', width: 240},
                     { text: 'Отдел', dataField: 'DepName', columntype: 'textbox', filtercondition: 'CONTAINS', width: 120},
                     { text: 'Служба', dataField: 'SectionName', columntype: 'textbox', filtercondition: 'CONTAINS', width: 120},
                     { text: 'Участок', dataField: 'Territ_Name', columntype: 'textbox', filtercondition: 'CONTAINS', width: 120},

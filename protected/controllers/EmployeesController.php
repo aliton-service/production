@@ -108,6 +108,7 @@ class EmployeesController extends Controller
     public function actionIndex()
     {
         $this->title = 'Сотрудники';
+        $this->setPageTitle('Сотрудники');
         $this->gridFilters = '_filters';
         $this->render('index');
     }
