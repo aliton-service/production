@@ -55,16 +55,16 @@
         // Инициализируем контролы
         $("#edNumber").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
         $("#edAddr").jqxInput({height: 25, width: 400, minLength: 1, value: Demand.Address});
-        $("#edDateReg").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edDateReg").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edServiceType").jqxInput({height: 25, width: 200, minLength: 1, value: Demand.ServiceType});
-        $("#edMasterName").jqxInput({height: 25, width: 210, minLength: 1, value: Demand.MasterName});
-        $("#edDemandType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandType});
-        $("#edSystemType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SystemType});
-        $("#edEquipType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.EquipType});
-        $("#edMalfunction").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.Malfunction});
+        $("#edMasterName").jqxInput({height: 25, width: 300, minLength: 1, value: Demand.MasterName});
+        $("#edDemandType").jqxInput({height: 25, width: 230, minLength: 1, value: Demand.DemandType});
+        $("#edSystemType").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.SystemType});
+        $("#edEquipType").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.EquipType});
+        $("#edMalfunction").jqxInput({height: 25, width: 330, minLength: 1, value: Demand.Malfunction});
         $("#edDemandPrior").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandPrior});
-        $("#edContacts").jqxInput({height: 25, width: 280, minLength: 1, value: Demand.Contacts});
-        $("#edCloseReason").jqxInput({height: 25, width: 300, minLength: 1, value: Demand.CloseReason});
+        $("#edContacts").jqxInput({height: 25, width: 455, minLength: 1, value: Demand.Contacts});
+        $("#edCloseReason").jqxInput({height: 25, width: 230, minLength: 1, value: Demand.CloseReason});
         $("#edRepMaster").jqxTextArea({height: '100%', width: '100%', minLength: 1});
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.AgreeDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
@@ -719,16 +719,16 @@
     @media screen and (min-width: 1300px) { 
         #MalfunctionWrapper {
             position: relative;
-            left: 850;
+            left: 910;
             top: -270;
-            width: 300px;
+            width: 290px;
             height: 110px;
         }
         #RepMasterWrapper {
             position: relative;
-            left: 15;
+            left: 75;
             top: -35;
-            width: 300px;
+            width: 290px;
             height: 105px;
         }
         #SpecConditionWrapper {
@@ -769,22 +769,22 @@
     </div>
     <div style="clear: both;"></div>
     <div style="float: left; width: 100%; height: 50px">
-        <div class="row-column" style="width: 180px;">
+        <div class="row-column" style="margin-right: 2px;">
             <div>Тип заявки</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edDemandType" type="text"/></div>
         </div>
-        <div class="row-column" style="width: 180px;">
+        <div class="row-column" style="margin-right: 2px;">
             <div>Тип системы</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edSystemType" type="text"/></div>
         </div>
-        <div class="row-column" style="width: 180px;">
+        <div class="row-column" style="margin-right: 2px;">
             <div>Тип оборудования</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edEquipType" type="text"/></div>
         </div>
-        <div class="row-column" style="width: 180px;">
+        <div class="row-column" style="margin-right: 2px;">
             <div>Тип неисправности</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edMalfunction" type="text"/></div>
@@ -797,13 +797,13 @@
             <div style="clear: both;"></div>
             <div><input readonly id="edDemandPrior" type="text"/></div>
         </div>
-        <div class="row-column" style="width: 280px;">
+        <div class="row-column" style="margin-right: 2px;">
             <div>Контактное лицо</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edContacts" type="text"/></div>
         </div>
-        <div class="row-column" style="width: 300px;">
-            <div>Причина несвоевременного закрытия заявки</div>
+        <div class="row-column">
+            <div>Причина несвоевр. закрытия заявки</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edCloseReason" type="text"/></div>
         </div>

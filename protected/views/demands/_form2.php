@@ -332,7 +332,7 @@
     <div class="row-column"><div id='cmbExecutor' name='Demands[ExecOther]'><?php echo $model->Master; ?></div></div>
 </div>
 <div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="width: 303px;">Тип <?php echo $model->DType_id; ?></div>
+    <div class="row-column" style="width: 303px;">Тип заявки</div>
     <div class="row-column" style="width: 303px;">Тип системы</div>
     <div class="row-column" style="width: 180px;">Тип оборудования</div>
 </div>
@@ -347,7 +347,7 @@
     <div class="row-column" style="width: 180px;">Предельная дата</div>
     
 </div>
-<div class="row" style="margin-bottom: 0px;">
+<div class="row" style="margin: 0px;">
     <div class="row-column" style="width: 300px;"><div id='cmbMalfunction' name="Demands[DMalfunction_id]"></div></div>
     <div class="row-column" style="width: 300px;"><div id='cmbPrior' name="Demands[DPrior_id]"></div><div><?php echo $form->error($model, 'DPrior_id'); ?></div></div>
     <div class="row-column" style="width: 180px;"><div id='edDeadline' name="Demands[Deadline]"></div></div>
