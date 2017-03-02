@@ -1329,7 +1329,7 @@ return array_merge(
             ),
         ),
         
-        /* Главный бухгалтер */
+        /* Главный бухгалтер - 29 */
         'AccountantGeneral' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Главный бухгалтер',
@@ -1341,6 +1341,7 @@ return array_merge(
                 'ManagerPaymentHistory',
                 'AdminContractsDetails_v',
                 'UserContractEquips',
+                'AdminContractPriceHistory',
             ),
         ),
         
