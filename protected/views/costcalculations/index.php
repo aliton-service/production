@@ -350,7 +350,7 @@
             });
             
             $('#btnAddDocContract1').on('click', function() {
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '560px', width: '870'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '630px', width: '870'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                     type: 'POST',
@@ -387,7 +387,7 @@
                 });
             });
             $('#btnAddDocContract2').on('click', function() {
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '560px', width: '870'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '630px', width: '870'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                     type: 'POST',
@@ -425,7 +425,7 @@
             });
             $('#btnAddDocAct').on('click', function(){
                 var SumHightFullValue = $('#edSumHightFull').jqxNumberInput('val');
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '510', width: '960'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '520', width: '990'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('WHActs/Insert');?>",
                     type: 'POST',
@@ -496,7 +496,7 @@
             });
             
             $('#btnAddDocContract3').on('click', function() {
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '440px', width: '810'}));
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '450px', width: '810'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
                     type: 'POST',

@@ -83,9 +83,9 @@
         $("#btnEdit").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" });
         $("#btnClient").jqxButton({ width: 120, height: 30 });
         $("#btnToMaster").jqxButton({ width: 170, height: 30, imgSrc: "/images/ok2.png", imgPosition: "left", disabled: !(Demand.DateMaster == null) });
-        $("#btnSMS").jqxButton({ width: 120, height: 30 });
+        $("#btnSMS").jqxButton({ width: 100, height: 30 });
         $("#btnWorkOut").jqxButton({ width: 120, height: 30, disabled: !(Demand.WorkedOut == null)});
-        $("#btnNotWork").jqxButton({ width: 140, height: 30, disabled: (Demand.WorkedOut == null)});
+        $("#btnNotWork").jqxButton({ width: 158, height: 30, disabled: (Demand.WorkedOut == null)});
         $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
         var CD = Date();
         $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 150, formatString: 'dd.MM.yyyy HH:mm'}));

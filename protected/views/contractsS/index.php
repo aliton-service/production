@@ -98,7 +98,7 @@
         $("#MoreInformContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150, disabled: true }));
         $("#ReloadContracts").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
-        $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 600, width: 870}));
+        $('#NewContractDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 630, width: 870}));
         $("#btnViewActs").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#btnViewActs").on('click', function() {
             var url = <?php echo json_encode(Yii::app()->createUrl('WhActs/Index')); ?>;

@@ -203,7 +203,7 @@
 <input type="hidden" name="WhActs[calc_id]" value="<?php echo $model->calc_id; ?>"/>
 <input type="hidden" name="WhActs[repr_id]" value="<?php echo $model->repr_id; ?>"/>
 
-<div class="al-data-nb" style="height: 230px;">
+<div class="al-data-nb">
     <div class="al-row-column">
         <div class="al-row">
             <div class="al-data">
