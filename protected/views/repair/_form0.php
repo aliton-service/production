@@ -86,7 +86,7 @@
         $('#edEngineerEdit').jqxComboBox($.extend(true, {}, { source: DataEmployees, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
         $('#edCurEdit').jqxComboBox($.extend(true, {}, { source: DataEmployees, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
         $('#btnFindDemand').on('click', function(){
-            $('#FindDemandDialog').jqxWindow({width: 800, height: 530, position: 'center'});
+            $('#FindDemandDialog').jqxWindow({width: 800, height: 540, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Demands/FindDemand')) ?>,
                 type: 'POST',
@@ -184,7 +184,7 @@
 
 
 <div class="al-row" style="*height: calc(100% - 48px);">
-    <div style="padding: 10px; overflow: none;">
+    <div style="overflow: none;">
         <?php 
             $form=$this->beginWidget('CActiveForm', array(
                 'id'=>'Repairs',

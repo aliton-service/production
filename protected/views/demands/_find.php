@@ -33,7 +33,7 @@
         $('#btnFindRefresh').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: false}));
         $('#btnFindSelectDem').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: false}));
         $('#btnFindClose').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: false}));
-        $("#edFindDemandText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '100%'}));
+        $("#edFindDemandText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: "", width: '99.5%'}));
         
         $("#chbPeriodAll").on('change', function(){
             if ($("#chbPeriodAll").jqxRadioButton('checked'))
@@ -142,7 +142,7 @@
         $("#FindDemandsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 height: 280,
-                width: '100%',
+                width: '99.5%',
                 showfilterrow: false,
                 autoshowfiltericon: true,
                 pagesize: 200,

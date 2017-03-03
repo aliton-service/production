@@ -1241,7 +1241,7 @@
             <div style="padding: 10px;">
                 <div class="al-row">
                     <div class="al-row-column">Диагностика</div>
-                    <div class="al-row-column"><input type="text" id="edResult" /></div>
+                    <div class="al-row-column"><input readonly type="text" id="edResult" /></div>
                 </div>
             </div>
         </div>

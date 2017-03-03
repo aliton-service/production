@@ -114,7 +114,7 @@
         $('#edDefect').jqxTextArea({ height: 42, width: 'calc(100% - 2px)', minLength: 1 });
         $('#btnInfo').jqxButton({ width: 150, height: 30 });
         $('#btnRefresh').jqxButton({ width: 150, height: 30 });
-        $('#btnAdd').jqxButton({ width: 120, height: 30 });
+        $('#btnAdd').jqxButton({ width: 150, height: 30 });
         $('#btnExport').jqxButton({ width: 120, height: 30 });
         $('#btnDel').jqxButton({ width: 150, height: 30 });
         $('#btnUndo').jqxButton({ width: 150, height: 30 });
@@ -178,7 +178,7 @@
         
         $('#btnAdd').on('click', function() {
             if ($('#btnAdd').jqxButton('disabled')) return;
-            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 780, position: 'center' }));
+            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 800, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Repair/Create')) ?>,
                 type: 'POST',

@@ -466,6 +466,8 @@
     }
 </style>
 
+bill = <?php echo $model->bill; ?>
+
 <div class="al-data-nb" style="width: 950px;">
     <div class="al-row-column">
         <div class="al-row">

@@ -716,7 +716,24 @@
         }
     }
     
-    @media screen and (min-width: 1300px) { 
+    @media screen and (min-width: 1300px) and (max-height: 800px) { 
+        #MalfunctionWrapper {
+            position: relative;
+            left: 900px;
+            top: -270px;
+            width: 300px;
+            height: 110px;
+        }
+        #RepMasterWrapper {
+            position: relative;
+            left: 65px;
+            top: -35px;
+            width: 300px;
+            height: 105px;
+        }
+    }
+    
+    @media screen and (min-width: 1300px) and (min-height: 800px) { 
         #MalfunctionWrapper {
             position: absolute;
             left: 940px;
@@ -731,10 +748,12 @@
             width: 290px;
             height: 105px;
         }
+    }
+    
+    @media screen and (min-width: 1300px) {
         #SpecConditionWrapper {
             width: 400px;
         }
-        
         #btnWorkOutWrapper {
             margin-left: 60px;
         }
