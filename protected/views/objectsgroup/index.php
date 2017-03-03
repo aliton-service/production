@@ -370,6 +370,10 @@
 
 <style>
     
+    #ContactInfoGrid .jqx-fill-state-pressed {
+        background-color: #A7D2BB !important;
+        color: black;
+    }
 
     #RefusersWrapper {
         width: 250px;
@@ -395,9 +399,9 @@
     
         #InformationWrapper {
             position: absolute;
-            left: 850px;
+            left: 870px;
             top: 50px;
-            width: 340px;
+            width: 320px;
             height: 212px;
         }
     }
@@ -405,11 +409,6 @@
         #InformationWrapper {
             width: 400px;
         }
-    }
-    
-    #ContactInfoGrid .jqx-fill-state-pressed {
-        background-color: #A7D2BB !important;
-        color: black;
     }
     
 </style>

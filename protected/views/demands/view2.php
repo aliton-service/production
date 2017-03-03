@@ -694,15 +694,15 @@
         height: calc(100% - 347px);
     }
     #MalfunctionWrapper {
-        width: 180px;
+        width: 160px;
         height: 70px;
     }
     #RepMasterWrapper {
-        width: 180px;
+        width: 160px;
         height: 70px;
     }
     #SpecConditionWrapper {
-        width: 180px;
+        width: 150px;
         height: 70px;
     }
         
@@ -718,21 +718,25 @@
     
     @media screen and (min-width: 1300px) { 
         #MalfunctionWrapper {
-            position: relative;
-            left: 910;
-            top: -270;
+            position: absolute;
+            left: 940px;
+            top: 10px;
             width: 290px;
             height: 110px;
         }
         #RepMasterWrapper {
-            position: relative;
-            left: 75;
-            top: -35;
+            position: absolute;
+            left: 940px;
+            top: 150px;
             width: 290px;
             height: 105px;
         }
         #SpecConditionWrapper {
             width: 400px;
+        }
+        
+        #btnWorkOutWrapper {
+            margin-left: 60px;
         }
     }
     @media screen and (min-width: 1500px) { 
@@ -886,8 +890,8 @@
     <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
     <div class="row-column"><input type="button" value="Передать мастеру" id='btnToMaster' /></div>
     <div class="row-column"><input type="button" value="Текст СМС" id='btnSMS' /></div>
-    <div class="row-column" style="margin-left: 60px"><input type="button" value="Отработано" id='btnWorkOut' /></div>
-    <div class="row-column"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
+    <div class="row-column" id="btnWorkOutWrapper"><input type="button" value="Отработано" id='btnWorkOut' /></div>
+    <div class="row-column" style="margin-right: 2px;"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
     <div class="row-column" style="float: right;">
         <div class="row-column"><div id="edColumnDateExec"></div></div>
         <div class="row-column"><input type="button" value="Выполнено" id='btnExec' /></div>
