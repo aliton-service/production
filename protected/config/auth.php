@@ -1442,6 +1442,7 @@ return array_merge(
                 'AdminObjectsGroupSystemComplexitys',
                 'AdminSystemCompetitors',
                 'AdminContractsS',
+                'AdminContractPriceHistory',
             ),
         ),
         

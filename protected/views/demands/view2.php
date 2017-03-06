@@ -61,8 +61,8 @@
         $("#edDemandType").jqxInput({height: 25, width: 230, minLength: 1, value: Demand.DemandType});
         $("#edSystemType").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.SystemType});
         $("#edEquipType").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.EquipType});
-        $("#edMalfunction").jqxInput({height: 25, width: 330, minLength: 1, value: Demand.Malfunction});
-        $("#edDemandPrior").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandPrior});
+        $("#edMalfunction").jqxInput({height: 25, width: 310, minLength: 1, value: Demand.Malfunction});
+        $("#edDemandPrior").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.DemandPrior});
         $("#edContacts").jqxInput({height: 25, width: 455, minLength: 1, value: Demand.Contacts});
         $("#edCloseReason").jqxInput({height: 25, width: 230, minLength: 1, value: Demand.CloseReason});
         $("#edRepMaster").jqxTextArea({height: '100%', width: '100%', minLength: 1});
@@ -70,7 +70,7 @@
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.AgreeDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edDateOfTrans").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTrans, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 150 }));
+        $("#edDateOfTrans").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTrans, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140 }));
         $("#edTransferReason").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.TransferReason});
         $("#edDelayReason").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.DelayReason});
         $("#edResultName").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.ResultName});
@@ -176,7 +176,7 @@
                             columns:
                             [
                                 { text: 'Дата сообщения', datafield: 'date', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
-                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 140 },
+                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 170 },
                                 { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 120, cellsformat: 'dd.MM.yyyy' },
                                 { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 120, cellsformat: 'dd.MM.yyyy HH:mm' },
                                 { text: 'Действие', filtertype: 'range', datafield: 'report', width: 400 },
@@ -688,17 +688,17 @@
 <style>
     
     #demandInputs {
-        height: 310px;
+        height: 340px;
     }
     #demandTabs {
         height: calc(100% - 347px);
     }
     #MalfunctionWrapper {
-        width: 160px;
+        width: 150px;
         height: 70px;
     }
     #RepMasterWrapper {
-        width: 160px;
+        width: 150px;
         height: 70px;
     }
     #SpecConditionWrapper {
@@ -713,6 +713,16 @@
         }
         #demandTabs {
             height: calc(100% - 197px);
+        }
+    }
+    
+    @media screen and (max-width: 1225px) and (min-height: 800px) { 
+        #demandInputs {
+            height: 370px;
+            /*overflow-x: hidden;*/
+        }
+        #demandTabs {
+            height: calc(100% - 380px);
         }
     }
     
@@ -815,7 +825,7 @@
     </div>
     <div style="clear: both;"></div>
     <div style="float: left; width: 100%; height: 50px">
-        <div class="row-column" style="width: 180px;">
+        <div class="row-column" style="margin: 0;">
             <div>Приоритет</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edDemandPrior" type="text"/></div>
@@ -870,7 +880,7 @@
     <div style="clear: both;"></div>
     
     <div style="float: left; width: 100%; height: 50px">
-        <div class="row-column" style="width: 150px;">
+        <div class="row-column" style="margin: 0;">
             <div>Дата перевода заявки</div>
             <div style="clear: both;"></div>
             <div><div id='edDateOfTrans'></div></div>
@@ -902,20 +912,21 @@
         </div>
     </div>
   
+
+    <div style="clear: both"></div>
+    <div style="float: left; width: 100%; height: 32px">
+        <div class="row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
+        <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
+        <div class="row-column"><input type="button" value="Передать мастеру" id='btnToMaster' /></div>
+        <div class="row-column"><input type="button" value="Текст СМС" id='btnSMS' /></div>
+        <div class="row-column" id="btnWorkOutWrapper"><input type="button" value="Отработано" id='btnWorkOut' /></div>
+        <div class="row-column" style="margin-right: 2px;"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
+        <div class="row-column" style="float: right; margin-top: 2px;">
+            <div class="row-column"><div id="edColumnDateExec"></div></div>
+            <div class="row-column"><input type="button" value="Выполнено" id='btnExec' /></div>
+        </div>
+    </div> 
 </div>
-<div style="clear: both"></div>
-<div style="float: left; width: 100%; height: 32px">
-    <div class="row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
-    <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
-    <div class="row-column"><input type="button" value="Передать мастеру" id='btnToMaster' /></div>
-    <div class="row-column"><input type="button" value="Текст СМС" id='btnSMS' /></div>
-    <div class="row-column" id="btnWorkOutWrapper"><input type="button" value="Отработано" id='btnWorkOut' /></div>
-    <div class="row-column" style="margin-right: 2px;"><input type="button" value="Отмена отработки" id='btnNotWork' /></div>
-    <div class="row-column" style="float: right;">
-        <div class="row-column"><div id="edColumnDateExec"></div></div>
-        <div class="row-column"><input type="button" value="Выполнено" id='btnExec' /></div>
-    </div>
-</div>    
 <div style="clear: both;"></div>
 <div id="demandTabs" style="float: left; width: 100%; margin-top: 5px;">
     <div id='Tabs'>
@@ -947,7 +958,7 @@
                 <div id="ProgressGrid"></div>
                 <div style="clear: both;"></div>
                 <div style="height: 30px; margin-top: 5px;">
-                    <div style="float: left; width: calc(100% - 576px)"><input id="edComment" type="text"/></div>
+                    <div style="float: left; width: calc(100% - 510px)"><input id="edComment" type="text"/></div>
                     <div style="float: right">
                         <div style="float: left; margin-left: 6px;">План. дата вып.</div>
                         <div style="float: left; margin-left: 6px;"><div id='edPlanDateExec'></div></div>

@@ -466,9 +466,7 @@
     }
 </style>
 
-bill = <?php echo $model->bill; ?>
-
-<div class="al-data-nb" style="width: 950px;">
+<div class="al-data-nb" style="width: 920px;">
     <div class="al-row-column">
         <div class="al-row">
             <div class="al-data" style="width: 552px; padding: 7px;">
@@ -507,7 +505,7 @@ bill = <?php echo $model->bill; ?>
     </div>
     <div class="al-row-column">
         <div class="al-row">
-            <div class="al-data" style="width: 298px; padding: 7px;">
+            <div class="al-data" style="width: 320px; padding: 7px;">
                 <!--<div class="al-row-label"><b>Оплата</b></div>-->
                 <div class="al-row">
                     <div class="al-row-column">Сумма по акту</div>
@@ -541,7 +539,7 @@ bill = <?php echo $model->bill; ?>
     </div>
 </div>
 <div style="clear: both"></div>
-<div class="al-data-nb" style="width: 900px;">
+<div class="al-data-nb" style="width: 920px;">
     <div class="al-data" style="padding: 7px;">
         <!--<div class="al-row-label"><b>Выполненные работы</b></div>-->
         <div class="al-row">

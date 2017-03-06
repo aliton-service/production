@@ -27,7 +27,7 @@
         });
         
         $("#edNumberDocEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
-        $("#edDateDocEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: RepairDocs.date}));
+        $("#edDateDocEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: RepairDocs.date}));
         $('#edDefectDocEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 50, width: 'calc(100% - 2px)', minLength: 1}));
         $('#edResultDocEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 50, width: 'calc(100% - 2px)', minLength: 1}));
         

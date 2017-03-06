@@ -392,8 +392,8 @@ class WHDocumentsController extends Controller
                     $ActionCode = 501;
                     break;
                 case 8:
-                    $this->title = 'Перемещение с склада на склад №' . $model->number;
-                    $this->setPageTitle('Перемещение с склада на склад №' . $model->number);
+                    $this->title = 'Перемещение со склада на склад №' . $model->number;
+                    $this->setPageTitle('Перемещение со склада на склад №' . $model->number);
                     $ActionCode = 101;
                     break;
                 case 9:

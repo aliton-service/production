@@ -300,7 +300,7 @@
         });
         
                     $("#edComment").jqxInput($.extend(true, {}, {height: 25, width: 440, minLength: 1}));
-                    $("#edPlanDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: null, dropDownVerticalAlignment: 'top'}));
+                    $("#edPlanDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: null, dropDownVerticalAlignment: 'top', formatString: "dd.MM.yyyy"}));
                     $('#btnAddComment').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     
                     var DataRepairComments = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairComments), { async: true,

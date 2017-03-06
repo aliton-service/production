@@ -75,7 +75,7 @@ class RepairDocs extends MainFormModel
             'repr_id' => '',
             'dctp_id' => '',
             'number' => '',
-            'date' => '',
+            'date' => 'Дата',
             'empl_id' => '',
             'splr_id' => '',
             'diagnostics' => '',

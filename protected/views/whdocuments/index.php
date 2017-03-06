@@ -1012,7 +1012,7 @@
             </li>
             <li>
                 <div style="height: 20px; margin-top: 5px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение с склада на склад</div>
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Перемещение со склада на склад</div>
                 </div>
             </li>
             <li>

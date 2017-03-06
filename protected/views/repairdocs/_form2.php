@@ -27,7 +27,7 @@
         });
         
         $("#edNumberDocEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
-        $("#edDateDocEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: RepairDocs.date}));
+        $("#edDateDocEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: RepairDocs.date}));
         var DataSuppliers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliersListMin, {async: false, url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SuppliersListMin',}));
         $("#edSplrDocEdit").jqxComboBox({ source: DataSuppliers, width: '300', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id"});
         $("#edContactPersonDocEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
@@ -104,7 +104,7 @@
     <div class="al-row-column">Номер</div>
     <div class="al-row-column"><input type="text" name="RepairDocs[number]" id="edNumberDocEdit" /><?php echo $form->error($model, 'number'); ?></div>
     <div class="al-row-column">Дата</div>
-    <div class="al-row-column"><div name="RepairDocs[date]" id="edDateDocEdit" ></div><?php echo $form->error($model, 'date'); ?></div>
+    <div class="al-row-column"><div name="RepairDocs[date]" id="edDateDocEdit" ></div></div><?php echo $form->error($model, 'date'); ?>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
