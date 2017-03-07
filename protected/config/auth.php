@@ -645,7 +645,7 @@ return array_merge(
             ),
         ),
         
-        /* МС */
+        /* МС - 17 */
         'StaffManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Руководитель СЦ',
