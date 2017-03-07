@@ -44,10 +44,10 @@
                             filterable: false,
                             columns:
                             [
-                                { text: 'Дата сообщения', datafield: 'date', width: 150, cellsformat: 'dd.MM.yyyy HH:mm'},
-                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 140 },
-                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 150, cellsformat: 'dd.MM.yyyy' },
-                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 150, cellsformat: 'dd.MM.yyyy HH:mm' },
+                                { text: 'Дата сообщения', datafield: 'date', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 170 },
+                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 120, cellsformat: 'dd.MM.yyyy' },
+                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 120, cellsformat: 'dd.MM.yyyy HH:mm' },
                                 { text: 'Действие', filtertype: 'range', datafield: 'report', width: 250 },
                                 { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 150 },
                                 { text: '№ Заявки', datafield: 'demand_id', width: 100},

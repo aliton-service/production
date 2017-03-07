@@ -793,7 +793,7 @@ return array_merge(
             ),
         ),
         
-        /* Офис менеджер */
+        /* Офис менеджер - 18 */
         'OfficeManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Офис менеджер',
@@ -804,7 +804,6 @@ return array_merge(
                 'ManagerObjects',
                 'ManagerObjectsGroup',
                 'ManagerContactInfo',
-                'UserObjectsGroupSystems',
                 'ManagerObjectEquips',
                 'ManagerContractsS',
                 'ManagerContractMasterHistory',

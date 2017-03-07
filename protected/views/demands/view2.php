@@ -88,7 +88,7 @@
         $("#btnNotWork").jqxButton({ width: 158, height: 30, disabled: (Demand.WorkedOut == null)});
         $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
         var CD = Date();
-        $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 150, formatString: 'dd.MM.yyyy HH:mm'}));
+        $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 160, formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true}));
         
         
         var initWidgets = function (tab) {
@@ -716,10 +716,9 @@
         }
     }
     
-    @media screen and (max-width: 1225px) and (min-height: 800px) { 
+    @media screen and (max-width: 1235px) and (min-height: 800px) { 
         #demandInputs {
             height: 370px;
-            /*overflow-x: hidden;*/
         }
         #demandTabs {
             height: calc(100% - 380px);
@@ -880,7 +879,7 @@
     <div style="clear: both;"></div>
     
     <div style="float: left; width: 100%; height: 50px">
-        <div class="row-column" style="margin: 0;">
+        <div class="row-column" style="margin-right: 3px;">
             <div>Дата перевода заявки</div>
             <div style="clear: both;"></div>
             <div><div id='edDateOfTrans'></div></div>

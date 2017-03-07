@@ -40,6 +40,10 @@
             })
         );
         
+        $("#ObjectsGroupSystemsGrid").on("bindingcomplete", function (event) {
+            $("#ObjectsGroupSystemsGrid").jqxGrid('selectrow', 0);
+        });  
+        
         $('#EditDialogOGSystems').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '460px', width: '600'}));
         
         $('#EditDialogOGSystems').jqxWindow({initContent: function() {
