@@ -70,7 +70,7 @@ class DeliveryController extends Controller
         if ($Dldm_id != null) {
             $model = new DeliveryDemands();
             $model->getModelPk($Dldm_id);
-            $this->title = 'Заявки на доставку №' . $Dldm_id;
+            $this->title = 'Заявка на доставку №' . $Dldm_id;
             
             $this->render('view', array(
                 'model' => $model,

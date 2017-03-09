@@ -111,7 +111,7 @@
     });
 </script>
 
-<?php $this->setPageTitle('Должности'); ?>
+<?php $this->setPageTitle('Отделы'); ?>
 
 <?php
     $this->breadcrumbs=array(

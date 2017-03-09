@@ -116,7 +116,7 @@ class SpecialDaysController extends Controller
 
     public function actionIndex()
     {
-        $this->title = 'Просмотр подразделений';
+        $this->title = 'Праздничные, выходные, рабочие дни';
         $this->render('index');
     }
 }

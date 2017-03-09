@@ -200,13 +200,13 @@ class Delivery extends MainFormModel
 		return array(
 			array('date, prty_id, deadline, text', 'required'),
 			array('objc_id, user_sender, dltp_id, mstr_id, prty_id, empl_dlvr_id, dlrs_id, prtp_id, prdoc_id, calc_id, docm_id, dmnd_id, repr_id, EmplLock, EmplCreate, EmplChange, EmplDel', 'numerical', 'integerOnly'=>true),
-			array(' user_logist', 'length', 'max'=>50),
+			array('user_logist', 'length', 'max'=>50),
 			array('text, note, rep_delivery', 'length', 'max'=>1073741823),
 			array('phonenumber, Contacts', 'length', 'max'=>200),
-			array('bestdate, plandate, date_logist, date_delivery, date_promise, Lock, DateLock, DateCreate, DateChange, DelDate', 'safe'),
+//			array('bestdate, plandate, date_logist, date_delivery, date_promise, Lock, DateLock, DateCreate, DateChange, DelDate', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('dldm_id, date, user_sender, objc_id, dltp_id, mstr_id, prty_id, bestdate, deadline, plandate, text, phonenumber, empl_dlvr_id, date_logist, user_logist, note, date_delivery, rep_delivery, Contacts, dlrs_id, date_promise, prtp_id, prdoc_id, calc_id, docm_id, dmnd_id, repr_id, Lock, EmplLock, DateLock, EmplCreate, DateCreate, EmplChange, DateChange, EmplDel, DelDate', 'safe', 'on'=>'search'),
+			array('dldm_id, date, user_sender, objc_id, dltp_id, mstr_id, prty_id, bestdate, deadline, plandate, text, phonenumber, empl_dlvr_id, date_logist, user_logist, note, date_delivery, rep_delivery, Contacts, dlrs_id, date_promise, prtp_id, prdoc_id, calc_id, docm_id, dmnd_id, repr_id, Lock, EmplLock, DateLock, EmplCreate, DateCreate, EmplChange, DateChange, EmplDel, DelDate', 'safe'),
 		);
 	}
 
@@ -228,7 +228,7 @@ class Delivery extends MainFormModel
 			'bestdate' => 'Bestdate',
 			'deadline' => 'Deadline',
 			'plandate' => 'Plandate',
-			'text' => 'Text',
+			'text' => 'Содержание заявки',
 			'phonenumber' => 'Phonenumber',
 			'empl_dlvr_id' => 'Empl Dlvr',
 			'date_logist' => 'Date Logist',

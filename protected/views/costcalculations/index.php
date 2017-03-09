@@ -1345,17 +1345,17 @@
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('MonitoringDemands/Index')); ?> + "&mndm_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 1)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View')); ?> + "&Docm_id=" + CurrentRowDataCCD.Docid);
-                            if (Type == 2)
+                            if (Type === 2)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHActs/View')); ?> + "&docm_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 3)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Documents/Index')); ?> + "&ContrS_id=" + CurrentRowDataCCD.Docid);
-                            if (Type == 4)
+                            if (Type === 4)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Documents/Index')); ?> + "&ContrS_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 5)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Delivery/View')); ?> + "&Dldm_id=" + CurrentRowDataCCD.Docid);
                             if (Type == 6)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Index')); ?> + "&docm_id=" + CurrentRowDataCCD.Docid);
-                            if (Type == 7)
+                            if (Type === 7)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Documents/Index')); ?> + "&ContrS_id=" + CurrentRowDataCCD.Docid);
                         }
                     });
@@ -1387,7 +1387,7 @@
                     });
 
 
-                    $('#CostCalcDocumentsGrid').jqxGrid('selectrow', 0);
+//                    $('#CostCalcDocumentsGrid').jqxGrid('selectrow', 0);
                 break;
                 case 3:
                     var CostCalcSalarysDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCostCalcSalarys), {

@@ -344,7 +344,7 @@
         
         LoadEditForm = function(Url, Data, Type) {
             if (FlagLog)
-                $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '800px', width: '740', position: 'center'}));
+                $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '800px', width: '800', position: 'center'}));
             else
                 $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '460px', width: '740', position: 'center'}));
             
@@ -366,6 +366,8 @@
         
     });
 </script>    
+
+<?php $this->setPageTitle('Заявка на доставку') ?>
 
 <div class="al-row">
     <div class="al-row-column">Номер</div>
@@ -478,7 +480,7 @@
     <div id="DeliveryDemandDialogHeader">
         <span id="HeaderText">Вставка\Редактирование записи</span>
     </div>
-    <div style="/* overflow: hidden; */padding: 10px;" id="DialogDeliveryContent">
+    <div style="padding: 10px; background: #eee;" id="DialogDeliveryContent">
         <div style="/*overflow: hidden;*/" id="BodyDeliveryDemDialog"></div>
         <!--
         <div id="BottomDeliveryDemDialog">

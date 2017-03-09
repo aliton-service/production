@@ -147,14 +147,14 @@
         $("#edEditDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.Date}));
         $("#edEditDeliveryType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataDeliveryTypes, width: '200', height: '25px', displayMember: "DeliveryType", valueMember: "dltp_id"}));
         $("#edEditDeliveryPrior").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataDemandPriors, width: '200', height: '25px', displayMember: "DemandPrior", valueMember: "DemandPrior_id"}));
-        $("#edEditDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edEditBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.BestDate}));
-        $("#edEditPromiseDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.DatePromise}));
+        $("#edEditDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 160, value: DeliveryDemands.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edEditBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 160, value: DeliveryDemands.BestDate}));
+        $("#edEditPromiseDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 160, value: DeliveryDemands.DatePromise}));
         $("#edEditAddress").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataAddress, width: '460', height: '25px', displayMember: "Addr", valueMember: "Object_id"}));
-        $("#edEditMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees, width: '210', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
-        $("#edEditContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контакты", width: 230}));
-        $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '210', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
-        $("#edEditPhoneNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Телефон", width: 200}));
+        $("#edEditMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees, width: '280', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
+        $("#edEditContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 750}));
+        $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '540px', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
+        $("#edEditPhoneNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
         $("#edEditText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
         $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
         $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -204,14 +204,13 @@
             //var DataDelayReasons = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceDelayReasonsLogistik, {async: false}));
             $("#edEditDelayReason").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataDelayReasonsLogistik, width: '470', height: '25px', displayMember: "name", valueMember: "dlrs_id"}));
             if (DeliveryDemands.Dlrs_id != '') $("#edEditDelayReason").jqxComboBox("val", DeliveryDemands.Dlrs_id);
-            if (DeliveryDemands.empl_dlvr_id != '') $("#edEditDelayReason").jqxComboBox("val", DeliveryDemands.empl_dlvr_id);
             $("#edEditNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
             if (DeliveryDemands.Note != '') $("#edEditNote").jqxTextArea("val", DeliveryDemands.Note);
             $("#edEditRepDelivery").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
             if (DeliveryDemands.RepDelivery != '') $("#edEditRepDelivery").jqxTextArea("val", DeliveryDemands.RepDelivery);
-            $("#edEditDateLogist").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.DateLogist,  readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-            $("#edEditDateDelivery").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.DateDelivery}));
-            $("#edEditDatePlan").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DeliveryDemands.PlanDate}));
+            $("#edEditDateLogist").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 160, value: DeliveryDemands.DateLogist,  readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+            $("#edEditDateDelivery").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, showTimeButton: true, value: DeliveryDemands.DateDelivery, dropDownVerticalAlignment: 'top'}));
+            $("#edEditDatePlan").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 170, showTimeButton: true, value: DeliveryDemands.PlanDate, dropDownVerticalAlignment: 'top'}));
             
         }
         
@@ -285,10 +284,10 @@
     </div>
 </div>
 <div class="row">
-    <div class="row-column">
-        <div>Контактное лицо</div>
-        <div><input type="text" id="edEditContacts" name="DeliveryDemands[Contacts]"/></div>
-    </div>
+    <div>Контактное лицо</div>
+    <div><input type="text" id="edEditContacts" name="DeliveryDemands[Contacts]"/></div>
+</div>
+<div class="row">
     <div class="row-column">
         <div>Из карточки</div>
         <div><div id="edEditContactInfo"></div></div>
@@ -333,7 +332,7 @@
 <div class="row">
     <div class="row-column">Принята<div id="edEditDateLogist" name="DeliveryDemands[date_logist]"></div></div>
     <div class="row-column">Выполнена<div id="edEditDateDelivery" name="DeliveryDemands[date_delivery]"></div></div>
-    <div class="row-column" style="float: right;">Планируется выполнить<div id="edEditDatePlan" name="DeliveryDemands[plandate]"></div></div>
+    <div class="row-column">Планируется выполнить<div id="edEditDatePlan" name="DeliveryDemands[plandate]"></div></div>
 </div>    
 <input type="hidden" id="edUserLogist" name="DeliveryDemands[user_logist]" value="<?php echo $model->user_logist; ?>"/>
 

@@ -166,6 +166,9 @@
             });
         });
 </script>
+
+<?php $this->setPageTitle('Структура организации'); ?>
+
 <div class="al-row">
     <div id="StructureGrid"></div>
 </div>
