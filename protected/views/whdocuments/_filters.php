@@ -102,13 +102,13 @@
         
         $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 135} ));
         $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: DateStart}));
-        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: DateEnd}));
-        $("#edControl").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 75}));
-        $("#edAcDateNull").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 120}));
+        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: DateEnd, dropDownHorizontalAlignment: 'right'}));
+        $("#edControl").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 150}));
+        $("#edAcDateNull").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 150}));
         $("#edDateCrStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: null}));
-        $("#edDateCrEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: null}));
+        $("#edDateCrEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: null, dropDownHorizontalAlignment: 'right'}));
         $("#edDateAcStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: null}));
-        $("#edDateAcEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: null}));
+        $("#edDateAcEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: null, dropDownHorizontalAlignment: 'right'}));
         $("#edSupplier").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSuppliers, width: 'calc(100% - 2px)', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id"}));
         $("#edAddress").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'} ));
         $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '150', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
@@ -388,8 +388,8 @@
 
 <div class="al-row">Номер</div>
 <div class="al-row"><input type="text" autocomplete="off" id="edNumber"/></div>
-<div class="al-row"><div id="edControl">Котроль</div></div>
-<div class="al-row"><div id="edAcDateNull">Не выданные</div></div>
+<div class="al-row"><div id="edControl" style="color: white;">Котроль</div></div>
+<div class="al-row"><div id="edAcDateNull" style="color: white;">Не выданные</div></div>
 <div class="al-row">Дата</div>
 <div class="al-row">
     <div class="al-row-column">с</div>

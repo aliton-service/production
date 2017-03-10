@@ -114,6 +114,7 @@ class Equips extends MainFormModel
     public function rules()
     {
         return array(
+            array('EquipName', 'required'),
             array('Equip_id,
                     group_id,
                     EquipName,

@@ -1046,7 +1046,7 @@ return array_merge(
             ),
         ),
         
-        /* Менеджер по прождажам */
+        /* Менеджер по прождажам - 21 */
         'SalesManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Менеджер по прождажам',

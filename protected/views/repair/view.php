@@ -346,7 +346,9 @@
                         if ($("#edComment").val() == '' && $("#edPlanDate").val() == '') return;
                         
                         var CurrentDate = new Date();
-                        CurrentDate = CurrentDate.getDay() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear() + ' ' + CurrentDate.getHours() + ':' + CurrentDate.getMinutes();
+                        console.log('CurrentDate0 = ' + CurrentDate);
+                        CurrentDate = CurrentDate.getDate() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear() + ' ' + CurrentDate.getHours() + ':' + CurrentDate.getMinutes();
+                        console.log('CurrentDate1 = ' + CurrentDate);
                         var NewComment = {
                             Repr_id: Repairs.Repr_id,
                             Date: CurrentDate,
@@ -561,7 +563,7 @@
                         $("#btnAddCostCalc").on('click', function(){
                             if ($("#btnAddCostCalc").jqxButton('disabled')) return;
                             if (Repairs.ObjectGr_id !== null) {
-                                $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 540, width: 635, position: 'center' }));
+                                $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 650, width: 640, position: 'center' }));
                                 $.ajax({
                                     url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Create')) ?>,
                                     type: 'POST',
@@ -653,7 +655,7 @@
                         });
                         
                         $('#btnAddDelivery').on('click', function(){
-                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '440px', width: '740'}));
+                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '470', width: '800'}));
                             $.ajax({
                                 url: "<?php echo Yii::app()->createUrl('Delivery/Insert');?>",
                                 type: 'POST',
@@ -677,7 +679,7 @@
                         });
                         
                         $('#btnAddWHDoc5').on('click', function(){
-                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 470, width: 940}));
+                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 500, width: 970}));
                             $.ajax({
                                 url: "<?php echo Yii::app()->createUrl('WHActs/Insert');?>",
                                 type: 'POST',
@@ -1148,7 +1150,7 @@
         <div style="overflow: hidden;">
             <div style="padding: 10px;">
                 <div class="al-row">
-                    <div class="al-row-column" style="width: 100px">Номер</div>
+                    <div class="al-row-column">Номер</div>
                     <div class="al-row-column"><input type="text" readonly="readonly" id="edNumber" /></div>
                     <div class="al-row-column">Дата прих. оборуд.</div>
                     <div class="al-row-column"><div id="edDate"></div></div>
