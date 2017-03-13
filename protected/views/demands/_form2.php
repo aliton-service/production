@@ -96,7 +96,7 @@
         $("#cmbEquipType").jqxComboBox({ disabled: false, source: DataEquipTypesRecords, promptText: "Выберите тип системы...", width: '182', height: '25px', displayMember: "EquipType", valueMember: "DEquip_id"});
         $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctionsRecords, promptText: "Выберите тип оборудования...", width: '300', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
         $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: false });
-        $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.AgreeDate, }));
         $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 390}));
         $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '300', height: '25px', displayMember: "contact", valueMember: "Info_id"});
