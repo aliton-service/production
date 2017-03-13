@@ -1428,7 +1428,6 @@ return array_merge(
                 'OfficeManagerSalesDepartment',
                 'AccountManager',
                 'ManagerWhActs',
-                'ManagerContractPriceHistory',
                 'AdminSystemComplexitys',
                 'AdminSystemStatements',
                 'AdminDocuments',

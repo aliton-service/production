@@ -296,6 +296,7 @@ class DemandsController extends Controller
 
 	public function actionUpdate($id, $Exec = false, $ToMaster = false) {
 		$this->title = 'Редактирование заявки №' . $id;
+                $this->setPageTitle('Редактирование заявки №');
                 $ObjectResult = array(
                     'result' => 0,
                     'id' => 0,

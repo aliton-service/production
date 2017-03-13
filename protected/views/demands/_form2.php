@@ -81,7 +81,7 @@
             }
         });
         // Инициализируем контроды
-        $("#btnSave").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
+        $("#btnSave").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, imgSrc: '/images/onebit.png' }));
         $("#btnCancelSave").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
         
         $("#edDemand_id").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "-НОМЕР-", width: 100}));
@@ -94,12 +94,12 @@
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypesRecords, width: '300', height: '25px', displayMember: "DemandType", valueMember: "DType_id"});
         $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypesRecords, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
         $("#cmbEquipType").jqxComboBox({ disabled: false, source: DataEquipTypesRecords, promptText: "Выберите тип системы...", width: '182', height: '25px', displayMember: "EquipType", valueMember: "DEquip_id"});
-        $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctionsRecords, promptText: "Выберите тип оборудования...", width: '300', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
-        $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: false });
+        $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctionsRecords, promptText: "Выберите тип оборудования...", width: '280', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
+        $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '220', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: false });
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.AgreeDate, }));
-        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 390}));
-        $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '300', height: '25px', displayMember: "contact", valueMember: "Info_id"});
+        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 500}));
+        $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '330', height: '25px', displayMember: "contact", valueMember: "Info_id"});
         $('#edRefusers').jqxTextArea({ disabled: true, placeHolder: '', height: 50, width: 800, minLength: 1});
         $('#edDemandText').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
@@ -342,25 +342,25 @@
     <div class="row-column"><div id='cmbEquipType' name="Demands[DEquip_id]"></div></div>
 </div>
 <div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="width: 300px;">Неисправность</div>
-    <div class="row-column" style="width: 300px;">Приоритет</div>
-    <div class="row-column" style="width: 180px;">Предельная дата</div>
+    <div class="row-column" style="width: 285px;">Неисправность</div>
+    <div class="row-column" style="width: 220px;">Приоритет</div>
+    <div class="row-column" style="width: 150px;">Предельная дата</div>
+    <div class="row-column" style="width: 150px;">Согласованная дата</div>
     
 </div>
 <div class="row" style="margin: 0px;">
-    <div class="row-column" style="width: 300px;"><div id='cmbMalfunction' name="Demands[DMalfunction_id]"></div></div>
-    <div class="row-column" style="width: 300px;"><div id='cmbPrior' name="Demands[DPrior_id]"></div><div><?php echo $form->error($model, 'DPrior_id'); ?></div></div>
-    <div class="row-column" style="width: 180px;"><div id='edDeadline' name="Demands[Deadline]"></div></div>
+    <div class="row-column"><div id='cmbMalfunction' name="Demands[DMalfunction_id]"></div></div>
+    <div class="row-column"><div id='cmbPrior' name="Demands[DPrior_id]"></div><div><?php echo $form->error($model, 'DPrior_id'); ?></div></div>
+    <div class="row-column"><div id='edDeadline' name="Demands[Deadline]"></div></div>
+    <div class="row-column"><div id='edAgreeDate' name="Demands[AgreeDate]"></div></div>
 </div>
 <div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="width: 392px;">Контактное лицо</div>
+    <div class="row-column" style="width: 502px;">Контактное лицо</div>
     <div class="row-column" style="width: 293px;">Из карточки клиента</div>
-    <div class="row-column" style="width: 180px;">Согласованная дата</div>
 </div>
 <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
     <div class="row-column" style="margin-right: 2px;"><input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" /><div><?php echo $form->error($model, 'Contacts'); ?></div></div>
     <div class="row-column" style="margin-right: 2px;"><div id='cmbContactInfo'></div></div>
-    <div class="row-column"><div id='edAgreeDate' name="Demands[AgreeDate]"></div></div>
 </div>
 <!--
     Если мы редактируем, то выводим поля: Дата доклада помощи, Дата перевода заявки,
@@ -403,7 +403,7 @@
 
 <div class="row" style="margin-top: 5px; width: 800px">
     <div class="row-column"><input type="button" value="Сохранить" id='btnSave' /></div>
-    <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
+    <div class="row-column" style="margin-left: 80px;"><input type="button" value="Карточка" id='btnClient' /></div>
     <div class="row-column" style="float: right"><input type="button" value="Отмена" id='btnCancelSave' /></div>
 </div>
 
