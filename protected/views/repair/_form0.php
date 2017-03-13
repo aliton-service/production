@@ -61,7 +61,7 @@
         $("#edEquipEdit").on('bindingComplete', function(event){
             if (Repair.Equip_id != '') $("#edEquipEdit").jqxComboBox('val', Repair.Equip_id);
         });
-        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: 350, height: 25, displayMember: "EquipName", valueMember: "Equip_id"/*, searchMode: 'containsignorecase', autoComplete: true */}));
+        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: 350, height: 25, displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: true }));
         $("#edSerialNumberEdit").jqxInput($.extend(true, {}, {height: 25, width: 200, minLength: 1}));
         $("#edUmNameEdit").jqxInput($.extend(true, {}, {height: 25, width: 60, minLength: 1}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Repair.Quant, decimalDigits: 0}));
