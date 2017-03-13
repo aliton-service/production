@@ -98,8 +98,8 @@
         $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: false });
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.AgreeDate, }));
-        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 800}));
-        $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '640', height: '25px', displayMember: "contact", valueMember: "Info_id"});
+        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 390}));
+        $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '300', height: '25px', displayMember: "contact", valueMember: "Info_id"});
         $('#edRefusers').jqxTextArea({ disabled: true, placeHolder: '', height: 50, width: 800, minLength: 1});
         $('#edDemandText').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
@@ -110,8 +110,8 @@
             $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec, width: 160 }));
             $("#edDateOfHelpRequest").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfHelpRequest, width: 160 }));
             $("#edDateOfTransfer").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTransfer, width: 145 }));
-            $("#cmbDelayedClosureReason").jqxComboBox({ source: DataDelayedClosureReasons, width: '230', height: '25px', displayMember: "Name", valueMember: "DelayedClosureReason_id", autoDropDownHeight: true });
-            $("#cmbTransferReason").jqxComboBox({ source: DataTransferReasons, width: '230', height: '25px', displayMember: "TransferReason", valueMember: "TransferReason_id", autoDropDownHeight: true });
+            $("#cmbDelayedClosureReason").jqxComboBox({ source: DataDelayedClosureReasons, width: '260', height: '25px', displayMember: "Name", valueMember: "DelayedClosureReason_id", autoDropDownHeight: true });
+            $("#cmbTransferReason").jqxComboBox({ source: DataTransferReasons, width: '250', height: '25px', displayMember: "TransferReason", valueMember: "TransferReason_id", autoDropDownHeight: true });
             $("#cmbCloseReason").jqxComboBox({ source: DataCloseReasons, width: '220', height: '25px', displayMember: "CloseReason", valueMember: "CloseReason_id", autoDropDownHeight: true });
             $("#cmbDelayReason").jqxComboBox({ source: DataDelayReasons, width: '420', height: '25px', displayMember: "name", valueMember: "dlrs_id"});
             $("#cmbDemandResult").jqxComboBox({ source: DataDemandResults, width: '140', height: '25px', displayMember: "ResultName", valueMember: "Result_id", autoDropDownHeight: true});
@@ -315,7 +315,7 @@
 <input  name="Demands[Object_id]" type="hidden" id="edObject_id" value="<?php echo $model->Object_id; ?>"/>
 <input  name="Demands[ContrS_id]" type="hidden" id="edContrS_id" value="<?php echo $model->ContrS_id; ?>"/>
 
-<div class="row">
+<div class="row" style="margin-top: 0;">
     <div class="row-column">Номер: <input  name="Demands[Demand_id]" type="text" id="edDemand_id" value="<?php echo $model->Demand_id; ?>"/></div>
     <div class="row-column">Адрес: <input type="text" id="edAddr" /></div>
     <div class="row-column">Особые условия: <b><?php echo $Objects->Condition; ?></b></div>
@@ -352,19 +352,15 @@
     <div class="row-column" style="width: 300px;"><div id='cmbPrior' name="Demands[DPrior_id]"></div><div><?php echo $form->error($model, 'DPrior_id'); ?></div></div>
     <div class="row-column" style="width: 180px;"><div id='edDeadline' name="Demands[Deadline]"></div></div>
 </div>
-<div class="row" style="margin-bottom: 0px;">
-    <div>Контактное лицо</div>
-    <input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" />
-    <div><?php echo $form->error($model, 'Contacts'); ?></div>
+<div class="row" style="margin-top: 5px;">
+    <div class="row-column" style="width: 392px;">Контактное лицо</div>
+    <div class="row-column" style="width: 293px;">Из карточки клиента</div>
+    <div class="row-column" style="width: 180px;">Согласованная дата</div>
 </div>
-<div class="row">
-    <div class="row-column">
-        <div>Из карточки клиента</div>
-        <div id='cmbContactInfo'></div></div>
-    <div class="row-column">
-        <div>Согласованная дата</div>
-        <div id='edAgreeDate' name="Demands[AgreeDate]"></div>
-    </div>
+<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
+    <div class="row-column" style="margin-right: 2px;"><input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" /><div><?php echo $form->error($model, 'Contacts'); ?></div></div>
+    <div class="row-column" style="margin-right: 2px;"><div id='cmbContactInfo'></div></div>
+    <div class="row-column"><div id='edAgreeDate' name="Demands[AgreeDate]"></div></div>
 </div>
 <!--
     Если мы редактируем, то выводим поля: Дата доклада помощи, Дата перевода заявки,
@@ -385,10 +381,10 @@
     </div>
 <?php } ?>
 
-<div class="row" style="margin-top: 3px;">
+<div class="row" style="margin-top: 0;">
     <div class="row-column">Отказники <textarea id="edRefusers" name="Demands[Refusers]"><?php echo $ObjectsGroup->Refusers; ?></textarea></div>
 </div>    
-<div class="row" style="margin-top: 3px;">
+<div class="row" style="margin-top: 0;">
     <div class="row-column">Неисправность <textarea id="edDemandText" name="Demands[DemandText]"><?php echo $model->DemandText; ?></textarea></div>
 </div>
 
