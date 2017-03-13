@@ -98,12 +98,12 @@
         <div style="clear: both"></div>
     </div>
     <div class="al-row">
-        <div class="al-row-column" style="width: 200px;">Лицо принимающее решение</div>
-        <div class="al-row-column"><div id='Main' name="ContactInfo[Main]" ></div><?php echo $form->error($model, 'Main'); ?></div>
-        <div class="al-row-column" >Для отчетов</div>
-        <div class="al-row-column"><div id='ForReport' name="ContactInfo[ForReport]" ></div><?php echo $form->error($model, 'ForReport'); ?></div>
-        <div class="al-row-column" style="">Эл. почту не присылать:</div>
-        <div class="al-row-column"><div id='NoSend' name="ContactInfo[NoSend]" ></div><?php echo $form->error($model, 'NoSend'); ?></div>
+        <div class="al-row-column">Лицо принимающее решение:</div>
+        <div class="al-row-column" style="margin-left: 2px;"><div id='Main' name="ContactInfo[Main]" ></div><?php echo $form->error($model, 'Main'); ?></div>
+        <div class="al-row-column" style="margin-left: 15px;">Для отчетов:</div>
+        <div class="al-row-column" style="margin-left: 2px;"><div id='ForReport' name="ContactInfo[ForReport]" ></div><?php echo $form->error($model, 'ForReport'); ?></div>
+        <div class="al-row-column" style="margin-left: 15px;">Эл. почту не присылать:</div>
+        <div class="al-row-column" style="margin-left: 2px;"><div id='NoSend' name="ContactInfo[NoSend]" ></div><?php echo $form->error($model, 'NoSend'); ?></div>
         <div style="clear: both"></div>
     </div>
     <div class="al-row">
