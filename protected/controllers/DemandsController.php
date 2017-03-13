@@ -185,6 +185,7 @@ class DemandsController extends Controller
             
             $model->setScenario('Insert');
             $this->title = 'Создание новой заявки';
+            $this->setPageTitle('Создание новой заявки');
             $ReadOnly = false;
             
             if(isset($_POST['Demands']))

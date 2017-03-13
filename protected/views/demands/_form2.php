@@ -97,9 +97,9 @@
         $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctionsRecords, promptText: "Выберите тип оборудования...", width: '300', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
         $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '300', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: false });
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '182px', value: Demand.AgreeDate, }));
-        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 300}));
-        $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '300', height: '25px', displayMember: "contact", valueMember: "Info_id"});
+        $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.AgreeDate, }));
+        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 800}));
+        $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '640', height: '25px', displayMember: "contact", valueMember: "Info_id"});
         $('#edRefusers').jqxTextArea({ disabled: true, placeHolder: '', height: 50, width: 800, minLength: 1});
         $('#edDemandText').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
@@ -352,15 +352,19 @@
     <div class="row-column" style="width: 300px;"><div id='cmbPrior' name="Demands[DPrior_id]"></div><div><?php echo $form->error($model, 'DPrior_id'); ?></div></div>
     <div class="row-column" style="width: 180px;"><div id='edDeadline' name="Demands[Deadline]"></div></div>
 </div>
-<div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="width: 300px;">Контактное лицо</div>
-    <div class="row-column" style="width: 300px;">Из карточки клиента</div>
-    <div class="row-column" style="width: 180px;">Согласованная дата</div>
+<div class="row" style="margin-bottom: 0px;">
+    <div>Контактное лицо</div>
+    <input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" />
+    <div><?php echo $form->error($model, 'Contacts'); ?></div>
 </div>
-<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-    <div class="row-column" style="width: 300px;"><input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" /><div><?php echo $form->error($model, 'Contacts'); ?></div></div>
-    <div class="row-column" style="width: 300px;"><div id='cmbContactInfo'></div></div>
-    <div class="row-column" style="width: 180px;"><div id='edAgreeDate' name="Demands[AgreeDate]"></div></div>
+<div class="row">
+    <div class="row-column">
+        <div>Из карточки клиента</div>
+        <div id='cmbContactInfo'></div></div>
+    <div class="row-column">
+        <div>Согласованная дата</div>
+        <div id='edAgreeDate' name="Demands[AgreeDate]"></div>
+    </div>
 </div>
 <!--
     Если мы редактируем, то выводим поля: Дата доклада помощи, Дата перевода заявки,
@@ -381,10 +385,10 @@
     </div>
 <?php } ?>
 
-<div class="row" style="margin-top: 0;">
+<div class="row" style="margin-top: 3px;">
     <div class="row-column">Отказники <textarea id="edRefusers" name="Demands[Refusers]"><?php echo $ObjectsGroup->Refusers; ?></textarea></div>
 </div>    
-<div class="row" style="margin-top: 0;">
+<div class="row" style="margin-top: 3px;">
     <div class="row-column">Неисправность <textarea id="edDemandText" name="Demands[DemandText]"><?php echo $model->DemandText; ?></textarea></div>
 </div>
 
