@@ -539,7 +539,7 @@
             if ($("#btnEdit").jqxButton('disabled')) return;
             if (WHDocuments.Docm_id !== null) {
                 if (WHDocuments.Dctp_id == 4)
-                    $('#WHDocumentsDialog').jqxWindow({width: 700, height: 460, position: 'center'});
+                    $('#WHDocumentsDialog').jqxWindow({width: 700, height: 500, position: 'center'});
                 else if (WHDocuments.Dctp_id == 8)
                     $('#WHDocumentsDialog').jqxWindow({width: 600, height: 270, position: 'center'});
                 else if (WHDocuments.Dctp_id == 7)

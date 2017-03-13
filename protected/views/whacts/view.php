@@ -368,9 +368,9 @@
         $("#edWorkType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.WorkType}));
         $("#edJobType").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 230, minLength: 1, value: Acts.JobType}));
         $('#edWorkList').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
-        $("#edJuridical").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.Juridical}));
-        $("#edUserCreate").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 220, minLength: 1, value: Acts.UserCreate}));
-        $("#edMaster").jqxInput($.extend(true, InputDefaultSettings, {height: 25, width: 225, minLength: 1, value: Acts.UserCreate}));
+        $("#edJuridical").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 200, minLength: 1, value: Acts.Juridical}));
+        $("#edUserCreate").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 220, minLength: 1, value: Acts.UserCreate}));
+        $("#edMaster").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 225, minLength: 1, value: Acts.UserCreate}));
         $('#btnEdit').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         if (Acts.Note != null) $('#edNote').val(Acts.Note);
@@ -391,6 +391,7 @@
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
+                    $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 510, width: 960, position: 'center' }));
                     $("#BodyWHDocumentsDialog").html(Res.html);
                     $('#WHDocumentsDialog').jqxWindow('open');
                 },
@@ -606,7 +607,7 @@
     <div style="padding: 10px;" id="DialogWHDocumentsContent">
         <div style="" id="BodyWHDocumentsDialog"></div>
     </div>
-</div>    
+</div>
 <div id="FindTrebsDialog" style="display: none;">
     <div id="FindTrebsDialogHeader">
         <span id="FindTrebsHeaderText">Поиск требования</span>
