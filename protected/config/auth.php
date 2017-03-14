@@ -763,6 +763,7 @@ return array_merge(
                 'UserDeliveryDemands',
                 'ManagerDeliveryComments',
                 'MSWHDocuments',
+                'AdminSerialNumbers',
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'AdminEvents',
