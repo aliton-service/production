@@ -12,7 +12,6 @@
             Note: <?php echo json_encode($model->Note); ?>
             
         };
-        $("#btnObjectEquipOk").jqxButton({disabled: true});
         var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
         $("#cmbEquip").on('bindingComplete', function (event) {
             if (ObjectEquip.Equip_id !== '') $("#cmbEquip").jqxComboBox('val', ObjectEquip.Equip_id);

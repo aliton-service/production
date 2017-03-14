@@ -437,7 +437,6 @@ return array_merge(
                 'AdminRepDebtReasonDetails',
                 'AdminEvents',
                 'AdminEventOffers',
-                'AdminEquipDetails',
                 'AdminTasks',
                 'AdminTaskNotes',
                 'AdminTaskExecutors',

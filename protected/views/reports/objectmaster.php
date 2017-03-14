@@ -21,6 +21,7 @@
                     ),
         ));
 ?>        
+    
         <div style="float: left;">
             <div style="float: left; margin-right: 6px">Мастер</div>
             <div style="float: left; margin-right: 6px">
