@@ -686,6 +686,7 @@ return array_merge(
                 'ManagerWHBuhActs',
                 'FindTreb',
                 'FindWHDoc1',
+                'AdminEvents',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',

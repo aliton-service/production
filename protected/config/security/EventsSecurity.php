@@ -1,7 +1,7 @@
 <?php
 return array(
 
-	/** Роли для таблицы Events (графики) **/
+	/* Events */
 	'ManagerEvents' => array(
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'ManagerEvents',

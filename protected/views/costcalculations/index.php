@@ -179,7 +179,7 @@
         $("#spec_condt").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '350px', height: 42 }));
         $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '350px', height: 42 }));
         $("#EmplAgreed").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
-        $("#chbGarantMail").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 200, checked: CostCalculations.GarantMail}));
+        $("#chbGarantMail").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 126, checked: CostCalculations.GarantMail}));
         
         
         $("#edIntogoStartingWork").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 150, readOnly: true, spinButtonsStep: 0 }));
@@ -1598,11 +1598,11 @@
     </div>
 </div>
 <div class="row">
-    <div class="row-column">Расходные материалы:</div>
+    <div class="row-column">Расход. материалы:</div>
     <div class="row-column"><div id='sum_materials_low' readonly="readonly"></div></div>
     <div class="row-column" style="margin-top: 2px;">Дата согл. с рук.: </div><div class="row-column"><div id='date_ready'></div></div>
     <div class="row-column" style="margin-top: 3px;">Согласовал: <input readonly id='EmplAgreed' type="text"></div>
-    <div class="row-column" style="margin-top: 3px;"><div id="chbGarantMail">Гарантийное письмо</div></div>
+    <div class="row-column" style="margin-top: 3px;"><div id="chbGarantMail">Гарант. письмо</div></div>
 </div>
 <div class="row" style="margin-top: 3px;">
     <div class="row-column" style="margin: 0 5px 0 0"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>
