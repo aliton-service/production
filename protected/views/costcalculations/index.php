@@ -1641,93 +1641,83 @@
         <div class="row-column" style="float: right;"><input type="button" value="Для заказчика" id='btnPrint1CostCalculations'/></div>
     </div>
 </div>   
-<div class="row">
-    <div id='jqxWidgetCostCalculations' style="margin-top: 5px; min-height: 310px; height: calc(100% - 500px);">
-        <div id='jqxTabsCostCalculations'>
-            <ul>
-                <li style="margin-left: 20px;">
-                    <div style="height: 15px;  margin-top: 3px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                            Оборудование и расходные материалы
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div style="height: 15px; margin-top: 3px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                            Перечень работ
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div style="height: 15px; margin-top: 3px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                            Документы
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div style="height: 15px; margin-top: 3px;">
-                        <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
-                            Заработная плата
-                        </div>
-                    </div>
-                </li>
-            </ul>
-
-
-            <div id='contentCostCalcEquips' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-                <div style="margin-top: 5px;">
-                    <div id="CostCalcEquipsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                    <div class="row" style="margin-top: 5px; padding-left: 0;">
-                        <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcEquips' /></div>
-                        <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcEquips' /></div>
-                        <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcEquips'/></div>
-                        <div class="row-column"><input type="button" value="Работа" id='AddWorkCostCalcEquips'/></div>
-                        <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcEquips' /></div>
+<div id='jqxWidgetCostCalculations' style="margin-top: 5px; min-height: 310px; height: calc(100% - 500px); ">
+    <div id='jqxTabsCostCalculations'>
+        <ul>
+            <li style="margin-left: 20px;">
+                <div style="height: 15px;  margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Оборудование и расходные материалы
                     </div>
                 </div>
-            </div>
-
-            <div id='contentCostCalcWorks' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-                <div style="margin-top: 5px;">
-                    <div id="CostCalcWorksGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                    <div class="row" style="margin-top: 3px; padding-left: 0;">
-                        <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcWorks' /></div>
-                        <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcWorks' /></div>
-                        <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcWorks'/></div>
-                        <div class="row-column"><input type="button" value="Для заказчика" id='btnPrintCostCalcWorks'/></div>
-                        <div class="row-column"><input type="button" value="Для нас" id='btnPrintForUsCostCalcWorks'/></div>
-                        <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcWorks' /></div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Перечень работ
                     </div>
                 </div>
-            </div>
-
-            <div id='contentCostCalcDocuments' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-                <div style="margin-top: 5px;">
-                    <div id="CostCalcDocumentsGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                    <div class="row" style="margin-top: 3px; padding-left: 0;">
-                        <div class="row-column"><input type="button" value="Инфо" id='MoreInfoCostCalcDocuments' /></div>
-                        <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcDocuments'/></div>
-                        <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcDocuments' /></div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Документы
                     </div>
                 </div>
-            </div>
-
-            <div id='contentCostCalcSalarys' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
-                <div style="margin-top: 5px;">
-                    <div id="CostCalcSalarysGrid" class="jqxGridAliton" style="margin-right: 10px"></div>
-                    <div class="row" style="margin-top: 3px; padding-left: 0;">
-                        <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcSalarys' /></div>
-                        <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcSalarys' /></div>
-                        <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcSalarys'/></div>
-                        <div class="row-column"><input type="button" value="Подтвердить" id='AcceptCostCalcSalarys'/></div>
-                        <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcSalarys' /></div>
+            </li>
+            <li>
+                <div style="height: 15px; margin-top: 3px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                        Заработная плата
                     </div>
                 </div>
-            </div>
+            </li>
+        </ul>
 
+
+        <div id='contentCostCalcEquips' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+            <div id="CostCalcEquipsGrid" class="jqxGridAliton" style="margin-right: 10px; margin-top: 5px;"></div>
+            <div class="row" style="margin-top: 5px; padding-left: 0;">
+                <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcEquips' /></div>
+                <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcEquips' /></div>
+                <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcEquips'/></div>
+                <div class="row-column"><input type="button" value="Работа" id='AddWorkCostCalcEquips'/></div>
+                <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcEquips' /></div>
+            </div>
         </div>
+
+        <div id='contentCostCalcWorks' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+            <div id="CostCalcWorksGrid" class="jqxGridAliton" style="margin-right: 10px; margin-top: 5px;"></div>
+            <div class="row" style="margin-top: 3px; padding-left: 0;">
+                <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcWorks' /></div>
+                <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcWorks' /></div>
+                <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcWorks'/></div>
+                <div class="row-column"><input type="button" value="Для заказчика" id='btnPrintCostCalcWorks'/></div>
+                <div class="row-column"><input type="button" value="Для нас" id='btnPrintForUsCostCalcWorks'/></div>
+                <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcWorks' /></div>
+            </div>
+        </div>
+
+        <div id='contentCostCalcDocuments' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+            <div id="CostCalcDocumentsGrid" class="jqxGridAliton" style="margin-right: 10px; margin-top: 5px;"></div>
+            <div class="row" style="margin-top: 3px; padding-left: 0;">
+                <div class="row-column"><input type="button" value="Инфо" id='MoreInfoCostCalcDocuments' /></div>
+                <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcDocuments'/></div>
+                <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcDocuments' /></div>
+            </div>
+        </div>
+
+        <div id='contentCostCalcSalarys' style="overflow: hidden; margin-left: 5px; width: 100%; height: 100%">
+            <div id="CostCalcSalarysGrid" class="jqxGridAliton" style="margin-right: 10px; margin-top: 5px;"></div>
+            <div class="row" style="margin-top: 3px; padding-left: 0;">
+                <div class="row-column"><input type="button" value="Добавить" id='AddCostCalcSalarys' /></div>
+                <div class="row-column"><input type="button" value="Изменить" id='EditCostCalcSalarys' /></div>
+                <div class="row-column"><input type="button" value="Обновить" id='RefreshCostCalcSalarys'/></div>
+                <div class="row-column"><input type="button" value="Подтвердить" id='AcceptCostCalcSalarys'/></div>
+                <div class="row-column" style="float: right; margin-right: 10px"><input type="button" value="Удалить" id='DelCostCalcSalarys' /></div>
+            </div>
+        </div>
+
     </div>
 </div>
 <div class="row" style="margin-top: 5px; max-width: 1024px">
