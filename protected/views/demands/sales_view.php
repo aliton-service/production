@@ -243,6 +243,34 @@
                         $('#btnAddDelivery').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
                         $('#btnAddTreb').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
                         $('#btnAddMonitoring').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
+                        $('#btnAddInspection').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
+                        
+                        $("#btnAddInspection").on('click', function(){
+                            if ($("#btnAddInspection").jqxButton('disabled')) return;
+                            if (Demand.ObjectGr_id !== null) {
+                                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 735, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Create')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Params: {
+                                            ObjectGr_id: Demand.ObjectGr_id,
+                                            Addr: Demand.Address,
+                                            Demand_id: Demand.Demand_id
+                                        },
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyCostCalculationsDialog").html(Res.html);
+                                        $('#CostCalculationsDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
                         
                         $("#btnAddSmeta").on('click', function(){
                             if ($("#btnAddSmeta").jqxButton('disabled')) return;
@@ -733,7 +761,7 @@
                 <div style="clear: both;"></div>
                 <div class="al-row">
                     <div style='float: left; margin-left: 0px;' id="btnAddDocuments">
-                        <div style="height: 170px">
+                        <div style="height: 208px">
                             <div style="padding: 2px"><input type="button" value="Смета" id='btnAddSmeta'/></div>
                             <div style="clear: both"></div>
                             <div style="padding: 2px"><input type="button" value="Ремонт" id='btnAddRepair'/></div>
@@ -743,6 +771,8 @@
                             <div style="padding: 2px"><input type="button" value="Требование" id='btnAddTreb'/></div>
                             <div style="clear: both"></div>
                             <div style="padding: 2px"><input type="button" value="Мониторинг" id='btnAddMonitoring'/></div>
+                            <div style="clear: both"></div>
+                            <div style="padding: 2px"><input type="button" value="Акт обследования" id='btnAddInspection'/></div>
                             <div style="clear: both"></div>
                         </div>
                     </div>

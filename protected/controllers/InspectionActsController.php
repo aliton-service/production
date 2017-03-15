@@ -39,12 +39,16 @@ class InspectionActsController extends Controller
 
     public function actionCreate()
     {
-        $model = new InspectionActs();
+        $model = new InspectionActs_v();
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
+        
+        if (isset($_POST['Params']))
+            $model->attributes = $_POST['Params'];
+        
         if (isset($_POST['InspectionActs'])) {
             $model->attributes = $_POST['InspectionActs'];
             if ($model->validate()) {
@@ -56,8 +60,15 @@ class InspectionActsController extends Controller
             } 
         }
         
+        if ($model->ObjectGr_id != '') {
+            $DataContactInfo = new ContactInfo();
+            $DataContactInfo = $DataContactInfo->Find(array(), array('ci.ObjectGr_id = ' . $model->ObjectGr_id));
+        }
+        else { $DataContactInfo = array(); }
+        
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
+            'DataContactInfo' => $DataContactInfo,
         ), true);
         echo json_encode($ObjectResult);
     }
@@ -85,9 +96,16 @@ class InspectionActsController extends Controller
                 return;
             }
         }
-
+        
+        if ($model->ObjectGr_id != '') {
+            $DataContactInfo = new ContactInfo();
+            $DataContactInfo = $DataContactInfo->Find(array(), array('i.ObjectGr_id = ' . $model->ObjectGr_id));
+        }
+        else { $DataContactInfo = array(); }
+        
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
+            'DataContactInfo' => $DataContactInfo,
         ), true);
         echo json_encode($ObjectResult);
     }
