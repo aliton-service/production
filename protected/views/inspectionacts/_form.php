@@ -14,6 +14,7 @@
             CountEntrance: <?php echo json_encode($model->CountEntrance); ?>,
             CountFloors: <?php echo json_encode($model->CountFloors); ?>,
             CountApartments: <?php echo json_encode($model->CountApartments); ?>,
+            Perimetr: <?php echo json_encode($model->Perimetr); ?>,
         };
         
         var DataEmployees;
@@ -49,6 +50,7 @@
         $("#edInspEntranceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.CountEntrance}));
         $("#edInspFloorsEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.CountFloors}));
         $("#edInspApartmentsEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.CountApartments}));
+        $("#edInspPerimetrEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.Perimetr}));
         
         
         $("#edInspSystemEdit").jqxComboBox('val', InspectionAct.SystemType_id);
@@ -168,6 +170,11 @@
     <div class="al-row-column">
         <div>Кол-во квартир</div>
         <div><div id='edInspApartmentsEdit' name="InspectionActs[CountApartments]"></div></div>
+        <div style="clear: both"></div>
+    </div>
+    <div class="al-row-column">
+        <div>Периметр</div>
+        <div><div id='edInspPerimetrEdit' name="InspectionActs[Perimetr]"></div></div>
         <div style="clear: both"></div>
     </div>
     <div style="clear: both"></div>
