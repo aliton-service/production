@@ -117,6 +117,8 @@ class ExecutorReportsController extends Controller
             );
             
             $MarketingSolutions = new MarketingSolutions();
+            $SystemOffers = new SystemOffers();
+            $ClientSolutions = new ClientSolutions();
             
             if (isset($_POST['Demand_id']))
                 $model->Demand_id = $_POST['Demand_id'];
@@ -131,12 +133,16 @@ class ExecutorReportsController extends Controller
                                         er.[Date],
                                         r.ActionResultName,
                                         er.NextAction,
-                                        ms.Solution_id");
+                                        ms.Solution_id,
+                                        so.SystemOffer_id,
+                                        cs.ClientSolution_id");
                 $Query->setFrom("\nFrom PropForms p left join ExecutorReports er on (p.LastAction_id = er.Exrp_id)
                                         left join FullDemands d on (er.Demand_id = d.Demand_id)
                                         left join ActionStages s on (er.ActionStage_id = s.Stage_id)
                                         left join ActionResults r on (er.ActionResult_id = r.Result_id)
-                                        left join MarketingSolutions ms on (p.Form_id = ms.Form_id)");
+                                        left join MarketingSolutions ms on (p.Form_id = ms.Form_id)
+                                        left join SystemOffers so on (p.Form_id = so.Form_id)
+                                        left join ClientSolutions cs on (p.Form_id = cs.Form_id)");
                 $Query->setWhere("\nWhere p.Form_id = " . $_POST['Form_id']);
                 $Result = $Query->QueryRow();
                 $LastAction['Address'] = $Result['Address'];
@@ -152,6 +158,10 @@ class ExecutorReportsController extends Controller
                 
                 if ($Result['Solution_id'] != '')
                     $MarketingSolutions->getModelPk ($Result['Solution_id']);
+                if ($Result['SystemOffer_id'] != '')
+                    $SystemOffers->getModelPk ($Result['SystemOffer_id']);
+                if ($Result['ClientSolution_id'] != '')
+                    $ClientSolutions->getModelPk ($Result['ClientSolution_id']);
                     
             }
             
@@ -164,6 +174,16 @@ class ExecutorReportsController extends Controller
             if (isset($_POST['MarketingSolutions'])) {
                 $MarketingSolutions->attributes = $_POST['MarketingSolutions'];
                 $MarketingSolutions->Update();
+            }
+            
+            if (isset($_POST['SystemOffers'])) {
+                $SystemOffers->attributes = $_POST['SystemOffers'];
+                $SystemOffers->Update();
+            }
+            
+            if (isset($_POST['ClientSolutions'])) {
+                $ClientSolutions->attributes = $_POST['ClientSolutions'];
+                $ClientSolutions->Update();
             }
             
             if (isset($_POST['ClientActions'])) {
@@ -187,6 +207,8 @@ class ExecutorReportsController extends Controller
                 'LastAction' => $LastAction,
                 'ContactInfo' => $ContactInfo,
                 'MarketingSolutions' => $MarketingSolutions,
+                'SystemOffers' => $SystemOffers,
+                'ClientSolutions' => $ClientSolutions,
             ), true);
             echo json_encode($ObjectResult);
         }

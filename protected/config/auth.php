@@ -238,6 +238,8 @@ return array_merge(
         
     /* Реестр клиентов */
     include(dirname(__FILE__).'/security/SalesDepClientsSecurity.php'),
+    /* Акты обследования */
+    include(dirname(__FILE__).'/security/InspectionActsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -1026,6 +1028,7 @@ return array_merge(
                 'UserPropForms',
                 /**/
                 'ManagerSalesDepClients',
+                'ManagerInspectionActs',
                 
                 /* Отчеты */
                 'DemandsReportAll',
