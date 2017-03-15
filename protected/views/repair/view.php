@@ -195,8 +195,8 @@
                     $("#edDatePlan").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 90, value: Repairs.DatePlan, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
                     $("#edDemand").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
                     $("#edAddress").jqxInput($.extend(true, {}, {height: 25, width: 340, minLength: 1}));
-                    $("#edRepairPay").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repairs.RepairPay}));
-                    $("#edReturn").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repairs.Return}));
+                    $("#edRepairPay").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 140, checked: Repairs.RepairPay}));
+                    $("#edReturn").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 160, checked: Repairs.Return}));
                     $("#edWorkOk").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repairs.WorkOk}));
                     $("#edWrnt").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 220, checked: Repairs.Wrnt}));
                     $("#edEquip").jqxInput($.extend(true, {}, {height: 25, width: 300, minLength: 1}));
@@ -1220,7 +1220,7 @@
                         <div style="clear: both"></div>
                         <div class="al-row" style="padding: 0px;"><div id="edPrice"></div></div>
                     </div>
-                    <div class="al-row-column"><div id="edUsed">Б\У</div></div>
+                    <div class="al-row-column" style="margin-top: 14px;"><div id="edUsed">Б\У</div></div>
                     <div style="clear: both"></div>
                 </div>
                 <div class="al-row" style="padding: 0px">
