@@ -182,7 +182,7 @@
         $("#btnCloseObjectsGroupEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: false}));
         $("#edFindOrg").jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: false}));
         $("#edFindOrg").on('click', function() {
-            $('#FindOrgDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 520, position: 'center'}));
+            $('#FindOrgDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 750, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('PropForms/Find')) ?>,
                 type: 'POST',

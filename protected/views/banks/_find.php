@@ -5,6 +5,7 @@
         var BanksDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceBanks));
         
         $('#btnSelectBank').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnCloseForm').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#btnSelectBank').on('click', function() {
             if ($('#edBankEdit').length>0)
@@ -12,6 +13,9 @@
             
             if ($('#FindBanksDialog').length>0)
                 $('#FindBanksDialog').jqxWindow('close');
+        });
+        $('#btnCloseForm').on('click', function() {
+            $('#FindBanksDialog').jqxWindow('close');
         });
         
         $("#BanksGrid").on('rowselect', function (event) {
