@@ -71,7 +71,7 @@
         }));
         
         $('#btnAddOrganization').on('click', function(){
-            $('#OrganizationsDialog').jqxWindow({width: 800, height: 490, position: 'center'});
+            $('#OrganizationsDialog').jqxWindow({width: 800, height: 600, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('propForms/Create')) ?>,
                 type: 'POST',
@@ -89,7 +89,7 @@
 
         $('#btnEditOrganization').on('click', function(){
             if (CurrentRowOrgData != undefined) {
-                $('#OrganizationsDialog').jqxWindow({width: 800, height: 490, position: 'center'});
+                $('#OrganizationsDialog').jqxWindow({width: 800, height: 600, position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('propForms/Update')) ?>,
                     type: 'POST',
@@ -112,7 +112,7 @@
         $('#btnDelOrganization').on('click', function(){
             if (CurrentRowOrgData != undefined) {
                 $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('Organizations/Delete')) ?>,
+                    url: <?php echo json_encode(Yii::app()->createUrl('propForms/Delete')) ?>,
                     type: 'POST',
                     async: false,
                     data: {
@@ -143,14 +143,7 @@
     });
 </script>
 
-<?php $this->setPageTitle('Должности'); ?>
-
-<?php
-    $this->breadcrumbs=array(
-            'Кадры'=>array('/Employees/index'),
-            'Подразделения'=>array('index'),
-    );?>
-
+<?php $this->setPageTitle('Просмотр организаций'); ?>
 
 <div class="al-row" style="height: calc(100% - 50px)">
     <div class="al-row-column" style="width: calc(100% - 320px)">

@@ -982,7 +982,7 @@
                             showaggregates: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '227',
+                            height: 'calc(100% - 52px)',
                             source: CostCalcEquipsDataAdapter,
                             columns: [
                                 { text: 'Наименование', datafield: 'eqip_name', columngroup: 'Equips', filtercondition: 'CONTAINS', width: 250},    
@@ -1162,7 +1162,7 @@
                             showaggregates: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '227',
+                            height: 'calc(100% - 52px)',
                             source: CostCalcWorksDataAdapter,
                             columns: [
                                 { text: 'Вид работ', datafield: 'cwrt_name', columngroup: 'Works', filtercondition: 'CONTAINS', width: 250},
@@ -1307,7 +1307,7 @@
                             sortable: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '227',
+                            height: 'calc(100% - 52px)',
                             source: CostCalcDocumentsDataAdapter,
                             columns: [
                                 { text: 'Наименование', datafield: 'DocName',  filtercondition: 'CONTAINS', width: 190},
@@ -1406,7 +1406,7 @@
                             sortable: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '227',
+                            height: 'calc(100% - 52px)',
                             source: CostCalcSalarysDataAdapter,
                             columns: [
                                 { text: 'Сотрудник', datafield: 'EmployeeName', filtercondition: 'CONTAINS', width: 300},
@@ -1538,7 +1538,7 @@
             }
         };
 
-        $('#jqxTabsCostCalculations').jqxTabs({ width: '100%', height: 310, initTabContent: initWidgets});
+        $('#jqxTabsCostCalculations').jqxTabs({ width: '99.5%', height: '99.5%', initTabContent: initWidgets});
 
         
         
@@ -1642,7 +1642,7 @@
     </div>
 </div>   
 <div class="row">
-    <div id='jqxWidgetCostCalculations' style="margin-top: 5px;">
+    <div id='jqxWidgetCostCalculations' style="margin-top: 5px; min-height: 310px; height: calc(100% - 500px);">
         <div id='jqxTabsCostCalculations'>
             <ul>
                 <li style="margin-left: 20px;">
@@ -1733,32 +1733,32 @@
 <div class="row" style="margin-top: 5px; max-width: 1024px">
     <div class="row-column">
         <div>
-            <div class="row-column" style="width: 250px">Пусконаладочные работы для клиента</div>
+            <div class="row-column" style="width: 270px">Пусконаладочные работы для клиента</div>
             <div class="row-column"><div id="edIntogoStartingWork"></div></div>
         </div>
         <div style="clear: both"></div>
         <div>
-            <div class="row-column" style="width: 250px">Накладные и транспортные расходы</div>
+            <div class="row-column" style="width: 270px">Накладные и транспортные расходы</div>
             <div class="row-column"><div id="edItogoExpences"></div></div>
         </div>
         <div style="clear: both"></div>
         <div>
-            <div class="row-column" style="width: 250px">Монтажные работы</div>
+            <div class="row-column" style="width: 270px">Монтажные работы</div>
             <div class="row-column"><div id="edItogoTotalWork"></div></div>
         </div>
         <div>
-            <div class="row-column" style="width: 250px">Пусконаладочные работы (себестоимость)</div>
+            <div class="row-column" style="width: 270px">Пусконаладочные работы (себестоимость)</div>
             <div class="row-column"><div id="edIntogoStartingWorkLow"></div></div>
         </div>
         <div>
-            <div class="row-column" style="width: 250px">Коэф. наценки на ФОТ</div>
+            <div class="row-column" style="width: 270px">Коэф. наценки на ФОТ</div>
             <div class="row-column"><div id="edIntogoKoef"></div></div>
         </div>
         <div>
             <div class="row-column" style="float: right; margin-top: 5px;"><input id="btnEditDetailsCostCalc" value="Изменить"/></div>
         </div>
     </div>
-    <div class="row-column" style="float: right; width: 400px">
+    <div class="row-column" style="float: right; width: 415px">
         <div>
             <div class="row-column">Себестоимость</div>
             

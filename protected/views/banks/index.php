@@ -132,13 +132,6 @@
 
 <?php $this->setPageTitle('Банки'); ?>
 
-<?php
-    $this->breadcrumbs=array(
-            'Кадры'=>array('/Employees/index'),
-            'Подразделения'=>array('index'),
-    );?>
-
-
 <div class="al-row" style="height: calc(100% - 58px)">
     <div class="al-row-column" style="width: 100%">
         <div id="BanksGrid" class="jqxGridAliton"></div>
