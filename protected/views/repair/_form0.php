@@ -64,10 +64,10 @@
         $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: 350, height: 25, displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: true }));
         $("#edSerialNumberEdit").jqxInput($.extend(true, {}, {height: 25, width: 200, minLength: 1}));
         $("#edUmNameEdit").jqxInput($.extend(true, {}, {height: 25, width: 60, minLength: 1}));
-        $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Repair.Quant, decimalDigits: 0}));
-        $("#edUsedEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 60, checked: Repair.Used}));
-        $("#edRepairPayEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repair.RepairPay}));
-        $("#edReturnEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 150, checked: Repair.Return}));
+        $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '60px', value: Repair.Quant, decimalDigits: 0}));
+        $("#edUsedEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 50, checked: Repair.Used}));
+        $("#edRepairPayEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 140, checked: Repair.RepairPay}));
+        $("#edReturnEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 160, checked: Repair.Return}));
         $("#edWorkOkEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repair.WorkOk}));
         $("#edWrntEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 220, checked: Repair.Wrnt}));
         $('#edSetEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: '300px', minLength: 1}));
@@ -255,11 +255,13 @@
                 <div class="al-row" style="padding: 0px;"><input type="text" readonly="readonly" id="edUmNameEdit" /></div>
             </div>
             <div class="al-row-column">
-                <div class="al-row" style="padding: 0px;">Количество</div>
+                <div class="al-row" style="padding: 0px;">Кол-во</div>
                 <div style="clear: both"></div>
                 <div class="al-row" style="padding: 0px;"><div id="edQuantEdit" name="Repairs[docm_quant]"></div><?php echo $form->error($model, 'docm_quant'); ?></div>
             </div>
-            <div class="al-row-column"><div id="edUsedEdit" name="Repairs[used]">Б\У</div></div>
+            <div class="al-row-column" style="margin-top: 14px;">
+                <div id="edUsedEdit" name="Repairs[used]">Б\У</div>
+            </div>
             <div style="clear: both"></div>
         </div>
         <div class="al-row">

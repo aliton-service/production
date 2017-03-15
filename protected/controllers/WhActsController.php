@@ -288,6 +288,7 @@ class WhActsController extends Controller
                                 c.ContrS_id,
                                 isNull(c.ServiceType, 'Не на обслуживании') + isNull(' (договор № ' + c.ContrNumS + ' от ' + convert(nvarchar, c.ContrDateS, 104) + ')', '') ServiceType,
                                 c.Jrdc_id,
+                                c.FullName,
                                 case when ('" . $_POST['Date'] . "' between dbo.truncdate(c.ContrSDateStart) and dbo.truncdate(c.ContrSDateEnd)) then 1 else 0 end Act
                             From Contracts_v c
                             Where c.ObjectGr_id = " . $_POST['ObjectGr_id'] . " and c.DocType_id = 4

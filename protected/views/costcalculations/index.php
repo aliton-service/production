@@ -174,12 +174,12 @@
         $("#RegistrationName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 160 }));
         $("#best_date").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalculations.best_date, formatString: 'dd.MM.yyyy H:mm', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 130}));
         $("#Demand_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 75 }));
-        $("#sum_materials_low").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 87, readOnly: true, spinButtonsStep: 0 }));
+        $("#sum_materials_low").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, readOnly: true, spinButtonsStep: 0 }));
         $("#date_ready").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalculations.date_ready, formatString: 'dd.MM.yyyy H:mm', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 130}));
         $("#spec_condt").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '350px', height: 42 }));
         $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '350px', height: 42 }));
-        $("#EmplAgreed").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
-        $("#chbGarantMail").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 126, checked: CostCalculations.GarantMail}));
+        $("#EmplAgreed").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
+        $("#chbGarantMail").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 140, checked: CostCalculations.GarantMail}));
         
         
         $("#edIntogoStartingWork").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 150, readOnly: true, spinButtonsStep: 0 }));
@@ -1598,11 +1598,11 @@
     </div>
 </div>
 <div class="row">
-    <div class="row-column">Расход. материалы:</div>
+    <div class="row-column" style="margin-top: 2px; margin-right: 5px;">Расход. материалы:</div>
     <div class="row-column"><div id='sum_materials_low' readonly="readonly"></div></div>
-    <div class="row-column" style="margin-top: 2px;">Дата согл. с рук.: </div><div class="row-column"><div id='date_ready'></div></div>
-    <div class="row-column" style="margin-top: 3px;">Согласовал: <input readonly id='EmplAgreed' type="text"></div>
-    <div class="row-column" style="margin-top: 3px;"><div id="chbGarantMail">Гарант. письмо</div></div>
+    <div class="row-column" style="margin-top: 2px; margin-right: 5px;">Дата согл. с рук.: </div><div class="row-column"><div id='date_ready'></div></div>
+    <div class="row-column" style="margin-top: 2px;">Согласовал: <input readonly id='EmplAgreed' type="text"></div>
+    <div class="row-column" style="margin-top: 2px;"><div id="chbGarantMail">Гарант. письмо</div></div>
 </div>
 <div class="row" style="margin-top: 3px;">
     <div class="row-column" style="margin: 0 5px 0 0"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>
@@ -1641,7 +1641,7 @@
         <div class="row-column" style="float: right;"><input type="button" value="Для заказчика" id='btnPrint1CostCalculations'/></div>
     </div>
 </div>   
-<div id='jqxWidgetCostCalculations' style="margin-top: 5px; min-height: 310px; height: calc(100% - 500px); ">
+<div id='jqxWidgetCostCalculations' style="margin-top: 5px; min-height: 310px; height: calc(100% - 430px); ">
     <div id='jqxTabsCostCalculations'>
         <ul>
             <li style="margin-left: 20px;">
@@ -1723,25 +1723,25 @@
 <div class="row" style="margin-top: 5px; max-width: 1024px">
     <div class="row-column">
         <div>
-            <div class="row-column" style="width: 270px">Пусконаладочные работы для клиента</div>
+            <div class="row-column" style="width: 280px">Пусконаладочные работы для клиента</div>
             <div class="row-column"><div id="edIntogoStartingWork"></div></div>
         </div>
         <div style="clear: both"></div>
         <div>
-            <div class="row-column" style="width: 270px">Накладные и транспортные расходы</div>
+            <div class="row-column" style="width: 280px">Накладные и транспортные расходы</div>
             <div class="row-column"><div id="edItogoExpences"></div></div>
         </div>
         <div style="clear: both"></div>
         <div>
-            <div class="row-column" style="width: 270px">Монтажные работы</div>
+            <div class="row-column" style="width: 280px">Монтажные работы</div>
             <div class="row-column"><div id="edItogoTotalWork"></div></div>
         </div>
         <div>
-            <div class="row-column" style="width: 270px">Пусконаладочные работы (себестоимость)</div>
+            <div class="row-column" style="width: 280px">Пусконаладочные работы (себестоимость)</div>
             <div class="row-column"><div id="edIntogoStartingWorkLow"></div></div>
         </div>
         <div>
-            <div class="row-column" style="width: 270px">Коэф. наценки на ФОТ</div>
+            <div class="row-column" style="width: 280px">Коэф. наценки на ФОТ</div>
             <div class="row-column"><div id="edIntogoKoef"></div></div>
         </div>
         <div>

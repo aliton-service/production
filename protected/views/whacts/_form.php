@@ -74,11 +74,15 @@
                 success: function(Res) {
                     Res = JSON.parse(Res);
                     if (Res.result == 1) {
+                        console.log(Res.html[0]);
                         $("#edServiceEdit").jqxComboBox({source: Res.html});
                         if (Acts2.Cntr_id != null)
                             $("#edServiceEdit").jqxComboBox('val', Acts2.Cntr_id);
                         else
                             $("#edServiceEdit").jqxComboBox({source: Res.html, selectedIndex: 0});
+                        
+                            $("#edJuridicalEdit").jqxComboBox('val', Res.html[0].Jrdc_id);
+                            $('#edClientEdit').jqxInput('val', Res.html[0].FullName);
                     }
                         
                 }
@@ -133,7 +137,7 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        console.log(Res);
+//                        console.log(Res);
                         if (!StateInsert) {
                             if (typeof(Acts.Refresh) != 'undefined')
                                 Acts.Refresh();
@@ -180,7 +184,7 @@
         if (Acts2.Pmtp_id != null) {
             $('#edPaymentTypeEdit').val(Acts2.Pmtp_id);
         } else {
-            $("#edPaymentTypeEdit").jqxComboBox({selectedIndex: 0 });
+//            $("#edPaymentTypeEdit").jqxComboBox({selectedIndex: 0 });
         }    
         if (Acts2.Wrtp_id != null) $('#edWorkTypeEdit').val(Acts2.Wrtp_id);
         if (Acts2.Jbtp_id != null) $('#edJobTypeEdit').val(Acts2.Jbtp_id);
@@ -215,7 +219,7 @@
                 <div style="clear: both"></div>
                 <div style="margin-top: 4px;">
                     <div class="row-column">Клиент</div>
-                    <div class="row-column"><input id="edClientEdit" /></div>
+                    <div class="row-column"><input readonly id="edClientEdit" /></div>
                     <div class="row-column">Тариф</div>
                     <div class="row-column"><div id="edServiceEdit" name="WhActs[cntr_id]"></div><?php echo $form->error($model, 'cntr_id'); ?></div>
                 </div>
