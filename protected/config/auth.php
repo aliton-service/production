@@ -646,7 +646,7 @@ return array_merge(
             ),
         ),
         
-        /* МС - 17 */
+        /* МС - Менеджер по работе с сотрудниками - 17 */
         'StaffManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Руководитель СЦ',
@@ -688,6 +688,7 @@ return array_merge(
                 'ManagerWHBuhActs',
                 'FindTreb',
                 'FindWHDoc1',
+                'AdminEvents',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
