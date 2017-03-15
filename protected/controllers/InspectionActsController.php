@@ -16,7 +16,7 @@ class InspectionActsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'view'),
+                    'actions'=>array('index', 'view', 'getmodel'),
                     'roles'=>array('ViewInspectionActs'),
             ),
             array('allow', 
@@ -37,6 +37,29 @@ class InspectionActsController extends Controller
         );
     }
 
+    public function actionGetModel()
+    {
+        $model = array();
+        if (isset($_POST['Inspection_id'])) {
+            $model = new InspectionActs_v();
+            $model->getModelPk($_POST['Inspection_id']);
+        }
+       
+        echo json_encode($model);
+    }
+    
+    public function actionView() {
+        $model = new InspectionActs_v();
+        
+        if (isset($_GET['Inspection_id']))
+            $model->getModelPk ($_GET['Inspection_id']);
+                
+        $this->render('view', array(
+            'model' => $model,
+        ));
+        
+    }
+    
     public function actionCreate()
     {
         $model = new InspectionActs_v();
@@ -72,11 +95,11 @@ class InspectionActsController extends Controller
         ), true);
         echo json_encode($ObjectResult);
     }
-
+    
 
     public function actionUpdate()
     {
-        $model = new InspectionActs();
+        $model = new InspectionActs_v();
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
@@ -99,7 +122,7 @@ class InspectionActsController extends Controller
         
         if ($model->ObjectGr_id != '') {
             $DataContactInfo = new ContactInfo();
-            $DataContactInfo = $DataContactInfo->Find(array(), array('i.ObjectGr_id = ' . $model->ObjectGr_id));
+            $DataContactInfo = $DataContactInfo->Find(array(), array('ci.ObjectGr_id = ' . $model->ObjectGr_id));
         }
         else { $DataContactInfo = array(); }
         

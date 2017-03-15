@@ -15,6 +15,18 @@
             CountFloors: <?php echo json_encode($model->CountFloors); ?>,
             CountApartments: <?php echo json_encode($model->CountApartments); ?>,
             Perimetr: <?php echo json_encode($model->Perimetr); ?>,
+            Feature: <?php echo json_encode($model->Feature); ?>,
+            ServiceCompetitor_id: <?php echo json_encode($model->ServiceCompetitor_id); ?>,
+            MontageCompetitor_id: <?php echo json_encode($model->MontageCompetitor_id); ?>,
+            Claims: <?php echo json_encode($model->Claims); ?>,
+            DateMontage: Aliton.DateConvertToJs('<?php echo $model->DateMontage; ?>'),
+            Documentations: <?php echo json_encode($model->Documentations); ?>,
+            CountRiser: <?php echo json_encode($model->Documentations); ?>,
+            PreparationVideo: <?php echo json_encode($model->PreparationVideo); ?>,
+            StateTrails: <?php echo json_encode($model->StateTrails); ?>,
+            BoxInfo: <?php echo json_encode($model->BoxInfo); ?>,
+            ResultEngineer: <?php echo json_encode($model->ResultEngineer); ?>,
+            ResultHead: <?php echo json_encode($model->ResultHead); ?>,
         };
         
         var DataEmployees;
@@ -22,13 +34,15 @@
         var DataContactInfo = <?php echo json_encode($DataContactInfo); ?>;
         var DataTerritory;
         var DataSystemComplexitys;
+        var DataCompetitors;
+        var DataSystemStatements;
         
         $.ajax({
             url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
             type: 'POST',
             async: false,
             data: {
-                Models: ['ListEmployees', 'SystemTypes', 'Territory', 'SystemComplexitys']
+                Models: ['ListEmployees', 'SystemTypes', 'Territory', 'SystemComplexitys', 'Competitors', 'SystemStatements']
             },
             success: function(Res) {
                 Res = JSON.parse(Res);
@@ -36,6 +50,8 @@
                 DataSystemTypes = Res[1].Data;
                 DataTerritory = Res[2].Data;
                 DataSystemComplexitys = Res[3].Data;
+                DataCompetitors = Res[4].Data;
+                DataSystemStatements = Res[5].Data;
             }
         });
         
@@ -47,10 +63,23 @@
         $("#edInspTerritEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataTerritory, width: '150', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id"}));
         $("#edInspLiveAreaSizeEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.LiveAreaSize}));
         $("#edInspSystemComplexityEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemComplexitys, width: '350', height: '25px', displayMember: "SystemComplexitysName", valueMember: "SystemComplexitys_id"}));
-        $("#edInspEntranceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.CountEntrance}));
-        $("#edInspFloorsEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.CountFloors}));
-        $("#edInspApartmentsEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.CountApartments}));
-        $("#edInspPerimetrEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 110, value: InspectionAct.Perimetr}));
+        $("#edInspEntranceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 130, value: InspectionAct.CountEntrance, decimalDigits: 0}));
+        $("#edInspFloorsEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 130, value: InspectionAct.CountFloors, decimalDigits: 0}));
+        $("#edInspApartmentsEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 130, value: InspectionAct.CountApartments, decimalDigits: 0}));
+        $("#edInspPerimetrEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 130, value: InspectionAct.Perimetr, decimalDigits: 0}));
+        $('#edInspFeatureEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 'calc(100% - 2px)', minLength: 1}));
+        $("#edInspServiceCompetitorEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataCompetitors, width: '150', height: '25px', displayMember: "Competitor", valueMember: "cmtr_id"}));
+        $("#edInspMontageCompetitorEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataCompetitors, width: '150', height: '25px', displayMember: "Competitor", valueMember: "cmtr_id"}));
+        $("#edInspClaimsEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 300, value: InspectionAct.Claims}));
+        $("#edInspDateMontageEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: InspectionAct.DateMontage, width: 130, formatString: 'dd.MM.yyyy'}));
+        $("#edInspDocumentationsEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150, value: InspectionAct.Documentations}));
+        $("#edInspStatementEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemStatements, width: '150', height: '25px', displayMember: "SystemStatementsName", valueMember: "SystemStatements_id"}));
+        $("#edInspCountRiserEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: 130, value: InspectionAct.CountRiser, decimalDigits: 0}));
+        $("#edInspPreparationVideoEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 130, value: InspectionAct.PreparationVideo}));
+        $("#edInspStateTrailsEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 130, value: InspectionAct.StateTrails}));
+        $("#edInspBoxInfoEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 130, value: InspectionAct.BoxInfo}));
+        $('#edInspResultEngineerEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 'calc(100% - 2px)', minLength: 1}));
+        $('#edInspResultHeadEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 'calc(100% - 2px)', minLength: 1}));
         
         
         $("#edInspSystemEdit").jqxComboBox('val', InspectionAct.SystemType_id);
@@ -58,6 +87,10 @@
         $("#edInspInfoEdit").jqxComboBox('val', InspectionAct.Info_id);
         $("#edInspTerritEdit").jqxComboBox('val', InspectionAct.Territ_id);
         $("#edInspSystemComplexityEdit").jqxComboBox('val', InspectionAct.SystemComplexity_id);
+        $("#edInspFeatureEdit").jqxTextArea('val', InspectionAct.Feature);
+        $("#edInspServiceCompetitorEdit").jqxComboBox('val', InspectionAct.ServiceCompetitor_id);
+        $("#edInspMontageCompetitorEdit").jqxComboBox('val', InspectionAct.MontageCompetitor_id);
+        $("#edInspStatementEdit").jqxComboBox('val', InspectionAct.Statement_id);
         
         
         $('#btnSaveEmpl').jqxButton({ width: 120, height: 30 });
@@ -66,25 +99,37 @@
         $('#btnCancelEmpl').on('click', function(){
             if ($('#CostCalculationsDialog').length>0)
                 $('#CostCalculationsDialog').jqxWindow('close');
+            if ($('#InspectionActDialog').length>0)
+                $('#InspectionActDialog').jqxWindow('close');
         });
         $('#btnSaveEmpl').on('click', function(){
-            var Url = <?php echo json_encode(Yii::app()->createUrl('Employees/Update')); ?>;
+            var Url = <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Update')); ?>;
             if (StateInsert)
-                Url = <?php echo json_encode(Yii::app()->createUrl('Employees/Create')); ?>;
+                Url = <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Create')); ?>;
             
             $.ajax({
                 url: Url,
-                data: $('#Employees').serialize(),
+                data: $('#InspectionActs').serialize(),
                 type: 'POST',
                 success: function(Res) {
-                    if (Res == '1') {
-                         if ($('#CostCalculationsDialog').length>0)
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        if ($('#CostCalculationsDialog').length>0)
                             $('#CostCalculationsDialog').jqxWindow('close');
+                        if ($('#InspectionActDialog').length>0) {
+                            $('#InspectionActDialog').jqxWindow('close');
+                            InspAct.Refresh();
+                        }
                         
                     }
-                    else
+                    else {
                         if ($('#CostCalculationsDialog').length>0)
-                            $('#BodyCostCalculationsDialog').html(Res);
+                            $('#BodyCostCalculationsDialog').html(Res.html);
+                        if ($('#InspectionActDialog').length>0) {
+                            $('#InspectionActDialog').jqxWindow('close');
+                            InspAct.Refresh();
+                        }
+                    }
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
@@ -106,11 +151,12 @@
 
 <input type="hidden" name="InspectionActs[Inspection_id]" value="<?php echo $model->Inspection_id; ?>"/>
 <input type="hidden" name="InspectionActs[ObjectGr_id]" value="<?php echo $model->ObjectGr_id; ?>"/>
+<input type="hidden" name="InspectionActs[Demand_id]" value="<?php echo $model->Demand_id; ?>"/>
 
 <div class="al-row">
     <div class="al-row-column">
         <div>Дата</div>
-        <div><div id='edInspDateEdit' name="InspectionActs[Date]"></div></div>
+        <div><div id='edInspDateEdit' name="InspectionActs[Date]"></div><?php echo $form->error($model, 'Date'); ?></div>
         <div style="clear: both"></div>
     </div>
     <div class="al-row-column">
@@ -123,12 +169,12 @@
 <div class="al-row" style="padding: 0px">
     <div class="al-row-column">
         <div>Система</div>
-        <div><div id='edInspSystemEdit' name="InspectionActs[SystemType_id]"></div></div>
+        <div><div id='edInspSystemEdit' name="InspectionActs[SystemType_id]"></div><?php echo $form->error($model, 'SystemType_id'); ?></div>
         <div style="clear: both"></div>
     </div>
     <div class="al-row-column">
         <div>Инженер</div>
-        <div><div id='edInspEmplEdit' name="InspectionActs[Empl_id]"></div></div>
+        <div><div id='edInspEmplEdit' name="InspectionActs[Empl_id]"></div><?php echo $form->error($model, 'Empl_id'); ?></div>
         <div style="clear: both"></div>
     </div>
     <div class="al-row-column">
@@ -179,9 +225,75 @@
     </div>
     <div style="clear: both"></div>
 </div>   
+<div class="al-row" style="padding: 0px">
+    <div>Особенности</div>
+    <div><textarea id='edInspFeatureEdit' name="InspectionActs[Feature]"></textarea></div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row" style="padding: 0px">
+    <div class="al-row-column">
+        <div>Пред. обсл. орг.</div>
+        <div><div id='edInspServiceCompetitorEdit' name="InspectionActs[ServiceCompetitor_id]"></div></div>
+    </div>
+    <div class="al-row-column">
+        <div>Монтажная орг.</div>
+        <div><div id='edInspMontageCompetitorEdit' name="InspectionActs[MontageCompetitor_id]"></div></div>
+    </div>
+    <div class="al-row-column">
+        <div>Претензии клиента</div>
+        <div><input id='edInspClaimsEdit' name="InspectionActs[Claims]" /></div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row" style="padding: 0px">
+    <div class="al-row-column">
+        <div>Дата монтажа</div>
+        <div><div id='edInspDateMontageEdit' name="InspectionActs[DateMontage]"></div></div>
+    </div>
+    <div class="al-row-column">
+        <div>Наличие техн. док-ии</div>
+        <div><input id='edInspDocumentationsEdit' name="InspectionActs[Documentations]" /></div>
+    </div>
+    <div class="al-row-column">
+        <div>Состояние</div>
+        <div><div id='edInspStatementEdit' name="InspectionActs[Statement_id]"></div></div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row" style="padding: 0px">
+    <div class="al-row-column">
+        <div>Кол-во стояков</div>
+        <div><div id='edInspCountRiserEdit' name="InspectionActs[CountRiser]"></div></div>
+    </div>
+    <div class="al-row-column">
+        <div>Подготовка видео</div>
+        <div><input id='edInspPreparationVideoEdit' name="InspectionActs[PreparationVideo]" /></div>
+    </div>
+    <div class="al-row-column">
+        <div>Состояние каб. трас</div>
+        <div><input id='edInspStateTrailsEdit' name="InspectionActs[StateTrails]" /></div>
+    </div>
+    <div class="al-row-column">
+        <div>Наличие м\этажных распр. коробок</div>
+        <div><input id='edInspBoxInfoEdit' name="InspectionActs[BoxInfo]" /></div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+<div class="al-row" style="padding: 0px">
+    <div class="al-row-column" style="width: 50%">
+        <div>Заключение инженера</div>
+        <div><textarea id='edInspResultEngineerEdit' name="InspectionActs[ResultEngineer]"></textarea></div>
+    </div>
+    <div class="al-row-column" style="width: calc(50% - 6px)">
+        <div>Заключение руководителя отдела</div>
+        <div><textarea id='edInspResultHeadEdit' name="InspectionActs[ResultHead]"></textarea></div>
+    </div>
+    <div style="clear: both"></div>
+</div>    
 <div class="al-row">
     <div class="al-row-column"><input type="button" value="Сохранить" id='btnSaveEmpl'/></div>
     <div class="al-row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelEmpl'/></div>
     <div style="clear: both"></div>
 </div>
+   
 <?php $this->endWidget(); ?>
