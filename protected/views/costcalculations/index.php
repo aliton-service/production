@@ -982,7 +982,7 @@
                             showaggregates: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '83%',
+                            height: 'calc(100% - 52px)',
                             source: CostCalcEquipsDataAdapter,
                             columns: [
                                 { text: 'Наименование', datafield: 'eqip_name', columngroup: 'Equips', filtercondition: 'CONTAINS', width: 250},    
@@ -1162,7 +1162,7 @@
                             showaggregates: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '83%',
+                            height: 'calc(100% - 52px)',
                             source: CostCalcWorksDataAdapter,
                             columns: [
                                 { text: 'Вид работ', datafield: 'cwrt_name', columngroup: 'Works', filtercondition: 'CONTAINS', width: 250},
@@ -1307,7 +1307,7 @@
                             sortable: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '83%',
+                            height: 'calc(100% - 52px)',
                             source: CostCalcDocumentsDataAdapter,
                             columns: [
                                 { text: 'Наименование', datafield: 'DocName',  filtercondition: 'CONTAINS', width: 190},
@@ -1406,7 +1406,7 @@
                             sortable: true,
                             showfilterrow: false,
                             width: '99%',
-                            height: '83%',
+                            height: 'calc(100% - 52px)',
                             source: CostCalcSalarysDataAdapter,
                             columns: [
                                 { text: 'Сотрудник', datafield: 'EmployeeName', filtercondition: 'CONTAINS', width: 300},
