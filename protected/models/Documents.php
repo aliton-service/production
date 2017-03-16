@@ -70,7 +70,7 @@ class Documents extends MainFormModel
 	public function rules()
 	{
             return array(
-                array('ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, Jrdc_id, empl_id', 'required', 'on' => 'Счет'),
+                array('ContrNumS, ContrDateS, ContrSDateStart, ContrSDateEnd, Jrdc_id, empl_id, dmnd_id', 'required', 'on' => 'Счет'),
                 array('ContrS_id,
                         ObjectGr_id, 
                         DocType_id, 
@@ -264,7 +264,7 @@ class Documents extends MainFormModel
 			'date_act' => 'Date Act',
 			'Debt' => 'Debt',
 			'DateExecuting' => 'Date Executing',
-			'dmnd_id' => 'Dmnd',
+			'dmnd_id' => 'Заявка',
 			'JobExec' => 'Job Exec',
 			'CalcSum' => 'Calc Sum',
 			'calc_id' => 'Calc',

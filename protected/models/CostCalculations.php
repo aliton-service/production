@@ -8,6 +8,7 @@ class CostCalculations extends MainFormModel
     public $group_name = null;
     public $Addr = null;
     public $FullName = null;
+    public $Form_id = null;
     public $date = null;
     public $empl_id = null;
     public $empl_name = null;
@@ -66,6 +67,7 @@ class CostCalculations extends MainFormModel
                         g.name as group_name,
                         a.Addr,
                         p.FullName,
+                        p.Form_id,
                         cc.date,
                         cc.empl_id,
                         dbo.FIO(e.EmployeeName) empl_name,

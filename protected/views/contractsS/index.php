@@ -88,8 +88,8 @@
             })
         );
 
-        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 280 }));
-        $("#MasterName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 302 }));
+        $("#MasterName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 170 }));
         $("#DateExecuting").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100 }));
         $("#SpecialCondition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 50 }));
         $("#ContrNote").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%', height: 50 }));
@@ -672,12 +672,12 @@
 <div class="al-row" >
     <div class="al-row-column" style="width: 400px">
         <div class="al-row">
-            <div class="al-row-column" style="width: 65px">Юр. лицо:</div>
+            <div class="al-row-column" style="width: 70px">Юр. лицо:</div>
             <div class="al-row-column"><input readonly id="JuridicalPerson" type="text"></div>
             <div style="clear: both"></div>
         </div>
         <div class="al-row">
-            <div class="al-row-column" style="width: 65px">Мастер:</div>
+            <div class="al-row-column" style="width: 50px">Мастер:</div>
             <div class="al-row-column"><input readonly id="MasterName" type="text"></div>
             <div class="al-row-column">ВЦКП: </div>
             <div class="al-row-column"><div id='DateExecuting'></div></div>
