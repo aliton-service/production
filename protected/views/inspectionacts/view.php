@@ -152,7 +152,85 @@
             });
         });
         
-        var initWidgets = function() {
+        var initWidgets = function(tab) {
+            switch (tab) {
+                case 0:
+                    var CurrentRowEquips;
+                    var FirstStartEquips;
+                    
+                    var DisabledEquipsControls = function() {
+                        $('#btnAddEquips').jqxButton({disabled: true});
+                        $('#btnEditEquips').jqxButton({disabled: true});
+                        $('#btnRefreshEquips').jqxButton({disabled: true});
+                        $('#btnDelEquips').jqxButton({disabled: true});
+                    };
+                    
+                    var CheckEquipsButton = function() {
+                        $('#btnAddEquips').jqxButton({disabled: false});
+                        $('#btnEditEquips').jqxButton({disabled: (CurrentRowEquips == undefined)});
+                        $('#btnRefreshEquips').jqxButton({disabled: false});
+                        $('#btnDelEquips').jqxButton({disabled: (CurrentRowEquips == undefined)});
+                    };
+            
+                    $('#btnAddEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnEditEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnRefreshEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnDelEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    var DataActEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInspectionActEquips), { async: true,
+                        formatData: function (data) {
+                                    $.extend(data, {
+                                        Filters: ["a.Inspection_id = " + InspAct.Inspection_id]
+                                    });
+                                    return data;
+                                },
+                        beforeSend: function(jqXHR, settings) {
+                            DisabledEquipsControls();
+                        }
+                    });
+                    
+                    $("#GridEquips").on('rowselect', function (event) {
+                        CurrentRowEquips = $('#GridEquips').jqxGrid('getrowdata', event.args.rowindex);
+                        CheckEquipsButton();
+                    });
+                    
+                    $("#GridEquips").on("bindingcomplete", function (event) {
+                        if (CurrentRowEquips != undefined) {
+                            Aliton.SelectRowById('ActEquip_id', CurrentRowEquips.ActEquip_id, '#GridEquips', false);
+                        }
+                        else {
+                            if (FirstStartEquips) {
+                                $('#GridEquips').jqxGrid('selectrow', 0);
+                                $('#GridEquips').jqxGrid('ensurerowvisible', 0);
+                                FirstStartEquips = false;
+                                
+                            }
+                        }
+                    });
+                    
+                    $("#GridEquips").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
+                            showfilterrow: false,
+                            source: DataActEquips, 
+                            autoshowfiltericon: true,
+                            pagesizeoptions: ['10', '200', '500', '1000'],
+                            pagesize: 200,
+                            virtualmode: true,
+                            columns:
+                                [
+                                    { text: 'Наименование', datafield: 'EquipName', width: 350},
+                                    { text: 'Ед. изм.', datafield: 'UmName', width: 60},
+                                    { text: 'Кол-во', datafield: 'Quant', width: 110, cellsformat: 'f2'},
+                                ]
+                    }));
+                    
+                    
+                    
+                    break;
+            };
+                    
         };
         
         $('#Tabs').jqxTabs({ width: '100%', height: '100%', keyboardNavigation: false, initTabContent: initWidgets});
@@ -272,7 +350,17 @@
             </li>
         </ul>
         <div style="overflow: hidden;">
-            <div style="padding: 10px; height: calc(100% - 20px)">
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridEquips"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type="button" id="btnAddEquips" value="Добавить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnEditEquips" value="Изменить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnRefreshEquips" value="Обновить"/></div>
+                    <div class="al-row-column" style="float: right"><input type="button" id="btnDelEquips" value="Удалить"/></div>
+                    <div style="clear: both"></div>
+                </div>
             </div>
         </div>
         <div style="overflow: hidden;">
