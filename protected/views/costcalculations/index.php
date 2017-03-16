@@ -34,6 +34,7 @@
             Object_id: <?php echo json_encode($model->Object_id); ?>,
             Addr: <?php echo json_encode($model->Addr); ?>,
             FullName: <?php echo json_encode($model->FullName); ?>,
+            Form_id: <?php echo json_encode($model->Form_id); ?>,
             Name: <?php echo json_encode($model->name); ?>,
             Info_id: <?php echo json_encode($model->info_id); ?>,
             ContrNumS: <?php echo json_encode($model->ContrNumS); ?>,
@@ -371,7 +372,7 @@
                             discount: CostCalcDetails.Discount,
                             Jrdc_id: CostCalculations.Jrdc_id,
                             SpecialCondition: CostCalculations.Name,
-                            Dmnd_id: CostCalculations.Demand_id,
+                            dmnd_id: CostCalculations.Demand_id,
                             Info: CostCalculations.Info_id,
                             DocNumber: CostCalculations.ContrNumS,
                             DocDate: CostCalculations.ContrDateS, 
@@ -408,7 +409,7 @@
                             discount: CostCalcDetails.Discount,
                             Jrdc_id: CostCalculations.Jrdc_id,
                             SpecialCondition: CostCalculations.Name,
-                            Dmnd_id: CostCalculations.Demand_id,
+                            dmnd_id: CostCalculations.Demand_id,
                             Info: CostCalculations.Info_id,
                             DocNumber: CostCalculations.ContrNumS,
                             DocDate: CostCalculations.ContrDateS, 
@@ -485,7 +486,8 @@
                             wrtp_id: CostCalculations.wrtp_id,
                             calc_id: CostCalculations.calc_id,
                             sum: CostCalcDetails.SumHighFull,
-                            org_name: CostCalculations.FullName
+                            org_name: CostCalculations.FullName,
+                            Form_id: CostCalculations.Form_id
                         }
                     },
                     success: function(Res) {
@@ -518,7 +520,7 @@
                             discount: CostCalcDetails.Discount,
                             Jrdc_id: CostCalculations.Jrdc_id,
                             SpecialCondition: CostCalculations.Name,
-                            Dmnd_id: CostCalculations.Demand_id,
+                            dmnd_id: CostCalculations.Demand_id,
                             Info: CostCalculations.Info_id,
                             DocNumber: CostCalculations.ContrNumS,
                             DocDate: CostCalculations.ContrDateS, 

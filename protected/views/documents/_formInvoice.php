@@ -174,9 +174,18 @@
 </div>
 
 <div class="row">
-    <div class="row-column">Юр. лицо: </div><div class="row-column"><div id="JuridicalPerson4" name="Documents[Jrdc_id]" type="text"></div><?php echo $form->error($model, 'Jrdc_id'); ?></div>
-    <div class="row-column">Тип контракта: </div><div class="row-column"><div id="ContactType4" name="Documents[crtp_id]" type="text"></div><?php echo $form->error($model, 'crtp_id'); ?></div>
-    <div class="row-column">Менеджер: </div><div class="row-column"><div id="empl4" name="Documents[empl_id]" type="text"></div><?php echo $form->error($model, 'empl_id'); ?></div>
+    <div class="row-column">
+        <div class="row-column">Юр. лицо: </div>
+        <div class="row-column"><div id="JuridicalPerson4" name="Documents[Jrdc_id]" type="text"></div></div><?php echo $form->error($model, 'Jrdc_id'); ?>
+    </div>
+    <div class="row-column">
+        <div class="row-column">Тип контракта: </div>
+        <div class="row-column"><div id="ContactType4" name="Documents[crtp_id]" type="text"></div></div><?php echo $form->error($model, 'crtp_id'); ?>
+    </div>
+    <div class="row-column">
+        <div class="row-column">Менеджер: </div>
+        <div class="row-column"><div id="empl4" name="Documents[empl_id]" type="text"></div></div><?php echo $form->error($model, 'empl_id'); ?>
+    </div>
 </div>
 
 <div class="row">
@@ -194,7 +203,7 @@
 <div class="row" style="padding: 0 10px 10px 10px; width: 815px; border: 1px solid #ddd; background-color: #eee;">
     <div style="overflow: hidden;">
         <div class="row-column" style="margin: 0 0 10px 0; width: 100%; font-weight: 500;">Выполненные работы</div>
-        <div class="row-column">Заявка: <input id="dmnd_id4" name="Documents[dmnd_id]" type="text"></div><?php echo $form->error($model, 'dmnd_id'); ?>
+        <div class="row-column">Заявка: <input id="dmnd_id4" name="Documents[dmnd_id]" type="text"><?php echo $form->error($model, 'dmnd_id'); ?></div>
         <div class="row-column" style="padding-top: 3px;">Дата выполнения работ: </div><div class="row-column"><div id="DateExec4" name="Documents[DateExec]"></div><?php echo $form->error($model, 'DateExec'); ?></div>
         <div class="row-column" style="padding-top: 3px;">Дата прихода оригинала акта: </div><div class="row-column"><div id="date_act4" name="Documents[date_act]"></div><?php echo $form->error($model, 'date_act'); ?></div>
         <div class="row-column" style="padding-top: 10px;">Перечень работ: <textarea id="SpecialCondition4" name="Documents[SpecialCondition]"></textarea><?php echo $form->error($model, 'SpecialCondition'); ?></div>
