@@ -4697,3 +4697,31 @@ Sources.SourceActionResults =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceInspectionActEquips =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'ActEquip_id', type: 'int'},
+        {name: 'Inspection_id', type: 'int'},
+        {name: 'Equip_id', type: 'int'},
+        {name: 'EquipName', type: 'string'},
+        {name: 'Quant', type: 'float'},
+        {name: 'UmName', type: 'string'},
+        {name: 'DateCreate', type: 'date'},
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'DateChange', type: 'date'},
+        {name: 'EmplChange', type: 'int'},
+    ],
+    id: 'ActEquip_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InspectionActEquips',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

@@ -240,6 +240,8 @@ return array_merge(
     include(dirname(__FILE__).'/security/SalesDepClientsSecurity.php'),
     /* Акты обследования */
     include(dirname(__FILE__).'/security/InspectionActsSecurity.php'),
+    /* Оборудование акта обследования */
+    include(dirname(__FILE__).'/security/InspectionActEquipsSecurity.php'),        
         
     array(    
         'guest' => array(
@@ -1029,6 +1031,7 @@ return array_merge(
                 /**/
                 'ManagerSalesDepClients',
                 'ManagerInspectionActs',
+                'ManagerInspectionActEquips',
                 
                 /* Отчеты */
                 'DemandsReportAll',

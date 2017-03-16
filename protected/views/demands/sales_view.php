@@ -224,6 +224,7 @@
                             case 5: window.open(<?php echo json_encode(Yii::app()->createUrl('CostCalculations/Index')); ?> + "&calc_id=" + Row.Docid); break;
                             case 7: window.open(<?php echo json_encode(Yii::app()->createUrl('Documents/Index')); ?> + "&ContrS_id=" + Row.Docid); break;
                             case 8: window.open(<?php echo json_encode(Yii::app()->createUrl('WHBuhActs/Index')); ?> + "&docm_id=" + Row.Docid); break;
+                            case 10: window.open(<?php echo json_encode(Yii::app()->createUrl('InspectionActs/View')); ?> + "&Inspection_id=" + Row.Docid); break;
                         };
                     };
                     
@@ -248,7 +249,7 @@
                         $("#btnAddInspection").on('click', function(){
                             if ($("#btnAddInspection").jqxButton('disabled')) return;
                             if (Demand.ObjectGr_id !== null) {
-                                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 735, position: 'center' }));
+                                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 560, width: 735, position: 'center' }));
                                 $.ajax({
                                     url: <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Create')) ?>,
                                     type: 'POST',

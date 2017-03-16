@@ -5,6 +5,7 @@ class InspectionActs_v extends MainFormModel
     public $Inspection_id;
     public $Date;
     public $ObjectGr_id;
+    public $Demand_id;
     public $Addr;
     public $SystemType_id;
     public $SystemTypeName;
@@ -39,7 +40,11 @@ class InspectionActs_v extends MainFormModel
     public $ResultHead;
     public $DateAgreeROMTO;
     public $DateAgreeRGI;
-    
+    public $EmplCreate;
+    public $DateCreate;
+    public $EmplChange;
+    public $DateChange;
+            
     function __construct($scenario = '') {
         parent::__construct($scenario);
 
@@ -51,6 +56,7 @@ class InspectionActs_v extends MainFormModel
                         i.Inspection_id,
                         i.Date,
                         i.ObjectGr_id,
+                        i.Demand_id,
                         i.Addr,
                         i.SystemType_id,
                         i.SystemTypeName,
@@ -101,6 +107,7 @@ class InspectionActs_v extends MainFormModel
             array('Inspection_id,
                     Date,
                     ObjectGr_id,
+                    Demand_id,
                     Addr,
                     SystemType_id,
                     SystemTypeName,
@@ -142,12 +149,13 @@ class InspectionActs_v extends MainFormModel
     {
         return array(
             'Inspection_id' => '',
-            'Date' => '',
+            'Date' => 'Дата',
             'ObjectGr_id' => '',
+            'Demand_id' => '',
             'Addr' => '',
-            'SystemType_id' => '',
+            'SystemType_id' => 'Система',
             'SystemTypeName' => '',
-            'Empl_id' => '',
+            'Empl_id' => 'Инженер',
             'EmployeeName' => '',
             'Info_id' => '',
             'FIO' => '',
