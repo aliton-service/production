@@ -142,7 +142,11 @@
             
         };
         
-        if (DocmAchsDetail.docm_quant != null) $("#edQuantEdit").jqxNumberInput('val', DocmAchsDetail.docm_quant);
+        if (DocmAchsDetail.docm_quant != null) {
+            $("#edQuantEdit").jqxNumberInput('val', DocmAchsDetail.docm_quant);
+        } else {
+            $("#edQuantEdit").jqxNumberInput('val', 1);
+        }
         if (DocmAchsDetail.price != '') $("#edPriceEdit").jqxNumberInput('val', DocmAchsDetail.price);
         if (DocmAchsDetail.used != '') $("#edUsedEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.used)));
         if (DocmAchsDetail.ToProduction != '') $("#edToProductionEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.ToProduction)));

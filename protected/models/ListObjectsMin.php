@@ -127,6 +127,15 @@ class ListObjectsMin extends MainFormModel
         $q->setWhere("\nWhere o.DelDate is Null");
         return $q->QueryAll();
     }
+    
+    public function attributeFilters()
+    {
+        return array(
+            'FullName' => 'p.FullName',
+        );
+        
+        
+    }
 }
 
 
