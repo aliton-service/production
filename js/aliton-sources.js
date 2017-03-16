@@ -4708,6 +4708,7 @@ Sources.SourceInspectionActEquips =
         {name: 'EquipName', type: 'string'},
         {name: 'Quant', type: 'float'},
         {name: 'UmName', type: 'string'},
+        {name: 'Characteristics', type: 'string'},
         {name: 'DateCreate', type: 'date'},
         {name: 'EmplCreate', type: 'int'},
         {name: 'DateChange', type: 'date'},
@@ -4715,6 +4716,31 @@ Sources.SourceInspectionActEquips =
     ],
     id: 'ActEquip_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InspectionActEquips',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceInspActEquipCharacteristics =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Characteristic_id', type: ''},
+        {name: 'ActEquip_id', type: ''},
+        {name: 'CharacteristicName', type: ''},
+        {name: 'EmplCreate', type: ''},
+        {name: 'DateCreate', type: ''},
+        {name: 'EmplChange', type: ''},
+        {name: 'DateChange', type: ''},
+    ],
+    id: 'Characteristic_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InspActEquipCharacteristics',
     type: 'POST',
     root: 'Rows',
     cache: false,

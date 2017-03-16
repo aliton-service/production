@@ -91,6 +91,8 @@
         $("#edInspServiceCompetitorEdit").jqxComboBox('val', InspectionAct.ServiceCompetitor_id);
         $("#edInspMontageCompetitorEdit").jqxComboBox('val', InspectionAct.MontageCompetitor_id);
         $("#edInspStatementEdit").jqxComboBox('val', InspectionAct.Statement_id);
+        $('#edInspResultEngineerEdit').jqxTextArea('val', InspectionAct.ResultEngineer);
+        $('#edInspResultHeadEdit').jqxTextArea('val', InspectionAct.ResultHead);
         
         
         $('#btnSaveEmpl').jqxButton({ width: 120, height: 30 });

@@ -1,8 +1,10 @@
 <script type="text/javascript">
     var InspAct = {};
+    var Characteristics = {};
     $(document).ready(function () {
         InspAct = {
             Inspection_id: <?php echo json_encode($model->Inspection_id); ?>,
+            Demand_id: <?php echo json_encode($model->Demand_id); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->Date; ?>'),
             Addr: <?php echo json_encode($model->Addr); ?>,
             SystemTypeName: <?php echo json_encode($model->SystemTypeName); ?>,
@@ -28,6 +30,9 @@
             BoxInfo: <?php echo json_encode($model->BoxInfo); ?>,
             ResultEngineer: <?php echo json_encode($model->ResultEngineer); ?>,
             ResultHead: <?php echo json_encode($model->ResultHead); ?>,
+            DateAgreeROMTO: Aliton.DateConvertToJs('<?php echo $model->DateAgreeROMTO; ?>'),
+            DateAgreeRGI: Aliton.DateConvertToJs('<?php echo $model->DateAgreeRGI; ?>'),
+            ActEquip_id: 0,
         };
 
         var SetValueControls = function() {
@@ -56,6 +61,9 @@
             $("#edBoxInfo").val(InspAct.BoxInfo);
             $("#edResultEngineer").val(InspAct.ResultEngineer);
             $("#edResultHead").val(InspAct.ResultHead);
+            $("#chbROMTO").jqxCheckBox('checked', (InspAct.DateAgreeROMTO != null))
+            $("#chbRGI").jqxCheckBox('checked', (InspAct.DateAgreeRGI != null))
+            
             
         };
         
@@ -92,6 +100,9 @@
                     InspAct.StateTrails = Res.StateTrails;
                     InspAct.BoxInfo = Res.BoxInfo;
                     InspAct.ResultHead = Res.ResultHead;
+                    InspAct.ResultEngineer = Res.ResultEngineer;
+                    InspAct.DateAgreeROMTO = Aliton.DateConvertToJs(Res.DateAgreeROMTO);
+                    InspAct.DateAgreeRGI = Aliton.DateConvertToJs(Res.DateAgreeRGI);
                     
                     SetValueControls();
 //                    $("#btnRefreshDetails").click();
@@ -130,6 +141,67 @@
         $('#edResultHead').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 'calc(100% - 2px)', minLength: 1}));
         
         $('#btnEdit').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $("#chbROMTO").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 160, height: 25, locked :true }));
+        $("#chbRGI").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 160, height: 25, locked :true }));
+        $('#btnPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnROMTO').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
+        $('#btnRGI').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
+        
+        $("#chbROMTO").jqxCheckBox('checked', (InspAct.DateAgreeROMTO != null));
+        $("#chbRGI").jqxCheckBox('checked', (InspAct.DateAgreeRGI != null));
+        $('#edResultEngineer').jqxTextArea('val', InspAct.ResultEngineer);
+        $('#edResultHead').jqxTextArea('val', InspAct.ResultHead);
+        
+        $('#btnROMTO').on('click', function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Agreed')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    InspectionActs: {
+                        Inspection_id: InspAct.Inspection_id,
+                        Type: 0,
+                    },
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        InspAct.Refresh();
+                    }
+                    else
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.html);
+                        
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        $('#btnRGI').on('click', function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Agreed')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    InspectionActs: {
+                        Inspection_id: InspAct.Inspection_id,
+                        Type: 1,
+                    },
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        InspAct.Refresh();
+                    }
+                    else
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.html);
+                        
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         
         $("#btnEdit").on('click', function(){
             if ($("#btnEdit").jqxButton('disabled')) return;
@@ -156,7 +228,7 @@
             switch (tab) {
                 case 0:
                     var CurrentRowEquips;
-                    var FirstStartEquips;
+                    var FirstStartEquips = true;
                     
                     var DisabledEquipsControls = function() {
                         $('#btnAddEquips').jqxButton({disabled: true});
@@ -176,6 +248,35 @@
                     $('#btnEditEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnRefreshEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnDelEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnExportEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnMonitoringEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnMonitoringEquips').on('click', function(){
+                        $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '640'}));
+                        $.ajax({
+                            url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Insert');?>",
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                DialogId: 'InspectionActDialog',
+                                BodyDialogId: 'BodyInspectionActDialog',
+                                Params: {
+                                    Demand_id: InspAct.Demand_id,
+                                    Prior: 1,
+                                }
+                            },
+                            success: function(Res) {
+                                $('#BodyInspectionActDialog').html(Res);
+                                $('#InspectionActDialog').jqxWindow('open');
+                            }
+                        });
+                    });
+                    
+                    
+                    
+                    $('#btnExportEquips').on('click', function() {
+                        $("#GridEquips").jqxGrid('exportdata', 'xls', 'Акт_обледования_оборудование', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+                    });
                     
                     var DataActEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInspectionActEquips), { async: true,
                         formatData: function (data) {
@@ -195,6 +296,11 @@
                     });
                     
                     $("#GridEquips").on("bindingcomplete", function (event) {
+                        if (InspAct.ActEquip_id !== 0) {
+                            Aliton.SelectRowById('ActEquip_id', InspAct.ActEquip_id, '#GridEquips', false);
+                            return;
+                        }
+                        
                         if (CurrentRowEquips != undefined) {
                             Aliton.SelectRowById('ActEquip_id', CurrentRowEquips.ActEquip_id, '#GridEquips', false);
                         }
@@ -206,7 +312,33 @@
                                 
                             }
                         }
+                        
+                        var DataInformation = $('#GridEquips').jqxGrid('getdatainformation');
+                        if (DataInformation.rowscount == 0)
+                            CheckEquipsButton();
                     });
+                    
+                    Characteristics.Add = function() {
+                        if (CurrentRowEquips !== undefined) {
+                            $('#InspectionActDialog').jqxWindow({width: 600, height: 440, position: 'center'});
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('InspActEquipCharacteristics/Index')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    ActEquip_id: CurrentRowEquips.ActEquip_id,
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $("#BodyInspectionActDialog").html(Res.html);
+                                    $('#InspectionActDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    };
                     
                     $("#GridEquips").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
@@ -223,10 +355,91 @@
                                     { text: 'Наименование', datafield: 'EquipName', width: 350},
                                     { text: 'Ед. изм.', datafield: 'UmName', width: 60},
                                     { text: 'Кол-во', datafield: 'Quant', width: 110, cellsformat: 'f2'},
+                                    { text: 'Характеристики', datafield: 'Characteristics', width: 150,
+                                        cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+                                            return '<div style=\'float: left; width: 80%\'>' + value + '</div>\n\
+                                                        <div style=\'float: left; width: 20%\'>\n\
+                                                            <button onclick=\'Characteristics.Add();\' style=\'float: right; margin-top: 4px;\'>...</button>\n\
+                                                        </div>';
+                                        }   
+                                    },
                                 ]
                     }));
                     
+                    $("#btnAddEquips").on('click', function(){
+                        if ($("#btnAddEquips").jqxButton('disabled')) return;
+                        if (InspAct.Inspection_id !== null) {
+                            $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 145, width: 500, position: 'center' }));
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('InspectionActEquips/Create')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Inspection_id: InspAct.Inspection_id
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $("#BodyInspectionActDialog").html(Res.html);
+                                    $('#InspectionActDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
                     
+                    $("#btnEditEquips").on('click', function(){
+                        if ($("#btnEditEquips").jqxButton('disabled')) return;
+                        if (CurrentRowEquips !== undefined) {
+                            $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 145, width: 500, position: 'center' }));
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('InspectionActEquips/Update')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    ActEquip_id: CurrentRowEquips.ActEquip_id
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $("#BodyInspectionActDialog").html(Res.html);
+                                    $('#InspectionActDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
+                    
+                    $("#btnRefreshEquips").on('click', function() {
+                        $("#GridEquips").jqxGrid('updatebounddata');
+                    });
+                    
+                    $("#btnDelEquips").on('click', function(){
+                        if ($("#btnDelEquips").jqxButton('disabled')) return;
+                        if (CurrentRowEquips !== undefined) {
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('InspectionActEquips/Delete')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    ActEquip_id: CurrentRowEquips.ActEquip_id,
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    if (Res.result == 1) {
+                                        CurrentRowEquips = undefined;
+                                        FirstStartEquips = true;
+                                        $("#btnRefreshEquips").click();
+                                    }
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
                     
                     break;
             };
@@ -323,6 +536,13 @@
 </div>
 <div class="al-row">
     <div class="al-row-column"><input type="button" id='btnEdit' value='Изменить'/></div>
+    <div class="al-row-column"><div id='chbROMTO' >Согласовано РОМТО</div></div>
+    <div class="al-row-column"><div id='chbRGI' >Согласовано РГИ</div></div>
+    <div class="al-row-column" style="float: right">
+        <div class="al-row-column"><input type="button" id='btnPrint' value='Печать'/></div>
+        <div class="al-row-column"><input type="button" id='btnROMTO' value='Согласовано РОМТО'/></div>
+        <div class="al-row-column"><input type="button" id='btnRGI' value='Согласовано РГИ'/></div>
+    </div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row" style="height: calc(100% - 286px)">
@@ -358,6 +578,8 @@
                     <div class="al-row-column"><input type="button" id="btnAddEquips" value="Добавить"/></div>
                     <div class="al-row-column"><input type="button" id="btnEditEquips" value="Изменить"/></div>
                     <div class="al-row-column"><input type="button" id="btnRefreshEquips" value="Обновить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnExportEquips" value="Экспорт"/></div>
+                    <div class="al-row-column"><input type="button" id="btnMonitoringEquips" value="Мониторинг"/></div>
                     <div class="al-row-column" style="float: right"><input type="button" id="btnDelEquips" value="Удалить"/></div>
                     <div style="clear: both"></div>
                 </div>
