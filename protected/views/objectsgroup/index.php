@@ -295,6 +295,8 @@
                         $('#content5').html(data);
                     if (index == 5)
                         $('#content6').html(data);
+                    if (index == 6)
+                        $('#content7').html(data);
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -308,6 +310,8 @@
                         $('#content5').html(Res.responseText);
                     if (index == 5)
                         $('#content6').html(Res.responseText);
+                    if (index == 6)
+                        $('#content7').html(Res.responseText);
                 }
             });
         
@@ -347,6 +351,9 @@
                     break;
                 case 5:
                     loadPage('<?php echo Yii::app()->createUrl('ObjectsGroupCostCalculations/index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 5);
+                    break;
+                case 6:
+                    loadPage('<?php echo Yii::app()->createUrl('SalesDepClients/History', array('Form_id' => "$model->PropForm_id")) ?>', 6);
                     break;
             }
         };
@@ -466,6 +473,13 @@ $this->breadcrumbs=array(
                 </div>
             </div>
         </li>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                    История
+                </div>
+            </div>
+        </li>
     </ul>
     <div style="overflow: auto; height: calc(100% - 2px); background-color: #F2F2F2;">
         <div style="overflow: auto; padding: 5px 10px 0;">
@@ -559,6 +573,12 @@ $this->breadcrumbs=array(
     <div id='content6' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
         <div style="width: 100%; height: 100%"></div>
     </div>
+    
+    <div id='content7' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
+        <div style="width: 100%; height: 100%"></div>
+    </div>
+    
+    
 </div>
 
 <div id="ObjectsGroupDialog" style="display: none;">

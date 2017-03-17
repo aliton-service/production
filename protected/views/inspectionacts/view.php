@@ -442,6 +442,477 @@
                     });
                     
                     break;
+                    case 1:
+                        var CurrentRowRemarks;
+                        var FirstStartRemarks = true;
+
+                        var DisabledRemarksControls = function() {
+                            $('#btnAddRemarks').jqxButton({disabled: true});
+                            $('#btnEditRemarks').jqxButton({disabled: true});
+                            $('#btnRefreshRemarks').jqxButton({disabled: true});
+                            $('#btnDelRemarks').jqxButton({disabled: true});
+                        };
+
+                        var CheckRemarksButton = function() {
+                            $('#btnAddRemarks').jqxButton({disabled: false});
+                            $('#btnEditRemarks').jqxButton({disabled: (CurrentRowRemarks == undefined)});
+                            $('#btnRefreshRemarks').jqxButton({disabled: false});
+                            $('#btnDelRemarks').jqxButton({disabled: (CurrentRowRemarks == undefined)});
+                        };
+
+                        $('#btnAddRemarks').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnEditRemarks').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnRefreshRemarks').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnDelRemarks').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        
+                        var DataActRemarks = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInspActRemarks), { async: true,
+                            formatData: function (data) {
+                                        $.extend(data, {
+                                            Filters: ["r.Inspection_id = " + InspAct.Inspection_id]
+                                        });
+                                        return data;
+                                    },
+                            beforeSend: function(jqXHR, settings) {
+                                DisabledRemarksControls();
+                            }
+                        });
+
+                        $("#GridRemarks").on('rowselect', function (event) {
+                            CurrentRowRemarks = $('#GridRemarks').jqxGrid('getrowdata', event.args.rowindex);
+                            CheckRemarksButton();
+                        });
+
+                        $("#GridRemarks").on("bindingcomplete", function (event) {
+                            if (InspAct.Remark_id !== 0) {
+                                Aliton.SelectRowById('Remark_id', InspAct.Remark_id, '#GridRemarks', false);
+                                return;
+                            }
+
+                            if (CurrentRowRemarks != undefined) {
+                                Aliton.SelectRowById('Remark_id', CurrentRowRemarks.Remark_id, '#GridRemarks', false);
+                            }
+                            else {
+                                if (FirstStartRemarks) {
+                                    $('#GridRemarks').jqxGrid('selectrow', 0);
+                                    $('#GridRemarks').jqxGrid('ensurerowvisible', 0);
+                                    FirstStartRemarks = false;
+
+                                }
+                            }
+
+                            var DataInformation = $('#GridRemarks').jqxGrid('getdatainformation');
+                            if (DataInformation.rowscount == 0)
+                                CheckRemarksButton();
+                        });
+
+                        $("#GridRemarks").jqxGrid(
+                            $.extend(true, {}, GridDefaultSettings, {
+                                height: 'calc(100% - 2px)',
+                                width: 'calc(100% - 2px)',
+                                showfilterrow: false,
+                                source: DataActRemarks, 
+                                autoshowfiltericon: true,
+                                pagesizeoptions: ['10', '200', '500', '1000'],
+                                pagesize: 200,
+                                virtualmode: true,
+                                columns:
+                                    [
+                                        { text: 'Номер', datafield: 'Remark_id', width: 100},
+                                        { text: 'Дата', filtertype: 'range', datafield: 'DateCreate', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
+                                        { text: 'Сотрудник', datafield: 'ShortName', width: 150},
+                                        { text: 'Замечание', datafield: 'Remark', width: 400},
+                                    ]
+                        }));
+
+                        $("#btnAddRemarks").on('click', function(){
+                            if ($("#btnAddRemarks").jqxButton('disabled')) return;
+                            if (InspAct.Inspection_id !== null) {
+                                $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 165, width: 500, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActRemarks/Create')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Inspection_id: InspAct.Inspection_id
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyInspectionActDialog").html(Res.html);
+                                        $('#InspectionActDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+
+                        $("#btnEditRemarks").on('click', function(){
+                            if ($("#btnEditRemarks").jqxButton('disabled')) return;
+                            if (CurrentRowRemarks !== undefined) {
+                                $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 165, width: 500, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActRemarks/Update')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Remark_id: CurrentRowRemarks.Remark_id
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyInspectionActDialog").html(Res.html);
+                                        $('#InspectionActDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+
+                        $("#btnRefreshRemarks").on('click', function() {
+                            $("#GridRemarks").jqxGrid('updatebounddata');
+                        });
+
+                        $("#btnDelRemarks").on('click', function(){
+                            if ($("#btnDelRemarks").jqxButton('disabled')) return;
+                            if (CurrentRowRemarks !== undefined) {
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActRemarks/Delete')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Remark_id: CurrentRowRemarks.Remark_id,
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        if (Res.result == 1) {
+                                            CurrentRowRemarks = undefined;
+                                            FirstStartRemarks = true;
+                                            $("#btnRefreshRemarks").click();
+                                        }
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+                    break
+                    case 2:
+                        var CurrentRowRecommendations;
+                        var FirstStartRecommendations = true;
+
+                        var DisabledRecommendationsControls = function() {
+                            $('#btnAddRecommendations').jqxButton({disabled: true});
+                            $('#btnEditRecommendations').jqxButton({disabled: true});
+                            $('#btnRefreshRecommendations').jqxButton({disabled: true});
+                            $('#btnDelRecommendations').jqxButton({disabled: true});
+                        };
+
+                        var CheckRecommendationsButton = function() {
+                            $('#btnAddRecommendations').jqxButton({disabled: false});
+                            $('#btnEditRecommendations').jqxButton({disabled: (CurrentRowRecommendations == undefined)});
+                            $('#btnRefreshRecommendations').jqxButton({disabled: false});
+                            $('#btnDelRecommendations').jqxButton({disabled: (CurrentRowRecommendations == undefined)});
+                        };
+
+                        $('#btnAddRecommendations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnEditRecommendations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnRefreshRecommendations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnDelRecommendations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        
+                        var DataActRecommendations = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInspActRecommendations), { async: true,
+                            formatData: function (data) {
+                                        $.extend(data, {
+                                            Filters: ["r.Inspection_id = " + InspAct.Inspection_id]
+                                        });
+                                        return data;
+                                    },
+                            beforeSend: function(jqXHR, settings) {
+                                DisabledRecommendationsControls();
+                            }
+                        });
+
+                        $("#GridRecommendations").on('rowselect', function (event) {
+                            CurrentRowRecommendations = $('#GridRecommendations').jqxGrid('getrowdata', event.args.rowindex);
+                            CheckRecommendationsButton();
+                        });
+
+                        $("#GridRecommendations").on("bindingcomplete", function (event) {
+                            if (InspAct.Recommendation_id !== 0) {
+                                Aliton.SelectRowById('Recommendation_id', InspAct.Recommendation_id, '#GridRecommendations', false);
+                                return;
+                            }
+
+                            if (CurrentRowRecommendations != undefined) {
+                                Aliton.SelectRowById('Recommendation_id', CurrentRowRecommendations.Recommendation_id, '#GridRecommendations', false);
+                            }
+                            else {
+                                if (FirstStartRecommendations) {
+                                    $('#GridRecommendations').jqxGrid('selectrow', 0);
+                                    $('#GridRecommendations').jqxGrid('ensurerowvisible', 0);
+                                    FirstStartRecommendations = false;
+
+                                }
+                            }
+
+                            var DataInformation = $('#GridRecommendations').jqxGrid('getdatainformation');
+                            if (DataInformation.rowscount == 0)
+                                CheckRecommendationsButton();
+                        });
+
+                        $("#GridRecommendations").jqxGrid(
+                            $.extend(true, {}, GridDefaultSettings, {
+                                height: 'calc(100% - 2px)',
+                                width: 'calc(100% - 2px)',
+                                showfilterrow: false,
+                                source: DataActRecommendations, 
+                                autoshowfiltericon: true,
+                                pagesizeoptions: ['10', '200', '500', '1000'],
+                                pagesize: 200,
+                                virtualmode: true,
+                                columns:
+                                    [
+                                        { text: 'Номер', datafield: 'Recommendation_id', width: 100},
+                                        { text: 'Дата', filtertype: 'range', datafield: 'DateCreate', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
+                                        { text: 'Сотрудник', datafield: 'ShortName', width: 150},
+                                        { text: 'Рекомендация', datafield: 'Recommendation', width: 400},
+                                    ]
+                        }));
+
+                        $("#btnAddRecommendations").on('click', function(){
+                            if ($("#btnAddRecommendations").jqxButton('disabled')) return;
+                            if (InspAct.Inspection_id !== null) {
+                                $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 165, width: 500, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActRecommendations/Create')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Inspection_id: InspAct.Inspection_id
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyInspectionActDialog").html(Res.html);
+                                        $('#InspectionActDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+
+                        $("#btnEditRecommendations").on('click', function(){
+                            if ($("#btnEditRecommendations").jqxButton('disabled')) return;
+                            if (CurrentRowRecommendations !== undefined) {
+                                $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 165, width: 500, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActRecommendations/Update')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Recommendation_id: CurrentRowRecommendations.Recommendation_id
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyInspectionActDialog").html(Res.html);
+                                        $('#InspectionActDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+
+                        $("#btnRefreshRecommendations").on('click', function() {
+                            $("#GridRecommendations").jqxGrid('updatebounddata');
+                        });
+
+                        $("#btnDelRecommendations").on('click', function(){
+                            if ($("#btnDelRecommendations").jqxButton('disabled')) return;
+                            if (CurrentRowRecommendations !== undefined) {
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActRecommendations/Delete')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Recommendation_id: CurrentRowRecommendations.Recommendation_id,
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        if (Res.result == 1) {
+                                            CurrentRowRecommendations = undefined;
+                                            FirstStartRecommendations = true;
+                                            $("#btnRefreshRecommendations").click();
+                                        }
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+                    break;
+                    case 3:
+                        var CurrentRowOptions;
+                        var FirstStartOptions = true;
+
+                        var DisabledOptionsControls = function() {
+                            $('#btnAddOptions').jqxButton({disabled: true});
+                            $('#btnEditOptions').jqxButton({disabled: true});
+                            $('#btnRefreshOptions').jqxButton({disabled: true});
+                            $('#btnDelOptions').jqxButton({disabled: true});
+                        };
+
+                        var CheckOptionsButton = function() {
+                            $('#btnAddOptions').jqxButton({disabled: false});
+                            $('#btnEditOptions').jqxButton({disabled: (CurrentRowOptions == undefined)});
+                            $('#btnRefreshOptions').jqxButton({disabled: false});
+                            $('#btnDelOptions').jqxButton({disabled: (CurrentRowOptions == undefined)});
+                        };
+
+                        $('#btnAddOptions').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnEditOptions').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnRefreshOptions').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        $('#btnDelOptions').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                        
+                        var DataActOptions = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInspActOptions), { async: true,
+                            formatData: function (data) {
+                                        $.extend(data, {
+                                            Filters: ["r.Inspection_id = " + InspAct.Inspection_id]
+                                        });
+                                        return data;
+                                    },
+                            beforeSend: function(jqXHR, settings) {
+                                DisabledOptionsControls();
+                            }
+                        });
+
+                        $("#GridOptions").on('rowselect', function (event) {
+                            CurrentRowOptions = $('#GridOptions').jqxGrid('getrowdata', event.args.rowindex);
+                            CheckOptionsButton();
+                        });
+
+                        $("#GridOptions").on("bindingcomplete", function (event) {
+                            if (InspAct.Option_id !== 0) {
+                                Aliton.SelectRowById('Option_id', InspAct.Option_id, '#GridOptions', false);
+                                return;
+                            }
+
+                            if (CurrentRowOptions != undefined) {
+                                Aliton.SelectRowById('Option_id', CurrentRowOptions.Option_id, '#GridOptions', false);
+                            }
+                            else {
+                                if (FirstStartOptions) {
+                                    $('#GridOptions').jqxGrid('selectrow', 0);
+                                    $('#GridOptions').jqxGrid('ensurerowvisible', 0);
+                                    FirstStartOptions = false;
+
+                                }
+                            }
+
+                            var DataInformation = $('#GridOptions').jqxGrid('getdatainformation');
+                            if (DataInformation.rowscount == 0)
+                                CheckOptionsButton();
+                        });
+
+                        $("#GridOptions").jqxGrid(
+                            $.extend(true, {}, GridDefaultSettings, {
+                                height: 'calc(100% - 2px)',
+                                width: 'calc(100% - 2px)',
+                                showfilterrow: false,
+                                source: DataActOptions, 
+                                autoshowfiltericon: true,
+                                pagesizeoptions: ['10', '200', '500', '1000'],
+                                pagesize: 200,
+                                virtualmode: true,
+                                columns:
+                                    [
+                                        { text: 'Номер', datafield: 'Option_id', width: 100},
+                                        { text: 'Дата', filtertype: 'range', datafield: 'DateCreate', width: 130, cellsformat: 'dd.MM.yyyy HH:mm' },
+                                        { text: 'Сотрудник', datafield: 'ShortName', width: 150},
+                                        { text: 'Варианты модернизаций', datafield: 'Option', width: 400},
+                                    ]
+                        }));
+
+                        $("#btnAddOptions").on('click', function(){
+                            if ($("#btnAddOptions").jqxButton('disabled')) return;
+                            if (InspAct.Inspection_id !== null) {
+                                $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 165, width: 500, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActOptions/Create')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Inspection_id: InspAct.Inspection_id
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyInspectionActDialog").html(Res.html);
+                                        $('#InspectionActDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+
+                        $("#btnEditOptions").on('click', function(){
+                            if ($("#btnEditOptions").jqxButton('disabled')) return;
+                            if (CurrentRowOptions !== undefined) {
+                                $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 165, width: 500, position: 'center' }));
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActOptions/Update')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Option_id: CurrentRowOptions.Option_id
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        $("#BodyInspectionActDialog").html(Res.html);
+                                        $('#InspectionActDialog').jqxWindow('open');
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+
+                        $("#btnRefreshOptions").on('click', function() {
+                            $("#GridOptions").jqxGrid('updatebounddata');
+                        });
+
+                        $("#btnDelOptions").on('click', function(){
+                            if ($("#btnDelOptions").jqxButton('disabled')) return;
+                            if (CurrentRowOptions !== undefined) {
+                                $.ajax({
+                                    url: <?php echo json_encode(Yii::app()->createUrl('InspActOptions/Delete')) ?>,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        Option_id: CurrentRowOptions.Option_id,
+                                    },
+                                    success: function(Res) {
+                                        Res = JSON.parse(Res);
+                                        if (Res.result == 1) {
+                                            CurrentRowOptions = undefined;
+                                            FirstStartOptions = true;
+                                            $("#btnRefreshOptions").click();
+                                        }
+                                    },
+                                    error: function(Res) {
+                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                    }
+                                });
+                            }
+                        });
+                    break;
             };
                     
         };
@@ -586,15 +1057,45 @@
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px; height: calc(100% - 20px)">
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridRemarks"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type="button" id="btnAddRemarks" value="Добавить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnEditRemarks" value="Изменить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnRefreshRemarks" value="Обновить"/></div>
+                    <div class="al-row-column" style="float: right"><input type="button" id="btnDelRemarks" value="Удалить"/></div>
+                    <div style="clear: both"></div>
+                </div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px; height: calc(100% - 20px)">
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridRecommendations"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type="button" id="btnAddRecommendations" value="Добавить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnEditRecommendations" value="Изменить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnRefreshRecommendations" value="Обновить"/></div>
+                    <div class="al-row-column" style="float: right"><input type="button" id="btnDelRecommendations" value="Удалить"/></div>
+                    <div style="clear: both"></div>
+                </div>
             </div>
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px; height: calc(100% - 20px)">
+            <div style="padding: 10px; height: 100%">
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="GridOptions"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column"><input type="button" id="btnAddOptions" value="Добавить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnEditOptions" value="Изменить"/></div>
+                    <div class="al-row-column"><input type="button" id="btnRefreshOptions" value="Обновить"/></div>
+                    <div class="al-row-column" style="float: right"><input type="button" id="btnDelOptions" value="Удалить"/></div>
+                    <div style="clear: both"></div>
+                </div>
             </div>
         </div>
     </div>

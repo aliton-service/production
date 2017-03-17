@@ -38,6 +38,26 @@
                 return data;
             },
         });
+        
+        var ValuableInstructionsAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceValuableInstructions, {
+            filter: function () {
+                $("#ValuableInstructionsGrid").jqxGrid('updatebounddata', 'filter');
+            },
+            sort: function () {
+                $("#ValuableInstructionsGrid").jqxGrid('updatebounddata', 'sort');
+            },
+            beforeSend: function(jqXHR, settings) {
+                //DisabledControls();
+            }
+        }), {
+            formatData: function (data) {
+//                $.extend(data, {
+//                    Filters: ["isNull(d.StatusOP, 0) = 1"],
+//                });
+                return data;
+            },
+        });
+        
         $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#edFiltering').on('click', function(){
@@ -77,6 +97,12 @@
                     if ($("#cmbExecutor").val() != '') $("#ReservActionsGrid").jqxGrid('addfilter', 'ResponsibleName', ExecutorFilterGroup);
                     
                     $('#ReservActionsGrid').jqxGrid({source: ReservDiaryActionsAdapter});
+                    break;
+                case 2:
+                    $('#ValuableInstructionsGrid').jqxGrid('removefilter', 'ShortName', false);
+                    if ($("#cmbExecutor").val() != '') $("#ValuableInstructionsGrid").jqxGrid('addfilter', 'ShortName', ExecutorFilterGroup);
+                    
+                    $('#ValuableInstructionsGrid').jqxGrid({source: ValuableInstructionsAdapter});
                     break;
             };
             
