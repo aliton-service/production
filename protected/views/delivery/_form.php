@@ -101,6 +101,32 @@
                     $("#edEditContactInfo").jqxComboBox({source: DataContactInfo});
                 }
             }
+            else {return; }
+            var ObjectGr_id = Aliton.FindArray(DataAddress.records, 'Object_id', value);
+            ObjectGr_id = ObjectGr_id['ObjectGr_id'];
+            
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Delivery/GetMaster')); ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    ObjectGr_id: ObjectGr_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        console.log(Res.html[0].Master);
+                        if (DeliveryDemands.Mstr_id != null) 
+                            $("#edEditMaster").jqxComboBox("val", DeliveryDemands.Mstr_id);
+                        else
+                            $("#edEditMaster").jqxComboBox('val', Res.html[0].Master);
+                    }
+                        
+                }
+            });
+            
+            
+            
         });
         $("#edEditAddress").on('bindingComplete', function(event){
             if (DeliveryDemands.Objc_id != '') $("#edEditAddress").jqxComboBox('val', DeliveryDemands.Objc_id);
