@@ -41,7 +41,7 @@
         $('#EmployeesDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '780px', width: '740', position: 'center'}));
         
         $('#btnAddEmpl').on('click', function(){
-            $('#EmployeesDialog').jqxWindow({height: '780px', width: '740', position: 'center'});
+            $('#EmployeesDialog').jqxWindow({height: '700px', width: '740', position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Employees/Create')) ?>,
                 type: 'POST',
@@ -55,7 +55,7 @@
         
         $('#btnEditEmpl').on('click', function(){
             if (CurrentRowData.Employee_id != undefined) {
-                $('#EmployeesDialog').jqxWindow({height: '780px', width: '740', position: 'center'});
+                $('#EmployeesDialog').jqxWindow({height: '710px', width: '740', position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('Employees/Update')) ?>,
                     type: 'POST',

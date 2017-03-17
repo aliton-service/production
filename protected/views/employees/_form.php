@@ -79,35 +79,35 @@
         
         $("#edEmployeeName").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "ФИО", width: 400}));
         $("#edPosition").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPositions, width: '290', height: '25px', displayMember: "PositionName", valueMember: "Position_id"}));
-        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.DateEnd, formatString: 'dd.MM.yyyy',}));
-        $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.DateStart, formatString: 'dd.MM.yyyy',}));
-        $("#edBirthday").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.Birthday, formatString: 'dd.MM.yyyy',}));
+        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Employee.DateEnd, formatString: 'dd.MM.yyyy',}));
+        $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Employee.DateStart, formatString: 'dd.MM.yyyy',}));
+        $("#edBirthday").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Employee.Birthday, formatString: 'dd.MM.yyyy',}));
         $("#edJuridicalPerson").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridiclas, width: '290', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"}));
-        $("#edCerDateIn").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.CerDateIn, formatString: 'dd.MM.yyyy',}));
-        $("#edDateBegin").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.DateBegin, formatString: 'dd.MM.yyyy',}));
-        $("#edCerDateOut").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.CerDateOut, formatString: 'dd.MM.yyyy',}));
+        $("#edCerDateIn").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Employee.CerDateIn, formatString: 'dd.MM.yyyy',}));
+        $("#edDateBegin").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Employee.DateBegin, formatString: 'dd.MM.yyyy',}));
+        $("#edCerDateOut").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Employee.CerDateOut, formatString: 'dd.MM.yyyy',}));
         $("#edSection").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSections, width: '180', height: '25px', displayMember: "SectionName", valueMember: "Section_id"}));
-        $("#edDepartment").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataDepartments, width: '180', height: '25px', displayMember: "DepName", valueMember: "Dep_id"}));
+        $("#edDepartment").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataDepartments, width: '340', height: '25px', displayMember: "DepName", valueMember: "Dep_id"}));
         $("#edTerrit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataTerritory, width: '180', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id"}));
         $("#edTelHomeEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Дом. тел.", width: 200}));
         $("#edTelOtherEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Другие тел.", width: 200}));
         $("#edTelWorkEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Рабочий тел.", width: 200}));
         $("#edWorkEmailEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Рабочий E-mail", width: 200}));
         $("#edEmailEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Личный E-mail", width: 200}));
-        $("#edDateTrial").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.DateTrial, formatString: 'dd.MM.yyyy',}));
+        $("#edDateTrial").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Employee.DateTrial, formatString: 'dd.MM.yyyy',}));
         $("#edAddressEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Адрес", width: 335}));
-        $("#edPriorResult").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.Prior_result, formatString: 'dd.MM.yyyy',}));
-        $("#edBypassList").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.BypassList, formatString: 'dd.MM.yyyy',}));
-        $("#edDate_motivation").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Employee.Date_motivation, formatString: 'dd.MM.yyyy',}));
-        $("#edRegion").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataRegions, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"}));
-        $("#edArea").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAreas, width: '100', height: '25px', displayMember: "AreaName", valueMember: "Area_id"}));
-        $("#edStreet").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataStreets, width: '180', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}));
-        $("#edHouse").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Дом", width: 80}));
-        $("#edCorp").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Корпус", width: 80}));
+        $("#edPriorResult").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 160, value: Employee.Prior_result, formatString: 'dd.MM.yyyy',}));
+        $("#edBypassList").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 190, value: Employee.BypassList, formatString: 'dd.MM.yyyy',}));
+        $("#edDate_motivation").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: Employee.Date_motivation, formatString: 'dd.MM.yyyy',}));
+        $("#edRegion").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataRegions, width: '130', height: '25px', displayMember: "RegionName", valueMember: "Region_id"}));
+        $("#edArea").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataAreas, width: '120', height: '25px', displayMember: "AreaName", valueMember: "Area_id"}));
+        $("#edStreet").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataStreets, width: '200', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}));
+        $("#edHouse").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Дом", width: 60}));
+        $("#edCorp").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Корпус", width: 60}));
         $("#edApartment").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Помещение", width: 80}));
-        $('#edNoteEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 230, minLength: 1}));
-        $('#edDocumentsEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 580, minLength: 1}));
-        $('#edInformationEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 230, minLength: 1}));
+        $('#edNoteEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 250, minLength: 1}));
+        $('#edDocumentsEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 610, minLength: 1}));
+        $('#edInformationEdit').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 50, width: 253, minLength: 1}));
         $('#btnSaveEmpl').jqxButton({ width: 120, height: 30 });
         $('#btnCancelEmpl').jqxButton({ width: 120, height: 30 });
         
@@ -250,7 +250,7 @@
 <div class="row">
     <div class="row-column">Дата окон. исп. срока:</div>
     <div class="row-column"><div name="Employees[DateTrial]" id="edDateTrial"></div></div>
-    <div class="row-column">Адрес</div>
+    <div class="row-column">Адрес:</div>
     <div class="row-column"><input name="Employees[Address]" id="edAddressEdit" /></div>
 </div>
 <div class="row">
@@ -264,29 +264,29 @@
     <div class="row-column" style="width: 220px; float: right;"><div name="Employees[Date_motivation]" id="edDate_motivation"></div></div>
 </div> 
 <div class="row" style="margin: 0px;">
-    <div class="row-column" style="width: 100px;">Регион</div>
-    <div class="row-column" style="width: 100px;">Район</div>
-    <div class="row-column" style="width: 180px;">Улица</div>
-    <div class="row-column" style="width: 80px;">Дом</div>
-    <div class="row-column" style="width: 80px;">Корпус</div>
+    <div class="row-column" style="width: 130px;">Регион</div>
+    <div class="row-column" style="width: 120px;">Район</div>
+    <div class="row-column" style="width: 200px;">Улица</div>
+    <div class="row-column" style="width: 60px;">Дом</div>
+    <div class="row-column" style="width: 60px;">Корпус</div>
     <div class="row-column" style="width: 80px;">Помещение</div>
 </div>
 <div class="row" style="margin: 0px;">
-    <div class="row-column" style="width: 100px;"><div name="Employees[Region_id]" id="edRegion"></div></div>
-    <div class="row-column" style="width: 100px;"><div name="Employees[Area_id]" id="edArea"></div></div>
-    <div class="row-column" style="width: 180px;"><div name="Employees[Street_id]" id="edStreet"></div></div>
-    <div class="row-column" style="width: 80px;"><input name="Employees[House]" id="edHouse" /></div>
-    <div class="row-column" style="width: 80px;"><input name="Employees[Corp]" id="edCorp" /></div>
+    <div class="row-column" style="width: 130px;"><div name="Employees[Region_id]" id="edRegion"></div></div>
+    <div class="row-column" style="width: 120px;"><div name="Employees[Area_id]" id="edArea"></div></div>
+    <div class="row-column" style="width: 200px;"><div name="Employees[Street_id]" id="edStreet"></div></div>
+    <div class="row-column" style="width: 60px;"><input name="Employees[House]" id="edHouse" /></div>
+    <div class="row-column" style="width: 60px;"><input name="Employees[Corp]" id="edCorp" /></div>
     <div class="row-column" style="width: 80px;"><input name="Employees[Apartment]" id="edApartment" /></div>
 </div>
 <div class="row">
-    <div class="row-column" style="width: 100px;">Документы:</div>
+    <div class="row-column" style="width: 82px;">Документы:</div>
     <div class="row-column"><textarea id="edDocumentsEdit" name="Employees[Documents]"></textarea></div>
 </div> 
-<div class="row" style="margin: 0px;">
-    <div class="row-column" style="width: 100px;">Примечание:</div>
+<div class="row">
+    <div class="row-column" style="width: 82px;">Примечание:</div>
     <div class="row-column"><textarea id="edNoteEdit" name="Employees[Note]"></textarea></div>
-    <div class="row-column" style="width: 100px;">Информация:</div>
+    <div class="row-column" style="width: 85px;">Информация:</div>
     <div class="row-column"><textarea id="edInformationEdit" name="Employees[Information]"></textarea></div>
 </div>
 <div class="row">
