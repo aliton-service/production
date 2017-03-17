@@ -1,6 +1,6 @@
 <?php
 
-class InspectionActEquipsController extends Controller
+class InspActEquipCharacteristicsController extends Controller
 {
     public $layout = '//layouts/column2';
     public $title = '';
@@ -16,20 +16,20 @@ class InspectionActEquipsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'view'),
-                    'roles'=>array('ViewInspectionActEquips'),
+                    'actions'=>array('Index', 'view'),
+                    'roles'=>array('ViewInspActEquipCharacteristics'),
             ),
             array('allow', 
                     'actions'=>array('create'),
-                    'roles'=>array('CreateInspectionActEquips'),
+                    'roles'=>array('CreateInspActEquipCharacteristics'),
             ),
             array('allow', 
                     'actions'=>array('update'),
-                    'roles'=>array('UpdateInspectionActEquips'),
+                    'roles'=>array('UpdateInspActEquipCharacteristics'),
             ),
             array('allow', 
                     'actions'=>array('delete'),
-                    'roles'=>array('DeleteInspectionActEquips'),
+                    'roles'=>array('DeleteInspActEquipCharacteristics'),
             ),
             array('deny',  // deny all users
                     'users'=>array('*'),
@@ -39,22 +39,23 @@ class InspectionActEquipsController extends Controller
 
     public function actionCreate()
     {
-        $model = new InspectionActEquips();
+        $model = new InspActEquipCharacteristics();
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
         
-        if (isset($_POST['Inspection_id']))
-            $model->Inspection_id = $_POST['Inspection_id'];
+        if (isset($_POST['ActEquip_id'])) {
+            $model->ActEquip_id = $_POST['ActEquip_id'];
+        }
         
-        if (isset($_POST['InspectionActEquips'])) {
-            $model->attributes = $_POST['InspectionActEquips'];
+        if (isset($_POST['InspActEquipCharacteristics'])) {
+            $model->attributes = $_POST['InspActEquipCharacteristics'];
             if ($model->validate()) {
                 $Res = $model->Insert();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['ActEquip_id'];
+                $ObjectResult['id'] = $Res['Characteristic_id'];
                 echo json_encode($ObjectResult);
                 return;
             } 
@@ -69,22 +70,22 @@ class InspectionActEquipsController extends Controller
 
     public function actionUpdate()
     {
-        $model = new InspectionActEquips();
+        $model = new InspActEquipCharacteristics();
         $ObjectResult = array(
                 'result' => 0,
                 'id' => 0,
                 'html' => '',
             );
-        if (isset($_POST['ActEquip_id']))
-            $model->getModelPk($_POST['ActEquip_id']);
+        if (isset($_POST['Characteristic_id']))
+            $model->getModelPk($_POST['Characteristic_id']);
 
-        if (isset($_POST['InspectionActEquips'])) {
-            $model->getModelPk($_POST['InspectionActEquips']['ActEquip_id']);
-            $model->attributes = $_POST['InspectionActEquips'];
+        if (isset($_POST['InspActEquipCharacteristics'])) {
+            $model->getModelPk($_POST['InspActEquipCharacteristics']['Characteristic_id']);
+            $model->attributes = $_POST['InspActEquipCharacteristics'];
             if ($model->validate()) {
                 $model->Update();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->ActEquip_id;
+                $ObjectResult['id'] = $model->Characteristic_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -104,13 +105,13 @@ class InspectionActEquipsController extends Controller
                 'html' => '',
             );
         
-        if (isset($_POST['ActEquip_id'])) {
-            $model = new InspectionActEquips();
-            $model->getModelPk($_POST['ActEquip_id']);
+        if (isset($_POST['Characteristic_id'])) {
+            $model = new InspActEquipCharacteristics();
+            $model->getModelPk($_POST['Characteristic_id']);
             if ($model->validate()) {
                 $model->delete();
                 $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $model->ActEquip_id;
+                $ObjectResult['id'] = $model->Characteristic_id;
                 echo json_encode($ObjectResult);
                 return;
             }
@@ -120,10 +121,25 @@ class InspectionActEquipsController extends Controller
 
     public function actionIndex()
     {
-        $this->title = 'Просмотр подразделений';
-        $this->render('index');
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['ActEquip_id'])) {
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            $ObjectResult['html'] = $this->renderPartial('index', array(
+                'ActEquip_id' => $_POST['ActEquip_id'],
+            ), true);
+            
+        }
+        echo json_encode($ObjectResult);
     }
 }
+
+
 
 
 

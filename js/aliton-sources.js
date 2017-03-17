@@ -4708,6 +4708,7 @@ Sources.SourceInspectionActEquips =
         {name: 'EquipName', type: 'string'},
         {name: 'Quant', type: 'float'},
         {name: 'UmName', type: 'string'},
+        {name: 'Characteristics', type: 'string'},
         {name: 'DateCreate', type: 'date'},
         {name: 'EmplCreate', type: 'int'},
         {name: 'DateChange', type: 'date'},
@@ -4715,6 +4716,143 @@ Sources.SourceInspectionActEquips =
     ],
     id: 'ActEquip_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InspectionActEquips',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceInspActEquipCharacteristics =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Characteristic_id', type: ''},
+        {name: 'ActEquip_id', type: ''},
+        {name: 'CharacteristicName', type: ''},
+        {name: 'EmplCreate', type: ''},
+        {name: 'DateCreate', type: ''},
+        {name: 'EmplChange', type: ''},
+        {name: 'DateChange', type: ''},
+    ],
+    id: 'Characteristic_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InspActEquipCharacteristics',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceInspActRemarks =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Remark_id', type: 'int'},
+        {name: 'Inspection_id', type: 'int'},
+        {name: 'Remark', type: 'string'},
+        {name: 'DateCreate', type: 'date'},
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'ShortName', type: 'string'},
+        {name: 'DateChange', type: 'date'},
+        {name: 'EmplChange', type: 'int'},
+    ],
+    id: 'Remark_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InspActRemarks',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceInspActRecommendations =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Recommendation_id', type: 'int'},
+        {name: 'Inspection_id', type: 'int'},
+        {name: 'Recommendation', type: 'string'},
+        {name: 'DateCreate', type: 'date'},
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'ShortName', type: 'string'},
+        {name: 'DateChange', type: 'date'},
+        {name: 'EmplChange', type: 'int'},
+    ],
+    id: 'Recommendation_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InspActRecommendations',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceInspActOptions =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Option_id', type: 'int'},
+        {name: 'Inspection_id', type: 'int'},
+        {name: 'Option', type: 'string'},
+        {name: 'DateCreate', type: 'date'},
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'ShortName', type: 'string'},
+        {name: 'DateChange', type: 'date'},
+        {name: 'EmplChange', type: 'int'},
+    ],
+    id: 'Option_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=InspActOptions',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceValuableInstructions =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Instruction_id', type: 'int'},
+        {name: 'Form_id', type: 'int'},
+        {name: 'Demand_id', type: 'int'},
+        {name: 'Empl_id', type: 'int'},
+        {name: 'ShortName', type: 'string'},
+        {name: 'DatePlanExec', type: 'date'},
+        {name: 'Instruction', type: 'string'},
+        {name: 'Executor_id', type: 'int'},
+        {name: 'ExecutorShortName', type: ''},
+        {name: 'DateExec', type: 'date'},
+        {name: 'Note', type: 'string'},
+        {name: 'DateCreate', type: 'date'},
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'CreatorShortName', type: 'string'},
+        {name: 'DateChange', type: 'date'},
+        {name: 'EmplChange', type: 'int'},
+    ],
+    id: 'Instruction_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ValuableInstructions',
     type: 'POST',
     root: 'Rows',
     cache: false,

@@ -8,6 +8,7 @@ class InspectionActEquips extends MainFormModel
     public $EquipName;
     public $Quant;
     public $UmName;
+    public $Characteristics;
     public $DateCreate;
     public $EmplCreate;
     public $DateChange;
@@ -27,6 +28,9 @@ class InspectionActEquips extends MainFormModel
                         e.EquipName,
                         a.Quant,
                         u.NameUnitMeasurement as UmName,
+                        (SELECT CASE WHEN MIN(c.CharacteristicName) IS NULL THEN '()' ELSE '(' + MIN(c.CharacteristicName) + ', ...)' END AS Expr1
+                               FROM            dbo.InspActEquipCharacteristics AS c
+                               WHERE        (a.ActEquip_id = c.ActEquip_id) AND (c.DelDate IS NULL)) AS Characteristics,
                         a.DateCreate,
                         a.EmplCreate,
                         a.DateChange,

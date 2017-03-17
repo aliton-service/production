@@ -16,7 +16,7 @@ class InspectionActsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'view', 'getmodel'),
+                    'actions'=>array('index', 'view', 'getmodel', 'Agreed'),
                     'roles'=>array('ViewInspectionActs'),
             ),
             array('allow', 
@@ -159,6 +159,32 @@ class InspectionActsController extends Controller
     {
         $this->title = 'Просмотр подразделений';
         $this->render('index');
+    }
+    
+    public function actionAgreed() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['InspectionActs'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'AGREE_InspectionActs';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['InspectionActs']['Inspection_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->Parameters[2]['Value'] = $_POST['InspectionActs']['Type'];
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
     }
 }
 

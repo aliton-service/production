@@ -242,6 +242,16 @@ return array_merge(
     include(dirname(__FILE__).'/security/InspectionActsSecurity.php'),
     /* Оборудование акта обследования */
     include(dirname(__FILE__).'/security/InspectionActEquipsSecurity.php'),        
+    /* Характеристики оборудования по актам обследования */    
+    include(dirname(__FILE__).'/security/InspActEquipCharacteristicsSecurity.php'),
+    /* Замечания по актам обследования */    
+    include(dirname(__FILE__).'/security/InspActRemarksSecurity.php'),
+    /* Рекомендации */    
+    include(dirname(__FILE__).'/security/InspActRecommendationsSecurity.php'),
+    /* Варианты модернизаций */    
+    include(dirname(__FILE__).'/security/InspActOptionsSecurity.php'),
+    /* Ценные указания */    
+    include(dirname(__FILE__).'/security/ValuableInstructionsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -1032,6 +1042,11 @@ return array_merge(
                 'ManagerSalesDepClients',
                 'ManagerInspectionActs',
                 'ManagerInspectionActEquips',
+                'ManagerInspActEquipCharacteristics',
+                'ManagerInspActRemarks',
+                'ManagerInspActRecommendations',
+                'ManagerInspActOptions',
+                'ManagerValuableInstructions',
                 
                 /* Отчеты */
                 'DemandsReportAll',

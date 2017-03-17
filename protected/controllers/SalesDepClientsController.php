@@ -17,7 +17,7 @@ class SalesDepClientsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('Diary, Statistics'),
+                    'actions'=>array('Diary', 'Statistics', 'History'),
                     'roles'=>array('DiarySalesDepClients'),
             ),
             array('allow',
@@ -25,12 +25,15 @@ class SalesDepClientsController extends Controller
                     'roles'=>array('ViewDemands'),
             ),
             array('allow',
-                    'actions'=>array('index, StatisticsInfo'),
+                    'actions'=>array('index', 'StatisticsInfo'),
                     'roles'=>array('ViewSalesDepClients'),
             ),
             array('allow',
                     'actions'=>array('SelectObjects'),
                     'roles'=>array('SelectObjects'),
+            ),
+            array('deny',  // deny all users
+                    'users'=>array('*'),
             ),
         );
     }
@@ -64,6 +67,14 @@ class SalesDepClientsController extends Controller
         $this->title = 'Клиенты - реестр';
         $this->gridFilters = '_filters';
         $this->render('index');
+    }
+    
+    public function actionHistory()
+    {
+        if (isset($_GET['Form_id']))
+            $this->renderPartial('history', array(
+                'Form_id' => $_GET['Form_id'],
+            ));
     }
     
     public function actionSetSalesManager() {

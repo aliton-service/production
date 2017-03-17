@@ -84,10 +84,11 @@
                     $('#btnProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnAddValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     
                     $('#btnProgress').on('click', function() {
                         $("#DiaryHeaderText").html("Ход работы");
-
+                        $('#DiaryDialog').jqxWindow({ height: 600, width: 1000});    
                         $.ajax({
                             url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Index')) ?>,
                             type: 'POST',
@@ -95,6 +96,31 @@
                             data: {
                                 Form_id: ActionsGridCurrentRow.Form_id,
                                 Demand_id: ActionsGridCurrentRow.Demand_id
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyDiaryDialog").html(Res.html);
+                                $('#DiaryDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
+                    
+                    $('#btnAddValuableInstruction').on('click', function() {
+                        $('#DiaryDialog').jqxWindow({ height: 370, width: 600});
+                        $("#DiaryHeaderText").html("Ценные указания");
+
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ValuableInstructions/Create')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Params: {
+                                    Form_id: ActionsGridCurrentRow.Form_id,
+                                    Demand_id: ActionsGridCurrentRow.Demand_id
+                                }
                             },
                             success: function(Res) {
                                 Res = JSON.parse(Res);
@@ -145,6 +171,58 @@
                     $('#btnReservAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnReservExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#edFiltering').click();
+                    break;
+                case 2:
+                    var InstructionsGridCurrentRow;
+                    $("#ValuableInstructionsGrid").on('rowselect', function (event) {
+                        InstructionsGridCurrentRow = $('#ValuableInstructionsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
+                    $("#ValuableInstructionsGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
+                            showfilterrow: false,
+                            autoshowfiltericon: true,
+                            pagesizeoptions: ['10', '200', '500', '1000'],
+                            pagesize: 200,
+                            virtualmode: true,
+                            columns:
+                                [
+                                    { text: 'Дата', filtertype: 'date', datafield: 'DateCreate', width: 110, cellsformat: 'dd.MM.yyyy'},
+                                    { text: 'Получатель', datafield: 'ShortName', width: 150},
+                                    { text: 'План. дата вып.', filtertype: 'date', datafield: 'DatePlanExec', width: 110, cellsformat: 'dd.MM.yyyy'},
+                                    { text: 'Содержание ЦУ', datafield: 'Instruction', width: 250},
+                                    { text: 'Комментарии к вып. ЦУ', datafield: 'Note', width: 250},
+                                    { text: 'Автор', datafield: 'CreatorShortName', width: 150},
+                                    { text: 'Факт дата вып.', filtertype: 'date', datafield: 'DateExec', width: 110, cellsformat: 'dd.MM.yyyy'},
+                                ]
+                    }));
+                    
+                    $('#btnEditValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnDelValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#edFiltering').click();
+                    
+                    $('#btnEditValuableInstruction').on('click', function() {
+                        $("#DiaryHeaderText").html("Ценные указания");
+                        $('#DiaryDialog').jqxWindow({ height: 650, width: 900});
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ValuableInstructions/Update')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Instruction_id: InstructionsGridCurrentRow.Instruction_id,
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyDiaryDialog").html(Res.html);
+                                $('#DiaryDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
                     break;
             }
         };
@@ -217,6 +295,7 @@
                         <div class="al-row-column"><input type="button" id="btnProgress" value="Ход работы"/></div>
                         <div class="al-row-column"><input type="button" id="btnAddAction" value="Действие"/></div>
                         <div class="al-row-column"><input type="button" id="btnExport" value="Экспорт"/></div>
+                        <div class="al-row-column"><input type="button" id="btnAddValuableInstruction" value="Добавить ЦУ"/></div>
                     </div>
                     <div style="clear: both"></div>
                 </div>
@@ -240,7 +319,16 @@
         </div>
         <div style="overflow: hidden;">
             <div style="padding: 10px; height: 100%">
-                
+                <div class="al-row" style="height: calc(100% - 62px)">
+                    <div id="ValuableInstructionsGrid"></div>
+                </div>
+                <div class="al-row">
+                    <div class="al-row-column">
+                        <div class="al-row-column"><input type="button" id="btnEditValuableInstruction" value="Изменить ЦУ"/></div>
+                        <div class="al-row-column"><input type="button" id="btnDelValuableInstruction" value="Удалить ЦУ"/></div>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
             </div>
         </div>
     </div>
