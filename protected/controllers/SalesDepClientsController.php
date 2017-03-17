@@ -71,10 +71,20 @@ class SalesDepClientsController extends Controller
     
     public function actionHistory()
     {
-        if (isset($_GET['Form_id']))
+        if (isset($_GET['Form_id'])) {
+            $History = new SQLQuery();
+            $History->setSelect("\nSelect
+                                        h.*");
+            $History->setFrom("\nFrom HistoryClients_v h");
+            $History->setWhere("\nWhere h.Form_id = " . $_GET['Form_id']);
+            $History->setOrder("\nOrder by h.Date");
+            $History = $History->QueryAll();
+            
             $this->renderPartial('history', array(
                 'Form_id' => $_GET['Form_id'],
+                'History' => $History,
             ));
+        }
     }
     
     public function actionSetSalesManager() {
