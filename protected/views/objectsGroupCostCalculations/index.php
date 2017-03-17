@@ -30,28 +30,91 @@
         $("#NoteCostCalculations").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '100%' }));
         
         $("#dropDownBtnCostCalculations").on('open', function(){
-            $('#btnAddKP').jqxButton({disabled: true});
             $('#btnAddSmeta').jqxButton({disabled: true});
             $('#btnAddDopSmeta').jqxButton({disabled: true});
             if (CurrentCostCalcRowData != undefined) {
-                if (CurrentCostCalcRowData.count_type0 == 0)
-                    $('#btnAddKP').jqxButton({disabled: false});
                 if (CurrentCostCalcRowData.count_type0 == 1 && CurrentCostCalcRowData.count_type1 == 0) 
                     $('#btnAddSmeta').jqxButton({disabled: false});
+                
                 if (CurrentCostCalcRowData.count_type0 == 1 && CurrentCostCalcRowData.count_type1 == 1) 
                     $('#btnAddDopSmeta').jqxButton({disabled: false});
             }
         });
         
         $("#dropDownBtnCostCalculations").jqxDropDownButton({initContent: function(){
-                $('#btnAddKP').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: '242px', disabled: true}));
-                $('#btnAddSmeta').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: '242px', disabled: true}));
-                $('#btnAddDopSmeta').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: '242px', disabled: true}));
+                $('#btnAddSmeta').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: '162px', disabled: true}));
+                $('#btnAddDopSmeta').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: '162px', disabled: true}));
+                
+                $('#btnAddSmeta').on('click', function(){
+                    if (CurrentCostCalcRowData.count_type0 == 1 && CurrentCostCalcRowData.count_type1 == 0) {
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Add')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Params: {
+                                    cgrp_id: CurrentCostCalcRowData.cgrp_id,
+                                    type: 1
+                                }
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                if (Res.result == 1)
+                                    window.open(<?php echo json_encode(Yii::app()->createUrl('CostCalculations/Index')); ?> + "&calc_id=" + Res.id);
+//                                    location.href =<?php // echo json_encode(Yii::app()->createUrl('CostCalculations/Index')); ?> + '&calc_id=' + Res.id;
+                                else
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                            }
+                        });
+                    } else {
+                        if (CostCalculations.count_type0 == 0) 
+                            Aliton.ShowErrorMessage('Ошибка', 'В этом проекте нет подтвержденного коммерческого предложения');
+                        if (CostCalculations.count_type1 > 0) 
+                            Aliton.ShowErrorMessage('Ошибка', 'В этом проекте уже создана смета');
+                    }
+
+                });
+                
+                $('#btnAddDopSmeta').on('click', function(){
+                    if (CurrentCostCalcRowData.count_type0 == 1 && CurrentCostCalcRowData.count_type1 == 1) {
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Add')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Params: {
+                                    cgrp_id: CurrentCostCalcRowData.cgrp_id,
+                                    type: 2
+                                }
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                if (Res.result == 1)
+                                    window.open(<?php echo json_encode(Yii::app()->createUrl('CostCalculations/Index')); ?> + "&calc_id=" + Res.id);
+//                                    location.href =<?php // echo json_encode(Yii::app()->createUrl('CostCalculations/Index')); ?> + '&calc_id=' + Res.id;
+                                else
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                            }
+                        });
+                    } else {
+                        if (CostCalculations.count_type1 == 0) 
+                            Aliton.ShowErrorMessage('Ошибка', 'В этом нет сметы');
+                    }
+
+                });
             }
         });
        
         
-        $("#dropDownBtnCostCalculations").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: false, width: 240, height: 22 }));
+        $("#dropDownBtnCostCalculations").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: false, width: 160, height: 22, dropDownVerticalAlignment: 'top' }));
         
         var dropDownBtnCostCalculations = '<div style="position: relative; margin-left: 3px; text-align: center; margin-top: 2px;">Создать</div>';
         $("#dropDownBtnCostCalculations").jqxDropDownButton('setContent', dropDownBtnCostCalculations);
@@ -80,11 +143,11 @@
             });
         };
         
-        $('#btnRefreshCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {imgSrc: '/images/11.png'}));
-        $('#btnCopyCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, imgSrc: '/images/10.png'}));
-        $('#btnEditCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {imgSrc: '/images/4.png'}));
-        $('#btnAnnulCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160, imgSrc: '/images/3.png'}));
-        $('#btnCopyBuffer').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 230}));
+        $('#btnRefreshCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 110, imgSrc: '/images/11.png'}));
+        $('#btnCopyCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 120, imgSrc: '/images/10.png'}));
+        $('#btnEditCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 100, imgSrc: '/images/4.png'}));
+        $('#btnAnnulCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, imgSrc: '/images/3.png'}));
+        $('#btnCopyBuffer').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 200}));
         
         $('#btnCopyBuffer').on('click', function() {
             var Calc_id = getCookie("CopyCostCalc_Calc_id");
@@ -397,12 +460,11 @@
     <div class="row-column">
         <div id='jqxWidget'>
             <div style='float: left;' id="dropDownBtnCostCalculations">
-                <!-- <div style="border: none;" id='jqxTreeCostCalculations'> -->
-                <div style="padding: 2px"><input type="button" id="btnAddKP" value="Коммерческое предложение"/></div>
-                <div style="clear: both"></div>
-                <div style="padding: 2px"><input type="button" id="btnAddSmeta" value="Смета"/></div>
-                <div style="clear: both"></div>
-                <div style="padding: 2px"><input type="button" id="btnAddDopSmeta" value="Доп. смета"/></div>
+                <div style="border: none;" id='jqxTreeCostCalculations'> 
+                    <div style="padding: 2px"><input type="button" id="btnAddSmeta" value="Смета"/></div>
+                    <div style="clear: both"></div>
+                    <div style="padding: 2px"><input type="button" id="btnAddDopSmeta" value="Доп. смета"/></div>
+                </div>
             </div>
         </div>
     </div>
