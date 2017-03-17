@@ -81,8 +81,8 @@
                         else
                             $("#edServiceEdit").jqxComboBox({source: Res.html, selectedIndex: 0});
                         
-                            $("#edJuridicalEdit").jqxComboBox('val', Res.html[0].Jrdc_id);
-                            $('#edClientEdit').jqxInput('val', Res.html[0].FullName);
+                        $("#edJuridicalEdit").jqxComboBox('val', Res.html[0].Jrdc_id);
+                        $('#edClientEdit').jqxInput('val', Res.html[0].FullName);
                     }
                         
                 }

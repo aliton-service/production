@@ -18,7 +18,7 @@ class DeliveryController extends Controller
     {
         return array(
                 array('allow',  // allow all users to perform 'index' and 'view' actions
-                        'actions'=>array('View', 'Index', 'GetDeadline', 'GetModel', 'GetComments'),
+                        'actions'=>array('View', 'Index', 'GetDeadline', 'GetModel', 'GetComments', 'GetMaster'),
                         'roles'=>array('ViewDeliveryDemands'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -255,6 +255,29 @@ class DeliveryController extends Controller
         }
         
         echo json_encode($Result);
+    }
+    
+    public function actionGetMaster() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['ObjectGr_id'])) {
+            $q = new SQLQuery();
+            $q->setSelect("Select
+                                c.ContrS_id,
+                                c.Master
+                            From Contracts_v c
+                            Where c.ObjectGr_id = " . $_POST['ObjectGr_id'] . " and c.DocType_id = 4");
+            $Res = $q->QueryAll();
+            $ObjectResult['result'] = 1;
+            $ObjectResult['html'] = $Res;
+        }
+        
+        echo json_encode($ObjectResult);
+        return;
     }
     
 }
