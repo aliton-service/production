@@ -34,6 +34,8 @@
             BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
 
+        $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
+        
         if (DeliveryDemands.DialogId == '' || DeliveryDemands.DialogId == null) {
             DeliveryDemands.DialogId = 'EditDeliveryDemandDialog';
             DeliveryDemands.BodyDialogId = 'BodyDeliveryDemDialog';
@@ -184,7 +186,7 @@
         $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '540px', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
         $("#edEditPhoneNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
         $("#edEditText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
-        $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
+        
         $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
 
         $('#btnDeliveryDemCancel').on('click', function(){
