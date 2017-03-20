@@ -186,7 +186,17 @@
                                 [
                                     { text: 'Номер', datafield: 'Number', width: 100},
                                     { text: 'Наименование', datafield: 'FullName', width: 250},
-                                    { text: 'Заявки', datafield: 'Demands', width: 100},
+                                    { text: 'Заявки', datafield: 'Demands', width: 100,
+                                        cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties) {
+                                                if (value == '')
+                                                    return '<div style=\'float: left; width: 100%\'>' + value + '</div>';
+                                                else
+                                                    return '<div style=\'float: left; width: 80%\'>' + value + '</div>\n\
+                                                            <div style=\'float: left; width: 20%\'>\n\
+                                                                <button onclick=\'$("#btnViewDemands").click();\' style=\'float: right; margin-top: 4px;\'>...</button>\n\
+                                                            </div>';
+                                            } 
+                                        },
                                     { text: 'Адрес', datafield: 'Address', width: 300},
                                     { text: 'МПОПР', datafield: 'SalesManager', width: 150},
                                     { text: 'Сегмент', datafield: 'SegmentName', width: 100},

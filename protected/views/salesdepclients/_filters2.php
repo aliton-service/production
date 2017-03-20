@@ -45,6 +45,9 @@
 
 <div id="GroupFilters">
     <div class="al-row">
+        
+    </div>
+    <div class="al-row">
         <input type="button" value="Фильтр" id="edFiltering"/>
     </div>
 </div>    

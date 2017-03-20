@@ -32,6 +32,10 @@ class SalesDepClientsController extends Controller
                     'actions'=>array('SelectObjects'),
                     'roles'=>array('SelectObjects'),
             ),
+            array('allow',
+                    'actions'=>array('SetSalesManager'),
+                    'roles'=>array('SetSalesManager'),
+            ),
             array('deny',  // deny all users
                     'users'=>array('*'),
             ),
