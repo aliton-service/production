@@ -14,7 +14,7 @@
         }), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["isNull(d.StatusOP, 0) <> 1"],
+                    Filters: ["isNull(d.StatusOP, 0) <> 1 and er.NextDate <> '01.01.2999'"],
                 });
                 return data;
             },
@@ -33,7 +33,7 @@
         }), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["isNull(d.StatusOP, 0) = 1"],
+                    Filters: ["(isNull(d.StatusOP, 0) = 1 or er.NextDate = '01.01.2999' )"],
                 });
                 return data;
             },

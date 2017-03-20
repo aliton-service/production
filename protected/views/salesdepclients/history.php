@@ -1,6 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var Form_id = <?php echo json_encode($Form_id); ?>;
+        var History = <?php echo json_encode($History); ?>;
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
@@ -58,6 +59,21 @@
                     }));
                     break;
                 case 1:
+                    for (var i = 0; i < History.length; i++) {
+                        $("#HistoryBlock").append("<div style=\"height: 50px; margin: 0 auto; border-left: 1px solid #000000; width: 1px;\"></div><a target=\"_blank\" href=\"" + History[i]['Href'] + "\">" +
+                        "<div style=\"border: 1px solid #000000; margin: 0 auto; width: 300px; padding: 5px\">" +
+                        "<div>" +
+                        "<div class=\"al-row-column\">" + History[i]['Date']+ "</div>" +
+                        "<div class=\"al-row-column\">|</div>" +
+                        "<div class=\"al-row-column\">" + History[i]['EmplName'] + "</div>" +
+                        "<div style=\"clear: both\"></div>" +
+                        "</div>" +
+                        "<div>" +
+                        "<div class=\"al-row-column\">" + History[i]['Operation'] + "</div>" +
+                        "<div style=\"clear: both\"></div>" +
+                        "</div>" +
+                        "</div></a>");
+                    }
                     break;
             };
         };
@@ -84,8 +100,23 @@
                 <div id="HistoryDemandsGrid"></div>
             </div>
         </div>
-        <div style="overflow: hidden;">
-            <div style="padding: 10px;">123</div>
+        <div style="overflow: hidden; padding: 10px;">
+            <div style="text-align: center; height: calc(100% - 20px); overflow: auto" id="HistoryBlock">
+                
+<!--                <div style="border: 1px solid #000000; margin: 0 auto; width: 300px; padding: 5px">
+                    <div>
+                        <div class="al-row-column">10.01.2017 13:47</div>
+                        <div class="al-row-column">|</div>
+                        <div class="al-row-column">Мазур С.А.</div>
+                        <div style="clear: both"></div>        
+                    </div>
+                    <div>
+                        <div class="al-row-column">Создание клиента</div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>-->
+                </a>
+            </div>
         </div>
     </div>
 </div>    
