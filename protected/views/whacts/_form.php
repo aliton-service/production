@@ -74,7 +74,7 @@
                 success: function(Res) {
                     Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        console.log(Res.html[0]);
+//                        console.log(Res.html[0]);
                         $("#edServiceEdit").jqxComboBox({source: Res.html});
                         if (Acts2.Cntr_id != null)
                             $("#edServiceEdit").jqxComboBox('val', Acts2.Cntr_id);

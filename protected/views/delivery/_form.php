@@ -115,7 +115,7 @@
                 success: function(Res) {
                     Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        console.log(Res.html[0].Master);
+//                        console.log(Res.html[0].Master);
                         if (DeliveryDemands.Mstr_id != null) 
                             $("#edEditMaster").jqxComboBox("val", DeliveryDemands.Mstr_id);
                         else
@@ -267,7 +267,7 @@
 <input type="hidden" name="DeliveryDemands[repr_id]" value="<?php echo $model->repr_id; ?>" />
 <input type="hidden" name="DeliveryDemands[dmnd_id]" value="<?php echo $model->dmnd_id; ?>" />
 
-<div class="row">
+<div class="row" style="margin-top: 0;">
     <div class="row-column">
         <div>Номер</div>
         <div><input readonly="readonly" name="DeliveryDemands[dldm_id]" id="edEditDldm_id" type="text" /></div>

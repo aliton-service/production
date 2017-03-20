@@ -365,7 +365,7 @@
                         });
                         
                         $('#btnAddDelivery').on('click', function(){
-                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '430px', width: '740'}));
+                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '470px', width: '800'}));
                             $.ajax({
                                 url: "<?php echo Yii::app()->createUrl('Delivery/Insert');?>",
                                 type: 'POST',
