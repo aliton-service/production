@@ -339,7 +339,7 @@
                         
                         $('#btnAddRepair').on('click', function() {
                             if ($('#btnAddRepair').jqxButton('disabled')) return;
-                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 640, width: 780, position: 'center' }));
+                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 670, width: 780, position: 'center' }));
                             $.ajax({
                                 url: <?php echo json_encode(Yii::app()->createUrl('Repair/Create')) ?>,
                                 type: 'POST',
@@ -365,7 +365,7 @@
                         });
                         
                         $('#btnAddDelivery').on('click', function(){
-                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '430px', width: '740'}));
+                            $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '470px', width: '800'}));
                             $.ajax({
                                 url: "<?php echo Yii::app()->createUrl('Delivery/Insert');?>",
                                 type: 'POST',
@@ -388,7 +388,7 @@
                         });
                         
                         $('#btnAddTreb').on('click', function() {
-                            $('#CostCalculationsDialog').jqxWindow({width: 700, height: 500, position: 'center', isModal: true});
+                            $('#CostCalculationsDialog').jqxWindow({width: 700, height: 540, position: 'center', isModal: true});
                             var CurrentDate = new Date();
                             var CurrentDateStr = '';
                             CurrentDateStr = CurrentDate.getDay() + '.' + (CurrentDate.getMonth() + 1) + '.' + CurrentDate.getFullYear();

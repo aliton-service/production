@@ -34,6 +34,8 @@
             BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
 
+        $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
+        
         if (DeliveryDemands.DialogId == '' || DeliveryDemands.DialogId == null) {
             DeliveryDemands.DialogId = 'EditDeliveryDemandDialog';
             DeliveryDemands.BodyDialogId = 'BodyDeliveryDemDialog';
@@ -115,7 +117,7 @@
                 success: function(Res) {
                     Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        console.log(Res.html[0].Master);
+//                        console.log(Res.html[0].Master);
                         if (DeliveryDemands.Mstr_id != null) 
                             $("#edEditMaster").jqxComboBox("val", DeliveryDemands.Mstr_id);
                         else
@@ -130,6 +132,8 @@
         });
         $("#edEditAddress").on('bindingComplete', function(event){
             if (DeliveryDemands.Objc_id != '') $("#edEditAddress").jqxComboBox('val', DeliveryDemands.Objc_id);
+        });
+        $("#edEditMaster").on('bindingComplete', function(event){
             $("#btnDeliveryDemOk").jqxButton({disabled: false});
         });
         $("#edEditContactInfo").on('select', function(event){
@@ -182,7 +186,7 @@
         $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '540px', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
         $("#edEditPhoneNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
         $("#edEditText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
-        $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
+        
         $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
 
         $('#btnDeliveryDemCancel').on('click', function(){
@@ -267,7 +271,7 @@
 <input type="hidden" name="DeliveryDemands[repr_id]" value="<?php echo $model->repr_id; ?>" />
 <input type="hidden" name="DeliveryDemands[dmnd_id]" value="<?php echo $model->dmnd_id; ?>" />
 
-<div class="row">
+<div class="row" style="margin-top: 0;">
     <div class="row-column">
         <div>Номер</div>
         <div><input readonly="readonly" name="DeliveryDemands[dldm_id]" id="edEditDldm_id" type="text" /></div>
