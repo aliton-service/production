@@ -4588,7 +4588,7 @@ Sources.SourceClientDemands =
         {name: 'OtherName', type: 'string'},
         {name: 'ObjectGr_id', type: 'int'},
     ],
-    id: 'Demand_id',
+    id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=ClientDemands',
     type: 'POST',
     root: 'Rows',
