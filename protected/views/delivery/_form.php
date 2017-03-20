@@ -130,6 +130,8 @@
         });
         $("#edEditAddress").on('bindingComplete', function(event){
             if (DeliveryDemands.Objc_id != '') $("#edEditAddress").jqxComboBox('val', DeliveryDemands.Objc_id);
+        });
+        $("#edEditMaster").on('bindingComplete', function(event){
             $("#btnDeliveryDemOk").jqxButton({disabled: false});
         });
         $("#edEditContactInfo").on('select', function(event){
