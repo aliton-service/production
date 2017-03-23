@@ -24,7 +24,8 @@
             NextDate: Aliton.DateConvertToJs('<?php echo $model->NextDate; ?>'),
             Responsible_id: <?php echo json_encode($model->Responsible_id); ?>,
             NextAction: <?php echo json_encode($model->NextAction); ?>,
-            NextContactInfo: <?php echo json_encode($model->NextContactInfo); ?>
+            NextContactInfo: <?php echo json_encode($model->NextContactInfo); ?>,
+            StatusOP: <?php echo json_encode($model->StatusOP); ?>
         };
     
         var DataContactInfo = <?php echo json_encode($ContactInfo); ?>;
@@ -70,7 +71,8 @@
         $("#cmbContactInfoEdit").jqxComboBox({ source: DataContactInfo, width: '240', height: '25px', displayMember: "CName", valueMember: "Info_id"});
         $("#cmbContactInfoEdit").jqxComboBox('val', Action.ContactInfo_id);
         $("#cmbStatusOPEdit").jqxComboBox({ source: [{id: 1, name: 'Холодный'}, {id: 2, name: 'Теплый'}, {id: 3, name: 'Горячий'}, {id: 4, name: 'Хронический'}], width: '150', height: '25px', displayMember: "name", valueMember: "id"});
-        
+        $("#cmbStatusOPEdit").jqxComboBox('val', Action.StatusOP);
+                
         var initWidgets = function(tab) {
             switch (tab) {
                 case 0:
@@ -353,6 +355,8 @@
         $('#btnCancelAction').on('click', function() {
             if ($('#ActionsDialog').length>0)
                 $('#ActionsDialog').jqxWindow('close');
+            if ($('#EditFormDialog').length>0)
+                $('#EditFormDialog').jqxWindow('close');
         });
         
         
@@ -499,11 +503,19 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
-                        $('#ActionsDialog').jqxWindow('close');
+                        if ($('#ActionsDialog').length>0) {
+                            Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
+                            $('#ActionsDialog').jqxWindow('close');
+                        }
+                        
+                        if ($('#EditFormDialog').length>0)
+                            $('#EditFormDialog').jqxWindow('close');
                     }
                     else {
-                        $('#BodyActionsDialog').html(Res.html);
+                        if ($('#ActionsDialog').length>0) 
+                            $('#BodyActionsDialog').html(Res.html);
+                        if ($('#EditFormDialog').length>0) 
+                            $('#BodyEditFormDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {
@@ -576,7 +588,7 @@
     </div>
     <div class="al-row-column">
         <div style="text-align: center">Статус ОП</div>
-        <div><div id="cmbStatusOPEdit"></div></div>
+        <div><div id="cmbStatusOPEdit" name="ClientActions[StatusOP]"></div></div>
     </div>
     <div style="clear: both"></div>
 </div>

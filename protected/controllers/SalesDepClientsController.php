@@ -17,7 +17,7 @@ class SalesDepClientsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('Diary', 'Statistics', 'History'),
+                    'actions'=>array('Diary', 'Statistics', 'History', 'Instruct'),
                     'roles'=>array('DiarySalesDepClients'),
             ),
             array('allow',
@@ -28,6 +28,11 @@ class SalesDepClientsController extends Controller
                     'actions'=>array('index', 'StatisticsInfo'),
                     'roles'=>array('ViewSalesDepClients'),
             ),
+            array('allow',
+                    'actions'=>array('AttachObjects'),
+                    'roles'=>array('AttachObjects'),
+            ),
+            
             array('allow',
                     'actions'=>array('SelectObjects'),
                     'roles'=>array('SelectObjects'),
@@ -40,6 +45,19 @@ class SalesDepClientsController extends Controller
                     'users'=>array('*'),
             ),
         );
+    }
+    
+    public function actionInstruct() {
+        $Query = new SQLQuery();
+        $Query->setSelect("\nSelect Count(vi.Instruction_id) as CIN");
+        $Query->setFrom("\nFrom ValuableInstructions vi");
+        $Query->setWhere("\nWhere vi.DelDate is Null
+                                and vi.DateExec is Null
+                                and vi.DatePlanExec <= dbo.truncdate(GETDATE())
+                                and vi.Executor_id = " . Yii::app()->user->Employee_id);
+        
+        $R = $Query->QueryRow();
+        echo json_encode($R);
     }
 
     public function actionStatisticsInfo() {

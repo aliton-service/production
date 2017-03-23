@@ -8,6 +8,7 @@
             DateReg: Aliton.DateConvertToJs('<?php echo $model->DateReg; ?>'),
             Object_id: <?php echo json_encode($model->Object_id); ?>,
             ObjectGr_id: <?php echo $model->ObjectGr_id; ?>,
+            PropForm_id: <?php echo $model->PropForm_id; ?>,
             Address: <?php echo json_encode($model->Address); ?>,
             StageName: <?php echo json_encode($model->StageName); ?>,
             DIFF_STR: <?php echo json_encode($model->DIFF_STR); ?>,
@@ -121,26 +122,30 @@
                                 { text: '№ Заявки', datafield: 'demand_id', width: 80},
                             ]
                     }));
-                    $("#edComment").jqxInput({height: 25, width: 'calc(100% - 6px)', minLength: 1});
-                    $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: '120px', dropDownVerticalAlignment: "top"}));
-                    $("#btnSend").jqxButton({ width: 120, height: 30 });
-                    $("#btnDelComment").jqxButton({ width: 120, height: 30 });
+
                     
-                    $("#edComment").on('keydown', function(event){
-                        if (event.keyCode == 13)
-                            Comment();
-                        return true;
-                    });
-                    $("#btnSend").on('click', function(){
-                        Comment();
-                    });
-                    $("#btnDelComment").on('click', function(){
-                        if (CurrentRowDataER == undefined) return;
-                        if (CurrentRowDataER.empl_id != <?php echo json_encode(Yii::app()->user->Employee_id); ?>) return;
-                        if (Aliton.DelComment(CurrentRowData.exrp_id)) {
-                            
-                            $("#ProgressGrid").jqxGrid('updatebounddata');
-                        }
+                    $('#btnProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnProgress').on('click', function() {
+                        //$("#DiaryHeaderText").html("Ход работы");
+                        $('#CostCalculationsDialog').jqxWindow({ height: 600, width: 1000});    
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Index')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Form_id: Demand.PropForm_id,
+                                Demand_id: Demand.Demand_id
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                
+                                $("#BodyCostCalculationsDialog").html(Res.html);
+                                $('#CostCalculationsDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
                     });
                     
                     break;
@@ -735,13 +740,13 @@
                 <div id="ProgressGrid"></div>
                 <div style="clear: both;"></div>
                 <div style="height: 30px; margin-top: 5px;">
-                    <div style="float: left; width: calc(100% - 576px)"><input id="edComment" type="text"/></div>
-                    <div style="float: right">
-                        <div style="float: left; margin-left: 6px;">План. дата вып.</div>
+                    
+                        <div style="float: left; margin-left: 6px;"><input type='button' value='Ход работы' id='btnProgress' /></div>
+<!--                        <div style="float: left; margin-left: 6px;">План. дата вып.</div>
                         <div style="float: left; margin-left: 6px;"><div id='edPlanDateExec'></div></div>
                         <div style="float: left; margin-left: 6px;"><input type="button" value="Написать" id='btnSend' /></div>
-                        <div style="float: left; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelComment' /></div>
-                    </div>
+                        <div style="float: left; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelComment' /></div>-->
+                    
                 </div>
             </div>
         </div>

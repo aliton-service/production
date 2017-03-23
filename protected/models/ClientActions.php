@@ -33,6 +33,7 @@ class ClientActions extends MainFormModel
     public $ActionResult_id;
     public $Responsible_id;
     public $NextContactInfo;
+    public $StatusOP;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -73,7 +74,8 @@ class ClientActions extends MainFormModel
                         er.ActionOperation_id,
                         er.ActionResult_id,
                         er.Responsible_id,
-                        er.NextContactInfo";
+                        er.NextContactInfo,
+                        d.StatusOP";
         $From = "\nFrom ExecutorReports er left join ContactTypes ct on (er.ContactType_id = ct.Contact_id)
                         left join ActionStages acs on (er.ActionStage_id = acs.Stage_id)
                         left join Organizations_v p on (er.Form_id = p.Form_id)
@@ -121,7 +123,8 @@ class ClientActions extends MainFormModel
                     ActionStatus_id,
                     ActionOperation_id,
                     ActionResult_id,
-                    Responsible_id', 'safe'),
+                    Responsible_id,
+                    StatusOP', 'safe'),
         );
     }
     
@@ -152,6 +155,7 @@ class ClientActions extends MainFormModel
             'ActionResult_id' => '',
             'Responsible_id' => '',
             'NextContactInfo' => '',
+            'StatusOP' => '',
         );
     }
 }

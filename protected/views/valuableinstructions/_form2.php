@@ -165,6 +165,7 @@
                     if (Res.result == 1) {
                         if ($('#DiaryDialog').length>0) {
                             $('#DiaryDialog').jqxWindow('close');
+                            CheckINS();
                         }
                     }
                     else {

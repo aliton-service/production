@@ -3,6 +3,7 @@
     $(document).ready(function () {
         var ObjectGroup = {
             ObjectGr_id: <?php echo json_encode($model->ObjectGr_id); ?>,
+            PropForm_id: <?php echo json_encode($model->PropForm_id); ?>,
             FullName: <?php echo json_encode($model->FullName); ?>,
             LphName: <?php echo json_encode($model->LphName); ?>,
             Address: <?php echo json_encode($model->Address); ?>,
@@ -107,6 +108,7 @@
             
             $("#ChangeObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             $("#ViewDemandsObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 200}));
+            $("#AddInstructing").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             
             $("#ViewDemandsObjectsGroup").on('click', function () {
                 var Data = {
@@ -114,6 +116,30 @@
                 };
                 
                 window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/Index')); ?> + '&DemFilters[ObjectGr_id]=' + ObjectGroup.ObjectGr_id + '&DemFilters[DemObjectGroup]=true' + '&DemFilters[House]=' + ObjectGroup.House + '&DemFilters[Street_id]=' + ObjectGroup.Street_id);
+            });
+            
+            $("#AddInstructing").on('click', function ()
+            {
+                if (ObjectGroup != undefined) {
+                    $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 600, height: 370, position: 'center'}));
+                    $.ajax({
+                        url: <?php echo json_encode(Yii::app()->createUrl('ValuableInstructions/Create')) ?>,
+                        type: 'POST',
+                        async: false,
+                        data: {
+                            Form_id: ObjectGroup.PropForm_id,
+                            Demand_id: 0
+                        },
+                        success: function(Res) {
+                            Res = JSON.parse(Res);
+                            $("#BodyObjectsGroupDialog").html(Res.html);
+                            $('#ObjectsGroupDialog').jqxWindow('open');
+                        },
+                        error: function(Res) {
+                            Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                        }
+                    });
+                }
             });
             
             $("#ChangeObjectsGroup").on('click', function ()
@@ -539,6 +565,7 @@ $this->breadcrumbs=array(
             <div class="al-row" style="margin: 0;">
                 <div class="al-row-column"><input type="button" value="Изменить" id='ChangeObjectsGroup' /></div>
                 <div class="al-row-column"><input type="button" value="Заявки по объекту" id='ViewDemandsObjectsGroup' /></div>
+                <div class="al-row-column"><input type="button" value="ЦУ" id='AddInstructing' /></div>
             </div>
         </div>
         <div style="padding: 10px; height: calc(100% - 323px)">
