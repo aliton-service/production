@@ -5,6 +5,9 @@
     var DataSourceInfo;
     var DataSubSourceInfo;
     var DataClientStatus;
+    var RC = {
+        Action_id: 0
+    };
     
     $(document).ready(function () {
         var CurrentRowData;
@@ -336,6 +339,8 @@
                 break;
                 case 1:
                     CurrentFormTabs[1] = 0;
+                    var CurrentRowDataAction;
+                    
                     var DataActions = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceClientActions, {}), {
                         formatData: function (data) {
                             var Form_id = 0;
@@ -351,8 +356,30 @@
                         //$('#btnObjectInformation').click();
                     });
                     
+                    $("#ActionsGrid").on('rowselect', function (event) {
+                        CurrentRowDataAction = $('#ActionsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
+                    $("#ActionsGrid").on("bindingcomplete", function (event) {
+                        if (RC.Action_id != 0) {
+                            Aliton.SelectRowByIdVirtual('Exrp_id', RC.Action_id, '#ActionsGrid', false);
+                            RC.Action_id = 0;
+                            return;
+                        }
+                            
+                        if (CurrentRowDataAction != undefined) 
+                            Aliton.SelectRowByIdVirtual('Exrp_id', CurrentRowDataAction.Exrp_id, '#ActionsGrid', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('Exrp_id', null, '#ActionsGrid', false);
+                    });
+                    
                     $('#btnAddAction2').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
                     $('#btnEditAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    $('#btnRefreshActions').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    
+                    $('#btnRefreshActions').on('click', function() {
+                        $('#edFiltering').click();
+                    });
                     
                     $('#btnAddAction2').on('click', function() {
                         if (CurrentRowData == undefined) return;                            
@@ -382,12 +409,12 @@
                         $('#EditFormDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
                         
                         $.ajax({
-                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update')) ?>,
                             type: 'POST',
                             async: false,
                             data: {
                                 Form_id: CurrentRowData.Form_id,
-                                Demand_id: 0,
+                                Exrp_id: CurrentRowDataAction.Exrp_id
                             },
                             success: function(Res) {
                                 Res = JSON.parse(Res);
@@ -471,7 +498,7 @@
                     $('#btnDemandView').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
                     $('#btnDemandView').on('click', function() {
                         if (Demand != undefined)
-                            window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/View')) ?> + "&Demand_id=" + Demand.Demand_id);
+                            window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/SalesView')) ?> + "&Demand_id=" + Demand.Demand_id);
                     });
                 break;
                 case 3:
@@ -611,6 +638,7 @@
                 <div class="al-row">
                     <div class="al-row-column"><input type="button" value="Дейтсвие" id="btnAddAction2" /></div>
                     <div class="al-row-column"><input type="button" value="Изменить" id="btnEditAction" /></div>
+                    <div class="al-row-column"><input type="button" value="Обновить" id="btnRefreshActions" /></div>
                     <div style="clear: both"></div>
                 </div>
             </div>

@@ -88,7 +88,7 @@ class ClientActions extends MainFormModel
                         left join ActionResults ar on (er.ActionResult_id = ar.Result_id)
                         left join Employees e2 on (er.Responsible_id = e2.Employee_id)
                         left join ContactInfo ci on (er.ContactInfo_id = ci.Info_id)";
-        $Order = "\nOrder by er.NextDate desc, er.Exrp_id desc";
+        $Order = "\nOrder by er.Exrp_id desc";
 
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);

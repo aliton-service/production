@@ -508,8 +508,12 @@
                             $('#ActionsDialog').jqxWindow('close');
                         }
                         
-                        if ($('#EditFormDialog').length>0)
+                        if ($('#EditFormDialog').length>0) {
+                            if (typeof(RC) != 'undefined')
+                                RC.Action_id = Res.id;
+                            $('#edFiltering').click();
                             $('#EditFormDialog').jqxWindow('close');
+                        }
                     }
                     else {
                         if ($('#ActionsDialog').length>0) 

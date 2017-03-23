@@ -48,6 +48,11 @@
         });
         
         var Find = function() {
+            
+            var selectedItem = $('#Tabs').jqxTabs('selectedItem'); 
+            
+            
+            
             var SalesManagerFilterGroup = new $.jqx.filter();
             if ($("#chbSalesManager").val() != '') {
                 var FilterSalesManager = SalesManagerFilterGroup.createfilter('stringfilter', '', 'NOT_NULL');
@@ -100,31 +105,40 @@
                 FullNameFilterGroup.addfilter(1, FilterFullName);
             }
             
-            $('#ClientsGrid').jqxGrid('removefilter', 'SalesManager', false);
-            if ($("#chbSalesManager").val() != '' || $("#chbNoSalesManager").val() != '' || $("#cmbSalesManager").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SalesManager', SalesManagerFilterGroup);
+            switch (selectedItem) {
+                case 0:
+                    $('#ClientsGrid').jqxGrid('removefilter', 'SalesManager', false);
+                    if ($("#chbSalesManager").val() != '' || $("#chbNoSalesManager").val() != '' || $("#cmbSalesManager").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SalesManager', SalesManagerFilterGroup);
+
+                    $('#ClientsGrid').jqxGrid('removefilter', 'SegmentName', false);
+                    if ($("#cmbSegment").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SegmentName', SegmentFilterGroup);
+
+                    $('#ClientsGrid').jqxGrid('removefilter', 'SubSegmentName', false);
+                    if ($("#cmbSubSegment").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SubSegmentName', SubSegmentFilterGroup);
+
+                    $('#ClientsGrid').jqxGrid('removefilter', 'SourceInfoName', false);
+                    if ($("#cmbSourceInfo").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SourceInfoName', SourceInfoFilterGroup);
+
+                    $('#ClientsGrid').jqxGrid('removefilter', 'SubSourceInfoName', false);
+                    if ($("#cmbSubSourceInfo").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SubSourceInfoName', SubSourceInfoFilterGroup);
+
+                    $('#ClientsGrid').jqxGrid('removefilter', 'BrandName', false);
+                    if ($("#edBrandName").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'BrandName', BrandNameFilterGroup);
+
+                    $('#ClientsGrid').jqxGrid('removefilter', 'StatusName', false);
+                    if ($("#cmbStatus").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'StatusName', StatusFilterGroup);
+
+                    $('#ClientsGrid').jqxGrid('removefilter', 'FullName', false);
+                    if ($("#edFullName").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'FullName', FullNameFilterGroup);
+
+                    $('#ClientsGrid').jqxGrid({source: ClientsAdapter});
+                break;
+                case 1:
+                    $('#ActionsGrid').jqxGrid('updatebounddata');
+                    break;
+            };
+                  
             
-            $('#ClientsGrid').jqxGrid('removefilter', 'SegmentName', false);
-            if ($("#cmbSegment").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SegmentName', SegmentFilterGroup);
-            
-            $('#ClientsGrid').jqxGrid('removefilter', 'SubSegmentName', false);
-            if ($("#cmbSubSegment").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SubSegmentName', SubSegmentFilterGroup);
-            
-            $('#ClientsGrid').jqxGrid('removefilter', 'SourceInfoName', false);
-            if ($("#cmbSourceInfo").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SourceInfoName', SourceInfoFilterGroup);
-            
-            $('#ClientsGrid').jqxGrid('removefilter', 'SubSourceInfoName', false);
-            if ($("#cmbSubSourceInfo").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'SubSourceInfoName', SubSourceInfoFilterGroup);
-            
-            $('#ClientsGrid').jqxGrid('removefilter', 'BrandName', false);
-            if ($("#edBrandName").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'BrandName', BrandNameFilterGroup);
-            
-            $('#ClientsGrid').jqxGrid('removefilter', 'StatusName', false);
-            if ($("#cmbStatus").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'StatusName', StatusFilterGroup);
-            
-            $('#ClientsGrid').jqxGrid('removefilter', 'FullName', false);
-            if ($("#edFullName").val() != '') $("#ClientsGrid").jqxGrid('addfilter', 'FullName', FullNameFilterGroup);
-            
-            $('#ClientsGrid').jqxGrid({source: ClientsAdapter});
             Statistics.Refresh();
         };
         
