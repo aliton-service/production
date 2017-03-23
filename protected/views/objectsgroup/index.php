@@ -243,7 +243,7 @@
 
             $("#NewContactInfo").on('click', function ()
             {
-                $('#ObjectsGroupDialog').jqxWindow({width: 600, height: 470, position: 'center'});
+                $('#ObjectsGroupDialog').jqxWindow({width: 630, height: 480, position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('ContactInfo/Insert')) ?>,
                     type: 'POST',
