@@ -482,6 +482,7 @@
                         Params: {
                             date: CostCalculations.date,
                             objc_id: CostCalculations.Object_id,
+                            ObjectGr_id: CostCalculations.ObjectGr_id,
                             jrdc_id: CostCalculations.Jrdc_id,
                             wrtp_id: CostCalculations.wrtp_id,
                             calc_id: CostCalculations.calc_id,
