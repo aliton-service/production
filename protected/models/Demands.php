@@ -320,7 +320,7 @@ class Demands extends MainFormModel
 			'DateReg' => 'Date Reg',
 			'DateExec' => 'Date Exec',
 			'DatePrev' => 'Date Prev',
-			'DateMaster' => 'Date Master',
+			'DateMaster' => 'Передано',
 			'RepMaster' => 'Rep Master',
 			'ExecOther' => 'Exec Other',
 			'WorkedOut' => 'WorkedOut',

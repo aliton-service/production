@@ -81,11 +81,11 @@
             return table;
         };
         
-        $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '300', height: '25px', displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: true /*, renderer: EquipRenderer */}));
+        $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '330', height: '25px', displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: true /*, renderer: EquipRenderer */}));
         $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
-        $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', decimalDigits: 4}));
-        $("#edFactQuantEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
+        $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', decimalDigits: 4}));
+        $("#edFactQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px'}));
         $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
         $("#edInvQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
         $("#edInvQuantUsed").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
@@ -133,7 +133,7 @@
         
         var CalcSum = function() {
             var Quant = $("#edQuantEdit").jqxNumberInput('val');
-            var Quant2 = $("#edFactQuantEdit").val();
+            var Quant2 = $("#edFactQuantEdit").jqxNumberInput('val');
             if (Quant2 !== '')
                    Quant = parseFloat(Quant2);
                
@@ -151,14 +151,14 @@
         if (DocmAchsDetail.used != '') $("#edUsedEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.used)));
         if (DocmAchsDetail.ToProduction != '') $("#edToProductionEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.ToProduction)));
         if (DocmAchsDetail.no_price_list != '') $("#edNoPriceListEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.no_price_list)));
-        if (DocmAchsDetail.fact_quant != '') $("#edFactQuantEdit").jqxInput('val', DocmAchsDetail.fact_quant);
+        if (DocmAchsDetail.fact_quant != '') $("#edFactQuantEdit").jqxNumberInput('val', DocmAchsDetail.fact_quant);
         if (DocmAchsDetail.sum != '') $("#edSumEdit").jqxNumberInput('val', DocmAchsDetail.sum);
         
         $('#edQuantEdit').on('valueChanged', function (event) {
             CalcSum();
         });
         
-        $("#edFactQuantEdit").on('keyup', function(event) {
+        $("#edFactQuantEdit").on('valueChanged', function(event) {
             CalcSum();
         });
         
@@ -180,7 +180,7 @@
 <input type="hidden" name="DocmAchsDetails[dadt_id]" value="<?php echo $model->dadt_id; ?>"/>
 <input type="hidden" name="DocmAchsDetails[docm_id]" value="<?php echo $model->docm_id; ?>"/>
 
-<div class="row">
+<div class="row" style="margin: 0;">
     <div class="row-column">
         <div><div class="row-column">Оборудование</div></div>
         <div style="clear: both"></div>
@@ -194,12 +194,12 @@
     <div class="row-column">
         <div><div class="row-column">Количество</div></div>
         <div style="clear: both"></div>
-        <div><div class="row-column"><div type="text" id="edQuantEdit" name="DocmAchsDetails[docm_quant]"></div><?php echo $form->error($model, 'docm_quant'); ?></div></div>
+        <div><div class="row-column"><div id="edQuantEdit" name="DocmAchsDetails[docm_quant]"></div><?php echo $form->error($model, 'docm_quant'); ?></div></div>
     </div>
     <div class="row-column" style="float: right">
         <div><div class="row-column">Цена</div></div>
         <div style="clear: both"></div>
-        <div><div class="row-column"><div type="text" id="edPriceEdit" name="DocmAchsDetails[price]"></div><?php echo $form->error($model, 'price'); ?></div></div>
+        <div><div class="row-column"><div id="edPriceEdit" name="DocmAchsDetails[price]"></div><?php echo $form->error($model, 'price'); ?></div></div>
     </div>
 </div>
 <div class="row">
@@ -208,7 +208,7 @@
     <div class="row-column"><div id="edNoPriceListEdit" name="DocmAchsDetails[no_price_list]">Не учитывать цену</div><?php echo $form->error($model, 'no_price_list'); ?></div>
     <div style="float: right">
         <div class="row-column">Факт. кол-во:</div>
-        <div class="row-column"><input style="text-align: right" type="text" id="edFactQuantEdit" name="DocmAchsDetails[fact_quant]" /><?php echo $form->error($model, 'fact_quant'); ?></div>
+        <div class="row-column"><div id="edFactQuantEdit" name="DocmAchsDetails[fact_quant]"></div><?php echo $form->error($model, 'fact_quant'); ?></div>
     </div>
 </div>
 <div class="row">

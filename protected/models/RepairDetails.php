@@ -15,9 +15,9 @@ class RepairDetails extends MainFormModel
     function __construct() {
         parent::__construct();
         
-        $this->SP_INSERT_NAME = 'INSERT_RepairDetails';
-        $this->SP_UPDATE_NAME = 'UPDATE_RepairDetails';
-        $this->SP_DELETE_NAME = 'DELETE_RepairDetails';
+        $this->SP_INSERT_NAME = 'INSERT_RepairDetails2';
+        $this->SP_UPDATE_NAME = 'UPDATE_RepairDetails2';
+        $this->SP_DELETE_NAME = 'DELETE_RepairDetails2';
         
         $Select = "\ndeclare @prlt_id int = dbo.get_price_list(getdate())
             \nSelect

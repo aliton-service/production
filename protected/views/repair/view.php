@@ -430,7 +430,7 @@
                                     { text: 'Наименование', datafield: 'EquipName', width: 350},
                                     { text: 'Ед. изм.', datafield: 'um_name', width: 60},
                                     { text: 'Требуется', datafield: 'docm_quant', width: 110, cellsformat: 'f2'},
-                                    { text: 'В наличие', datafield: 'fact_quant', width: 110, cellsformat: 'f2'},
+                                    { text: 'В наличии', datafield: 'fact_quant', width: 110, cellsformat: 'f2'},
                                     { text: 'Сумма', datafield: 'summa', width: 110, cellsformat: 'f2'},
                                 ]
                     }));
@@ -868,6 +868,28 @@
                         }
                     });
                     
+                    $("#btnDelDocuments").on('click', function(){
+                        if (CurrentRowDoc !== undefined) {
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('RepairDocs/Delete')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    rpdoc_id: CurrentRowDoc.docid
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    if (Res.result === 1) {
+                                        $('#GridDocuments').jqxGrid('updatebounddata');
+                                    }
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
+                    
                     $("#GridDocuments").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -887,6 +909,7 @@
                                     { text: 'Примечание', datafield: 'note', width: 120},
                                 ]
                     }));
+                    
 
         
         $('#Tabs2').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)'});
@@ -1292,7 +1315,7 @@
     <div class="al-row-column" style="float: right"><input type="button" id="btnPrint" value="Печать"/></div>
     <div style="clear: both"></div>
 </div>
-<div class="al-row" style="height: calc(100% - 394px)">
+<div class="al-row" style=" min-height: 250px; height: calc(100% - 394px);">
     <div id='Tabs2'>
         <ul>
             <li style="margin-left: 30px;">
