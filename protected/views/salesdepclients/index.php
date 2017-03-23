@@ -173,6 +173,13 @@
                         $('#btnObjectInformation').click();
                     });
                     
+                    $("#ClientsGrid").on("bindingcomplete", function (event) {
+                        if (CurrentRowData != undefined) 
+                            Aliton.SelectRowByIdVirtual('Form_id', CurrentRowData.Form_id, '#ClientsGrid', false);
+                        else
+                            Aliton.SelectRowByIdVirtual('Form_id', null, '#ClientsGrid', false);
+                    });
+                    
                     $("#ClientsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -219,11 +226,40 @@
                     $('#btnCreateClient').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
                     $('#btnImportClients').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
                     $('#btnAttachObjects').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
-                    $('#btnCreateDemand').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    $('#btnAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    
+                    $('#btnAddAction').on('click', function() {
+                        if (CurrentRowData == undefined) return;                            
+                        $('#EditFormDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
+                        
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Form_id: CurrentRowData.Form_id,
+                                Demand_id: 0,
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyEditFormDialog").html(Res.html);
+                                $('#EditFormDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
+                    
                     $('#btnSetSalesManager').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
                     $('#btnObjectInformation').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnViewDemands').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 140, height: 30 }));
                     $('#btnExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 140, height: 30 }));
+                    $('#btnRefreshClients').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
+                    
+                    $('#btnRefreshClients').on('click', function() {
+                        $('#edFiltering').click();
+                    });
                     
                     $('#btnSetSalesManager').on('click', function() {
                         $('#SelectSalesManagerDialog').jqxWindow('open');
@@ -314,6 +350,56 @@
                     $("#ActionsGrid").on('rowdoubleclick', function(){
                         //$('#btnObjectInformation').click();
                     });
+                    
+                    $('#btnAddAction2').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    $('#btnEditAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    
+                    $('#btnAddAction2').on('click', function() {
+                        if (CurrentRowData == undefined) return;                            
+                        $('#EditFormDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
+                        
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Form_id: CurrentRowData.Form_id,
+                                Demand_id: 0,
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyEditFormDialog").html(Res.html);
+                                $('#EditFormDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
+                    
+                    $('#btnEditAction').on('click', function() {
+                        if (CurrentRowData == undefined) return;                            
+                        $('#EditFormDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
+                        
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Form_id: CurrentRowData.Form_id,
+                                Demand_id: 0,
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyEditFormDialog").html(Res.html);
+                                $('#EditFormDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
+                    
                     $("#ActionsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -434,6 +520,14 @@
                         if (Object != undefined)
                             window.open(<?php echo json_encode(Yii::app()->createUrl('Objectsgroup/Index')) ?> + "&ObjectGr_id=" + Object.ObjectGr_id);
                     });
+                    $('#btnCreateDemand').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    $('#btnCreateDemand').on('click', function() {
+                        if (Object != undefined)
+                            Aliton.NewDemand(Object['Object_id'], Object['ContrS_id']);
+                            
+                    });
+                    
+                    
                     break;
                     
             }
@@ -467,7 +561,7 @@
             </li>
             <li style="">
                 <div style="height: 20px; margin-top: 5px;">
-                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Дейтсвия</div>
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Ход работы с клиентом</div>
                 </div>
             </li>
             <li style="">
@@ -493,10 +587,11 @@
                     </div>
                     <div class="al-row-column">
                         <div><input type="button" value="Привязать объект" id="btnAttachObjects" /></div>
-                        <div style="margin-top: 4px"><input type="button" value="Создать заявку" id="btnCreateDemand" /></div>
+                        <div style="margin-top: 4px"><input type="button" value="Контакт" id="btnAddAction" /></div>
                     </div>
                     <div class="al-row-column">
-                        <input type="button" value="Назначить МПОПР" id="btnSetSalesManager"/>
+                        <div><input type="button" value="Назначить МПОПР" id="btnSetSalesManager"/></div>
+                        <div style="margin-top: 4px"><input type="button" value="Обновить" id="btnRefreshClients" /></div>
                     </div>
                     <div class="al-row-column" style="float: right;">
                         <div class="al-row-column"><input type="button" value="Просмотр КК" id="btnObjectInformation"/></div>
@@ -514,6 +609,8 @@
                     <div id="ActionsGrid"></div>
                 </div>
                 <div class="al-row">
+                    <div class="al-row-column"><input type="button" value="Дейтсвие" id="btnAddAction2" /></div>
+                    <div class="al-row-column"><input type="button" value="Изменить" id="btnEditAction" /></div>
                     <div style="clear: both"></div>
                 </div>
             </div>
@@ -536,6 +633,7 @@
                 </div>
                 <div class="al-row">
                     <div class="al-row-column"><input type="button" id="btnObjectView" value="Просмотр"/></div>
+                    <div class="al-row-column"><input type="button" value="Создать заявку" id="btnCreateDemand" /></div>
                     <div style="clear: both"></div>
                 </div>
             </div>

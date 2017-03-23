@@ -19,6 +19,17 @@
             }
         });
         
+        if (DataEmployees == undefined)
+        {
+            var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
+        }
+        //console.log(DataEmployees);
+//        if (DataEmployees.length < 100) {
+//            var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
+//            DataEmployees.dataBind();
+//            
+//        }
+            
         
         $("#cmbValuableEmpl").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
         $("#edValuableDatePlanExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: ValuableInstruction.DatePlanExec}));
@@ -32,6 +43,8 @@
         $('#btnCancelValuableInstructions').on('click', function(){
             if ($('#DiaryDialog').length>0)
                 $('#DiaryDialog').jqxWindow('close');
+            if ($('#ObjectsGroupDialog').length>0)
+                $('#ObjectsGroupDialog').jqxWindow('close');
         });
         
         $('#btnSaveValuableInstructions').on('click', function(){
@@ -49,10 +62,17 @@
                         if ($('#DiaryDialog').length>0) {
                             $('#DiaryDialog').jqxWindow('close');
                         }
+                        if ($('#ObjectsGroupDialog').length>0) {
+                            $('#ObjectsGroupDialog').jqxWindow('close');
+                        }
+                        if (typeof(CheckINS) != 'undefined')
+                            CheckINS();
                     }
                     else {
                         if ($('#DiaryDialog').length>0)
                             $('#BodyDiaryDialog').html(Res.html);
+                        if ($('#ObjectsGroupDialog').length>0)
+                            $('#BodyObjectsGroupDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {

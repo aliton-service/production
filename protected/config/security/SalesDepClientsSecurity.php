@@ -15,7 +15,8 @@ return array(
                 'ViewDemands',
                 'DiarySalesDepClients',
                 'SetSalesManager',
-                 
+                'SelectObjects',
+                'AttachObjects',
                 ),
         ),
 

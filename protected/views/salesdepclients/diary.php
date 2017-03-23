@@ -1,6 +1,40 @@
 <script>
     var DataEmployees;
     var Statistics = {};
+    var CurrentCIN = 0;
+    var CheckINS = function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('SalesDepClients/Instruct'))?>,
+                type: 'POST',
+                async: true,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.CIN == 1) {
+                        if (CurrentCIN == 0) {
+                            CurrentCIN = 1;
+                            $("#tCy").css({
+                                "-webkit-animation": "flash 1s infinite ease"
+                            });
+                            console.log('!!!');
+                        }
+                        
+                        
+                        
+                    }
+                    else {
+                            if (CurrentCIN == 1) {
+                                CurrentCIN = 0;
+                                $("#tCy").css({
+                                    "-webkit-animation": "flash 0s infinite ease"
+                                });
+                            
+                            }
+                        }
+                        
+                }
+            });
+        };
+        
     $(document).ready(function () {
         var CurrentUserShortName = <?php echo json_encode(Yii::app()->user->fullname); ?>;
         $.ajax({
@@ -32,6 +66,11 @@
             });
         };
         
+        
+        CheckINS();
+        window.setInterval(CheckINS, 1000*60*5);
+        
+        
         $("#cmbExecutor").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "ShortName"}));
         $("#cmbExecutor").jqxComboBox('val', CurrentUserShortName);
         $('#edStatisticsInfo1').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
@@ -48,6 +87,17 @@
                     $("#ActionsGrid").on('rowselect', function (event) {
                         ActionsGridCurrentRow = $('#ActionsGrid').jqxGrid('getrowdata', event.args.rowindex);
                     });
+                    
+                    var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+                        var Temp = $('#ActionsGrid').jqxGrid('getrowdata', row);
+                        if (Temp['OverDay'] == 1) //'')
+                            return '<span class="backlight_red" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                        if (Temp['StatusOP'] == 'Горячий') //'')
+                            return '<span class="backlight_1" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                        if (Temp['StatusOP'] == 'Теплый') //'')
+                            return '<span class="backlight_2" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                        
+                    };
                     
                     $("#ActionsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
@@ -67,24 +117,29 @@
                                         }
                                     },
                                     { text: 'Дата', filtertype: 'date', datafield: 'NextDate', width: 110, cellsformat: 'dd.MM.yyyy'},
-                                    { text: 'Наименование', datafield: 'FullName', width: 250},
-                                    { text: 'Ответственный', datafield: 'ResponsibleName', width: 150},
-                                    { text: 'Сегмент', datafield: 'SegmentName', width: 150},
-                                    { text: 'ПОДСегмент', datafield: 'SubSegmentName', width: 150},
-                                    { text: 'Адрес', datafield: 'Address', width: 250},
-                                    { text: 'Заявка', datafield: 'Demand_id', width: 100},
-                                    { text: 'Тип', datafield: 'ContactName', width: 150},
-                                    { text: 'Этап', datafield: 'StageName', width: 100},
-                                    { text: 'Продолжительность этапа', datafield: 'DIFF_STR', width: 200},
+                                    { text: 'Наименование', datafield: 'FullName', width: 250, cellsrenderer: cellsrenderer},
+                                    { text: 'Ответственный', datafield: 'ResponsibleName', width: 150, cellsrenderer: cellsrenderer},
+                                    { text: 'Сегмент', datafield: 'SegmentName', width: 150, cellsrenderer: cellsrenderer},
+                                    { text: 'ПОДСегмент', datafield: 'SubSegmentName', width: 150, cellsrenderer: cellsrenderer},
+                                    { text: 'Адрес', datafield: 'Address', width: 250, cellsrenderer: cellsrenderer},
+                                    { text: 'Заявка', datafield: 'Demand_id', width: 100, cellsrenderer: cellsrenderer},
+                                    { text: 'Тип', datafield: 'ContactName', width: 150, cellsrenderer: cellsrenderer},
+                                    { text: 'Этап', datafield: 'StageName', width: 100, cellsrenderer: cellsrenderer},
+                                    { text: 'Продолжительность этапа', datafield: 'DIFF_STR', width: 200, cellsrenderer: cellsrenderer},
                                     { text: 'Дата посл. контакта', filtertype: 'date', datafield: 'LastDateContact', width: 110, cellsformat: 'dd.MM.yyyy'},
-                                    { text: 'Стутас ОП', datafield: 'StatusOP', width: 100},
-                                    { text: 'Запланированное дейтсвие', datafield: 'NextAction', width: 200},
+                                    { text: 'Стутас ОП', datafield: 'StatusOP', width: 100, cellsrenderer: cellsrenderer},
+                                    { text: 'Запланированное действие', datafield: 'NextAction', width: 200},
+                                    { text: 'Тип заявки', datafield: 'DemandType', width: 200, cellsrenderer: cellsrenderer},
                                 ]
                     }));
                     $('#btnProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnAddValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnExport').on('click', function() {
+                        $("#ActionsGrid").jqxGrid('exportdata', 'xls', 'Ежедневник', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+                    });
                     
                     $('#btnProgress').on('click', function() {
                         $("#DiaryHeaderText").html("Ход работы");
@@ -135,6 +190,11 @@
                     
                     break;
                 case 1:
+                    var ReservActionsGridCurrentRow;
+                    $("#ReservActionsGrid").on('rowselect', function (event) {
+                        ReservActionsGridCurrentRow = $('#ReservActionsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
                     $("#ReservActionsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -170,6 +230,33 @@
                     $('#btnReservProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnReservAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnReservExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnReservExport').on('click', function() {
+                        $("#ReservActionsGrid").jqxGrid('exportdata', 'xls', 'Резерв', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+                    });
+                    
+                    $('#btnReservProgress').on('click', function() {
+                        $("#DiaryHeaderText").html("Ход работы");
+                        $('#DiaryDialog').jqxWindow({ height: 600, width: 1000});    
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Index')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Form_id: ReservActionsGridCurrentRow.Form_id,
+                                Demand_id: ReservActionsGridCurrentRow.Demand_id
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyDiaryDialog").html(Res.html);
+                                $('#DiaryDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
+                    
                     $('#edFiltering').click();
                     break;
                 case 2:
@@ -233,6 +320,28 @@
     });
 </script>    
 
+<style>
+    .backlight_red {
+        color: #FF0000;
+    }
+    .backlight_1 {
+        color: #FFFF00;
+    }
+    .backlight_2 {
+        color: #FFFFB9;
+    }
+    
+    @-webkit-keyframes flash {
+        0%	{ background-color: #e8e8e8; }
+        50%	{ background-color: #b4b4b4; }
+        100%	{ background-color: #646464; }
+    }
+    
+    #tCy {
+	-webkit-animation: flash 0s infinite ease;
+    }
+</style>    
+
 <?php $this->setPageTitle('Ежедневник'); ?>
 
 <div class="al-row">
@@ -279,7 +388,7 @@
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Резерв</div>
                 </div>
             </li>
-            <li style="margin-left: 0px;">
+            <li style="margin-left: 0px; background-color: #e8e8e8" id="tCy" >
                 <div style="height: 20px; margin-top: 5px;">
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">ЦУ</div>
                 </div>

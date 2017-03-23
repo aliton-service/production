@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function () {
-        var Demand = {
+        var Demand2 = {
             Form_id: <?php echo json_encode($Form_id); ?>,
             Demand_id: <?php echo json_encode($Demand_id); ?>,
             DemandType: <?php echo json_encode($model->DemandType); ?>,
@@ -9,13 +9,13 @@
             DemandText: <?php echo json_encode($model->DemandText); ?>,
             ExecutorsName: <?php echo json_encode($model->ExecutorsName); ?>,
         };
-        $('#edDemand_id').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100, value: Demand.Demand_id}));
-        $('#edDemandType').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180, value: Demand.DemandType}));
-        $('#edAddress').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180, value: Demand.Address}));
-        $('#edStage').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100, value: Demand.Stage}));
-        $('#edInformation').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 500, value: Demand.DemandText}));
-        $('#edInformation').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 500, value: Demand.DemandText}));
-        $('#edExecutors').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150, value: Demand.ExecutorsName}));
+        $('#edDemand_id2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100, value: Demand2.Demand_id}));
+        $('#edDemandType2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180, value: Demand2.DemandType}));
+        $('#edAddress2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180, value: Demand2.Address}));
+        $('#edStage2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100, value: Demand2.Stage}));
+        $('#edInformation2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 500, value: Demand2.DemandText}));
+        //$('#edInformation2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 500, value: Demand2.DemandText}));
+        $('#edExecutors2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150, value: Demand2.ExecutorsName}));
         
         $('#Tabs2').jqxTabs({ width: '100%', height: '100%', keyboardNavigation: false});
         
@@ -24,7 +24,7 @@
         var DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceClientActions, {}), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["(er.Demand_id = " + Demand.Demand_id + " or er.Form_id = " + Demand.Form_id + ")"],
+                    Filters: ["(er.Demand_id = " + Demand2.Demand_id + " or er.Form_id = " + Demand2.Form_id + ")"],
                 });
                 return data;
             },
@@ -48,8 +48,8 @@
                 async: false,
                 data: {
                     Exrp_id: CurrentRowDataER.Exrp_id,
-                    Form_id: Demand.Form_id,
-                    Demand_id: Demand.Demand_id,
+                    Form_id: Demand2.Form_id,
+                    Demand_id: Demand2.Demand_id,
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
@@ -107,8 +107,8 @@
                 type: 'POST',
                 async: false,
                 data: {
-                    Form_id: Demand.Form_id,
-                    Demand_id: Demand.Demand_id,
+                    Form_id: Demand2.Form_id,
+                    Demand_id: Demand2.Demand_id,
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
@@ -128,30 +128,30 @@
 <div class="al-row">
     <div class="al-row-column">
         <div>Заявка</div>
-        <div><input type="text" id="edDemand_id" /></div>
+        <div><input type="text" id="edDemand_id2" /></div>
     </div>
     <div class="al-row-column">
         <div>Тип</div>
-        <div><input type="text" id="edDemandType" /></div>
+        <div><input type="text" id="edDemandType2" /></div>
     </div>
     <div class="al-row-column">
         <div>Адрес</div>
-        <div><input type="text" id="edAddress" /></div>
+        <div><input type="text" id="edAddress2" /></div>
     </div>
     <div class="al-row-column">
         <div>Этап</div>
-        <div><input type="text" id="edStage" /></div>
+        <div><input type="text" id="edStage2" /></div>
     </div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
     <div class="al-row-column">
         <div>Информация</div>
-        <div><input type="text" id="edInformation" /></div>
+        <div><input type="text" id="edInformation2" /></div>
     </div>
     <div class="al-row-column">
         <div>Исполнители</div>
-        <div><input type="text" id="edExecutors" /></div>
+        <div><input type="text" id="edExecutors2" /></div>
     </div>
     <div style="clear: both"></div>
 </div>

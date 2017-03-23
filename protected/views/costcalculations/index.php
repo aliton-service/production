@@ -607,7 +607,7 @@
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
                                 return false;
                             }
-                            if (Discount5) {
+                            if (Discount5 && !Marj30) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 5%');
                                 return false;
                             }

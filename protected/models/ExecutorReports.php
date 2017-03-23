@@ -41,6 +41,7 @@ class ExecutorReports extends MainFormModel
 	public $EmplChange = null;
 	public $DateChange = null;
 	public $EmplDel = null;
+        public $StatusOP;
 	
 	public function rules()
 	{
@@ -62,6 +63,7 @@ class ExecutorReports extends MainFormModel
                     'EmplCreate',
                     'EmplChange',
                     'DateChange',
+                    'StatusOP',
                     'EmplDel', 'safe'),
             );
 	}
@@ -115,6 +117,7 @@ class ExecutorReports extends MainFormModel
 			'EmplChange' => 'Empl Change',
 			'DateChange' => 'Date Change',
 			'EmplDel' => 'Empl Del',
+                        'StatusOP' => 'StatusOP',
 		);
 	}
 
