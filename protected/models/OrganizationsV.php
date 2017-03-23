@@ -58,6 +58,7 @@ class OrganizationsV extends MainFormModel
             return array(
                     array('FormName, fown_id', 'required'),
                     array('FormName', 'FormNameValidate'),
+                    array('inn', 'INNValidate'),
                     array('Form_id,
                             FormName,
                             fown_id,
@@ -121,6 +122,23 @@ class OrganizationsV extends MainFormModel
             
             if (count($Forms) > 0)
                 $this->addError($attribute, 'Организация с таким именем уже заведена');
+        }
+        
+        public function INNValidate($attribute, array $params = array()) {
+            $Forms = new OrganizationsV();
+            
+            if ($this->Form_id != '')
+                $Forms = $Forms->Find(array(), array(
+                    'p.Form_id <> \'' . $this->Form_id . '\'',
+                    'p.inn = \'' . $this->inn . '\'',
+                ));
+            else
+                $Forms = $Forms->Find(array(), array(
+                    'p.inn = \'' . $this->inn . '\'',
+                ));
+            
+            if (count($Forms) > 0)
+                $this->addError($attribute, 'Организация с таким ИНН уже заведена');
         }
         
         public function __construct($scenario = '') {
