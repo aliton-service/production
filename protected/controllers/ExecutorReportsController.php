@@ -311,7 +311,7 @@ class ExecutorReportsController extends Controller
                 if ($model->validate()) {
                     $Res = $model->Update();
                     $ObjectResult['result'] = 1;
-                    $ObjectResult['id'] = $Res['Exrp_id'];
+                    $ObjectResult['id'] = $model->Exrp_id;
                     echo json_encode($ObjectResult);
                     return;
                 } 

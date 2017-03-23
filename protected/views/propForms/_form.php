@@ -189,7 +189,11 @@
                         }
                     }
                     else {
-                        $('#BodyOrganizationsDialog').html(Res.html);
+                        if ($('#OrganizationsDialog').length>0)
+                            $('#BodyOrganizationsDialog').html(Res.html);
+                        if ($('#EditFormDialog').length>0)
+                            $('#BodyEditFormDialog').html(Res.html);
+                        
                     };
                 },
                 error: function(Res) {
