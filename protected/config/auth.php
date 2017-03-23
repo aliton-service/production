@@ -747,7 +747,7 @@ return array_merge(
         /* ПМ - 16 */
         'AccountManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
-            'description' => 'Руководитель СЦ',
+            'description' => 'Менеджер по работе с клиентами',
             'bizRule' => null,
             'data' => null,
             'defaultIndex' => 'object/index',

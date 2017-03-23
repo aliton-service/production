@@ -85,25 +85,7 @@
             }
             return null;
         };
-        $("#edEditAddress").on('select', function(event){
-            var args = event.args;
-            if (args) {
-                var item = args.item;
-                var value = item.value;
-                var res = find(item.value);
-                if (res != null) {
-                    var DataContactInfo = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContactInfo, {}), {
-                        formatData: function (data) {
-                            $.extend(data, {
-                                Filters: ["ci.ObjectGr_id = " + res.ObjectGr_id],
-                            });
-                            return data;
-                        },
-                    });
-                    $("#edEditContactInfo").jqxComboBox({source: DataContactInfo});
-                }
-            }
-        });
+        
 //        $("#edEditAddress").on('select', function(event){
 //            var args = event.args;
 //            if (args) {
@@ -122,30 +104,57 @@
 //                    $("#edEditContactInfo").jqxComboBox({source: DataContactInfo});
 //                }
 //            }
-//            else {return; }
-//            var ObjectGr_id = Aliton.FindArray(DataAddress.records, 'Object_id', value);
-//            ObjectGr_id = ObjectGr_id['ObjectGr_id'];
-//            
-//            $.ajax({
-//                url: <?php // echo json_encode(Yii::app()->createUrl('Delivery/GetMaster')); ?>,
-//                type: 'POST',
-//                async: false,
-//                data: {
-//                    ObjectGr_id: ObjectGr_id
-//                },
-//                success: function(Res) {
-//                    Res = JSON.parse(Res);
-//                    if (Res.result == 1) {
-////                        console.log(Res.html[0].Master);
-//                        if (DeliveryDemands.Mstr_id != null) 
-//                            $("#edEditMaster").jqxComboBox("val", DeliveryDemands.Mstr_id);
-//                        else
-//                            $("#edEditMaster").jqxComboBox('val', Res.html[0].Master);
-//                    }
-//                        
-//                }
-//            });
 //        });
+        
+        
+        $("#edEditAddress").on('select', function(event){
+            var args = event.args;
+            if (args) {
+                var item = args.item;
+                var value = item.value;
+                var res = find(item.value);
+                if (res != null) {
+                    var DataContactInfo = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContactInfo, {}), {
+                        formatData: function (data) {
+                            $.extend(data, {
+                                Filters: ["ci.ObjectGr_id = " + res.ObjectGr_id],
+                            });
+                            return data;
+                        },
+                    });
+                    $("#edEditContactInfo").jqxComboBox({source: DataContactInfo});
+                }
+            }
+            else { return; }
+            
+            var ObjectGr_id = Aliton.FindArray(DataAddress.records, 'Object_id', value);
+            ObjectGr_id = ObjectGr_id['ObjectGr_id'];
+            
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Delivery/GetMaster')); ?>,
+                type: 'POST',
+                async: true,
+                data: {
+                    ObjectGr_id: ObjectGr_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result == 1) {
+                        console.log(Res.html);
+                        if (DeliveryDemands.Mstr_id != null) {
+                            $("#edEditMaster").jqxComboBox("val", DeliveryDemands.Mstr_id);
+                        }
+                        else if (Res.html.length > 0 && Res.html[0].Master != undefined) {
+                            $("#edEditMaster").jqxComboBox('val', Res.html[0].Master);
+                        } 
+                        else if (Res.html.length === 0 ) {
+                            $("#edEditMaster").jqxComboBox('val', '');
+                        }
+                    }
+                        
+                }
+            });
+        });
         
         $("#edEditAddress").on('bindingComplete', function(event){
             if (DeliveryDemands.Objc_id != '') $("#edEditAddress").jqxComboBox('val', DeliveryDemands.Objc_id);
@@ -274,6 +283,12 @@
         
     });
 </script>
+
+<?php
+    $date = new DateTime();
+    $date2 = $date->format('m/d/Y');
+    echo $date2 . "\n";
+?>
 
 <?php
     $form = $this->beginWidget('CActiveForm', array(
