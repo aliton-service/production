@@ -140,7 +140,7 @@
                 success: function(Res) {
                     Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        console.log(Res.html);
+//                        console.log(Res.html);
                         if (DeliveryDemands.Mstr_id != null) {
                             $("#edEditMaster").jqxComboBox("val", DeliveryDemands.Mstr_id);
                         }
@@ -284,11 +284,6 @@
     });
 </script>
 
-<?php
-    $date = new DateTime();
-    $date2 = $date->format('m/d/Y');
-    echo $date2 . "\n";
-?>
 
 <?php
     $form = $this->beginWidget('CActiveForm', array(
