@@ -38,11 +38,11 @@
             $("#btnSaveRepairDetails").jqxButton({disabled: false});
         });
         
-        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '300', height: '25px', displayMember: "EquipName", valueMember: "Equip_id" /*, renderer: EquipRenderer */}));
+        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '350', height: '25px', displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: true /*, renderer: EquipRenderer */}));
         $("#edUmNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', decimalDigits: 0}));
-        $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px'}));
-        $("#edFactQuantEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '124px'}));
+        $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px'}));
+        $("#edFactQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', decimalDigits: 0}));
         $('#btnSaveRepairDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
         $('#btnCancelRepairDetails').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
@@ -86,7 +86,7 @@
         
         if (RepairDetails.docm_quant != null) $("#edQuantEdit").jqxNumberInput('val', RepairDetails.docm_quant);
         if (RepairDetails.price != '') $("#edPriceEdit").jqxNumberInput('val', RepairDetails.price);
-        if (RepairDetails.fact_quant != '') $("#edFactQuantEdit").jqxInput('val', RepairDetails.fact_quant);
+        if (RepairDetails.fact_quant != '') $("#edFactQuantEdit").jqxNumberInput('val', RepairDetails.fact_quant);
         
     });
 </script>        
@@ -117,18 +117,18 @@
     <div class="row-column">
         <div><div class="row-column">Количество</div></div>
         <div style="clear: both"></div>
-        <div><div class="row-column"><div type="text" id="edQuantEdit" name="RepairDetails[docm_quant]"></div><?php echo $form->error($model, 'docm_quant'); ?></div></div>
+        <div><div class="row-column"><div id="edQuantEdit" name="RepairDetails[docm_quant]"></div><?php echo $form->error($model, 'docm_quant'); ?></div></div>
     </div>
     <div class="row-column" style="float: right">
         <div><div class="row-column">Цена</div></div>
         <div style="clear: both"></div>
-        <div><div class="row-column"><div type="text" id="edPriceEdit" name="RepairDetails[price]"></div><?php echo $form->error($model, 'price'); ?></div></div>
+        <div><div class="row-column"><div id="edPriceEdit" name="RepairDetails[price]"></div><?php echo $form->error($model, 'price'); ?></div></div>
     </div>
 </div>
 <div class="row">
     <div style="float: right">
-        <div class="row-column">Факт. кол-во:</div>
-        <div class="row-column"><input style="text-align: right" type="text" id="edFactQuantEdit" name="RepairDetails[fact_quant]" /><?php echo $form->error($model, 'fact_quant'); ?></div>
+        <div class="row-column" style="margin: 0;">Факт. кол-во:</div>
+        <div><div class="row-column"><div id="edFactQuantEdit" name="RepairDetails[fact_quant]"></div><?php echo $form->error($model, 'fact_quant'); ?></div></div>
     </div>
 </div>
    

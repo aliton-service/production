@@ -146,7 +146,7 @@
     });
 </script>
 
-<?php $this->setPageTitle('Должности'); ?>
+<?php $this->setPageTitle('Просмотр поставщиков'); ?>
 
 <?php
     $this->breadcrumbs=array(

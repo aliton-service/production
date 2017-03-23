@@ -1230,7 +1230,7 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'AdminRepairs',
-                'AdminWhActs',
+                'UserWhActs',
                 'AdminRepairDocs',
                 'ManagerEquips',
                 'AdminSuppliers',
@@ -1239,7 +1239,7 @@ return array_merge(
             ),
         ),
         
-        /* Инженер ПРЦ */
+        /* Инженер ПРЦ  - 25 */
         'EngineerPRC' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Инженер ПРЦ',
@@ -1249,6 +1249,10 @@ return array_merge(
             'children' => array(
                 'StaffManager',
                 'AdminRepairs',
+                'AdminRepairDocs',
+                'AdminSuppliers',
+                'UserWhActs',
+                'ManagerEquips',
             ),
         ),
         
@@ -1266,10 +1270,11 @@ return array_merge(
                 'AdminInventories',
                 'ManagerMaterialLogistics',
                 'AdminWHDocuments',
+                'AdminSuppliers',
             ),
         ),
         
-        /* Менеджер по логистике */
+        /* Менеджер по логистике  - 27 */
         'LogisticsManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Менеджер по логитике',
@@ -1286,7 +1291,7 @@ return array_merge(
                 'ManagerPriceMonitoring',
                 'ManagerEquips',
                 'AdminAddressedStorage',
-                'ManagerSuppliers',
+                'AdminSuppliers',
                 'ManagerAddressSystems',
                 'ManagerInventories',
                 'UserInventoryDetails',
@@ -1295,6 +1300,9 @@ return array_merge(
                 'ManagerControlWHDocuments',
                 'UserPriceList',
                 'UserPriceListDetails',
+                'AdminRepairs',
+                'UserWhActs',
+                'AdminRepairDocs',
                 
                 /* Отчеты */
                 'DeliveryDemandsReportAll',
@@ -1319,12 +1327,10 @@ return array_merge(
                 'WHActs2Report',
                 'WHActs3Report',
                 'WHActs4Report',
-                
-                
             ),
         ),
         
-        /* Кладовщик */
+        /* Кладовщик - 28 */
         'Storeman' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Кладовщик',
@@ -1335,11 +1341,15 @@ return array_merge(
                 'StaffManager',
                 'ManagerWHDocuments',
                 'ManagerEquips',
-                'ManagerSuppliers',
+                'AdminSuppliers',
                 'ManagerAddressSystems',
                 'ManagerInventories',
                 'UserInventoryDetails',
                 'AdminDocmAchsDetails',
+                'AdminRepairs',
+                'UserWhActs',
+                'AdminRepairDocs',
+                
                 'WHActsAll',
                 'WHActs1Report',
                 'WHActs2Report',

@@ -11,6 +11,20 @@
             ),
         ),
         
+        'UserWhActs' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Просмотр + Редактирование',
+            'bizRule' => null,
+            'data' => null,
+            'defaultIndex' => 'ContactInfo/index',
+            'children' => array(
+                'ViewWhActs',
+                'InsertWhActs',
+                'UpdateWhActs',
+                'AddTrebWhActs',
+            ),
+         ),
+        
         'ManagerWhActs' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Просмотр + Редактирование',
