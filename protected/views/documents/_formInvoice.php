@@ -62,8 +62,8 @@
         
         $("#Annex4").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
         $("#Debtor4").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
-        $("#DocNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#DocDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DocDate, width: 102}));
+        $("#DocNumber4").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 90 }));
+        $("#DocDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DocDate, width: 140, formatString: 'dd.MM.yyyy'}));
         $("#PaymentType4").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPaymentTypes, displayMember: "PaymentTypeName", valueMember: "PaymentType_Id", width: 130, autoDropDownHeight: true }));
         
         $("#Price4").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));

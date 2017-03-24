@@ -52,26 +52,26 @@
         });
 
         $("#ContrNumS5").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, value: "-Авто-" }));
-        $("#ContrDateS5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102}));
-        $("#date_doc5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102, value: null }));
-        $("#ContrSDateStart5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102}));
-        $("#ContrSDateEnd5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102}));
+        $("#ContrDateS5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, formatString: 'dd.MM.yyyy'}));
+        $("#date_doc5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, formatString: 'dd.MM.yyyy', value: null }));
+        $("#ContrSDateStart5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, formatString: 'dd.MM.yyyy'}));
+        $("#ContrSDateEnd5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, formatString: 'dd.MM.yyyy'}));
         $("#JuridicalPerson5").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridical, displayMember: "JuridicalPerson", valueMember: "Jrdc_Id", width: 200, autoDropDownHeight: true }));
         $("#ContactType5").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContractTypes, displayMember: "name", valueMember: "crtp_id", width: 130, autoDropDownHeight: true }));
         $("#empl5").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, displayMember: "ShortName", valueMember: "Employee_id", width: 180 }));
         
         $("#Annex5").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
         $("#Debtor5").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {}));
-        $("#DocNumber5").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#DocDate5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DocDate, width: 102}));
+        $("#DocNumber5").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 90 }));
+        $("#DocDate5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DocDate, width: 120, formatString: 'dd.MM.yyyy'}));
         $("#PaymentType5").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataPaymentTypes, displayMember: "PaymentTypeName", valueMember: "PaymentType_Id", width: 130, autoDropDownHeight: true }));
         
         $("#Price5").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#CalcSum5").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#PrePayment5").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#dmnd_id5").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
-        $("#DateExec5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DateExec, width: 102}));
-        $("#date_act5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.date_act, width: 102}));
+        $("#DateExec5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.DateExec, width: 120, formatString: 'dd.MM.yyyy'}));
+        $("#date_act5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Document.date_act, width: 120, formatString: 'dd.MM.yyyy'}));
         $("#SpecialCondition5").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420 }));
         $("#ContactInfo5").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "FIO", valueMember: "Info_id", width:360, autoDropDownHeight: true }));
         

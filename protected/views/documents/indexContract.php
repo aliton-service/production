@@ -34,14 +34,14 @@
             
         
         $("#ContrNumS").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
-        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
-        $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, width: 85, readonly: true, showCalendarButton: false, allowKeyboardDelete: false,  formatString: 'dd.MM.yyyy' }));
-        $("#DateExecuting2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExecuting, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80 }));
-        $("#DatePay").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DatePay, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
-        $("#ContrSDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrSDateStart, width: 85, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy' }));
-        $("#ContrSDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrSDateEnd, width: 85, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy' }));
-        $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 80}));
-        $("#PaymentName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 190 }));
+        $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, width: 100, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy' }));
+        $("#DateExecuting2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExecuting, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy' }));
+        $("#DatePay").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DatePay, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy'}));
+        $("#ContrSDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrSDateStart, width: 100, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy' }));
+        $("#ContrSDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrSDateEnd, width: 100, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy' }));
+        $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy'}));
+        $("#PaymentName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
         $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#Prolong").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
         $("#Debtor").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
@@ -51,7 +51,7 @@
         $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
         $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 430, height: 70 }));
         $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 430, height: 70 }));
-        $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
+        $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy'}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         //$("#MasterName2").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
         $("#ServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150 }));
@@ -264,7 +264,7 @@
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
-    <div class="al-row-column" style="padding: 3px 5px 0 0;">Оплачено по: </div><div class="row-column"><div id="DatePay" type="text"></div></div>
+    <div class="al-row-column" style="padding: 3px 5px 0 0;">Оплачено по: </div><div class="row-column" style="margin: 0;"><div id="DatePay" type="text"></div></div>
     <!--<div class="al-row-column">Мастер: <input readonly id="MasterName2" type="text"></div>-->
     <div class="al-row-column">Тариф: <input readonly id="ServiceType" type="text"></div>
     <div class="al-row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
@@ -281,8 +281,8 @@
 
 <div class="al-row">
     <div class="al-row-column"><input type="button" value="Изменить" id='EditContract' /></div>
-    <div class="al-row-column">Дата утв-я: </div>
-    <div class="row-column"><div id="date_checkup"></div></div>
+    <div class="al-row-column" style="margin-top: 3px;">Дата утв-я: </div>
+    <div class="al-row-column"><div id="date_checkup"></div></div>
     <div class="al-row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
     <div class="al-row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
     <div class="al-row-column" style="float: right;"><input type="button" value="Печатать" id='PrintContract' /></div>

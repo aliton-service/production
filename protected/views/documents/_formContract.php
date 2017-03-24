@@ -42,12 +42,12 @@
         var DataServiceTypes = new $.jqx.dataAdapter(Sources.SourceServiceTypes);
         
         $("#ContrNumS3").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, value: "-Авто-" }));
-        $("#ContrDateS3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
-        $("#DateExecuting3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null, formatString: 'dd.MM.yyyy' }));
-        $("#DatePay3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null, formatString: 'dd.MM.yyyy' }));
-        $("#date_doc3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, value: null, formatString: 'dd.MM.yyyy' }));
-        $("#ContrSDateStart3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
-        $("#ContrSDateEnd3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 110, formatString: 'dd.MM.yyyy' }));
+        $("#ContrDateS3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, formatString: 'dd.MM.yyyy' }));
+        $("#DateExecuting3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: null, formatString: 'dd.MM.yyyy' }));
+        $("#DatePay3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: null, formatString: 'dd.MM.yyyy' }));
+        $("#date_doc3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: null, formatString: 'dd.MM.yyyy' }));
+        $("#ContrSDateStart3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, formatString: 'dd.MM.yyyy' }));
+        $("#ContrSDateEnd3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, formatString: 'dd.MM.yyyy' }));
         $("#JuridicalPerson3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridical3, displayMember: "JuridicalPerson", valueMember: "Jrdc_Id", width: 200, autoDropDownHeight: true }));
         $("#ContactType3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContractTypes3, displayMember: "name", valueMember: "crtp_id", width: 130, autoDropDownHeight: true }));
         $("#empl3").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees3, displayMember: "ShortName", valueMember: "Employee_id", width: 180 }));

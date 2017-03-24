@@ -265,14 +265,12 @@ class DeliveryController extends Controller
             );
         
         if (isset($_POST['ObjectGr_id'])) {
-            $currentDate = new DateTime();
-            $currentDateFormat = $currentDate->format('m/d/Y');
             $q = new SQLQuery();
             $q->setSelect("Select
                                 c.ContrS_id,
                                 c.Master
                             From Contracts_v c
-                            Where c.ObjectGr_id = " . $_POST['ObjectGr_id'] . " and c.DocType_id = 4 and c.ContrSDateEnd >= convert(datetime,'" . $currentDateFormat . "',101)");
+                            Where c.ObjectGr_id = " . $_POST['ObjectGr_id'] . " and c.DocType_id = 4 and c.ContrSDateEnd >= GETDATE()");
             $Res = $q->QueryAll();
             $ObjectResult['result'] = 1;
             $ObjectResult['html'] = $Res;
