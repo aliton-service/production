@@ -831,7 +831,7 @@ return array_merge(
                 'ManagerCostCalcDocuments',
                 'ManagerCostCalcEquips',
                 'ManagerCostCalcWorks',
-                'ManagerDemands',
+                'ManagerDemands+',
                 'ManagerExecuteReports',
                 'UserRepairs',
                 'ManagerRepairComments',

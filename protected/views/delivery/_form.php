@@ -151,7 +151,6 @@
                             $("#edEditMaster").jqxComboBox('val', '');
                         }
                     }
-                        
                 }
             });
         });

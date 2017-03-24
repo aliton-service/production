@@ -312,6 +312,7 @@ class DemandsController extends Controller
                 $ReadOnly = true;
                 $ReadOnly = !Yii::app()->user->checkAccess('ChangeType');
                 
+                
 		if ($id == null)
                         throw new CHttpException(404, 'Не выбрана запись.');
                 
@@ -356,6 +357,10 @@ class DemandsController extends Controller
                 
                 $model->getmodelPk($id);
 
+                if ((int)($model->DType_id) === 28 && Yii::app()->user->checkAccess('ChangeTypeCallback')) {
+                    $ReadOnly = !Yii::app()->user->checkAccess('ChangeTypeCallback');
+                }
+                
                 if ($Exec) {
                     $model->EmplChange = Yii::app()->user->Employee_id;
                     $model->DateExec = date('d.m.Y H:i');

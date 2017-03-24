@@ -16,6 +16,21 @@ return array(
         ),
     ),
     
+    'ManagerDemands+' => array(
+        'type' => CAuthItem::TYPE_ROLE,
+        'description' => 'ManagerDemands',
+        'bizRule' => null,
+        'data' => null,
+        'defaultIndex' => 'Demands/index',
+        'children' => array(
+            'ViewDemands',
+            'CreateDemands',
+            'UpdateDemands',
+            'WorkedOut',
+            'ChangeTypeCallback',
+        ),
+    ),
+    
     'SeniorDemands' => array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'ManagerDemands',
@@ -97,6 +112,13 @@ return array(
     'ChangeType' => array(
         'type' => CAuthItem::TYPE_OPERATION,
         'description' => 'ChangeType',
+        'bizRule' => null,
+        'data' => null,
+    ),
+    
+    'ChangeTypeCallback' => array(
+        'type' => CAuthItem::TYPE_OPERATION,
+        'description' => 'ChangeTypeCallback',
         'bizRule' => null,
         'data' => null,
     ),
