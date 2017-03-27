@@ -123,8 +123,14 @@ class ExecutorReportsController extends Controller
             if (isset($_POST['Demand_id']))
                 $model->Demand_id = $_POST['Demand_id'];
             
-            if (isset($_POST['Form_id'])) {
-                $model->Form_id = $_POST['Form_id'];
+            $Form_id = 0;
+            if (isset($_POST['Form_id']))
+                $Form_id = $_POST['Form_id'];
+            if (isset($_POST['ClientActions']))
+                $Form_id = $_POST['ClientActions']['Form_id'];
+            
+            if ($Form_id != 0) {
+                $model->Form_id = $Form_id;
                 $Query = new SQLQuery();
                 $Query->setSelect("\nSelect
                                         er.Exrp_id,
@@ -135,16 +141,20 @@ class ExecutorReportsController extends Controller
                                         er.NextAction,
                                         ms.Solution_id,
                                         so.SystemOffer_id,
-                                        cs.ClientSolution_id");
+                                        cs.ClientSolution_id,
+                                        er.Responsible_id,
+                                        er.ActionStage_id,
+                                        d.StatusOP");
                 $Query->setFrom("\nFrom PropForms p left join ExecutorReports er on (p.LastAction_id = er.Exrp_id)
                                         left join FullDemands d on (er.Demand_id = d.Demand_id)
                                         left join ActionStages s on (er.ActionStage_id = s.Stage_id)
                                         left join ActionResults r on (er.ActionResult_id = r.Result_id)
-                                        left join MarketingSolutions ms on (p.Form_id = ms.Form_id)
-                                        left join SystemOffers so on (p.Form_id = so.Form_id)
-                                        left join ClientSolutions cs on (p.Form_id = cs.Form_id)");
-                $Query->setWhere("\nWhere p.Form_id = " . $_POST['Form_id']);
+                                        left join MarketingSolutions ms on (er.Exrp_id = ms.Action_id)
+                                        left join SystemOffers so on (er.Exrp_id = so.Action_id)
+                                        left join ClientSolutions cs on (er.Exrp_id = cs.Action_id)");
+                $Query->setWhere("\nWhere p.Form_id = " . $Form_id);
                 $Result = $Query->QueryRow();
+                
                 $LastAction['Address'] = $Result['Address'];
                 $LastAction['StageName'] = $Result['StageName'];
                 $LastAction['Date'] = $Result['Date'];
@@ -153,7 +163,7 @@ class ExecutorReportsController extends Controller
                 
                 $ContactInfo = new ContactInfo();
                 $ContactInfo = $ContactInfo->Find(array(), array(
-                    'og.PropForm_id = ' . $_POST['Form_id'],
+                    'og.PropForm_id = ' . $Form_id,
                 ));
                 
                 if ($Result['Solution_id'] != '')
@@ -162,6 +172,18 @@ class ExecutorReportsController extends Controller
                     $SystemOffers->getModelPk ($Result['SystemOffer_id']);
                 if ($Result['ClientSolution_id'] != '')
                     $ClientSolutions->getModelPk ($Result['ClientSolution_id']);
+                
+                // Значения по умолчанию
+                if (!isset($_POST['ClientActions'])) {
+                    if ($Result['Responsible_id'] != '')
+                        $model->Responsible_id = $Result['Responsible_id'];
+                    else $model->Responsible_id = Yii::app()->user->Employee_id;
+                    
+                    $model->ActionStage_id = $Result['ActionStage_id'];
+                    $model->StatusOP = $Result['StatusOP'];
+                    
+                }
+                    
                     
             }
             
@@ -171,20 +193,9 @@ class ExecutorReportsController extends Controller
                     'html' => '',
                 );
             
-            if (isset($_POST['MarketingSolutions'])) {
-                $MarketingSolutions->attributes = $_POST['MarketingSolutions'];
-                $MarketingSolutions->Update();
-            }
             
-            if (isset($_POST['SystemOffers'])) {
-                $SystemOffers->attributes = $_POST['SystemOffers'];
-                $SystemOffers->Update();
-            }
             
-            if (isset($_POST['ClientSolutions'])) {
-                $ClientSolutions->attributes = $_POST['ClientSolutions'];
-                $ClientSolutions->Update();
-            }
+            
             
             if (isset($_POST['ClientActions'])) {
                 $model->attributes = $_POST['ClientActions'];
@@ -197,10 +208,35 @@ class ExecutorReportsController extends Controller
                     $Res = $model->Insert();
                     $ObjectResult['result'] = 1;
                     $ObjectResult['id'] = $Res['Exrp_id'];
+                    
+                    if (isset($_POST['MarketingSolutions'])) {
+                        $MarketingSolutions->attributes = $_POST['MarketingSolutions'];
+                        $MarketingSolutions->Action_id = $Res['Exrp_id'];
+                        $MarketingSolutions->Update();
+                    }
+                    
+                    if (isset($_POST['SystemOffers'])) {
+                        $SystemOffers->attributes = $_POST['SystemOffers'];
+                        $SystemOffers->Action_id = $Res['Exrp_id'];
+                        $SystemOffers->Update();
+                    }
+
+                    if (isset($_POST['ClientSolutions'])) {
+                        $ClientSolutions->attributes = $_POST['ClientSolutions'];
+                        $ClientSolutions->Action_id = $Res['Exrp_id'];
+                        $ClientSolutions->Update();
+                    }
+                    
                     echo json_encode($ObjectResult);
+                    
+                    
+                    
                     return;
                 } 
+                
             }
+            
+            
 
             $ObjectResult['html'] = $this->renderPartial('_form', array(
                 'model' => $model,
@@ -218,8 +254,27 @@ class ExecutorReportsController extends Controller
 	{
             $model = new ClientActions();
             
-            if (isset($_POST['Exrp_id']))
+            $Solution_id = '';
+            $SystemOffer_id = '';
+            $ClientSolution_id = '';
+            
+            if (isset($_POST['Exrp_id'])) { 
                 $model->getModelPk ($_POST['Exrp_id']);
+                
+                $Q = new SQLQuery();
+                $Q->setSelect("\nSelect
+                                    ms.Solution_id,
+                                    so.SystemOffer_id,
+                                    co.ClientSolution_id");
+                $Q->setFrom("\nFrom ExecutorReports er left join MarketingSolutions ms on (ms.Action_id = er.Exrp_id)"
+                        . "         left join SystemOffers so on (so.Action_id = er.Exrp_id)"
+                        . "         left join ClientSolutions co on (co.Action_id = er.Exrp_id)");
+                $Q->setWhere("\nWhere er.Exrp_id = " . $_POST['Exrp_id']);
+                $Q = $Q->QueryRow(); 
+                $Solution_id = $Q['Solution_id'];
+                $SystemOffer_id = $Q['SystemOffer_id'];
+                $ClientSolution_id = $Q['ClientSolution_id'];
+            }
             
             $LastAction = array(
                 'Address' => null,
@@ -230,14 +285,28 @@ class ExecutorReportsController extends Controller
             );
             
             $MarketingSolutions = new MarketingSolutions();
+            if ($Solution_id != '')
+                $MarketingSolutions->getModelPk ($Solution_id);
+            
             $SystemOffers = new SystemOffers();
+            if ($SystemOffer_id != '')
+                $SystemOffers->getModelPk($SystemOffer_id);
+            
             $ClientSolutions = new ClientSolutions();
+            if ($ClientSolution_id != '')
+                $ClientSolutions->getModelPk ($ClientSolution_id);
             
             if (isset($_POST['Demand_id']))
                 $model->Demand_id = $_POST['Demand_id'];
             
-            if (isset($_POST['Form_id'])) {
-                $model->Form_id = $_POST['Form_id'];
+            $Form_id = 0;
+            if (isset($_POST['Form_id']))
+                $Form_id = $_POST['Form_id'];
+            if (isset($_POST['ClientActions']))
+                $Form_id = $_POST['ClientActions']['Form_id'];
+            
+            if ($Form_id != 0) {
+                $model->Form_id = $Form_id;
                 $Query = new SQLQuery();
                 $Query->setSelect("\nSelect
                                         er.Exrp_id,
@@ -253,10 +322,10 @@ class ExecutorReportsController extends Controller
                                         left join FullDemands d on (er.Demand_id = d.Demand_id)
                                         left join ActionStages s on (er.ActionStage_id = s.Stage_id)
                                         left join ActionResults r on (er.ActionResult_id = r.Result_id)
-                                        left join MarketingSolutions ms on (p.Form_id = ms.Form_id)
+                                        left join MarketingSolutions ms on (er.Exrp_id = ms.Action_id)
                                         left join SystemOffers so on (p.Form_id = so.Form_id)
                                         left join ClientSolutions cs on (p.Form_id = cs.Form_id)");
-                $Query->setWhere("\nWhere p.Form_id = " . $_POST['Form_id']);
+                $Query->setWhere("\nWhere p.Form_id = " . $Form_id);
                 $Result = $Query->QueryRow();
                 $LastAction['Address'] = $Result['Address'];
                 $LastAction['StageName'] = $Result['StageName'];
@@ -266,15 +335,15 @@ class ExecutorReportsController extends Controller
                 
                 $ContactInfo = new ContactInfo();
                 $ContactInfo = $ContactInfo->Find(array(), array(
-                    'og.PropForm_id = ' . $_POST['Form_id'],
+                    'og.PropForm_id = ' . $Form_id,
                 ));
                 
-                if ($Result['Solution_id'] != '')
-                    $MarketingSolutions->getModelPk ($Result['Solution_id']);
-                if ($Result['SystemOffer_id'] != '')
-                    $SystemOffers->getModelPk ($Result['SystemOffer_id']);
-                if ($Result['ClientSolution_id'] != '')
-                    $ClientSolutions->getModelPk ($Result['ClientSolution_id']);
+                //if ($Result['Solution_id'] != '')
+                //    $MarketingSolutions->getModelPk ($model->Exrp_id);
+//                if ($Result['SystemOffer_id'] != '')
+//                    $SystemOffers->getModelPk ($Result['SystemOffer_id']);
+//                if ($Result['ClientSolution_id'] != '')
+//                    $ClientSolutions->getModelPk ($Result['ClientSolution_id']);
                     
             }
             

@@ -4,6 +4,7 @@ class MarketingSolutions extends MainFormModel
 {
     public $Solution_id;
     public $Form_id;
+    public $Action_id;
     public $Offer1Result_id;
     public $Offer1Date;
     public $Offer1Note;
@@ -47,6 +48,7 @@ class MarketingSolutions extends MainFormModel
         $Select = "\nSelect
                         ms.Solution_id,
                         ms.Form_id,
+                        ms.Action_id,
                         ms.Offer1Result_id,
                         ms.Offer1Date,
                         ms.Offer1Note,
@@ -93,6 +95,7 @@ class MarketingSolutions extends MainFormModel
         return array(
             array('Solution_id,
                     Form_id,
+                    Action_id,
                     Offer1Result_id,
                     Offer1Date,
                     Offer1Note,
@@ -133,6 +136,7 @@ class MarketingSolutions extends MainFormModel
         return array(
             'Solution_id' => '',
             'Form_id' => '',
+            'Action_id' => '',
             'Offer1Result_id' => '',
             'Offer1Date' => '',
             'Offer1Note' => '',

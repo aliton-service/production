@@ -4,6 +4,7 @@ class SystemOffers extends MainFormModel
 {
     public $SystemOffer_id;
     public $Form_id;
+    public $Action_id;
     public $Offer1Result_id;
     public $Offer1Date;
     public $Offer1Note;
@@ -42,6 +43,7 @@ class SystemOffers extends MainFormModel
         $Select = "\nSelect
                         ms.SystemOffer_id,
                         ms.Form_id,
+                        ms.Action_id,
                         ms.Offer1Result_id,
                         ms.Offer1Date,
                         ms.Offer1Note,
@@ -83,6 +85,7 @@ class SystemOffers extends MainFormModel
         return array(
             array('SystemOffer_id,
                     Form_id,
+                    Action_id,
                     Offer1Result_id,
                     Offer1Date,
                     Offer1Note,
@@ -118,6 +121,7 @@ class SystemOffers extends MainFormModel
         return array(
             'SystemOffer_id' => '',
             'Form_id' => '',
+            'Action_id' => '',
             'Offer1Result_id' => '',
             'Offer1Date' => '',
             'Offer1Note' => '',

@@ -2,6 +2,9 @@
     var DataEmployees;
     var Statistics = {};
     var CurrentCIN = 0;
+    var FirstTab0 = true;
+    var FirstTab1 = true;
+    var FirstTab2 = true;
     var CheckINS = function() {
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('SalesDepClients/Instruct'))?>,
@@ -99,6 +102,10 @@
                         
                     };
                     
+                    $("#ActionsGrid").on('rowdoubleclick', function(){
+                        $('#btnProgress').click();
+                    });
+                    
                     $("#ActionsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 2px)',
@@ -136,6 +143,10 @@
                     $('#btnAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnAddValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnRefreshActions').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnRefreshActions').on('click', function() {
+                        $("#edFiltering").click();
+                    });
                     
                     $('#btnExport').on('click', function() {
                         $("#ActionsGrid").jqxGrid('exportdata', 'xls', 'Ежедневник', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
@@ -230,6 +241,10 @@
                     $('#btnReservProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnReservAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnReservExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnRefreshReserv').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnRefreshReserv').on('click', function() {
+                        $("#edFiltering").click();
+                    });
                     
                     $('#btnReservExport').on('click', function() {
                         $("#ReservActionsGrid").jqxGrid('exportdata', 'xls', 'Резерв', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
@@ -288,6 +303,12 @@
                     
                     $('#btnEditValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnDelValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnRefreshInstr').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnRefreshInstr').on('click', function() {
+                        $("#edFiltering").click();
+                    });
+                    
                     $('#edFiltering').click();
                     
                     $('#btnEditValuableInstruction').on('click', function() {
@@ -405,6 +426,7 @@
                         <div class="al-row-column"><input type="button" id="btnAddAction" value="Действие"/></div>
                         <div class="al-row-column"><input type="button" id="btnExport" value="Экспорт"/></div>
                         <div class="al-row-column"><input type="button" id="btnAddValuableInstruction" value="Добавить ЦУ"/></div>
+                        <div class="al-row-column"><input type="button" id="btnRefreshActions" value="Обновить"/></div>
                     </div>
                     <div style="clear: both"></div>
                 </div>
@@ -421,6 +443,7 @@
                         <div class="al-row-column"><input type="button" id="btnReservProgress" value="Ход работы"/></div>
                         <div class="al-row-column"><input type="button" id="btnReservAddAction" value="Действие"/></div>
                         <div class="al-row-column"><input type="button" id="btnReservExport" value="Экспорт"/></div>
+                        <div class="al-row-column"><input type="button" id="btnRefreshReserv" value="Обновить"/></div>
                     </div>
                     <div style="clear: both"></div>
                 </div>
@@ -435,6 +458,7 @@
                     <div class="al-row-column">
                         <div class="al-row-column"><input type="button" id="btnEditValuableInstruction" value="Изменить ЦУ"/></div>
                         <div class="al-row-column"><input type="button" id="btnDelValuableInstruction" value="Удалить ЦУ"/></div>
+                        <div class="al-row-column"><input type="button" id="btnRefreshInstr" value="Обновить"/></div>
                     </div>
                     <div style="clear: both"></div>
                 </div>
