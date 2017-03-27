@@ -107,7 +107,18 @@ class DocumentsController extends Controller
             
             if (isset($_POST['ObjectGr_id'])) {
                 $model->ObjectGr_id = $_POST['ObjectGr_id'];
+                
+                $q = new SQLQuery();
+                $q->setSelect("Select cs.ContrNumS, cs.ContrDateS 
+                                From ContractsS cs 
+                                Where cs.ObjectGr_id = " . $_POST['ObjectGr_id'] . "
+                                    and cs.DocType_id = 4 
+                                    and cs.ContrSDateEnd >= GETDATE()");
+                $Res = $q->QueryAll();
+                $model->DocNumber = $Res[0]['ContrNumS'];
+                $model->DocDate = $Res[0]['ContrDateS'];
             }
+            
             if (isset($_POST['DocType_Name'])) {
                 switch ($_POST['DocType_Name']) {
                     case 'Счет':

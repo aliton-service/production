@@ -36,29 +36,29 @@
             
         
         $("#ContrNumS7").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
-        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
-        $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
+        $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 155 }));
+        $("#ContrDateS").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.ContrDateS, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy'}));
+        $("#date_doc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_doc, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy'}));
+        $("#crtp_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
         $("#Annex").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
         $("#Debtor").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { disabled: true }));
-        $("#DocNumber").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 90 }));
-        $("#DocDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DocDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
+        $("#DocNumber").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70 }));
+        $("#DocDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DocDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy'}));
         $("#PaymentTypeName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 60 }));
         $("#Price").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#CalcSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#PrePayment").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 2 }));
         $("#summa").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, readOnly: true, symbol: "р.", symbolPosition: 'right', min: 0, decimalDigits: 0 }));
         $("#empl_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 120 }));
-        $("#dmnd_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
-        $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
-        $("#date_act").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_act, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
+        $("#dmnd_id").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 90 }));
+        $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 90, formatString: 'dd.MM.yyyy'}));
+        $("#date_act").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_act, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 90, formatString: 'dd.MM.yyyy'}));
         $("#SpecialCondition1").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 420, height: 50 }));
         $("#FIO").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 360 }));
         $("#ExecDay").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Garant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 65, readOnly: true, symbol: "", symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
         $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)', height: 25 }));
-        $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
+        $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy'}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         $("#btnDemandView").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 60}));
         $("#btnDemandView").on('click', function() {
@@ -158,17 +158,17 @@
 <div class="al-row">
     <div class="al-row-column">Номер: <input readonly id="ContrNumS7" type="text"></div>
     <div class="al-row-column" style="padding-top: 3px;">Дата: </div><div class="al-row-column"><div id="ContrDateS" type="text"></div></div>
-    <div class="al-row-column" style="padding-top: 3px;">Дата вып. работ по акту: </div><div class="row-column"><div id="date_doc" type="text"></div></div>
+    <div class="al-row-column" style="padding-top: 3px;">Дата вып. работ по акту: </div><div class="al-row-column"><div id="date_doc" type="text"></div></div>
     <div class="al-row-column" style="padding-top: 3px;">Долг: </div><div class="al-row-column"><div id="Debtor" type="checkbox"></div></div>
     <div class="al-row-column" style="padding-top: 3px;">Приложение: </div><div class="al-row-column"><div id="Annex" type="checkbox"></div></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
-    <div class="al-row-column">Юр. лицо:<input readonly id="JuridicalPerson" type="text"></div>
-    <div class="al-row-column">Тип контракта:<input readonly id="crtp_name" type="text"></div>
-    <div class="al-row-column">Договор №:<input readonly id="DocNumber" type="text"></div>
+    <div class="al-row-column">Юр. лицо: <input readonly id="JuridicalPerson" type="text"></div>
+    <div class="al-row-column">Тип контракта: <input readonly id="crtp_name" type="text"></div>
+    <div class="al-row-column">Договор №: <input readonly id="DocNumber" type="text"></div>
     <div class="al-row-column" style="padding-top: 3px;">Дата: </div><div class="al-row-column"><div id="DocDate"></div></div>
-    <div class="al-row-column">Оплата:<input readonly id="PaymentTypeName" type="text"></div>
+    <div class="al-row-column">Оплата: <input readonly id="PaymentTypeName" type="text"></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
@@ -180,15 +180,15 @@
     <div class="al-row-column"><div id="PrePayment" type="text"></div></div>
     <div class="al-row-column">Оплата:</div>
     <div class="al-row-column"><div id="summa" type="text"></div></div>
-    <div class="al-row-column">Менеджер:<input readonly id="empl_name" type="text"></div>
+    <div class="al-row-column">Менеджер: <input readonly id="empl_name" type="text"></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-data">
     <div class="al-row">
-        <div class="al-row-column" style="font-weight: 500;">Выполненные работы</div>
+        <div class="al-row-column" style="font-weight: 500; margin-right: 10px;">Выполненные работы: </div>
         <div class="al-row-column">Заявка: <input readonly id="dmnd_id" type="text"></div>
-        <div class="al-row-column">Дата вып. работ: </div><div class="row-column"><div id="DateExec"></div></div>
-        <div class="al-row-column">Дата прихода ориг. акта: </div><div class="row-column"><div id="date_act"></div></div>
+        <div class="al-row-column">Дата вып. работ: </div><div class="al-row-column"><div id="DateExec"></div></div>
+        <div class="al-row-column">Дата прихода ориг. акта: </div><div class="al-row-column"><div id="date_act"></div></div>
         <div class="al-row-column"><input type="button" value="Заявка" id='btnDemandView' /></div>
         <div style="clear: both"></div>
     </div>
@@ -220,7 +220,7 @@
 
 <div class="al-row">
     <div class="al-row-column"><input type="button" value="Изменить" id='EditContract' /></div>
-    <div class="al-row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="row-column"><div id="date_checkup"></div></div>
+    <div class="al-row-column" style="padding-top: 3px;">Дата утв-я: </div><div class="al-row-column"><div id="date_checkup"></div></div>
     <div class="al-row-column">Утвердил: <input readonly id="user_checkup" type="text"></div>
     <div class="al-row-column"><input type="button" value="Утвердить" id='CheckupContract' /></div>
     <div class="al-row-column" style="float: right"><input type="button" value="Печатать" id='PrintContract' /></div>
