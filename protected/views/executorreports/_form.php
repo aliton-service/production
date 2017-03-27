@@ -362,13 +362,15 @@
         
         $('#btnSaveAction').on('click', function(){
             var Url = <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update')); ?>;
-            if (StateInsert)
+            if (StateInsert) {
                 Url = <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')); ?>;
+            }
             var Data = {};
             if (ChangeTab1) {
                 Data = {
                         MarketingSolutions: {
                             Form_id: Action.Form_id,
+                            Action_id: Action.Exrp_id,
                             Offer1Result_id: $("#cmbOffer1ResultEdit").val(),
                             Offer1Date: $("#cmbOffer1DateEdit").val(),
                             Offer1Note: $("#edOffer1Note").val(),
@@ -409,6 +411,7 @@
                 Data = $.extend(true, Data, {
                         SystemOffers: {
                             Form_id: Action.Form_id,
+                            Action_id: Action.Exrp_id,
                             Offer1Result_id: $("#cmbSystemOffer1ResultEdit").val(),
                             Offer1Date: $("#cmbSystemOffer1DateEdit").val(),
                             Offer1Note: $("#edSystemOffer1Note").val(),
@@ -444,6 +447,7 @@
                 Data = $.extend(true, Data, {
                         ClientSolutions: {
                             Form_id: Action.Form_id,
+                            Action_id: Action.Exrp_id,
                             Solution1Result_id: $("#cmbSolution1ResultEdit").val(),
                             Solution1Date: $("#cmbSolution1DateEdit").val(),
                             Solution1Note: $("#edSolution1Note").val(),
@@ -592,7 +596,7 @@
     </div>
     <div class="al-row-column">
         <div style="text-align: center">Статус ОП</div>
-        <div><div id="cmbStatusOPEdit" name="ClientActions[StatusOP]"></div></div>
+        <div><div id="cmbStatusOPEdit" name="ClientActions[StatusOP]"></div><?php echo $form->error($model, 'StatusOP'); ?></div>
     </div>
     <div style="clear: both"></div>
 </div>
@@ -922,7 +926,7 @@
     <div class="al-row-column"><div id="cmbNextContactInfo" name="ClientActions[NextContactInfo]"></div><?php echo $form->error($model, 'NextContactInfo'); ?></div>
     
     <div class="al-row-column">
-        <div id="chbReserv">В РЕЗЕРВ</div>
+        <div id="chbReserv" name="ClientActions[InReserv]">В РЕЗЕРВ</div>
     </div>
     <div style="clear: both"></div>
 </div>

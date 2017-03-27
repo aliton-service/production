@@ -34,6 +34,7 @@ class ClientActions extends MainFormModel
     public $Responsible_id;
     public $NextContactInfo;
     public $StatusOP;
+    public $InReserv;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -101,6 +102,7 @@ class ClientActions extends MainFormModel
     public function rules()
     {
         return array(
+            array('ActionStage_id, StatusOP, ActionOperation_id, ActionResult_id, Responsible_id, NextDate', 'required'),
             array('Exrp_id,
                     Date,
                     Empl_id,
@@ -124,7 +126,8 @@ class ClientActions extends MainFormModel
                     ActionOperation_id,
                     ActionResult_id,
                     Responsible_id,
-                    StatusOP', 'safe'),
+                    StatusOP,
+                    InReserv', 'safe'),
         );
     }
     
@@ -139,10 +142,10 @@ class ClientActions extends MainFormModel
             'Demand_id' => '',
             'ContactType_id' => '',
             'ContactName' => '',
-            'ActionStage_id' => '',
+            'ActionStage_id' => 'Этап',
             'StageName' => '',
             'Report' => '',
-            'NextDate' => '',
+            'NextDate' => 'Дата план. действия',
             'NextAction' => '',
             'SegmentName' => '',
             'SubSegmentName' => '',
@@ -151,11 +154,12 @@ class ClientActions extends MainFormModel
             'DateExec' => '',
             'ContactInfo_id' => '',
             'ActionStatus_id' => '',
-            'ActionOperation_id' => '',
-            'ActionResult_id' => '',
-            'Responsible_id' => '',
+            'ActionOperation_id' => 'Действие',
+            'ActionResult_id' => 'Результат',
+            'Responsible_id' => 'Ответственный',
             'NextContactInfo' => '',
-            'StatusOP' => '',
+            'StatusOP' => 'Статус ОП',
+            'InReserv' => 'InReserv',
         );
     }
 }

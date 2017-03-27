@@ -190,7 +190,13 @@
                     if ($("#chbFilterNotExec").val() == '') $('#ActionsGrid').jqxGrid('removefilter', 'NextDate', false);
                     if ($("#cmbFilterDateStart").val() != '' || $("#cmbFilterDateEnd").val() != '') $("#ActionsGrid").jqxGrid('addfilter', 'NextDate', DateFilterGroup);
                     
-                    $('#ActionsGrid').jqxGrid({source: DiaryActionsAdapter});
+                    if (FirstTab0) {
+                        $('#ActionsGrid').jqxGrid({source: DiaryActionsAdapter});
+                        FirstTab0 = false;
+                    } else
+                        $('#ActionsGrid').jqxGrid('updatebounddata', 'cells');
+                    
+                    
                     break;
                 case 1:
                     $('#ReservActionsGrid').jqxGrid('removefilter', 'ResponsibleName', false);
@@ -217,13 +223,24 @@
                     if ($("#chbFilterNotExec").val() == '') $('#ReservActionsGrid').jqxGrid('removefilter', 'NextDate', false);
                     if ($("#cmbFilterDateStart").val() != '' || $("#cmbFilterDateEnd").val() != '') $("#ReservActionsGrid").jqxGrid('addfilter', 'NextDate', DateFilterGroup);
                     
-                    $('#ReservActionsGrid').jqxGrid({source: ReservDiaryActionsAdapter});
+                    
+                    if (FirstTab1) {
+                        $('#ReservActionsGrid').jqxGrid({source: ReservDiaryActionsAdapter});
+                        FirstTab1 = false;
+                    } else
+                        $('#ReservActionsGrid').jqxGrid('updatebounddata', 'cells');
+                    
                     break;
                 case 2:
                     $('#ValuableInstructionsGrid').jqxGrid('removefilter', 'ShortName', false);
                     if ($("#cmbExecutor").val() != '') $("#ValuableInstructionsGrid").jqxGrid('addfilter', 'ShortName', ExecutorFilterGroup);
                     
-                    $('#ValuableInstructionsGrid').jqxGrid({source: ValuableInstructionsAdapter});
+                    if (FirstTab2) {
+                        $('#ValuableInstructionsGrid').jqxGrid({source: ValuableInstructionsAdapter});
+                        FirstTab2 = false;
+                    } else
+                        $('#ValuableInstructionsGrid').jqxGrid('updatebounddata', 'cells');
+                    
                     break;
             };
             
