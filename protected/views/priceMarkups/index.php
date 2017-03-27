@@ -268,12 +268,12 @@
     });
 </script>
 
-<?php $this->setPageTitle('Остатки на складе'); ?>
+<?php $this->setPageTitle('Наценки'); ?>
 
 <?php
     $this->breadcrumbs=array(
         'Склад'=>array('#'),
-        'Остатки на складе'=>array('index'),
+        'Наценки'=>array('index'),
     );
 ?>
 

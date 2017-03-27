@@ -364,7 +364,7 @@ class Demands extends MainFormModel
 			'DemandEt_id' => 'Demand Et',
 			'FirstEquipType_id' => 'First Equip Type',
 			'FirstMalfunction_id' => 'First Malfunction',
-			'rslt_id' => '',
+			'rslt_id' => 'Результат заявки',
 			'EmplCreate' => 'Empl Create',
 			'EmplChange' => 'Empl Change',
 			'EmplDel' => 'Empl Del',

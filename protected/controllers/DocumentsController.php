@@ -115,8 +115,10 @@ class DocumentsController extends Controller
                                     and cs.DocType_id = 4 
                                     and cs.ContrSDateEnd >= GETDATE()");
                 $Res = $q->QueryAll();
-                $model->DocNumber = $Res[0]['ContrNumS'];
-                $model->DocDate = $Res[0]['ContrDateS'];
+                if (!empty($Res)) {
+                    $model->DocNumber = $Res[0]['ContrNumS'];
+                    $model->DocDate = $Res[0]['ContrDateS'];
+                }
             }
             
             if (isset($_POST['DocType_Name'])) {
