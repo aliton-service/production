@@ -17,7 +17,7 @@ class ContactInfoController extends Controller
         return array(
             
             array('allow',
-                    'actions'=>array('Grid'),
+                    'actions'=>array('Grid', 'Paste'),
                     'roles'=>array('ViewContactInfo'),
                 ),
             array('allow',
@@ -166,6 +166,30 @@ class ContactInfoController extends Controller
             $model->Delete();
             $this->redirect(Yii::app()->createUrl('Objectsgroup/index', array('ObjectGr_id' => $model->ObjectGr_id)));
         }
+    }
+    
+    public function actionPaste() 
+    {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        if (isset($_POST['Out_ObjectGr_id']) && isset($_POST['In_ObjectGr_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'COPY_ContactInfo';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Out_ObjectGr_id'];
+            $sp->Parameters[1]['Value'] = $_POST['In_ObjectGr_id'];
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $Res;
+        }
+        
+        echo json_encode($ObjectResult);
     }
     
     protected function performAjaxValidation($model)

@@ -201,6 +201,105 @@
                     return data;
                 },
             });
+            
+            
+            
+            
+            var contextMenu = $("#ContextMenu1").jqxMenu({ width: 200, height: 58, autoOpenPopup: false, mode: 'popup'});
+            $("#ContactInfoGrid").on('contextmenu', function () {
+                return false;
+            });
+
+            $("#ContactInfoGrid").on("columnclick", function (event) {
+                var scrollTop = $(window).scrollTop();
+                var scrollLeft = $(window).scrollLeft();
+                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+                return false;
+            });
+
+            $("#ContactInfoGrid").on('rowclick', function (event) {
+                if (event.args.rightclick) {
+                    $("#ContactInfoGrid").jqxGrid('selectrow', event.args.rowindex);
+                    var scrollTop = $(window).scrollTop();
+                    var scrollLeft = $(window).scrollLeft();
+                    contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+                    return false;
+                }
+            });
+            
+            
+            function getCookie(name) {
+                var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+                return matches ? decodeURIComponent(matches[1]) : undefined;
+            }
+
+            function setCookie(name, value, options) {
+                options = options || {};
+
+                var expires = options.expires;
+
+                if (typeof expires == "number" && expires) {
+                    var d = new Date();
+                    d.setTime(d.getTime() + expires * 1000);
+                    expires = options.expires = d;
+                }
+                if (expires && expires.toUTCString) {
+                    options.expires = expires.toUTCString();
+                }
+
+                value = encodeURIComponent(value);
+
+                var updatedCookie = name + "=" + value;
+
+                for (var propName in options) {
+                    updatedCookie += "; " + propName;
+                    var propValue = options[propName];
+                    if (propValue !== true) {
+                        updatedCookie += "=" + propValue;
+                    }
+                }
+
+                document.cookie = updatedCookie;
+            }
+
+            $("#ContextMenu1").on('itemclick', function (event) {
+                var args = event.args;
+                var rowindex = $("#ContactInfoGrid").jqxGrid('getselectedrowindex');
+                if ($.trim($(args).text()) == "Копировать контакты") {
+                    console.log("Копировать контакты");
+                    setCookie("Out_ObjectGr_id", ObjectsGroup.ObjectGr_id, 3600);
+                }
+                if ($.trim($(args).text()) == "Вставить контакты") {
+                    console.log("Вставить контакты");
+                    var Out_ObjectGr_id = getCookie("Out_ObjectGr_id");
+                    if (Out_ObjectGr_id != undefined) {
+                        PasteContactInfo(Out_ObjectGr_id);
+                    }
+                }
+            });
+            
+            
+            function PasteContactInfo(Out_ObjectGr_id1) {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl("ContactInfo/Paste")); ?>,
+                    type: 'POST',
+                    async: true,
+                    data: {
+                       Out_ObjectGr_id: Out_ObjectGr_id1,
+                       In_ObjectGr_id: ObjectsGroup.ObjectGr_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        Out_ObjectGr_id = Res.id;
+                        $('#ContactInfoGrid').jqxGrid('updatebounddata');
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+
+                });
+            };
+
 
 
             $("#ContactInfoGrid").jqxGrid(
@@ -617,3 +716,9 @@ $this->breadcrumbs=array(
     </div>
 </div>
 
+<div id='ContextMenu1' style="display: none">
+    <ul>
+        <li>Копировать контакты</li>
+        <li>Вставить контакты</li>
+    </ul>
+</div>
