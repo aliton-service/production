@@ -266,11 +266,9 @@
                 var args = event.args;
                 var rowindex = $("#ContactInfoGrid").jqxGrid('getselectedrowindex');
                 if ($.trim($(args).text()) == "Копировать контакты") {
-                    console.log("Копировать контакты");
                     setCookie("Out_ObjectGr_id", ObjectsGroup.ObjectGr_id, 3600);
                 }
                 if ($.trim($(args).text()) == "Вставить контакты") {
-                    console.log("Вставить контакты");
                     var Out_ObjectGr_id = getCookie("Out_ObjectGr_id");
                     if (Out_ObjectGr_id != undefined) {
                         PasteContactInfo(Out_ObjectGr_id);
