@@ -910,6 +910,7 @@ return array_merge(
                 'UserInventoryDetails',
                 'ManagerEquips',
                 'ManagerPropForms',
+                'ManagerBanks',
                 'ManagerObjectsGroupSystems',
                 'AdminSystemCompetitors',
                 /* Отчеты */
