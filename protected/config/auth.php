@@ -909,7 +909,7 @@ return array_merge(
                 'ManagerInventories',
                 'UserInventoryDetails',
                 'ManagerEquips',
-                'UserPropForms',
+                'ManagerPropForms',
                 'ManagerObjectsGroupSystems',
                 'AdminSystemCompetitors',
                 /* Отчеты */
