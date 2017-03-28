@@ -178,4 +178,35 @@ class SiteController extends Controller
             $result = $command->execute();
             return $result;
         }
+        
+        public function actionSettings() {
+            $UserSettings = new UserSettings();
+            $R = $UserSettings->Find(array(), array(
+                's.Empl_id = ' . Yii::app()->user->Employee_id,
+            ));
+            
+            if (count($R) > 0) {
+                $UserSettings->Setting_id = $R[0]['Setting_id'];
+                $UserSettings->Empl_id = $R[0]['Empl_id'];
+                $UserSettings->Theme = $R[0]['Theme'];
+            }
+            //$UserSettings->getModelPk(Yii::app()->user->Employee_id);
+            
+            if (isset($_POST['UserSettings'])) {
+                $UserSettings->attributes = $_POST['UserSettings'];
+                $UserSettings->Empl_id = Yii::app()->user->Employee_id;
+                if ($UserSettings->validate()) {
+                    $UserSettings->Update();
+                    echo '1';
+                    return;
+                }
+            }
+            
+            
+            $this->render('settings',array(
+                'model'=>$UserSettings,
+            ));
+        }
+        
+        
 }

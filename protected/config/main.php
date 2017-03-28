@@ -60,9 +60,9 @@ return array(
                                 '/jqwidgets/globalization/globalize.js',
                                 '/jqwidgets/globalization/globalize.culture.ru-RU.js',
                             ),
-                            'css' => array(
-                                '/jqwidgets/styles/jqx.base.css',
-                            ),
+//                            'css' => array(
+//                                '/jqwidgets/styles/jqx.base.css',
+//                            ),
                         ),
                         'widgets' => array(
                             'baseUrl' => '/js',
