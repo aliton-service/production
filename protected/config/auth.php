@@ -871,7 +871,7 @@ return array_merge(
         /* Офис менеджер - ЮГ */
         'OfficeManagerSouth' => array(
             'type' => CAuthItem::TYPE_ROLE,
-            'description' => 'Руководитель СЦ',
+            'description' => 'Офис менеджер - ЮГ',
             'bizRule' => null,
             'data' => null,
             'defaultIndex' => 'object/index',

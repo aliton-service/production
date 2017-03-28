@@ -49,6 +49,7 @@
             'children' => array(
                 'ViewObjectsGroup',
                 'UpdateObjectsGroup',
+                'CreateObjectsGroup',
             ),
             'data' => null
         ),
