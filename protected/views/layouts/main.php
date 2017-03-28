@@ -8,21 +8,24 @@
     <!--<link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet">-->
     <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
     <?php 
-        $UserSettings = new UserSettings();
-        $R =  $UserSettings->Find(array(), array(
-            's.Empl_id = ' . Yii::app()->user->Employee_id,
-        ));
-        
-        
-        if (count($R) > 0) {
-            if ($R[0]['Theme'] == 'fresh') {
-                echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh.css" type="text/css" />';
-                echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
+        if (!Yii::app()->user->isGuest) {
+    
+            $UserSettings = new UserSettings();
+            $R =  $UserSettings->Find(array(), array(
+                's.Empl_id = ' . Yii::app()->user->Employee_id,
+            ));
+
+
+            if (count($R) > 0) {
+                if ($R[0]['Theme'] == 'fresh') {
+                    echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh.css" type="text/css" />';
+                    echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
+                }
+                else {
+                    echo '<meta id="ID_THEME" style="display: \'none\'"></div>';
+                }
+
             }
-            else {
-                echo '<meta id="ID_THEME" style="display: \'none\'"></div>';
-            }
-            
         }
         
     
