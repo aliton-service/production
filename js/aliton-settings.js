@@ -1,3 +1,7 @@
+var Theme = $('#ID_THEME').attr('value') ;
+
+
+
 /* Настройки по умолчанию для грида */
 var GridDefaultSettings = {
     width: '100%',
@@ -15,6 +19,7 @@ var GridDefaultSettings = {
     virtualmode: false,
     autosavestate: true,
     enableanimations: false,
+    theme: Theme,
     //autoloadstate: true,
     //enablebrowserselection: true,
     localization: getLocalization('ru'),
@@ -41,7 +46,8 @@ var GridDefaultSettings = {
 };
 
 /* Настройки по умолчанию для диалогового окна (модальный режим) */
-var DialogDefaultSettings = {  
+var DialogDefaultSettings = {
+    theme: Theme,
     width: 500,
     maxHeight: 2000,
     maxWidth: 2000,
@@ -55,6 +61,7 @@ var DialogDefaultSettings = {
 
 /* Настройки по умолчанию для поля со временем */
 var DateTimeDefaultSettings = {
+    theme: Theme,
     showFooter: true,
     todayString: 'Сегодня',
     clearString: 'Очистить',
@@ -68,6 +75,7 @@ var DateTimeDefaultSettings = {
 
 /* Настройки по умолчанию для инпутов */
 var InputDefaultSettings = {
+    theme: Theme,
     height: 25,
     width: 200,
     minLength: 1
@@ -75,6 +83,7 @@ var InputDefaultSettings = {
 
 /* Настройки по умолчанию для пароль-инпутов */
 var PasswordInputDefaultSettings = {
+    theme: Theme,
     height: 25,
     minLength: 1,
     showStrength: true,
@@ -83,18 +92,21 @@ var PasswordInputDefaultSettings = {
 
 /* Настройки по умолчанию для кнопок */
 var ButtonDefaultSettings = {
+    theme: Theme,
     width: 120,
     height: 30,
-    imgPosition: "left"
+    imgPosition: "left",
 };
 
 var DropDownButtonDefaultSettings = {
+    theme: Theme,
     width: 120,
     height: 30
 };
 
 /* Настройки по умолчанию для Tree */
 var TreeDefaultSettings = {
+    theme: Theme,
     height: '300px',
     width: '400px'
 };
@@ -102,6 +114,7 @@ var TreeDefaultSettings = {
 
 /* Настройки по умолчанию для ComboBox */
 var ComboBoxDefaultSettings = {
+    theme: Theme,
     height: 25,
     width: 200
     //minLength: 1
@@ -109,6 +122,7 @@ var ComboBoxDefaultSettings = {
 
 /* Настройки по умолчанию для TextArea */
 var TextAreaDefaultSettings = {
+    theme: Theme,
     height: 70,
     width: 340
 };
@@ -116,27 +130,32 @@ var TextAreaDefaultSettings = {
 
 /* Настройки по умолчанию для CheckBox */
 var CheckBoxDefaultSettings = {
+    theme: Theme,
     width: 25, 
     height: 25
 };
 
 var NumberInputDefaultSettings = {
+    theme: Theme,
     width: 125, 
     height: 25,
     inputMode: 'simple'
 };
 
 var RadioButtonDefaultSettings = {
+    theme: Theme,
     width: 20, 
     height: 22
 };
 
 var ToggleButtonDefaultSettings = {
+    theme: Theme,
     width: 200,
     height: 30,
 };
 
 var CalendarDefaultSettings = {
+    theme: Theme,
     culture: 'ru-RU'
 };
 

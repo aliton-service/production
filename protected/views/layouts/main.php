@@ -7,6 +7,31 @@
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
     <!--<link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet">-->
     <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <?php 
+        if (!Yii::app()->user->isGuest) {
+    
+            $UserSettings = new UserSettings();
+            $R =  $UserSettings->Find(array(), array(
+                's.Empl_id = ' . Yii::app()->user->Employee_id,
+            ));
+
+
+            if (count($R) > 0) {
+                if ($R[0]['Theme'] == 'fresh') {
+                    echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh.css" type="text/css" />';
+                    echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
+                }
+                else {
+                    echo '<meta id="ID_THEME" style="display: \'none\'"></div>';
+                }
+
+            }
+        }
+        
+    
+    ?>
+    
+    
     <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
     <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
@@ -77,7 +102,9 @@
                         'activeCssClass'=>'active',
                         'activateParents'=>true,
                         'items'=>array(
-                            array('label'=>'Главная', 'url'=>array('/site/index'), 'visible'=>!Yii::app()->user->isGuest),
+                            array('label'=>'Главная', 'url'=>array('/site/index'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array(
+                                array('label'=>'Настройки', 'url'=>array('/site/settings'), 'visible'=>true),
+                            )),
                             array('label'=>'Кадры', 'url'=>'#', 'visible'=>true, 'visible'=>Yii::app()->user->checkAccess('ManagerEmployees'), 'items'=>array(
                                     array('label'=>'Сотрудники', 'url'=>array('/employees/index'), 'visible'=>Yii::app()->user->checkAccess('ManagerEmployees')),
                                     array('label'=>'Должности', 'url'=>array('/positions/index'), 'visible'=>Yii::app()->user->checkAccess('ViewPositions')),
