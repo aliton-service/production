@@ -28,29 +28,29 @@
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
         var CurrentUser = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
         // Инициализируем контролы
-        $("#edNumber").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
+        $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 100, minLength: 1, value: Demand.Demand_id}));
         $("#edDateReg").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edAddr").jqxInput({height: 25, width: 400, minLength: 1, value: Demand.Address});
-        $("#edStage").jqxInput({height: 25, width: 150, minLength: 1, value: Demand.StageName});
-        $("#edDiffStr").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DIFF_STR});
-        $("#edStatusOP").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.StatusOP});
-        $("#edDemandPrior").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandPrior});
-        $("#edDemandType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.DemandType});
-        $("#edSystemType").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SystemType});
+        $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 400, minLength: 1, value: Demand.Address}));
+        $("#edStage").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 150, minLength: 1, value: Demand.StageName}));
+        $("#edDiffStr").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Demand.DIFF_STR}));
+        $("#edStatusOP").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Demand.StatusOP}));
+        $("#edDemandPrior").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Demand.DemandPrior}));
+        $("#edDemandType").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Demand.DemandType}));
+        $("#edSystemType").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Demand.SystemType}));
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edSegment").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SegmentName});
-        $("#edSubSegment").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.SegmentName});
+        $("#edSegment").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Demand.SegmentName}));
+        $("#edSubSegment").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Demand.SegmentName}));
         $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edContacts").jqxInput({height: 25, width: 514, minLength: 1, value: Demand.Contacts});
-        $("#btnCall").jqxButton({ width: 120, height: 40 });
-        $("#btnMail").jqxButton({ width: 120, height: 40 });
-        $("#btnPresentation").jqxButton({ width: 120, height: 40 });
-        $("#btnKP").jqxButton({ width: 120, height: 40 });
-        $("#btnArchive").jqxButton({ width: 246, height: 40 });
-        $("#edInformation").jqxTextArea({height: '30px', width: '500px', minLength: 1});
-        $("#edSourceInfo").jqxTextArea({height: '30px', width: '200px', minLength: 1});
-        $("#btnEdit").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" });
-        $("#btnClient").jqxButton({ width: 120, height: 30 });
+        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 514, minLength: 1, value: Demand.Contacts}));
+        $("#btnCall").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 40 }));
+        $("#btnMail").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 40 }));
+        $("#btnPresentation").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 40 }));
+        $("#btnKP").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 40 }));
+        $("#btnArchive").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 246, height: 40 }));
+        $("#edInformation").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {height: '30px', width: '500px', minLength: 1}));
+        $("#edSourceInfo").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {height: '30px', width: '200px', minLength: 1}));
+        $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" }));
+        $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         var initWidgets = function (tab) {
             switch (tab) {
@@ -183,9 +183,9 @@
                             ]
                     }));
                     
-                    $("#btnAddExecutor").jqxButton({ width: 120, height: 30 });
-                    $("#btnChangeExecutor").jqxButton({ width: 180, height: 30 });
-                    $("#btnDelExecutor").jqxButton({ width: 120, height: 30 });
+                    $("#btnAddExecutor").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $("#btnChangeExecutor").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, height: 30 }));
+                    $("#btnDelExecutor").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30 }));
                     
                     $("#btnDelExecutor").on('click', function() {
                         if (Executor == undefined) return;
@@ -460,22 +460,22 @@
                         $("#edDateSurvey").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.DateSurvey, dropDownVerticalAlignment: "top"}));
                         $("#edDateCalc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.date_calc, dropDownVerticalAlignment: "top"}));
                         $("#chbGoCalc").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Demand.GoCalc}));
-                        $("#edRvrs").jqxComboBox({source: ResolveReasonsData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ResolveReason", valueMember: "Rvrs_id"});
+                        $("#edRvrs").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: ResolveReasonsData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ResolveReason", valueMember: "Rvrs_id"}));
                         $("#edCalcAccept").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.calc_accept, dropDownVerticalAlignment: "top"}));
                         $("#edDateContract").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.DateContract, dropDownVerticalAlignment: "top"}));
                         $("#chbWorkExec").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Demand.WorkExec}));
-                        $("#edNegative").jqxComboBox({source: NegativesData, width: '150', height: '25px', displayMember: "NegativeName", dropDownVerticalAlignment: 'top', valueMember: "Ngtv_id"});
+                        $("#edNegative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: NegativesData, width: '150', height: '25px', displayMember: "NegativeName", dropDownVerticalAlignment: 'top', valueMember: "Ngtv_id"}));
                         $("#edOffer").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings,{height: 85, width: 300, minLength: 1}));
-                        $("#edNegative").jqxComboBox({source: NegativesData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "NegativeName", valueMember: "Ngtv_id"});
+                        $("#edNegative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: NegativesData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "NegativeName", valueMember: "Ngtv_id"}));
                         $("#edOffer").jqxTextArea('val', Demand.offer);
-                        $("#edInitiative").jqxComboBox({source: [{id: 0, name: 'Компания'}, {id: 1, name: 'Клиент'}], dropDownVerticalAlignment: 'top', width: '150', height: '25px', displayMember: "name", valueMember: "id"});
+                        $("#edInitiative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Компания'}, {id: 1, name: 'Клиент'}], dropDownVerticalAlignment: 'top', width: '150', height: '25px', displayMember: "name", valueMember: "id"}));
                         $("#edInitiative").jqxComboBox('val', Demand.initiative);
                         $("#edCalcSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Demand.CalcSum}));
                         $("#edUpgNote").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
                         $("#edUpgNote").jqxInput('val', Demand.upg_note);
-                        $("#edCompetitive").jqxComboBox({source: [{id: 0, name: 'Да'}, {id: 1, name: 'Нет'}, {id: 2, name: 'Не знаю'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"});
+                        $("#edCompetitive").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Да'}, {id: 1, name: 'Нет'}, {id: 2, name: 'Не знаю'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
                         $("#edCompetitive").jqxComboBox('val', Demand.competitive);
-                        $("#edClrs_id").jqxComboBox({source: [{id: 0, name: 'Отказ клиента'}, {id: 1, name: 'Фактическое исполнение'}, {id: 2, name: 'Дублирующая заявка'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"});
+                        $("#edClrs_id").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Отказ клиента'}, {id: 1, name: 'Фактическое исполнение'}, {id: 2, name: 'Дублирующая заявка'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
                         $("#edClrs_id").jqxComboBox('val', Demand.clrs_id);
                         $("#edStatusOP").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: ''}, {id: 1, name: 'Холодный'}, {id: 2, name: 'Теплый'}, {id: 3, name: 'Горячий'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
                         $("#edStatusOP").jqxComboBox('val', Demand.StatusOP);
@@ -516,10 +516,98 @@
                             });
                         });
                     break;
+                    case 4:
+                        var SetPotentialValue = function(Obj) {
+                            $("#edPotEditDate1"),val(Obj.Date1);
+                            $("#edPotEditDate2"),val(Obj.Date2);
+                            $("#edPotEditDate3"),val(Obj.Date3);
+                            $("#edPotEditDate4"),val(Obj.Date4);
+                            $("#edPotEditDate5"),val(Obj.Date5);
+                        };
+                        var PotentialRefresh = function() {
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('Demands/GetPotential')) ?>,
+                                type: 'POST',
+                                data: {
+                                    Form_id: Demand.PropForm_id
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    Res.Date1 = Aliton.DateConvertToJs(Res.Date1);
+                                    Res.Date2 = Aliton.DateConvertToJs(Res.Date1);
+                                    Res.Date3 = Aliton.DateConvertToJs(Res.Date1);
+                                    Res.Date4 = Aliton.DateConvertToJs(Res.Date1);
+                                    Res.Date5 = Aliton.DateConvertToJs(Res.Date1);
+                                    SetPotentialValue(Res);
+                                }
+                            });
+                        };
+                        
+                        
+                    
+                        $("#edPotEditDate1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+                        $("#edPotEditDate2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+                        $("#edPotEditDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+                        $("#edPotEditDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+                        $("#edPotEditInitiative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Компания'}, {id: 1, name: 'Клиент'}], width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
+                        var ResolveReasonsData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceResolveReasons, {}));
+                        $("#edPotEditService").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: ResolveReasonsData, width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ResolveReason", valueMember: "Rvrs_id"}));
+                        $("#edPotEditDate5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+                        $("#edPotEditCompetitive").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Да'}, {id: 1, name: 'Нет'}, {id: 2, name: 'Не знаю'}], width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
+                        var NegativesData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceNegatives, {}));
+                        $("#edPotEditNegative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{source: NegativesData, width: '150', height: '25px', displayMember: "NegativeName", dropDownVerticalAlignment: 'top', valueMember: "Ngtv_id"}));
+                        $("#edPotEditSystem1").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditSystem2").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditSystem3").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditSystem4").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditSystem5").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditOffer1").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditOffer2").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditOffer3").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditOffer4").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        $("#edPotEditOffer5").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+                        
+                        $('#edPotEditSave').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '156px'}));
+                        
+                        $('#edPotEditSave').on('click', function() {
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('Demands/SavePotential')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Client: {
+                                        Demand_id: Demand.Demand_id,
+                                        GoCalc: $('#chbGoCalc').val(),
+                                        WorkExec: $('#chbWorkExec').val(),
+                                        ngtv_id: $('#edNegative').val(),
+                                        Rvrs_id: $('#edRvrs').val(),
+                                        DateContract: $('#edDateContract').val(),
+                                        CalcSum: $('#edCalcSum').val(),
+                                        DateSurvey: $('#edDateSurvey').val(),
+                                        offer: $('#edOffer').val(),
+                                        competitive: $('#edCompetitive').val(),
+                                        initiative: $('#edInitiative').val(),
+                                        clrs_id: $('#edClrs_id').val(),
+                                        upg_note: $('#edUpgNote').val(),
+                                        date_calc: $('#edDateCalc').val(),
+                                        calc_accept: $('#edCalcAccept').val(),
+                                        StatusOP: $('#edStatusOP').val()
+                                    }
+                                },
+                                success: function(Res) {
+                                    Aliton.ShowErrorMessage('Запись произведена', 'Изменения успешно сохранены');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage('Ошибка', Res.responseText);
+                                }
+                            });
+                        });
+                        PotentialRefresh();
+                    break;
             }
         };
         
-        $('#Tabs').jqxTabs({ width: '100%', height: '100%', keyboardNavigation: false, initTabContent: initWidgets});
+        $('#Tabs').jqxTabs($.extend(true, {}, TabsDefaultSettings, { width: '100%', height: '100%', keyboardNavigation: false, initTabContent: initWidgets}));
         
         
         $('#SMSDialog').jqxWindow(
@@ -528,8 +616,8 @@
                 height: 170,
                 isModal: false,
                 initContent: function () {
-                    $("#edTextSMS").jqxTextArea({height: 80, width: '100%', minLength: 1});
-                    $("#btnCloseDialog").jqxButton({ width: 120, height: 30 });
+                    $("#edTextSMS").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {height: 80, width: '100%', minLength: 1}));
+                    $("#btnCloseDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $("#btnCloseDialog").on('click', function(){
                         $('#SMSDialog').jqxWindow('close');
                     });
@@ -542,11 +630,11 @@
                 width: 500,
                 height: 170,
                 initContent: function () {
-                    $("#edDemand_idExecutor").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
+                    $("#edDemand_idExecutor").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 100, minLength: 1, value: Demand.Demand_id}));
                     $("#edDateStartExecutor").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Date()}));
-                    $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
-                    $("#btnYesExDialog").jqxButton({ width: 120, height: 30 });
-                    $("#btnNoExDialog").jqxButton({ width: 120, height: 30 });
+                    $("#cmbExecutor").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
+                    $("#btnYesExDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $("#btnNoExDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $("#btnNoExDialog").on('click', function(){
                         $('#ExecutorDialog').jqxWindow('close');
                     });
@@ -734,6 +822,11 @@
                     <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Модернизация и монтаж</div>
                 </div>
             </li>
+            <li>
+                <div style="height: 15px;">
+                    <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Потенциал и предложения конкурентов</div>
+                </div>
+            </li>
         </ul>
         <div style="overflow: hidden;">
             <div style="padding: 10px; height: calc(100% - 20px)">
@@ -872,6 +965,120 @@
                     <div class="al-row-column"><input type='button' id='btnSaveDetails' value='Сохранить'/></div>
                 </div>
             </div>
+            
+        </div>
+        <div style="overflow: hidden;">
+            <div style="padding: 10px; height: calc(100% - 20px)">
+                <div class="al-row-column">
+                    <div class="al-row">
+                        <div class="al-row-column">
+                            <div>Согл. дата модер.</div>
+                            <div><div id="edPotEditDate1"></div></div>
+                        </div>
+                        <div class="al-row-column">
+                            <div>Согл. дата РВР.</div>
+                            <div><div id="edPotEditDate2"></div></div>
+                        </div>
+                        <div class="al-row-column">
+                            <div>Согл. дата диагностики.</div>
+                            <div><div id="edPotEditDate3"></div></div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div class="al-row">
+                        <div class="al-row-column">
+                            <div>Факт. дата обсл.</div>
+                            <div><div id="edPotEditDate4"></div></div>
+                        </div>
+                        <div class="al-row-column">
+                            <div>Инициатива</div>
+                            <div><div id="edPotEditInitiative"></div></div>
+                        </div>
+                        <div class="al-row-column">
+                            <div>От чего зависит заключение договра</div>
+                            <div><div id="edPotEditService"></div></div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div class="al-row">
+                        <div class="al-row-column">
+                            <div>Согл. дата подготовки</div>
+                            <div><div id="edPotEditDate5"></div></div>
+                        </div>
+                        <div class="al-row-column">
+                            <div>Конкурентоспособность</div>
+                            <div><div id="edPotEditCompetitive"></div></div>
+                        </div>
+                        <div class="al-row-column">
+                            <div>Возражения клиента</div>
+                            <div><div id="edPotEditNegative"></div></div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+                <div class="al-row-column">
+                    <div>Потенциал</div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">АППЗ</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditSystem1" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">СВН</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditSystem2" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">ПЗУ</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditSystem3" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">ОДС</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditSystem4" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">ВЕНТ</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditSystem5" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="al-row-column">
+                    <div>Предложения конкурентов</div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">АППЗ</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditOffer1" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">СВН</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditOffer2" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">ПЗУ</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditOffer3" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">ОДС</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditOffer4" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <div>
+                        <div class="al-row-column" style="width: 80">ВЕНТ</div>
+                        <div class="al-row-column"><input type="text" id="edPotEditOffer5" /></div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+                <div class="al-row">
+                    <input type="button" id="edPotEditSave" value="Сохранить"/>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

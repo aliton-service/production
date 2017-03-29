@@ -23,7 +23,7 @@ class DemandsController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'SalesView', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut'),
+                'actions' => array('index', 'view', 'SalesView', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut', 'GetPotential', 'SavePotential'),
                 'roles' => array(
                     'ViewDemands',
                 ),
@@ -277,6 +277,35 @@ class DemandsController extends Controller
 		);
         }
         
+        public function actionSavePotential() {
+            $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+            
+            $ClientPotential = new ClientPotentials();
+            if (isset($_POST['ClientPotentials'])) {
+                $ClientPotential->attributes = $_POST['ClientPotentials'];
+                $ClientPotential->Update();
+                $ObjectResult['result'] = 1;
+                
+            }
+            
+            echo json_encode($ObjectResult);
+        }
+        
+        public function actionGetPotential() {
+            $ClientPotential = new ClientPotentials();
+            if (isset($_POST['Form_id'])) {
+                $R = $ClientPotential->Find(array(), array('cp.Form_id = ' . $_POST['Form_id']));
+                if (count($R) > 0)
+                    $ClientPotential->attributes = $R[0];
+            }
+            
+            echo json_encode($ClientPotential);
+        }
+        
         public function actionSalesView($Demand_id){
             $this->title = 'Заявка №' . $Demand_id;
             $this->setPageTitle('Заявка №' . $Demand_id);
@@ -286,6 +315,8 @@ class DemandsController extends Controller
             
             $Object = new Objects();
             $Object->getModelPk($Demand->Object_id);
+            
+            
             
             $this->render('sales_view', array(
 			'model'=>$Demand,
