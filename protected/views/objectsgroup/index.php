@@ -326,7 +326,15 @@
     
             $("#NewContactInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             $("#EditContactInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $('#btnCopyContactBuffer').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 220}));
             $("#DelContactInfo").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            
+            $('#btnCopyContactBuffer').on('click', function() {
+                var Out_ObjectGr_id = getCookie("Out_ObjectGr_id");
+                if (Out_ObjectGr_id != undefined) {
+                    PasteContactInfo(Out_ObjectGr_id);
+                }
+            });
             
             $("#ContactInfoGrid").on('rowselect', function (event) {
                 CurrentRowCInfoData = $('#ContactInfoGrid').jqxGrid('getrowdata', event.args.rowindex);
@@ -672,6 +680,7 @@ $this->breadcrumbs=array(
             <div class="al-row" style="padding: 6px 0px 0px 0px;">
                 <div class="al-row-column"><input type="button" value="Создать" id='NewContactInfo' /></div>
                 <div class="al-row-column"><input type="button" value="Изменить" id='EditContactInfo' /></div>
+                <div class="al-row-column"><input type="button" value="Вставить контакт из буфера" id='btnCopyContactBuffer'/></div>
                 <div class="al-row-column" style="float: right"><input type="button" value="Удалить" id='DelContactInfo' /></div>
                 <div style="clear: both"></div>
             </div>
