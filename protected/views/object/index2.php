@@ -358,11 +358,10 @@
     }
     
     .jqx-fill-state-pressed .backlight_green {
-        color: black;
+        *color: black;
     }
     
     #ObjectsGrid .jqx-fill-state-pressed {
-        color: black;
         background-color: #A7D2BB !important;
     }
     

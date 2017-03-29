@@ -20,6 +20,9 @@
                 if ($R[0]['Theme'] == 'fresh') {
                     echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh.css" type="text/css" />';
                     echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
+                }else if ($R[0]['Theme'] == 'fresh2') {
+                    echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh2.css" type="text/css" />';
+                    echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
                 }
                 else {
                     echo '<meta id="ID_THEME" style="display: \'none\'"></div>';

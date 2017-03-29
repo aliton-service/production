@@ -6,7 +6,7 @@
             Theme: <?php echo json_encode($model->Theme); ?>
         };
         
-        $("#edTheme").jqxComboBox({ source: [{id: 'standart', name: 'standart'}, {id: 'fresh', name: 'fresh'}], width: '300', height: '25px', displayMember: "id", valueMember: "name"});
+        $("#edTheme").jqxComboBox({ source: [{id: 'standart', name: 'standart'}, {id: 'fresh', name: 'fresh'}, {id: 'fresh2', name: 'fresh2'}], width: '300', height: '25px', displayMember: "id", valueMember: "name"});
         $("#edTheme").jqxComboBox('val', UserSettings.Theme); 
         $("#btnSaveSetting").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
         
