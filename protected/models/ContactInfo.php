@@ -53,7 +53,7 @@ class ContactInfo extends MainFormModel
         
         $this->SP_INSERT_NAME = 'INSERT_ContactInfo';
         $this->SP_UPDATE_NAME = 'UPDATE_ContactInfo';
-        $this->SP_DELETE_NAME = 'DELETE_ContactInfo';
+        $this->SP_DELETE_NAME = 'DELETE_ContactInfo2';
         
         $Select =   "Select"
                     ."  ci.Info_id,"
