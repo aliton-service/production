@@ -1,8 +1,34 @@
 <html>
     <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
 	<meta name="language" content="en">
+        <?php 
+            if (!Yii::app()->user->isGuest) {
+
+                $UserSettings = new UserSettings();
+                $R =  $UserSettings->Find(array(), array(
+                    's.Empl_id = ' . Yii::app()->user->Employee_id,
+                ));
+
+
+                if (count($R) > 0) {
+                    if ($R[0]['Theme'] == 'fresh') {
+                        echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh.css" type="text/css" />';
+                        echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
+                    }else if ($R[0]['Theme'] == 'fresh2') {
+                        echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh2.css" type="text/css" />';
+                        echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
+                    }
+                    else {
+                        echo '<meta id="ID_THEME" style="display: \'none\'"></div>';
+                    }
+
+                }
+            }
         
+    
+        ?>
         
         <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
         <?php Yii::app()->clientScript->registerPackage('widgets'); ?>
