@@ -27,8 +27,8 @@
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
-                    $("#edContact").jqxInput({height: 25, width: 600, minLength: 1});
-                    $('#edDemandText').jqxTextArea({ placeHolder: 'Текст заявки', height: 90, width: '100%', minLength: 1 });
+                    $("#edContact").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 600, minLength: 1}));
+                    $('#edDemandText').jqxTextArea($.extend(true, {}, InputDefaultSettings, { placeHolder: 'Текст заявки', height: 90, width: '100%', minLength: 1 }));
                     break;
                 case 1:
                     $("#ProgressGrid").jqxGrid(
@@ -63,10 +63,10 @@
                 $("#ProgressGrid").jqxGrid('updatebounddata');
         }); 
         
-        $('#Tabs').jqxTabs({ width: '100%', height: '100%', initTabContent: initWidgets});
+        $('#Tabs').jqxTabs($.extend(true, {}, TabsDefaultSettings, { width: '100%', height: '100%', initTabContent: initWidgets}));
         
         
-        $('#btnDemView').jqxButton({ width: 120, height: 30 });
+        $('#btnDemView').jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30 }));
         $('#btnRefreshDemands').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnObjectInfo').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $("#btnObjectInfo").on('click', function(){

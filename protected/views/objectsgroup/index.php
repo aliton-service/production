@@ -384,7 +384,7 @@
             }
         };
         
-        $('#jqxTabs').jqxTabs({ width: '100%', height: 'calc(100% - 2px)', keyboardNavigation: false, initTabContent: initWidgets });
+        $('#jqxTabs').jqxTabs($.extend(true, {}, TabsDefaultSettings, { width: '100%', height: 'calc(100% - 2px)', keyboardNavigation: false, initTabContent: initWidgets }));
         var defaultTabIndex = 0;
         var tabIndex = Aliton.GetTabIndexFromURL(defaultTabIndex);
         $('#jqxTabs').jqxTabs('select', tabIndex);

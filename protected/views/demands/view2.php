@@ -53,40 +53,40 @@
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
         var CurrentUser = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
         // Инициализируем контролы
-        $("#edNumber").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
-        $("#edAddr").jqxInput({height: 25, width: 400, minLength: 1, value: Demand.Address});
+        $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 100, minLength: 1, value: Demand.Demand_id}));
+        $("#edAddr").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 400, minLength: 1, value: Demand.Address}));
         $("#edDateReg").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edServiceType").jqxInput({height: 25, width: 200, minLength: 1, value: Demand.ServiceType});
-        $("#edMasterName").jqxInput({height: 25, width: 300, minLength: 1, value: Demand.MasterName});
-        $("#edDemandType").jqxInput({height: 25, width: 230, minLength: 1, value: Demand.DemandType});
-        $("#edSystemType").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.SystemType});
-        $("#edEquipType").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.EquipType});
-        $("#edMalfunction").jqxInput({height: 25, width: 310, minLength: 1, value: Demand.Malfunction});
-        $("#edDemandPrior").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.DemandPrior});
-        $("#edContacts").jqxInput({height: 25, width: 455, minLength: 1, value: Demand.Contacts});
-        $("#edCloseReason").jqxInput({height: 25, width: 230, minLength: 1, value: Demand.CloseReason});
-        $("#edRepMaster").jqxTextArea({height: '100%', width: '100%', minLength: 1});
+        $("#edServiceType").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 200, minLength: 1, value: Demand.ServiceType}));
+        $("#edMasterName").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 300, minLength: 1, value: Demand.MasterName}));
+        $("#edDemandType").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 230, minLength: 1, value: Demand.DemandType}));
+        $("#edSystemType").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 160, minLength: 1, value: Demand.SystemType}));
+        $("#edEquipType").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 140, minLength: 1, value: Demand.EquipType}));
+        $("#edMalfunction").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 310, minLength: 1, value: Demand.Malfunction}));
+        $("#edDemandPrior").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 160, minLength: 1, value: Demand.DemandPrior}));
+        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 455, minLength: 1, value: Demand.Contacts}));
+        $("#edCloseReason").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 230, minLength: 1, value: Demand.CloseReason}));
+        $("#edRepMaster").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings,{height: '100%', width: '100%', minLength: 1}));
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.AgreeDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edDateOfTrans").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTrans, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140 }));
-        $("#edTransferReason").jqxInput({height: 25, width: 180, minLength: 1, value: Demand.TransferReason});
-        $("#edDelayReason").jqxInput({height: 25, width: 160, minLength: 1, value: Demand.DelayReason});
+        $("#edTransferReason").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 180, minLength: 1, value: Demand.TransferReason}));
+        $("#edDelayReason").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 160, minLength: 1, value: Demand.DelayReason}));
         $("#edResultName").jqxInput({height: 25, width: 140, minLength: 1, value: Demand.ResultName});
-        $("#edDemandText").jqxTextArea({height: '100%', width: '100%', minLength: 1});
-        $("#edSpecCondition").jqxTextArea({height: 71, width: '100%', minLength: 1});
-        $("#edUCreateName").jqxInput({height: 25, width: 110, minLength: 1, value: Demand.UCreateName});
-        $("#edUChangeName").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.UChangeName});
+        $("#edDemandText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings,{height: '100%', width: '100%', minLength: 1}));
+        $("#edSpecCondition").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings,{height: 71, width: '100%', minLength: 1}));
+        $("#edUCreateName").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 110, minLength: 1, value: Demand.UCreateName}));
+        $("#edUChangeName").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 100, minLength: 1, value: Demand.UChangeName}));
         
         
-        $("#btnEdit").jqxButton({ width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" });
-        $("#btnClient").jqxButton({ width: 120, height: 30 });
-        $("#btnToMaster").jqxButton({ width: 170, height: 30, imgSrc: "/images/ok2.png", imgPosition: "left", disabled: !(Demand.DateMaster == null) });
-        $("#btnSMS").jqxButton({ width: 100, height: 30 });
-        $("#btnWorkOut").jqxButton({ width: 120, height: 30, disabled: !(Demand.WorkedOut == null)});
-        $("#btnNotWork").jqxButton({ width: 158, height: 30, disabled: (Demand.WorkedOut == null)});
-        $("#btnExec").jqxButton({ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) });
+        $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" }));
+        $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30 }));
+        $("#btnToMaster").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 170, height: 30, imgSrc: "/images/ok2.png", imgPosition: "left", disabled: !(Demand.DateMaster == null) }));
+        $("#btnSMS").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 100, height: 30 }));
+        $("#btnWorkOut").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30, disabled: !(Demand.WorkedOut == null)}));
+        $("#btnNotWork").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 158, height: 30, disabled: (Demand.WorkedOut == null)}));
+        $("#btnExec").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30, imgSrc: "/images/circle.png", imgPosition: "left", disabled: !(Demand.DateExec == null) }));
         var CD = Date();
         $("#edColumnDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {value: CD, width: 160, formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true}));
         
@@ -184,10 +184,10 @@
                                 { text: '№ Заявки', datafield: 'demand_id', width: 80},
                             ]
                     }));
-                    $("#edComment").jqxInput({height: 25, width: 'calc(100% - 6px)', minLength: 1});
+                    $("#edComment").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 'calc(100% - 6px)', minLength: 1}));
                     $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: '120px', dropDownVerticalAlignment: "top"}));
-                    $("#btnSend").jqxButton({ width: 120, height: 30 });
-                    $("#btnDelComment").jqxButton({ width: 120, height: 30 });
+                    $("#btnSend").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $("#btnDelComment").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30 }));
                     
                     $("#edComment").on('keydown', function(event){
                         if (event.keyCode == 13)
@@ -241,9 +241,9 @@
                             ]
                     }));
                     
-                    $("#btnAddExecutor").jqxButton({ width: 120, height: 30 });
-                    $("#btnChangeExecutor").jqxButton({ width: 180, height: 30 });
-                    $("#btnDelExecutor").jqxButton({ width: 120, height: 30 });
+                    $("#btnAddExecutor").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $("#btnChangeExecutor").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 180, height: 30 }));
+                    $("#btnDelExecutor").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30 }));
                     
                     $("#btnDelExecutor").on('click', function() {
                         if (Executor == undefined) return;
@@ -489,22 +489,22 @@
                         $("#edDateSurvey").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.DateSurvey, dropDownVerticalAlignment: "top"}));
                         $("#edDateCalc").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.date_calc, dropDownVerticalAlignment: "top"}));
                         $("#chbGoCalc").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Demand.GoCalc}));
-                        $("#edRvrs").jqxComboBox({source: ResolveReasonsData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ResolveReason", valueMember: "Rvrs_id"});
+                        $("#edRvrs").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: ResolveReasonsData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ResolveReason", valueMember: "Rvrs_id"}));
                         $("#edCalcAccept").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.calc_accept, dropDownVerticalAlignment: "top"}));
                         $("#edDateContract").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 100, formatString: 'dd.MM.yyyy', value: Demand.DateContract, dropDownVerticalAlignment: "top"}));
                         $("#chbWorkExec").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 100, checked: Demand.WorkExec}));
-                        $("#edNegative").jqxComboBox({source: NegativesData, width: '150', height: '25px', displayMember: "NegativeName", dropDownVerticalAlignment: 'top', valueMember: "Ngtv_id"});
+                        $("#edNegative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{source: NegativesData, width: '150', height: '25px', displayMember: "NegativeName", dropDownVerticalAlignment: 'top', valueMember: "Ngtv_id"}));
                         $("#edOffer").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings,{height: 85, width: 300, minLength: 1}));
-                        $("#edNegative").jqxComboBox({source: NegativesData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "NegativeName", valueMember: "Ngtv_id"});
+                        $("#edNegative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{source: NegativesData, width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "NegativeName", valueMember: "Ngtv_id"}));
                         $("#edOffer").jqxTextArea('val', Demand.offer);
-                        $("#edInitiative").jqxComboBox({source: [{id: 0, name: 'Компания'}, {id: 1, name: 'Клиент'}], dropDownVerticalAlignment: 'top', width: '150', height: '25px', displayMember: "name", valueMember: "id"});
+                        $("#edInitiative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Компания'}, {id: 1, name: 'Клиент'}], dropDownVerticalAlignment: 'top', width: '150', height: '25px', displayMember: "name", valueMember: "id"}));
                         $("#edInitiative").jqxComboBox('val', Demand.initiative);
                         $("#edCalcSum").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', value: Demand.CalcSum}));
                         $("#edUpgNote").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
                         $("#edUpgNote").jqxInput('val', Demand.upg_note);
-                        $("#edCompetitive").jqxComboBox({source: [{id: 0, name: 'Да'}, {id: 1, name: 'Нет'}, {id: 2, name: 'Не знаю'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"});
+                        $("#edCompetitive").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Да'}, {id: 1, name: 'Нет'}, {id: 2, name: 'Не знаю'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
                         $("#edCompetitive").jqxComboBox('val', Demand.competitive);
-                        $("#edClrs_id").jqxComboBox({source: [{id: 0, name: 'Отказ клиента'}, {id: 1, name: 'Фактическое исполнение'}, {id: 2, name: 'Дублирующая заявка'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"});
+                        $("#edClrs_id").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Отказ клиента'}, {id: 1, name: 'Фактическое исполнение'}, {id: 2, name: 'Дублирующая заявка'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
                         $("#edClrs_id").jqxComboBox('val', Demand.clrs_id);
                         $("#edStatusOP").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: ''}, {id: 1, name: 'Холодный'}, {id: 2, name: 'Теплый'}, {id: 3, name: 'Горячий'}], width: '150', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
                         $("#edStatusOP").jqxComboBox('val', Demand.StatusOP);
@@ -551,7 +551,7 @@
             }
         };
         
-        $('#Tabs').jqxTabs({ width: '100%', height: '100%', keyboardNavigation: false, initTabContent: initWidgets});
+        $('#Tabs').jqxTabs($.extend(true, {}, TabsDefaultSettings, { width: '100%', height: '100%', keyboardNavigation: false, initTabContent: initWidgets}));
         
         
         $('#SMSDialog').jqxWindow(
@@ -560,8 +560,8 @@
                 height: 170,
                 isModal: false,
                 initContent: function () {
-                    $("#edTextSMS").jqxTextArea({height: 80, width: '100%', minLength: 1});
-                    $("#btnCloseDialog").jqxButton({ width: 120, height: 30 });
+                    $("#edTextSMS").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {height: 80, width: '100%', minLength: 1}));
+                    $("#btnCloseDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $("#btnCloseDialog").on('click', function(){
                         $('#SMSDialog').jqxWindow('close');
                     });
@@ -574,11 +574,11 @@
                 width: 500,
                 height: 170,
                 initContent: function () {
-                    $("#edDemand_idExecutor").jqxInput({height: 25, width: 100, minLength: 1, value: Demand.Demand_id});
+                    $("#edDemand_idExecutor").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 100, minLength: 1, value: Demand.Demand_id}));
                     $("#edDateStartExecutor").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Date()}));
-                    $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
-                    $("#btnYesExDialog").jqxButton({ width: 120, height: 30 });
-                    $("#btnNoExDialog").jqxButton({ width: 120, height: 30 });
+                    $("#cmbExecutor").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
+                    $("#btnYesExDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $("#btnNoExDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $("#btnNoExDialog").on('click', function(){
                         $('#ExecutorDialog').jqxWindow('close');
                     });
@@ -610,8 +610,8 @@
                 width: 500,
                 height: 170,
                 initContent: function () {
-                    $("#btnYesDialog").jqxButton({ width: 120, height: 30 });
-                    $("#btnNoDialog").jqxButton({ width: 120, height: 30 });
+                    $("#btnYesDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $("#btnNoDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $("#btnNoDialog").on('click', function(){
                         $('#WorkOutDialog').jqxWindow('close');
                     });

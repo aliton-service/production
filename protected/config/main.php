@@ -55,7 +55,7 @@ return array(
                                 'jquery-1.11.3.min.js',
                                 '/jqwidgets/localization.js',
                                 'aliton-sources.js',
-                                'aliton-settings.js',
+                                'aliton-settings-17.03.29.01.js',
                                 '/jqwidgets/jqx-all.js',
                                 '/jqwidgets/globalization/globalize.js',
                                 '/jqwidgets/globalization/globalize.culture.ru-RU.js',
