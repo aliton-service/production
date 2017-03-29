@@ -564,6 +564,9 @@
                     var PM = false;
                     var RSC = false;
                     var ROPR = false;
+                    var God = false;
+                    if (parseInt(CostCalculations.Position_id) == 151)
+                        God = true;
                     if (parseInt(CostCalculations.Position_id) == 37)
                         RSC = true;
                     if (parseInt(CostCalculations.Position_id) == 86)
@@ -571,7 +574,7 @@
                     if (parseInt(CostCalculations.Position_id) == 31)
                         ROPR = true;
                     
-                    
+                    if (God) return true;
                     
                     if ((parseInt(CostCalculations.Position_id) == 37) || (parseInt(CostCalculations.Position_id) == 152))
                         Chief = true;
