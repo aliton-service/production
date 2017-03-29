@@ -507,6 +507,8 @@ return array_merge(
                 'HeadLogistics',
                 'AdminAreaPrices',
                 'AdminAreaObjectPrices',
+                'ManagerSalesDepClients',
+                
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
