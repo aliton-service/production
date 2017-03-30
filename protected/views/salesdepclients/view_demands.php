@@ -59,6 +59,8 @@
                     [
                         { text: 'Дата посл. действия', filtertype: 'date', datafield: 'Date', width: 110, cellsformat: 'dd.MM.yyyy'},
                         { text: 'Номер', datafield: 'Demand_id', width: 100},
+                        { text: 'Дата рег.', datafield: 'DateReg', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
+                        { text: 'Дата вып.', datafield: 'DateExec', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
                         { text: 'Адрес', datafield: 'Address', width: 350},
                         { text: 'Тип', datafield: 'DemandType', width: 150},
                         { text: 'Этап', datafield: 'StageName', width: 150},

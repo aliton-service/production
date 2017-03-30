@@ -23,6 +23,8 @@ class ClientDemands extends MainFormModel
     public $NextActionOperationName;
     public $Responsible_id;
     public $ResponsibleName;
+    public $DateReg;
+    public $DateExec;
             
     public function rules()
     {
@@ -55,6 +57,8 @@ class ClientDemands extends MainFormModel
         $Select = "\nSelect
                         er.Exrp_id,
                         er.[Date],
+                        d.DateReg,
+                        d.DateExec,
                         d.Demand_id,
                         d.ObjectGr_id,
                         d.[Address],

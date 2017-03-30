@@ -52,6 +52,52 @@
         $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" }));
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
+        var TypeInt = 0;
+        
+        $("#SelectContactDialog").jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 500, height: 150, initContent: function() {
+            var DataContactInfo = new $.jqx.dataAdapter(Sources.SourceContactInfo, {
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["ci.ObjectGr_id = " + Demand.ObjectGr_id],
+                    });
+                    return data;
+                }
+            });    
+            $("#edSelectCont").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, dropDownWidth: 550, width: '400', height: '25px', displayMember: "SelEmail", valueMember: "Email"}));
+            $("#btnSelCont").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            $("#btnCancelCont").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            $("#btnCancelCont").on('click', function() {
+                $("#SelectContactDialog").jqxWindow('close');
+            });
+            $("#btnSelCont").on('click', function() {
+                if (TypeInt == 0 || TypeInt == 1)
+                    $("#MailTo").attr("href", "mailto:" + $("#edSelectCont").val() + "?subject=Письмо&body=");
+                if (TypeInt == 2)
+                    $("#MailTo").attr("href", "mailto:" + $("#edSelectCont").val() + "?subject=Презентация&body=");
+                if (TypeInt == 3)
+                    $("#MailTo").attr("href", "mailto:" + $("#edSelectCont").val() + "?subject=КП&body=");
+                    
+                document.getElementById('MailTo').click();
+                $("#SelectContactDialog").jqxWindow('close');
+            });
+        }
+        }));
+        
+        $("#btnKP").on('click', function() {
+            TypeInt = 3;
+            $("#SelectContactDialog").jqxWindow("open");
+        });
+        
+        $("#btnPresentation").on('click', function() {
+            TypeInt = 2;
+            $("#SelectContactDialog").jqxWindow("open");
+        });
+        
+        $("#btnMail").on('click', function() {
+            TypeInt = 1;
+            $("#SelectContactDialog").jqxWindow("open");
+        });
+        
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
@@ -116,18 +162,47 @@
                                 { text: 'Дата сообщения', datafield: 'date', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
                                 { text: 'Администрирующий', datafield: 'EmployeeName', width: 140 },
                                 { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 120, cellsformat: 'dd.MM.yyyy' },
+                                { text: 'Этап', datafield: 'StageName', width: 150 },
+                                { text: 'Действие', datafield: 'ActionOperationName', width: 150 },
+                                { text: 'Тип контакта', datafield: 'ContactName', width: 100 },
+                                { text: 'Результат', datafield: 'ActionResultName', width: 250 },
+                                { text: 'Ответственный', datafield: 'ResponsibleName', width: 100 },
+                                { text: 'Конт. лицо', datafield: 'FIO', width: 250 },
+                                { text: 'План. действие', datafield: 'NextAction', width: 100 },
                                 { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 120, cellsformat: 'dd.MM.yyyy HH:mm' },
                                 { text: 'Действие', filtertype: 'range', datafield: 'report', width: 400 },
                                 { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 120 },
                                 { text: '№ Заявки', datafield: 'demand_id', width: 80},
                             ]
                     }));
-
                     
+                    
+                    $('#btnAddActn').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnAddActn').on('click', function() {
+                        $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Form_id: Demand.PropForm_id,
+                                Demand_id: Demand.Demand_id,
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyCostCalculationsDialog").html(Res.html);
+                                $('#CostCalculationsDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
+        
                     $('#btnProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnProgress').on('click', function() {
                         //$("#DiaryHeaderText").html("Ход работы");
-                        $('#CostCalculationsDialog').jqxWindow({ height: 600, width: 1000});    
+                        $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 600, width: 1000}));    
                         $.ajax({
                             url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Index')) ?>,
                             type: 'POST',
@@ -517,12 +592,35 @@
                         });
                     break;
                     case 4:
+                        var Potential_id;
+                        var Form_id;
+                        
+                        
                         var SetPotentialValue = function(Obj) {
-                            $("#edPotEditDate1"),val(Obj.Date1);
-                            $("#edPotEditDate2"),val(Obj.Date2);
-                            $("#edPotEditDate3"),val(Obj.Date3);
-                            $("#edPotEditDate4"),val(Obj.Date4);
-                            $("#edPotEditDate5"),val(Obj.Date5);
+                            Potential_id = Obj.Potential_id;
+                            Form_id = Obj.Form_id;
+                            if (Form_id == null)
+                                Form_id = Demand.PropForm_id;
+                            
+                            $("#edPotEditDate1").val(Obj.Date1);
+                            $("#edPotEditDate2").val(Obj.Date2);
+                            $("#edPotEditDate3").val(Obj.Date3);
+                            $("#edPotEditDate4").val(Obj.Date4);
+                            $("#edPotEditDate5").val(Obj.Date5);
+                            $("#edPotEditInitiative").val(Obj.Initiative_id);
+                            $("#edPotEditService").val(Obj.Service_id);
+                            $("#edPotEditNegative").val(Obj.Negative_id);
+                            $("#edPotEditCompetitive").val(Obj.Competitive_id);
+                            $("#edPotEditSystem1").val(Obj.System1);
+                            $("#edPotEditSystem2").val(Obj.System2);
+                            $("#edPotEditSystem3").val(Obj.System3);
+                            $("#edPotEditSystem4").val(Obj.System4);
+                            $("#edPotEditSystem5").val(Obj.System5);
+                            $("#edPotEditOffer1").val(Obj.Offer1);
+                            $("#edPotEditOffer2").val(Obj.Offer2);
+                            $("#edPotEditOffer3").val(Obj.Offer3);
+                            $("#edPotEditOffer4").val(Obj.Offer4);
+                            $("#edPotEditOffer5").val(Obj.Offer5);
                         };
                         var PotentialRefresh = function() {
                             $.ajax({
@@ -534,10 +632,12 @@
                                 success: function(Res) {
                                     Res = JSON.parse(Res);
                                     Res.Date1 = Aliton.DateConvertToJs(Res.Date1);
-                                    Res.Date2 = Aliton.DateConvertToJs(Res.Date1);
-                                    Res.Date3 = Aliton.DateConvertToJs(Res.Date1);
-                                    Res.Date4 = Aliton.DateConvertToJs(Res.Date1);
-                                    Res.Date5 = Aliton.DateConvertToJs(Res.Date1);
+                                    Res.Date2 = Aliton.DateConvertToJs(Res.Date2);
+                                    Res.Date3 = Aliton.DateConvertToJs(Res.Date3);
+                                    Res.Date4 = Aliton.DateConvertToJs(Res.Date4);
+                                    Res.Date5 = Aliton.DateConvertToJs(Res.Date5);
+                                    
+                                    
                                     SetPotentialValue(Res);
                                 }
                             });
@@ -575,27 +675,34 @@
                                 type: 'POST',
                                 async: false,
                                 data: {
-                                    Client: {
-                                        Demand_id: Demand.Demand_id,
-                                        GoCalc: $('#chbGoCalc').val(),
-                                        WorkExec: $('#chbWorkExec').val(),
-                                        ngtv_id: $('#edNegative').val(),
-                                        Rvrs_id: $('#edRvrs').val(),
-                                        DateContract: $('#edDateContract').val(),
-                                        CalcSum: $('#edCalcSum').val(),
-                                        DateSurvey: $('#edDateSurvey').val(),
-                                        offer: $('#edOffer').val(),
-                                        competitive: $('#edCompetitive').val(),
-                                        initiative: $('#edInitiative').val(),
-                                        clrs_id: $('#edClrs_id').val(),
-                                        upg_note: $('#edUpgNote').val(),
-                                        date_calc: $('#edDateCalc').val(),
-                                        calc_accept: $('#edCalcAccept').val(),
-                                        StatusOP: $('#edStatusOP').val()
+                                    ClientPotentials: {
+                                        Potential_id: Potential_id,
+                                        Form_id: Form_id,
+                                        Date1: $("#edPotEditDate1").val(),
+                                        Date2: $("#edPotEditDate2").val(),
+                                        Date3: $("#edPotEditDate3").val(),
+                                        Date4: $("#edPotEditDate4").val(),
+                                        Date5: $("#edPotEditDate5").val(),
+                                        Initiative_id: $("#edPotEditInitiative").val(),
+                                        Service_id: $("#edPotEditService").val(),
+                                        Competitive_id: $("#edPotEditCompetitive").val(),
+                                        Negative_id: $("#edPotEditNegative").val(),
+                                        System1: $("#edPotEditSystem1").val(),
+                                        System2: $("#edPotEditSystem2").val(),
+                                        System3: $("#edPotEditSystem3").val(),
+                                        System4: $("#edPotEditSystem4").val(),
+                                        System5: $("#edPotEditSystem5").val(),
+                                        Offer1: $("#edPotEditOffer1").val(),
+                                        Offer2: $("#edPotEditOffer2").val(),
+                                        Offer3: $("#edPotEditOffer3").val(),
+                                        Offer4: $("#edPotEditOffer4").val(),
+                                        Offer5: $("#edPotEditOffer5").val()
+                                        
                                     }
                                 },
                                 success: function(Res) {
                                     Aliton.ShowErrorMessage('Запись произведена', 'Изменения успешно сохранены');
+                                    PotentialRefresh();
                                 },
                                 error: function(Res) {
                                     Aliton.ShowErrorMessage('Ошибка', Res.responseText);
@@ -631,7 +738,7 @@
                 height: 170,
                 initContent: function () {
                     $("#edDemand_idExecutor").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 100, minLength: 1, value: Demand.Demand_id}));
-                    $("#edDateStartExecutor").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Date()}));
+                    $("#edDateStartExecutor").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null}));
                     $("#cmbExecutor").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
                     $("#btnYesExDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $("#btnNoExDialog").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -763,7 +870,9 @@
         </div>
     </div>
     <div class="al-row-column">
+        <a style="display: none" id="MailTo" href="mailto:manish@simplygraphix.com?subject=Feedback for webdevelopersnotes.com&body=The Tips and Tricks section is great"></a>
         <div style="margin-top: 23px;">
+            
             <div class="al-row-column"><input type="button" id="btnCall" value="Звонок"/></div>
             <div class="al-row-column"><input type="button" id="btnMail" value="Письмо"/></div>
             <div style="clear: both;"></div>
@@ -834,7 +943,8 @@
                 <div style="clear: both;"></div>
                 <div style="height: 30px; margin-top: 5px;">
                     
-                        <div style="float: left; margin-left: 6px;"><input type='button' value='Ход работы' id='btnProgress' /></div>
+                        <div style="float: left;"><input type='button' value='Ход работы' id='btnProgress' /></div>
+                        <div style="float: left; margin-left: 6px;"><input type='button' value='Добавить запись' id='btnAddActn' /></div>
 <!--                        <div style="float: left; margin-left: 6px;">План. дата вып.</div>
                         <div style="float: left; margin-left: 6px;"><div id='edPlanDateExec'></div></div>
                         <div style="float: left; margin-left: 6px;"><input type="button" value="Написать" id='btnSend' /></div>
@@ -1134,5 +1244,22 @@
     </div>
     <div style="padding: 10px;" id="DialogCostCalculationsContent">
         <div style="" id="BodyCostCalculationsDialog"></div>
+    </div>
+</div>
+
+
+<div id="SelectContactDialog" style="display: none;">
+    <div id="SelectContactDialogHeader">
+        <span id="SelectContactHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogSelectContactContent">
+        <div style="" id="BodySelectContactDialog">
+            <div class="al-row">Выбирите контактное лицо</div>
+            <div class="al-row"><div id="edSelectCont"></div></div>
+            <div class="al-row">
+                <div class="al-row-column"><input type="button" id="btnSelCont" value="Продолжить" /></div>
+                <div class="al-row-column" style="float: right"><input type="button" id="btnCancelCont" value="Отмена" /></div>
+            </div>
+        </div>
     </div>
 </div>

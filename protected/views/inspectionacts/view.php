@@ -152,6 +152,14 @@
         $('#edResultEngineer').jqxTextArea('val', InspAct.ResultEngineer);
         $('#edResultHead').jqxTextArea('val', InspAct.ResultHead);
         
+        $('#btnPrint').on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                            'ReportName' => '/Акт обследования/Акт обследования',
+                            'Ajax' => false,
+                            'Render' => true,
+                        ))); ?> + '&Parameters[Inspection_id]=' + InspAct.Inspection_id + '&FileName=Акт_обследования_' + InspAct.SystemTypeName);
+        });
+        
         $('#btnROMTO').on('click', function() {
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Agreed')) ?>,

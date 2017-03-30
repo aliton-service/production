@@ -17,7 +17,7 @@
         //$('#edInformation2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 500, value: Demand2.DemandText}));
         $('#edExecutors2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 150, value: Demand2.ExecutorsName}));
         
-        $('#Tabs2').jqxTabs({ width: '100%', height: '100%', keyboardNavigation: false});
+        $('#Tabs2').jqxTabs($.extend(true, {}, TabsDefaultSettings, { width: '100%', height: '100%', keyboardNavigation: false}));
         
         var CurrentRowDataER;
 
@@ -98,6 +98,8 @@
         $('#btnCloseProg').on('click', function() {
             if ($("#DiaryDialog").length>0)
                 $("#DiaryDialog").jqxWindow('close');
+            if ($("#CostCalculationsDialog").length>0)
+                $("#CostCalculationsDialog").jqxWindow('close');
         });
         
         $('#btnNewAction').on('click', function() {

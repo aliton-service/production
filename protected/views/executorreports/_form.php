@@ -357,6 +357,8 @@
                 $('#ActionsDialog').jqxWindow('close');
             if ($('#EditFormDialog').length>0)
                 $('#EditFormDialog').jqxWindow('close');
+            if ($('#CostCalculationsDialog').length>0)
+                $('#CostCalculationsDialog').jqxWindow('close');
         });
         
         
@@ -507,9 +509,20 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
+                        if ($('#CostCalculationsDialog').length>0) {
+                            Aliton.SelectRowById('Exrp_id', Res.id, '#ProgressGrid', true);
+                            $('#CostCalculationsDialog').jqxWindow('close');
+                            
+                        }
+                        
                         if ($('#ActionsDialog').length>0) {
-                            Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
-                            $('#ActionsDialog').jqxWindow('close');
+                            if ($('#CostCalculationsDialog').length>0) {
+                                $('#ActionsDialog').jqxWindow('close');
+                            } else {
+                                Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
+                                $('#ActionsDialog').jqxWindow('close');
+                            }
+                            
                         }
                         
                         if ($('#EditFormDialog').length>0) {
@@ -583,19 +596,19 @@
 </div>
 <div class="al-row">
     <div class="al-row-column">
-        <div style="text-align: center">Этап</div>
+        <div style="text-align: center">Этап*</div>
         <div><div id="cmbStageEdit" name="ClientActions[ActionStage_id]"></div><?php echo $form->error($model, 'ActionStage_id'); ?></div>
     </div>
     <div class="al-row-column">
-        <div style="text-align: center">Тип контакта</div>
+        <div style="text-align: center">Тип контакта*</div>
         <div><div id="cmbContactTypeEdit" name="ClientActions[ContactType_id]"></div><?php echo $form->error($model, 'ContactType_id'); ?></div>
     </div>
     <div class="al-row-column">
-        <div style="text-align: center">Контактное лицо</div>
+        <div style="text-align: center">Контактное лицо*</div>
         <div><div id="cmbContactInfoEdit" name="ClientActions[ContactInfo_id]"></div><?php echo $form->error($model, 'ContactInfo_id'); ?></div>
     </div>
     <div class="al-row-column">
-        <div style="text-align: center">Статус ОП</div>
+        <div style="text-align: center">Статус ОП*</div>
         <div><div id="cmbStatusOPEdit" name="ClientActions[StatusOP]"></div><?php echo $form->error($model, 'StatusOP'); ?></div>
     </div>
     <div style="clear: both"></div>
@@ -900,9 +913,9 @@
     </div>
 </div>
 <div class="al-row">
-    <div class="al-row-column">Действие</div>
+    <div class="al-row-column">Действие*</div>
     <div class="al-row-column"><div id="cmbActionOperationEdit" name="ClientActions[ActionOperation_id]"></div><?php echo $form->error($model, 'ActionOperation_id'); ?></div>
-    <div class="al-row-column">Результат</div>
+    <div class="al-row-column">Результат*</div>
     <div class="al-row-column"><div id="cmbActionResultEdit" name="ClientActions[ActionResult_id]"></div><?php echo $form->error($model, 'ActionResult_id'); ?></div>
     <div style="clear: both"></div>
 </div>
@@ -910,9 +923,9 @@
     <div><textarea id="edReport" name="ClientActions[Report]"><?php echo $model->Report; ?></textarea><?php echo $form->error($model, 'Report'); ?></div>
 </div>
 <div class="al-row">
-    <div class="al-row-column">Дата план. действия</div>
+    <div class="al-row-column">Дата план. действия*</div>
     <div class="al-row-column"><div id="edNextDateEdit" name="ClientActions[NextDate]"></div><?php echo $form->error($model, 'NextDate'); ?></div>
-    <div class="al-row-column">Ответ.</div>
+    <div class="al-row-column">Ответ.*</div>
     <div class="al-row-column"><div id="cmbResponsibleEdit" name="ClientActions[Responsible_id]"></div><?php echo $form->error($model, 'Responsible_id'); ?></div>
     <div class="al-row-column">Соисп.</div>
     <div class="al-row-column"><div id="cmbExecutorEdit" ></div></div>
