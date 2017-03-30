@@ -109,6 +109,12 @@
 
             <div class="main-menu">
                     <?php
+                    $empl = [];
+                    $empl['ShortName'] = '';
+                    if (!Yii::app()->user->isGuest) { 
+                        $empl = new Employees; 
+                        $empl->getModelPk(Yii::app()->user->Employee_id); 
+                    }
                     $this->widget('zii.widgets.CMenu',array(
                         'activeCssClass'=>'active',
                         'activateParents'=>true,
@@ -483,7 +489,7 @@
                                 )),
                             )),
                             array('label'=>'О программе', 'url'=>array('/site/about')),
-                            array('label'=>'Выход', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+                            array('label'=>'Выход (' . $empl['ShortName'] . ')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                         )
                     ));?>
                 </div>
