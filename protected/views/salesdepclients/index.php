@@ -682,8 +682,8 @@
                         <div><div id="edSalesManager"></div></div>
                         <div style="margin-top: 4px">
                             <div class="al-row-column">
-                                <div><div id="chbPlan">В ПЛАН</div></div>
-                                <div><div id="chbWork">В РАБОТУ</div></div>
+                                <div><div id="chbPlan">В Резерв</div></div>
+                                <div><div id="chbWork">В Ежедневник</div></div>
                             </div>
                             <div class="al-row-column">
                                 <div id="Calendar"></div>

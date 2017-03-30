@@ -218,7 +218,12 @@
                                         array('label'=>'Виды заявок на доставку', 'url'=>array('/DeliveryTypes/index'), 'visible'=>Yii::app()->user->checkAccess('ViewDeliveryTypes')),
                                     ),
                                     ),
-
+                                    array('label'=>'Продажи', 'url'=>'#', 'items'=>array(
+                                        array('label'=>'Этапы', 'url'=>array('/ActionStages/index'), 'visible'=>true),
+                                        array('label'=>'Действия', 'url'=>array('/ActionOperations/index'), 'visible'=>true),
+                                        array('label'=>'Результаты', 'url'=>array('/ActionResults/index'), 'visible'=>true),
+                                    ),
+                                    ),
 
                                 ),
                             ),

@@ -534,6 +534,11 @@
         };
         
         $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '600px', width: '800', position: 'center'}));
+//        $('#WHDocumentEquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '600px', width: '800', position: 'center', initContent: function() {
+//                $.ajax({
+//                    url:
+//                });
+//        }));
         
         $("#btnEdit").on('click', function(){
             if ($("#btnEdit").jqxButton('disabled')) return;
@@ -1355,3 +1360,13 @@
         <div style="" id="BodyWHDocumentsDialog"></div>
     </div>
 </div>
+
+<div id="WHDocumentEquipsDialog" style="display: none;">
+    <div id="WHDocumentEquipsDialogHeader">
+        <span id="WHDocumentEquipsHeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="padding: 10px;" id="DialogWHDocumentEquipsContent">
+        <div style="" id="BodyWHDocumentEquipsDialog"></div>
+    </div>
+</div>
+

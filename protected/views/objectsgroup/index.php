@@ -202,9 +202,6 @@
                 },
             });
             
-            
-            
-            
             var contextMenu = $("#ContextMenu1").jqxMenu({ width: 200, height: 58, autoOpenPopup: false, mode: 'popup'});
             $("#ContactInfoGrid").on('contextmenu', function () {
                 return false;
@@ -486,6 +483,148 @@
                 case 6:
                     loadPage('<?php echo Yii::app()->createUrl('SalesDepClients/History', array('Form_id' => "$model->PropForm_id")) ?>', 6);
                     break;
+                case 7:
+                    var InspectionActRow;
+                    
+                    var contextMenu2 = $("#ContextMenu2").jqxMenu({ width: 200, height: 58, autoOpenPopup: false, mode: 'popup'});
+                    $("#InspectionActsGrid").on('contextmenu', function () {
+                        return false;
+                    });
+
+                    $("#InspectionActsGrid").on("columnclick", function (event) {
+                        var scrollTop = $(window).scrollTop();
+                        var scrollLeft = $(window).scrollLeft();
+                        contextMenu2.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+                        return false;
+                    });
+
+                    $("#InspectionActsGrid").on('rowclick', function (event) {
+                        if (event.args.rightclick) {
+                            $("#ContactInfoGrid").jqxGrid('selectrow', event.args.rowindex);
+                            var scrollTop = $(window).scrollTop();
+                            var scrollLeft = $(window).scrollLeft();
+                            contextMenu2.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+                            return false;
+                        }
+                    });
+
+
+                    function getCookie(name) {
+                        var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+                        return matches ? decodeURIComponent(matches[1]) : undefined;
+                    }
+
+                    function setCookie(name, value, options) {
+                        options = options || {};
+
+                        var expires = options.expires;
+
+                        if (typeof expires == "number" && expires) {
+                            var d = new Date();
+                            d.setTime(d.getTime() + expires * 1000);
+                            expires = options.expires = d;
+                        }
+                        if (expires && expires.toUTCString) {
+                            options.expires = expires.toUTCString();
+                        }
+
+                        value = encodeURIComponent(value);
+
+                        var updatedCookie = name + "=" + value;
+
+                        for (var propName in options) {
+                            updatedCookie += "; " + propName;
+                            var propValue = options[propName];
+                            if (propValue !== true) {
+                                updatedCookie += "=" + propValue;
+                            }
+                        }
+
+                        document.cookie = updatedCookie;
+                    }
+
+                    $("#ContextMenu2").on('itemclick', function (event) {
+                        var args = event.args;
+                        var rowindex = $("#InspectionActsGrid").jqxGrid('getselectedrowindex');
+                        if ($.trim($(args).text()) == "Копировать акт") {
+                            console.log(InspectionActRow);
+                            if (InspectionActRow != undefined) {
+                                setCookie("CopyInspAct_Inspection_id", InspectionActRow.Inspection_id, 3600);
+                            }
+                        }
+                        if ($.trim($(args).text()) == "Вставить акт") {
+                            var Inspection_id = getCookie("CopyInspAct_Inspection_id");
+                            if (Inspection_id != undefined) {
+                                PasteInspAct(Inspection_id);
+                            }
+                        }
+                    });
+
+
+                    function PasteInspAct(Inspection_id) {
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl("InspectionActs/Paste")); ?>,
+                            type: 'POST',
+                            async: true,
+                            data: {
+                                Parameters: {
+                                    Inspection_id: Inspection_id,
+                                    In_ObjectGr_id: ObjectGroup.ObjectGr_id
+                                }
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                //Out_ObjectGr_id = Res.id;
+                                $('#InspectionActsGrid').jqxGrid('updatebounddata');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+
+                        });
+                    };
+
+                    
+                    var DataInspectionActions = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceInspectionActs_v, {}), {
+                        formatData: function (data) {
+                            $.extend(data, {
+                                Filters: ["i.ObjectGr_id = " + ObjectGroup.ObjectGr_id],
+                            });
+                            return data;
+                        },
+                    });
+                    
+                    $("#InspectionActsGrid").on('rowselect', function (event) {
+                        InspectionActRow = $('#InspectionActsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                    });
+                    
+                    $("#InspectionActsGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            pagesizeoptions: ['10', '200', '500', '1000'],
+                            pagesize: 200,
+                            showfilterrow: false,
+                            virtualmode: false,
+                            width: 'calc(100% - 2px)',
+                            height: 'calc(100% - 2px)',
+                            source: DataInspectionActions,
+                            enablebrowserselection: true,
+                            columns: [
+                                { text: 'Дата', dataField: 'Date', cellsformat: 'dd.MM.yyyy', width: 150 },
+                                { text: 'Система', datafield: 'SystemTypeName', width: 150 },
+                                { text: 'Инженер', datafield: 'EmployeeName', width: 100 },
+                            ]
+                        })
+                    );
+                    
+                    $('#btnCopyInspAct').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 220}));
+                    $('#btnCopyInspAct').on('click', function() {
+                        var Inspection_id = getCookie("CopyInspAct_Inspection_id");
+                        if (Inspection_id != undefined) {
+                            PasteInspAct(Inspection_id);
+                        }
+                    });
+                    
+                    break;
             }
         };
         
@@ -611,6 +750,13 @@ $this->breadcrumbs=array(
                 </div>
             </div>
         </li>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                    Акты обследования
+                </div>
+            </div>
+        </li>
     </ul>
     <div style="overflow: auto; height: calc(100% - 2px); background-color: #F2F2F2;">
         <div style="overflow: auto; padding: 5px 10px 0;">
@@ -711,6 +857,17 @@ $this->breadcrumbs=array(
         <div style="width: 100%; height: 100%"></div>
     </div>
     
+    <div id='content8' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
+        <div style="width: 100%; height: calc(100% - 18px)">
+            <div class="al-row" style="height: calc(100% - 38px)">
+                <div id="InspectionActsGrid"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column"><input type="button" id="btnCopyInspAct" value="Вставить из буфера"/></div>
+            </div>
+        </div>
+    </div>
+    
     
 </div>
 
@@ -727,5 +884,12 @@ $this->breadcrumbs=array(
     <ul>
         <li>Копировать контакты</li>
         <li>Вставить контакты</li>
+    </ul>
+</div>
+
+<div id='ContextMenu2' style="display: none">
+    <ul>
+        <li>Копировать акт</li>
+        <li>Вставить акт</li>
     </ul>
 </div>

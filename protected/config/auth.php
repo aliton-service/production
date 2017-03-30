@@ -1296,6 +1296,7 @@ return array_merge(
                 'ManagerMaterialLogistics',
                 'AdminWHDocuments',
                 'AdminSuppliers',
+                'ManagerWhActs',
             ),
         ),
         

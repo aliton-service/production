@@ -33,5 +33,25 @@
     </div>
 <?php endif; ?>
 
+<?php 
+//    if ($handle = opendir("\\CHZ\\records2")) {
+//        echo "Дескриптор каталога: $handle\n";
+//        echo "Файлы:\n";
+//
+//        /* Именно этот способ чтения элементов каталога является правильным. */
+//        while (false !== ($file = readdir($handle))) { 
+//            echo "$file\n";
+//        }
+//
+//        /* Этот способ НЕВЕРЕН. */
+//        while ($file = readdir($handle)) { 
+//            echo "$file\n";
+//        }
+//
+//        closedir($handle); 
+//    }
+
+?>
+
     
 

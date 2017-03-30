@@ -42,6 +42,13 @@ class ExecutorReports extends MainFormModel
 	public $DateChange = null;
 	public $EmplDel = null;
         public $StatusOP;
+        public $StageName;
+        public $ContactName;
+        public $ActionOperationName;
+        public $ActionResultName;
+        public $ResponsibleName;
+        public $FIO;
+        public $NextAction;
 	
 	public function rules()
 	{
@@ -85,8 +92,21 @@ class ExecutorReports extends MainFormModel
                               ex.plandateexec,
                               ex.othername,
                               ex.dateexec,
-                              isnull(is_auto, 0) as is_auto";
-            $From =     "\nFrom ExecutorReports ex inner join Employees e on (ex.empl_id = e.Employee_id)";
+                              isnull(is_auto, 0) as is_auto,
+                              s.StageName,
+                              ct.ContactName,
+                              o.ActionOperationName,
+                              r.ActionResultName,
+                              e2.ShortName as ResponsibleName,
+                              ci.FIO,
+                              ex.NextAction";
+            $From =     "\nFrom ExecutorReports ex inner join Employees e on (ex.empl_id = e.Employee_id)"
+                    . "left join ActionStages s on (ex.ActionStage_id = s.Stage_id)
+				left join ContactTypes ct on (ex.ContactType_id = ct.Contact_id)
+				left join ActionOperations o  on (ex.ActionOperation_id = o.Operation_id)
+				left join ActionResults r on (ex.ActionResult_id = r.Result_id)
+				left join Employees e2 on (ex.Responsible_id = e2.Employee_id)
+				left join ContactInfo ci on (ex.ContactInfo_id = ci.info_id)";
             $Where =    "\nWhere ex.DelDate is null";
             $Order =    "\nOrder by ex.exrp_id desc";
             $this->Query->setSelect($Select);

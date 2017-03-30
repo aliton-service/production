@@ -16,7 +16,7 @@ class InspectionActsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'view', 'getmodel', 'Agreed'),
+                    'actions'=>array('index', 'view', 'getmodel', 'Agreed', 'Paste'),
                     'roles'=>array('ViewInspectionActs'),
             ),
             array('allow', 
@@ -180,6 +180,34 @@ class InspectionActsController extends Controller
             
             $ObjectResult['result'] = 1;
             $ObjectResult['id'] = 0;
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    
+    public function actionPaste() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Parameters'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'COPY_InspectionActs';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = null;
+            $sp->Parameters[1]['Value'] = $_POST['Parameters']['Inspection_id'];;
+            $sp->Parameters[2]['Value'] = $_POST['Parameters']['In_ObjectGr_id'];
+            $sp->Parameters[3]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $Res['Out_Inspection_id'];
             echo json_encode($ObjectResult);
             return;
         }

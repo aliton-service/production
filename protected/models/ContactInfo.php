@@ -23,6 +23,7 @@ class ContactInfo extends MainFormModel
     public $NoSend;
     public $CName;
     public $dep;
+    public $SelEmail;
 
         
      
@@ -76,7 +77,8 @@ class ContactInfo extends MainFormModel
                     ."  ci.FIO + ' (' + ISNULL(c.CustomerName + ', ', '') + ISNULL(ci.telephone, '') + CASE WHEN ci.ctelephone IS NOT NULL THEN ', ' + ci.ctelephone + ')' ELSE ')' END AS contact,"
                     ."  ISNULL(c.Reduction + ' - ', '') + isNull(ci.FIO, '') +
                             case when isNull(ci.telephone, '') <> '' or isNull(ci.ctelephone, '') <> ''
-                            then ', тел.:' + isNull(ci.telephone + '', '') + isNull(ci.ctelephone, '') else '' end CName";
+                            then ', тел.:' + isNull(ci.telephone + '', '') + isNull(ci.ctelephone, '') else '' end CName,
+                    ci.FIO + ' ' + isnull(ci.Email, '') as SelEmail";
         $From =     "\nFrom ContactInfo ci left join Customers c on (ci.Cstm_id = c.Customer_Id)"
                     . "     left join ObjectsGroup og on (ci.ObjectGr_id = og.ObjectGr_id)";
         $Where =    "\nWhere ci.DelDate is Null";
