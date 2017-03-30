@@ -5,6 +5,7 @@ class UserSettings extends MainFormModel
     public $Setting_id;
     public $Empl_id;
     public $Theme;
+    public $Hide_page_header;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -14,7 +15,8 @@ class UserSettings extends MainFormModel
         $Select = "\nSelect
                         s.Setting_id,
                         s.Empl_id,
-                        s.Theme";
+                        s.Theme,
+                        s.Hide_page_header";
         $From = "\nFrom UserSettings s";
         
 
@@ -31,7 +33,8 @@ class UserSettings extends MainFormModel
             array('Theme', 'required'),
             array('Setting_id,
                     Empl_id,
-                    Theme', 'safe'),
+                    Theme,
+                    Hide_page_header', 'safe'),
         );
     }
     
@@ -41,7 +44,7 @@ class UserSettings extends MainFormModel
             'Setting_id' => 'Setting_id',
             'Theme' => 'Theme',
             'Empl_id' => 'Empl_id',
-            
+            'Hide_page_header' => 'Hide_page_header',
         );
     }
 }
