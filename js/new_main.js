@@ -23,29 +23,30 @@ $(function(){
     }
     
     $(window).resize(function(){
+        console.log('WindowResize');
         WindowResize();
     });
     
-    function MenuShowAndHide() {
-        $nav = $('#page_container .nav')
-        if ($nav.is(':hidden')) {
-            $nav.show();
-            $('#sidebar>.portlet').addClass('nav-open')
-            $(this).addClass('active')
-        }
-        else {
-            $nav.hide(0);
-            $('#sidebar>.portlet').removeClass('nav-open')
-            $(this).removeClass('active')
-        }
-        WindowResize();
-    }
-    
-    $('body').on('click','.toggler-navbar', function(){
-        MenuShowAndHide();
-    })
-    
-    WindowResize();
+//    function MenuShowAndHide() {
+//        $nav = $('#page_container .nav')
+//        if ($nav.is(':hidden')) {
+//            $nav.show();
+//            $('#sidebar>.portlet').addClass('nav-open')
+//            $(this).addClass('active')
+//        }
+//        else {
+//            $nav.hide(0);
+//            $('#sidebar>.portlet').removeClass('nav-open')
+//            $(this).removeClass('active')
+//        }
+//        WindowResize();
+//    }
+//    
+//    $('body').on('click','.toggler-navbar', function(){
+//        MenuShowAndHide();
+//    })
+//    
+//    WindowResize();
 });
 
 

@@ -189,6 +189,7 @@ class SiteController extends Controller
                 $UserSettings->Setting_id = $R[0]['Setting_id'];
                 $UserSettings->Empl_id = $R[0]['Empl_id'];
                 $UserSettings->Theme = $R[0]['Theme'];
+                $UserSettings->Hide_page_header = $R[0]['Hide_page_header'];
             }
             //$UserSettings->getModelPk(Yii::app()->user->Employee_id);
             

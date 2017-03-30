@@ -27,7 +27,15 @@
                 else {
                     echo '<meta id="ID_THEME" style="display: \'none\'"></div>';
                 }
-
+                
+//                print_r($R[0]['Hide_page_header']);
+                if ($R[0]['Hide_page_header'] === '1') {
+                    echo '<meta id="Hide_page_header" value="' . $R[0]['Hide_page_header'] .'">';
+                    echo '<link rel="stylesheet" type="text/css" href="' . Yii::app()->request->baseUrl . '/css/header-hide.css">';
+                    echo '<link rel="stylesheet" type="text/css" href="' . Yii::app()->request->baseUrl . '/css/main-whithout-header.css">';
+                } else {
+                    echo '<meta id="Hide_page_header" style="display: \'none\'"></div>';
+                }
             }
         }
         
@@ -101,6 +109,12 @@
 
             <div class="main-menu">
                     <?php
+                    $empl = [];
+                    $empl['ShortName'] = '';
+                    if (!Yii::app()->user->isGuest) { 
+                        $empl = new Employees; 
+                        $empl->getModelPk(Yii::app()->user->Employee_id); 
+                    }
                     $this->widget('zii.widgets.CMenu',array(
                         'activeCssClass'=>'active',
                         'activateParents'=>true,
@@ -480,6 +494,7 @@
                                 )),
                             )),
                             array('label'=>'О программе', 'url'=>array('/site/about')),
+                            array('label'=>'Выход (' . $empl['ShortName'] . ')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                         )
                     ));?>
                 </div>
