@@ -159,8 +159,8 @@
                         type: 'POST',
                         data: {
                             ClientSounds: {
-                                out_patch: Patch,
-                                out_filename: Name
+                                Patch: Patch,
+                                Name: Name
                             }
                         },
                         success: function(Res) {

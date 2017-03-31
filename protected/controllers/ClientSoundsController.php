@@ -46,15 +46,27 @@ class ClientSoundsController extends Controller
                 'html' => '',
             );
         if (isset($_POST['ClientSounds'])) {
+            $OutFile = $_POST['ClientSounds']['Patch'] . "\\" . $_POST['ClientSounds']['Name'];
+            $InFile = "\\\\ESRVWEB00\\Sounds\\" . $_POST['ClientSounds']['Name'];
+            if (is_file($OutFile)) {
+                copy($OutFile, $InFile);
+            }
             
-//            $model->attributes = $_POST['ClientSounds'];
-//            if ($model->validate()) {
-//                $Res = $model->Insert();
-//                $ObjectResult['result'] = 1;
-//                $ObjectResult['id'] = $Res['Sound_id'];
-//                echo json_encode($ObjectResult);
-//                return;
-//            } 
+            $model->Form_id = $_POST['ClientSounds']['Form_id'];
+            $model->SoundDate = date ("d.m.Y H:i", filemtime($OutFile));
+            $model->SoundName = $_POST['ClientSounds']['Name'];
+//            $model->SoundPatch ;
+//            $model->Empl_id;
+//            $model->EmplCreate;
+            
+    
+            if ($model->validate()) {
+                $Res = $model->Insert();
+                $ObjectResult['result'] = 1;
+                $ObjectResult['id'] = $Res['Sound_id'];
+                echo json_encode($ObjectResult);
+                return;
+            } 
         }
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
