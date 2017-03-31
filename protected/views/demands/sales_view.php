@@ -112,7 +112,7 @@
                     },
                     success: function(Res) {
                         Res = JSON.parse(Res);
-                        $("#Music").attr("src", 'http://aliton/audio/274_sound.wav?cb=' + new Date().getTime());
+                        $("#Music").attr("src", 'http://test.aliton.ru/audio/274_sound.wav?cb=' + new Date().getTime());
                         $("#Music")[0].load();
                     }
 
