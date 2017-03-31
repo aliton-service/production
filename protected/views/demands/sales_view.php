@@ -55,69 +55,165 @@
         
         var TypeInt = 0;
         $("#SoundsDialog").jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 450, initContent: function() {
-            var CurrentSoundRow;    
+            var CurrentFileRow;
+            var CurrentSoundRow;
+            var initWidgets = function(tab) {
+                switch (tab) {
+                case 0:
+                        
                 
-            var DataSounds = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceClientSounds, {}), {
-                formatData: function (data) {
-                    $.extend(data, {
-                        Filters: ["s.Form_id = " + Demand.PropForm_id],
+                    var DataSounds = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceClientSounds, {}), {
+                        formatData: function (data) {
+                            $.extend(data, {
+                                Filters: ["s.Form_id = " + Demand.PropForm_id],
+                            });
+                            return data;
+                        },
                     });
-                    return data;
-                },
-            });
-            
-            $("#SoundsGrid").on('rowselect', function (event) {
-                CurrentSoundRow = $('#SoundsGrid').jqxGrid('getrowdata', event.args.rowindex);
-                                
-            });
-            
-            $("#SoundsGrid").jqxGrid(
-                $.extend(true, {}, GridDefaultSettings, {
-                    height: 'calc(100% - 2px)',
-                    width: 'calc(100% - 2px)',
-                    sortable: false,
-                    autorowheight: false,
-                    virtualmode: false,
-                    pageable: false,
-                    showfilterrow: false,
-                    filterable: false,
-                    autoshowfiltericon: true,
-                    source: DataSounds,
-                    enablebrowserselection: true,
-                    columns:
-                    [
-                        { text: 'Дата звонка', datafield: 'SoundDate', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
-                        { text: 'Имя фала', datafield: 'SoundName', width: 140 },
-                        { text: 'Менеджер', datafield: 'ShortName', width: 200 },
-                    ]
-            }));
-            
-            $("#btnLoadSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 120, height: 30}));
-            $("#btnAddSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, height: 30}));
-            $("#btnRefreshSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, height: 30}));
-            
-            $("#btnRefreshSound").on('click', function() {
-                $("#SoundsGrid").jqxGrid('updatebounddata');
-            });
-            
-            $("#btnLoadSound").on('click', function() {
-                $.ajax({
-                    url: 'index.php?r=Audio/Load',
-                    type: 'POST',
-                    data: {
-                        Parameters: {
-                            out_patch: CurrentSoundRow['SoundPatch'],
-                            out_filename: CurrentSoundRow['SoundName']
-                        }
-                    },
-                    success: function(Res) {
-                        Res = JSON.parse(Res);
-                        $("#Music").attr("src", 'http://test.aliton.ru/audio/274_sound.wav?cb=' + new Date().getTime());
-                        $("#Music")[0].load();
-                    }
 
+                    $("#SoundsGrid").on('rowselect', function (event) {
+                        CurrentSoundRow = $('#SoundsGrid').jqxGrid('getrowdata', event.args.rowindex);
+
+                    });
+
+                    $("#SoundsGrid").jqxGrid(
+                        $.extend(true, {}, GridDefaultSettings, {
+                            height: 'calc(100% - 2px)',
+                            width: 'calc(100% - 2px)',
+                            sortable: false,
+                            autorowheight: false,
+                            virtualmode: false,
+                            pageable: false,
+                            showfilterrow: false,
+                            filterable: false,
+                            autoshowfiltericon: true,
+                            source: DataSounds,
+                            enablebrowserselection: true,
+                            columns:
+                            [
+                                { text: 'Дата звонка', datafield: 'SoundDate', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                { text: 'Имя фала', datafield: 'SoundName', width: 250 },
+                                { text: 'Менеджер', datafield: 'ShortName', width: 200 },
+                            ]
+                    }));
+                    break;
+                    case 1:
+                            
+                
+                        var Data2Sounds = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceAudioFiles, {}), {
+//                            formatData: function (data) {
+//                                $.extend(data, {
+//                                    Filters: ["s.Form_id = " + Demand.PropForm_id],
+//                                });
+//                                return data;
+//                            },
+                        });
+
+                        $("#FilesGrid").on('rowselect', function (event) {
+                            CurrentFileRow = $('#FilesGrid').jqxGrid('getrowdata', event.args.rowindex);
+                            
+                        });
+
+                        $("#FilesGrid").jqxGrid(
+                            $.extend(true, {}, GridDefaultSettings, {
+                                height: 'calc(100% - 2px)',
+                                width: 'calc(100% - 2px)',
+                                sortable: false,
+                                autorowheight: false,
+                                virtualmode: false,
+                                pageable: false,
+                                showfilterrow: false,
+                                filterable: false,
+                                autoshowfiltericon: true,
+                                source: Data2Sounds,
+                                enablebrowserselection: true,
+                                columns:
+                                [
+                                    { text: 'Дата звонка', datafield: 'LastChange', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                    { text: 'Имя файла', datafield: 'SoundName', width: 250 },
+                                    
+                                ]
+                        }));
+                    
+                        break;
+                }
+                
+                $("#btnLoadSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 120, height: 30}));
+                $("#btnAddSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, height: 30}));
+                $("#btnRefreshSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, height: 30}));
+                
+                $("#btnAddSound").on('click', function() {
+                    var Patch;
+                    var Name;
+                    if ($('#SoundTabs').jqxTabs('selectedItem') == 0) {
+                        Patch = CurrentSoundRow['SoundPatch'];
+                        Name = CurrentSoundRow['SoundName'];
+                    }
+                    if ($('#SoundTabs').jqxTabs('selectedItem') == 1) {
+                        Patch = CurrentFileRow['SoundPatch'];
+                        Name = CurrentFileRow['SoundName'];
+                    }
+                    
+                    $.ajax({
+                        url: 'index.php?r=ClientSounds/Create',
+                        type: 'POST',
+                        data: {
+                            ClientSounds: {
+                                out_patch: Patch,
+                                out_filename: Name
+                            }
+                        },
+                        success: function(Res) {
+                            Res = JSON.parse(Res);
+                            //$("#Music").attr("src", 'http://test.aliton.ru' + Res.FileName + '?cb=' + new Date().getTime());
+                            $("#Music").attr("src", Res.FileName + '?cb=' + new Date().getTime());
+                            $("#Music")[0].load();
+                        }
+
+                    });
                 });
-            });
+                
+                $("#btnRefreshSound").on('click', function() {
+                    $("#SoundsGrid").jqxGrid('updatebounddata');
+                });
+
+                $("#btnLoadSound").on('click', function() {
+                    var Patch;
+                    var Name;
+                    if ($('#SoundTabs').jqxTabs('selectedItem') == 0) {
+                        Patch = CurrentSoundRow['SoundPatch'];
+                        Name = CurrentSoundRow['SoundName'];
+                    }
+                    if ($('#SoundTabs').jqxTabs('selectedItem') == 1) {
+                        Patch = CurrentFileRow['SoundPatch'];
+                        Name = CurrentFileRow['SoundName'];
+                    }
+                    
+                        
+                    $.ajax({
+                        url: 'index.php?r=Audio/Load',
+                        type: 'POST',
+                        data: {
+                            Parameters: {
+                                out_patch: Patch,
+                                out_filename: Name
+                            }
+                        },
+                        success: function(Res) {
+                            Res = JSON.parse(Res);
+                            //$("#Music").attr("src", 'http://test.aliton.ru' + Res.FileName + '?cb=' + new Date().getTime());
+                            $("#Music").attr("src", Res.FileName + '?cb=' + new Date().getTime());
+                            $("#Music")[0].load();
+                        }
+
+                    });
+                });
+            };
+            $('#SoundTabs').jqxTabs($.extend(true, {}, TabsDefaultSettings, { width: 'calc(100% - 2px)', height: 'calc(100% - 2px)', initTabContent: initWidgets}));
+            
+            
+            
+            
         }
         }));
         
@@ -1343,7 +1439,31 @@
     <div style="padding: 10px;" id="DialogSoundsContent">
         <div style="" id="BodySoundsDialog">
             <div class="al-row" style="height: calc(100% - 86px)">
-                <div id="SoundsGrid"></div>
+                <div id='SoundTabs'>
+                    <ul>
+                        <li style="margin-left: 30px;">
+                            <div style="height: 20px; margin-top: 5px;">
+                                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Приикрепленные файлы</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="height: 20px; margin-top: 5px;">
+                                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">Все файлы из папки</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div style="overflow: hidden;">
+                        <div style="padding: 10px; height: calc(100% - 20px)">
+                            <div id="SoundsGrid"></div>
+                        </div>
+                    </div>
+                    <div style="overflow: hidden;">
+                        <div style="padding: 10px; height: calc(100% - 20px)">
+                            <div id="FilesGrid"></div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             <div class="al-row">
                 <div class="al-row-column"><input type="button" id="btnAddSound" value="Прикрепить файл"/></div>
@@ -1357,3 +1477,5 @@
         </div>
     </div>
 </div>
+
+

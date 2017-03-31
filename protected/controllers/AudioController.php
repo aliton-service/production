@@ -14,12 +14,41 @@ class AudioController extends Controller
         }
     }
     
-    public function actionLoad2() {
-        if (isset($_GET['Parameters'])) {
-            $out_file = $_GET['Parameters']['out_patch'] . "\\" . $_GET['Parameters']['out_filename'];
-            $f = file_get_contents($out_file);
-            echo $f;
+    public function actionGetListFiles() {
+        $Result = array();
+        
+        if (Yii::app()->user->Employee_id == 274)
+            $Number = '113';
+        
+        $Patch = "\\\\CHZ\\records2\\" . $Number;
+
+        if ($Handle = opendir($Patch)) {
+            /* Именно этот способ чтения элементов каталога является правильным. */
+            while (false !== ($File = readdir($Handle))) { 
+                if (is_file($Patch . "\\" . $File)) {
+                    $LastChange = filemtime($Patch . "\\" . $File);
+                    array_push($Result, array(
+                        'SoundName' => $File,
+                        'SoundPatch' => $Patch,
+                        'FullFileName' => $Patch . "\\" . $File,
+                        'LastChange' => date ("d.m.Y H:i", $LastChange) ,
+                        ));
+                }
+            }
+
+            closedir($Handle); 
         }
+        
+        $Data = array();
+        
+        $Data[] = array(
+            'TotalRows' => count($Result),
+            'Rows' => $Result
+        );
+        echo json_encode($Data);
+        
+        
     }
+    
 }
 

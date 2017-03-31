@@ -4972,3 +4972,26 @@ Sources.SourceClientSounds =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceAudioFiles =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'SoundName', type: 'string'},
+        {name: 'SoundPatch', type: 'string'},
+        {name: 'FullFileName', type: 'string'},
+        {name: 'LastChange', type: 'date'},
+        
+    ],
+    id: 'FileName',
+    url: '/index.php?r=Audio/GetListFiles',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

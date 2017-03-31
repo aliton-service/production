@@ -46,14 +46,15 @@ class ClientSoundsController extends Controller
                 'html' => '',
             );
         if (isset($_POST['ClientSounds'])) {
-            $model->attributes = $_POST['ClientSounds'];
-            if ($model->validate()) {
-                $Res = $model->Insert();
-                $ObjectResult['result'] = 1;
-                $ObjectResult['id'] = $Res['Sound_id'];
-                echo json_encode($ObjectResult);
-                return;
-            } 
+            
+//            $model->attributes = $_POST['ClientSounds'];
+//            if ($model->validate()) {
+//                $Res = $model->Insert();
+//                $ObjectResult['result'] = 1;
+//                $ObjectResult['id'] = $Res['Sound_id'];
+//                echo json_encode($ObjectResult);
+//                return;
+//            } 
         }
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
