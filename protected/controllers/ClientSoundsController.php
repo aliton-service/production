@@ -55,9 +55,9 @@ class ClientSoundsController extends Controller
             $model->Form_id = $_POST['ClientSounds']['Form_id'];
             $model->SoundDate = date ("d.m.Y H:i", filemtime($OutFile));
             $model->SoundName = $_POST['ClientSounds']['Name'];
-//            $model->SoundPatch ;
-//            $model->Empl_id;
-//            $model->EmplCreate;
+            $model->SoundPatch = $_POST['ClientSounds']['Patch'];
+            $model->Empl_id = Yii::app()->user->Employee_id;
+            $model->EmplCreate = Yii::app()->user->Employee_id;
             
     
             if ($model->validate()) {

@@ -160,14 +160,13 @@
                         data: {
                             ClientSounds: {
                                 Patch: Patch,
-                                Name: Name
+                                Name: Name,
+                                Form_id: Demand.PropForm_id
                             }
                         },
                         success: function(Res) {
                             Res = JSON.parse(Res);
-                            //$("#Music").attr("src", 'http://test.aliton.ru' + Res.FileName + '?cb=' + new Date().getTime());
-                            $("#Music").attr("src", Res.FileName + '?cb=' + new Date().getTime());
-                            $("#Music")[0].load();
+                            
                         }
 
                     });

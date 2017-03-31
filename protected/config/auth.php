@@ -252,6 +252,8 @@ return array_merge(
     include(dirname(__FILE__).'/security/InspActOptionsSecurity.php'),
     /* Ценные указания */    
     include(dirname(__FILE__).'/security/ValuableInstructionsSecurity.php'),
+    /* Звукозаписи */    
+    include(dirname(__FILE__).'/security/ClientSoundsSecurity.php'),
         
     array(    
         'guest' => array(
