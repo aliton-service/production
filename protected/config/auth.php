@@ -1050,6 +1050,7 @@ return array_merge(
                 'ManagerInspActRecommendations',
                 'ManagerInspActOptions',
                 'ManagerValuableInstructions',
+                'AdminClientSounds',
                 
                 /* Отчеты */
                 'DemandsReportAll',

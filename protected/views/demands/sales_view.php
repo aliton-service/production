@@ -9,6 +9,7 @@
             Object_id: <?php echo json_encode($model->Object_id); ?>,
             ObjectGr_id: <?php echo $model->ObjectGr_id; ?>,
             PropForm_id: <?php echo $model->PropForm_id; ?>,
+            FullName: <?php echo json_encode($model->FullName); ?>,
             Address: <?php echo json_encode($model->Address); ?>,
             StageName: <?php echo json_encode($model->StageName); ?>,
             DIFF_STR: <?php echo json_encode($model->DIFF_STR); ?>,
@@ -53,6 +54,77 @@
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         var TypeInt = 0;
+        $("#SoundsDialog").jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 450, initContent: function() {
+            var CurrentSoundRow;    
+                
+            var DataSounds = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceClientSounds, {}), {
+                formatData: function (data) {
+                    $.extend(data, {
+                        Filters: ["s.Form_id = " + Demand.PropForm_id],
+                    });
+                    return data;
+                },
+            });
+            
+            $("#SoundsGrid").on('rowselect', function (event) {
+                CurrentSoundRow = $('#SoundsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                                
+            });
+            
+            $("#SoundsGrid").jqxGrid(
+                $.extend(true, {}, GridDefaultSettings, {
+                    height: 'calc(100% - 2px)',
+                    width: 'calc(100% - 2px)',
+                    sortable: false,
+                    autorowheight: false,
+                    virtualmode: false,
+                    pageable: false,
+                    showfilterrow: false,
+                    filterable: false,
+                    autoshowfiltericon: true,
+                    source: DataSounds,
+                    enablebrowserselection: true,
+                    columns:
+                    [
+                        { text: 'Дата звонка', datafield: 'SoundDate', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
+                        { text: 'Имя фала', datafield: 'SoundName', width: 140 },
+                        { text: 'Менеджер', datafield: 'ShortName', width: 200 },
+                    ]
+            }));
+            
+            $("#btnLoadSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 120, height: 30}));
+            $("#btnAddSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, height: 30}));
+            $("#btnRefreshSound").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140, height: 30}));
+            
+            $("#btnRefreshSound").on('click', function() {
+                $("#SoundsGrid").jqxGrid('updatebounddata');
+            });
+            
+            $("#btnLoadSound").on('click', function() {
+                $.ajax({
+                    url: 'index.php?r=Audio/Load',
+                    type: 'POST',
+                    data: {
+                        Parameters: {
+                            out_patch: CurrentSoundRow['SoundPatch'],
+                            out_filename: CurrentSoundRow['SoundName']
+                        }
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        $("#Music").attr("src", 'http://aliton/audio/274_sound.wav?cb=' + new Date().getTime());
+                        $("#Music")[0].load();
+                    }
+
+                });
+            });
+        }
+        }));
+        
+        $("#btnArchive").on('click', function() {
+            $("#SoundsDialog").jqxWindow('open');
+        });
+        
         
         $("#SelectContactDialog").jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 500, height: 150, initContent: function() {
             var DataContactInfo = new $.jqx.dataAdapter(Sources.SourceContactInfo, {
@@ -1259,6 +1331,28 @@
             <div class="al-row">
                 <div class="al-row-column"><input type="button" id="btnSelCont" value="Продолжить" /></div>
                 <div class="al-row-column" style="float: right"><input type="button" id="btnCancelCont" value="Отмена" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="SoundsDialog" style="display: none;">
+    <div id="SoundsDialogHeader">
+        <span id="SoundsHeaderText">Аудиозаписи по клиенту <?php echo $model->FullName; ?></span>
+    </div>
+    <div style="padding: 10px;" id="DialogSoundsContent">
+        <div style="" id="BodySoundsDialog">
+            <div class="al-row" style="height: calc(100% - 86px)">
+                <div id="SoundsGrid"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column"><input type="button" id="btnAddSound" value="Прикрепить файл"/></div>
+                <div class="al-row-column"><input type="button" id="btnLoadSound" value="Загрузить"/></div>
+                <div class="al-row-column" style="width: calc(100% - 280px)"><audio id="Music" style="width: 100%" controls="controls" src="" type="audio/wav"></audio></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column"><input type="button" id="btnRefreshSound" value="Обновить"/></div>
             </div>
         </div>
     </div>
