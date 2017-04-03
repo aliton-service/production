@@ -108,7 +108,26 @@
 //                                return data;
 //                            },
                         });
+                        
+                        var addfilter = function () {
+                            var filtergroup = new $.jqx.filter();
+                            var filter_or_operator = 1;
+                            var filtervalue = 'Beate';
+                            var filtercondition = 'contains';
+                            var filter1 = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
 
+                            filtervalue = 'Andrew';
+                            filtercondition = 'starts_with';
+                            var filter2 = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
+
+                            filtergroup.addfilter(filter_or_operator, filter1);
+                            filtergroup.addfilter(filter_or_operator, filter2);
+                            // add the filters.
+                            $("#jqxgrid").jqxGrid('addfilter', 'firstname', filtergroup);
+                            // apply the filters.
+                            $("#jqxgrid").jqxGrid('applyfilters');
+                        }
+            
                         $("#FilesGrid").on('rowselect', function (event) {
                             CurrentFileRow = $('#FilesGrid').jqxGrid('getrowdata', event.args.rowindex);
                             

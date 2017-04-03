@@ -316,7 +316,7 @@ return array_merge(
                 'WHActs3Report',
                 'AdminEmployees',
                 'AdminOrganizationStructure',
-                
+                'ManagerWHDocuments',
                 'EmployeesReportAll',
                 'Employee1Report',
                 'Employee2Report',
