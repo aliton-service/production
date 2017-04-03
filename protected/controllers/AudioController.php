@@ -54,7 +54,7 @@ class AudioController extends Controller
         if (Yii::app()->user->Employee_id == 1059)
             $Number = '113';
         
-        if (Yii::app()->user->Employee_id == 274) 
+        if (Yii::app()->user->Employee_id == 274 || Yii::app()->user->Employee_id == 1022) 
         {    
             $Result = array_merge($Result, $this->GetFiles("\\\\CHZ\\records2\\118")); 
             $Result = array_merge($Result, $this->GetFiles("\\\\CHZ\\records2\\205")); 
