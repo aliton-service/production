@@ -806,7 +806,7 @@
         
         // Добавление оборудования
         $("#btnAddDetails").on('click', function(){
-            if ($("#btnAddDetails").jqxButton('disabled')) return;
+            //if ($("#btnAddDetails").jqxButton('disabled')) return;
             EquipMode = 'Insert';
             $("#WHDocumentEquipsDialog").jqxWindow('open');
             
@@ -861,7 +861,7 @@
         
         $("#btnRefreshDetails").on('click', function() {
             if ($("#btnRefreshDetails").jqxButton('disabled')) return;
-            console.log(CurrentRowDetails);
+            
             if (CurrentRowDetails != undefined) {
                 
                 var Dadt_id = CurrentRowDetails.dadt_id
@@ -1190,7 +1190,7 @@
             }
             
             
-            console.log(WHDocuments.Dctp_id);
+            
         });
         
         SN.Add = function() {
@@ -1216,6 +1216,16 @@
         };
         
         SetStateButtons();
+        
+        var AutoAddEquip = <?php
+            if (isset($_GET['AddEquip']))
+                echo json_encode($_GET['AddEquip']); 
+            else echo json_encode(0);
+        ?>;
+        
+        if (AutoAddEquip == 1)
+            $("#btnAddDetails").click();
+        
     });
 </script>    
 

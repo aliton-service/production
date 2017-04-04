@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var AutoAddEquip = false;
     $(document).ready(function () {
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
         var WHDocuments = {
@@ -102,7 +103,8 @@
                         if (StateInsert) {
                             WHReestr.Docm_id = Res.id;
                             $('#Grid1').jqxGrid('updatebounddata');
-                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                            AutoAddEquip = true;
+                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id + '&AddEquip=1');
                         }
                         $('#WHDocumentsDialog').jqxWindow('close');
                     }
