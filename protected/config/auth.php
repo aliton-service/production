@@ -654,6 +654,7 @@ return array_merge(
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
+                'ChangeType',
                 
                 /* Отчеты */
                 'DemandsReportAll',
