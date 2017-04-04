@@ -511,6 +511,16 @@ return array_merge(
                 'AdminAreaObjectPrices',
                 'ManagerSalesDepClients',
                 
+                'ManagerSalesDepClients',
+                'ManagerInspectionActs',
+                'ManagerInspectionActEquips',
+                'ManagerInspActEquipCharacteristics',
+                'ManagerInspActRemarks',
+                'ManagerInspActRecommendations',
+                'ManagerInspActOptions',
+                'ManagerValuableInstructions',
+                'AdminClientSounds',
+                
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
