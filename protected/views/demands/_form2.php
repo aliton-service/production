@@ -249,10 +249,6 @@
         });
         
         $("#btnSave").on('click', function () {
-            //$("#Demands").submit();
-            var chbOtherExecutor = $("#chbOtherExecutor").jqxCheckBox('val');
-            console.log(chbOtherExecutor);
-            
             $("#btnSave").jqxButton({disabled: true});
             var State = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
             var url = '';
@@ -276,7 +272,7 @@
 
                     Res = JSON.parse(Res);
                     if (Res.result === 1) {
-//                        document.location = <?php // echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + Res.id;
+                        document.location = <?php echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + Res.id;
                     } else {
                         $("#body-form").html(Res.html);
                     }

@@ -194,7 +194,7 @@ class DemandsController extends Controller
                 $model->EmplCreate = Yii::app()->user->Employee_id;
                 $model->User = Yii::app()->user->Employee_id;
                 
-                if ((bool)$ToMaster) {
+                if ($ToMaster == 'true') {
                     $model->DateMaster = date('d.m.Y H:i');
                     $model->validate();
                 }
