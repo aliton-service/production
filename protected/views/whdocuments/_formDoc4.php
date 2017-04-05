@@ -130,8 +130,12 @@
                         
                         if (StateInsert) {
                             if (typeof(WHReestr) != 'undefined') WHReestr.Docm_id = Res.id;
-                            if ($('#Grid4').length > 0) $('#Grid4').jqxGrid('updatebounddata');
-                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                            if ($('#Grid4').length > 0) {
+                                $('#Grid4').jqxGrid('updatebounddata');
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                            }
+                            if ($('#GridDocuments').length>0)
+                                $('#GridDocuments').jqxGrid('updatebounddata');
                         }
                         if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null)
                             $('#' + WHDocuments.DialogId).jqxWindow('close');

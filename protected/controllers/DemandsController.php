@@ -174,7 +174,7 @@ class DemandsController extends Controller
             ));
 	}
 
-	public function actionCreate() {
+	public function actionCreate($ToMaster = false, $OtherExecutor = false, $ExecutorId = null) {
             $model = new Demands;
             
             $ObjectResult = array(
@@ -194,6 +194,16 @@ class DemandsController extends Controller
                 $model->EmplCreate = Yii::app()->user->Employee_id;
                 $model->User = Yii::app()->user->Employee_id;
                 
+                if ((bool)$ToMaster) {
+                    $model->DateMaster = date('d.m.Y H:i');
+                    $model->validate();
+                }
+
+                if ($OtherExecutor == 'true' && !is_null($ExecutorId)) {
+                    $model->ExecOther = $ExecutorId;
+                    $model->validate();
+                }
+                    
                 if ($model->validate()) {
                     $Result = $model->insert();
                     $ObjectResult['result'] = 1;
@@ -325,7 +335,7 @@ class DemandsController extends Controller
 		);
         }
 
-	public function actionUpdate($id, $Exec = false, $ToMaster = false) {
+	public function actionUpdate($id, $Exec = false, $ToMaster = false, $OtherExecutor = false, $ExecutorId = null) {
 		$this->title = 'Редактирование заявки №' . $id;
                 $this->setPageTitle('Редактирование заявки');
                 $ObjectResult = array(
@@ -348,7 +358,6 @@ class DemandsController extends Controller
                         throw new CHttpException(404, 'Не выбрана запись.');
                 
                 
-                
 		if(isset($_POST['Demands']))
 		{
                     $model->attributes=$_POST['Demands'];
@@ -357,13 +366,25 @@ class DemandsController extends Controller
 
                     if (!is_null($model->DateExec) && ($model->DateExec !== '')) 
                         $Scenario = 'Exec';
-
+                    
                     $model->setScenario($Scenario);
-
+                    
+                    if ((bool)$ToMaster) {
+                        $model->DateMaster = date('d.m.Y H:i');
+                        $model->validate();
+                    }
+                    
+                    if ($OtherExecutor == 'true' && !is_null($ExecutorId)) {
+                        $model->ExecOther = $ExecutorId;
+                        $model->validate();
+                    }
+                
                     if ($model->validate()) {
                         $model->update();
                         $ObjectResult['result'] = 1;
                         $ObjectResult['id'] = $model->Demand_id;
+//                        $ObjectResult['html'] = $ExecutorId;
+//                        $ObjectResult['OtherExecutor'] = $OtherExecutor;
                         echo json_encode($ObjectResult);
                         return;
                     } else {
@@ -396,12 +417,6 @@ class DemandsController extends Controller
                     $model->EmplChange = Yii::app()->user->Employee_id;
                     $model->DateExec = date('d.m.Y H:i');
                     $model->setScenario('Exec');
-                    $model->validate();
-                }
-
-                if ($ToMaster) {
-                    $model->EmplChange = Yii::app()->user->Employee_id;
-                    $model->DateMaster = date('d.m.Y H:i');
                     $model->validate();
                 }
                 

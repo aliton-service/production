@@ -328,9 +328,9 @@
                             columns:
                                 [
                                     { text: 'Администрирующий', datafield: 'EmployeeName', width: 150},
-                                    { text: 'Дата сообщения', datafield: 'Date', filtertype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', width: 130},
+                                    { text: 'Дата сообщения', datafield: 'Date', filtertype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', width: 150},
                                     { text: 'Сообщение', datafield: 'Comment', width: 450},
-                                    { text: 'План. дата', datafield: 'DatePlan', filtertype: 'date', cellsformat: 'dd.MM.yyyy', width: 130},
+                                    { text: 'План. дата', datafield: 'DatePlan', filtertype: 'date', cellsformat: 'dd.MM.yyyy', width: 110},
                                 ]
                     }));
                     
@@ -539,7 +539,7 @@
                         $('#btnAddWHDoc4').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 256, height: 30, disabled: false }));
                         
                         $('#btnAddMonitoring').on('click', function(){
-                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '640'}));
+                            $('#RepairsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '280px', width: '640'}));
                             $.ajax({
                                 url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Insert');?>",
                                 type: 'POST',
@@ -705,7 +705,7 @@
                         });
                         
                         $('#btnAddWHDoc4').on('click', function() {
-                            $('#RepairsDialog').jqxWindow({width: 710, height: 500, position: 'center', isModal: true});
+                            $('#RepairsDialog').jqxWindow({width: 750, height: 500, position: 'center', isModal: true});
                             $.ajax({
                                 url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
                                 type: 'POST',
@@ -863,8 +863,8 @@
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('Delivery/View')); ?> + "&Dldm_id=" + CurrentRowDoc.docid);
                             if (Type == 8)
                                 window.open(<?php echo json_encode(Yii::app()->createUrl('WHActs/View')); ?> + "&docm_id=" + CurrentRowDoc.docid);
-                    
-                            
+                            if (Type == 9)
+                                window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View')); ?> + "&Docm_id=" + CurrentRowDoc.docid);
                         }
                     });
                     
@@ -902,11 +902,11 @@
                             virtualmode: true,
                             columns:
                                 [
-                                    { text: 'Тип документа', datafield: 'doctype', width: 350},
-                                    { text: 'Дата рег.', datafield: 'datereg', filtertype: 'date', cellsformat: 'dd.MM.yyyy', width: 130},
+                                    { text: 'Тип документа', datafield: 'doctype', width: 270},
+                                    { text: 'Дата рег.', datafield: 'datereg', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy', width: 100},
                                     { text: 'Номер', datafield: 'number', width: 100},
-                                    { text: 'Статус', datafield: 'status', width: 120},
-                                    { text: 'Примечание', datafield: 'note', width: 120},
+                                    { text: 'Статус', datafield: 'status', width: 170},
+                                    { text: 'Примечание', datafield: 'note', width: 220},
                                 ]
                     }));
                     

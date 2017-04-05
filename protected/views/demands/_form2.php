@@ -27,7 +27,6 @@
             Clrs_id: '<?php echo $model->clrs_id; ?>',
             Dlrs_id: '<?php echo $model->dlrs_id; ?>',
             Rslt_id: '<?php echo $model->rslt_id; ?>',
-    
         };
         
         if (StateInsert) {
@@ -89,8 +88,8 @@
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Тариф обслуживания", value: Demand.ServiceType}));
         $("#chbDateMaster").jqxCheckBox({ width: 160, height: 25 });
-        $("#chbOtherExecutor").jqxCheckBox({ width: 160, height: 25 });
-        $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '300', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#chbOtherExecutor").jqxCheckBox({ width: 180, height: 25 });
+        $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '180', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypesRecords, width: '300', height: '25px', displayMember: "DemandType", valueMember: "DType_id"});
         $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypesRecords, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
         $("#cmbEquipType").jqxComboBox({ disabled: false, source: DataEquipTypesRecords, promptText: "Выберите тип системы...", width: '182', height: '25px', displayMember: "EquipType", valueMember: "DEquip_id"});
@@ -125,7 +124,7 @@
         }
         // Проставляем знаячение
         if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
-        
+
         
         // Инициализация событий
         $("#cmbDemandType").bind('select', function(event) {
@@ -251,14 +250,23 @@
         
         $("#btnSave").on('click', function () {
             //$("#Demands").submit();
+            var chbOtherExecutor = $("#chbOtherExecutor").jqxCheckBox('val');
+            console.log(chbOtherExecutor);
             
             $("#btnSave").jqxButton({disabled: true});
             var State = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
             var url = '';
             if (State)
-                url = <?php echo json_encode(Yii::app()->createUrl('Demands/Create')) ?>;
+                url = <?php echo json_encode(Yii::app()->createUrl('Demands/Create')) ?> 
+                    + '&ToMaster=' + $("#chbDateMaster").jqxCheckBox('val') 
+                    + '&OtherExecutor=' + $("#chbOtherExecutor").jqxCheckBox('val') 
+                    + '&ExecutorId=' + $("#cmbExecutor").jqxComboBox('val');
             else
-                url = <?php echo json_encode(Yii::app()->createUrl('Demands/Update')) ?> + '&id=' + $("#edDemand_id").val();
+                url = <?php echo json_encode(Yii::app()->createUrl('Demands/Update')) ?> 
+                    + '&id=' + $("#edDemand_id").val() 
+                    + '&ToMaster=' + $("#chbDateMaster").jqxCheckBox('val') 
+                    + '&OtherExecutor=' + $("#chbOtherExecutor").jqxCheckBox('val') 
+                    + '&ExecutorId=' + $("#cmbExecutor").jqxComboBox('val');
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -268,7 +276,7 @@
 
                     Res = JSON.parse(Res);
                     if (Res.result === 1) {
-                        document.location = <?php echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + Res.id;
+//                        document.location = <?php // echo json_encode(Yii::app()->createUrl('Demands/View')); ?> + '&Demand_id=' + Res.id;
                     } else {
                         $("#body-form").html(Res.html);
                     }
@@ -310,7 +318,7 @@
      )); 
 
 ?>
-
+    
 <input  name="Demands[ObjectGr_id]" type="hidden" id="edObjectGr_id" value="<?php echo $model->ObjectGr_id; ?>"/>
 <input  name="Demands[Object_id]" type="hidden" id="edObject_id" value="<?php echo $model->Object_id; ?>"/>
 <input  name="Demands[ContrS_id]" type="hidden" id="edContrS_id" value="<?php echo $model->ContrS_id; ?>"/>
@@ -323,13 +331,13 @@
 <div class="row" style="margin-top: 7px;">
     <div class="row-column" style="width: 210px;">Дата и время заявки</div>
     <div class="row-column" style="width: 200px;">Тариф обслуживания</div>
-    <div class="row-column" style="width: 150px;"><div id='chbDateMaster'>Передача мастеру</div></div>
-    <div class="row-column" style="width: 160px;"><div id='chbOtherExecutor'>Другой исполнитель</div></div>
+    <div class="row-column"><div id='chbOtherExecutor'>Другой исполнитель:</div></div>
+    <div class="row-column"><div id='chbDateMaster'>Передать мастеру</div></div>
 </div>
 <div class="row" style="margin-top: 0px;">
     <div class="row-column"><div id='edDate' name="Demands[DateReg]"></div></div>
     <div class="row-column"><input name="Demands[ServiceType]" type="text" id="edServiceType"/></div>
-    <div class="row-column"><div id='cmbExecutor' name='Demands[ExecOther]'><?php echo $model->Master; ?></div></div>
+    <div class="row-column"><div id='cmbExecutor'><?php echo $model->ExecOther; ?></div></div>
 </div>
 <div class="row" style="margin-top: 5px;">
     <div class="row-column" style="width: 303px;">Тип заявки</div>
