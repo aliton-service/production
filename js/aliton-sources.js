@@ -4943,3 +4943,55 @@ Sources.SourceInspectionActs_v =
         this.totalrecords = data[0].TotalRows;
     }
 };
+
+Sources.SourceClientSounds =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'Sound_id', type: 'int'},
+        {name: 'Form_id', type: 'int'},
+        {name: 'SoundDate', type: 'date'},
+        {name: 'SoundName', type: 'string'},
+        {name: 'SoundPatch', type: 'string'},
+        {name: 'Empl_id', type: 'int'},
+        {name: 'ShortName', type: 'string'},
+        {name: 'DateCreate', type: 'date'},
+        {name: 'EmplCreate', type: 'int'},
+        {name: 'DateChange', type: 'date'},
+        {name: 'EmplChange', type: 'int'},
+    ],
+    id: 'Sound_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ClientSounds',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceAudioFiles =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'SoundName', type: 'string'},
+        {name: 'SoundPatch', type: 'string'},
+        {name: 'FullFileName', type: 'string'},
+        {name: 'LastChange', type: 'date'},
+        
+    ],
+    id: 'FileName',
+    url: '/index.php?r=Audio/GetListFiles',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};

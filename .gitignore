@@ -4,3 +4,4 @@
 *.log
 /nbproject/private/
 /protected/config/database.php
+/audio/

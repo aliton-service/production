@@ -252,6 +252,8 @@ return array_merge(
     include(dirname(__FILE__).'/security/InspActOptionsSecurity.php'),
     /* Ценные указания */    
     include(dirname(__FILE__).'/security/ValuableInstructionsSecurity.php'),
+    /* Звукозаписи */    
+    include(dirname(__FILE__).'/security/ClientSoundsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -314,7 +316,7 @@ return array_merge(
                 'WHActs3Report',
                 'AdminEmployees',
                 'AdminOrganizationStructure',
-                
+                'ManagerWHDocuments',
                 'EmployeesReportAll',
                 'Employee1Report',
                 'Employee2Report',
@@ -509,6 +511,16 @@ return array_merge(
                 'AdminAreaObjectPrices',
                 'ManagerSalesDepClients',
                 
+                'ManagerSalesDepClients',
+                'ManagerInspectionActs',
+                'ManagerInspectionActEquips',
+                'ManagerInspActEquipCharacteristics',
+                'ManagerInspActRemarks',
+                'ManagerInspActRecommendations',
+                'ManagerInspActOptions',
+                'ManagerValuableInstructions',
+                'AdminClientSounds',
+                
                 /* Отчеты */
                 'Demand1Report',
                 'Demand2Report',
@@ -642,6 +654,7 @@ return array_merge(
                 'ManagerDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
+                'ChangeType',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -1050,6 +1063,7 @@ return array_merge(
                 'ManagerInspActRecommendations',
                 'ManagerInspActOptions',
                 'ManagerValuableInstructions',
+                'AdminClientSounds',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -1108,6 +1122,16 @@ return array_merge(
                 'WhActsView',
                 'ManagerWHBuhActs',
                 
+                'ManagerSalesDepClients',
+                'ManagerInspectionActs',
+                'ManagerInspectionActEquips',
+                'ManagerInspActEquipCharacteristics',
+                'ManagerInspActRemarks',
+                'ManagerInspActRecommendations',
+                'ManagerInspActOptions',
+                'ManagerValuableInstructions',
+                'AdminClientSounds',
+                
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -1159,6 +1183,16 @@ return array_merge(
                 'WhActsView',
                 'ManagerWHBuhActs',
                 'SalesManager',
+                
+                'ManagerSalesDepClients',
+                'ManagerInspectionActs',
+                'ManagerInspectionActEquips',
+                'ManagerInspActEquipCharacteristics',
+                'ManagerInspActRemarks',
+                'ManagerInspActRecommendations',
+                'ManagerInspActOptions',
+                'ManagerValuableInstructions',
+                'AdminClientSounds',
                 
                 /* Отчеты */
                 'DemandsReportAll',

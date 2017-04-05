@@ -1,18 +1,4 @@
 <script>
-    $(document).ready(function() {
-//        $.ajax({
-//            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
-//            type: 'POST',
-//            data: {
-//                Models: ['Juridicals', 'Sections']
-//            },
-//            success: function(Res) {
-//                Res = JSON.parse(Res);
-//                console.log(Res);
-//            }
-//        });
-    });
-    
 
 </script>    
 
@@ -32,26 +18,4 @@
         за комфортные условия жизни и труда жителей Санкт-Петербурга и области, мы идем в ногу со временем и сегодня являемся прогрессивной и клиентоориентированной компанией.
     </div>
 <?php endif; ?>
-
-<?php 
-//    if ($handle = opendir("\\CHZ\\records2")) {
-//        echo "Дескриптор каталога: $handle\n";
-//        echo "Файлы:\n";
-//
-//        /* Именно этот способ чтения элементов каталога является правильным. */
-//        while (false !== ($file = readdir($handle))) { 
-//            echo "$file\n";
-//        }
-//
-//        /* Этот способ НЕВЕРЕН. */
-//        while ($file = readdir($handle)) { 
-//            echo "$file\n";
-//        }
-//
-//        closedir($handle); 
-//    }
-
-?>
-
-    
 

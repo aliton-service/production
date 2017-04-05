@@ -1,6 +1,8 @@
 <script type="text/javascript">
     var WHDoc = {};
     var SN = {};
+    var EquipMode = '';
+    
     $(document).ready(function () {
         WHDoc.Employee_id = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
         var WHDocuments = {
@@ -92,6 +94,8 @@
         };
         
         var FirstStart = true;
+        
+        
         
         $('#edNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 70, width: '100%', minLength: 1}));
         $("#edMsg").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '100%'}));
@@ -213,11 +217,11 @@
                 Aliton.SelectRowById('dadt_id', CurrentRowDetails.dadt_id, '#GridDetails', false);
             }
             else {
-                if (FirstStart) {
+//                if (FirstStart) {
                     $('#GridDetails').jqxGrid('selectrow', 0);
                     $('#GridDetails').jqxGrid('ensurerowvisible', 0);
                     FirstStart = false;
-                }
+//                }
             }
         });
         
@@ -534,11 +538,204 @@
         };
         
         $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '600px', width: '800', position: 'center'}));
-//        $('#WHDocumentEquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '600px', width: '800', position: 'center', initContent: function() {
-//                $.ajax({
-//                    url:
-//                });
-//        }));
+        
+        var initEquipsDialog = function() {
+            
+            $('#DocmAchsDetails').on('keyup keypress', function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) { 
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
+            
+            var SetInvInfo = function(Equip_id, Strg_id) {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Equips/GetInvInfo')); ?>,
+                    type: 'POST',
+                    data: {
+                        Equip_id: Equip_id,
+                        Strg_id: Strg_id
+                    },
+                    async: true,
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result = 1) {
+                            $("#edInvQuant").jqxNumberInput('val', Res.inv_quant);
+                            $("#edInvQuantUsed").jqxNumberInput('val', Res.inv_quant_used);
+                        }
+                    },
+                    error: function(Res) {
+                        //Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                });
+            };
+            
+            $("#edEquip").on('select', function(event) {
+                var args = event.args;
+                if (args) {
+                    var Item = args.item;
+                    var Value = Item.value;
+
+                    var Row = Aliton.FindArray(DataEquips.records, 'Equip_id', Value);
+                    if (Row != null) {
+                        $("#edUmName").val(Row.NameUM);
+
+                        if (Row.EmplChangeInventory != null) {
+                            $("#edInvQuant input").css({'background-color': '#00FF00'});
+                            $("#edInvQuantUsed input").css({'background-color': '#00FF00'});
+                        }
+                        else {
+                            $("#edInvQuant input").css({'background-color': 'white'});
+                            $("#edInvQuantUsed input").css({'background-color': 'white'});
+                        }
+                    }
+
+
+                    SetInvInfo(Value, 1);
+                }
+            });
+            
+            $("#edEquip").on('bindingComplete', function(event){
+//                if (DocmAchsDetail.eqip_id != '') 
+                if (EquipMode == 'Insert') {
+                    $("#edEquip").jqxComboBox('clearSelection');
+                }
+                else
+                    $("#edEquip").jqxComboBox('val', CurrentRowDetails.eqip_id);
+                $("#btnSaveDocmAchsDetail").jqxButton({disabled: false});
+            });
+
+            var EquipRenderer = function(index, label, value) {
+                var DataRecord = DataEquips.records[index];
+                var table = '<table><tbody><tr><td>' + DataRecord.EquipName + '</td><td>' + DataRecord.discontinued + '</td></tr></tbody></table>';
+                return table;
+            };
+            
+            $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '330', height: '25px', displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: false /*, renderer: EquipRenderer */}));
+            $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
+            $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
+            $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', decimalDigits: 4}));
+            $("#edFactQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px'}));
+            $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
+            $("#edInvQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
+            $("#edInvQuantUsed").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
+            $("#edUsedEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '50px'}));
+            $("#edToProductionEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '130px'}));
+            $("#edNoPriceListEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 170}));
+            $('#btnSaveDocmAchsDetail').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
+            $('#btnCancelDocmAchsDetail').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+            
+            $('#btnCancelDocmAchsDetail').on('click', function(){
+                $('#WHDocumentEquipsDialog').jqxWindow('close');
+            });
+            
+            $('#btnSaveDocmAchsDetail').on('click', function(){
+                var UrlUpdate = <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Update')); ?>;
+                var UrlInsert = <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Create')); ?>;
+                if (EquipMode == 'Insert')
+                    var Url = UrlInsert;
+                else 
+                    var Url = UrlUpdate;
+                    
+
+                $.ajax({
+                    url: Url,
+                    data: $('#DocmAchsDetails').serialize(),
+                    type: 'POST',
+                    success: function(Res) {
+                        var Res = JSON.parse(Res);
+                        if (Res.result == 1) {
+                            if ($('#GridDetails').length>0) {
+                                if ($('#btnRefreshDetails').length>0)
+                                    $('#btnRefreshDetails').click();
+                                else
+                                    Aliton.SelectRowById('dadt_id', Res.id, '#GridDetails', true);
+                            }
+                            if ($('#WHDocumentEquipsDialog').length>0)
+                                $('#WHDocumentEquipsDialog').jqxWindow('close');
+                            
+                        }
+                        else {
+                            if ($('#WHDocumentEquipsDialog').length>0)
+                                $('#BodyWHDocumentEquipsDialog').html(Res.html);
+                            
+                        };
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
+                    }
+                });
+            });
+            
+            var CalcSum = function() {
+                var Quant = $("#edQuantEdit").jqxNumberInput('val');
+                var Quant2 = $("#edFactQuantEdit").jqxNumberInput('val');
+                if (Quant2 !== '')
+                       Quant = parseFloat(Quant2);
+
+                var Price = $("#edPriceEdit").jqxNumberInput('val');
+                $("#edSumEdit").jqxNumberInput('val', Quant*Price);
+
+            };
+
+//            if (DocmAchsDetail.docm_quant != null) {
+//                $("#edQuantEdit").jqxNumberInput('val', DocmAchsDetail.docm_quant);
+//            } else {
+//                $("#edQuantEdit").jqxNumberInput('val', 1);
+//            }
+//            if (DocmAchsDetail.price != '') $("#edPriceEdit").jqxNumberInput('val', DocmAchsDetail.price);
+//            if (DocmAchsDetail.used != '') $("#edUsedEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.used)));
+//            if (DocmAchsDetail.ToProduction != '') $("#edToProductionEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.ToProduction)));
+//            if (DocmAchsDetail.no_price_list != '') $("#edNoPriceListEdit").jqxCheckBox('val', Boolean(Number(DocmAchsDetail.no_price_list)));
+//            if (DocmAchsDetail.fact_quant != '') $("#edFactQuantEdit").jqxNumberInput('val', DocmAchsDetail.fact_quant);
+//            if (DocmAchsDetail.sum != '') $("#edSumEdit").jqxNumberInput('val', DocmAchsDetail.sum);
+
+            $('#edQuantEdit').on('valueChanged', function (event) {
+                CalcSum();
+            });
+
+            $("#edFactQuantEdit").on('valueChanged', function(event) {
+                CalcSum();
+            });
+
+            $('#edPriceEdit').on('valueChanged', function (event) {
+                CalcSum();
+            });
+        };
+        
+        $('#WHDocumentEquipsDialog').on('open', function() {
+            if (EquipMode == 'Insert') {
+                
+                $("#edAchsDadt_id").val();
+                $("#edAchsDocm_id").val(WHDocuments.Docm_id);
+                $("#edQuantEdit").jqxNumberInput('val', 1);
+                $("#edPriceEdit").jqxNumberInput('val', null);
+                $("#edUsedEdit").jqxCheckBox('val', false);
+                $("#edToProductionEdit").jqxCheckBox('val', false);
+                $("#edNoPriceListEdit").jqxCheckBox('val', false);
+                $("#edFactQuantEdit").jqxNumberInput('val', null);
+                $("#edSumEdit").jqxNumberInput('val', null);
+                $("#edEquip").jqxComboBox('clearSelection');
+            } else {
+                $("#edAchsDadt_id").val(CurrentRowDetails.dadt_id);
+                $("#edAchsDocm_id").val(CurrentRowDetails.docm_id);
+                $("#edQuantEdit").jqxNumberInput('val', CurrentRowDetails.quant);
+                $("#edPriceEdit").jqxNumberInput('val', CurrentRowDetails.price);
+                $("#edUsedEdit").jqxCheckBox('val', CurrentRowDetails.used);
+                $("#edToProductionEdit").jqxCheckBox('val', CurrentRowDetails.ToProduction);
+                $("#edNoPriceListEdit").jqxCheckBox('val', CurrentRowDetails.no_price_list);
+                $("#edFactQuantEdit").jqxNumberInput('val', CurrentRowDetails.fact_quant);
+                $("#edSumEdit").jqxNumberInput('val', CurrentRowDetails.sum);
+                var I = $("#edEquip").jqxComboBox('getItems');
+                if (I.length > 0)
+                    $("#edEquip").jqxComboBox('val', CurrentRowDetails.eqip_id);
+            }
+        });
+        
+        $('#WHDocumentEquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '205px', width: '640', position: 'center', initContent: initEquipsDialog}));
         
         $("#btnEdit").on('click', function(){
             if ($("#btnEdit").jqxButton('disabled')) return;
@@ -609,57 +806,62 @@
         
         // Добавление оборудования
         $("#btnAddDetails").on('click', function(){
-            if ($("#btnAddDetails").jqxButton('disabled')) return;
-            if (WHDocuments.Docm_id !== null) {
-                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
-                $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Create')) ?>,
-                    type: 'POST',
-                    async: false,
-                    data: {
-                        Docm_id: WHDocuments.Docm_id,
-                        Dctp_id: WHDocuments.Dctp_id
-                    },
-                    success: function(Res) {
-                        Res = JSON.parse(Res);
-                        $("#BodyWHDocumentsDialog").html(Res.html);
-                        $('#WHDocumentsDialog').jqxWindow('open');
-                    },
-                    error: function(Res) {
-                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                    }
-                });
-            }
+            //if ($("#btnAddDetails").jqxButton('disabled')) return;
+            EquipMode = 'Insert';
+            $("#WHDocumentEquipsDialog").jqxWindow('open');
+            
+//            if (WHDocuments.Docm_id !== null) {
+//                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
+//                $.ajax({
+//                    url: <?php //echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Create')) ?>,
+//                    type: 'POST',
+//                    async: false,
+//                    data: {
+//                        Docm_id: WHDocuments.Docm_id,
+//                        Dctp_id: WHDocuments.Dctp_id
+//                    },
+//                    success: function(Res) {
+//                        Res = JSON.parse(Res);
+//                        $("#BodyWHDocumentsDialog").html(Res.html);
+//                        $('#WHDocumentsDialog').jqxWindow('open');
+//                    },
+//                    error: function(Res) {
+//                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                    }
+//                });
+//            }
         });
         
         $("#btnEditDetails").on('click', function(){
             if ($("#btnEditDetails").jqxButton('disabled')) return;
-            if (WHDocuments.Docm_id !== null) {
-                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
-                $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Update')) ?>,
-                    type: 'POST',
-                    async: false,
-                    data: {
-                        Dadt_id: CurrentRowDetails.dadt_id,
-                        Docm_id: WHDocuments.Docm_id,
-                        Dctp_id: WHDocuments.Dctp_id
-                    },
-                    success: function(Res) {
-                        Res = JSON.parse(Res);
-                        $("#BodyWHDocumentsDialog").html(Res.html);
-                        $('#WHDocumentsDialog').jqxWindow('open');
-                    },
-                    error: function(Res) {
-                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                    }
-                });
-            }
+            EquipMode = 'Update';
+            $("#WHDocumentEquipsDialog").jqxWindow('open');
+//            if (WHDocuments.Docm_id !== null) {
+//                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
+//                $.ajax({
+//                    url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Update')) ?>,
+//                    type: 'POST',
+//                    async: false,
+//                    data: {
+//                        Dadt_id: CurrentRowDetails.dadt_id,
+//                        Docm_id: WHDocuments.Docm_id,
+//                        Dctp_id: WHDocuments.Dctp_id
+//                    },
+//                    success: function(Res) {
+//                        Res = JSON.parse(Res);
+//                        $("#BodyWHDocumentsDialog").html(Res.html);
+//                        $('#WHDocumentsDialog').jqxWindow('open');
+//                    },
+//                    error: function(Res) {
+//                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                    }
+//                });
+//            }
         });
         
         $("#btnRefreshDetails").on('click', function() {
             if ($("#btnRefreshDetails").jqxButton('disabled')) return;
-            console.log(CurrentRowDetails);
+            
             if (CurrentRowDetails != undefined) {
                 
                 var Dadt_id = CurrentRowDetails.dadt_id
@@ -988,7 +1190,7 @@
             }
             
             
-            console.log(WHDocuments.Dctp_id);
+            
         });
         
         SN.Add = function() {
@@ -1014,6 +1216,16 @@
         };
         
         SetStateButtons();
+        
+        var AutoAddEquip = <?php
+            if (isset($_GET['AddEquip']))
+                echo json_encode($_GET['AddEquip']); 
+            else echo json_encode(0);
+        ?>;
+        
+        if (AutoAddEquip == 1)
+            $("#btnAddDetails").click();
+        
     });
 </script>    
 
@@ -1366,7 +1578,68 @@
         <span id="WHDocumentEquipsHeaderText">Вставка\Редактирование записи</span>
     </div>
     <div style="padding: 10px;" id="DialogWHDocumentEquipsContent">
-        <div style="" id="BodyWHDocumentEquipsDialog"></div>
+            <div style="" id="BodyWHDocumentEquipsDialog">
+                <?php
+                    $form=$this->beginWidget('CActiveForm', array(
+                        'id'=>'DocmAchsDetails',
+                        'htmlOptions'=>array(
+                                'class'=>'form-inline'
+                                ),
+                    )); 
+                ?>
+                
+                <input type="hidden" id="edAchsDadt_id" name="DocmAchsDetails[dadt_id]" value="<?php //echo $model->dadt_id; ?>"/>
+                <input type="hidden" id="edAchsDocm_id" name="DocmAchsDetails[docm_id]" value="<?php //echo $model->docm_id; ?>"/>
+
+                <div class="row" style="margin: 0;">
+                    <div class="row-column">
+                        <div><div class="row-column">Оборудование</div></div>
+                        <div style="clear: both"></div>
+                        <div><div class="row-column"><div name="DocmAchsDetails[eqip_id]" id="edEquip"></div><?php echo $form->error($model, 'eqip_id'); ?></div></div>
+                    </div>
+                    <div class="row-column">
+                        <div><div class="row-column">Ед. изм.</div></div>
+                        <div style="clear: both"></div>
+                        <div><div class="row-column"><input type="text" id="edUmName" /></div></div>
+                    </div>
+                    <div class="row-column">
+                        <div><div class="row-column">Количество</div></div>
+                        <div style="clear: both"></div>
+                        <div><div class="row-column"><div id="edQuantEdit" name="DocmAchsDetails[docm_quant]"></div><?php echo $form->error($model, 'docm_quant'); ?></div></div>
+                    </div>
+                    <div class="row-column" style="float: right">
+                        <div><div class="row-column">Цена</div></div>
+                        <div style="clear: both"></div>
+                        <div><div class="row-column"><div id="edPriceEdit" name="DocmAchsDetails[price]"></div><?php echo $form->error($model, 'price'); ?></div></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row-column"><div id="edUsedEdit" name="DocmAchsDetails[used]">Б\У</div><?php echo $form->error($model, 'price'); ?></div>
+                    <div class="row-column"><div id="edToProductionEdit" name="DocmAchsDetails[ToProduction]">В производство</div><?php echo $form->error($model, 'ToProduction'); ?></div>
+                    <div class="row-column"><div id="edNoPriceListEdit" name="DocmAchsDetails[no_price_list]">Не учитывать цену</div><?php echo $form->error($model, 'no_price_list'); ?></div>
+                    <div style="float: right">
+                        <div class="row-column">Факт. кол-во:</div>
+                        <div class="row-column"><div id="edFactQuantEdit" name="DocmAchsDetails[fact_quant]"></div><?php echo $form->error($model, 'fact_quant'); ?></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="float: left">
+                        <div class="row-column">Наличие:</div>
+                        <div class="row-column"><div type="text" id="edInvQuant"></div></div>
+                        <div class="row-column">Б\У:</div>
+                        <div class="row-column"><div type="text" id="edInvQuantUsed"></div></div>
+                    </div>
+                    <div style="float: right">
+                        <div class="row-column">Сумма:</div>
+                        <div class="row-column"><div type="text" id="edSumEdit" name="DocmAchsDetails[sum]"></div><?php echo $form->error($model, 'sum'); ?></div>
+                    </div>
+                </div>    
+                <div class="row">
+                    <div class="row-column"><input type="button" value="Сохранить" id='btnSaveDocmAchsDetail'/></div>
+                    <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelDocmAchsDetail'/></div>
+                </div>
+                <?php $this->endWidget(); ?>
+        </div>
     </div>
 </div>
 

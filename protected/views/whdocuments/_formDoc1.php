@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var AutoAddEquip = false;
     $(document).ready(function () {
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
         var WHDocuments = {
@@ -29,11 +30,28 @@
         });
         
         // Инициализация источников данных
-        var DataWorkTypes = new $.jqx.dataAdapter(Sources.SourceWorkTypes);
-        var DataStorages = new $.jqx.dataAdapter(Sources.SourceStoragesList);
-        var DataSuppliers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliersListMin, {async: false, url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SuppliersListMin',}));
-        var DataWHDocKinds = new $.jqx.dataAdapter(Sources.SourceWHDocKinds);
-        var DataJuridicals = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
+        var DataWorkTypes; //= new $.jqx.dataAdapter(Sources.SourceWorkTypes);
+        var DataStorages; //= new $.jqx.dataAdapter(Sources.SourceStoragesList);
+        var DataSuppliers; //= new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceSuppliersListMin, {async: false, url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=SuppliersListMin',}));
+        var DataWHDocKinds; //= new $.jqx.dataAdapter(Sources.SourceWHDocKinds);
+        var DataJuridicals; //= new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
+        
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['WorkTypes', 'StoragesList', 'SuppliersListMin', 'WHDocKinds', 'JuridicalsMin']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                DataWorkTypes = Res[0].Data;
+                DataStorages = Res[1].Data;
+                DataSuppliers = Res[2].Data;
+                DataWHDocKinds = Res[3].Data;
+                DataJuridicals = Res[4].Data;
+            }
+        });
         
         $("#edWorkTypeEdit").jqxComboBox({ source: DataWorkTypes, width: '200', height: '25px', displayMember: "name", valueMember: "wrtp_id"});
         $("#edStorageEdit").jqxComboBox({ source: DataStorages, width: '200', height: '25px', displayMember: "storage", valueMember: "storage_id"});
@@ -44,7 +62,7 @@
             if (args) {
                 var Item = args.item;
                 var Value = Item.value;
-                var Row = Aliton.FindArray(DataSuppliers.records, 'Supplier_id', Value);
+                var Row = Aliton.FindArray(DataSuppliers, 'Supplier_id', Value);
                 if (Row != null)
                     $("#edSupplierFullName").val(Row.FullName);
                     
@@ -85,7 +103,8 @@
                         if (StateInsert) {
                             WHReestr.Docm_id = Res.id;
                             $('#Grid1').jqxGrid('updatebounddata');
-                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id);
+                            AutoAddEquip = true;
+                            window.open(<?php echo json_encode(Yii::app()->createUrl('WHDocuments/View'))?> + '&Docm_id=' + Res.id + '&AddEquip=1');
                         }
                         $('#WHDocumentsDialog').jqxWindow('close');
                     }
