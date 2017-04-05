@@ -6,12 +6,14 @@
             Date: Aliton.DateConvertToJs(<?php echo json_encode($model->date); ?>),
             Demand_id: <?php echo json_encode($model->dmnd_id); ?>, 
             Object_id: <?php echo json_encode($model->objc_id); ?>,
+            AddrSearch: <?php echo json_encode($model->Addr); ?>,
             Prior_id: <?php echo json_encode($model->prtp_id); ?>,
             BestDate: Aliton.DateConvertToJs(<?php echo json_encode($model->best_date); ?>),
             Deadline: Aliton.DateConvertToJs(<?php echo json_encode($model->deadline); ?>),
             DatePlan: Aliton.DateConvertToJs(<?php echo json_encode($model->DatePlan); ?>),
             Jrdc_id: <?php echo json_encode($model->jrdc_id); ?>,
             Equip_id: <?php echo json_encode($model->eqip_id); ?>,
+            EquipSearch: <?php echo json_encode($model->EquipName); ?>,
             Quant: <?php echo json_encode($model->docm_quant); ?>,
             Used: <?php echo json_encode($model->used); ?>,
             SN: <?php echo json_encode($model->SN); ?>,
@@ -28,36 +30,82 @@
             Reg: <?php echo json_encode($model->reg_empl_id); ?>,
             Cur: <?php echo json_encode($model->cur_empl_id); ?>,
         };
-
+        
+        var PriorsDataAdapter;
+        var DataJuridicals;
+        var DataRepairDelayReasons;
+        var DataEmployees;
+        $.ajax({
+            url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
+            type: 'POST',
+            async: false,
+            data: {
+                Models: ['RepairPriors', 'JuridicalsMin', 'RepairDelayReasons', 'ListEmployees']
+            },
+            success: function(Res) {
+                Res = JSON.parse(Res);
+                PriorsDataAdapter = Res[0].Data;
+                DataJuridicals = Res[1].Data;
+                DataRepairDelayReasons = Res[2].Data;
+                DataEmployees = Res[3].Data;
+            }
+        });
+        
         
         $("#edNumberEdit").jqxInput($.extend(true, {}, {height: 25, width: 100, minLength: 1}));
         $("#edDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Repair.Date, formatString: 'dd.MM.yyyy H:mm', showTimeButton: true, width: 180}));
-        var PriorsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairPriors));
+        //var PriorsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceRepairPriors));
         $("#edPriorEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: PriorsDataAdapter, displayMember: "RepairPrior", valueMember: "prtp_id", autoDropDownHeight: true, width: 150 }));
         $("#edDemandEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 140 }));
         $("#edBestDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: Repair.BestDate}));
         $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: Repair.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
         $("#edDatePlanEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.DatePlan, formatString: 'dd.MM.yyyy'}));
-        var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses,/* {async: false}),*/ {}) 
-//            formatData: function (data) {
-//                    data.NotExecute = '';
-//                    if (Addr != '')
-//                        data.Filters = ["a.Addr like '" + Addr + "%'"];
-//                    else
-//                        data.NotExecute = 'NotExecute'
-//                    
-//                    return data;
-//                }
+        var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {async: false}), { 
+            formatData: function (data) {
+                    
+                    data.NotExecute = '';
+                    if (Repair.AddrSearch == null)
+                        Repair.AddrSearch = '';
+                    if (Repair.AddrSearch.length > 5)
+                        Repair.AddrSearch = Repair.AddrSearch.substr(0, 4);                    
+                    
+                    if (Repair.AddrSearch != '')
+                        data.Filters = ["a.Addr + CASE WHEN o.Doorway IS NULL THEN '' ELSE ', п. ' + o.Doorway END like '" + Repair.AddrSearch + "%'"];
+                    else
+                        data.NotExecute = 'NotExecute';
+                    
+                    return data;
+                }
+            }
         );
-        $("#edAddrEdit").on('bindingComplete', function(){
-            $('#btnSaveRepairs').jqxButton({disabled: false});
-            if (Repair.Object_id !== null) $("#edAddrEdit").jqxComboBox('val', Repair.Object_id);
-        });
 
-        $("#edAddrEdit").jqxComboBox({ source: DataAddress, width: '350', height: '25px', displayMember: "Addr", valueMember: "Object_id", autoComplete: true /*, remoteAutoComplete: true */});
-        var DataJuridicals = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
+        $("#edAddrEdit").jqxComboBox({ source: DataAddress, width: '350', height: '25px', displayMember: "Addr", valueMember: "Object_id", autoComplete: false, remoteAutoComplete: true,
+            search: function (searchString) {
+                Repair.AddrSearch = $("#edAddrEdit").jqxComboBox('searchString');
+                DataAddress.dataBind();
+            }
+        });
+        
+        DataAddress.dataBind();
+        $("#edAddrEdit").val(Repair.Object_id);
+
+//        var DataJuridicals = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
         $("#edJrdcEdit").jqxComboBox({ source: DataJuridicals, width: '300', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
-        var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
+        var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: false, type: 'GET'}), {
+            formatData: function (data) {
+                    data.NotExecute = '';
+                    if (Repair.EquipSearch == null)
+                        Repair.EquipSearch = '';
+                    
+                    if (Repair.EquipSearch != '')
+                        data.Filters = ["e.EquipName like '%" + Repair.EquipSearch + "%'"];
+                    else
+                        data.NotExecute = 'NotExecute';
+                    
+                    return data;
+                }
+            }
+        );
         $("#edEquipEdit").on('select', function(event) {
             var args = event.args;
             if (args) {
@@ -69,10 +117,17 @@
 
             }
         });
-        $("#edEquipEdit").on('bindingComplete', function(event){
-            if (Repair.Equip_id != '') $("#edEquipEdit").jqxComboBox('val', Repair.Equip_id);
-        });
-        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: 350, height: 25, displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: false }));
+        
+        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: 350, height: 25, displayMember: "EquipName", valueMember: "Equip_id", /*searchMode: 'containsignorecase',*/ autoComplete: false, remoteAutoComplete: true, 
+            search: function (searchString) {
+                Repair.EquipSearch = searchString;
+                DataEquips.dataBind();
+            }
+        }));
+        
+        DataEquips.dataBind();
+        $("#edEquipEdit").val(Repair.Equip_id);
+        
         $("#edSerialNumberEdit").jqxInput($.extend(true, {}, {height: 25, width: 200, minLength: 1}));
         $("#edUmNameEdit").jqxInput($.extend(true, {}, {height: 25, width: 60, minLength: 1}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '60px', value: Repair.Quant, decimalDigits: 0}));
@@ -82,16 +137,17 @@
         $("#edWorkOkEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 200, checked: Repair.WorkOk}));
         $("#edWrntEdit").jqxCheckBox($.extend(true, CheckBoxDefaultSettings, {width: 220, checked: Repair.Wrnt}));
         $('#edSetEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: '300px', minLength: 1}));
-        var DataRepairDelayReasons = new $.jqx.dataAdapter(Sources.SourceRepairDelayReasons);
+//        var DataRepairDelayReasons = new $.jqx.dataAdapter(Sources.SourceRepairDelayReasons);
         $('#edDelayReasonEdit').jqxComboBox($.extend(true, {}, { source: DataRepairDelayReasons, width: '250', height: '25px', displayMember: "DelayReason", valueMember: "Dlrs_id"}));
         $('#FindDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {}));
         $("#edQuantEqipEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
         $("#edQuantObjectEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
         $('#edDefectEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
         $('#edNoteEdit').jqxTextArea($.extend(true, TextAreaDefaultSettings, { height: 60, width: 'calc(100% - 2px)', minLength: 1}));
-        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
-        DataEmployees.dataBind();
-        DataEmployees = DataEmployees.records;
+        
+//        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {}));
+//        DataEmployees.dataBind();
+//        DataEmployees = DataEmployees.records;
         $('#edMstrEdit').jqxComboBox($.extend(true, {}, { source: DataEmployees, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
         $('#edRegEdit').jqxComboBox($.extend(true, {}, { source: DataEmployees, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
         $('#edEngineerEdit').jqxComboBox($.extend(true, {}, { source: DataEmployees, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
@@ -174,7 +230,7 @@
             });
         });
         
-        $('#btnSaveRepairs').jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: true}));
+        $('#btnSaveRepairs').jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: false}));
         $('#btnCancelRepairs').jqxButton($.extend(true, {}, ButtonDefaultSettings));
         
         $('#btnCancelRepairs').on('click', function() {
@@ -205,6 +261,7 @@
             )); 
         ?>
         <input type="hidden" name="Repairs[Repr_id]" value="<?php echo $model->Repr_id; ?>"/>
+        <input type="hidden" name="Repairs[Addr]" value="<?php echo $model->Addr; ?>"/>
 
         <div class="al-row">
             <div class="al-row-column">Номер</div>

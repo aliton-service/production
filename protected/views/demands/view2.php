@@ -379,7 +379,8 @@
                                         prtp_id: 1,
                                         objc_id: Demand.Object_id,
                                         docm_quant: 1,
-                                        mstr_empl_id: Demand.Master
+                                        mstr_empl_id: Demand.Master,
+                                        Addr: Demand.Address,
                                     }
                                 },
                                 success: function(Res) {
