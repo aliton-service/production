@@ -9,6 +9,16 @@ class AjaxDataController extends Controller
         $TopCount = -1;
         $Variables = array();
         
+        if (isset($_GET['NotExecute'])) {
+            if ($_GET['NotExecute'] == 'NotExecute') {
+                echo json_encode(array(
+                    'TotalRows' => 0,
+                    'Rows' => array(),
+                ));
+                return;
+            }
+        }
+        
         if (isset($_POST['TopCount'])) 
             $TopCount = $_POST['TopCount'];
         if (isset($_POST['Variables']))

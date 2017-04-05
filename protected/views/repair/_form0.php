@@ -38,12 +38,13 @@
         $("#edBestDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: Repair.BestDate}));
         $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: Repair.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
         $("#edDatePlanEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.DatePlan, formatString: 'dd.MM.yyyy'}));
-        var DataAddress = new $.jqx.dataAdapter(Sources.SourceListAddresses);
+        var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {}));
         $("#edAddrEdit").on('bindingComplete', function(){
             $('#btnSaveRepairs').jqxButton({disabled: false});
             if (Repair.Object_id !== null) $("#edAddrEdit").jqxComboBox('val', Repair.Object_id);
         });
-        $("#edAddrEdit").jqxComboBox({ source: DataAddress, width: '350', height: '25px', displayMember: "Addr", valueMember: "Object_id"});
+
+        $("#edAddrEdit").jqxComboBox({ source: DataAddress, width: '350', height: '25px', displayMember: "Addr", valueMember: "Object_id", autoComplete: false});
         var DataJuridicals = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
         $("#edJrdcEdit").jqxComboBox({ source: DataJuridicals, width: '300', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
         var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
@@ -61,7 +62,7 @@
         $("#edEquipEdit").on('bindingComplete', function(event){
             if (Repair.Equip_id != '') $("#edEquipEdit").jqxComboBox('val', Repair.Equip_id);
         });
-        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: 350, height: 25, displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: true }));
+        $("#edEquipEdit").jqxComboBox($.extend(true, {}, { source: DataEquips, width: 350, height: 25, displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: false }));
         $("#edSerialNumberEdit").jqxInput($.extend(true, {}, {height: 25, width: 200, minLength: 1}));
         $("#edUmNameEdit").jqxInput($.extend(true, {}, {height: 25, width: 60, minLength: 1}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '60px', value: Repair.Quant, decimalDigits: 0}));
