@@ -38,13 +38,23 @@
         $("#edBestDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 150, value: Repair.BestDate}));
         $("#edDeadlineEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 120, value: Repair.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, formatString: 'dd.MM.yyyy'}));
         $("#edDatePlanEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Repair.DatePlan, formatString: 'dd.MM.yyyy'}));
-        var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {}));
+        var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses,/* {async: false}),*/ {}) 
+//            formatData: function (data) {
+//                    data.NotExecute = '';
+//                    if (Addr != '')
+//                        data.Filters = ["a.Addr like '" + Addr + "%'"];
+//                    else
+//                        data.NotExecute = 'NotExecute'
+//                    
+//                    return data;
+//                }
+        );
         $("#edAddrEdit").on('bindingComplete', function(){
             $('#btnSaveRepairs').jqxButton({disabled: false});
             if (Repair.Object_id !== null) $("#edAddrEdit").jqxComboBox('val', Repair.Object_id);
         });
 
-        $("#edAddrEdit").jqxComboBox({ source: DataAddress, width: '350', height: '25px', displayMember: "Addr", valueMember: "Object_id", autoComplete: false});
+        $("#edAddrEdit").jqxComboBox({ source: DataAddress, width: '350', height: '25px', displayMember: "Addr", valueMember: "Object_id", autoComplete: true /*, remoteAutoComplete: true */});
         var DataJuridicals = new $.jqx.dataAdapter(Sources.SourceJuridicalsMin);
         $("#edJrdcEdit").jqxComboBox({ source: DataJuridicals, width: '300', height: '25px', displayMember: "JuridicalPerson", valueMember: "Jrdc_Id"});
         var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
