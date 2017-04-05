@@ -210,7 +210,7 @@
         $("#edEditContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 750}));
         $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '540px', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
         $("#edEditPhoneNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
-        $("#edEditText").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700 }));
+        $("#edEditTextDD").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700, height: 70 }));
         
         $('#btnDeliveryDemCancel').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
 
@@ -275,7 +275,7 @@
         if (DeliveryDemands.Mstr_id != '') $("#edEditMaster").jqxComboBox("val", DeliveryDemands.Mstr_id);
         if (DeliveryDemands.Contacts != '') $("#edEditContacts").jqxInput("val", DeliveryDemands.Contacts);
         if (DeliveryDemands.PhoneNumber != '') $("#edEditPhoneNumber").jqxInput("val", DeliveryDemands.PhoneNumber);
-        if (DeliveryDemands.Text != '') $("#edEditText").jqxTextArea("val", DeliveryDemands.Text);
+        if (DeliveryDemands.Text != '') $("#edEditTextDD").jqxTextArea("val", DeliveryDemands.Text);
         
         
         
@@ -356,7 +356,7 @@
 <div class="row">
     <div class="row-column">
         <div>Содержание заявки</div>
-        <div><textarea id="edEditText" name="DeliveryDemands[text]"></textarea></div>
+        <div><textarea id="edEditTextDD" name="DeliveryDemands[text]"></textarea></div>
     </div>
 </div>
 

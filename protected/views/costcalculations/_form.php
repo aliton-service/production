@@ -62,7 +62,7 @@
         
         $("#Demand_idCC").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 140 }));
         $('#btnFindDemand').on('click', function(){
-            $('#FindDemandDialog').jqxWindow({width: 800, height: 550, position: 'center'});
+            $('#FindDemandDialog').jqxWindow({width: 800, height: 530, position: 'center'});
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Demands/FindDemand')) ?>,
                 type: 'POST',

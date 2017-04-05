@@ -40,7 +40,10 @@
                 success: function(Res) {
                     if (Res == '1' || Res == 1) {
                         $('#EditDialogContractMasterHistory').jqxWindow('close');
-                        $("#ContractMasterHistoryGrid").jqxGrid('updatebounddata');
+                        if ($('#ContractMasterHistoryGrid').length>0)
+                            $('#ContractMasterHistoryGrid').jqxGrid('updatebounddata');
+                        if ($('#MastersGrid').length>0)
+                                $('#MastersGrid').jqxGrid('updatebounddata');
                     } else {
                         $('#BodyDialogContractMasterHistory').html(Res);
                     }

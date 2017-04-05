@@ -161,7 +161,7 @@
         $("#ReloadContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings));
         $("#DelContractsMasters").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true }));
         
-        $('#MastersEditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 220, width: 370}));
+        $('#EditDialogContractMasterHistory').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: 220, width: 370}));
 
         $('#MastersGrid').on('rowdoubleclick', function () { 
             $("#EditContractsMasters").click();
@@ -176,8 +176,8 @@
                     ContrS_id: CurrentContract.ContrS_id
                 },
                 success: function(Res) {
-                    $('#MastersEditDialog').jqxWindow('open');
-                    $('#MastersBodyDialog').html(Res);
+                    $('#EditDialogContractMasterHistory').jqxWindow('open');
+                    $('#BodyDialogContractMasterHistory').html(Res);
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
@@ -194,8 +194,8 @@
                     History_id: CurrentRowData.History_id
                 },
                 success: function(Res) {
-                    $('#MastersBodyDialog').html(Res);
-                    $('#MastersEditDialog').jqxWindow('open');
+                    $('#BodyDialogContractMasterHistory').html(Res);
+                    $('#EditDialogContractMasterHistory').jqxWindow('open');
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_EDIT'], Res.responseText);
@@ -329,11 +329,11 @@
 </div>
 
 
-<div id="MastersEditDialog" style="display: none;">
+<div id="EditDialogContractMasterHistory" style="display: none;">
     <div id="MastersDialogHeader">
         <span id="MastersHeaderText">Вставка\Редактирование записи</span>
     </div>
     <div style="overflow: hidden; padding: 10px;" id="MastersDialogContent">
-        <div style="overflow: hidden;" id="MastersBodyDialog"></div>
+        <div style="overflow: hidden;" id="BodyDialogContractMasterHistory"></div>
     </div>
 </div>

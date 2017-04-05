@@ -166,7 +166,7 @@
     });
 </script>    
 
-<div class="row">
+<div class="row" style="margin: 0;">
     <div class="row-column">
         <div>
             <div class="row-column">Номер заявки</div>
