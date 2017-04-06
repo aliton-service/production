@@ -460,6 +460,7 @@
                             calc_id: CostCalculations.calc_id,
                             prty_id: 1,
                             objc_id: CostCalculations.Object_id,
+                            Addr: CostCalculations.Addr,
                         }
                     },
                     success: function(Res) {

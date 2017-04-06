@@ -1113,7 +1113,7 @@
         $('#btnAddDelivery').on('click', function(){
             $('#btnOperation').jqxDropDownButton('close');
             if (WHDocuments.Docm_id !== null) {
-                $('#WHDocumentsDialog').jqxWindow({width:740, height: 390, position: 'center'});
+                $('#WHDocumentsDialog').jqxWindow({width:740, height: 450, position: 'center'});
                 var D = null;
                 if (WHDocuments.Dmnd_id != null)
                     D = WHDocuments.Dmnd_id;
@@ -1128,8 +1128,9 @@
                         Params: {
                             docm_id: WHDocuments.Docm_id,
                             prty_id: 1,
-                            objc_id: WHDocuments.Object_id,
+                            objc_id: WHDocuments.Objc_id,
                             dmnd_id: D,
+                            Addr: WHDocuments.Address
                         }
                     },
                     success: function(Res) {
