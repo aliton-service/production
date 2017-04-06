@@ -196,6 +196,11 @@
         $("#edProcMarj").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 150, readOnly: true, spinButtonsStep: 0 }));
         $('#btnAutoMarj').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '200px', imgSrc: '/images/1.png', disabled: !(CostCalculations.date_agreed == null && CostCalculations.date_ready == null) }));
         $('#btnEditCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { imgSrc: '/images/4.png', disabled: !(CostCalculations.date_agreed == null && CostCalculations.date_ready == null)}));
+        $('#btnVDemand').jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
+        $("#btnVDemand").on('click', function() {
+            if (CostCalculations.Demand_id != null)
+                Aliton.ViewDemand(CostCalculations.Demand_id, true);
+        });
         
         $('#btnAgreedCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px', imgSrc: '/images/1.png' }));
         $('#btnUndoAgreedCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '100%', imgSrc: '/images/3.png' }));
@@ -1643,6 +1648,7 @@
         <div style="clear: both"></div>
         <div style="padding: 2px"><input type="button" value="Счет заказ" id='btnAddDocContract3'/></div>
     </div>
+    <div class="row-column" style="margin: 0 0px 0 5px"><input type="button" value="Заявка" id='btnVDemand'/></div>
     <div>
         <div class="row-column" style="float: right; margin: 0 0 0 5px;"><input type="button" value="Печатать" id='btnPrint2CostCalculations'/></div>
         <div class="row-column" style="float: right;"><input type="button" value="Для заказчика" id='btnPrint1CostCalculations'/></div>
