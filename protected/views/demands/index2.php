@@ -151,6 +151,8 @@
                 height: 'calc(100% - 12px)',
                 width: '100%',
                 showfilterrow: false,
+                //rowsheight: 20,
+                //columnsheight: 25,
                 autoshowfiltericon: true,
                 ready: function(){
                     var State = $('#DemandsGrid').jqxGrid('getstate');
@@ -248,6 +250,7 @@
         color: black;
     }
 </style>
+
 
 
 <div id="GridContainer" style="float: left; width: 100%; height: calc(100% - 240px)">

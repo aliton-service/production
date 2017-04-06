@@ -667,7 +667,8 @@
                                         repr_id: Repairs.Repr_id,
                                         date: Repairs.Date,
                                         prty_id: 1,
-                                        objc_id: Repairs.Object_id
+                                        objc_id: Repairs.Object_id,
+                                        Addr: Repairs.Addr,
                                     }
                                 },
                                 success: function(Res) {

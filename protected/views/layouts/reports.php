@@ -91,6 +91,11 @@
                 $('#edExportExcel').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160}));
                 $('#edExportPDF').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160}));
                 $('#edSiteInex').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160}));
+                $('#edPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160}));
+                $('#edPrint').on('click', function() {
+                    window.print();
+                });
+                
                 
                 $('#edView').on('click', function() {
                     var Data = null;
@@ -186,6 +191,9 @@
                 </div>
                 <div style="float: left; margin-left: 6px;">
                     <input type="button" id='edView' value='Просмотр отчета в новой вкладке'/>
+                </div>
+                <div style="float: left; margin-left: 6px;">
+                    <input type="button" id='edPrint' value='Печать'/>
                 </div>
                 <div style="clear: both"></div>
                 <div style="float: left">

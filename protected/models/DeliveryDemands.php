@@ -127,6 +127,7 @@ class DeliveryDemands extends MainFormModel
         return array(
                 array('prty_id, dltp_id, deadline', 'required'),
                 array('dldm_id,
+                        Addr,
                         date,
                         user_sender,
                         objc_id,
@@ -173,6 +174,7 @@ class DeliveryDemands extends MainFormModel
                     'date' => 'Date',
                     'user_sender' => 'User Sender',
                     'objc_id' => 'Objc',
+                    'Addr' => '',
                     'dltp_id' => 'Вид',
                     'mstr_id' => 'Mstr',
                     'prty_id' => 'Приоритет',

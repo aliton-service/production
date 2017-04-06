@@ -52,6 +52,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $calc_id;
     public $repr_id;
     public $dmnd_id;
+    public $SN;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -127,6 +128,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public function rules()
     {
         return array(
+            array('prty_id', 'PrtyValidate'),
             array('date, prty_id, strg_id, dmnd_empl_id, empl_id, prms_empl_id, wrtp_id, objc_id', 'required'),
             array('docm_id,
                     dctp_id,
@@ -179,6 +181,12 @@ class WHDocumentsDoc4 extends MainFormModel
         );
     }
     
+    public function PrtyValidate($attribute, array $params = array()) {
+        
+        if ((int)$this->prty_id < 9 && (int)$this->objc_id == 7337)
+            $this->addError($attribute, 'Приоритет должен быть плановым');
+    }
+        
     public function attributeLabels()
     {
         return array(
@@ -246,6 +254,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'dmnd_empl_name' => 'd.dmnd_empl_id',
             'AddressForFind' => 'd.objc_id',
             'status' => '(case when d.status = \'Готово к выдаче\' then 1 when d.status = \'Зарезервировано\' then 2 when d.status = \'Выдано\' then 3 end)',
+            'SN' => '()',
         );
     }
     

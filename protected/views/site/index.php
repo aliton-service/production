@@ -1,5 +1,103 @@
 <script>
-
+    $(document).ready(function() {
+        
+//        var Object_id = null;
+//        //var Addr = null;
+//        
+//        var AdrSource =
+//        {
+//            datatype: "json",
+//            datafields: [
+//                { name: 'Object_id', type: 'int' },
+//                { name: 'ObjectGr_id', type: 'int' },
+//                { name: 'Address_id', type: 'int' },
+//                { name: 'Addr', type: 'string' },
+//            ],
+//            id: 'Object_id',
+//            url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=AddressList',
+//            root: 'Rows',
+//            cache: true,
+//            async: false,
+//            pagenum: 0,
+//            pagesize: 300,
+//            beforeprocessing: function (data) {
+//                    this.totalrecords = data[0].TotalRows;
+//           },
+//           data: {
+//                    featureClass: "P",
+//                    style: "full",
+//                    maxRows: 12,
+//                    username: "jqwidgets"
+//                }
+//        };
+//        var DataAddress = new $.jqx.dataAdapter(AdrSource, 
+//            {
+//                formatData: function (data) {
+//                    data.NotExecute = '';
+//                    var Addr = $("#edAddressList").jqxComboBox('searchString')
+//                    if (Addr != '') {
+//                        data.Filters = ["a.Addr like '" + Addr + "%'"];
+//                        //data.name_startsWith = $("#edAddressList").jqxComboBox('searchString');
+//                        return data;
+//                    } else
+//                        data.NotExecute = 'NotExecute'
+//                    
+//                    
+//                    
+//                    return data;
+//                }
+//        });
+//        $('#btnSetValue').jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: false}));
+//        
+//        $("#edAddressList").jqxComboBox({
+//            remoteAutoComplete: true,
+//            //autoDropDownHeight: true,               
+//            selectedIndex: 0,
+//            source: DataAddress,
+//            width: '350',
+//            height: '25px',
+//            displayMember: "Addr",
+//            valueMember: "Object_id",
+//            autoComplete: true,
+//            search: function (searchString) {
+//                    Addr = searchString;
+//                    DataAddress.dataBind();
+//                    
+//                }
+//        });
+//        
+//        $('#btnSetValue').on('click', function() {
+//            $("#edAddressList").val(Object_id);
+//        });
+//        
+//        
+//        DataAddress.dataBind();
+//        $("#edAddressList").val(Object_id);
+//        
+//        
+//        
+//        var DataAddress2 = new $.jqx.dataAdapter(AdrSource, {
+//                formatData: function (data) {
+//                    console.log($("#edAddressList2").val());
+//                    data.NotExecute = '';
+//                    if (Addr != '') {
+//                        data.Filters = ["a.Addr like '" + Addr + "%'"];
+//                        //data.name_startsWith = $("#edAddressList").jqxComboBox('searchString');
+//                        return data;
+//                    } else
+//                        data.NotExecute = 'NotExecute'
+//                    
+//                    
+//                    
+//                    return data;
+//                }});
+//            
+//        $("#edAddressList2").on('keyup', function(){
+//            DataAddress2.dataBind();
+//        });
+//        
+//        $("#edAddressList2").jqxComboBox({ source: DataAddress2, width: '350', height: '25px', displayMember: "Addr", valueMember: "Object_id", autoComplete: false});
+    });
 </script>    
 
 <?php
@@ -19,3 +117,13 @@
     </div>
 <?php endif; ?>
 
+<!--<div id="edAddressList" name="Models[Object_id]"></div>
+
+
+<input type="button" id="btnSetValue" value="Поставить значение"/>
+
+<br>
+<br>
+<br>
+
+<div id="edAddressList2" name="Models[Object_id]"></div>-->
