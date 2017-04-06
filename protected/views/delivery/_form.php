@@ -5,6 +5,7 @@
             Dldm_id: <?php echo json_encode($model->dldm_id); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->date; ?>'),
             Objc_id: <?php echo json_encode($model->objc_id); ?>,
+            AddrSearch: <?php echo json_encode($model->Addr); ?>,
             Dltp_id: <?php echo json_encode($model->dltp_id); ?>,
             Prty_id: <?php echo json_encode($model->prty_id); ?>,
             Dlrs_id: <?php echo json_encode($model->dlrs_id); ?>,
@@ -34,7 +35,7 @@
             BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
         };
 
-        $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, width: 120, height: 30 }));
+        $('#btnDeliveryDemOk').jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false, width: 120, height: 30 }));
         
         if (DeliveryDemands.DialogId == '' || DeliveryDemands.DialogId == null) {
             DeliveryDemands.DialogId = 'EditDeliveryDemandDialog';
@@ -74,7 +75,24 @@
 //                            });
 //                            return data;
 //                        },});
-        var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {async: true}));
+//        var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {async: true}));
+        var DataAddress = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListAddresses, {async: false}), { 
+            formatData: function (data) {
+                    data.NotExecute = '';
+                    if (DeliveryDemands.AddrSearch == null)
+                        DeliveryDemands.AddrSearch = '';
+                    if (DeliveryDemands.AddrSearch.length > 5)
+                        DeliveryDemands.AddrSearch = DeliveryDemands.AddrSearch.substr(0, 4);                    
+                    
+                    if (DeliveryDemands.AddrSearch != '')
+                        data.Filters = ["a.Addr + CASE WHEN o.Doorway IS NULL THEN '' ELSE ', п. ' + o.Doorway END like '" + DeliveryDemands.AddrSearch + "%'"];
+                    else
+                        data.NotExecute = 'NotExecute';
+                    
+                    return data;
+                }
+            }
+        );
 //        var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees, {async: false}));
 //        DataEmployees.dataBind();
         var find = function(id) {
@@ -106,6 +124,7 @@
 //            }
 //        });
         
+        $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '540px', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
         
         $("#edEditAddress").on('select', function(event){
             var args = event.args;
@@ -114,6 +133,7 @@
                 var value = item.value;
                 var res = find(item.value);
                 if (res != null) {
+                    
                     var DataContactInfo = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContactInfo, {}), {
                         formatData: function (data) {
                             $.extend(data, {
@@ -155,10 +175,10 @@
             });
         });
         
-        $("#edEditAddress").on('bindingComplete', function(event){
-            if (DeliveryDemands.Objc_id != '') $("#edEditAddress").jqxComboBox('val', DeliveryDemands.Objc_id);
-            $("#btnDeliveryDemOk").jqxButton({disabled: false});
-        });
+//        $("#edEditAddress").on('bindingComplete', function(event){
+//            if (DeliveryDemands.Objc_id != '') $("#edEditAddress").jqxComboBox('val', DeliveryDemands.Objc_id);
+//            $("#btnDeliveryDemOk").jqxButton({disabled: false});
+//        });
 //        $("#edEditMaster").on('bindingComplete', function(event){
 //        });
         $("#edEditContactInfo").on('select', function(event){
@@ -205,10 +225,21 @@
         $("#edEditDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 160, value: DeliveryDemands.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edEditBestDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 160, value: DeliveryDemands.BestDate}));
         $("#edEditPromiseDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 160, value: DeliveryDemands.DatePromise}));
-        $("#edEditAddress").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataAddress, width: '460', height: '25px', displayMember: "Addr", valueMember: "Object_id"}));
+        
+//        $("#edEditAddress").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataAddress, width: '460', height: '25px', displayMember: "Addr", valueMember: "Object_id"}));
+        $("#edEditAddress").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataAddress, width: '460', height: '25px', displayMember: "Addr", valueMember: "Object_id", remoteAutoComplete: true, remoteAutoCompleteDelay: 1000,
+            search: function (searchString) {
+                DeliveryDemands.AddrSearch = $("#edEditAddress").jqxComboBox('searchString');
+                DataAddress.dataBind();
+            }
+        }));
+        
+        DataAddress.dataBind();
+        $("#edEditAddress").val(DeliveryDemands.Objc_id);
+        
         $("#edEditMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', source: DataEmployees, width: '280', height: '25px', displayMember: "EmployeeName", valueMember: "Employee_id"}));
         $("#edEditContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 750}));
-        $("#edEditContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { placeHolder: '', width: '540px', height: '25px', displayMember: "contact", valueMember: "Info_id"}));
+        
         $("#edEditPhoneNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 200}));
         $("#edEditTextDD").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 700, height: 70 }));
         

@@ -81,7 +81,7 @@
             return table;
         };
         
-        $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '330', height: '25px', displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: true /*, renderer: EquipRenderer */}));
+        $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '330', height: '25px', displayMember: "EquipName", valueMember: "Equip_id", /*searchMode: 'containsignorecase', */ autoComplete: true /*, renderer: EquipRenderer */}));
         $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
         $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', decimalDigits: 4}));
