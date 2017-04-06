@@ -770,7 +770,7 @@ return array_merge(
                 'ManagerObjects',
                 'ManagerObjectsGroup',
                 'ManagerOfficeObjectsGroup',
-                'ManagerContactInfo',
+                'AdminContactInfo',
                 'ManagerObjectsGroupSystems',
                 'DeleteDocmAchsDetails',
                 'ManagerSystemCompetitors',
@@ -806,6 +806,7 @@ return array_merge(
                 'ManagerObjectsGroupSystems',
                 'AdminSystemCompetitors',
                 
+                
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -833,7 +834,7 @@ return array_merge(
             'children' => array(
                 'ManagerObjects',
                 'ManagerObjectsGroup',
-                'ManagerContactInfo',
+                'AdminContactInfo',
                 'ManagerObjectEquips',
                 'ManagerContractsS',
                 'ManagerContractMasterHistory',
@@ -893,7 +894,7 @@ return array_merge(
             'children' => array(
                 'ManagerObjects',
                 'ManagerObjectsGroup',
-                'ManagerContactInfo',
+                'AdminContactInfo',
                 'UserObjectsGroupSystems',
                 'ManagerObjectEquips',
                 'ManagerContractsS',
