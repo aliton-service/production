@@ -52,6 +52,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public $calc_id;
     public $repr_id;
     public $dmnd_id;
+    public $SN;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -253,6 +254,7 @@ class WHDocumentsDoc4 extends MainFormModel
             'dmnd_empl_name' => 'd.dmnd_empl_id',
             'AddressForFind' => 'd.objc_id',
             'status' => '(case when d.status = \'Готово к выдаче\' then 1 when d.status = \'Зарезервировано\' then 2 when d.status = \'Выдано\' then 3 end)',
+            'SN' => '()',
         );
     }
     

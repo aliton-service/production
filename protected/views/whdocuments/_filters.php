@@ -10,7 +10,11 @@
                         beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
-                        
+                        formatData: function (data) {
+                            if ($("#edSN").val() != '')
+                                data.Filters = ["exists (select 1 from docmachsdetails dt inner join serialnumbers s on (dt.dadt_id = s.dadt_id) where dt.docm_id = d.docm_id and dt.deldate is null and s.empldel is null and s.SN like '%" + $("#edSN").val() + "%')"];
+                            return data;
+                        },
                     }));
         var DataWHDocumentsDoc1 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc1Source, {
                         filter: function () {
@@ -22,7 +26,11 @@
                         beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
-                        
+                        formatData: function (data) {
+                            if ($("#edSN").val() != '')
+                                data.Filters = ["exists (select 1 from docmachsdetails dt inner join serialnumbers s on (dt.dadt_id = s.dadt_id) where dt.docm_id = d.docm_id and dt.deldate is null and s.empldel is null and s.SN like '%" + $("#edSN").val() + "%')"];
+                            return data;
+                        },
                     }));
         var DataWHDocumentsDoc2 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc2Source, {
                         filter: function () {
@@ -34,7 +42,11 @@
                         beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
-                        
+                        formatData: function (data) {
+                            if ($("#edSN").val() != '')
+                                data.Filters = ["exists (select 1 from docmachsdetails dt inner join serialnumbers s on (dt.dadt_id = s.dadt_id) where dt.docm_id = d.docm_id and dt.deldate is null and s.empldel is null and s.SN like '%" + $("#edSN").val() + "%')"];
+                            return data;
+                        },
                     }));
         var DataWHDocumentsDoc3 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc3Source, {
                         filter: function () {
@@ -46,7 +58,11 @@
                         beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
-                        
+                        formatData: function (data) {
+                            if ($("#edSN").val() != '')
+                                data.Filters = ["exists (select 1 from docmachsdetails dt inner join serialnumbers s on (dt.dadt_id = s.dadt_id) where dt.docm_id = d.docm_id and dt.deldate is null and s.empldel is null and s.SN like '%" + $("#edSN").val() + "%')"];
+                            return data;
+                        },
                     }));
         var DataWHDocumentsDoc4 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc4Source, {
                         filter: function () {
@@ -57,6 +73,11 @@
                         },
                         beforeSend: function(jqXHR, settings) {
                             DisabledControls();
+                        },
+                        formatData: function (data) {
+                            if ($("#edSN").val() != '')
+                                data.Filters = ["exists (select 1 from docmachsdetails dt inner join serialnumbers s on (dt.dadt_id = s.dadt_id) where dt.docm_id = d.docm_id and dt.deldate is null and s.empldel is null and s.SN like '%" + $("#edSN").val() + "%')"];
+                            return data;
                         },
                     }));
         var DataWHDocumentsDoc8 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc8Source, {
@@ -69,6 +90,11 @@
                         beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
+                        formatData: function (data) {
+                            if ($("#edSN").val() != '')
+                                data.Filters = ["exists (select 1 from docmachsdetails dt inner join serialnumbers s on (dt.dadt_id = s.dadt_id) where dt.docm_id = d.docm_id and dt.deldate is null and s.empldel is null and s.SN like '%" + $("#edSN").val() + "%')"];
+                            return data;
+                        },
                     }));
         var DataWHDocumentsDoc7 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc7Source, {
                         filter: function () {
@@ -80,6 +106,11 @@
                         beforeSend: function(jqXHR, settings) {
                             DisabledControls();
                         },
+                        formatData: function (data) {
+                            if ($("#edSN").val() != '')
+                                data.Filters = ["exists (select 1 from docmachsdetails dt inner join serialnumbers s on (dt.dadt_id = s.dadt_id) where dt.docm_id = d.docm_id and dt.deldate is null and s.empldel is null and s.SN like '%" + $("#edSN").val() + "%')"];
+                            return data;
+                        },
                     }));
         var DataWHDocumentsDoc9 = new $.jqx.dataAdapter($.extend(true, {}, Sources.WHDocumentsDoc9Source, {
                         filter: function () {
@@ -90,6 +121,11 @@
                         },
                         beforeSend: function(jqXHR, settings) {
                             DisabledControls();
+                        },
+                        formatData: function (data) {
+                            if ($("#edSN").val() != '')
+                                data.Filters = ["exists (select 1 from docmachsdetails dt inner join serialnumbers s on (dt.dadt_id = s.dadt_id) where dt.docm_id = d.docm_id and dt.deldate is null and s.empldel is null and s.SN like '%" + $("#edSN").val() + "%')"];
+                            return data;
                         },
                     }));
         
@@ -112,7 +148,7 @@
         $("#edSupplier").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSuppliers, width: 'calc(100% - 2px)', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id"}));
         $("#edAddress").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'} ));
         $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '150', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
-        
+        $("#edSN").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'} ));
         $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         $('#edFiltering').on('click', function(){
@@ -417,4 +453,6 @@
 <div class="al-row"><input type="text" autocomplete="off" id="edAddress"/></div>
 <div class="al-row">Затребовал</div>
 <div class="al-row"><div id="edMaster"></div></div>
+<div class="al-row">Серийный номер</div>
+<div class="al-row"><input type="text" autocomplete="off" id="edSN"/></div>
 <div style="margin-top: 4px;"><input type="button" value="Фильтр" id="edFiltering"/></div>
