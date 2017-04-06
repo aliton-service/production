@@ -567,8 +567,11 @@
                                     }
                                 }
                             }
-                        if ((Temp["prty_name"] == "Срочная")) 
+                        if ((parseInt(Temp["overday"]) > 0)) 
+                            return '<span class="backlight_red" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                        else if ((Temp["prty_name"] == "Срочная")) 
                             return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                        
                     }
                     
                     $("#Grid4").jqxGrid(
@@ -969,6 +972,9 @@
 <style>
     .backlight_pink {
         color: #E000E0;
+    }
+    .backlight_pink {
+        color: #FF0000;
     }
 </style> 
 

@@ -171,7 +171,9 @@
                                     }
                                 }
                             }
-                        if ((Temp["DemandPrior"] == "Срочная") || (Temp["DemandPrior"] == "Аварийная")) 
+                        if (parseInt(Temp["overday"]) > 0)
+                            return '<span class="backlight_red" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+                        else if ((Temp["DemandPrior"] == "Срочная") || (Temp["DemandPrior"] == "Аварийная")) 
                             return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
                     }
         
@@ -230,6 +232,9 @@
 <style>
     .backlight_pink {
         color: #E000E0;
+    }
+    .backlight_red {
+        color: #FF0000;
     }
 </style> 
 
