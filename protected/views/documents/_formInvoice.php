@@ -108,8 +108,10 @@
                                 location.reload();
                             }
                         }
-                        if (Document.DialogId == 'CostCalculationsDialog')
+                        if (Document.DialogId == 'CostCalculationsDialog') {
                             $('#RefreshCostCalcDocuments').click();
+//                            window.open('/index.php?r=/index.php?r=Documents/Index&ContrS_id=')
+                        }
                         
                     } else {
                         $('#' + Document.BodyDialogId).html(Res);
