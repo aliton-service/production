@@ -127,6 +127,7 @@ class WHDocumentsDoc4 extends MainFormModel
     public function rules()
     {
         return array(
+            array('prty_id', 'PrtyValidate'),
             array('date, prty_id, strg_id, dmnd_empl_id, empl_id, prms_empl_id, wrtp_id, objc_id', 'required'),
             array('docm_id,
                     dctp_id,
@@ -179,6 +180,12 @@ class WHDocumentsDoc4 extends MainFormModel
         );
     }
     
+    public function PrtyValidate($attribute, array $params = array()) {
+        
+        if ((int)$this->prty_id < 9 && (int)$this->objc_id == 7337)
+            $this->addError($attribute, 'Приоритет должен быть плановым');
+    }
+        
     public function attributeLabels()
     {
         return array(
