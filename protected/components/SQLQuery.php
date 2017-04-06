@@ -173,7 +173,15 @@ class SQLQuery
             $SQLText = str_ireplace($value['ParamName'], $value['ParamValue'], $SQLText);
         }
         return Yii::app()->db->createCommand($SQLText)->queryAll();
-        
+    }
+    
+    public function QueryExecute()
+    {
+        $SQLText = $this->text;
+        foreach ($this->Parameters as $key => $value) {
+            $SQLText = str_ireplace($value['ParamName'], $value['ParamValue'], $SQLText);
+        }
+        return Yii::app()->db->createCommand($SQLText)->execute();
     }
     
     public function QueryRow()

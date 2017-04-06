@@ -41,6 +41,7 @@
             CreateEmplName: <?php echo json_encode($model->empl_name); ?>,
             EmplChangeName: <?php echo json_encode($model->EmplChangeName); ?>,
             DateChange: Aliton.DateConvertToJs('<?php echo $model->date_change; ?>'),
+            control: <?php echo json_encode($model->control); ?>
         };
         
         var Admin = Boolean(Number(<?php echo json_encode(Yii::app()->user->checkAccess('HeadLogistics')); ?>));
@@ -83,6 +84,7 @@
                     WHDocuments.DateChange = Aliton.DateConvertToJs(Res.date_change);
                     WHDocuments.BestDate = Aliton.DateConvertToJs(Res.best_date);
                     WHDocuments.PromiseDate = Aliton.DateConvertToJs(Res.date_promise);
+                    WHDocuments.control = Res.control;
                     SetValueControls(parseInt(WHDocuments.Dctp_id));
                     $("#btnRefreshDetails").click();
                     SetStateButtons();
@@ -100,6 +102,30 @@
         $('#edNote').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { height: 70, width: '100%', minLength: 1}));
         $("#edMsg").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '100%'}));
         $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: true, imgSrc: "/images/4.png"}));
+        $("#btnSetControl").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false}));
+        
+        $("#btnSetControl").on('click', function() {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/SetControl')); ?>,
+                type: 'POST',
+                data: {
+                    WHDocuments: {
+                        Docm_id: WHDocuments.Docm_id
+                    }
+                },
+                async: true,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result = 1) {
+                        WHDoc.Refresh();
+                    }
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
+        
         $("#btnOperation").jqxDropDownButton($.extend(true, {}, DropDownButtonDefaultSettings, { autoOpen: false, width: 140, height: 28 }));
         $('#jqxTreeOperation').on('select', function (event) {
                 var args = event.args;
@@ -321,6 +347,14 @@
                     if (WHDocuments.EmplChangeName != '') $("#edEmplChangeName4").jqxInput('val', WHDocuments.EmplChangeName);
                     if (WHDocuments.DateChange != '') $("#edLastChangeDate4").jqxDateTimeInput('val', WHDocuments.DateChange);
                     if (WHDocuments.Notes != '') $("#edNote").jqxTextArea('val', WHDocuments.Notes);
+                    if (parseInt(WHDocuments.control) == 1) {
+                        $("#edControlDoc").html("Контроль");
+                        $("#btnSetControl").val("Снять контроль");
+                    }
+                    else { 
+                        $("#edControlDoc").html("");
+                        $("#btnSetControl").val("Контроль");
+                    }
                     break;
                 case 8:
                     if (WHDocuments.Storage != '') $("#edStorage8").jqxInput('val', WHDocuments.Storage);
@@ -1380,6 +1414,7 @@
                 <div class="row-column"><div id="edDate4"></div></div>
                 <div class="row-column"><b><?php echo $model->status; ?></b></div>
                 <div class="row-column"><b><?php echo $model->state_prchs; ?></b></div>
+                <div class="row-column"><b><div id="edControlDoc"></div></b></div>
             </div>
             <div class="row">
                 <div class="row-column">Вид работ:</div>
@@ -1513,6 +1548,10 @@
     <div style="float: right">
         <div class="row-column"><input type="button" value="Для заказчика" id='btnPrintClient' /></div>
         <div class="row-column" style="margin-right: 0px;"><input type="button" value="Печать" id='btnPrint' /></div>
+    </div>
+    <div class="row-column">
+        <input type="button" value="Контроль" id='btnSetControl' />
+        
     </div>
 </div>
 <div class="row" style="padding: 0px 2px 0px 0px">

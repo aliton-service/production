@@ -19,7 +19,7 @@ class WHDocumentsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'View', 'GetWhNotes', 'GetModel'),
+                    'actions'=>array('index', 'View', 'GetWhNotes', 'GetModel', 'SetControl'),
                     'roles'=>array('WHDocumentsView'),
             ),
             array('allow', 
@@ -62,6 +62,26 @@ class WHDocumentsController extends Controller
                     'users'=>array('*'),
             ),
         );
+    }
+    
+    public function actionSetControl() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['WHDocuments'])) {
+            $Q = new SQLQuery();
+            $Q->setSelect("Update WHDocuments Set [Control] = Case When [Control] = 1 Then 0 Else 1 End Where Docm_id = " . $_POST['WHDocuments']['Docm_id']);
+            $Q->QueryExecute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $_POST['WHDocuments']['Docm_id'];
+            echo json_encode($ObjectResult);
+            return;
+        }
+        echo json_encode($ObjectResult);
     }
     
     public function actionGetModel()

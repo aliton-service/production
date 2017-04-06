@@ -973,7 +973,7 @@
     .backlight_pink {
         color: #E000E0;
     }
-    .backlight_pink {
+    .backlight_red {
         color: #FF0000;
     }
 </style> 
