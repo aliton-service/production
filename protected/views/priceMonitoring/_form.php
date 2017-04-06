@@ -97,7 +97,7 @@
 
 <div class="al-row">
     <div class="al-row-column">Дата: <div id='date' name="PriceMonitoring[date]" ></div></div>
-    <div class="al-row-column">Номер заявки: <br/><input name="PriceMonitoring[Mndm_id]" type="text" id="Mndm_id"></div>
+    <div class="al-row-column">Номер заявки: <br/><input name="PriceMonitoring[mndm_id]" type="text" id="Mndm_id"></div>
     <div style="clear: both"></div>
 </div>
 
