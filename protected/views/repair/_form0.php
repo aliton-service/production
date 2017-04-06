@@ -86,6 +86,18 @@
             }
         });
         
+        $("#edAddrEdit").on('select', function(event) {
+            var args = event.args;
+            if (args) {
+                var Item = args.item;
+                var Value = Item.value;
+                var Row = Aliton.FindArray(DataAddress.records, 'Object_id', Value);
+                if (Row != null)
+                    $("#edAddrStrEdit").val(Row.Addr);
+
+            }
+        });
+        
         DataAddress.dataBind();
         $("#edAddrEdit").val(Repair.Object_id);
 
@@ -112,8 +124,10 @@
                 var Item = args.item;
                 var Value = Item.value;
                 var Row = Aliton.FindArray(DataEquips.records, 'Equip_id', Value);
-                if (Row != null)
+                if (Row != null) {
                     $("#edUmNameEdit").val(Row.NameUM);
+                    $("#edEquipStrEdit").val(Row.EquipName);
+                }
 
             }
         });
@@ -261,7 +275,8 @@
             )); 
         ?>
         <input type="hidden" name="Repairs[Repr_id]" value="<?php echo $model->Repr_id; ?>"/>
-        <input type="hidden" name="Repairs[Addr]" value="<?php echo $model->Addr; ?>"/>
+        <input type="hidden" id="edAddrStrEdit" name="Repairs[Addr]" value="<?php echo $model->Addr; ?>"/>
+        <input type="hidden" id="edEquipStrEdit" name="Repairs[EquipName]" value="<?php echo $model->EquipName; ?>"/>
 
         <div class="al-row">
             <div class="al-row-column">Номер</div>

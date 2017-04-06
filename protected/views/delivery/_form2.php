@@ -96,7 +96,8 @@
                 var value = item.value;
                 var res = find(item.value);
                 if (res != null) {
-                    
+                    var Row = Aliton.FindArray(DataAddress.records, 'Object_id', value);
+                    $("#edAddrStrEdit").val(Row.Addr);
                     var DataContactInfo = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceContactInfo, {}), {
                         formatData: function (data) {
                             $.extend(data, {
@@ -250,6 +251,7 @@
 <input type="hidden" name="DeliveryDemands[calc_id]" value="<?php echo $model->calc_id; ?>" />
 <input type="hidden" name="DeliveryDemands[repr_id]" value="<?php echo $model->repr_id; ?>" />
 <input type="hidden" name="DeliveryDemands[dmnd_id]" value="<?php echo $model->dmnd_id; ?>" />
+<input type="hidden" id="edAddrStrEdit" name="DeliveryDemands[Addr]" value="<?php echo $model->Addr; ?>" />
 
 <div class="row">
     <div class="row-column">
