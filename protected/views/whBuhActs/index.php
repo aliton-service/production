@@ -237,7 +237,7 @@
         $("#btnAddEquips").on('click', function(){
             if ($("#btnAddEquips").jqxButton('disabled')) return;
             if (WHBuhActs.docm_id !== null) {
-                $('#WHDocumentsDialog').jqxWindow({width: 660, height: 255, position: 'center'});
+                $('#WHDocumentsDialog').jqxWindow({width: 730, height: 270, position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Create')) ?>,
                     type: 'POST',
@@ -261,7 +261,7 @@
         $("#btnEditEquips").on('click', function(){
             if ($("#btnEditEquips").jqxButton('disabled')) return;
             if (WHBuhActs.docm_id !== null) {
-                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 255, position: 'center'});
+                $('#WHDocumentsDialog').jqxWindow({width: 730, height: 270, position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Update')) ?>,
                     type: 'POST',
@@ -356,7 +356,7 @@
 <?php $this->setPageTitle('Бухгалтерский акт'); ?>
 
 
-<div class="row">
+<div class="row" style="margin: 0;">
     <div class="row-column">Номер: <input readonly type="text" id="numberWHBA"></div>
     <div class="row-column" style="margin-top: 2px;">Дата: </div><div class="row-column"><div id="dateWHBA"></div></div>
     <div class="row-column" style="margin: 2px 0 0 40px; font-weight: 500;"><?php echo $model->state; ?></div>
