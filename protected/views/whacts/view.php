@@ -238,7 +238,7 @@
                             $("#btnAddEquips").on('click', function(){
                                 if ($("#btnAddEquips").jqxButton('disabled')) return;
                                 if (Acts.Docm_id !== null) {
-                                    $('#WHDocumentsDialog').jqxWindow({width: 660, height: 255, position: 'center'});
+                                    $('#WHDocumentsDialog').jqxWindow({width: 730, height: 270, position: 'center'});
                                     $.ajax({
                                         url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Create')) ?>,
                                         type: 'POST',
@@ -262,7 +262,7 @@
                             $("#btnEditEquips").on('click', function(){
                                 if ($("#btnEditEquips").jqxButton('disabled')) return;
                                 if (Acts.Docm_id !== null) {
-                                    $('#WHDocumentsDialog').jqxWindow({width: 640, height: 255, position: 'center'});
+                                    $('#WHDocumentsDialog').jqxWindow({width: 730, height: 270, position: 'center'});
                                     $.ajax({
                                         url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Update')) ?>,
                                         type: 'POST',

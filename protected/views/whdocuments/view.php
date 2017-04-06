@@ -2,6 +2,7 @@
     var WHDoc = {};
     var SN = {};
     var EquipMode = '';
+    var First = true;
     
     $(document).ready(function () {
         WHDoc.Employee_id = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
@@ -168,28 +169,28 @@
         
         var SetInvInfo = function() {
             if (CurrentRowDetails != undefined) 
-                $.ajax({
-                    url: <?php echo json_encode(Yii::app()->createUrl('Equips/GetInvInfo')); ?>,
-                    type: 'POST',
-                    data: {
-                        Equip_id: CurrentRowDetails.eqip_id,
-                        Strg_id: WHDocuments.Strg_id
-                    },
-                    async: true,
-                    success: function(Res) {
-                        Res = JSON.parse(Res);
-                        if (Res.result = 1) {
-                            $("#edQuant").jqxNumberInput('val', Res.inv_quant);
-                            $("#edUsedQuant").jqxNumberInput('val', Res.inv_quant_used);
-                            $("#edReserv").jqxNumberInput('val', Res.res_quant);
-                            $("#edReady").jqxNumberInput('val', Res.ready_quant);
-                            $("#edMinReserv").jqxNumberInput('val', Res.min_quant)
-                        }
-                    },
-                    error: function(Res) {
-                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('Equips/GetInvInfo')); ?>,
+                type: 'POST',
+                data: {
+                    Equip_id: CurrentRowDetails.eqip_id,
+                    Strg_id: WHDocuments.Strg_id
+                },
+                async: true,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result = 1) {
+                        $("#edQuant").jqxNumberInput('val', Res.inv_quant);
+                        $("#edUsedQuant").jqxNumberInput('val', Res.inv_quant_used);
+                        $("#edReserv").jqxNumberInput('val', Res.res_quant);
+                        $("#edReady").jqxNumberInput('val', Res.ready_quant);
+                        $("#edMinReserv").jqxNumberInput('val', Res.min_quant)
                     }
-                });
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
         };
         
         $("#GridDetails").on('rowselect', function (event) {
@@ -549,8 +550,100 @@
                 }
             });
             
-            var DataEquips = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}));
+            var EquipsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEquipsMin, {async: true}), {
+                formatData: function (data) {
+                    var Value = $('#FilterEquipsDAD').val();
+                    var Filters = [];
+                    Filters[0] = "c.ctgr_id <> 7";
+                    Filters[1] = "e.equipname like '%" + Value + "%'"
+                    Filters[2] = "e.discontinued is null"
+                    $.extend(data, {
+                        Filters: Filters
+                    });
+                    return data;
+                },
+            });
             
+            $("#FilterEquipsDAD").jqxInput($.extend(true, {}, InputDefaultSettings, { width: '524px'}));
+            
+            $("#FilterEquipsDAD").on('change', function(e){
+                EquipsDataAdapter.dataBind();
+            });
+            
+            $("#EquipsDAD").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {
+                displayMember: "EquipName",
+                source: EquipsDataAdapter,
+                valueMember: "Equip_id",
+                searchMode: 'startswithignorecase',
+                width: 430,
+                dropDownWidth: 650
+            }));
+            
+            $("#UnitMeasurementDAD").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 } ));
+            $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
+            
+            $('#EquipsDAD').on('select', function (event) 
+            {
+                var args = event.args;
+                if (args) {
+                    var item = args.item;
+                    if(item) {
+                        var value = item.value;
+                        if(value) {
+                            var Row = Aliton.FindArray(EquipsDataAdapter.records, 'Equip_id', value);
+                            if (Row != null) {
+                                $("#UnitMeasurementDAD").val(Row.NameUM);
+                                if (Row.EmplChangeInventory != null) {
+                                    $("#edInvQuant input").css({'background-color': '#00FF00'});
+                                    $("#edInvQuantUsed input").css({'background-color': '#00FF00'});
+                                }
+                                else {
+                                    $("#edInvQuant input").css({'background-color': 'white'});
+                                    $("#edInvQuantUsed input").css({'background-color': 'white'});
+                                }
+                            }
+                            SetInvInfo(value, 1);
+
+                            var PriceListDetailsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourcePriceListDetails, {}), {
+                                formatData: function (data) {
+                                    $.extend(data, {
+                                        Filters: ["p.eqip_id = " + value],
+                                    });
+                                    return data;
+                                },
+                            });
+                            PriceListDetailsDataAdapter.dataBind();
+                            if (PriceListDetailsDataAdapter.records.length > 0) {
+                                if (!First) {
+                                    var edPriceEdit = PriceListDetailsDataAdapter.records[0].price_high;
+                                    $("#edPriceEdit").jqxNumberInput('val', edPriceEdit);
+                                }
+                            } else {
+                                if (!First) {
+                                    $("#edPriceEdit").jqxNumberInput('val', null);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            });
+            
+
+            
+            $("#EquipsDAD").on('bindingComplete', function(){
+                First = false;
+                if (EquipMode == 'Insert') {
+                    $("#EquipsDAD").jqxComboBox('clearSelection');
+                }
+                else
+                    $("#EquipsDAD").jqxComboBox('val', CurrentRowDetails.eqip_id);
+                $("#btnSaveDocmAchsDetail").jqxButton({disabled: false});
+                
+            });
+        
+        
+        
             var SetInvInfo = function(Equip_id, Strg_id) {
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('Equips/GetInvInfo')); ?>,
@@ -573,51 +666,9 @@
                 });
             };
             
-            $("#edEquip").on('select', function(event) {
-                var args = event.args;
-                if (args) {
-                    var Item = args.item;
-                    var Value = Item.value;
-
-                    var Row = Aliton.FindArray(DataEquips.records, 'Equip_id', Value);
-                    if (Row != null) {
-                        $("#edUmName").val(Row.NameUM);
-
-                        if (Row.EmplChangeInventory != null) {
-                            $("#edInvQuant input").css({'background-color': '#00FF00'});
-                            $("#edInvQuantUsed input").css({'background-color': '#00FF00'});
-                        }
-                        else {
-                            $("#edInvQuant input").css({'background-color': 'white'});
-                            $("#edInvQuantUsed input").css({'background-color': 'white'});
-                        }
-                    }
-
-
-                    SetInvInfo(Value, 1);
-                }
-            });
             
-            $("#edEquip").on('bindingComplete', function(event){
-//                if (DocmAchsDetail.eqip_id != '') 
-                if (EquipMode == 'Insert') {
-                    $("#edEquip").jqxComboBox('clearSelection');
-                }
-                else
-                    $("#edEquip").jqxComboBox('val', CurrentRowDetails.eqip_id);
-                $("#btnSaveDocmAchsDetail").jqxButton({disabled: false});
-            });
-
-            var EquipRenderer = function(index, label, value) {
-                var DataRecord = DataEquips.records[index];
-                var table = '<table><tbody><tr><td>' + DataRecord.EquipName + '</td><td>' + DataRecord.discontinued + '</td></tr></tbody></table>';
-                return table;
-            };
-            
-            $("#edEquip").jqxComboBox($.extend(true, {}, { source: DataEquips, width: '330', height: '25px', displayMember: "EquipName", valueMember: "Equip_id", searchMode: 'containsignorecase', autoComplete: false /*, renderer: EquipRenderer */}));
-            $("#edUmName").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
             $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
-            $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', decimalDigits: 4}));
+            $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', decimalDigits: 2}));
             $("#edFactQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px'}));
             $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
             $("#edInvQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
@@ -708,17 +759,17 @@
         
         $('#WHDocumentEquipsDialog').on('open', function() {
             if (EquipMode == 'Insert') {
-                
+                $("#FilterEquipsDAD").jqxInput('val', '');
                 $("#edAchsDadt_id").val();
                 $("#edAchsDocm_id").val(WHDocuments.Docm_id);
                 $("#edQuantEdit").jqxNumberInput('val', 1);
-                $("#edPriceEdit").jqxNumberInput('val', null);
+                $("#edPriceEdit").jqxNumberInput('val', 0);
                 $("#edUsedEdit").jqxCheckBox('val', false);
                 $("#edToProductionEdit").jqxCheckBox('val', false);
                 $("#edNoPriceListEdit").jqxCheckBox('val', false);
-                $("#edFactQuantEdit").jqxNumberInput('val', null);
-                $("#edSumEdit").jqxNumberInput('val', null);
-                $("#edEquip").jqxComboBox('clearSelection');
+                $("#edFactQuantEdit").jqxNumberInput('val', 0);
+                $("#edSumEdit").jqxNumberInput('val', 0);
+                $("#EquipsDAD").jqxComboBox('clearSelection');
             } else {
                 $("#edAchsDadt_id").val(CurrentRowDetails.dadt_id);
                 $("#edAchsDocm_id").val(CurrentRowDetails.docm_id);
@@ -729,13 +780,13 @@
                 $("#edNoPriceListEdit").jqxCheckBox('val', CurrentRowDetails.no_price_list);
                 $("#edFactQuantEdit").jqxNumberInput('val', CurrentRowDetails.fact_quant);
                 $("#edSumEdit").jqxNumberInput('val', CurrentRowDetails.sum);
-                var I = $("#edEquip").jqxComboBox('getItems');
+                var I = $("#EquipsDAD").jqxComboBox('getItems');
                 if (I.length > 0)
-                    $("#edEquip").jqxComboBox('val', CurrentRowDetails.eqip_id);
+                    $("#EquipsDAD").jqxComboBox('val', CurrentRowDetails.eqip_id);
             }
         });
         
-        $('#WHDocumentEquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '205px', width: '640', position: 'center', initContent: initEquipsDialog}));
+        $('#WHDocumentEquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 270, width: 730, position: 'center', initContent: initEquipsDialog}));
         
         $("#btnEdit").on('click', function(){
             if ($("#btnEdit").jqxButton('disabled')) return;
@@ -839,7 +890,7 @@
 //            if (WHDocuments.Docm_id !== null) {
 //                $('#WHDocumentsDialog').jqxWindow({width: 640, height: 205, position: 'center'});
 //                $.ajax({
-//                    url: <?php echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Update')) ?>,
+//                    url: <?php // echo json_encode(Yii::app()->createUrl('DocmAchsDetails/Update')) ?>,
 //                    type: 'POST',
 //                    async: false,
 //                    data: {
@@ -1583,25 +1634,21 @@
                     $form=$this->beginWidget('CActiveForm', array(
                         'id'=>'DocmAchsDetails',
                         'htmlOptions'=>array(
-                                'class'=>'form-inline'
-                                ),
+                            'class'=>'form-inline'
+                        ),
                     )); 
                 ?>
                 
                 <input type="hidden" id="edAchsDadt_id" name="DocmAchsDetails[dadt_id]" value="<?php //echo $model->dadt_id; ?>"/>
                 <input type="hidden" id="edAchsDocm_id" name="DocmAchsDetails[docm_id]" value="<?php //echo $model->docm_id; ?>"/>
-
+                
                 <div class="row" style="margin: 0;">
-                    <div class="row-column">
-                        <div><div class="row-column">Оборудование</div></div>
-                        <div style="clear: both"></div>
-                        <div><div class="row-column"><div name="DocmAchsDetails[eqip_id]" id="edEquip"></div><?php echo $form->error($model, 'eqip_id'); ?></div></div>
-                    </div>
-                    <div class="row-column">
-                        <div><div class="row-column">Ед. изм.</div></div>
-                        <div style="clear: both"></div>
-                        <div><div class="row-column"><input type="text" id="edUmName" /></div></div>
-                    </div>
+                    <div class="row-column">Фильтр: <input id="FilterEquipsDAD" /></div>
+                </div>
+                <div class="row">
+                    <div class="row-column">Оборудование: <div id="EquipsDAD" name="DocmAchsDetails[eqip_id]"></div><?php echo $form->error($model, 'eqip_id'); ?></div>
+                    <div class="row-column">Ед.изм.: <br><input readonly id='UnitMeasurementDAD' type="text" /></div>
+    
                     <div class="row-column">
                         <div><div class="row-column">Количество</div></div>
                         <div style="clear: both"></div>
