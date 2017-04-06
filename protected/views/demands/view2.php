@@ -407,6 +407,7 @@
                                         dmnd_id: Demand.Demand_id,
                                         prty_id: 1,
                                         objc_id: Demand.Object_id,
+                                        Addr: Demand.Address,
                                     }
                                 },
                                 success: function(Res) {
