@@ -104,7 +104,10 @@
         if (Filters.Master != null) $("#cmbMaster").val(Filters.Master);
         if (Filters.DemandType_id != null) $("#cmbDemandType").val(Filters.DemandType_id);
         if (Filters.Executor != null) $("#cmbExecutor").val(Filters.Executor);
+        
+        
         if (Filters.Street_id != null) $("#cmbStreet").val(Filters.Street_id);
+        $("#cmbStreet").jqxComboBox({valueMember: "StreetName"});
         
         var Find = function(){
             var MasterFilterGroup = new $.jqx.filter();
@@ -169,7 +172,7 @@
             
             var StreetFilterGroup = new $.jqx.filter();
             if ($("#cmbStreet").val() != '') {
-                var FilterStreet = StreetFilterGroup.createfilter('numericfilter', $("#cmbStreet").val(), 'EQUAL');
+                var FilterStreet = StreetFilterGroup.createfilter('stringfilter', $("#cmbStreet").val(), 'STARTS_WITH');
                 StreetFilterGroup.addfilter(1, FilterStreet);
             }
             

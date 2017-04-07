@@ -776,6 +776,7 @@ Order by [Address]";
             'MasterName' => 'd.Master',
             'DemandType' => 'd.DemandType_id',
             'ExecutorsName' => 'd.OtherName',
+            'Street_id' => 'd.Address',
         );
         
         

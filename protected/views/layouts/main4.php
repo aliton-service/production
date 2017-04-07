@@ -7,40 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
     <!--<link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet">-->
     <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
-    <?php 
-        if (!Yii::app()->user->isGuest) {
-    
-            $UserSettings = new UserSettings();
-            $R =  $UserSettings->Find(array(), array(
-                's.Empl_id = ' . Yii::app()->user->Employee_id,
-            ));
-
-
-            if (count($R) > 0) {
-                if ($R[0]['Theme'] == 'fresh') {
-                    echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh.css" type="text/css" />';
-                    echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
-                }else if ($R[0]['Theme'] == 'fresh2') {
-                    echo '<link rel="stylesheet" href="/js/jqwidgets/styles/jqx.fresh2.css" type="text/css" />';
-                    echo '<meta id="ID_THEME" value="' . $R[0]['Theme'] .'">' ;
-                }
-                else {
-                    echo '<meta id="ID_THEME" style="display: \'none\'"></div>';
-                }
-                
-//                print_r($R[0]['Hide_page_header']);
-                if ($R[0]['Hide_page_header'] === '1') {
-                    echo '<meta id="Hide_page_header" value="' . $R[0]['Hide_page_header'] .'">';
-                    echo '<link rel="stylesheet" type="text/css" href="' . Yii::app()->request->baseUrl . '/css/header-hide.css">';
-                    echo '<link rel="stylesheet" type="text/css" href="' . Yii::app()->request->baseUrl . '/css/main-whithout-header.css">';
-                } else {
-                    echo '<meta id="Hide_page_header" style="display: \'none\'"></div>';
-                }
-            }
-        }
-        
-    
-    ?>
+    <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.custom_01.css" type="text/css" />
     
     
     <?php Yii::app()->clientScript->registerPackage('jquery_js'); ?>
