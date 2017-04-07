@@ -608,7 +608,7 @@
                 displayMember: "EquipName",
                 source: EquipsDataAdapter,
                 valueMember: "Equip_id",
-                searchMode: 'startswithignorecase',
+//                searchMode: 'startswithignorecase',
                 width: 430,
                 dropDownWidth: 650
             }));

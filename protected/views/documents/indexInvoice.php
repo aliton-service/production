@@ -33,7 +33,6 @@
             user_checkup: <?php echo json_encode($model->user_checkup); ?>,
             EmplChange: <?php echo json_encode($model->EmplChange); ?>,
         };
-            
         
         $("#ContrNumS7").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
         $("#JuridicalPerson").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 200 }));
@@ -169,7 +168,7 @@
     <div class="al-row-column">Тип контракта:</div><div class="al-row-column"><input readonly id="crtp_name" type="text"></div>
     <div class="al-row-column">Договор №:</div><div class="al-row-column"><input readonly id="DocNumber" type="text"></div>
     <div class="al-row-column">Дата: </div><div class="al-row-column"><div id="DocDate"></div></div>
-    <div class="al-row-column">Оплата:</div><div class="al-row-column"><input readonly id="PaymentTypeName" type="text"></div>
+    <div class="al-row-column">Вид оплаты:</div><div class="al-row-column"><input readonly id="PaymentTypeName" type="text"></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
