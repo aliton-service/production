@@ -129,7 +129,7 @@
     }
     
     .jqx-widget, .jqx-widget-content, .jqx-input {
-        font-size: 12 !important;
+        font-size: 11 !important;
     }
     
     
