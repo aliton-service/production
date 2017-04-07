@@ -175,10 +175,10 @@
                             enablebrowserselection: true,
                             columns:
                             [
-                                { text: 'Дата сообщения', datafield: 'date', width: 140, cellsformat: 'dd.MM.yyyy HH:mm'},
+                                { text: 'Дата сообщения', datafield: 'date', width: 160, cellsformat: 'dd.MM.yyyy HH:mm ddd'},
                                 { text: 'Администрирующий', datafield: 'EmployeeName', width: 160 },
-                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 130, cellsformat: 'dd.MM.yyyy' },
-                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 100, cellsformat: 'dd.MM.yyyy HH:mm' },
+                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 130, cellsformat: 'dd.MM.yyyy ddd' },
+                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 130, cellsformat: 'dd.MM.yyyy HH:mm ddd' },
                                 { text: 'Действие', filtertype: 'range', datafield: 'report', width: 370 },
                                 { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 150 },
                                 { text: '№ Заявки', datafield: 'demand_id', width: 80},
