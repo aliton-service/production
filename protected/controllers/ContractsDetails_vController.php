@@ -28,7 +28,7 @@ class ContractsDetails_vController extends Controller
         return array(
 
             array('allow',
-                    'actions'=>array('Index'),
+                    'actions'=>array('Index', 'GetModel'),
                     'roles'=>array('ViewContractsDetails_v'),
                 ),
             array('allow',
@@ -143,6 +143,17 @@ class ContractsDetails_vController extends Controller
         if(!is_null($csdt_id)){
             $model->delete();
         }
+    }
+    
+    public function actionGetModel()
+    {
+        $model = array();
+        if (isset($_POST['csdt_id'])) {
+            $model = new ContractsDetails_v();
+            $model->getModelPk($_POST['csdt_id']);
+        }
+        
+        echo json_encode($model);
     }
 
 

@@ -97,7 +97,8 @@
                     if (Res == '1' || Res == 1) {
                         $('#CDetailsEditDialog').jqxWindow('close');
                         $("#CDetailsGrid").jqxGrid('updatebounddata');
-                        var summaryData = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
+                        location.reload(true);
+//                        var summaryData = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
 //                        $("#GridSum").jqxNumberInput('val', summaryData.sum);
                     } else {
                         $('#CDetailsBodyDialog').html(Res);
@@ -155,6 +156,7 @@
            
         $("#DelContractsDetails").on('click', function ()
         {
+            if(CurrentRowData != null)
             $.ajax({
                 type: "POST",
                 url: "/index.php?r=ContractsDetails_v/Delete",
@@ -162,7 +164,7 @@
                 success: function(){
                     $("#CDetailsGrid").jqxGrid('updatebounddata');
                     $("#CDetailsGrid").jqxGrid('selectrow', 0);
-                    var summaryData4 = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
+//                    var summaryData4 = $("#CDetailsGrid").jqxGrid('getcolumnaggregateddata', 'sum', ['sum']);
 //                    $("#GridSum").jqxNumberInput('val', summaryData4.sum);
                 }
             });
