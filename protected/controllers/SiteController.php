@@ -25,6 +25,12 @@ class SiteController extends Controller
 		);
 	}
 
+        public function actionDesign() {
+            $this->layout = '//layouts/main4';
+            $this->title = 'Дизайн';
+            $this->render('design');
+        }
+        
 	public function actionIndex()
 	{
             /* В зависимости от роли, открываем по умолчанию */
