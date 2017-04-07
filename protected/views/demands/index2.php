@@ -151,6 +151,7 @@
                 height: 'calc(100% - 12px)',
                 width: '100%',
                 showfilterrow: false,
+                pagermode: 'pagermode',
                 //rowsheight: 20,
                 //columnsheight: 25,
                 autoshowfiltericon: true,
