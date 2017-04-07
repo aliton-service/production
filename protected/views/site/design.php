@@ -137,7 +137,7 @@
         color: #E000E0;
     }
     
-    .backlight_red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .backlight_pink:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+    .backlight_red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .backlight_red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
         color: #FF0000;
     }
         
