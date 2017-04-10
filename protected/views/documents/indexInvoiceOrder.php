@@ -17,6 +17,7 @@
             date_checkup: Aliton.DateConvertToJs(<?php echo json_encode($model->date_checkup); ?>),
             user_checkup: <?php echo json_encode($model->user_checkup); ?>,
             EmplChange: <?php echo json_encode($model->EmplChange); ?>,
+            dmnd_id: <?php echo json_encode($model->dmnd_id); ?>,
         };
         
         $("#ContrNumS").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
@@ -31,7 +32,13 @@
         $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)' }));
         $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 83}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
+        $("#dmnd_id6").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
+        $("#btnDemandView2").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 90}));
         
+        $("#btnDemandView2").on('click', function() {
+            if (CurrentContract.dmnd_id != null)
+                Aliton.ViewDemand(CurrentContract.dmnd_id, true);
+        });
         
         if (CurrentContract.ContrNumS != '') $("#ContrNumS").jqxInput('val', CurrentContract.ContrNumS);
         if (CurrentContract.WorkText != '') $("#WorkText").jqxInput('val', CurrentContract.WorkText);
@@ -43,7 +50,7 @@
         if (CurrentContract.FIO != '') $("#FIO").jqxInput('val', CurrentContract.FIO);
         if (CurrentContract.Note != '') $("#Note").jqxTextArea('val', CurrentContract.Note);
         if (CurrentContract.user_checkup != '') $("#user_checkup").jqxInput('val', CurrentContract.user_checkup);
-        
+        if (CurrentContract.dmnd_id != '') $("#dmnd_id6").jqxInput('val', CurrentContract.dmnd_id);
         
         $("#EditContract").jqxButton($.extend(true, {}, ButtonDefaultSettings, { imgSrc: '/images/4.png' }));
         $("#PrintContract").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -125,6 +132,8 @@
 </div>
 <div class="al-row">
     <div class="al-row-column">Наименование вида работ: <input readonly id="WorkText" type="text"></div>
+    <div class="al-row-column" style="margin-right: 3px;">Заявка: <input readonly id="dmnd_id6" type="text"></div>
+    <div class="al-row-column"><input type="button" value="Заявка" id='btnDemandView2' /></div>
     <div style="clear: both"></div>
 </div>
 <div class="al-row">
