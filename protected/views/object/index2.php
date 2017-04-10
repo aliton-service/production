@@ -54,11 +54,13 @@
                 Aliton.SelectRowByIdVirtual('Object_id', CurrentRowObjectsData.Object_id, '#ObjectsGrid', false);
             else
                 Aliton.SelectRowByIdVirtual('Object_id', null, '#ObjectsGrid', false);
+            
+            
         });
         
         $("#ObjectsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, GridsSettings['ObjectsGrid'], {
-                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesizeoptions: ['10', '200', '500', '1000', '50000'],
                 pagesize: 200,
                 showfilterrow: true,
                 virtualmode: false,
@@ -72,6 +74,7 @@
                     $.extend(true, State.columns, Columns);
                     $('#ObjectsGrid').jqxGrid('loadstate', State);    
                     $('#ObjectsGrid').jqxGrid({source: DemDataAdapter});
+                    
 
                 },
                 columns: [
@@ -126,7 +129,15 @@
             }
         });
         
+        var Admin = <?php echo json_encode(Yii::app()->user->checkAccess('Administrator')); ?>;
+        
         $("#btnAddObject").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 140}));
+        $("#btnExportObjects").jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: !Admin}));
+        
+        $('#btnExportObjects').on('click', function() {
+            $("#ObjectsGrid").jqxGrid('exportdata', 'xls', 'Объекты', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
+        });
+        
         $("#btnAddObject").on('click', function() {
             $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings,{width: 850, height: 750, position: 'center'}));
             $.ajax({
@@ -387,6 +398,7 @@
     <div class="row-column"><input type="button" value="Просмотр заявок" id='ViewDemands' /></div>
     <div class="row-column"><input type="button" value="Обновить" id='ReloadObjects' /></div>
     <div class="row-column"><input type="button" value="Новый объект" id='btnAddObject' /></div>
+    <div class="row-column"><input type="button" value="Экспорт" id='btnExportObjects' /></div>
     <div class="row-column" style="float: right"><input type="button" value="Удалить объект" id='btnDelObject' /></div>
 </div>
 
