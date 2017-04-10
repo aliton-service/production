@@ -133,6 +133,25 @@
                     break;
                 }
             }
+            
+            
+            
+//            var e = $("#pagerDemandsGrid").children();
+            
+//            console.log(e);
+            
+//            if ($("#myElemPager").length>0) {
+//                var PageInfo =  $("#DemandsGrid").jqxGrid("getpaginginformation");
+//                var datainformation = $('#DemandsGrid').jqxGrid('getdatainformation');
+//                var rowscount = datainformation.rowscount;
+//                //var Str = PageInfo.pagenum ;
+//                //var I = Str.indexOf('-');
+//                //console.log(Str);
+//                $("#myElemPager").html("Запись: " + (event.args.rowindex+1) + " из " + rowscount);
+//            }
+//            
+            
+            
         });
 
         $("#DemandsGrid").on('bindingcomplete', function(){
@@ -167,6 +186,13 @@
                 virtualmode: true,
                 columns:
                     [
+                        {text: '#', sortable: false, filterable: false, editable: false,
+                            groupable: false, draggable: false, resizable: false,
+                            datafield: '', columntype: 'number', width: 40,
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                            }
+                        },
                         { text: 'Зарегистрировал', datafield: 'UCreateName', width: 150, cellsrenderer: cellsrenderer },
                         { text: 'Номер', datafield: 'Demand_id', width: 75, cellsrenderer: cellsrenderer },
                         { text: 'Адрес', datafield: 'Address', width: 250, cellsrenderer: cellsrenderer },
@@ -227,6 +253,13 @@
         });
         
         $('#Tabs').css({display: 'block'});
+        
+        
+//        $("#pagerDemandsGrid").find("div:contains('of')").each(function(i, elem) {
+//                if ($(this).html().length <= 50)
+//                    $(this).attr('id', 'myElemPager');
+//                
+//            });
     });
     
     
