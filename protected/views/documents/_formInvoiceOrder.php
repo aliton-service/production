@@ -17,6 +17,7 @@
             Note: <?php echo json_encode($model->Note); ?>,
             DialogId: <?php echo json_encode($DialogId); ?>,
             BodyDialogId: <?php echo json_encode($BodyDialogId); ?>,
+            dmnd_id: '<?php echo $model->dmnd_id; ?>',
         };
 
         if (Document.DialogId == '' || Document.DialogId == null) {
@@ -37,6 +38,7 @@
 
         $("#ContrNumS6").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130, value: "-Авто-" }));
         $("#ContrDateS6").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 102}));
+        $("#dmnd_id5").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 112 }));
         $("#JuridicalPerson6").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataJuridical, displayMember: "JuridicalPerson", valueMember: "Jrdc_Id", width: 200, autoDropDownHeight: true }));
         
         $("#WorkText6").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
@@ -89,6 +91,7 @@
         });
         
         if (Document.ContrNumS != '') $("#ContrNumS6").jqxInput('val', Document.ContrNumS);
+        if (Document.dmnd_id != '') $("#dmnd_id5").jqxInput('val', Document.dmnd_id);
         if (Document.JuridicalPerson != '') $("#JuridicalPerson6").jqxComboBox('val', Document.JuridicalPerson);
         if (Document.ContrDateS !== null) $("#ContrDateS6").jqxDateTimeInput('val', Document.ContrDateS);
         if (Document.WorkText != '') $("#WorkText6").jqxInput('val', Document.WorkText);
@@ -122,6 +125,7 @@
 <div class="row">
     <div class="row-column">Номер: <input id="ContrNumS6" name="Documents[ContrNumS]" type="text"></div>
     <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS6"  name="Documents[ContrDateS]" type="text"></div></div>
+    <div class="row-column">Заявка: <input id="dmnd_id5" name="Documents[dmnd_id]" type="text"><?php echo $form->error($model, 'dmnd_id'); ?></div>
 </div>
 
 <div class="row">

@@ -60,6 +60,7 @@
         $("#date_checkup").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CurrentContract.date_checkup, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 100, formatString: 'dd.MM.yyyy'}));
         $("#user_checkup").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
         $("#btnDemandView").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 60}));
+        
         $("#btnDemandView").on('click', function() {
             if (CurrentContract.dmnd_id != null)
                 Aliton.ViewDemand(CurrentContract.dmnd_id, true);
