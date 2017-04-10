@@ -1212,7 +1212,7 @@
                     data: {
                         Params: {
                             docm_id: WHDocuments.Docm_id,
-                            prty_id: 1,
+                            prty_id: 8,
                             objc_id: WHDocuments.Objc_id,
                             dmnd_id: D,
                             Addr: WHDocuments.Address
