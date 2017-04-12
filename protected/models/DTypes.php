@@ -22,7 +22,7 @@ class DTypes extends MainFormModel
                         d.Sort";
         $From = "\nFrom DTypes d left join DemandTypes dt on (d.DemandType_id = dt.DemandType_id)";
         $Where = "\nWhere dt.DemandType_id <> 90";
-        $Order = "\nOrder by dt.DemandType";
+        $Order = "\nOrder by d.Sort";
 
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
