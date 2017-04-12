@@ -4,7 +4,7 @@
         
         var Document = {
             ContrS_id: '<?php echo $model->ContrS_id; ?>',
-            ContrNumS: '<?php echo $model->ContrNumS; ?>',
+            ContrNumS: <?php echo json_encode($model->ContrNumS); ?>,
             ObjectGr_id: '<?php echo $model->ObjectGr_id; ?>',
             JuridicalPerson: '<?php echo $model->Jrdc_id; ?>',
             ContrDateS: Aliton.DateConvertToJs('<?php echo $model->ContrDateS; ?>'),
@@ -162,7 +162,7 @@
 <input type="hidden" name="Documents[DocType_id]" value="<?php echo $model->DocType_id; ?>">
 <input type="hidden" name="Documents[Calc_id]" value="<?php echo $model->Calc_id; ?>">
 
-<div class="row">
+<div class="row" style="margin: 0;">
     <div class="row-column">Номер: <input id="ContrNumS4" name="Documents[ContrNumS]" type="text"><?php echo $form->error($model, 'ContrNumS'); ?></div>
     <div class="row-column" style="padding-top: 3px;">Дата: </div><div class="row-column"><div id="ContrDateS4"  name="Documents[ContrDateS]" type="text"></div><?php echo $form->error($model, 'ContrDateS'); ?></div>
     <div class="row-column" style="padding-top: 3px;">Дата выполнения работ по акту: </div><div class="row-column"><div id="date_doc4" name="Documents[date_doc]" type="text"></div><?php echo $form->error($model, 'date_doc'); ?></div>
