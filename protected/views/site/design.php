@@ -132,6 +132,9 @@
         font-size: 11 !important;
     }
     
+    .DemandsGrid {
+        font-size: 16 !important;
+    }
     
     .backlight_pink:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .backlight_pink:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
         color: #E000E0;
