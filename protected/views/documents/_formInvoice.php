@@ -120,7 +120,7 @@
             });
         });
         
-        if (Document.ContrNumS != '') $("#ContrNumS4").jqxInput('val', Document.ContrNumS);
+        if (Document.ContrNumS != null) $("#ContrNumS4").jqxInput('val', Document.ContrNumS);
         if (Document.ContrDateS !== null) $("#ContrDateS4").jqxDateTimeInput('val', Document.ContrDateS);
         if (Document.JuridicalPerson != '') $("#JuridicalPerson4").jqxComboBox('val', Document.JuridicalPerson);
         if (Document.date_doc != '') $("#date_doc4").jqxDateTimeInput('val', Document.date_doc);
