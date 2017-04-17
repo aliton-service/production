@@ -67,6 +67,8 @@
                 width: '100%',
                 height: 'calc(100% - 12px)',
                 virtualmode: !LoadAllObjects,
+                autoshowfiltericon: true,
+                showfiltermenuitems: false,
                 //source: DemDataAdapter,
                 ready: function() {
                     var State = $('#ObjectsGrid').jqxGrid('getstate');
