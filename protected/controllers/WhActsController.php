@@ -127,7 +127,7 @@ class WhActsController extends Controller
             select
                 c.ContrNumS
             from ContractsS c
-            where c.DocType_id = 8 and c.DelDate is null and c.calc_id = " . $model->calc_id;
+            where (c.DocType_id = 8 or c.DocType_id = 3) and c.DelDate is null and c.calc_id = " . $model->calc_id;
         $Res = $query->QueryRow();
         $model->bill = $Res['ContrNumS'];
         
