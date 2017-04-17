@@ -190,11 +190,30 @@
         </div>
         <div style="overflow: hidden;">
             <div style="padding: 10px; height: calc(100% - 20px)">
-                
+                <div style="height: 400px; width: 600px; background-color: #f0f0f0">
+                    <span id="span1" class="al-text">Проверка шрифта АБВГДабвгд</span>
+                    <br><span id="span1" class="al-text">Проверка шрифта АБВГДабвгд</span>
+                    <br><span id="span1" class="al-text">Проверка шрифта АБВГДабвгд</span>
+                    <br><span id="span1" class="al-text" style="font-size: 14px">Проверка шрифта АБВГДабвгд</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    @font-face {
+        font-family: mssanserif; /* Имя шрифта */
+        src: url(fonts/MSSansSerif.ttf); /* Путь к файлу со шрифтом */
+    }
+    .al-text {
+        *font-family: mssanserif;
+        color: #000;
+        font-weight: bold;
+        font-size: 14pt;
+        font-family: Batang, sans-serif;
+    }
+    </style>
 
 <div id="Test1Dialog" style="display: none;">
     <div id="Test1DialogHeader">
