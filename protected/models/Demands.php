@@ -121,6 +121,7 @@ class Demands extends MainFormModel
         public $DEquip_id;
         public $DMalfunction_id;
         public $DPrior_id;
+        public $LphName;
         
         
 	function __construct($scenario = '') {
@@ -148,8 +149,14 @@ class Demands extends MainFormModel
                             when d.StatusOP = 2 then 'Теплый'
                             when d.StatusOP = 3 then 'Горячий'
                             end as StatusOPName,
-                        dbo.get_overday(d.Deadline, isnull(d.DateExec, getdate()), d.DemandEt_id) + isnull(d.overday, 0) as FullOverDay";
-        $from = "\nFrom FullDemands d with (nolock) ";
+                        dbo.get_overday(d.Deadline, isnull(d.DateExec, getdate()), d.DemandEt_id) + isnull(d.overday, 0) as FullOverDay,
+                        Case when l.LPh_id = 1 then 'Юр.лицо'
+                            when l.LPh_id = 2 then 'Физ.лицо'
+                            end AS LphName";
+        $from = "\nFrom FullDemands d with (nolock) 
+                    left join ObjectsGroup og on (d.ObjectGr_id = og.ObjectGr_id)
+                    left join PropForms AS p on (og.PropForm_id = p.Form_id)
+                    left join Lph AS l ON ISNULL(p.lph_id, 1) = l.LPh_id";
 				
 	$this->Query->setSelect($select);
         $this->Query->setFrom($from);

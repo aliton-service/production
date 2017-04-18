@@ -48,7 +48,10 @@
             clrs_id: <?php echo json_encode($model->clrs_id); ?>,
             StatusOP: <?php echo json_encode($model->StatusOP); ?>,
             Initiator_id: <?php echo json_encode($model->Initiator_id); ?>,
+            LphName: <?php echo json_encode($model->LphName); ?>,
         };
+//        console.log(Demand.LphName);
+        
         // Инициализация источников данных
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
         var CurrentUser = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
@@ -819,6 +822,7 @@
         <div class="row-column"><input readonly id="edNumber" type="text"/></div>
         <div class="row-column">Адрес</div>
         <div class="row-column"><input readonly id="edAddr" type="text"/></div>
+        <div class="row-column"><b><?php echo $model->LphName; ?>,</b></div>
         <div class="row-column"><b>Статус ОП: <?php echo $model->StatusOPName; ?></b></div>
     </div>
     <div style="clear: both;"></div>
