@@ -958,7 +958,7 @@ return array_merge(
             ),
         ),
         
-        /* Ведущий инженер */
+        /* Ведущий инженер - 15 */
         'LeadEngineer' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Руководитель СЦ',
@@ -990,6 +990,7 @@ return array_merge(
                 'ManagerWHBuhActs',
                 'ManagerEventOffers',
                 'ManagerOfferDemands',
+                'ManagerEquips',
                 
                 /* Отчеты */
                 'DemandsReportAll',
