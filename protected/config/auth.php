@@ -991,6 +991,7 @@ return array_merge(
                 'ManagerEventOffers',
                 'ManagerOfferDemands',
                 'ManagerEquips',
+                'ManagerEqipGroups',
                 
                 /* Отчеты */
                 'DemandsReportAll',
@@ -1087,7 +1088,7 @@ return array_merge(
             ),
         ),
         
-        /* Менеджер по прождажам - 21 */
+        /* Менеджер по продажам - 21 */
         'SalesManager' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Менеджер по прождажам',
@@ -1123,6 +1124,7 @@ return array_merge(
                 'LogDeliveryDemands',
                 'WhActsView',
                 'ManagerWHBuhActs',
+                'ManagerPropForms',
                 
                 'ManagerSalesDepClients',
                 'ManagerInspectionActs',
