@@ -174,7 +174,7 @@ class DemandsController extends Controller
             ));
 	}
 
-	public function actionCreate($ToMaster = false, $OtherExecutor = false, $ExecutorId = null) {
+	public function actionCreate($ToMaster = false, $ExecutorId = null) {
             $model = new Demands;
             
             $ObjectResult = array(
@@ -199,7 +199,7 @@ class DemandsController extends Controller
                     $model->validate();
                 }
 
-                if ($OtherExecutor == 'true' && !is_null($ExecutorId)) {
+                if (!is_null($ExecutorId)) {
                     $model->ExecOther = $ExecutorId;
                     $model->validate();
                 }
@@ -335,7 +335,7 @@ class DemandsController extends Controller
 		);
         }
 
-	public function actionUpdate($id, $Exec = false, $ToMaster = false, $OtherExecutor = false, $ExecutorId = null) {
+	public function actionUpdate($id, $Exec = false, $ToMaster = false, $ExecutorId = null) {
 		$this->title = 'Редактирование заявки №' . $id;
                 $this->setPageTitle('Редактирование заявки');
                 $ObjectResult = array(
@@ -374,7 +374,7 @@ class DemandsController extends Controller
                         $model->validate();
                     }
                     
-                    if ($OtherExecutor == 'true' && !is_null($ExecutorId)) {
+                    if (!is_null($ExecutorId)) {
                         $model->ExecOther = $ExecutorId;
                         $model->validate();
                     }
@@ -383,8 +383,6 @@ class DemandsController extends Controller
                         $model->update();
                         $ObjectResult['result'] = 1;
                         $ObjectResult['id'] = $model->Demand_id;
-//                        $ObjectResult['html'] = $ExecutorId;
-//                        $ObjectResult['OtherExecutor'] = $OtherExecutor;
                         echo json_encode($ObjectResult);
                         return;
                     } else {

@@ -88,7 +88,6 @@
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Тариф обслуживания", value: Demand.ServiceType}));
         $("#chbDateMaster").jqxCheckBox({ width: 160, height: 25 });
-        $("#chbOtherExecutor").jqxCheckBox({ width: 180, height: 25 });
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '180', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypesRecords, width: '300', height: '25px', displayMember: "DemandType", valueMember: "DType_id"});
         $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypesRecords, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
@@ -123,7 +122,7 @@
             if (Demand.Rslt_id != '') $("#cmbDemandResult").jqxComboBox('val', Demand.Rslt_id);
         }
         // Проставляем знаячение
-        if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
+//        if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
 
         
         // Инициализация событий
@@ -255,13 +254,11 @@
             if (State)
                 url = <?php echo json_encode(Yii::app()->createUrl('Demands/Create')) ?> 
                     + '&ToMaster=' + $("#chbDateMaster").jqxCheckBox('val') 
-                    + '&OtherExecutor=' + $("#chbOtherExecutor").jqxCheckBox('val') 
                     + '&ExecutorId=' + $("#cmbExecutor").jqxComboBox('val');
             else
                 url = <?php echo json_encode(Yii::app()->createUrl('Demands/Update')) ?> 
                     + '&id=' + $("#edDemand_id").val() 
                     + '&ToMaster=' + $("#chbDateMaster").jqxCheckBox('val') 
-                    + '&OtherExecutor=' + $("#chbOtherExecutor").jqxCheckBox('val') 
                     + '&ExecutorId=' + $("#cmbExecutor").jqxComboBox('val');
             $.ajax({
                 url: url,
@@ -327,7 +324,7 @@
 <div class="row" style="margin-top: 7px;">
     <div class="row-column" style="width: 210px;">Дата и время заявки</div>
     <div class="row-column" style="width: 200px;">Тариф обслуживания</div>
-    <div class="row-column"><div id='chbOtherExecutor'>Другой исполнитель:</div></div>
+    <div class="row-column" style="width: 200px;">Другой исполнитель:</div>
     <div class="row-column"><div id='chbDateMaster'>Передать мастеру</div></div>
 </div>
 <div class="row" style="margin-top: 0px;">
