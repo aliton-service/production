@@ -324,7 +324,7 @@
 <div class="row" style="margin-top: 7px;">
     <div class="row-column" style="width: 210px;">Дата и время заявки</div>
     <div class="row-column" style="width: 200px;">Тариф обслуживания</div>
-    <div class="row-column" style="width: 200px;">Другой исполнитель:</div>
+    <div class="row-column" style="width: 200px;">Исполнитель:</div>
     <div class="row-column"><div id='chbDateMaster'>Передать мастеру</div></div>
 </div>
 <div class="row" style="margin-top: 0px;">
