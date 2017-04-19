@@ -122,7 +122,7 @@
             if (Demand.Rslt_id != '') $("#cmbDemandResult").jqxComboBox('val', Demand.Rslt_id);
         }
         // Проставляем знаячение
-//        if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
+        if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
 
         
         // Инициализация событий
