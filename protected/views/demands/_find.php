@@ -4,6 +4,7 @@
         var Params = {
             Demand_id: <?php echo json_encode($Demand_id); ?>,
             Object_id: <?php echo json_encode($Object_id); ?>,
+            ObjectGr_id: <?php echo json_encode($ObjectGr_id); ?>,
         };
         var CurrentRowDataAll;
         
@@ -27,6 +28,7 @@
         $("#edFindDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', value: DateEnd, formatString: 'dd.MM.yyyy'}));
         $("#edFindDemNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100, disabled: false}));
         $("#edFindDemNoExec").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 200, checked: true}));
+        $("#edFindObjectGrDem").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: 240, checked: false}));
         $("#chbPeriod").jqxRadioButton($.extend(true, {}, RadioButtonDefaultSettings, {width: 110, groupName: 'group1', checked: true}));
         
         $("#chbPeriodAll").jqxRadioButton($.extend(true, {}, RadioButtonDefaultSettings, {width: 130, groupName: 'group1'}));
@@ -79,6 +81,11 @@
                 var FilterExec = ExecFilterGroup.createfilter('datefilter', Date(), 'NULL');
                 ExecFilterGroup.addfilter(1, FilterExec);
             }
+            var ObjectGrFilterGroup = new $.jqx.filter();
+            if ($("#edFindObjectGrDem").jqxCheckBox('checked')) {
+                var FilterObjectGr = ObjectGrFilterGroup.createfilter('numericfilter', Params.ObjectGr_id, 'EQUAL');
+                ObjectGrFilterGroup.addfilter(1, FilterObjectGr);
+            }
             var DateFilterGroup = new $.jqx.filter();
             if ($("#edFindDateStart").val() != '') {
                 var FilterDateStart = DateFilterGroup.createfilter('datefilter', $("#edFindDateStart").val(), 'DATE_GREATER_THAN_OR_EQUAL');   
@@ -101,6 +108,10 @@
             $('#FindDemandsGrid').jqxGrid('removefilter', 'DateExec', false);
             if ($("#edFindDemNoExec").jqxCheckBox('checked')) $("#FindDemandsGrid").jqxGrid('addfilter', 'DateExec', ExecFilterGroup);
             
+            $('#FindDemandsGrid').jqxGrid('removefilter', 'ObjectGr_id', false);
+            if ($("#edFindObjectGrDem").jqxCheckBox('checked') && Params.ObjectGr_id != 0) {
+                $("#FindDemandsGrid").jqxGrid('addfilter', 'ObjectGr_id', ObjectGrFilterGroup);
+            }
             $('#FindDemandsGrid').jqxGrid('removefilter', 'DateReg', false);
             if (($("#edFindDateStart").val() != '' || $("#edFindDateEnd").val() != '') && (!$("#chbPeriodAll").jqxRadioButton('checked'))) $("#FindDemandsGrid").jqxGrid('addfilter', 'DateReg', DateFilterGroup);
             
@@ -159,6 +170,7 @@
                         { text: 'Тип заявки', columngroup: 'Documents', datafield: 'DemandType', width: 150 },
                         { text: 'Неисправность', columngroup: 'Documents', datafield: 'Malfunction', width: 150 },
                         { text: 'Объект', columngroup: 'Documents', datafield: 'Object_id', width: 150, hidden: true },
+                        { text: 'ObjectGr_id', columngroup: 'Documents', datafield: 'ObjectGr_id', width: 150, hidden: true },
                     ],
                 
                 }));
@@ -177,13 +189,13 @@
         </div>
     </div>
     <div class="row-column" style="float: right">
-        <div>Выберите период за который будут отображены заявки: </div>
-        <div style="margin-top: 10px;">
+        <div id="edFindObjectGrDem">Только по этому объекту</div>
+        <div style="height: 35px; margin-top: 2px; padding: 4px 4px 0; border: 1px solid #ccc; border-radius: 2px;">
             <div class="row-column"><div id="chbPeriod">За период с</div></div>
             <div class="row-column"><div id="edFindDateStart"></div></div>
             <div class="row-column">по</div>
             <div class="row-column"><div id="edFindDateEnd"></div></div>
-            <div class="row-column"><div id="chbPeriodAll">Неограничено</div></div>
+            <div class="row-column" style="margin-left: 15px;"><div id="chbPeriodAll">Неограничено</div></div>
         </div>
     </div>
 </div>

@@ -780,6 +780,7 @@ Order by [Address]";
     public function attributeFilters()
     {
         return array(
+            'ObjectGr_id' => 'd.ObjectGr_id',
             'MasterName' => 'd.Master',
             'DemandType' => 'd.DemandType_id',
             'ExecutorsName' => 'd.OtherName',
