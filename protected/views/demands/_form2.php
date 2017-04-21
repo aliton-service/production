@@ -44,13 +44,20 @@
         var DataDelayReasons;
         var DataDemandResults;
         var DataEmployees;
+        //var DataNewDemandPriors;
+        var ListModels;
+        
+        if (StateInsert)
+            ListModels = ['DSystemsNew', 'DEquipsNew', 'DMalfunctionsNew', 'DPriorsNew', 'DTypesNew', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults', 'ListEmployees'];
+        else
+            ListModels = ['DSystems', 'DEquips', 'DMalfunctions', 'DPriors', 'DTypes', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults', 'ListEmployees'];
         
         $.ajax({
             url: <?php echo json_encode(Yii::app()->createUrl('AjaxData/DataJQXSimpleList'))?>,
             type: 'POST',
             async: false,
             data: {
-                Models: ['DSystems', 'DEquips', 'DMalfunctions', 'DPriors', 'DTypes', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults', 'ListEmployees']
+                Models: ListModels
             },
             success: function(Res) {
                 Res = JSON.parse(Res);
@@ -65,6 +72,7 @@
                 DataDelayReasons = Res[8].Data;
                 DataDemandResults = Res[9].Data;
                 DataEmployees = Res[10].Data;
+                
             }
         });
 
@@ -212,6 +220,8 @@
             }
         });
         
+        
+        
         if (Demand.DType_id != '') $("#cmbDemandType").jqxComboBox('val', Demand.DType_id);
         if (Demand.DSystem_id !== '') { $("#cmbSystemType").jqxComboBox('val', Demand.DSystem_id); } else { $("#cmbSystemType").jqxComboBox({disabled: true}); }
         if (Demand.DEquip_id != '') $("#cmbEquipType").jqxComboBox('val', Demand.DEquip_id); else $("#cmbEquipType").jqxComboBox({disabled: false});
@@ -287,6 +297,9 @@
         $("#btnClient").on('click', function(){
             Aliton.ViewClient(Demand.ObjectGr_id);
         });
+        
+        if (StateInsert)
+            $("#cmbDemandType").jqxComboBox('selectIndex', 0);
     });
 </script>    
 
