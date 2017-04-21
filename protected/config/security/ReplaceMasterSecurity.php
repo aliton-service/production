@@ -1,7 +1,7 @@
 <?php
 return array(
 
-	/** Роли для таблицы ReplaceMaster  **/
+	/** ReplaceMaster  **/
 	'ManagerReplaceMaster' => array(
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'ManagerReplaceMaster',

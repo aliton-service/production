@@ -1646,7 +1646,7 @@
         <div style="clear: both"></div>
         <div style="padding: 2px"><input type="button" value="Бухгалтерский акт" id='btnAddDocBuhAct'/></div>
         <div style="clear: both"></div>
-        <div style="padding: 2px"><input type="button" value="Счет заказ" id='btnAddDocContract3'/></div>
+        <div style="padding: 2px"><input type="button" value="Счет-заказ" id='btnAddDocContract3'/></div>
     </div>
     <div class="row-column" style="margin: 0 0px 0 5px"><input type="button" value="Заявка" id='btnVDemand'/></div>
     <div>

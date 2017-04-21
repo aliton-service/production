@@ -59,7 +59,7 @@ $this->widget('application.extensions.alitonwidgets.button.albutton', array(
 ));
 
 ?>
-</div">
+</div>
 <form id="eqip-edit" class="hidden">
 	<input type="text" id="name-eqiptree">
 	<input type="submit" value="ok">

@@ -341,7 +341,7 @@
     <div class="row-column" style="width: 210px;">Дата и время заявки</div>
     <div class="row-column" style="width: 200px;">Тариф обслуживания</div>
     <div class="row-column"><div id='chbOtherExecutor'>Другой исполнитель:</div></div>
-    <div class="row-column"><div id='chbDateMaster'>Передать мастеру</div></div>
+    <div class="row-column" style="margin-left: 30px;"><div id='chbDateMaster'>Передать мастеру</div></div>
 </div>
 <div class="row" style="margin-top: 0px;">
     <div class="row-column"><div id='edDate' name="Demands[DateReg]"></div></div>

@@ -53,26 +53,26 @@
         ));
 ?>        
 
-<div class="al-row">
+<div class="al-row" style="height: 35px;">
     <div class="al-row-column">Направление:</div>
     <div class="al-row-column"><div id='cmbEventType' name="Parameters[p_evtp]"></div></div>
 </div>
-<div class="al-row">
+<div class="al-row" style="height: 35px;">
     <div class="al-row-column">Исполнитель:</div>
     <div class="al-row-column"><div id='cmbExecutor' name="Parameters[p_empl]"></div></div>
 </div>
-<div class="al-row">
+<div class="al-row" style="height: 35px;">
     <div class="al-row-column">Участок:</div>
     <div class="al-row-column"><div id='cmbTerrit' name="Parameters[p_territ]"></div></div>
 </div>
-<div class="al-row">
+<div class="al-row" style="height: 35px;">
     <div class="al-row-column">ВИП:</div>
     <div class="al-row-column"><div id='cmbVIP'></div></div>
     <input type="hidden" id="edSum1" name="Parameters[p_sum1]" />
     <input type="hidden" id="edSum2" name="Parameters[p_sum2]" />
 </div>
     
-<div class="al-row">
+<div class="al-row" style="height: 35px;">
     <div class="al-row-column">Период с</div>
     <div class="al-row-column"><div id='DateStart' name="Parameters[p_datestart]"></div></div>
     <div class="al-row-column">по</div>
