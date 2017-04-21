@@ -69,6 +69,7 @@
                 async: false,
                 data: {
                     Demand_id: CostCalc.Demand_id,
+                    ObjectGr_id: CostCalc.ObjectGr_id,
                 },
                 success: function(Res) {
                     Res = JSON.parse(Res);
