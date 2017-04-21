@@ -189,7 +189,7 @@
         </div>
     </div>
     <div class="row-column" style="float: right">
-        <div id="edFindObjectGrDem">Только по этому объекту</div>
+        <div id="edFindObjectGrDem">Только по этому адресу</div>
         <div style="height: 35px; margin-top: 2px; padding: 4px 4px 0; border: 1px solid #ccc; border-radius: 2px;">
             <div class="row-column"><div id="chbPeriod">За период с</div></div>
             <div class="row-column"><div id="edFindDateStart"></div></div>
