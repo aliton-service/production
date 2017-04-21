@@ -47,9 +47,9 @@
         //var DataNewDemandPriors;
         var ListModels;
         
-        if (StateInsert)
-            ListModels = ['DSystemsNew', 'DEquipsNew', 'DMalfunctionsNew', 'DPriorsNew', 'DTypesNew', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults', 'ListEmployees'];
-        else
+//        if (StateInsert)
+//            ListModels = ['DSystemsNew', 'DEquipsNew', 'DMalfunctionsNew', 'DPriorsNew', 'DTypesNew', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults', 'ListEmployees'];
+//        else
             ListModels = ['DSystems', 'DEquips', 'DMalfunctions', 'DPriors', 'DTypes', 'DelayedClosureReasons', 'TransferReasons', 'CloseReasons', 'DelayReasons', 'DemandResults', 'ListEmployees'];
         
         $.ajax({
