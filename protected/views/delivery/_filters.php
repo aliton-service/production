@@ -16,10 +16,11 @@
         
         // Инициализируем контролы фильтров
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр исполнитель
-        $("#edNoAccept").jqxCheckBox({ width: 160, height: 25, checked: false}); // Фильтр непринятые
-        $("#edNoExec").jqxCheckBox({ width: 160, height: 25, checked: true}); // Фильтр невыполненные
-        $("#edExec").jqxCheckBox({ width: 160, height: 25, checked: false}); // Фильтр выполненные
-        $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {height: 25, width: 200, decimalDigits: 0})); // Фильтр номер
+        $("#cmbUserSenderName").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр подал
+        $("#edNoAccept").jqxCheckBox({ width: 200, height: 25, checked: false}); // Фильтр непринятые
+        $("#edNoExec").jqxCheckBox({ width: 200, height: 25, checked: true}); // Фильтр невыполненные
+        $("#edExec").jqxCheckBox({ width: 200, height: 25, checked: false}); // Фильтр выполненные
+        $("#edNumber").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {height: 25, width: 100, decimalDigits: 0})); // Фильтр номер
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null}));
         $("#edDeliveryMan").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр исполнитель
         $("#edAddress").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 'calc(100% - 2px)'}));
@@ -39,6 +40,12 @@
             if ($("#cmbExecutor").val() != '') {
                 var FilterExecutor = ExecutorFilterGroup.createfilter('numericfilter', $("#cmbExecutor").val(), 'EQUAL');
                 ExecutorFilterGroup.addfilter(1, FilterExecutor);
+            }
+            
+            var UserSenderNameFilterGroup = new $.jqx.filter();
+            if ($("#cmbUserSenderName").val() != '') {
+                var FilterUserSenderName = UserSenderNameFilterGroup.createfilter('numericfilter', $("#cmbUserSenderName").val(), 'EQUAL');
+                UserSenderNameFilterGroup.addfilter(1, FilterUserSenderName);
             }
             
             var NotAcceptFilterGroup = new $.jqx.filter();
@@ -83,6 +90,9 @@
             $('#DeliveryDemandsGrid').jqxGrid('removefilter', 'MasterName', false);
             if ($("#cmbExecutor").val() != '') $("#DeliveryDemandsGrid").jqxGrid('addfilter', 'MasterName', ExecutorFilterGroup);
             
+            $('#DeliveryDemandsGrid').jqxGrid('removefilter', 'user_sender_name', false);
+            if ($("#cmbUserSenderName").val() != '') $("#DeliveryDemandsGrid").jqxGrid('addfilter', 'user_sender_name', UserSenderNameFilterGroup);
+            
             $('#DeliveryDemandsGrid').jqxGrid('removefilter', 'date_logist', false);
             if ($("#edNoAccept").val() != '') $("#DeliveryDemandsGrid").jqxGrid('addfilter', 'date_logist', NotAcceptFilterGroup);
             
@@ -108,18 +118,26 @@
     });
 </script>
 
-<div>Исполнитель</div>
+<div>Исполнитель:</div>
 <div><div id='cmbExecutor'></div></div>
+
 <div id='edNoAccept' style="color: white;">Непринятые заявки</div>
 <div id='edNoExec' style="color: white;">Невыполненные заявки</div>
 <div id='edExec' style="color: white;">Выполненные заявки</div>
-<div>Номер</div>
+
+<div style="margin-top: 3px;">Номер:</div>
 <div><div id="edNumber"></div></div>
-<div>Дата</div>
+
+<div style="margin-top: 3px;">Дата:</div>
 <div><div id="edDate"></div></div>
-<div>Курьер</div>
+
+<div style="margin-top: 3px;">Курьер:</div>
 <div><div id='edDeliveryMan'></div></div>
-<div>Адрес</div>
+
+<div style="margin-top: 3px;">Адрес:</div>
 <div><input type="text" id="edAddress"></div>
 
-<div style="margin-top: 4px;"><input type="button" value="Фильтр" id="edFiltering"/></div>
+<div style="margin-top: 3px;">Заявку подал:</div>
+<div><div id='cmbUserSenderName'></div></div>
+
+<div style="margin-top: 10px;"><input type="button" value="Фильтр" id="edFiltering"/></div>
