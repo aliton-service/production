@@ -716,6 +716,8 @@ return array_merge(
                 'FindTreb',
                 'FindWHDoc1',
                 'AdminEvents',
+                'ManagerReplaceMaster',
+                
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
@@ -733,7 +735,14 @@ return array_merge(
                 
                 'EquipsReportAll',
                 'ObjectEquipsReport',
-                'ObjectEquipsReport2'
+                'ObjectEquipsReport2',
+                
+                'ObjectReportAll',
+                'ObjectReport1',
+                'ObjectReport2',
+                'ObjectReport3',
+                'ObjectReport4',
+                'ObjectReport5',
             ),
         ),
         

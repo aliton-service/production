@@ -5,8 +5,8 @@
         if (Ajax == '') {
             var DataDocTypes = [{id: 1, name: 'Все'}, {id: 2, name: 'Договора'}, {id: 3, name: 'Счета и счет-заказы'}];
             var DataTerritory = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceTerritory));
-            $("#edDocType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataDocTypes, width: '290', height: '25px', displayMember: "name", valueMember: "id"}));
-            $("#edTerrit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataTerritory, width: '150', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id"}));
+            $("#edDocType").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataDocTypes, width: '200', height: '25px', displayMember: "name", valueMember: "id"}));
+            $("#edTerrit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataTerritory, width: '200', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id"}));
         }
     });
 </script>    
@@ -24,11 +24,11 @@
         ));
 ?>        
         <div class="row">
-            <div class="row-column" style="width: 130px">Тип документа:</div>
+            <div class="row-column">Тип документа:</div>
             <div class="row-column"><div id="edDocType" name="Parameters[prmDocType]"></div></div>
         </div>
         <div class="row">
-            <div class="row-column" style="width: 130px">Участок:</div>
+            <div class="row-column">Участок:</div>
             <div class="row-column"><div id="edTerrit" name="Parameters[prmTerrit]"></div></div>
         </div>
         <div style="clear: both; margin-top: 10px;"></div>
