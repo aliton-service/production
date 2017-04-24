@@ -355,8 +355,8 @@
                     $('#Grid4').jqxGrid('removefilter', 'dmnd_empl_name', false);
                     if ($("#edMaster").val() != '') $("#Grid4").jqxGrid('addfilter', 'dmnd_empl_name', MasterFilterGroup);
                     /* Склад */
-                    $('#Grid4').jqxGrid('removefilter', 'strg_id', false);
-                    if ($("#edStorage").val() != '') $("#Grid4").jqxGrid('addfilter', 'strg_id', StorageFilterGroup);
+                    $('#Grid4').jqxGrid('removefilter', 'storage', false);
+                    if ($("#edStorage").val() != '') $("#Grid4").jqxGrid('addfilter', 'storage', StorageFilterGroup);
                     
                     
                     $('#Grid4').jqxGrid('removefilter', 'ac_date', false);

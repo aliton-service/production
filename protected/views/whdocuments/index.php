@@ -612,7 +612,6 @@
                                     { text: 'Предельная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'deadline', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
                                     { text: 'Обещенная дата', columngroup: 'Documents', filtertype: 'date', datafield: 'date_promise', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
                                     { text: 'Склад', columngroup: 'Documents', datafield: 'storage', width: 100, cellsrenderer: cellsrenderer },
-                                    { text: 'strg_id', columngroup: 'Documents', datafield: 'strg_id', width: 100, cellsrenderer: cellsrenderer, hidden: true },
                                     { text: 'Пр-ка', columngroup: 'Documents', datafield: 'overday', width: 50, cellsrenderer: cellsrenderer },
                                     
                                     { text: 'Дата', columngroup: 'Action', filtertype: 'date', datafield: 'ac_date', cellsformat: 'dd.MM.yyyy', width: 100, cellsrenderer: cellsrenderer },
