@@ -6,7 +6,8 @@
     var DataSubSourceInfo;
     var DataClientStatus;
     var RC = {
-        Action_id: 0
+        Action_id: 0,
+        Form_id: 0,
     };
     
     $(document).ready(function () {
@@ -76,7 +77,7 @@
         $('#SelectSalesManagerDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 340, width: 346, position: 'center',  initContent: function () {
             $("#edSalesManager").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '326', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"})); 
             $("#chbPlan").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 100, height: 25, checked: false})); 
-            $("#chbWork").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 100, height: 25, checked: false})); 
+            $("#chbWork").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 100, height: 25, checked: true})); 
             //$("#Calendar").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 120}));
             $("#Calendar").jqxCalendar($.extend(true, {}, CalendarDefaultSettings, {width: 220, height: 220}));
             $('#btnSelectManager').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 100}));
@@ -177,6 +178,12 @@
                     });
                     
                     $("#ClientsGrid").on("bindingcomplete", function (event) {
+                        if (RC.Form_id != 0) {
+                            Aliton.SelectRowByIdVirtual('Form_id', RC.Form_id, '#ClientsGrid', false);
+                            RC.Form_id = 0;
+                            return;
+                        }
+        
                         if (CurrentRowData != undefined) 
                             Aliton.SelectRowByIdVirtual('Form_id', CurrentRowData.Form_id, '#ClientsGrid', false);
                         else
@@ -189,8 +196,8 @@
                             width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
-                            pagesizeoptions: ['200', '5000'],
-                            pagesize: 200,
+                            pagesizeoptions: ['200', '500', '1000', '8000'],
+                            pagesize: 8000,
                             virtualmode: true,
                             columns:
                                 [
@@ -353,7 +360,7 @@
                         },
                     });
                     $("#ActionsGrid").on('rowdoubleclick', function(){
-                        //$('#btnObjectInformation').click();
+                        $('#btnEditAction').click();
                     });
                     
                     $("#ActionsGrid").on('rowselect', function (event) {

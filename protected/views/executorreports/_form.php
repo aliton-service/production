@@ -3,8 +3,43 @@
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         var LastAction = <?php echo json_encode($LastAction); ?>;
         var MarketingSolutions = <?php echo json_encode($MarketingSolutions); ?>;
+        MarketingSolutions.Offer1Date = Aliton.DateConvertToJs(MarketingSolutions.Offer1Date);
+        MarketingSolutions.Offer2Date = Aliton.DateConvertToJs(MarketingSolutions.Offer2Date);
+        MarketingSolutions.Offer3Date = Aliton.DateConvertToJs(MarketingSolutions.Offer3Date);
+        MarketingSolutions.Offer4Date = Aliton.DateConvertToJs(MarketingSolutions.Offer4Date);
+        MarketingSolutions.Offer5Date = Aliton.DateConvertToJs(MarketingSolutions.Offer5Date);
+        MarketingSolutions.Offer6Date = Aliton.DateConvertToJs(MarketingSolutions.Offer6Date);
+        MarketingSolutions.Offer7Date = Aliton.DateConvertToJs(MarketingSolutions.Offer7Date);
+        MarketingSolutions.Offer8Date = Aliton.DateConvertToJs(MarketingSolutions.Offer8Date);
+        MarketingSolutions.Offer9Date = Aliton.DateConvertToJs(MarketingSolutions.Offer9Date);
+        
         var SystemOffers = <?php echo json_encode($SystemOffers); ?>;
+        SystemOffers.Offer1Date = Aliton.DateConvertToJs(SystemOffers.Offer1Date);
+        SystemOffers.Offer2Date = Aliton.DateConvertToJs(SystemOffers.Offer2Date);
+        SystemOffers.Offer3Date = Aliton.DateConvertToJs(SystemOffers.Offer3Date);
+        SystemOffers.Offer4Date = Aliton.DateConvertToJs(SystemOffers.Offer4Date);
+        SystemOffers.Offer5Date = Aliton.DateConvertToJs(SystemOffers.Offer5Date);
+        SystemOffers.Offer6Date = Aliton.DateConvertToJs(SystemOffers.Offer6Date);
+        SystemOffers.Offer7Date = Aliton.DateConvertToJs(SystemOffers.Offer7Date);
+        SystemOffers.Offer8Date = Aliton.DateConvertToJs(SystemOffers.Offer8Date);
+        SystemOffers.Offer9Date = Aliton.DateConvertToJs(SystemOffers.Offer9Date);
+        
         var ClientSolutions = <?php echo json_encode($ClientSolutions); ?>;
+        ClientSolutions.Solution1Date = Aliton.DateConvertToJs(ClientSolutions.Solution1Date);
+        ClientSolutions.Solution2Date = Aliton.DateConvertToJs(ClientSolutions.Solution2Date);
+        ClientSolutions.Solution3Date = Aliton.DateConvertToJs(ClientSolutions.Solution3Date);
+        ClientSolutions.Solution4Date = Aliton.DateConvertToJs(ClientSolutions.Solution4Date);
+        ClientSolutions.Solution5Date = Aliton.DateConvertToJs(ClientSolutions.Solution5Date);
+        ClientSolutions.Solution6Date = Aliton.DateConvertToJs(ClientSolutions.Solution6Date);
+        ClientSolutions.Solution7Date = Aliton.DateConvertToJs(ClientSolutions.Solution7Date);
+        ClientSolutions.Solution8Date = Aliton.DateConvertToJs(ClientSolutions.Solution8Date);
+        ClientSolutions.Solution9Date = Aliton.DateConvertToJs(ClientSolutions.Solution9Date);
+        ClientSolutions.Solution10Date = Aliton.DateConvertToJs(ClientSolutions.Solution10Date);
+        ClientSolutions.Solution11Date = Aliton.DateConvertToJs(ClientSolutions.Solution11Date);
+        ClientSolutions.Solution12Date = Aliton.DateConvertToJs(ClientSolutions.Solution12Date);
+        ClientSolutions.Solution13Date = Aliton.DateConvertToJs(ClientSolutions.Solution13Date);
+        ClientSolutions.Solution14Date = Aliton.DateConvertToJs(ClientSolutions.Solution14Date);
+        ClientSolutions.Solution15Date = Aliton.DateConvertToJs(ClientSolutions.Solution15Date);
         
         var Action = {
             Exrp_id: <?php echo json_encode($model->Exrp_id); ?>,
@@ -64,60 +99,61 @@
         $("#edLastResult").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150, value: LastAction.ResultName}));
         $("#edLastNextAction").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 150, value: LastAction.NextAction}));
         
-        $("#cmbStageEdit").jqxComboBox({ source: DataActionStages, width: '260', height: '25px', displayMember: "StageName", valueMember: "Stage_id"});
+        $("#cmbStageEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataActionStages, width: '260', height: '25px', displayMember: "StageName", valueMember: "Stage_id"}));
         $("#cmbStageEdit").jqxComboBox('val', Action.ActionStage_id);
-        $("#cmbContactTypeEdit").jqxComboBox({ source: DataContactTypes, width: '200', height: '25px', displayMember: "ContactName", valueMember: "Contact_id"});
+        $("#cmbContactTypeEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactTypes, width: '200', height: '25px', displayMember: "ContactName", valueMember: "Contact_id"}));
         $("#cmbContactTypeEdit").jqxComboBox('val', Action.ContactType_id);
-        $("#cmbContactInfoEdit").jqxComboBox({ source: DataContactInfo, width: '240', height: '25px', displayMember: "CName", valueMember: "Info_id"});
+        $("#cmbContactInfoEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataContactInfo, width: '240', height: '25px', displayMember: "CName", valueMember: "Info_id"}));
         $("#cmbContactInfoEdit").jqxComboBox('val', Action.ContactInfo_id);
-        $("#cmbStatusOPEdit").jqxComboBox({ source: [{id: 1, name: 'Холодный'}, {id: 2, name: 'Теплый'}, {id: 3, name: 'Горячий'}, {id: 4, name: 'Хронический'}], width: '150', height: '25px', displayMember: "name", valueMember: "id"});
+        $("#cmbStatusOPEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: [{id: 1, name: 'Холодный'}, {id: 2, name: 'Теплый'}, {id: 3, name: 'Горячий'}, {id: 4, name: 'Хронический'}], width: '150', height: '25px', displayMember: "name", valueMember: "id"}));
         $("#cmbStatusOPEdit").jqxComboBox('val', Action.StatusOP);
                 
         var initWidgets = function(tab) {
             switch (tab) {
                 case 0:
+                    console.log(MarketingSolutions.Offer1Date);
                     $("#edOfferName1").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Бесплатная модернизация'}));
-                    $("#cmbOffer1ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer1ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer1DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer1Date }));
                     $("#edOffer1Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer1Note}));
                     
                     $("#edOfferName2").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Бесплатные месяца обслуживания'}));
-                    $("#cmbOffer2ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer2ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer2DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer2Date }));
                     $("#edOffer2Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer2Note}));
                     
                     $("#edOfferName3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Скидка на модернизацию'}));
-                    $("#cmbOffer3ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer3ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer3DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer3Date }));
                     $("#edOffer3Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer3Note}));
                     
                     $("#edOfferName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Скидка на обслуживание'}));
-                    $("#cmbOffer4ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer4ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer4DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer4Date }));
                     $("#edOffer4Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer4Note}));
                     
                     $("#edOfferName5").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Акция 15% от клиента'}));
-                    $("#cmbOffer5ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer5ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer5DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer5Date }));
                     $("#edOffer5Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer5Note}));
                     
                     $("#edOfferName6").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Акция система в подарок'}));
-                    $("#cmbOffer6ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer6ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer6DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer6Date }));
                     $("#edOffer6Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer6Note}));
                     
                     $("#edOfferName7").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Акция год за два'}));
-                    $("#cmbOffer7ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer7ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer7DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer7Date }));
                     $("#edOffer7Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer7Note}));
                     
                     $("#edOfferName8").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Антиклон'}));
-                    $("#cmbOffer8ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer8ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer8DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer8Date }));
                     $("#edOffer8Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer8Note}));
                     
                     $("#edOfferName9").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Акция'}));
-                    $("#cmbOffer9ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbOffer9ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer9DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer9Date }));
                     $("#edOffer9Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: MarketingSolutions.Offer9Note}));
                     
@@ -147,47 +183,47 @@
                     break;
                 case 1:
                     $("#edSystemOfferName1").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'ПЗУ'}));
-                    $("#cmbSystemOffer1ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer1ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer1DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer1Date }));
                     $("#edSystemOffer1Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer1Note}));
                     
                     $("#edSystemOfferName2").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'СВН'}));
-                    $("#cmbSystemOffer2ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer2ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer2DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer2Date }));
                     $("#edSystemOffer2Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer2Note}));
                     
                     $("#edSystemOfferName3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'АППЗ'}));
-                    $("#cmbSystemOffer3ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer3ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer3DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer3Date }));
                     $("#edSystemOffer3Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer3Note}));
                     
                     $("#edSystemOfferName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'СКД'}));
-                    $("#cmbSystemOffer4ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer4ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer4DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer4Date }));
                     $("#edSystemOffer4Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer4Note}));
                     
                     $("#edSystemOfferName5").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Венталиция'}));
-                    $("#cmbSystemOffer5ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer5ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer5DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer5Date }));
                     $("#edSystemOffer5Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer5Note}));
                     
                     $("#edSystemOfferName6").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Естественная вентиляция'}));
-                    $("#cmbSystemOffer6ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer6ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer6DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer6Date }));
                     $("#edSystemOffer6Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer6Note}));
                     
                     $("#edSystemOfferName7").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'ОДС'}));
-                    $("#cmbSystemOffer7ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer7ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer7DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer7Date }));
                     $("#edSystemOffer7Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer7Note}));
                     
                     $("#edSystemOfferName8").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'ИТП'}));
-                    $("#cmbSystemOffer8ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer8ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer8DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer8Date }));
                     $("#edSystemOffer8Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer8Note}));
                     
                     $("#edSystemOfferName9").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'УУТЭ'}));
-                    $("#cmbSystemOffer9ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSystemOffer9ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSystemOffer9DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: SystemOffers.Offer9Date }));
                     $("#edSystemOffer9Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: SystemOffers.Offer9Note}));
                     
@@ -217,77 +253,77 @@
                     break;
                 case 2:
                     $("#edSolutionName1").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Другой бонус, чем предлагался ранее'}));
-                    $("#cmbSolution1ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution1ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution1DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution1Date }));
                     $("#edSolution1Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution1Note}));
                     
                     $("#edSolutionName2").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Дополнительный личный выезд'}));
-                    $("#cmbSolution2ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution2ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution2DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution2Date }));
                     $("#edSolution2Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution2Note}));
                     
                     $("#edSolutionName3").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Звонок руководителя'}));
-                    $("#cmbSolution3ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution3ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution3DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution3Date }));
                     $("#edSolution3Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution3Note}));
                     
                     $("#edSolutionName4").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Поездка с руководителем'}));
-                    $("#cmbSolution4ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution4ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution4DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution4Date }));
                     $("#edSolution4Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution4Note}));
                     
                     $("#edSolutionName5").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Повторная поездка с руководителем'}));
-                    $("#cmbSolution5ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution5ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution5DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution5Date }));
                     $("#edSolution5Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution5Note}));
                     
                     $("#edSolutionName6").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Отправить проект договора на рассмотрение'}));
-                    $("#cmbSolution6ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution6ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution6DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution6Date }));
                     $("#edSolution6Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution6Note}));
                     
                     $("#edSolutionName7").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Приехать на заседание правления'}));
-                    $("#cmbSolution7ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution7ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution7DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution7Date }));
                     $("#edSolution7Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution7Note}));
                     
                     $("#edSolutionName8").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Отправить перечень довольных клиентов в округе'}));
-                    $("#cmbSolution8ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution8ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution8DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution8Date }));
                     $("#edSolution8Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution8Note}));
                     
                     $("#edSolutionName9").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Предложить начать с одной системы или каких-то конкретных работ'}));
-                    $("#cmbSolution9ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution9ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution9DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution9Date }));
                     $("#edSolution9Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution9Note}));
                     
                     $("#edSolutionName10").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Поездка с ГД'}));
-                    $("#cmbSolution10ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution10ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution10DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution10Date }));
                     $("#edSolution10Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution10Note}));
                     
                     $("#edSolutionName11").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Повторная поездка с ГД'}));
-                    $("#cmbSolution11ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution11ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution11DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution11Date }));
                     $("#edSolution11Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution11Note}));
                     
                     $("#edSolutionName12").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Отправка видеобращений руководителей и сотрудников'}));
-                    $("#cmbSolution12ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution12ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution12DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution12Date }));
                     $("#edSolution12Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution12Note}));
                     
                     $("#edSolutionName13").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Отправка итогов обследований'}));
-                    $("#cmbSolution13ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution13ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution13DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution13Date }));
                     $("#edSolution13Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution13Note}));
                     
                     $("#edSolutionName14").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Отправка портфолио отзывов'}));
-                    $("#cmbSolution14ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution14ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution14DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution14Date }));
                     $("#edSolution14Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution14Note}));
                     
                     $("#edSolutionName15").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'ДРУГОЕ'}));
-                    $("#cmbSolution15ResultEdit").jqxComboBox({ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"});
+                    $("#cmbSolution15ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbSolution15DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: ClientSolutions.Solution15Date }));
                     $("#edSolution15Note").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: ClientSolutions.Solution15Note}));
                     
@@ -329,16 +365,16 @@
             };
         };
         
-        $('#ActionEditTab').jqxTabs({ width: 'calc(100% - 2px)', height: '234px', keyboardNavigation: false, initTabContent: initWidgets});
+        $('#ActionEditTab').jqxTabs($.extend(true, {}, TabsDefaultSettings, { width: 'calc(100% - 2px)', height: '234px', keyboardNavigation: false, initTabContent: initWidgets}));
         $("#chbEconomy").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 100, height: 25, checked: Boolean(Number(MarketingSolutions.Economy))}));
         $("#chbQuality").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 100, height: 25, checked: Boolean(Number(MarketingSolutions.Quality)) }));
         $("#chbPrivate").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 150, height: 25, checked: Boolean(Number(MarketingSolutions.Private)) }));
         $("#chbModernization").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 150, height: 25, checked: Boolean(Number(MarketingSolutions.Modernization)) }));
         $("#chbBeautification").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 150, height: 25, checked: Boolean(Number(MarketingSolutions.Beautification)) }));
         
-        $("#cmbActionOperationEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataActionOperations, width: 235, height: '25px', displayMember: "ActionOperationName", valueMember: "Operation_id"}));
+        $("#cmbActionOperationEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataActionOperations, width: 235, height: '25px', displayMember: "ActionOperationName", valueMember: "Operation_id", dropDownWidth: 400}));
         $("#cmbActionOperationEdit").jqxComboBox('val', Action.ActionOperation_id);
-        $("#cmbActionResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataActionResults, width: 235, height: '25px', displayMember: "ActionResultName", valueMember: "Result_id"}));
+        $("#cmbActionResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataActionResults, width: 235, height: '25px', displayMember: "ActionResultName", valueMember: "Result_id", dropDownWidth: 600}));
         $("#cmbActionResultEdit").jqxComboBox('val', Action.ActionResult_id);
         $('#edReport').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {placeHolder: 'Комментарии', height: 50, width: 'calc(100% - 2px)', minLength: 1}));
         $("#edNextDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: Action.NextDate }));
@@ -346,7 +382,7 @@
         $("#cmbResponsibleEdit").jqxComboBox('val', Action.Responsible_id);
         $("#cmbExecutorEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataListEmployees, width: 200, height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
         $("#edNextAction").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: 'Планируемое действие', width: 400, value: Action.NextAction}));
-        $("#cmbNextContactInfo").jqxComboBox({ source: DataContactInfo, dropDownVerticalAlignment: 'top', width: '240', height: '25px', displayMember: "CName", valueMember: "Info_id"});
+        $("#cmbNextContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataContactInfo, dropDownVerticalAlignment: 'top', width: '240', height: '25px', displayMember: "CName", valueMember: "Info_id"}));
         $("#cmbNextContactInfo").jqxComboBox('val', Action.NextContactInfo);
         $("#chbReserv").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 100, height: 25 }));
         
@@ -537,6 +573,8 @@
                             $('#BodyActionsDialog').html(Res.html);
                         if ($('#EditFormDialog').length>0) 
                             $('#BodyEditFormDialog').html(Res.html);
+                        if ($('#CostCalculationsDialog').length>0) 
+                            $('#BodyCostCalculationsDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {

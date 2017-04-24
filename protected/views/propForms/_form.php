@@ -90,29 +90,29 @@
         
         $("#edFormNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 300} ));
         $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
-        $("#edStatusEdit").jqxComboBox({ source: StatusAdapter, width: '250', height: '25px', displayMember: "StatusName", valueMember: "Status_id"});
-        $("#edFownEdit").jqxComboBox({ source: FormsOfOwnershipVDataAdapter, width: '200', height: '25px', displayMember: "name", valueMember: "fown_id"});
-        $("#edLphEdit").jqxComboBox({ source: [{id: 1, name: 'Юридическое лицо'}, {id: 2, name: 'Физическое лицо'}], width: '200', height: '25px', displayMember: "name", valueMember: "id"});
+        $("#edStatusEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: StatusAdapter, width: '250', height: '25px', displayMember: "StatusName", valueMember: "Status_id"}));
+        $("#edFownEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: FormsOfOwnershipVDataAdapter, width: '200', height: '25px', displayMember: "name", valueMember: "fown_id"}));
+        $("#edLphEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: [{id: 1, name: 'Юридическое лицо'}, {id: 2, name: 'Физическое лицо'}], width: '200', height: '25px', displayMember: "name", valueMember: "id"}));
         $("#edCountObjectsEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {placeHolder: "", width: 100, decimalDigits: 0} ));
-        $("#edSegmentEdit").jqxComboBox({ source: ClientGroupsAdapter, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "clgr_id"});
-        $("#edSubSegmentEdit").jqxComboBox({ source: ClientGroupsAdapter, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "clgr_id"});
-        $("#edSourceInfoEdit").jqxComboBox({ source: SourceInfoAdapter, width: '200', height: '25px', displayMember: "SourceInfo_name", valueMember: "SourceInfo_id"});
-        $("#edSubSourceInfoEdit").jqxComboBox({ source: SourceInfoAdapter, width: '200', height: '25px', displayMember: "SourceInfo_name", valueMember: "SourceInfo_id"});
+        $("#edSegmentEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: ClientGroupsAdapter, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "clgr_id"}));
+        $("#edSubSegmentEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: ClientGroupsAdapter, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "clgr_id"}));
+        $("#edSourceInfoEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: SourceInfoAdapter, width: '200', height: '25px', displayMember: "SourceInfo_name", valueMember: "SourceInfo_id"}));
+        $("#edSubSourceInfoEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: SourceInfoAdapter, width: '200', height: '25px', displayMember: "SourceInfo_name", valueMember: "SourceInfo_id"}));
         $("#edInnEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
         $("#edAccountEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 200} ));
         $("#edKppEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edBrandNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 250} ));
         $("#edWWWEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 250} ));
         $("#edCountObjectsEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
-        $("#edJRegionEdit").jqxComboBox({ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"});
-        $("#edJAreaEdit").jqxComboBox({ source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"});
-        $("#edJStreetEdit").jqxComboBox({ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"});
+        $("#edJRegionEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"}));
+        $("#edJAreaEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"}));
+        $("#edJStreetEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}));
         $("#edJHouseEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
         $("#edJCorpEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
         $("#edJRoomEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
-        $("#edFRegionEdit").jqxComboBox({ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"});
-        $("#edFAreaEdit").jqxComboBox({ source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"});
-        $("#edFStreetEdit").jqxComboBox({ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"});
+        $("#edFRegionEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"}));
+        $("#edFAreaEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"}));
+        $("#edFStreetEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}));
         $("#edFHouseEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
         $("#edFCorpEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
         $("#edFRoomEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
@@ -132,7 +132,7 @@
         $("#edBankEdit").on('bindingComplete', function() {
             if (Organization.bank_id != '') $("#edBankEdit").jqxComboBox('val', Organization.bank_id);
         });
-        $("#edBankEdit").jqxComboBox({ source: BanksDataAdapter, width: '300px', height: '25px', displayMember: "bank_name", valueMember: "Bank_id"});
+        $("#edBankEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: BanksDataAdapter, width: '300px', height: '25px', displayMember: "bank_name", valueMember: "Bank_id"}));
         $("#edBankBikEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edBankCorAccountEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edTelephoneEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 350} ));
@@ -184,6 +184,9 @@
                         }
                         if ($('#EditFormDialog').length>0) {
                             //Aliton.SelectRowById('Form_id', Res.id, '#ClientsGrid', true);
+                            if (typeof(RC) != 'undefined')
+                                RC.Form_id = Res.id;
+                            
                             $('#edFiltering').click();
                             $('#EditFormDialog').jqxWindow('close');
                         }
