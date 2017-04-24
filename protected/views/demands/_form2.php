@@ -262,6 +262,7 @@
             $("#btnSave").jqxButton({disabled: true});
             var State = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
             var url = '';
+            console.log($("#chbDateMaster").jqxCheckBox('val'));
             if (State)
                 url = <?php echo json_encode(Yii::app()->createUrl('Demands/Create')) ?> 
                     + '&ToMaster=' + $("#chbDateMaster").jqxCheckBox('val') 

@@ -189,7 +189,7 @@
                             width: 'calc(100% - 2px)',
                             showfilterrow: false,
                             autoshowfiltericon: true,
-                            pagesizeoptions: ['10', '200', '500', '1000'],
+                            pagesizeoptions: ['200', '5000'],
                             pagesize: 200,
                             virtualmode: true,
                             columns:
@@ -560,7 +560,7 @@
             }
         };
         
-        $('#Tabs').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)', initTabContent: initWidgets});
+        $('#Tabs').jqxTabs($.extend(true, {}, TabsDefaultSettings, { width: 'calc(100% - 2px)', height: 'calc(100% - 2px)', initTabContent: initWidgets}));
         
         
         
