@@ -369,7 +369,7 @@ class DemandsController extends Controller
                     
                     $model->setScenario($Scenario);
                     
-                    if ((bool)$ToMaster) {
+                    if ($ToMaster == 'true') {
                         $model->DateMaster = date('d.m.Y H:i');
                         $model->validate();
                     }
