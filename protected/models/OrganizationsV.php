@@ -127,6 +127,9 @@ class OrganizationsV extends MainFormModel
         public function INNValidate($attribute, array $params = array()) {
             $Forms = new OrganizationsV();
             
+            if ($this->inn == '')
+                return;
+            
             if ($this->Form_id != '')
                 $Forms = $Forms->Find(array(), array(
                     'p.Form_id <> \'' . $this->Form_id . '\'',

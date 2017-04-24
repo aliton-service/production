@@ -257,9 +257,14 @@ class ExecutorReportsController extends Controller
             $Solution_id = '';
             $SystemOffer_id = '';
             $ClientSolution_id = '';
+            $Exrp_id = 0;
+            if (isset($_POST['Exrp_id']))
+                $Exrp_id = $_POST['Exrp_id'];
+            if (isset($_POST['ClientActions']))
+                $Exrp_id = $_POST['ClientActions']['Exrp_id'];    
             
-            if (isset($_POST['Exrp_id'])) { 
-                $model->getModelPk ($_POST['Exrp_id']);
+            if ($Exrp_id != 0) { 
+                $model->getModelPk ($Exrp_id);
                 
                 $Q = new SQLQuery();
                 $Q->setSelect("\nSelect
@@ -269,7 +274,7 @@ class ExecutorReportsController extends Controller
                 $Q->setFrom("\nFrom ExecutorReports er left join MarketingSolutions ms on (ms.Action_id = er.Exrp_id)"
                         . "         left join SystemOffers so on (so.Action_id = er.Exrp_id)"
                         . "         left join ClientSolutions co on (co.Action_id = er.Exrp_id)");
-                $Q->setWhere("\nWhere er.Exrp_id = " . $_POST['Exrp_id']);
+                $Q->setWhere("\nWhere er.Exrp_id = " . $Exrp_id);
                 $Q = $Q->QueryRow(); 
                 $Solution_id = $Q['Solution_id'];
                 $SystemOffer_id = $Q['SystemOffer_id'];
