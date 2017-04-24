@@ -117,10 +117,6 @@
     </div>
 <?php endif; ?>
 
-<?php 
-    $a = 'true';
-    echo (int)$a;
-?>    
     
 <!--<div id="edAddressList" name="Models[Object_id]"></div>
 
