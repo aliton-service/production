@@ -135,6 +135,7 @@
         
         var DataSuppliers = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListSuppliersMin));
         var DataEmployees = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceListEmployees));
+        var DataStorages = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStoragesList));
         
         $("#edNumber").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 135} ));
         $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: DateStart}));
@@ -147,7 +148,8 @@
         $("#edDateAcEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '100px', formatString: 'dd.MM.yyyy', value: null, dropDownHorizontalAlignment: 'right'}));
         $("#edSupplier").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSuppliers, width: 'calc(100% - 2px)', height: '25px', displayMember: "NameSupplier", valueMember: "Supplier_id"}));
         $("#edAddress").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'} ));
-        $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '150', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
+        $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: 'calc(100% - 2px)', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
+        $("#edStorage").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataStorages, width: '180', height: '25px', displayMember: "storage", valueMember: "storage_id", autoDropDownHeight: true}));
         $("#edSN").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 'calc(100% - 2px)'} ));
         $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
@@ -228,6 +230,12 @@
             if ($("#edMaster").val() != '') {
                 var FilterMaster = MasterFilterGroup.createfilter('numericfilter', $("#edMaster").val(), 'EQUAL');
                 MasterFilterGroup.addfilter(1, FilterMaster);
+            }
+            
+            var StorageFilterGroup = new $.jqx.filter();
+            if ($("#edStorage").val() != '') {
+                var FilterStorage = StorageFilterGroup.createfilter('numericfilter', $("#edStorage").val(), 'EQUAL');
+                StorageFilterGroup.addfilter(1, FilterStorage);
             }
             
             var Docm_id = 0;
@@ -346,6 +354,10 @@
                     /* Затребовал */
                     $('#Grid4').jqxGrid('removefilter', 'dmnd_empl_name', false);
                     if ($("#edMaster").val() != '') $("#Grid4").jqxGrid('addfilter', 'dmnd_empl_name', MasterFilterGroup);
+                    /* Склад */
+                    $('#Grid4').jqxGrid('removefilter', 'strg_id', false);
+                    if ($("#edStorage").val() != '') $("#Grid4").jqxGrid('addfilter', 'strg_id', StorageFilterGroup);
+                    
                     
                     $('#Grid4').jqxGrid('removefilter', 'ac_date', false);
                     if ($("#edAcDateNull").val() != '') $("#Grid4").jqxGrid('addfilter', 'ac_date', AcDateNullFilterGroup);
@@ -422,37 +434,39 @@
     });
 </script>
 
-<div class="al-row">Номер</div>
+<div class="al-row" style="padding: 0;">Номер:</div>
 <div class="al-row"><input type="text" autocomplete="off" id="edNumber"/></div>
 <div class="al-row"><div id="edControl" style="color: white;">Котроль</div></div>
 <div class="al-row"><div id="edAcDateNull" style="color: white;">Не выданные</div></div>
-<div class="al-row">Дата</div>
-<div class="al-row">
+<div class="al-row" style="padding: 0;">Дата:</div>
+<div class="al-row" style="height: 27px;">
     <div class="al-row-column">с</div>
     <div class="al-row-column" style="margin-left: 0"><div id="edDateStart"></div></div>
     <div class="al-row-column" style="margin-left: 0">по</div>
     <div class="al-row-column" style="margin-left: 0"><div id="edDateEnd"></div></div>
 </div>
-<div class="al-row">Создан</div>
-<div class="al-row">
+<div class="al-row" style="padding-bottom: 0;">Создан:</div>
+<div class="al-row" style="height: 27px;">
     <div class="al-row-column">с</div>
     <div class="al-row-column" style="margin-left: 0"><div id="edDateCrStart"></div></div>
     <div class="al-row-column" style="margin-left: 0">по</div>
     <div class="al-row-column" style="margin-left: 0"><div id="edDateCrEnd"></div></div>
 </div>
-<div class="al-row">Подтвержден</div>
-<div class="al-row">
+<div class="al-row" style="padding-bottom: 0;">Подтвержден:</div>
+<div class="al-row" style="height: 27px;">
     <div class="al-row-column">с</div>
     <div class="al-row-column" style="margin-left: 0"><div id="edDateAcStart"></div></div>
     <div class="al-row-column" style="margin-left: 0">по</div>
     <div class="al-row-column" style="margin-left: 0"><div id="edDateAcEnd"></div></div>
 </div>
-<div class="al-row">Поставщик</div>
+<div class="al-row" style="padding-bottom: 0;">Поставщик:</div>
 <div class="al-row"><div id="edSupplier"></div></div>
-<div class="al-row">Адрес</div>
+<div class="al-row" style="padding-bottom: 0;">Адрес:</div>
 <div class="al-row"><input type="text" autocomplete="off" id="edAddress"/></div>
-<div class="al-row">Затребовал</div>
+<div class="al-row" style="padding-bottom: 0;">Затребовал:</div>
 <div class="al-row"><div id="edMaster"></div></div>
-<div class="al-row">Серийный номер</div>
+<div class="al-row" style="padding-bottom: 0;">Серийный номер:</div>
 <div class="al-row"><input type="text" autocomplete="off" id="edSN"/></div>
+<div class="al-row" style="padding-bottom: 0;">Склад:</div>
+<div class="al-row"><div id="edStorage"></div></div>
 <div style="margin-top: 4px;"><input type="button" value="Фильтр" id="edFiltering"/></div>
