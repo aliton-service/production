@@ -4,6 +4,9 @@
             
         };
         
+        var Position_id = <?php echo json_encode(Yii::app()->user->Position_id); ?>;
+        var Empl_id = <?php echo json_encode(Yii::app()->user->fullname); ?>;
+        
         var DisabledControls = function() {
 //            $("#btnRefresh").jqxButton({disabled: true});
         };
@@ -21,6 +24,9 @@
         }));
         
         $("#cmbSalesManager").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "ShortName"}));
+        if (Position_id == 50)
+            $("#cmbSalesManager").jqxComboBox('val', Empl_id);
+        
         $("#cmbSegment").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSegments, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "ClientGroup"}));
         $("#cmbSubSegment").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSegments, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "ClientGroup"}));
         $("#cmbSourceInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSourceInfo, width: '200', height: '25px', displayMember: "SourceInfo_name", valueMember: "SourceInfo_name"}));
