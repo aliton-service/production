@@ -167,7 +167,8 @@
                         $.extend(true, {}, GridDefaultSettings, {
                             height: 'calc(100% - 36px)',
                             width: '100%',
-                            sortable: true,
+                            sortable: false,
+                            autoheight: false,
                             autorowheight: true,
                             virtualmode: false,
                             pageable: true,
@@ -176,6 +177,22 @@
                             autoshowfiltericon: true,
                             source: DataExecutorReports,
                             enablebrowserselection: true,
+                            enablehover: true,
+//                            cellhover: function (cellhtmlElement, x, y) {
+//                                var cell = $('#ProgressGrid').jqxGrid('getcellatposition', x, y);
+//                                if (cell.column == 'report') {
+//                                    if (cell.value != '' && cell.value != null) {
+//                                        $("#ProgressGrid").jqxTooltip({ content: cell.value });
+//                                        $("#ProgressGrid").jqxTooltip('open', x + 15, y + 15);
+//                                    }
+//                                    else
+//                                        $("#ProgressGrid").jqxTooltip('close');
+//                                }
+//                                else {
+//                                    $("#ProgressGrid").jqxTooltip('close');
+//                                }
+//                                    
+//                            },
                             columns:
                             [
                                 { text: 'Дата сообщения', datafield: 'date', width: 160, cellsformat: 'dd.MM.yyyy HH:mm ddd'},
@@ -1185,3 +1202,5 @@
         <div style="" id="BodyCostCalculationsDialog"></div>
     </div>
 </div>
+
+<div id="elemHover" style="display: none; position: absolute; border: 1px solid #696969; padding: 5px; background-color: #FFFFE1;"></div>
