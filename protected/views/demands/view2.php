@@ -181,8 +181,10 @@
                             cellhover: function (cellhtmlElement, x, y) {
                                 var cell = $('#ProgressGrid').jqxGrid('getcellatposition', x, y);
                                 if (cell.column == 'report') {
-                                    $("#ProgressGrid").jqxTooltip({ content: cell.value });
-                                    $("#ProgressGrid").jqxTooltip('open', x + 15, y + 15);
+                                    if (cell.value != '' && cell.value != null) {
+                                        $("#ProgressGrid").jqxTooltip({ content: cell.value });
+                                        $("#ProgressGrid").jqxTooltip('open', x + 15, y + 15);
+                                    }
                                 }
                                     
                             },
