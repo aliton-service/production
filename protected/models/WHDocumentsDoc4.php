@@ -247,6 +247,7 @@ class WHDocumentsDoc4 extends MainFormModel
         return array(
             'date' => 'd.date',
             'splr_name' => 'd.splr_id',
+            'storage' => 'd.strg_id',
             'overday' => '(case when isnull(d.date_ready, null) > d.deadline then dbo.get_wdays_diff(d.deadline, isNull(d.date_ready, getdate())) else 0 end)',
             'c_date' => 'ac.date',
             'c_name' => 'ac.EmployeeName',
