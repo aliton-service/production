@@ -861,7 +861,7 @@
         
         $('#btnPrint1CostCalculations').on('click', function() {
             window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
-                            'ReportName' => '/Сметы/Смета',
+                            'ReportName' => '/Сметы/Смета 2',
                             'Ajax' => false,
                             'Render' => true,
                         ))); ?> + '&Parameters[pCalc_id]=' + CostCalculations.calc_id + '&FileName=' + <?php echo json_encode($model->group_name)?>);
