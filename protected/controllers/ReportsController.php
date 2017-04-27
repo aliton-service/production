@@ -27,6 +27,23 @@ class ReportsController extends Controller
         );
     }
     
+    public function ReplaceImage($ResultHtml = '', $Images = array()) {
+        $idx = 0;
+        $pos_img = stripos($ResultHtml, 'img', $idx);
+        $i = 0;
+        while ($pos_img !== false) {
+            // ищем src
+            $pos_src = stripos($ResultHtml, 'src="', $pos_img);
+            $pos_src_end = stripos($ResultHtml, '"', $pos_src + 6);
+            $len = $pos_src_end - $pos_src;
+            $str = mb_strcut($ResultHtml, $pos_src, $len+1);
+            $ResultHtml = str_ireplace($str, 'src="' . $Images[$i] . '"', $ResultHtml);
+            $pos_img = stripos($ResultHtml, 'img', $pos_img + 3);
+            $i++;
+        }
+        return $ResultHtml;
+    }
+    
     public function actionReportOpen($ReportName = '', $Ajax = false, $Render = true) {
         
         if ($ReportName == '') {
@@ -65,6 +82,11 @@ class ReportsController extends Controller
         
         $ResultHtml = str_ireplace('<div dir="LTR" style="HEIGHT:100%;WIDTH:100%;direction:ltr" id="oReportDiv">', '<div dir="LTR" style="HEIGHT:calc(100% - 80px);WIDTH:100%;direction:ltr" id="oReportDiv">', $ResultHtml);
         $ResultHtml = str_ireplace('<div style="HEIGHT:100%;WIDTH:100%;" class="ap">', '<div class="ap">', $ResultHtml);
+        
+        if ($ReportName == '/Сметы/Смета 2')
+            $ResultHtml = $this->ReplaceImage($ResultHtml, array('https://test.aliton.ru/images/top-logo.bmp', 'https://test.aliton.ru/images/stump-button.bmp'));
+        
+            
         
         if (!$Ajax)
             $this->render($this->GetViewForReport($ReportName), array(
