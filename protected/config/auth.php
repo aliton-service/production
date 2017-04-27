@@ -720,6 +720,7 @@ return array_merge(
                 'FindWHDoc1',
                 'AdminEvents',
                 'ManagerReplaceMaster',
+                'ManagerObjectEvents',
                 
                 /* Отчеты */
                 'DemandsReportAll',
