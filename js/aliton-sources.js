@@ -3803,6 +3803,7 @@ Sources.SourceEventOffers =
         {name: 'prev_note', type: 'string'},
         {name: 'offergroup', type: 'int'},
         {name: 'demand', type: 'string'},
+        {name: 'emplname', type: 'string'},
     ],
     id: 'code',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EventOffers',
@@ -4985,6 +4986,31 @@ Sources.SourceAudioFiles =
     ],
     id: 'FileName',
     url: '/index.php?r=Audio/GetListFiles',
+    type: 'POST',
+    root: 'Rows',
+    cache: false,
+    async: true,
+    pagenum: 0,
+    pagesize: 200,
+    beforeprocessing: function (data) {
+        this.totalrecords = data[0].TotalRows;
+    }
+};
+
+Sources.SourceObjectEvents =
+{
+    datatype: "json",
+    datafields: [
+        {name: 'evnt_id', type: 'int'},
+        {name: 'evtp_id', type: 'int'},
+        {name: 'eventtype', type: 'string'},
+        {name: 'date', type: 'date'},
+        {name: 'date_exec', type: 'date'},
+        {name: 'employeename', type: 'string'},
+        {name: 'Note', type: 'string'},
+    ],
+    id: 'evnt_id',
+    url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectEvents',
     type: 'POST',
     root: 'Rows',
     cache: false,

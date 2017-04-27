@@ -425,6 +425,8 @@
                         $('#content6').html(data);
                     if (index == 6)
                         $('#content7').html(data);
+                    if (index == 8)
+                        $('#content9').html(data);
                 },
                 error: function(Res) {
                     Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -440,6 +442,8 @@
                         $('#content6').html(Res.responseText);
                     if (index == 6)
                         $('#content7').html(Res.responseText);
+                    if (index == 8)
+                        $('#content9').html(Res.responseText);
                 }
             });
         
@@ -625,6 +629,10 @@
                     });
                     
                     break;
+                    
+                case 8:
+                    loadPage('<?php echo Yii::app()->createUrl('ObjectEvents/Index', array('ObjectGr_id' => "$model->ObjectGr_id")) ?>', 8);
+                    break;
             }
         };
         
@@ -757,6 +765,13 @@ $this->breadcrumbs=array(
                 </div>
             </div>
         </li>
+        <li>
+            <div style="height: 15px; margin-top: 3px;">
+                <div style="margin-left: 4px; vertical-align: middle; text-align: center; float: left;">
+                    Предложения и события графика
+                </div>
+            </div>
+        </li>
     </ul>
     <div style="overflow: auto; height: calc(100% - 2px); background-color: #F2F2F2;">
         <div style="overflow: auto; padding: 5px 10px 0;">
@@ -868,6 +883,9 @@ $this->breadcrumbs=array(
         </div>
     </div>
     
+    <div id='content9' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
+        <div style="width: 100%; height: 100%"></div>
+    </div>
     
 </div>
 

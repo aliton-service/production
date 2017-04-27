@@ -16,6 +16,7 @@ class EventOffers extends MainFormModel
     public $resulltdate = null;
     public $resultcreator_id = null;
     public $offergroup = null;
+    public $emplname = null;
     public $EmplCreate = null;
     public $EmplChange = null;
     public $EmplDel = null;
@@ -53,6 +54,7 @@ class EventOffers extends MainFormModel
                 prev_r.resultname prev_resultname,
                 prev_e.date prev_date,
                 dbo.fio(emp.employeename) prev_emplname,
+                dbo.fio(emp1.employeename) emplname,
                 dbo.is_systemtype_elton(ot.systp_id, e.objectgr_id) is_system
          ";
         $from = "
@@ -63,6 +65,7 @@ class EventOffers extends MainFormModel
                 left join offerresults prev_r on (prev_eo.rslt_id = prev_r.rslt_id)
                 left join events prev_e on (prev_e.evnt_id = prev_eo.evnt_id)
                 left join employees_forobj_v emp on (prev_e.empl_id = emp.employee_id)
+                left join employees_forobj_v emp1 on (e.empl_id = emp1.employee_id)
 
          ";
         $where = " where eo.EmplDel is null ";

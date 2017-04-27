@@ -40,10 +40,23 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('evnt_id', Res.id, '#EventOffersGrid', true);
+                        if ($("#EventOffersGrid").length>0) {
+                            Aliton.SelectRowById('evnt_id', Res.id, '#EventOffersGrid', true);
+                            $('#EventOffersDialog').jqxWindow('close');
+                            $("#EventOffersDialog").on("bindingcomplete", function () {
+                                $('#EventOffersGrid').jqxGrid('updatebounddata');
+                                $('#EventOffersGrid').jqxGrid({ groupable: true}); 
+                            });
+                        }
+                        if ($("#EventOffersGrid2").length>0) {
+                            $('#EventOffersGrid2').jqxGrid('updatebounddata');
+                            $("#EventOffersGrid2").jqxGrid({
+                                groupable: true,
+                                showgroupsheader: false,
+                                groups: ['offertype']
+                            });
+                        }
                         $('#EventOffersDialog').jqxWindow('close');
-                        $('#EventOffersGrid').jqxGrid('updatebounddata');
-                        $('#EventOffersGrid').jqxGrid({ groupable: true}); 
                     }
                     else {
                         $('#BodyEventOffersDialog').html(Res.html);
