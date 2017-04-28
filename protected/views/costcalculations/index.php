@@ -1084,6 +1084,7 @@
                                 var RowIndex = $('#CostCalcEquipsGrid').jqxGrid('getselectedrowindex');
                                 var Val = $('#CostCalcEquipsGrid').jqxGrid('getcellvalue', (RowIndex + 1), "cceq_id");
                                 Aliton.SelectRowById('cceq_id', Val, '#CostCalcEquipsGrid', true);
+                                CostCalcDetails.DetailsRefresh();
                             },
                             error: function(Res) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
@@ -1260,6 +1261,7 @@
                                 var RowIndex = $('#CostCalcWorksGrid').jqxGrid('getselectedrowindex');
                                 var Val = $('#CostCalcWorksGrid').jqxGrid('getcellvalue', RowIndex, "cceq_id");
                                 Aliton.SelectRowById('cceq_id', Val, '#CostCalcWorksGrid', true);
+                                CostCalcDetails.DetailsRefresh();
                             },
                             error: function(Res) {
                                 Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);

@@ -105,6 +105,7 @@
         });
         
         $('#btnSaveWHDocuments').on('click', function(){
+            $('#btnSaveWHDocuments').jqxButton({disabled: true });
             var Url = <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Update')); ?>;
             if (StateInsert)
                 Url = <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')); ?>;
@@ -141,6 +142,7 @@
                             $('#' + WHDocuments.DialogId).jqxWindow('close');
                         else
                             $('#WHDocumentsDialog').jqxWindow('close');
+                        $('#btnSaveWHDocuments').jqxButton({disabled: false });
                     }
                     else {
                         if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null) {
