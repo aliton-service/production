@@ -104,7 +104,7 @@ class WHDocumentsController extends Controller
                 case 1: $model = new WHDocumentsDoc1(); break;
                 case 2: $model = new WHDocumentsDoc2(); break;
                 case 3: $model = new WHDocumentsDoc3(); break;
-                case 4: $model = new WHDocumentsDoc4(); break;
+                case 4: $model = new WHDocumentsDoc4(); $model->empl_id = Yii::app()->user->Employee_id; break;
                 case 7: $model = new WHDocumentsDoc7(); break;
                 case 8: $model = new WHDocumentsDoc8(); break;
                 case 9: $model = new WHDocumentsDoc9(); break;
