@@ -702,9 +702,9 @@
             
             
             $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px'}));
-            $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', decimalDigits: 2}));
+            $("#edPriceEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', decimalDigits: 4}));
             $("#edFactQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px'}));
-            $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
+            $("#edSumEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '130px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0, decimalDigits: 4}));
             $("#edInvQuant").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
             $("#edInvQuantUsed").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '90px', disabled: false, readOnly: true, spinMode: 'simple', spinButtonsStep: 0}));
             $("#edUsedEdit").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, {width: '50px'}));

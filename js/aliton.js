@@ -303,3 +303,102 @@ Aliton.GetTabIndexFromURL = function (defaultTabIndex){
     return tabIndex;
 };
 
+
+var Utf8 = {
+
+    // public method for url encoding
+    encode : function (string) {
+        string = string.replace(/rn/g,"n");
+        var utftext = "";
+
+        for (var n = 0; n < string.length; n++) {
+
+            var c = string.charCodeAt(n);
+
+            if (c < 128) {
+                utftext += String.fromCharCode(c);
+            }
+            else if((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >> 6) | 192);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+            else {
+                utftext += String.fromCharCode((c >> 12) | 224);
+                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+
+        }
+
+        return utftext;
+    },
+
+    // public method for url decoding
+    decode : function (utftext) {
+        var string = "";
+        var i = 0;
+        var c = c1 = c2 = 0;
+
+        while ( i < utftext.length ) {
+
+            c = utftext.charCodeAt(i);
+
+            if (c < 128) {
+                string += String.fromCharCode(c);
+                i++;
+            }
+            else if((c > 191) && (c < 224)) {
+                c2 = utftext.charCodeAt(i+1);
+                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                i += 2;
+            }
+            else {
+                c2 = utftext.charCodeAt(i+1);
+                c3 = utftext.charCodeAt(i+2);
+                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                i += 3;
+            }
+
+        }
+
+        return string;
+    }
+
+}
+
+Aliton.ConvertJSONToCsv = function(Obj, Columns) {
+    var Result = '';
+    var Tmp;
+    
+    for (var j = 0; j < Columns.length; j++) {
+        Result += "\"" + Columns[j].text + "\";";
+    }
+    Result += "\n";
+    
+    for(var i=0; i < Obj.length; i++) {
+        for (var j = 0; j < Columns.length; j++) {
+            if (Obj[i][Columns[j].datafield] != null) {
+                if (typeof(Obj[i][Columns[j].datafield]) == 'string')
+                    Result += "\"" + Obj[i][Columns[j].datafield] + "\";";
+                if (typeof(Obj[i][Columns[j].datafield]) == 'number')
+                    Result += Obj[i][Columns[j].datafield] + ";";
+            }
+            else
+                Result += ";";
+        }
+        Result += "\n";
+    }
+    return Result;
+}
+
+Aliton.GridExportToCsv = function(FileName, Array, Columns) {
+    var File = Aliton.ConvertJSONToCsv(Array, Columns.records);
+    var Url= 'data:text/csv;charset=utf-8,' + '\uFEFF' + encodeURIComponent(File + ';');
+    var Link = document.createElement("a");    
+    Link.href = Url;
+    Link.style = "visibility:hidden";
+    Link.download = FileName;
+    document.body.appendChild(Link);
+    Link.click();
+    document.body.removeChild(Link);
+};
