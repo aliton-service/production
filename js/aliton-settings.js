@@ -10,6 +10,8 @@ var GridDefaultSettings = {
     sorttogglestates: 1,
     showfilterrow: true,
     filterable: true,
+    autosavestate: true,
+    autoloadstate: true,
     //autoshowfiltericon: true,
     pageable: true,
     pagesizeoptions: ['10', '200', '500', '1000'],
@@ -17,11 +19,11 @@ var GridDefaultSettings = {
     columnsresize: true,
     columnsreorder: true,
     virtualmode: false,
-    autosavestate: true,
+    
     enableanimations: false,
     autoshowfiltericon: false,
     theme: Theme,
-    //autoloadstate: true,
+    
     //enablebrowserselection: true,
     localization: getLocalization('ru'),
     updatefilterconditions: function (type, defaultconditions) {
