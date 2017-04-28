@@ -367,6 +367,8 @@ var Utf8 = {
 }
 
 Aliton.ConvertJSONToCsv = function(Obj, Columns) {
+    console.log()
+    
     var Result = '';
     var Tmp;
     
@@ -394,6 +396,7 @@ Aliton.ConvertJSONToCsv = function(Obj, Columns) {
 Aliton.GridExportToCsv = function(FileName, Array, Columns) {
     var File = Aliton.ConvertJSONToCsv(Array, Columns.records);
     var Url= 'data:text/csv;charset=utf-8,' + '\uFEFF' + encodeURIComponent(File + ';');
+    
     var Link = document.createElement("a");    
     Link.href = Url;
     Link.style = "visibility:hidden";

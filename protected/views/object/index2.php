@@ -137,7 +137,8 @@
         $("#btnExportObjects").jqxButton($.extend(true, {}, ButtonDefaultSettings, {disabled: !Admin}));
         
         $('#btnExportObjects').on('click', function() {
-            Aliton.GridExportToCsv('Объекты.csv', $("#ObjectsGrid").jqxGrid('getrows'), $("#ObjectsGrid").jqxGrid('columns'));
+//            Aliton.GridExportToCsv('Объекты.csv', $("#ObjectsGrid").jqxGrid('getrows'), $("#ObjectsGrid").jqxGrid('columns'));
+                $("#ObjectsGrid").jqxGrid('exportdata', 'xls', 'Объекты', true, null, true, <?php echo json_encode(Yii::app()->createUrl('Reports/UpLoadFileGrid'))?>);
         });
         
         $("#btnAddObject").on('click', function() {
