@@ -6,6 +6,7 @@
             PropForm_id: <?php echo json_encode($model->PropForm_id); ?>,
             FullName: <?php echo json_encode($model->FullName); ?>,
             LphName: <?php echo json_encode($model->LphName); ?>,
+            Address_id: <?php echo json_encode($model->Address_id); ?>,
             Address: <?php echo json_encode($model->Address); ?>,
             Apartment: <?php echo json_encode($model->Apartment); ?>,
             Floor: <?php echo json_encode($model->Floor); ?>,
@@ -46,6 +47,10 @@
             $("#SalesManager").jqxInput('val', ObjectGroup.SalesManager);
         };
         OG.Addr = ObjectGroup.Address;
+        OG.Address_id = ObjectGroup.Address_id;
+        
+        console.log('Address_id:' + OG.Address_id);
+        
         OG.Refresh = function() {
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/GetModel'))?>,

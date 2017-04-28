@@ -64,6 +64,16 @@ class ObjectController extends Controller
             $model->ObjectGr_id = $_POST['ObjectGr_id'];
         }
         
+        if (isset($_POST['Address_id']))
+        {
+            if ($_POST['Address_id'] == 0) {
+                echo 'Address_id:' . $_POST['Address_id'];
+                return;
+            }
+                
+            $model->Address_id = $_POST['Address_id'];
+        }
+        
         if (isset($_POST['Objects']))
         {
             $model->attributes = $_POST['Objects'];

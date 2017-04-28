@@ -3,7 +3,8 @@
         var Mode = '';
         var House = {
             ObjectGr_id: <?php echo json_encode($ObjectGr_id); ?>,
-            CommonObject_id: <?php echo json_encode($CommonObject_id); ?>
+            CommonObject_id: <?php echo json_encode($CommonObject_id); ?>,
+            Address_id: OG.Address_id
         };
         
         var ObjectCorrentRow = {};
@@ -163,7 +164,8 @@
                 async: false,
                 data: {
                     Object_id: Object_id,
-                    ObjectGr_id: ObjectGr_id
+                    ObjectGr_id: ObjectGr_id,
+                    Address_id: House.Address_id
                 },
                 success: function(Res) {
                     $('#EditObjectDialog #BodyDialog').html(Res);

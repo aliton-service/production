@@ -9,6 +9,7 @@
     
     echo '<input name="Objects[ObjectGr_id]" id="Objects_ObjectGr_id" type="text" style="display: none;" value="' . $model->ObjectGr_id . '"/>';
     echo '<input name="Objects[Object_id]" id="Objects_Object_id" type="text" style="display: none;" value="' . $model->Object_id . '"/>';
+    echo '<input name="Objects[Address_id]" id="Objects_Address_id" type="text" style="display: none;" value="' . $model->Address_id . '"/>';
 ?>    
     
 <table>
