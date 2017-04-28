@@ -116,14 +116,4 @@
         за комфортные условия жизни и труда жителей Санкт-Петербурга и области, мы идем в ногу со временем и сегодня являемся прогрессивной и клиентоориентированной компанией.
     </div>
 <?php endif; ?>
-    
-<!--<div id="edAddressList" name="Models[Object_id]"></div>
 
-
-<input type="button" id="btnSetValue" value="Поставить значение"/>
-
-<br>
-<br>
-<br>
-
-<div id="edAddressList2" name="Models[Object_id]"></div>-->

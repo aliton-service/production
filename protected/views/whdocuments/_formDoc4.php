@@ -93,7 +93,7 @@
         $("#edReceiptNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 100} ));
         $("#edDemandEmplEdit").jqxComboBox({ source: EmplRecords, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
         $("#edPromiseEmplEdit").jqxComboBox({ source: EmplRecords, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
-        $("#edCreateEmplEdit").jqxComboBox({ source: EmplRecords, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#edCreateEmplEdit").jqxComboBox({ source: EmplRecords, width: '250', height: '25px', displayMember: "ShortName", valueMember: "Employee_id", disabled: true});
         $("#edPromiseDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '110px', value: WHDocuments.DatePromise, formatString: 'dd.MM.yyyy', dropDownVerticalAlignment: 'top'}));
         $("#edPlanDateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '130px', value: WHDocuments.DatePlan, formatString: 'dd.MM.yyyy', dropDownHorizontalAlignment: 'right', dropDownVerticalAlignment: 'top'}));
         
