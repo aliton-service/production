@@ -113,7 +113,7 @@
         
         if (!StateInsert) {
             $('#edRepMaster').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
-            $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, width: 160 }));
+            $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, width: 160, dropDownVerticalAlignment: 'top' }));
             $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec, width: 160 }));
             $("#edDateOfHelpRequest").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfHelpRequest, width: 160 }));
             $("#edDateOfTransfer").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTransfer, width: 145 }));
