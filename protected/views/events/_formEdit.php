@@ -32,7 +32,7 @@
         $("#Employee").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: EmployeeDataAdapter, displayMember: "ShortName", valueMember: "Employee_id", width: 230 }));
         $("#EmplCreate").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: EmployeeDataAdapter, displayMember: "ShortName", valueMember: "Employee_id", width: 230, disabled: true }));
         
-        $("#Note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 70 }));
+        $("#Note2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 600, height: 70 }));
         
         $("#DateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 117, formatString: 'dd.MM.yyyy', value: null }));
         
@@ -64,7 +64,7 @@
         if (EventEdit.DateAct != null) $("#DateAct").jqxDateTimeInput('val', EventEdit.DateAct);
         if (EventEdit.Who_reported != null) $("#ContactInfo").jqxComboBox('val', EventEdit.Who_reported);
         if (EventEdit.Evaluation != null) $("#Evaluation").jqxInput('val', EventEdit.Evaluation);
-        if (EventEdit.Note != null) $("#Note").jqxTextArea('val', EventEdit.Note);
+        if (EventEdit.Note != null) $("#Note2").jqxTextArea('val', EventEdit.Note);
         
         
         
@@ -234,7 +234,18 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
-                        Aliton.SelectRowById('Evnt_id', Res.id, '#EventsGrid', true);
+                        if ($("#EventsGrid").length>0) {
+                            Aliton.SelectRowById('Evnt_id', Res.id, '#EventsGrid', true);
+                        }
+                        if ($("#ObjectEventsGrid").length>0) {
+                            $('#ObjectEventsGrid').jqxGrid('updatebounddata');
+                            $('#ObjectEventsGrid').jqxGrid({ groupable: true});
+                            $("#ObjectEventsGrid").jqxGrid({
+                                groupable: true,
+                                showgroupsheader: false,
+                                groups: ['eventtype']
+                            });
+                        }
                         $('#EventsDialog').jqxWindow('close');
                     }
                     else {
@@ -262,7 +273,7 @@
 
 <input type="hidden" name="Events[Evnt_id]" value="<?php echo $model->Evnt_id; ?>"/>
 
-<div class="row">
+<div class="row" style="margin: 0;">
     <div class="row-column">Плановая дата: </div>
     <div class="row-column"><div id="Date" name="Events[Date]"></div></div>
     <div class="row-column">Интервал:</div>
@@ -278,7 +289,7 @@
 
 <div class="row">
     <div class="row-column">Примечание:</div>
-    <div class="row-column"><textarea id="Note" name="Events[Note]"></textarea><?php echo $form->error($model, 'Note'); ?></div>
+    <div class="row-column"><textarea id="Note2" name="Events[Note]"></textarea><?php echo $form->error($model, 'Note'); ?></div>
 </div>
 
 <div id='jqxTabsEventOffers' style="margin-top: 10px;">

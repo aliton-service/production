@@ -254,6 +254,8 @@ return array_merge(
     include(dirname(__FILE__).'/security/ValuableInstructionsSecurity.php'),
     /* Звукозаписи */    
     include(dirname(__FILE__).'/security/ClientSoundsSecurity.php'),
+    /* Предложения и события графика в карточке объекта */    
+    include(dirname(__FILE__).'/security/ObjectEventsSecurity.php'),
         
     array(    
         'guest' => array(
@@ -520,6 +522,7 @@ return array_merge(
                 'ManagerInspActOptions',
                 'ManagerValuableInstructions',
                 'AdminClientSounds',
+                'AdminObjectEvents',
                 
                 /* Отчеты */
                 'Demand1Report',
@@ -717,6 +720,7 @@ return array_merge(
                 'FindWHDoc1',
                 'AdminEvents',
                 'ManagerReplaceMaster',
+                'ManagerObjectEvents',
                 
                 /* Отчеты */
                 'DemandsReportAll',
