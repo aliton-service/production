@@ -42,6 +42,7 @@ class ObjectsGroup extends MainFormModel
     public $Telephone;
     public $AreaSize;
     public $Inform_id;
+    public $CommonObject_id;
     
     public function rules()
     {
@@ -131,7 +132,8 @@ class ObjectsGroup extends MainFormModel
                     ."  og.EmplCreate,"
                     ."  og.DateCreate,"
                     ."  og.EmplChange,"
-                    ."  og.DateChange";
+                    ."  og.DateChange,"
+                    ."  (Select max(o.Object_id) From Objects o Where o.ObjectGr_id = og.ObjectGr_id and o.DelDate is Null and o.Doorway = 'Общее') as CommonObject_id";
         $From =     "\nFrom ObjectsGroup og left join Organizations_v p on (og.PropForm_id = p.Form_id)"
                     ."  left join Addresses_v a on (a.Address_id = og.Address_id)"
                     ."  left join ClientGroups cg on (og.clgr_id = cg.clgr_id)"
