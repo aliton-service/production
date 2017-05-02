@@ -265,6 +265,24 @@ return array_merge(
             'data' => null
         ),
         
+        'ViewDocuments' => array(
+            'type' => CAuthItem::TYPE_ROLE,
+            'description' => 'Просмотр документов',
+            'bizRule' => null,
+            'data' => null,
+            'children' => array(
+                'ViewDeliveryDemands',
+                'WHDocumentsView',
+                'ViewRepairs',
+                'ViewMonitoringDemands',
+                'ViewMonitoringDemandDetails',
+                'ViewCostCalculations',
+                'ViewContractsS',
+                'ViewDocuments',
+                'ViewWhActs',
+            ),
+        ),
+        
         'Storekeeper' => array(
             'type' => CAuthItem::TYPE_ROLE,
             'description' => 'Кладовщик',
@@ -348,6 +366,7 @@ return array_merge(
                 'AdminOfferDemands',
                 'AllLoadObjects',
                 'ManagerStreets',
+                'ViewDocuments',
                 
             ),
         ),
@@ -370,6 +389,7 @@ return array_merge(
                 'ManagerContacts',
                 'UserContractsS',
                 'AllLoadObjects',
+                'ViewDocuments',
                 /* Отчеты*/
                 'Demand1Report',
             ),
@@ -392,6 +412,7 @@ return array_merge(
                 'ManagerContacts',
                 'UserContractsS',
                 'AllLoadObjects',
+                'ViewDocuments',
             ),
         ),
 
@@ -1005,7 +1026,7 @@ return array_merge(
                 'ManagerOfferDemands',
                 'ManagerEquips',
                 'ManagerEqipGroups',
-                
+                'ViewDocuments',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
