@@ -69,6 +69,8 @@
                 virtualmode: !LoadAllObjects,
                 autoshowfiltericon: true,
                 showfiltermenuitems: false,
+                autosavestate: false,
+                autoloadstate: false,
                 //source: DemDataAdapter,
                 ready: function() {
                     var State = $('#ObjectsGrid').jqxGrid('getstate');

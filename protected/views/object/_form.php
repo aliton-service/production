@@ -52,6 +52,7 @@
 
 <input name="Objects[ObjectGr_id]" type="hidden" value="<?php echo $model->ObjectGr_id; ?>" />
 <input name="Objects[Object_id]" type="hidden" value="<?php echo $model->Object_id; ?>" />
+<input name="Objects[Address_id]" type="hidden" value="<?php echo $model->Address_id; ?>" />
 
 <div class="row">
     <div class="row-column">Подъезд</div>

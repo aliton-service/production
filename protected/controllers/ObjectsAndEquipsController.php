@@ -41,8 +41,9 @@ class ObjectsAndEquipsController extends Controller
                 'o.Doorway' => '\'Общее\'',
             ));
             
-            if (count($Objects) > 0)
+            if (count($Objects) > 0) {
                 $Object_id = $Objects[0]['Object_id'];
+            }
             else
                 $Object_id = 0;
             
@@ -98,6 +99,7 @@ class ObjectsAndEquipsController extends Controller
             $this->renderPartial('_grid_common', array(
                 'Object_id' => $Object_id,
                 'ObjectGr_id' => $ObjectGr_id,
+                
             ), false, true);
         }
     }

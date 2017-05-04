@@ -583,6 +583,8 @@
                             pagesize: 200,
                             columnsreorder: true,
                             virtualmode: true,
+                            autosavestate: false,
+                            autoloadstate: false,
                             ready: function() {
                                 var State = $('#Grid4').jqxGrid('getstate');
                                 var Columns = GridState.LoadGridSettings('#Grid4', 'TrebGrid4');

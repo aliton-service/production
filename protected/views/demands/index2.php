@@ -171,6 +171,8 @@
                 width: '100%',
                 showfilterrow: false,
                 pagermode: 'pagermode',
+                autosavestate: false,
+                autoloadstate: false,
                 //rowsheight: 20,
                 //columnsheight: 25,
                 autoshowfiltericon: true,
