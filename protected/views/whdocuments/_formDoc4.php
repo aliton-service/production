@@ -137,6 +137,8 @@
                             }
                             if ($('#GridDocuments').length>0)
                                 $('#GridDocuments').jqxGrid('updatebounddata');
+                            if ($('#CostCalcDocumentsGrid').length>0)
+                                $('#CostCalcDocumentsGrid').jqxGrid('updatebounddata');
                         }
                         if (WHDocuments.DialogId != '' && WHDocuments.DialogId != null)
                             $('#' + WHDocuments.DialogId).jqxWindow('close');

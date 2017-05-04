@@ -80,9 +80,12 @@
                                 location.reload();
                             }
                         }
-                        if (Document.DialogId == 'CostCalculationsDialog')
+                        if (Document.DialogId == 'CostCalculationsDialog'){
                             $('#RefreshCostCalcDocuments').click();
-                        
+                        }
+                        if ($('#CostCalcDocumentsGrid').length>0) {
+                            $('#CostCalcDocumentsGrid').jqxGrid('updatebounddata');
+                        }
                     } else {
                         $('#' + Document.BodyDialogId).html(Res);
                     }

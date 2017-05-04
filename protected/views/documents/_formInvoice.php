@@ -102,8 +102,11 @@
                         $('#' + Document.DialogId).jqxWindow('close');
                         if (Document.DialogId == 'NewContractDialog') {
                             if (StateInsert) {
-                                $("#ContractsGrid").jqxGrid('updatebounddata');
-                                $("#ContractsGrid").jqxGrid('selectrow', 0);
+                                if ($('#ContractsGrid').length>0) {
+                                    $("#ContractsGrid").jqxGrid('updatebounddata');
+                                    $("#ContractsGrid").jqxGrid('selectrow', 0);
+                                }
+                                
                             } else {
                                 location.reload();
                             }
@@ -112,7 +115,9 @@
                             $('#RefreshCostCalcDocuments').click();
 //                            window.open('/index.php?r=/index.php?r=Documents/Index&ContrS_id=')
                         }
-                        
+                        if ($('#CostCalcDocumentsGrid').length>0) {
+                            $('#CostCalcDocumentsGrid').jqxGrid('updatebounddata');
+                        }
                     } else {
                         $('#' + Document.BodyDialogId).html(Res);
                     }

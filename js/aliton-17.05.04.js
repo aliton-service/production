@@ -231,19 +231,6 @@ Aliton.UndoWorkedOut = function (Demand_id) {
     });
 };
 
-/* Отмена отработки заявки */
-Aliton.UndoWorkedOut = function (Demand_id) {
-    $.ajax({
-        url: '/index.php?r=Demands/UndoWorkedOut&Demand_id=' + Demand_id,
-        async: false,
-        success: function(Res) {
-            if (JSON.parse(Res) === 0)
-                Aliton.ViewDemand(Demand_id, false);
-                
-        }
-    });
-};
-
 Aliton.ViewDemand = function (Demand_id, Blank) {
     if (Blank == undefined || Blank == true)
         Blank = true;
@@ -275,6 +262,15 @@ Aliton.ViewClient = function (ObjectGr_id, Demand_id) {
 
 Aliton.EditDemand = function(Demand_id) {
     location.href = '/index.php?r=Demands/Update&id=' + Demand_id;
+};
+
+/* Проверяем, есть ли в смете документ определенного типа */
+Aliton.CheckToCostCalcDocs = function(docs, docType) {
+
+    function isDocExist(doc) {
+        return doc.DocType_id === docType;
+    }
+    return docs.some(isDocExist);
 };
 
 Aliton.Message = [];
@@ -405,3 +401,5 @@ Aliton.GridExportToCsv = function(FileName, Array, Columns) {
     Link.click();
     document.body.removeChild(Link);
 };
+
+

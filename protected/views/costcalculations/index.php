@@ -167,6 +167,40 @@
             });
         };
         
+        var CostCalcDocumentsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCostCalcDocuments), {
+            data: {
+                calc_id: CostCalculations.calc_id
+            },
+        });
+        CostCalcDocumentsDataAdapter.dataBind();
+        
+        $("#CostCalcDocumentsGrid").jqxGrid(
+            $.extend(true, {}, GridDefaultSettings, {
+                pagesizeoptions: ['10', '200', '500', '1000'],
+                pagesize: 200,
+                sortable: true,
+                showfilterrow: false,
+                width: '99%',
+                height: 'calc(100% - 52px)',
+                source: CostCalcDocumentsDataAdapter,
+                columns: [
+                    { text: 'Наименование', datafield: 'DocName',  filtercondition: 'CONTAINS', width: 190},
+                    { text: 'Номер', datafield: 'DocNumber',  filtercondition: 'CONTAINS', width: 70},
+                    { text: 'Дата док-та', datafield: 'DocDate', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Сумма', datafield: 'DocSum', filtercondition: 'CONTAINS', width: 70 },
+                    { text: 'Статус', datafield: 'DocState', filtercondition: 'CONTAINS', width: 90 },
+                    { text: 'Дата статуса', datafield: 'DocDateState', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Вид работ', datafield: 'DocWrtpName', filtercondition: 'CONTAINS', width: 120 },
+                    { text: 'Приоритет', datafield: 'DocPrior', filtercondition: 'CONTAINS', width: 90 },
+                    { text: 'Предельная дата', datafield: 'DocDeadline', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Дата принятия', datafield: 'DocAccept', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
+                    { text: 'Создал', datafield: 'DocUserCreate', filtercondition: 'CONTAINS', width: 180 },
+                    { text: 'Юр. лицо', datafield: 'DocJuridicalPerson', filtercondition: 'CONTAINS', width: 180 },
+                ]
+            })
+        );
+                
+        
         $("#DateCCDetails").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: CostCalculations.date, formatString: 'dd.MM.yyyy H:mm', readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 130}));
         $("#group_name").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 210 }));
         $("#workname").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
@@ -218,6 +252,8 @@
         $("#ddbtnDocuments").on('open', function(){
             CheckBtnDocuments();
         });
+        
+    
         $("#ddbtnDocuments").jqxDropDownButton({initContent: function(){
             $('#btnAddDocSmets').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
             $('#btnAddDocDopSmets').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
@@ -230,6 +266,69 @@
             $('#btnAddDocBuhAct').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
             $('#btnAddDocContract3').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
             
+            var currentDocType;
+            $('#IsDocExistDialog').jqxWindow(
+                $.extend(true, DialogDefaultSettings, {
+                    width: 540,
+                    height: 130,
+                    initContent: function () {
+                        $("#IsDocExistDialogYes").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+                        $("#IsDocExistDialogCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+                        var customCostCalcType;
+                        console.log('CostCalculations.type = ' + CostCalculations.type);
+                        switch (Number(CostCalculations.type)) {
+                            case 0:
+                                customCostCalcType = 'этом КП';
+                                break;
+                            case 1:
+                                customCostCalcType = 'этой смете';
+                                break;
+                            case 2:
+                                customCostCalcType = 'этой доп. смете';
+                                break;
+                        }
+                         console.log('customCostCalcType = ' + customCostCalcType);
+                         
+                        $("#customCostCalcType").html(customCostCalcType);
+
+                        $("#IsDocExistDialogCancel").on('click', function () {
+                            $('#IsDocExistDialog').jqxWindow('Close');
+                        });
+
+                        $("#IsDocExistDialogYes").on('click', function () {
+                            $('#IsDocExistDialog').jqxWindow('Close');
+                            switch (currentDocType) {
+                                case 0:
+                                    addDocMonitoring();
+                                    break;
+                                case 1:
+                                    addDocTreb();
+                                    break;
+                                case 4:
+                                    addDocContract1();
+                                    break;
+                                case 3:
+                                    addDocContract2();
+                                    break;
+                                case 2:
+                                    addDocAct();
+                                    break;
+                                case 5:
+                                    addDocDelivery();
+                                    break;
+                                case 6:
+                                    addDocBuhAct();
+                                    break;
+                                case 7:
+                                    addDocContract3();
+                                    break;
+                            }
+                        });
+                    }
+                })
+            );
+    
+    
             $('#btnAddDocSmets').on('click', function(){
                 
                 if ((CostCalculations.count_type0 > 0) && (CostCalculations.count_type1 == 0)) {
@@ -295,9 +394,8 @@
                 
             });
             
-            $('#btnAddDocTreb').on('click', function() {
-                
-                $('#CostCalculationsDialog').jqxWindow({width: 720, height: 500, position: 'center', isModal: true});
+            var addDocTreb = function () {
+                $('#CostCalculationsDialog').jqxWindow({width: 750, height: 530, position: 'center', isModal: true});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('WHDocuments/Create')) ?>,
                     type: 'POST',
@@ -323,7 +421,6 @@
                     },
                     success: function(Res) {
                         Res = JSON.parse(Res);
-                        
                         $("#BodyCostCalculationsDialog").html(Res.html);
                         $('#CostCalculationsDialog').jqxWindow('open');
                     },
@@ -331,9 +428,22 @@
                         Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
                     }
                 });
+            };
+            
+            $('#btnAddDocTreb').on('click', function() {
+                var docExist = Aliton.CheckToCostCalcDocs(CostCalcDocumentsDataAdapter.records, 1);
+                if (docExist) {
+                    currentDocType = 1;
+                    $('#IsDocExistDialog').jqxWindow('open');
+                    $("#customDoc").html('требование на выдачу');
+                }
+                else if (!docExist) {
+                    addDocTreb();
+                }
             });
             
-            $('#btnAddDocMonitoring').on('click', function(){
+            
+            var addDocMonitoring = function () {
                 $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: true, height: '330px', width: '640'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Insert');?>",
@@ -353,9 +463,23 @@
                         $('#CostCalculationsDialog').jqxWindow('open');
                     }
                 });
+            };
+            
+            $('#btnAddDocMonitoring').on('click', function(){
+            console.log(CostCalcDocumentsDataAdapter.records);
+                var docExist = Aliton.CheckToCostCalcDocs(CostCalcDocumentsDataAdapter.records, 0);
+                if (docExist) {
+                    currentDocType = 0;
+                    $('#IsDocExistDialog').jqxWindow('open');
+                    $("#customDoc").html('заявка на мониторинг');
+                }
+                else if (!docExist) {
+                    addDocMonitoring();
+                }
             });
             
-            $('#btnAddDocContract1').on('click', function() {
+            
+            var addDocContract1 = function () {
                 $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '630px', width: '870'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
@@ -391,8 +515,23 @@
                         $('#CostCalculationsDialog').jqxWindow('open');
                     }
                 });
+            };
+            
+            $('#btnAddDocContract1').on('click', function() {
+                var docExist = Aliton.CheckToCostCalcDocs(CostCalcDocumentsDataAdapter.records, 4);
+                if (docExist) {
+                    currentDocType = 4;
+                    $('#IsDocExistDialog').jqxWindow('open');
+                    $("#customDoc").html('счет');
+                }
+                else if (!docExist) {
+                    addDocContract1();
+                }
             });
-            $('#btnAddDocContract2').on('click', function() {
+            
+            
+            
+            var addDocContract2 = function () {
                 $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '630px', width: '870'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
@@ -428,8 +567,23 @@
                         $('#CostCalculationsDialog').jqxWindow('open');
                     }
                 });
+            };
+            
+            $('#btnAddDocContract2').on('click', function() {
+                var docExist = Aliton.CheckToCostCalcDocs(CostCalcDocumentsDataAdapter.records, 3);
+                if (docExist) {
+                    currentDocType = 3;
+                    $('#IsDocExistDialog').jqxWindow('open');
+                    $("#customDoc").html('доп. соглашение');
+                }
+                else if (!docExist) {
+                    addDocContract2();
+                }
             });
-            $('#btnAddDocAct').on('click', function(){
+            
+            
+            
+            var addDocAct = function () {
                 var SumHightFullValue = $('#edSumHightFull').jqxNumberInput('val');
                 $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '520', width: '990'}));
                 $.ajax({
@@ -450,10 +604,22 @@
                         $('#CostCalculationsDialog').jqxWindow('open');
                     }
                 });
+            };
+            
+            $('#btnAddDocAct').on('click', function(){
+                var docExist = Aliton.CheckToCostCalcDocs(CostCalcDocumentsDataAdapter.records, 2);
+                if (docExist) {
+                    currentDocType = 2;
+                    $('#IsDocExistDialog').jqxWindow('open');
+                    $("#customDoc").html('внутренний акт');
+                }
+                else if (!docExist) {
+                    addDocAct();
+                }
             });
             
-            $('#btnAddDocDelivery').on('click', function(){
-                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '470px', width: '740'}));
+            var addDocDelivery = function () {
+                $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '470', width: '800'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Delivery/Insert');?>",
                     type: 'POST',
@@ -474,9 +640,22 @@
                         $('#CostCalculationsDialog').jqxWindow('open');
                     }
                 });
+            };
+            
+            $('#btnAddDocDelivery').on('click', function(){
+                var docExist = Aliton.CheckToCostCalcDocs(CostCalcDocumentsDataAdapter.records, 5);
+                if (docExist) {
+                    currentDocType = 5;
+                    $('#IsDocExistDialog').jqxWindow('open');
+                    $("#customDoc").html('заявка на доставку');
+                }
+                else if (!docExist) {
+                    addDocDelivery();
+                }
             });
             
-            $('#btnAddDocBuhAct').on('click', function(){
+            
+            var addDocBuhAct = function () {
                 $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: 540, width: 750}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('WHBuhActs/Create');?>",
@@ -502,9 +681,22 @@
                         $('#BodyCostCalculationsDialog').html(Res);
                     }
                 });
+            };
+            
+            $('#btnAddDocBuhAct').on('click', function(){
+                var docExist = Aliton.CheckToCostCalcDocs(CostCalcDocumentsDataAdapter.records, 6);
+                if (docExist) {
+                    currentDocType = 6;
+                    $('#IsDocExistDialog').jqxWindow('open');
+                    $("#customDoc").html('бухгалтерский акт');
+                }
+                else if (!docExist) {
+                    addDocBuhAct();
+                }
             });
             
-            $('#btnAddDocContract3').on('click', function() {
+            
+            var addDocContract3 = function () {
                 $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {resizable: false, height: '450px', width: '810'}));
                 $.ajax({
                     url: "<?php echo Yii::app()->createUrl('Documents/Insert');?>",
@@ -541,6 +733,18 @@
                         $('#CostCalculationsDialog').jqxWindow('open');
                     }
                 });
+            };
+            
+            $('#btnAddDocContract3').on('click', function() {
+                var docExist = Aliton.CheckToCostCalcDocs(CostCalcDocumentsDataAdapter.records, 7);
+                if (docExist) {
+                    currentDocType = 7;
+                    $('#IsDocExistDialog').jqxWindow('open');
+                    $("#customDoc").html('счет-заказ');
+                }
+                else if (!docExist) {
+                    addDocContract3();
+                }
             });
         }});
         
@@ -1294,11 +1498,11 @@
                     $('#CostCalcWorksGrid').jqxGrid('selectrow', 0);
                 break;
                 case 2:
-                    var CostCalcDocumentsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCostCalcDocuments), {
-                        data: {
-                            calc_id: CostCalculations.calc_id
-                        },
-                    });
+//                    var CostCalcDocumentsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceCostCalcDocuments), {
+//                        data: {
+//                            calc_id: CostCalculations.calc_id
+//                        },
+//                    });
                     
                     $('#CostCalcDocumentsGrid').on('rowdoubleclick', function (event) { 
                         $("#MoreInfoCostCalcDocuments").click();
@@ -1314,31 +1518,7 @@
                         $('#DelCostCalcDocuments').jqxButton({disabled: !(CurrentRowDataCCD != undefined)})
                     };
 
-                    $("#CostCalcDocumentsGrid").jqxGrid(
-                        $.extend(true, {}, GridDefaultSettings, {
-                            pagesizeoptions: ['10', '200', '500', '1000'],
-                            pagesize: 200,
-                            sortable: true,
-                            showfilterrow: false,
-                            width: '99%',
-                            height: 'calc(100% - 52px)',
-                            source: CostCalcDocumentsDataAdapter,
-                            columns: [
-                                { text: 'Наименование', datafield: 'DocName',  filtercondition: 'CONTAINS', width: 190},
-                                { text: 'Номер', datafield: 'DocNumber',  filtercondition: 'CONTAINS', width: 70},
-                                { text: 'Дата док-та', datafield: 'DocDate', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
-                                { text: 'Сумма', datafield: 'DocSum', filtercondition: 'CONTAINS', width: 70 },
-                                { text: 'Статус', datafield: 'DocState', filtercondition: 'CONTAINS', width: 90 },
-                                { text: 'Дата статуса', datafield: 'DocDateState', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
-                                { text: 'Вид работ', datafield: 'DocWrtpName', filtercondition: 'CONTAINS', width: 120 },
-                                { text: 'Приоритет', datafield: 'DocPrior', filtercondition: 'CONTAINS', width: 90 },
-                                { text: 'Предельная дата', datafield: 'DocDeadline', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
-                                { text: 'Дата принятия', datafield: 'DocAccept', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
-                                { text: 'Создал', datafield: 'DocUserCreate', filtercondition: 'CONTAINS', width: 180 },
-                                { text: 'Юр. лицо', datafield: 'DocJuridicalPerson', filtercondition: 'CONTAINS', width: 180 },
-                            ]
-                        })
-                    );
+                    
                     
                     
                     $("#CostCalcDocumentsGrid").on('rowselect', function (event) {
@@ -1352,7 +1532,7 @@
                         }
                     });
                     $('#MoreInfoCostCalcDocuments').on('click', function(){
-                        console.log(CurrentRowDataCCD.DocType_id);
+//                        console.log(CurrentRowDataCCD.DocType_id);
                         if (CurrentRowDataCCD != undefined) {
                             var Type = parseInt(CurrentRowDataCCD.DocType_id);
                             if (Type == 0)
@@ -1810,5 +1990,21 @@
     </div>
     <div style="padding: 10px;" id="DialogCostCalculationsContent">
         <div style="" id="BodyCostCalculationsDialog"></div>
+    </div>
+</div>
+
+
+<div id="IsDocExistDialog" style="display: none">
+    <div id="customWindowHeader">
+        <span id="captureContainer" style="float: left">Внимание! </span>
+    </div>
+    <div id="customWindowContent" style="overflow: hidden">
+        <div style="margin: 10px">
+            <div>В <span id="customCostCalcType"></span> уже есть <span id="customDoc" style="font-weight: bold;"></span>, создать еще?</div>
+            <div style="margin-top: 25px">
+                <div style="float: left"><input type="button" value="Да" id='IsDocExistDialogYes' /></div>
+                <div style="float: right"><input type="button" value="Отмена" id='IsDocExistDialogCancel' /></div>
+            </div>
+        </div>
     </div>
 </div>

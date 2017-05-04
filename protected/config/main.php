@@ -69,7 +69,7 @@ return array(
                             'baseUrl' => '/js',
 
                             'js' => array(
-                                    'aliton.js',
+                                    'aliton-17.05.04.js',
                             ),
                         ),
                     ),
