@@ -468,6 +468,22 @@
             'data' => null,
         ),
         
+        
+        /* Задачи */
+        'TasksReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Задачи',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'TasksReport1' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Отчет по задачам',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
     );
 ?>
 

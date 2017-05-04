@@ -58,6 +58,8 @@
             
         });
         
+        
+        
         $("#ObjectsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, GridsSettings['ObjectsGrid'], {
                 pagesizeoptions: ['10', '200', '500', '1000', '50000'],
@@ -69,8 +71,8 @@
                 virtualmode: !LoadAllObjects,
                 autoshowfiltericon: true,
                 showfiltermenuitems: false,
-                autosavestate: false,
-                autoloadstate: false,
+                autosavestate: true,
+                autoloadstate: true,
                 //source: DemDataAdapter,
                 ready: function() {
                     var State = $('#ObjectsGrid').jqxGrid('getstate');
@@ -356,6 +358,22 @@
             $("#edDate").jqxDateTimeInput('val', new Date() );
             
         });
+        var obj = {
+            columns: [
+                {
+                    name: 'col1',
+                    width: '100px'
+                },
+                {
+                    name: 'col2',
+                    width: '200px'
+                },
+                {
+                    name: 'col3',
+                    width: '300px'
+                },
+            ]
+        };
         
     });
 </script>    

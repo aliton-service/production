@@ -341,6 +341,8 @@ return array_merge(
                 'Employee1Report',
                 'Employee2Report',
                 'Employee3Report',
+                'TasksReportAll',
+                'TasksReport1',
             ),
         ),
         
@@ -628,6 +630,9 @@ return array_merge(
                 'DebtorsReportAll',
                 'Debt1Report',
                 'Debt2Report',
+                
+                'TasksReportAll',
+                'TasksReport1',
                 ),
         ),
         

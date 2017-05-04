@@ -53,6 +53,7 @@ return array(
                             'baseUrl' => '/js',
                             'js' => array(
                                 'jquery-1.11.3.min.js',
+                                'jquery.cookie.js',
                                 '/jqwidgets/localization.js',
                                 'aliton-sources.js',
                                 'aliton-settings-17.05.04.01.js',

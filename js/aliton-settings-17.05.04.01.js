@@ -338,6 +338,8 @@ GridState.SaveGridSettings = function(ID, KEY) {
 };
 
 GridState.StateInitGrid = function(ID, KEY) {
+    console.log('123');
+    console.log($('#ObjectsGrid').jqxGrid('ready'));
     $('#' + ID).on('bindingcomplete', function(){
 //        $('#' + ID).jqxGrid('selectrow', 0);
         

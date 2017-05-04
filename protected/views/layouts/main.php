@@ -285,7 +285,15 @@
 
                             array('label'=>'Авторизация', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                             array('label'=>'Отчеты', 'url'=>'#', 'items' => array(
+                                array('label'=>'Задачи', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('TasksReportAll'), 'items'=>array(
+                                    array('label' => 'Отчет по задачам', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Задачи/Отчет по задачам', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('TasksReport1'),
+                                        ),
+                                    ),
+                                ),
                                 array('label'=>'Заявки', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('DemandsReportAll'), 'items'=>array(
+                                    
                                     array('label' => 'Отчет по заявкам Call-центра', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Отчет по заявкам Call-центра', 'Render' => 0)),
                                             'visible'=>Yii::app()->user->checkAccess('DemandsReport1')
