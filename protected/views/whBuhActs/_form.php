@@ -130,7 +130,9 @@
                         else {
                             location.reload();
                         } 
-                            
+                        if ($('#CostCalcDocumentsGrid').length>0) {
+                            $('#CostCalcDocumentsGrid').jqxGrid('updatebounddata');
+                        }
                     } else {
                         $('#' + WHBuhActs2.BodyDialogId).html(Res.html);
                     }

@@ -277,7 +277,9 @@
                             $('#RefreshCostCalcDocuments').click();
                         if (DeliveryDemands.DialogId == 'RepairsDialog')
                             $('#GridDocuments').jqxGrid('updatebounddata');
-                        
+                        if ($('#CostCalcDocumentsGrid').length>0) {
+                            $('#CostCalcDocumentsGrid').jqxGrid('updatebounddata');
+                        }
                         window.open(<?php echo json_encode(Yii::app()->createUrl('Delivery/View'))?> + '&Dldm_id=' + Res.id);
                     }
                     else

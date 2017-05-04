@@ -139,7 +139,7 @@ class WHDocumentsController extends Controller
                 if ((int)$model->dctp_id == 4) {
                     $modelUpd->SP_INSERT_NAME = 'INSERT_Treb';
                 }
-                $Result =  $modelUpd->Insert();
+                $Result = $modelUpd->Insert();
                 $ObjectResult['result'] = 1;
                 $ObjectResult['id'] = $Result['docm_id'];
                 echo json_encode($ObjectResult);
