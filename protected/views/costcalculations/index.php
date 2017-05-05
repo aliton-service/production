@@ -991,6 +991,8 @@
                 
                 
                 $('#btnSendAgreedCostCalculations').on('click', function() {
+//                      $("#MailTo").attr("href", "mailto:ban@aliton.ru" + "?subject=Согласование сметы&body=Прошу согласовать смету №<a href=\"http://test.aliton.ru/\">123</a>");
+//                      document.getElementById('MailTo').click();
                     $.ajax({
                         url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/SendAgreed')) ?>,
                         type: 'POST',
@@ -2035,3 +2037,5 @@
         </div>
     </div>
 </div>
+
+<a style="display: none" id="MailTo" href=""></a>

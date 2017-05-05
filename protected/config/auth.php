@@ -1032,6 +1032,7 @@ return array_merge(
                 'ManagerEquips',
                 'ManagerEqipGroups',
                 'ViewDocs',
+                'ManagerInspectionActs',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
