@@ -23,7 +23,7 @@ class DemandsController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'SalesView', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut', 'GetPotential', 'SavePotential'),
+                'actions' => array('index', 'view', 'SalesView', 'FindDemand', 'equipAnalog', 'tabGeneral', 'tabAdministration', 'DemandFilters','DemandExec','Tomaster','RepGeneral', 'Report', 'Message', 'UndoWorkedOut', 'GetPotential', 'SavePotential', 'PrintProgress'),
                 'roles' => array(
                     'ViewDemands',
                 ),
@@ -67,6 +67,19 @@ class DemandsController extends Controller
         );
     }
         
+        public function actionPrintProgress() {
+            if (isset($_GET['Demand_id'])) {
+                $Progress = new ExecutorReports();
+                $Result = $Progress->Find(array(), array(
+                    'Demand_id = ' . $_GET['Demand_id'],
+                ));
+                $this->renderPartial('PrintProgress', array(
+                    'Progress' => $Result,
+                    'Demand_id' => $_GET['Demand_id'],
+                ));
+            }
+        }
+    
         public function actionTabGeneral(){
             $this->renderPartial('TabGeneral',array(), false, true);
         }
