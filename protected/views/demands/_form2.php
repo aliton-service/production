@@ -16,6 +16,7 @@
             Address: '<?php echo $model->Address; ?>',
             ServiceType: '<?php echo $model->ServiceType; ?>',
             Master: '<?php echo $model->Master; ?>',
+            ExecOther: '<?php echo $model->ExecOther; ?>',
             AgreeDate: Aliton.DateConvertToJs('<?php echo $model->AgreeDate; ?>'),
             RepMaster: '<?php echo $model->RepMaster; ?>',
             DateMaster: Aliton.DateConvertToJs('<?php echo $model->DateMaster; ?>'),
@@ -96,7 +97,6 @@
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateReg, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Тариф обслуживания", value: Demand.ServiceType}));
         $("#chbDateMaster").jqxCheckBox({ width: 160, height: 25 });
-        $("#chbOtherExecutor").jqxCheckBox({ width: 180, height: 25 });
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '180', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypesRecords, width: '300', height: '25px', displayMember: "DemandType", valueMember: "DType_id"});
         $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypesRecords, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
@@ -132,7 +132,7 @@
         }
         // Проставляем знаячение
         if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
-
+        if (Demand.ExecOther != '') $("#cmbExecutor").jqxComboBox('val', Demand.ExecOther);
         
         // Инициализация событий
         $("#cmbDemandType").bind('select', function(event) {
@@ -262,17 +262,15 @@
             $("#btnSave").jqxButton({disabled: true});
             var State = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
             var url = '';
-            console.log($("#chbDateMaster").jqxCheckBox('val'));
+//            console.log($("#chbDateMaster").jqxCheckBox('val'));
             if (State)
                 url = <?php echo json_encode(Yii::app()->createUrl('Demands/Create')) ?> 
                     + '&ToMaster=' + $("#chbDateMaster").jqxCheckBox('val') 
-                    + '&OtherExecutor=' + $("#chbOtherExecutor").jqxCheckBox('val') 
                     + '&ExecutorId=' + $("#cmbExecutor").jqxComboBox('val');
             else
                 url = <?php echo json_encode(Yii::app()->createUrl('Demands/Update')) ?> 
                     + '&id=' + $("#edDemand_id").val() 
                     + '&ToMaster=' + $("#chbDateMaster").jqxCheckBox('val') 
-                    + '&OtherExecutor=' + $("#chbOtherExecutor").jqxCheckBox('val') 
                     + '&ExecutorId=' + $("#cmbExecutor").jqxComboBox('val');
             $.ajax({
                 url: url,
@@ -339,20 +337,20 @@
     <div class="row-column">Особые условия: <b><?php echo $Objects->Condition; ?></b></div>
 </div>
 <div class="row" style="margin-top: 7px;">
-    <div class="row-column" style="width: 210px;">Дата и время заявки</div>
-    <div class="row-column" style="width: 200px;">Тариф обслуживания</div>
-    <div class="row-column"><div id='chbOtherExecutor'>Другой исполнитель:</div></div>
+    <div class="row-column" style="width: 210px;">Дата и время заявки:</div>
+    <div class="row-column" style="width: 200px;">Тариф обслуживания:</div>
+    <div class="row-column" style="width: 200px;">Исполнитель:</div>
     <div class="row-column" style="margin-left: 30px;"><div id='chbDateMaster'>Передать мастеру</div></div>
 </div>
 <div class="row" style="margin-top: 0px;">
     <div class="row-column"><div id='edDate' name="Demands[DateReg]"></div></div>
     <div class="row-column"><input name="Demands[ServiceType]" type="text" id="edServiceType"/></div>
-    <div class="row-column"><div id='cmbExecutor'><?php echo $model->ExecOther; ?></div></div>
+    <div class="row-column"><div id='cmbExecutor' name="Demands[ExecOther]"></div></div>
 </div>
 <div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="width: 303px;">Тип заявки</div>
-    <div class="row-column" style="width: 303px;">Тип системы</div>
-    <div class="row-column" style="width: 180px;">Тип оборудования</div>
+    <div class="row-column" style="width: 303px;">Тип заявки:</div>
+    <div class="row-column" style="width: 303px;">Тип системы:</div>
+    <div class="row-column" style="width: 180px;">Тип оборудования:</div>
 </div>
 <div class="row" style="margin-top: 0px;">
     <div class="row-column"><div id='cmbDemandType' name="Demands[DType_id]"><?php echo $model->DType_id; ?></div></div>
@@ -360,10 +358,10 @@
     <div class="row-column"><div id='cmbEquipType' name="Demands[DEquip_id]"></div></div>
 </div>
 <div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="width: 285px;">Неисправность</div>
-    <div class="row-column" style="width: 220px;">Приоритет</div>
-    <div class="row-column" style="width: 150px;">Предельная дата</div>
-    <div class="row-column" style="width: 150px;">Согласованная дата</div>
+    <div class="row-column" style="width: 285px;">Неисправность:</div>
+    <div class="row-column" style="width: 220px;">Приоритет:</div>
+    <div class="row-column" style="width: 150px;">Предельная дата:</div>
+    <div class="row-column" style="width: 150px;">Согласованная дата:</div>
     
 </div>
 <div class="row" style="margin: 0px;">
@@ -373,8 +371,8 @@
     <div class="row-column"><div id='edAgreeDate' name="Demands[AgreeDate]"></div></div>
 </div>
 <div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="width: 502px;">Контактное лицо</div>
-    <div class="row-column" style="width: 293px;">Из карточки клиента</div>
+    <div class="row-column" style="width: 502px;">Контактное лицо:</div>
+    <div class="row-column" style="width: 293px;">Из карточки клиента:</div>
 </div>
 <div class="row" style="margin-bottom: 0px; margin-top: 0px;">
     <div class="row-column" style="margin-right: 2px;"><input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" /><div><?php echo $form->error($model, 'Contacts'); ?></div></div>
@@ -387,23 +385,23 @@
 -->
 <?php if (Yii::app()->controller->action->id == 'Update') { ?>
     <div class="row" style="margin-top: 5px;">
-        <div class="row-column">Дата доклада о помощи <div id='edDateOfHelpRequest' name="Demands[DateOfHelpRequest]"></div></div>
-        <div class="row-column">Дата перевода заявки <div id='edDateOfTransfer' name="Demands[DateOfTransfer]"></div></div>
-        <div class="row-column">Причина несв. закрытия заявки <div id='cmbDelayedClosureReason' name="Demands[DelayedClosureReason_id]"></div></div>
-        <div class="row-column">Причина перевода заявки<div id='cmbTransferReason' name="Demands[TransferReason]"></div><div><?php echo $form->error($model, 'TransferReason'); ?></div></div>
+        <div class="row-column">Дата доклада о помощи: <div id='edDateOfHelpRequest' name="Demands[DateOfHelpRequest]"></div></div>
+        <div class="row-column">Дата перевода заявки: <div id='edDateOfTransfer' name="Demands[DateOfTransfer]"></div></div>
+        <div class="row-column">Причина несв. закрытия заявки: <div id='cmbDelayedClosureReason' name="Demands[DelayedClosureReason_id]"></div></div>
+        <div class="row-column">Причина перевода заявки: <div id='cmbTransferReason' name="Demands[TransferReason]"></div><div><?php echo $form->error($model, 'TransferReason'); ?></div></div>
     </div>
     <div class="row" style="margin-top: 5px;">
-        <div class="row-column">Причина закрытия <div id='cmbCloseReason' name="Demands[clrs_id]"></div></div>
-        <div class="row-column">Причина просрочки <div id='cmbDelayReason' name="Demands[dlrs_id]"></div><div><?php echo $form->error($model, 'dlrs_id'); ?></div></div>
-        <div class="row-column">Результат заявки <div id='cmbDemandResult' name="Demands[rslt_id]"></div><div><?php echo $form->error($model, 'rslt_id'); ?></div></div>
+        <div class="row-column">Причина закрытия: <div id='cmbCloseReason' name="Demands[clrs_id]"></div></div>
+        <div class="row-column">Причина просрочки: <div id='cmbDelayReason' name="Demands[dlrs_id]"></div><div><?php echo $form->error($model, 'dlrs_id'); ?></div></div>
+        <div class="row-column">Результат заявки: <div id='cmbDemandResult' name="Demands[rslt_id]"></div><div><?php echo $form->error($model, 'rslt_id'); ?></div></div>
     </div>
 <?php } ?>
 
 <div class="row" style="margin-top: 0;">
-    <div class="row-column">Отказники <textarea id="edRefusers" name="Demands[Refusers]"><?php echo $ObjectsGroup->Refusers; ?></textarea></div>
+    <div class="row-column">Отказники: <textarea id="edRefusers" name="Demands[Refusers]"><?php echo $ObjectsGroup->Refusers; ?></textarea></div>
 </div>    
 <div class="row" style="margin-top: 0;">
-    <div class="row-column">Неисправность <textarea id="edDemandText" name="Demands[DemandText]"><?php echo $model->DemandText; ?></textarea></div>
+    <div class="row-column">Неисправность: <textarea id="edDemandText" name="Demands[DemandText]"><?php echo $model->DemandText; ?></textarea></div>
 </div>
 
 <!-- Если мы редактируем, то выводим поля: Отчет мастера, Дата передач, Дата выполнения -->

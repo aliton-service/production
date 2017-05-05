@@ -174,7 +174,7 @@ class DemandsController extends Controller
             ));
 	}
 
-	public function actionCreate($ToMaster = false, $OtherExecutor = false, $ExecutorId = null) {
+	public function actionCreate($ToMaster = false) {
             $model = new Demands;
             
             $ObjectResult = array(
@@ -199,10 +199,10 @@ class DemandsController extends Controller
                     $model->validate();
                 }
 
-                if ($OtherExecutor == 'true' && !is_null($ExecutorId)) {
-                    $model->ExecOther = $ExecutorId;
-                    $model->validate();
-                }
+//                if (!is_null($ExecutorId)) {
+//                    $model->ExecOther = $ExecutorId;
+//                    $model->validate();
+//                }
                     
                 if ($model->validate()) {
                     $Result = $model->insert();
@@ -335,7 +335,7 @@ class DemandsController extends Controller
 		);
         }
 
-	public function actionUpdate($id, $Exec = false, $ToMaster = false, $OtherExecutor = false, $ExecutorId = null) {
+	public function actionUpdate($id, $Exec = false, $ToMaster = false) {
 		$this->title = 'Редактирование заявки №' . $id;
                 $this->setPageTitle('Редактирование заявки');
                 $ObjectResult = array(
@@ -374,17 +374,15 @@ class DemandsController extends Controller
                         $model->validate();
                     }
                     
-                    if ($OtherExecutor == 'true' && !is_null($ExecutorId)) {
-                        $model->ExecOther = $ExecutorId;
-                        $model->validate();
-                    }
+//                    if (!is_null($ExecutorId)) {
+//                        $model->ExecOther = $ExecutorId;
+//                        $model->validate();
+//                    }
                 
                     if ($model->validate()) {
                         $model->update();
                         $ObjectResult['result'] = 1;
                         $ObjectResult['id'] = $model->Demand_id;
-//                        $ObjectResult['html'] = $ExecutorId;
-//                        $ObjectResult['OtherExecutor'] = $OtherExecutor;
                         echo json_encode($ObjectResult);
                         return;
                     } else {
