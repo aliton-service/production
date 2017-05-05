@@ -139,6 +139,13 @@ class SiteController extends Controller
 
 	public function actionLogin()
 	{
+            $Obj = array (
+                'Data' => array(
+                    'Result' => 'NotLogin',
+                    'Url' => '',                        
+                ),
+            );    
+            
             $model = new LoginForm;
             
             if(isset($_POST['LoginForm']))
@@ -146,11 +153,15 @@ class SiteController extends Controller
                 $model->attributes=$_POST['LoginForm'];
 
                 if($model->validate() && $model->login()) {
-                    echo 'Login';
+                    $Obj['Data']['Result'] = 'Login';
+                    $Obj['Data']['Url'] = Yii::app()->user->returnUrl;
+                    echo json_encode($Obj);
                     return 1;
                 }
                 else {
-                    echo 'NotLogin';
+//                    echo 'NotLogin';
+                    $Obj['Data']['Result'] = 'NotLogin';
+                    echo json_encode($Obj);
                     return 0;
                 }
             }
@@ -159,6 +170,7 @@ class SiteController extends Controller
 		
             $this->render('login',array(
                 'model'=>$model,
+                'url' => Yii::app()->user->returnUrl,
             ));
 	}
 

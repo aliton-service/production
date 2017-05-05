@@ -50,8 +50,10 @@
                     }
                 },
                 success: function(Res){
-                    if (Res == 'Login')
-                        window.location.replace("<?php echo Yii::app()->createUrl('Site/Index'); ?>");
+                    Res = JSON.parse(Res);
+                    if (Res.Data.Result == 'Login')
+                        window.location.replace(Res.Data.Url);
+                        
                     else 
                         $("#edError").html('Неверный логин или пароль.');
                 }
@@ -59,7 +61,6 @@
         });
     });
 </script>    
-    
 
 <p style="margin-top: 0;">Введите свой логин и пароль:</p>
 <style>
