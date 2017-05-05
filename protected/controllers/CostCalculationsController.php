@@ -451,7 +451,7 @@ class CostCalculationsController extends Controller
             $Res = $sp->Execute();
             
             $ObjectResult['result'] = 1;
-            $ObjectResult['id'] = $Res['calc_id'];
+            $ObjectResult['id'] = $_POST['Calc_id'];
         }
         
         echo json_encode($ObjectResult);
