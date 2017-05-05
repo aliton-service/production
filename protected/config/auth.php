@@ -1034,6 +1034,11 @@ return array_merge(
                 'ViewDocs',
                 'ManagerInspectionActs',
                 'ManagerInspectionActEquips',
+                'ManagerInspActEquipCharacteristics',
+                'ManagerInspActOptions',
+                'ManagerInspActRecommendations',
+                'ManagerInspActRemarks',
+                
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',
