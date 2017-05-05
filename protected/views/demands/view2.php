@@ -207,7 +207,14 @@
                     $("#edComment").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 'calc(100% - 6px)', minLength: 1}));
                     $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: '120px', dropDownVerticalAlignment: "top"}));
                     $("#btnSend").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $("#btnPrintProgress").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $("#btnDelComment").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30 }));
+                    
+                    $("#btnPrintProgress").on('click', function() {
+                        var url = <?php echo json_encode(Yii::app()->createUrl('Demands/PrintProgress', array('Demand_id' => $model->Demand_id))); ?>;
+                        window.open(url);
+                    });
+                    
                     
                     $("#edComment").on('keydown', function(event){
                         if (event.keyCode == 13)
@@ -1009,11 +1016,12 @@
                 <div id="ProgressGrid"></div>
                 <div style="clear: both;"></div>
                 <div style="height: 30px; margin-top: 5px;">
-                    <div style="float: left; width: calc(100% - 510px)"><input id="edComment" type="text"/></div>
+                    <div style="float: left; width: calc(100% - 640px)"><input id="edComment" type="text"/></div>
                     <div style="float: right">
                         <div style="float: left; margin-left: 6px;">План. дата вып.</div>
                         <div style="float: left; margin-left: 6px;"><div id='edPlanDateExec'></div></div>
                         <div style="float: left; margin-left: 6px;"><input type="button" value="Написать" id='btnSend' /></div>
+                        <div style="float: left; margin-left: 6px;"><input type="button" value="Печать" id='btnPrintProgress' /></div>
                         <div style="float: left; margin-left: 6px;"><input type="button" value="Удалить" id='btnDelComment' /></div>
                     </div>
                 </div>
