@@ -212,11 +212,6 @@ class DemandsController extends Controller
                     $model->validate();
                 }
 
-//                if (!is_null($ExecutorId)) {
-//                    $model->ExecOther = $ExecutorId;
-//                    $model->validate();
-//                }
-                    
                 if ($model->validate()) {
                     $Result = $model->insert();
                     $ObjectResult['result'] = 1;
@@ -386,11 +381,6 @@ class DemandsController extends Controller
                         $model->DateMaster = date('d.m.Y H:i');
                         $model->validate();
                     }
-                    
-//                    if (!is_null($ExecutorId)) {
-//                        $model->ExecOther = $ExecutorId;
-//                        $model->validate();
-//                    }
                 
                     if ($model->validate()) {
                         $model->update();
