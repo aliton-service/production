@@ -53,6 +53,7 @@
                     Res = JSON.parse(Res);
                     if (Res.Data.Result == 'Login')
                         window.location.replace(Res.Data.Url);
+                    
                         
                     else 
                         $("#edError").html('Неверный логин или пароль.');

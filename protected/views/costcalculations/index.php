@@ -999,7 +999,12 @@
                             Calc_id: CostCalculations.calc_id,
                         },
                         success: function(Res) {
-                            
+                            Res = JSON.parse(Res);
+                            if (Res.result == 1)
+                                Aliton.ShowErrorMessage('Отправка', 'Письмо успешно отправлено');
+                            else
+                                Aliton.ShowErrorMessage('Ошибка', 'Письмо не отправлено');
+                                
                         },
                         error: function(Res) {
                             Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
