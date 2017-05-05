@@ -19,7 +19,7 @@ class CostCalculationsController extends Controller
     {
         return array(
                 array('allow',
-                'actions'=>array('index', 'view', 'GetModel', 'GetDetails', 'Paste'),
+                'actions'=>array('index', 'view', 'GetModel', 'GetDetails', 'Paste', 'SendAgreed'),
                 'roles'=>array('ViewCostCalculations'),
             ),
             array('allow', 
@@ -420,6 +420,30 @@ class CostCalculationsController extends Controller
         if (isset($_POST['Calc_id'])) {
             $sp = new StoredProc();
             $sp->ProcedureName = 'AGREED_CostCalculations';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Calc_id'];
+            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $Res['calc_id'];
+        }
+        
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionSendAgreed() 
+    {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        if (isset($_POST['Calc_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'SEND_AgreeCostCalc';
             $sp->ParametersRefresh();
             $sp->Parameters[0]['Value'] = $_POST['Calc_id'];
             $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
