@@ -844,7 +844,7 @@ return array_merge(
                 'ManagerBanks',
                 'ManagerObjectsGroupSystems',
                 'AdminSystemCompetitors',
-                
+                'ManagerObjectEvents',
                 
                 /* Отчеты */
                 'DemandsReportAll',
