@@ -369,6 +369,7 @@ class DemandsController extends Controller
 		if(isset($_POST['Demands']))
 		{
                     $model->attributes=$_POST['Demands'];
+                    $model->ExecOther= null;
                     $model->Demand_id = $id;
                     $model->EmplChange = Yii::app()->user->Employee_id;
 

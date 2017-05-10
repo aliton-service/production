@@ -53,8 +53,8 @@ class WhActsController extends Controller
     }
     
     public function actionControl() {
-        $this->title = 'Контроль списания';
-        $this->setPageTitle('Контроль списания');
+        $this->title = 'Контроль списания оборудования';
+        $this->setPageTitle('Контроль списания оборудования');
         $this->gridFilters = '_filters2';
         
         $this->render('control');
