@@ -561,6 +561,10 @@
                             
                         }
                         
+                        if ($('#DiaryDialog').length>0) {
+                            $('#DiaryDialog').jqxWindow('close');
+                        }
+                        
                         if ($('#EditFormDialog').length>0) {
                             if (typeof(RC) != 'undefined')
                                 RC.Action_id = Res.id;
@@ -575,6 +579,8 @@
                             $('#BodyEditFormDialog').html(Res.html);
                         if ($('#CostCalculationsDialog').length>0) 
                             $('#BodyCostCalculationsDialog').html(Res.html);
+                        if ($('#DiaryDialog').length>0) 
+                            $('#BodyDiaryDialog').html(Res.html);
                     };
                 },
                 error: function(Res) {

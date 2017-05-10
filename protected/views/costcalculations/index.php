@@ -236,6 +236,7 @@
                 Aliton.ViewDemand(CostCalculations.Demand_id, true);
         });
         
+        $('#btnSendAgreedCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px'}));
         $('#btnAgreedCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '256px', imgSrc: '/images/1.png' }));
         $('#btnUndoAgreedCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '100%', imgSrc: '/images/3.png' }));
         $('#btnReadyCostCalculations').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '100%', imgSrc: '/images/1.png' }));
@@ -987,6 +988,32 @@
                     }
                     return true;
                 };
+                
+                
+                $('#btnSendAgreedCostCalculations').on('click', function() {
+//                      $("#MailTo").attr("href", "mailto:ban@aliton.ru" + "?subject=Согласование сметы&body=Прошу согласовать смету №<a href=\"http://test.aliton.ru/\">123</a>");
+//                      document.getElementById('MailTo').click();
+                    $.ajax({
+                        url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/SendAgreed')) ?>,
+                        type: 'POST',
+                        async: false,
+                        data: {
+                            Calc_id: CostCalculations.calc_id,
+                        },
+                        success: function(Res) {
+                            Res = JSON.parse(Res);
+                            if (Res.result == 1)
+                                Aliton.ShowErrorMessage('Отправка', 'Письмо успешно отправлено');
+                            else
+                                Aliton.ShowErrorMessage('Ошибка', 'Письмо не отправлено');
+                                
+                        },
+                        error: function(Res) {
+                            Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                        }
+                    });   
+                });
+                
                 $('#btnAgreedCostCalculations').on('click', function(){
                     if (!CheckAgreed()) return;
                     $.ajax({
@@ -1801,6 +1828,8 @@
 <div class="row" style="margin-top: 3px;">
     <div class="row-column" style="margin: 0 5px 0 0"><input type="button" value="Изменить" id='btnEditCostCalculations'/></div>
     <div style='float: left;' id="dropDownBtnCostCalculations">
+        <div style="padding: 2px"><input type="button" value="Отправить на согл." id='btnSendAgreedCostCalculations'/></div>
+        <div style="clear: both"></div>
         <div style="padding: 2px"><input type="button" value="Согласовано с рук." id='btnAgreedCostCalculations'/></div>
         <div style="clear: both"></div>
         <div style="padding: 2px"><input type="button" value="Отмена согл. рук." id='btnUndoAgreedCostCalculations'/></div>
@@ -2008,3 +2037,5 @@
         </div>
     </div>
 </div>
+
+<a style="display: none" id="MailTo" href=""></a>

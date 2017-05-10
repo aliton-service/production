@@ -76,8 +76,8 @@
         
         $('#SelectSalesManagerDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 340, width: 346, position: 'center',  initContent: function () {
             $("#edSalesManager").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '326', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"})); 
-            $("#chbPlan").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 100, height: 25, checked: false})); 
-            $("#chbWork").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 100, height: 25, checked: true})); 
+            $("#chbPlan").jqxRadioButton($.extend(true, {}, RadioButtonDefaultSettings, { width: 100, height: 25, checked: false})); 
+            $("#chbWork").jqxRadioButton($.extend(true, {}, RadioButtonDefaultSettings, { width: 100, height: 25, checked: true})); 
             //$("#Calendar").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 120}));
             $("#Calendar").jqxCalendar($.extend(true, {}, CalendarDefaultSettings, {width: 220, height: 220}));
             $('#btnSelectManager').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 100}));
@@ -98,9 +98,9 @@
             
             $('#btnSelectManager').on('click', function() {
                 var Flag = 0;
-                if ($("#chbPlan").jqxCheckBox('checked'))
+                if ($("#chbPlan").jqxRadioButton('checked'))
                     Flag = 1;
-                if ($("#chbWork").jqxCheckBox('checked'))
+                if ($("#chbWork").jqxRadioButton('checked'))
                     Flag = 2;
                 var CalendarValue = $("#Calendar").jqxCalendar('value');
                 var CalendarValueStr = CalendarValue.getDate() + '.' + (CalendarValue.getMonth()+1) + '.' + CalendarValue.getFullYear();
@@ -621,7 +621,7 @@
                     </div>
                     <div class="al-row-column">
                         <div><input type="button" value="Привязать объект" id="btnAttachObjects" /></div>
-                        <div style="margin-top: 4px"><input type="button" value="Контакт" id="btnAddAction" /></div>
+                        <div style="margin-top: 4px"><input type="button" value="Контакты ОП" id="btnAddAction" /></div>
                     </div>
                     <div class="al-row-column">
                         <div><input type="button" value="Назначить МПОПР" id="btnSetSalesManager"/></div>

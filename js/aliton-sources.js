@@ -4643,7 +4643,11 @@ Sources.SourceDiaryActions =
         {name: 'ResponsibleName', type: 'string'},
         {name: 'EmployeeName', type: 'string'},
         {name: 'OverDay', type: 'int'},
-        {name: 'DemandType', type: 'string'}
+        {name: 'DemandType', type: 'string'},
+        {name: 'ObjectGr_id', type: 'int'},
+        {name: 'Contacts', type: 'string'},
+        {name: 'DemandText', type: 'string'}
+        
         
     ],
     id: 'Exrp_id',

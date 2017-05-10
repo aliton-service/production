@@ -89,7 +89,7 @@
         var BanksDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceBanks, {async: true}));
         
         $("#edFormNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 300} ));
-        $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
+        $("#edNumberEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150, disabled: true} ));
         $("#edStatusEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: StatusAdapter, width: '250', height: '25px', displayMember: "StatusName", valueMember: "Status_id"}));
         $("#edFownEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: FormsOfOwnershipVDataAdapter, width: '200', height: '25px', displayMember: "name", valueMember: "fown_id"}));
         $("#edLphEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: [{id: 1, name: 'Юридическое лицо'}, {id: 2, name: 'Физическое лицо'}], width: '200', height: '25px', displayMember: "name", valueMember: "id"}));
