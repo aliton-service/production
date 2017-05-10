@@ -85,7 +85,8 @@ class ClientDemands extends MainFormModel
                         left join ContactInfo ci on (er.ContactInfo_id = ci.Info_id)
                         left join ContactTypes ct on (er.ContactType_id = ct.Contact_id)
                         left join ActionOperations o2 on (er.NextAction = o2.Operation_id)
-                        left join Employees e2 on (er.Responsible_id = e2.Employee_id)";
+                        left join Employees e2 on (er.Responsible_id = e2.Employee_id)
+                        left join ObjectsGroup og on (d.ObjectGr_id = og.Objectgr_id)";
         $Order = "\nOrder by d.Demand_id desc";
         
         $this->Query->setSelect($Select);
