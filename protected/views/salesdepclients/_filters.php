@@ -24,8 +24,14 @@
         }));
         
         $("#cmbSalesManager").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "ShortName"}));
+        
+    
         if (Position_id == 50)
             $("#cmbSalesManager").jqxComboBox('val', Empl_id);
+        
+        $("#cmbSalesManager input").focus(function() {
+            this.setSelectionRange(0, this.value.length)
+        });
         
         $("#cmbSegment").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSegments, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "ClientGroup"}));
         $("#cmbSubSegment").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSegments, width: '200', height: '25px', displayMember: "ClientGroup", valueMember: "ClientGroup"}));

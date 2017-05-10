@@ -67,6 +67,10 @@
                         }
                         if (typeof(CheckINS) != 'undefined')
                             CheckINS();
+                        
+                        if ($("#ValuableInstructionsGrid").length>0)
+                            $("#ValuableInstructionsGrid").jqxGrid('updatebounddata');
+                                                
                     }
                     else {
                         if ($('#DiaryDialog').length>0)

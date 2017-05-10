@@ -22,6 +22,9 @@ class DiaryActions extends MainFormModel
     public $EmployeeName;
     public $OverDay;
     public $DemandType;
+    public $ObjectGr_id;
+    public $Contacts;
+    public $DemandText;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -52,7 +55,10 @@ class DiaryActions extends MainFormModel
                         dbo.FIO(e.EmployeeName) ResponsibleName,
                         dbo.FIO(e2.EmployeeName) EmployeeName,
                         Case When dbo.truncdate(GETDATE()) > er.NextDate Then 1 Else 0 End OverDay,
-                        d.DemandType";
+                        d.DemandType,
+                        Case When d.ObjectGr_id is Not Null Then d.ObjectGr_id Else (Select Min(og.ObjectGr_id) From ObjectsGroup og Where og.DelDate is Null and og.PropForm_id = p.Form_id) End ObjectGr_id,
+                        d.Contacts,
+                        d.DemandText";
         $From = "\nFrom ExecutorReports er inner join Organizations_v p on (er.Exrp_id = p.LastAction_id)
                         left join ClientGroups s on (p.Segment_id = s.Clgr_id)
                         left join ClientGroups ss on (p.SubSegment_id = ss.Clgr_id)

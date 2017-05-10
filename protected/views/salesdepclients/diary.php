@@ -50,6 +50,7 @@
             success: function(Res) {
                 Res = JSON.parse(Res);
                 DataEmployees = Res[0].Data;
+                DataEmployees.splice(0, 1);
             }
         });
         
@@ -76,6 +77,20 @@
         
         $("#cmbExecutor").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "ShortName"}));
         $("#cmbExecutor").jqxComboBox('val', CurrentUserShortName);
+        $("#cmbExecutor input").focus(function() {
+            this.setSelectionRange(0, this.value.length)
+        });
+        
+        $('#cmbExecutor').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                $("#edFiltering").click();
+                return false;
+            }
+        });
+        
+        
         $('#edStatisticsInfo1').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
         $('#edStatisticsInfo2').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
         $('#edStatisticsInfo3').jqxInput($.extend(true, {}, InputDefaultSettings, { width: 70}));
@@ -89,6 +104,11 @@
                     var ActionsGridCurrentRow;
                     $("#ActionsGrid").on('rowselect', function (event) {
                         ActionsGridCurrentRow = $('#ActionsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                        if (ActionsGridCurrentRow != undefined) {
+                            $("#edContInfo").jqxInput('val', ActionsGridCurrentRow.Contacts);
+                            $("#edDemText").jqxInput('val', ActionsGridCurrentRow.DemandText);
+                            
+                        }
                     });
                     
                     var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
@@ -143,7 +163,38 @@
                     $('#btnAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnAddValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnViewObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
                     $('#btnRefreshActions').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
+                    $('#btnAddAction').on('click', function() {
+                        if (ActionsGridCurrentRow != undefined) {
+                            $('#DiaryDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Form_id: ActionsGridCurrentRow.Form_id,
+                                    Demand_id: ActionsGridCurrentRow.Demand_id,
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $("#BodyDiaryDialog").html(Res.html);
+                                    $('#DiaryDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
+                    
+                    $('#btnViewObject').on('click', function() {
+                        if (ActionsGridCurrentRow.ObjectGr_id != null)
+                            Aliton.ViewClient(ActionsGridCurrentRow.ObjectGr_id);
+                    });
+                    
                     $('#btnRefreshActions').on('click', function() {
                         $("#edFiltering").click();
                     });
@@ -204,6 +255,11 @@
                     var ReservActionsGridCurrentRow;
                     $("#ReservActionsGrid").on('rowselect', function (event) {
                         ReservActionsGridCurrentRow = $('#ReservActionsGrid').jqxGrid('getrowdata', event.args.rowindex);
+                        if (ReservActionsGridCurrentRow != undefined) {
+                            $("#edContInfo").jqxInput('val', ReservActionsGridCurrentRow.Contacts);
+                            $("#edDemText").jqxInput('val', ReservActionsGridCurrentRow.DemandText);
+                            
+                        }
                     });
                     
                     $("#ReservActionsGrid").jqxGrid(
@@ -241,9 +297,40 @@
                     $('#btnReservProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnReservAddAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnReservExport').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnReservAddValuableInstruction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnReservViewObject').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    
                     $('#btnRefreshReserv').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
                     $('#btnRefreshReserv').on('click', function() {
                         $("#edFiltering").click();
+                    });
+                    
+                    $('#btnReservAddAction').on('click', function() {
+                        if (ReservActionsGridCurrentRow != undefined) {
+                            $('#DiaryDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
+                            $.ajax({
+                                url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+                                type: 'POST',
+                                async: false,
+                                data: {
+                                    Form_id: ReservActionsGridCurrentRow.Form_id,
+                                    Demand_id: ReservActionsGridCurrentRow.Demand_id,
+                                },
+                                success: function(Res) {
+                                    Res = JSON.parse(Res);
+                                    $("#BodyDiaryDialog").html(Res.html);
+                                    $('#DiaryDialog').jqxWindow('open');
+                                },
+                                error: function(Res) {
+                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                                }
+                            });
+                        }
+                    });
+                    
+                    $('#btnReservViewObject').on('click', function() {
+                        if (ReservActionsGridCurrentRow.ObjectGr_id != null)
+                            Aliton.ViewClient(ReservActionsGridCurrentRow.ObjectGr_id);
                     });
                     
                     $('#btnReservExport').on('click', function() {
@@ -260,6 +347,31 @@
                             data: {
                                 Form_id: ReservActionsGridCurrentRow.Form_id,
                                 Demand_id: ReservActionsGridCurrentRow.Demand_id
+                            },
+                            success: function(Res) {
+                                Res = JSON.parse(Res);
+                                $("#BodyDiaryDialog").html(Res.html);
+                                $('#DiaryDialog').jqxWindow('open');
+                            },
+                            error: function(Res) {
+                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                            }
+                        });
+                    });
+                    
+                    $('#btnReservAddValuableInstruction').on('click', function() {
+                        $('#DiaryDialog').jqxWindow({ height: 370, width: 600});
+                        $("#DiaryHeaderText").html("Ценные указания");
+
+                        $.ajax({
+                            url: <?php echo json_encode(Yii::app()->createUrl('ValuableInstructions/Create')) ?>,
+                            type: 'POST',
+                            async: false,
+                            data: {
+                                Params: {
+                                    Form_id: ReservActionsGridCurrentRow.Form_id,
+                                    Demand_id: ReservActionsGridCurrentRow.Demand_id
+                                }
                             },
                             success: function(Res) {
                                 Res = JSON.parse(Res);
@@ -337,6 +449,16 @@
         
         $('#Tabs').jqxTabs({ width: 'calc(100% - 2px)', height: 'calc(100% - 2px)', initTabContent: initWidgets});
         
+        $('#Tabs').on('selected', function (event) { 
+            var selectedTab = event.args.item;
+            $("#edContInfo").jqxInput('val', '');
+            $("#edDemText").jqxInput('val', '');
+            
+        }); 
+        
+        $("#edContInfo").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 200}));
+        $("#edDemText").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 500}));
+        
         
     });
 </script>    
@@ -396,7 +518,7 @@
     <div style="clear: both"></div>
 </div>
 
-<div class="al-row" style="height: calc(100% - 82px)">
+<div class="al-row" style="height: calc(100% - 117px)">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 30px;">
@@ -426,6 +548,7 @@
                         <div class="al-row-column"><input type="button" id="btnAddAction" value="Действие"/></div>
                         <div class="al-row-column"><input type="button" id="btnExport" value="Экспорт"/></div>
                         <div class="al-row-column"><input type="button" id="btnAddValuableInstruction" value="Добавить ЦУ"/></div>
+                        <div class="al-row-column"><input type="button" id="btnViewObject" value="Карточка"/></div>
                         <div class="al-row-column"><input type="button" id="btnRefreshActions" value="Обновить"/></div>
                     </div>
                     <div style="clear: both"></div>
@@ -443,6 +566,8 @@
                         <div class="al-row-column"><input type="button" id="btnReservProgress" value="Ход работы"/></div>
                         <div class="al-row-column"><input type="button" id="btnReservAddAction" value="Действие"/></div>
                         <div class="al-row-column"><input type="button" id="btnReservExport" value="Экспорт"/></div>
+                        <div class="al-row-column"><input type="button" id="btnReservAddValuableInstruction" value="Добавить ЦУ"/></div>
+                        <div class="al-row-column"><input type="button" id="btnReservViewObject" value="Карточка"/></div>
                         <div class="al-row-column"><input type="button" id="btnRefreshReserv" value="Обновить"/></div>
                     </div>
                     <div style="clear: both"></div>
@@ -466,6 +591,13 @@
         </div>
     </div>
     
+</div>
+<div class="al-row">
+    <div class="al-row-column">Контакты</div>
+    <div class="al-row-column"><input id="edContInfo" /></div>
+    <div class="al-row-column">Неисправность</div>
+    <div class="al-row-column"><input id="edDemText" /></div>
+    <div style="clear: both"></div>
 </div>
 
 <div id="DiaryDialog" style="display: none;">
