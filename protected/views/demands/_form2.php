@@ -131,8 +131,9 @@
             if (Demand.Rslt_id != '') $("#cmbDemandResult").jqxComboBox('val', Demand.Rslt_id);
         }
         // Проставляем знаячение
-        if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
-        if (Demand.ExecOther != '') $("#cmbExecutor").jqxComboBox('val', Demand.ExecOther);
+        if (StateInsert) {
+            if (Demand.Master != '') $("#cmbExecutor").jqxComboBox('val', Demand.Master);
+        }
         
         // Инициализация событий
         $("#cmbDemandType").bind('select', function(event) {
@@ -233,7 +234,7 @@
         
         if (!StateInsert) {
             $("#cmbMalfunction").select();
-            
+            $("#cmbExecutor").jqxComboBox({disabled: true});
             $("#cmbDemandType").jqxComboBox({disabled: ReadOnly});
             $("#cmbSystemType").jqxComboBox({disabled: ReadOnly});
             $("#cmbEquipType").jqxComboBox({disabled: ReadOnly});
