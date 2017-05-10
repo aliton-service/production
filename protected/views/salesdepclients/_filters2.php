@@ -14,7 +14,7 @@
         }), {
             formatData: function (data) {
                 $.extend(data, {
-                    Filters: ["d.PropForm_id = " + Form_id],
+                    Filters: ["og.PropForm_id = " + Form_id],
                 });
                 return data;
             },

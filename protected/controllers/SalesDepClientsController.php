@@ -54,7 +54,7 @@ class SalesDepClientsController extends Controller
         $Query->setWhere("\nWhere vi.DelDate is Null
                                 and vi.DateExec is Null
                                 and vi.DatePlanExec <= dbo.truncdate(GETDATE())
-                                and vi.Executor_id = " . Yii::app()->user->Employee_id);
+                                and (vi.Executor_id = " . Yii::app()->user->Employee_id . " or vi.Empl_id = " . Yii::app()->user->Employee_id . ")");
         
         $R = $Query->QueryRow();
         echo json_encode($R);

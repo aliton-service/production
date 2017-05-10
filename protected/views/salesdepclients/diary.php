@@ -12,7 +12,7 @@
                 async: true,
                 success: function(Res) {
                     Res = JSON.parse(Res);
-                    if (Res.CIN == 1) {
+                    if (parseInt(Res.CIN) > 0) {
                         if (CurrentCIN == 0) {
                             CurrentCIN = 1;
                             $("#tCy").css({
