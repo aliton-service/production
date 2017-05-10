@@ -147,7 +147,7 @@
         $("#edCategoryEdit").val(Equips.ctgr_id);
         $("#edSystemTypeEdit").val(Equips.SystemType_id);
         $("#edDescriptionEdit").val(Equips.Description);
-        
+        $("#edNoteEdit").val(Equips.note);
         $("#edMustInstructing").val(Equips.must_instruction);
         $("#edThereInstructing").val(Equips.there_instruction);
         $("#edMustAnalog").val(Equips.must_analog);
