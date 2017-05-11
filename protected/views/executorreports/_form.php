@@ -2,6 +2,8 @@
     $(document).ready(function () {
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         var LastAction = <?php echo json_encode($LastAction); ?>;
+        LastAction.Date = Aliton.DateConvertToJs(LastAction.Date);
+        
         var MarketingSolutions = <?php echo json_encode($MarketingSolutions); ?>;
         MarketingSolutions.Offer1Date = Aliton.DateConvertToJs(MarketingSolutions.Offer1Date);
         MarketingSolutions.Offer2Date = Aliton.DateConvertToJs(MarketingSolutions.Offer2Date);
