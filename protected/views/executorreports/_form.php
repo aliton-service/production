@@ -555,7 +555,8 @@
                             if ($('#CostCalculationsDialog').length>0) {
                                 $('#ActionsDialog').jqxWindow('close');
                             } else {
-                                Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
+                                if ($('#ProgGrid').length>0)
+                                    Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
                                 $('#ActionsDialog').jqxWindow('close');
                             }
                             
