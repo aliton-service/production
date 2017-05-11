@@ -19,17 +19,20 @@
             jregion: <?php echo json_encode($model->jregion); ?>,
             jarea: <?php echo json_encode($model->jarea); ?>,
             jstreet: <?php echo json_encode($model->jstreet); ?>,
+            JStreetSearch: <?php echo json_encode($model->JStreetSearch); ?>,
             jhouse: <?php echo json_encode($model->jhouse); ?>,
             jcorp: <?php echo json_encode($model->jcorp); ?>,
             jroom: <?php echo json_encode($model->jroom); ?>,
             fregion: <?php echo json_encode($model->fregion); ?>,
             farea: <?php echo json_encode($model->farea); ?>,
             fstreet: <?php echo json_encode($model->fstreet); ?>,
+            FStreetSearch: <?php echo json_encode($model->FStreetSearch); ?>,
             fhouse: <?php echo json_encode($model->fhouse); ?>,
             fcorp: <?php echo json_encode($model->fcorp); ?>,
             froom: <?php echo json_encode($model->froom); ?>,
             telephone: <?php echo json_encode($model->telephone); ?>,
             bank_name: <?php echo json_encode($model->bank_name); ?>,
+            BankSearch: <?php echo json_encode($model->BankSearch); ?>,
             bik: <?php echo json_encode($model->bik); ?>,
             cor_account: <?php echo json_encode($model->cor_account); ?>,
             cityb: <?php echo json_encode($model->cityb); ?>,
@@ -71,18 +74,18 @@
             type: 'POST',
             async: false,
             data: {
-                Models: ['FormsOfOwnership', 'Regions', 'Areas', 'Streets', 'ClientStatus', 'ClientGroups', 'SourceInfo']
+                Models: ['FormsOfOwnership', 'Regions', 'Areas', 'ClientStatus', 'ClientGroups', 'SourceInfo']
             },
             success: function(Res) {
                 Res = JSON.parse(Res);
                 FormsOfOwnershipVDataAdapter = Res[0].Data;
                 RegionsDataAdapter = Res[1].Data;
                 AreasDataAdapter = Res[2].Data;
-                StreetsDataAdapter = Res[3].Data;
+                //StreetsDataAdapter = Res[3].Data;
                 //BanksDataAdapter = Res[4].Data;
-                StatusAdapter = Res[4].Data;
-                ClientGroupsAdapter = Res[5].Data;
-                SourceInfoAdapter = Res[6].Data;
+                StatusAdapter = Res[3].Data;
+                ClientGroupsAdapter = Res[4].Data;
+                SourceInfoAdapter = Res[5].Data;
             }
         });
         
@@ -106,13 +109,70 @@
         $("#edCountObjectsEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edJRegionEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"}));
         $("#edJAreaEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"}));
-        $("#edJStreetEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}));
+        
+        
+        var JStreetsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}), { 
+            formatData: function (data) {
+                    data.NotExecute = '';
+                    if (Organization.JStreetSearch == null)
+                        Organization.JStreetSearch = '';
+                    if (Organization.JStreetSearch.length > 5)
+                        Organization.JStreetSearch = Organization.JStreetSearch.substr(0, 4);                    
+                    
+                    if (Organization.JStreetSearch != '')
+                        data.Filters = ["st.StreetName like '" + Organization.JStreetSearch + "%'"];
+                    else
+                        data.NotExecute = 'NotExecute';
+                    
+                    return data;
+                }
+            }
+        );
+        
+        $("#edJStreetEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: JStreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id", remoteAutoComplete: true,
+            search: function (searchString) {
+                Organization.JStreetSearch = $("#edJStreetEdit").jqxComboBox('searchString');
+                JStreetsDataAdapter.dataBind();
+            }
+        }));
+        JStreetsDataAdapter.dataBind();
+        $("#edJStreetEdit").val(Organization.jstreet);
+        
         $("#edJHouseEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
         $("#edJCorpEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
         $("#edJRoomEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
         $("#edFRegionEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: RegionsDataAdapter, width: '100', height: '25px', displayMember: "RegionName", valueMember: "Region_id"}));
         $("#edFAreaEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: AreasDataAdapter, width: '150', height: '25px', displayMember: "AreaName", valueMember: "Area_id"}));
-        $("#edFStreetEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: StreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id"}));
+        
+        var FStreetsDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceStreets, {async: false}), { 
+            formatData: function (data) {
+                    data.NotExecute = '';
+                    if (Organization.FStreetSearch == null)
+                        Organization.FStreetSearch = '';
+                    if (Organization.FStreetSearch.length > 5)
+                        Organization.FStreetSearch = Organization.FStreetSearch.substr(0, 4);                    
+                    
+                    if (Organization.FStreetSearch != '')
+                        data.Filters = ["st.StreetName like '" + Organization.FStreetSearch + "%'"];
+                    else
+                        data.NotExecute = 'NotExecute';
+                    
+                    return data;
+                }
+            }
+        );
+
+        $("#edFStreetEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: FStreetsDataAdapter, width: '150', height: '25px', displayMember: "StreetName", valueMember: "Street_id", remoteAutoComplete: true,
+            search: function (searchString) {
+                Organization.FStreetSearch = $("#edFStreetEdit").jqxComboBox('searchString');
+                FStreetsDataAdapter.dataBind();
+            }
+        }));
+        
+        FStreetsDataAdapter.dataBind();
+        $("#edFStreetEdit").val(Organization.fstreet);
+        
+        
         $("#edFHouseEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
         $("#edFCorpEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 80} ));
         $("#edFRoomEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 100} ));
@@ -129,10 +189,38 @@
             
         });
         
-        $("#edBankEdit").on('bindingComplete', function() {
-            if (Organization.bank_id != '') $("#edBankEdit").jqxComboBox('val', Organization.bank_id);
-        });
-        $("#edBankEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: BanksDataAdapter, width: '300px', height: '25px', displayMember: "bank_name", valueMember: "Bank_id"}));
+//        $("#edBankEdit").on('bindingComplete', function() {
+//            if (Organization.bank_id != '') $("#edBankEdit").jqxComboBox('val', Organization.bank_id);
+//        });
+        
+        var BanksDataAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceBanks, {async: false}), { 
+            formatData: function (data) {
+                    data.NotExecute = '';
+                    if (Organization.BankSearch == null)
+                        Organization.BankSearch = '';
+                    if (Organization.BankSearch.length > 5)
+                        Organization.BankSearch = Organization.BankSearch.substr(0, 4);                    
+                    
+                    if (Organization.BankSearch != '')
+                        data.Filters = ["b.bank_name like '%" + Organization.BankSearch + "%'"];
+                    else
+                        data.NotExecute = 'NotExecute';
+                    
+                    return data;
+                }
+            }
+        );
+        
+        $("#edBankEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: BanksDataAdapter, width: '300px', height: '25px', displayMember: "bank_name", valueMember: "Bank_id", remoteAutoComplete: true,
+            search: function (searchString) {
+                Organization.BankSearch = $("#edBankEdit").jqxComboBox('searchString');
+                BanksDataAdapter.dataBind();
+            }
+        }));
+        
+        BanksDataAdapter.dataBind();
+        $("#edBankEdit").val(Organization.bank_id);
+        
         $("#edBankBikEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edBankCorAccountEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 150} ));
         $("#edTelephoneEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 350} ));
