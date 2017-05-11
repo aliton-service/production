@@ -471,7 +471,7 @@
                             if (CurrentRowData != undefined)
                                 Form_id = CurrentRowData.Form_id;
                             $.extend(data, {
-                                Filters: ["d.PropForm_id = " + Form_id],
+                                Filters: ["og.PropForm_id = " + Form_id],
                             });
                             return data;
                         },
