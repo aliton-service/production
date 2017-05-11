@@ -119,15 +119,18 @@ class ExecutorReportsController extends Controller
             $MarketingSolutions = new MarketingSolutions();
             $SystemOffers = new SystemOffers();
             $ClientSolutions = new ClientSolutions();
-            
-            if (isset($_POST['Demand_id']))
+            $ContactInfo = array();
+            if (isset($_POST['Demand_id'])) {
                 $model->Demand_id = $_POST['Demand_id'];
+            }
             
             $Form_id = 0;
             if (isset($_POST['Form_id']))
                 $Form_id = $_POST['Form_id'];
             if (isset($_POST['ClientActions']))
                 $Form_id = $_POST['ClientActions']['Form_id'];
+            
+            
             
             if ($Form_id != 0) {
                 $model->Form_id = $Form_id;
@@ -185,6 +188,9 @@ class ExecutorReportsController extends Controller
                 }
                     
                     
+            }
+            else {
+                
             }
             
             $ObjectResult = array(
