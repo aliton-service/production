@@ -1208,6 +1208,7 @@ return array_merge(
             'defaultIndex' => 'object/index',
             'children' => array(
                 'UserObjects',
+                'ManagerBanks',
                 'UserObjectsGroup',
                 'ManagerContactInfo',
                 'UserObjectsGroupSystems',
