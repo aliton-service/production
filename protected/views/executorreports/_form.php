@@ -2,6 +2,8 @@
     $(document).ready(function () {
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
         var LastAction = <?php echo json_encode($LastAction); ?>;
+        LastAction.Date = Aliton.DateConvertToJs(LastAction.Date);
+        
         var MarketingSolutions = <?php echo json_encode($MarketingSolutions); ?>;
         MarketingSolutions.Offer1Date = Aliton.DateConvertToJs(MarketingSolutions.Offer1Date);
         MarketingSolutions.Offer2Date = Aliton.DateConvertToJs(MarketingSolutions.Offer2Date);
@@ -555,7 +557,8 @@
                             if ($('#CostCalculationsDialog').length>0) {
                                 $('#ActionsDialog').jqxWindow('close');
                             } else {
-                                Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
+                                if ($('#ProgGrid').length>0)
+                                    Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
                                 $('#ActionsDialog').jqxWindow('close');
                             }
                             

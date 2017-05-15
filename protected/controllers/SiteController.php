@@ -142,7 +142,8 @@ class SiteController extends Controller
             $Obj = array (
                 'Data' => array(
                     'Result' => 'NotLogin',
-                    'Url' => '',                        
+                    'Url' => '',
+                    'Error' => '',
                 ),
             );    
             
@@ -151,16 +152,19 @@ class SiteController extends Controller
             if(isset($_POST['LoginForm']))
             {
                 $model->attributes=$_POST['LoginForm'];
-
+                                
                 if($model->validate() && $model->login()) {
                     $Obj['Data']['Result'] = 'Login';
                     $Obj['Data']['Url'] = Yii::app()->user->returnUrl;
+                    $Obj['Data']['Error']  = $model;
                     echo json_encode($Obj);
                     return 1;
                 }
                 else {
 //                    echo 'NotLogin';
                     $Obj['Data']['Result'] = 'NotLogin';
+                    $model->addError('password','Пользователю не присвоина роль');
+                    $Obj['Data']['Error']  = $model;
                     echo json_encode($Obj);
                     return 0;
                 }

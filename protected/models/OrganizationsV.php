@@ -18,17 +18,20 @@ class OrganizationsV extends MainFormModel
 	public $jregion;
 	public $jarea;
 	public $jstreet;
+        public $JStreetSearch;
 	public $jhouse;
 	public $jcorp;
 	public $jroom;
 	public $fregion;
 	public $farea;
 	public $fstreet;
+        public $FStreetSearch;
 	public $fhouse;
 	public $fcorp;
 	public $froom;
 	public $telephone;
 	public $bank_name;
+        public $BankSearch;
 	public $bik;
 	public $cor_account;
 	public $cityb;
@@ -81,11 +84,13 @@ class OrganizationsV extends MainFormModel
                             fregion,
                             farea,
                             fstreet,
+                            JStreetSearch,
                             fhouse,
                             fcorp,
                             froom,
                             telephone,
                             bank_name,
+                            BankSearch,
                             bik,
                             cor_account,
                             cityb,
@@ -152,8 +157,12 @@ class OrganizationsV extends MainFormModel
             $this->SP_DELETE_NAME = 'DELETE_PropForms';
 
             $Select =   "Select "
-                        ."   p.*";
-            $From =     "\nFrom Organizations_v p";
+                        ."  p.*,"
+                        ."  st1.StreetName as JStreetSearch,"
+                        ."  st2.StreetName as FStreetSearch,"
+                        ."  p.bank_name as BankSearch";
+            $From =     "\nFrom Organizations_v p left join Streets st1 on (p.jstreet = st1.Street_id)"
+                        ."\nleft join Streets st2 on (p.fstreet = st2.Street_id)";
             $Order =    "\nOrder by p.FullName";
             $Where =    "\nWhere p.DelDate is null";
 
@@ -174,6 +183,9 @@ class OrganizationsV extends MainFormModel
                     'Form_id' => 'Form',
                     'FormName' => 'Наименование',
                     'fown_id' => 'Форма собственности',
+                    'JStreetSearch' => 'JStreetSearch',
+                    'FStreetSearch' => 'FStreetSearch',
+                    'BankSearch' => 'BankSearch',
 
             );
 	}

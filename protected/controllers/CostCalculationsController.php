@@ -446,7 +446,8 @@ class CostCalculationsController extends Controller
             $sp->ProcedureName = 'SEND_AgreeCostCalc';
             $sp->ParametersRefresh();
             $sp->Parameters[0]['Value'] = $_POST['Calc_id'];
-            $sp->Parameters[1]['Value'] = Yii::app()->user->Employee_id;
+            $sp->Parameters[1]['Value'] = $_POST['Reason'];
+            $sp->Parameters[2]['Value'] = Yii::app()->user->Employee_id;
             $sp->CheckParam = true;
             $Res = $sp->Execute();
             

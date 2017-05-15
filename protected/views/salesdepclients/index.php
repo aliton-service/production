@@ -471,7 +471,7 @@
                             if (CurrentRowData != undefined)
                                 Form_id = CurrentRowData.Form_id;
                             $.extend(data, {
-                                Filters: ["d.PropForm_id = " + Form_id],
+                                Filters: ["og.PropForm_id = " + Form_id],
                             });
                             return data;
                         },
@@ -503,6 +503,11 @@
                                 ]
                     }));
                     $('#btnDemandView').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    $('#btnRefreshDemandView').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    $('#btnRefreshDemandView').on('click', function() {
+                        $("#DemandsGrid").jqxGrid('updatebounddata', 'cells');
+                    });
+                    
                     $('#btnDemandView').on('click', function() {
                         if (Demand != undefined)
                             window.open(<?php echo json_encode(Yii::app()->createUrl('Demands/SalesView')) ?> + "&Demand_id=" + Demand.Demand_id);
@@ -550,6 +555,12 @@
                                 ]
                     }));
                     $('#btnObjectView').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    $('#btnRefreshObjectView').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
+                    
+                    $('#btnRefreshObjectView').on('click', function() {
+                        $("#ObjectsGrid").jqxGrid('updatebounddata');
+                    });
+                    
                     $('#btnObjectView').on('click', function() {
                         if (Object != undefined)
                             window.open(<?php echo json_encode(Yii::app()->createUrl('Objectsgroup/Index')) ?> + "&ObjectGr_id=" + Object.ObjectGr_id);
@@ -657,6 +668,7 @@
                 </div>
                 <div class="al-row">
                     <div class="al-row-column"><input type="button" id="btnDemandView" value="Просмотр"/></div>
+                    <div class="al-row-column"><input type="button" id="btnRefreshDemandView" value="Обновить"/></div>
                     <div style="clear: both"></div>
                 </div>
             </div>
@@ -669,6 +681,7 @@
                 <div class="al-row">
                     <div class="al-row-column"><input type="button" id="btnObjectView" value="Просмотр"/></div>
                     <div class="al-row-column"><input type="button" value="Создать заявку" id="btnCreateDemand" /></div>
+                    <div class="al-row-column"><input type="button" value="Обновить" id="btnRefreshObjectView" /></div>
                     <div style="clear: both"></div>
                 </div>
             </div>

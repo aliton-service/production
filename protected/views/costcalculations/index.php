@@ -991,27 +991,28 @@
                 
                 
                 $('#btnSendAgreedCostCalculations').on('click', function() {
-//                      $("#MailTo").attr("href", "mailto:ban@aliton.ru" + "?subject=Согласование сметы&body=Прошу согласовать смету №<a href=\"http://test.aliton.ru/\">123</a>");
-//                      document.getElementById('MailTo').click();
-                    $.ajax({
-                        url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/SendAgreed')) ?>,
-                        type: 'POST',
-                        async: false,
-                        data: {
-                            Calc_id: CostCalculations.calc_id,
-                        },
-                        success: function(Res) {
-                            Res = JSON.parse(Res);
-                            if (Res.result == 1)
-                                Aliton.ShowErrorMessage('Отправка', 'Письмо успешно отправлено');
-                            else
-                                Aliton.ShowErrorMessage('Ошибка', 'Письмо не отправлено');
-                                
-                        },
-                        error: function(Res) {
-                            Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                        }
-                    });   
+                    $('#ReasonDialog').jqxWindow('open');
+                    
+                    
+//                    $.ajax({
+//                        url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/SendAgreed')) ?>,
+//                        type: 'POST',
+//                        async: false,
+//                        data: {
+//                            Calc_id: CostCalculations.calc_id,
+//                        },
+//                        success: function(Res) {
+//                            Res = JSON.parse(Res);
+//                            if (Res.result == 1)
+//                                Aliton.ShowErrorMessage('Отправка', 'Письмо успешно отправлено');
+//                            else
+//                                Aliton.ShowErrorMessage('Ошибка', 'Письмо не отправлено');
+//                                
+//                        },
+//                        error: function(Res) {
+//                            Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                        }
+//                    });   
                 });
                 
                 $('#btnAgreedCostCalculations').on('click', function(){
@@ -1760,8 +1761,43 @@
         };
 
         $('#jqxTabsCostCalculations').jqxTabs({ width: '99.5%', height: '99.5%', initTabContent: initWidgets});
-
         
+        var initReasonDialog = function() {
+            $("#edReasonSend").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)', height: 200 }));
+            $('#btnSendMailAgree').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120 }));
+            $('#btnCancelSendmailAgree').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120 }));
+            
+            $('#btnCancelSendmailAgree').on('click', function() {
+                $('#ReasonDialog').jqxWindow('close');
+            });
+            
+            $('#btnSendMailAgree').on('click', function() {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/SendAgreed')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        Calc_id: CostCalculations.calc_id,
+                        Reason: $("#edReasonSend").val()
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result == 1) {
+                            Aliton.ShowErrorMessage('Отправка', 'Письмо успешно отправлено');
+                            $('#ReasonDialog').jqxWindow('close');
+                        }
+                        else
+                            Aliton.ShowErrorMessage('Ошибка', 'Письмо не отправлено');
+
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                    }
+                }); 
+            });
+            
+        };
+        $('#ReasonDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 450, height: 320, position: 'center', isModal: true, initContent: initReasonDialog}));
         
         
         
@@ -2039,3 +2075,21 @@
 </div>
 
 <a style="display: none" id="MailTo" href=""></a>
+
+<div id="ReasonDialog" style="display: none;">
+    <div id="ReasonDialogHeader">
+        <span id="ReasonHeaderText">Отправить на согласование</span>
+    </div>
+    <div style="padding: 10px;" id="DialogReasonContent">
+        <div style="" id="BodyReasonDialog">
+            <div class="al-row">Укажите причину:</div>
+            <div class="al-row">
+                <textarea id="edReasonSend"></textarea>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column" ><input type="button" value="Отправить" id='btnSendMailAgree' /></div>
+                <div class="al-row-column" style="float: right"><input type="button" value="Отмена" id='btnCancelSendmailAgree' /></div>
+            </div>
+        </div>
+    </div>
+</div>
