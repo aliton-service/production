@@ -19,8 +19,12 @@
             DS.setMonth(DS.getMonth() - 1);
             
             $("#edMaster").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataEmployees, multiSelect: true, width: '290', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}));
-            $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DS, width: 110, formatString: 'dd.MM.yyyy' }));
-            $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DE, width: 110, formatString: 'dd.MM.yyyy' }));
+            $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DS, width: 110, formatString: 'dd.MM.yyyy', showCalendarButton: true }));
+            $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: DE, width: 110, formatString: 'dd.MM.yyyy', showCalendarButton: true }));
+            $("#edWHDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: 110, formatString: 'dd.MM.yyyy', showCalendarButton: true }));
+            $("#edWHDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: 110, formatString: 'dd.MM.yyyy', showCalendarButton: true }));
+            $("#edWHBuhDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: 110, formatString: 'dd.MM.yyyy', showCalendarButton: true }));
+            $("#edWHBuhDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: 110, formatString: 'dd.MM.yyyy', showCalendarButton: true }));
             
             
             $("#edMaster").on('change', function (event) {
@@ -33,7 +37,6 @@
                     }
                 });
                 
-                console.log(selectedItems);
                 $("#edParam").val(selectedItems);
             });
             $("#edMaster").jqxComboBox('selectIndex', 0 );
@@ -53,19 +56,33 @@
                     ),
         ));
 ?>        
-        <div class="row">
+        <div class="al-row">
             <div class="row-column" style="width: 130px">Сотрудники:</div>
             <div class="row-column"><div id="edMaster" ></div></div>
             <input hidden="" type="hidden" name="Parameters[Empl]" id="edParam"/>
         </div>
         <div class="al-row">
-            <div class="al-row-column" style="width: 150px;">Период с</div>
+            <div class="al-row-column" style="width: 150px;">Выполнение заявки в период с</div>
             <div class="al-row-column"><div name="Parameters[DateStart]" id="edDateStart"></div></div>
             <div class="al-row-column" >по</div>
             <div class="al-row-column"><div name="Parameters[DateEnd]" id="edDateEnd"></div></div>
             <div style="clear: both"></div>
         </div>
-        
+        <div class="al-row">
+            <div class="al-row-column" style="width: 150px;">Внутренний акт</div>
+            <div class="al-row-column"><div name="Parameters[WHDateStart]" id="edWHDateStart"></div></div>
+            <div class="al-row-column" >по</div>
+            <div class="al-row-column"><div name="Parameters[WHDateEnd]" id="edWHDateEnd"></div></div>
+            <div style="clear: both"></div>
+        </div>
+        <div class="al-row">
+            <div class="al-row-column" style="width: 150px;">Бухг. акт</div>
+            <div class="al-row-column"><div name="Parameters[WHBuhDateStart]" id="edWHBuhDateStart"></div></div>
+            <div class="al-row-column" >по</div>
+            <div class="al-row-column"><div name="Parameters[WHBuhDateEnd]" id="edWHBuhDateEnd"></div></div>
+            <div style="clear: both"></div>
+        </div>
+
         <div style="clear: both; margin-top: 10px;"></div>
         
 <?php        
