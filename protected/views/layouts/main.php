@@ -292,6 +292,13 @@
                                         ),
                                     ),
                                 ),
+                                array('label'=>'Сметы', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('CalcReportAll'), 'items'=>array(
+                                    array('label' => 'Модернизации', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Сметы/Модернизации', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('CalcReport1'),
+                                        ),
+                                    ),
+                                ),
                                 array('label'=>'Заявки', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('DemandsReportAll'), 'items'=>array(
                                     
                                     array('label' => 'Отчет по заявкам Call-центра', 

@@ -484,6 +484,20 @@
             'data' => null,
         ),
         
+        
+        /* Сметы */
+        'CalcReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Сметы',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        'CalcReport1' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Модернизации',
+            'bizRule' => null,
+            'data' => null,
+        ),
     );
 ?>
 

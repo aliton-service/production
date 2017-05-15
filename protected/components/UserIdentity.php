@@ -25,7 +25,7 @@ class UserIdentity extends CUserIdentity
                 if (!$result)
                 {
                     $this->errorCode = self::ERROR_USERNAME_INVALID;
-                    return $this->errorCode;
+                    return 10;//$this->errorCode;
                     
                 }
                 else {

@@ -36,6 +36,8 @@ class LoginForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
+                        'username' => 'username',
+                        'password' => 'password',
 			'rememberMe'=>'Remember me next time',
 		);
 	}
@@ -59,6 +61,9 @@ class LoginForm extends CFormModel
                                 break;
                             case 3:
                                 $this->addError('password','Пользователю не присвоина роль');
+                                break;
+                            case 10:
+                                $this->addError('password','Пользователя нет в домене');
                                 break;
                         }
 		}

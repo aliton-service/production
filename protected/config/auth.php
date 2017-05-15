@@ -633,6 +633,9 @@ return array_merge(
                 
                 'TasksReportAll',
                 'TasksReport1',
+                
+                'CalcReportAll',
+                'CalcReport1',
                 ),
         ),
         
@@ -699,6 +702,9 @@ return array_merge(
                 'DemandsReport10',
                 'DemandsReport11',
                 'DemandsReport12',
+                
+                'CalcReportAll',
+                'CalcReport1',
             ),
         ),
         
@@ -860,6 +866,9 @@ return array_merge(
                 'DemandsReport10',
                 'DemandsReport11',
                 'DemandsReport12',
+                
+                'CalcReportAll',
+                'CalcReport1',
             ),
         ),
         
@@ -920,6 +929,9 @@ return array_merge(
                 'DebtorsReportAll',
                 'Debt1Report',
                 'Debt2Report',
+                
+                'CalcReportAll',
+                'CalcReport1',
             ),
         ),
         
@@ -993,6 +1005,9 @@ return array_merge(
                 'ObjectReport4',
                 'ObjectReport5',
                 'ObjectReport6',
+                
+                'CalcReportAll',
+                'CalcReport1',
                 
             ),
         ),
