@@ -22,7 +22,7 @@
             
             $("#SystemType2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemTypes, displayMember: "SystemTypeName", valueMember: "SystemType_Id", width:300 }));
             $("#Availability2").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataSystemAvailabilitys, displayMember: "availability", valueMember: "code_id", width:200, autoDropDownHeight: true }));;
-            $("#count2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
+            $("#count2").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 100, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true, value: 1 }));
             $("#edCompetitors").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 340 }));
             $("#edComplexitySystems").jqxInput($.extend(true, {}, InputDefaultSettings, { width: '100%' }));
             
