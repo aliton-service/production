@@ -31,8 +31,8 @@
         $this->beginWidget('CActiveForm', array(
             'id' => 'Parameters',
             'htmlOptions'=>array(
-                    'class'=>'form-inline'
-                    ),
+                'class'=>'form-inline'
+            ),
         ));
 ?>        
         <div class="row">

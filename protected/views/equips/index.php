@@ -159,7 +159,7 @@
         });
         
         $("#btnAddEquip").on('click', function() {
-            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 780, height: 600, position: 'center'}));
+            $('#EquipsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 615, position: 'center'}));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('Equips/Create')); ?>,
                 type: 'POST',

@@ -1464,7 +1464,7 @@
                 <div class="row-column">Дата:</div>
                 <div class="row-column"><div id="edDate4"></div></div>
                 <div class="row-column"><b><?php echo $model->status; ?></b></div>
-                <div class="row-column"><b><?php echo $model->state_prchs; ?></b></div>
+                <div class="row-column" style="margin-left: 170px;"><b><?php echo $model->state_prchs; ?></b></div>
                 <div class="row-column"><b><div id="edControlDoc"></div></b></div>
             </div>
             <div class="row">

@@ -224,7 +224,7 @@
 <div class="al-row">
     <div class="al-row-column" style="width: 150px">Наименование:</div>
     <div class="al-row-column" style="width: calc(100% - 160px);">
-        <input type="text" name="Equips[EquipName]" id="edEquipNameEdit"/>
+        <input type="text" name="Equips[EquipName]" id="edEquipNameEdit"/><?php echo $Form->error($model, 'EquipName'); ?>
     </div>
     <div style="clear: both"></div>
 </div>

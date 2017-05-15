@@ -86,8 +86,6 @@ class ReportsController extends Controller
         if ($ReportName == '/Сметы/Смета 2')
             $ResultHtml = $this->ReplaceImage($ResultHtml, array('https://test.aliton.ru/images/top-logo.bmp', 'https://test.aliton.ru/images/stump-button.bmp'));
         
-            
-        
         if (!$Ajax)
             $this->render($this->GetViewForReport($ReportName), array(
                 'ResultHtml' => $ResultHtml,
