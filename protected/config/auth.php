@@ -687,7 +687,7 @@ return array_merge(
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'ChangeType',
-                
+                'ManagerCostCalcDocuments',
                 /* Отчеты */
                 'DemandsReportAll',
                 'DemandsReport1',

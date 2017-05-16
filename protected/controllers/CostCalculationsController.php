@@ -245,12 +245,14 @@ class CostCalculationsController extends Controller
             'SumEquipsHighDefault' => 0,
             'SumPay' => 0,
             'SumPayNoAvans' => 0,
+            'isContract' => 0,
         );
         
         if (isset($_POST['calc_id'])) {
             $Query = new SQLQuery();
             $Query->text = "Select
                                   t.*,
+                                  case when (select count(*) from contractss c where c.calc_id = t.calc_id and c.deldate is null and c.doctype_id in (3, 8)) > 0 then 1 else 0 end isContract,
                                   isnull(t.sum_equips_low, 0) + isnull(t.sum_materials_low, 0) + isnull(t.sum_works_low, 0) sum_low_full,
                                   (t.sum_works_high + t.sum_equips_high + t.sum_materials_high) sum_high_full_no_discount,
                                   (t.sum_works_high + t.sum_equips_high + t.sum_materials_high)*(1-t.discount/100) sum_high_full,
@@ -258,6 +260,7 @@ class CostCalculationsController extends Controller
                                   case when ((t.sum_works_high + t.sum_equips_high + t.sum_materials_high)*(1-t.discount/100)) > 0 then ((t.sum_works_high + t.sum_equips_high + t.sum_materials_high)*(1-t.discount/100) - (t.sum_works_low + t.sum_equips_low + t.sum_materials_low))/((t.sum_works_high + t.sum_equips_high + t.sum_materials_high)*(1-t.discount/100))*100 else 0 end as proc_marj
                                 From (
                                 Select
+                                  c.calc_id,
                                   c.sum_works_low,
                                   c.total_work,
                                   c.sum_works_high,
@@ -301,6 +304,7 @@ class CostCalculationsController extends Controller
             $Result['SumMaterialsHigh'] = $Res['sum_materials_high'];
             $Result['SumEquipsHighDefault'] = $Res['sum_equips_high_standart'];
             $Result['SumPay'] = $Res['SumPay'];
+            $Result['isContract'] = $Res['isContract'];
             
             // Общая сумма закупок без аванса
             $SumPayNoAvans = new SQLQuery();
