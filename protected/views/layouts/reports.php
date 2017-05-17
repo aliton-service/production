@@ -1,6 +1,7 @@
 <html>
     <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        
         <link rel="stylesheet" href="/js/jqwidgets/styles/jqx.base.css" type="text/css" />
 	<meta name="language" content="en">
         <?php 
@@ -80,6 +81,10 @@
 
             .al-data .al-row:last-child {
                 padding-bottom: 0px;
+            }
+            
+            .jqx-calendar-month-container:last-child {
+                height: 10px !important;
             }
             
         </style>

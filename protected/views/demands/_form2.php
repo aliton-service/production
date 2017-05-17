@@ -260,7 +260,10 @@
         });
         
         $("#btnSave").on('click', function () {
+            if ($("#btnSave").jqxButton('disabled'))
+                return;
             $("#btnSave").jqxButton({disabled: true});
+            
             var State = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
             var url = '';
 //            console.log($("#chbDateMaster").jqxCheckBox('val'));
