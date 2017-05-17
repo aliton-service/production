@@ -808,7 +808,7 @@
                     var ProcPay = 0;
                     if (CostCalcDetails.SumHighFull > 0)
                         ProcPay = (parseFloat(CostCalcDetails.SumPay)*100)/CostCalcDetails.SumHighFull;
-                    var Pay50 = (parseFloat(ProcPay) >= 50);
+                    var Pay50 = (parseFloat(ProcPay) >= 45);
                     
                     if (Type == 0) {// КП
                         if (ROPR) {
