@@ -105,8 +105,8 @@
         $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '220', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: false });
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.AgreeDate, }));
-        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 500}));
-        $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '330', height: '25px', displayMember: "contact", valueMember: "Info_id"});
+        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 690}));
+        $("#cmbContactInfo").jqxComboBox({ source: DataContactInfo, width: '170', dropDownWidth:'450px', height: '25px', displayMember: "contact", valueMember: "Info_id", dropDownHorizontalAlignment: 'right'});
         $('#edRefusers').jqxTextArea({ disabled: true, placeHolder: '', height: 50, width: 800, minLength: 1});
         $('#edDemandText').jqxTextArea({ placeHolder: '', height: 50, width: 800, minLength: 1});
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { disabled: false }));
@@ -375,12 +375,14 @@
     <div class="row-column"><div id='edAgreeDate' name="Demands[AgreeDate]"></div></div>
 </div>
 <div class="row" style="margin-top: 5px;">
-    <div class="row-column" style="width: 502px;">Контактное лицо:</div>
-    <div class="row-column" style="width: 293px;">Из карточки клиента:</div>
-</div>
-<div class="row" style="margin-bottom: 0px; margin-top: 0px;">
-    <div class="row-column" style="margin-right: 2px;"><input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" /><div><?php echo $form->error($model, 'Contacts'); ?></div></div>
-    <div class="row-column" style="margin-right: 2px;"><div id='cmbContactInfo'></div></div>
+    <div class="row-column" style="margin: 0px;">
+        <div class="row" style="margin: 0px; padding: 0;">Контактное лицо:</div>
+        <div class="row" style="margin: 0 2px 0 0;"><input autocomplete="off" type="text" id="edContacts" name="Demands[Contacts]" value="<?php echo $model->Contacts; ?>" /><div><?php echo $form->error($model, 'Contacts'); ?></div></div>
+    </div>
+    <div class="row-column" style="margin: 0px;">  
+        <div class="row" style="margin: 0px; padding: 0;">Из карточки клиента:</div>
+        <div class="row" style="margin: 0;"><div id='cmbContactInfo'></div></div>
+    </div>
 </div>
 <!--
     Если мы редактируем, то выводим поля: Дата доклада помощи, Дата перевода заявки,
