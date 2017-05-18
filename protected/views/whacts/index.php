@@ -145,7 +145,7 @@
         
         $('#btnAdd').on('click', function() {
             if ($('#btnAdd').jqxButton('disabled')) return;
-            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 510, width: 960, position: 'center' }));
+            $('#WHDocumentsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 510, width: 975, position: 'center' }));
             $.ajax({
                 url: <?php echo json_encode(Yii::app()->createUrl('WhActs/Insert')) ?>,
                 type: 'POST',

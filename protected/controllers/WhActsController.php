@@ -122,18 +122,19 @@ class WhActsController extends Controller
             } 
         }
         
-        $query = new SQLQuery();
-        $query->text = " 
-            select
-                c.ContrNumS
-            from ContractsS c
-            where (c.DocType_id = 8 or c.DocType_id = 3) and c.DelDate is null and c.calc_id = " . $model->calc_id;
-        $Res = $query->QueryRow();
-        $model->bill = $Res['ContrNumS'];
+        if ($model->calc_id != '') {        
+            $query = new SQLQuery();
+            $query->text = " 
+                select
+                    c.ContrNumS
+                from ContractsS c
+                where (c.DocType_id = 8 or c.DocType_id = 3) and c.DelDate is null and c.calc_id = " . $model->calc_id;
+            $Res = $query->QueryRow();
+            $model->bill = $Res['ContrNumS'];
+        }
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
-            'ContrNumS' => $model->bill
         ), true);
         echo json_encode($ObjectResult);
     }
