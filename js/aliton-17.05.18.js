@@ -65,11 +65,13 @@ Aliton.GetRowById = function(FieldName, Value, Grid, Refresh) {
     return PI.pagesize*PI.pagenum;  
 };
 
-Aliton.ShowErrorMessage = function(Msg, ErrorText) {
+Aliton.ShowErrorMessage = function(Msg, ErrorText, Title) {
     if (Msg == undefined)
         Msg = '';
     if (ErrorText == undefined)
         ErrorText = '';
+    if (Title == undefined)
+        Title = 'Внимание! Ошибка.';
     
     $('#MainDialog').on('open', function() {
         $('#BodyMainDialog').jqxTextArea('val', Msg + '\nТекст ошибки:\n' + ErrorText);
@@ -81,7 +83,7 @@ Aliton.ShowErrorMessage = function(Msg, ErrorText) {
         position: 'center',
         modalZIndex: 19000,
         zIndex: 99999,
-        title: 'Внимание! Ошибка.',
+        title: Title,
         initContent: function(){
             $('#BodyMainDialog').jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { placeHolder: '', height: 170, width: '100%', minLength: 1}));
             

@@ -22,7 +22,7 @@
             jrdc_name: '<?php echo $model->jrdc_name; ?>',
             RegistrationName: '<?php echo $model->RegistrationName; ?>',
             best_date: Aliton.DateConvertToJs('<?php echo $model->best_date; ?>'),
-            Demand_id: '<?php echo $model->Demand_id; ?>',
+            Demand_id: <?php echo json_encode($model->Demand_id); ?>,
             sum_materials_low: <?php echo json_encode($model->sum_materials_low); ?>,
             date_ready: Aliton.DateConvertToJs('<?php echo $model->date_ready; ?>'),
             date_agreed: Aliton.DateConvertToJs('<?php echo $model->date_agreed; ?>'),
@@ -770,29 +770,35 @@
             SetStateButtons();
         });
         
+        var CheckPermission = function() {
+            var Result = {
+                Permission: true,
+                Messasge: ''
+            };
+            
+            
+            
+            return Result;
+        };
+        
         $("#dropDownBtnCostCalculations").jqxDropDownButton({initContent: function(){
                 var CheckAgreed = function() {
-                    if (Administrator || (parseInt(CostCalculations.Position_id) == 150)) return true;
+                    var Result = {
+                        Permission: true,
+                        Messasge: 'Согласование не требуется'
+                    };
+                    
+                    if (Administrator) {
+                        return Result;
+                    }
                     var Type = parseInt(CostCalculations.type);
-                    var Chief = false;
-                    var PM = false;
-                    var RSC = false;
-                    var ROPR = false;
-                    var God = false;
-                    if (parseInt(CostCalculations.Position_id) == 151)
-                        God = true;
-                    if (parseInt(CostCalculations.Position_id) == 37)
-                        RSC = true;
-                    if (parseInt(CostCalculations.Position_id) == 86)
-                        PM = true;
-                    if (parseInt(CostCalculations.Position_id) == 31)
-                        ROPR = true;
+                    var Chief = false; var PM = false; var RSC = false; var ROPR = false; var God = false;
+                    if (parseInt(CostCalculations.Position_id) == 151) God = true;
+                    if (parseInt(CostCalculations.Position_id) == 37) RSC = true;
+                    if (parseInt(CostCalculations.Position_id) == 86) PM = true;
+                    if (parseInt(CostCalculations.Position_id) == 31) ROPR = true;
+                    if ((parseInt(CostCalculations.Position_id) == 37) || (parseInt(CostCalculations.Position_id) == 152)) Chief = true;
                     
-                    
-                    
-                    if ((parseInt(CostCalculations.Position_id) == 37) || (parseInt(CostCalculations.Position_id) == 152))
-                        Chief = true;
-                    //var Chief = (find([37, 152], parseFloat(CostCalculations.Position_id)) != -1);
                     var Marj = (parseFloat(CostCalcDetails.ProcMarj) >= parseFloat(CostCalculations.ccwt_proc));
                     var Discount15 = (parseFloat(CostCalcDetails.Discount) > 15);
                     var Discount5 = (parseFloat(CostCalcDetails.Discount) > 5);
@@ -813,227 +819,215 @@
                     if (Type == 0) {// КП
                         if (ROPR) {
                             if (!Marj20 && !NotWorks) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше 20%';
+//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
+                                return Result;
                             }
                             if (!CheckEquips && NotWorks && Discount0) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Требуется увеличить стоимость оборудования';
+                                return Result;
                             }
                         }
                         else if (PM) {
                             if (!Marj30 && !NotWorks) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше 30%';
+                                return Result;
                             }
                             if (Discount5 && !Marj30) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 5%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Скидка не может быть больше 5%';
+                                return Result;
                             }
                             if (!CheckEquips && NotWorks && Discount0) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Требуется увеличить стоимость оборудования';
+                                return Result;
                             }
                         }
                         else if (RSC) {
                             if (!Marj15 && CostCalculations.ccwt_id == 7) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 15%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше 15%';
+                                return Result;
                             }
                             if (!Marj20 && !NotWorks) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше 20%';
+                                return Result;
                             }
                             if (Discount15) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 15%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Скидка не может быть больше 15%';
+                                return Result;
                             }
                             if (!CheckEquips && NotWorks && Discount0) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Требуется увеличить стоимость оборудования';
+                                return Result;
                             }
                         }
                         else if (Chief) {
                             if (Discount15 && !Marj20) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%';
+                                return Result;
                             }
                             if (!Marj30 && !NotWorks) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше 30%';
+                                return Result;
                             }
                             if (!CheckEquips && NotWorks && Discount0) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Требуется увеличить стоимость оборудования';
+                                return Result;
                             }
                             
                         } else {
                             
                             if (!Marj && !NotWorks) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
                             }
                             if (!CheckEquips && NotWorks && Discount0) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Требуется увеличить стоимость оборудования';
+                                return Result;
                             }
                         }
                         
                     }
                     if (Type == 1 || Type == 2) { // Смета
                         if (God) {
-                            return true;
+                            return Result;
                         }
                         if (ROPR) {
-//                            if (!Marj20 && !NotWorks) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
-//                                return false;
-//                            }
-//                            if (!CheckEquips && NotWorks && Discount0) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-//                                return false;
-//                            }
                             if (CostCalculations.ccwt_id == 7) {
                                 if (CostCalcDetails.isContract == 0) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется выставить счет или счет-заказ');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Требуется выставить счет или счет-заказ';
+                                    return Result;
                                 }
                             } else
                                 if ((parseFloat(CostCalcDetails.SumHighFull) >= 10000 && !Pay50)) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Если сумма сметы больше 10000р., счет должен быть оплачен на 50% или более.');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Если сумма сметы больше 10000р., счет должен быть оплачен на 50% или более.';
+                                    return Result;
                                 }
                         } else if (PM) {
-//                            if (!Marj30 && !NotWorks) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
-//                                return false;
-//                            }
-//                            if (Discount5) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 5%');
-//                                return false;
-//                            }
-//                            if (!CheckEquips && NotWorks && Discount0) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-//                                return false;
-//                            }
                             if (CostCalculations.ccwt_id == 7) {
                                 if (CostCalcDetails.isContract == 0) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется выставить счет или счет-заказ');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Требуется выставить счет или счет-заказ';
+                                    return Result;
                                 }
                             } else
                             if (!Pay50) {
                                 if (SumNoAvans >= 50000) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется аванс более 50%, лимит в 50000р. превышен.');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Требуется аванс более 50%, лимит в 50000р. превышен.';
+                                    return Result;
                                 }
                                 else {
                                     
                                     if (GarantMail && CostCalcDetails.SumHighFull >= 20000) {
-                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Без 50% аванса и с гарантийным письмом, можно согласовать смету только если сумма не превышает 20000р.');
-                                        return false;
+                                        Result.Permission = false;
+                                        Result.Messasge = 'Без 50% аванса и с гарантийным письмом, можно согласовать смету только если сумма не превышает 20000р.';
+                                        return Result;
                                     }
                                     if (!GarantMail && CostCalcDetails.SumHighFull >= 10000) {
-                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Без 50% аванса и без гарантийного письма, можно согласовать смету только если сумма не превышает 10000р.');
-                                        return false;
+                                        Result.Permission = false;
+                                        Result.Messasge = 'Без 50% аванса и без гарантийного письма, можно согласовать смету только если сумма не превышает 10000р.';
+                                        return Result;
                                     }
                                 }
                             }
                         }
                         else if (RSC) {
-//                            if (!Marj20 && !NotWorks) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
-//                                return false;
-//                            }
-//                            if (Discount15) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Скидка не может быть больше 15%');
-//                                return false;
-//                            }
-//                            if (!CheckEquips && NotWorks && Discount0) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-//                                return false;
-//                            }
                             if (CostCalculations.ccwt_id == 7) {
                                 if (CostCalcDetails.isContract == 0) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется выставить счет или счет-заказ');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Требуется выставить счет или счет-заказ';
+                                    return Result;
                                 }
                             } else
                             if (!Pay50) {
                                 if (SumNoAvans >= 200000) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется аванс более 50%, лимит в 200000р. превышен.');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Требуется аванс более 50%, лимит в 200000р. превышен.';
+                                    return Result;
                                 }
                                 else {
-                                    
                                     if (GarantMail && CostCalcDetails.SumHighFull >= 50000) {
-                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Без 50% аванса и с гарантийным письмом, можно согласовать смету только если сумма не превышает 50000р.');
-                                        return false;
+                                        Result.Permission = false;
+                                        Result.Messasge = 'Без 50% аванса и с гарантийным письмом, можно согласовать смету только если сумма не превышает 50000р.';
+                                        return Result;
                                     }
                                     if (!GarantMail && CostCalcDetails.SumHighFull >= 30000) {
-                                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Без 50% аванса и без гарантийного письма, можно согласовать смету только если сумма не превышает 30000р.');
-                                        return false;
+                                        Result.Permission = false;
+                                        Result.Messasge = 'Без 50% аванса и без гарантийного письма, можно согласовать смету только если сумма не превышает 30000р.';
+                                        return Result;
                                     }
                                 }
                             }
-                                    
-                            
                         }
                         else if (Chief) {
-//                            if (Discount15 && !Marj20) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%');
-//                                return false;
-//                            }
-//                            if (!Marj30 && !NotWorks) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 30%');
-//                                return false;
-//                            }
-//                            if (!CheckEquips && NotWorks && Discount0) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-//                                return false;
-//                            }
                             if (CostCalculations.ccwt_id == 7) {
                                 if (CostCalcDetails.isContract == 0) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется выставить счет или счет-заказ');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Требуется выставить счет или счет-заказ';
+                                    return Result;
                                 }
                             } else
                             if (parseFloat(CostCalcDetails.SumHighFull) > 15000 && !Pay50) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Если сумма сметы больше 15000р., счет должен быть оплачен на 50% или более.');
-                                return false;
+                                Result.Permission = false;
+                                Result.Messasge = 'Если сумма сметы больше 15000р., счет должен быть оплачен на 50% или более.';
+                                return Result;
                             }
                             
                         } else {
-//                            if (!Marj && !NotWorks) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%');
-//                                return false;
-//                            }
-//                            if (!CheckEquips && NotWorks && Discount0) {
-//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется увеличить стоимость оборудования');
-//                                return false;
-//                            }
                             if (CostCalculations.ccwt_id == 7) {
                                 if (CostCalcDetails.isContract == 0) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Требуется выставить счет или счет-заказ');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Требуется выставить счет или счет-заказ';
+                                    return Result;
                                 }
                             } else
                                 if (parseFloat(CostCalcDetails.SumHighFull) >= 10000 && !Pay50) {
-                                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Если сумма сметы больше 10000р., счет должен быть оплачен на 50% или более.');
-                                    return false;
+                                    Result.Permission = false;
+                                    Result.Messasge = 'Если сумма сметы больше 10000р., счет должен быть оплачен на 50% или более.';
+                                    return Result;
                                 }
                         }
                     }
-                    return true;
+                    return Result;
                 };
                 
                 
                 $('#btnSendAgreedCostCalculations').on('click', function() {
+                    
+                    var Check = CheckAgreed();
+                    if (Check.Permission) {
+                        Aliton.ShowErrorMessage('Согласование не требуется', 'Согласование не требуется', 'Внимание!');
+                        return false;
+                    }
+                        
+                    
+                    
                     $('#ReasonDialog').jqxWindow('open');
                 });
                 
                 $('#btnAgreedCostCalculations').on('click', function(){
-                    if (!CheckAgreed()) return;
+                    var Check = CheckAgreed();
+                    if (!Check.Permission) {
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], Check.Messasge);
+                        return false;
+                    }
+                    
                     $.ajax({
                         url: <?php echo json_encode(Yii::app()->createUrl('CostCalculations/Agreed')) ?>,
                         type: 'POST',
