@@ -27,7 +27,7 @@
         var initWidgets = function (tab) {
             switch (tab) {
                 case 0:
-                    $("#edContact").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 600, minLength: 1}));
+                    $("#edContact").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: '100%', minLength: 1}));
                     $('#edDemandText').jqxTextArea($.extend(true, {}, InputDefaultSettings, { placeHolder: 'Текст заявки', height: 90, width: '100%', minLength: 1 }));
                     break;
                 case 1:
