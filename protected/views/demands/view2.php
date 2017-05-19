@@ -1052,7 +1052,7 @@
                     }
                     table {
                         font-family: verdana,arial,sans-serif;
-                        font-size: 11px;
+                        font-size: 13px;
                         color: #000;
                         border-width: 1px;
                         border-color: #666666;
