@@ -56,7 +56,7 @@ return array(
                                 'jquery.cookie.js',
                                 '/jqwidgets/localization.js',
                                 'aliton-sources.js',
-                                'aliton-settings-17.05.04.01.js',
+                                'aliton-settings-17.05.19.02.js',
                                 '/jqwidgets/jqx-all.js',
                                 '/jqwidgets/globalization/globalize.js',
                                 '/jqwidgets/globalization/globalize.culture.ru-RU.js',
@@ -69,7 +69,7 @@ return array(
                             'baseUrl' => '/js',
 
                             'js' => array(
-                                    'aliton-17.05.19.js',
+                                    'aliton-17.05.19.02.js',
                             ),
                         ),
                     ),

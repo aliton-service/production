@@ -414,6 +414,17 @@ Aliton.DateTimeToStr = function(Date, Format) {
     var Year = Date.getFullYear();
     var Hours = Date.getHours();
     var Minutes = Date.getMinutes();
+    var WeekDay = Date.getDay();
+    var WeekDays = [
+        '',
+        'Понедельник',
+        'Втроник',
+        'Среда',
+        'Четверг',
+        'Пятница',
+        'Суббота',
+        'Воскресенье',
+    ];
     if (Day < 10)
         Day = '0' + Day;
     if (Month < 10)
@@ -423,10 +434,13 @@ Aliton.DateTimeToStr = function(Date, Format) {
     if (Minutes < 10)
         Minutes = '0' + Minutes;
     
+    
     if (Format == 'dd.mm.yyyy hh:mm') 
         Str = Day + '.' + Month + '.' + Year + ' ' + Hours + ':' + Minutes;
     if (Format == 'dd.mm.yyyy') 
         Str = Day + '.' + Month + '.' + Year;
+    if (Format == 'dd.mm.yyyy hh:mm ddd') 
+        Str = Day + '.' + Month + '.' + Year + ' ' + Hours + ':' + Minutes + ' ' + WeekDays[WeekDay];
     
     return Str;
 };
