@@ -65,14 +65,14 @@
         $("#edSystemType").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 160, minLength: 1, value: Demand.SystemType}));
         $("#edEquipType").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 140, minLength: 1, value: Demand.EquipType}));
         $("#edMalfunction").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 310, minLength: 1, value: Demand.Malfunction}));
-        $("#edDemandPrior").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 160, minLength: 1, value: Demand.DemandPrior}));
-        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 455, minLength: 1, value: Demand.Contacts}));
-        $("#edCloseReason").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 230, minLength: 1, value: Demand.CloseReason}));
+        $("#edDemandPrior").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 90, minLength: 1, value: Demand.DemandPrior}));
+//        $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 790, minLength: 1, value: Demand.Contacts}));
+        $("#edCloseReason").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 130, minLength: 1, value: Demand.CloseReason}));
         $("#edRepMaster").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings,{height: '100%', width: '100%', minLength: 1}));
-        $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.AgreeDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
-        $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
+        $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140 }));
+        $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.AgreeDate, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140 }));
+        $("#edDateMaster").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateMaster, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140 }));
+        $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140 }));
         $("#edDateOfTrans").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: Demand.DateOfTrans, readonly: true, showCalendarButton: false, allowKeyboardDelete: false, width: 140 }));
         $("#edTransferReason").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 180, minLength: 1, value: Demand.TransferReason}));
         $("#edDelayReason").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 160, minLength: 1, value: Demand.DelayReason}));
@@ -82,6 +82,7 @@
         $("#edUCreateName").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 110, minLength: 1, value: Demand.UCreateName}));
         $("#edUChangeName").jqxInput($.extend(true, {}, InputDefaultSettings,{height: 25, width: 100, minLength: 1, value: Demand.UChangeName}));
         
+        $("#edContacts").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings,{height: 40, width: 790, minLength: 1}));
         
         $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" }));
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings,{ width: 120, height: 30 }));
@@ -781,15 +782,15 @@
         height: calc(100% - 347px);
     }
     #MalfunctionWrapper {
-        width: 150px;
+        width: 130px;
         height: 70px;
     }
     #RepMasterWrapper {
-        width: 150px;
+        width: 130px;
         height: 70px;
     }
     #SpecConditionWrapper {
-        width: 150px;
+        width: 130px;
         height: 70px;
     }
         
@@ -888,7 +889,7 @@
         <div class="row-column"><input readonly id="edMasterName" type="text"/></div>
     </div>
     <div style="clear: both;"></div>
-    <div style="float: left; width: 100%; height: 50px">
+    <div style="float: left; width: 100%; height: 47px">
         <div class="row-column" style="margin-right: 2px;">
             <div>Тип заявки</div>
             <div style="clear: both;"></div>
@@ -911,25 +912,22 @@
         </div>
     </div>
     <div style="clear: both;"></div>
-    <div style="float: left; width: 100%; height: 50px">
-        <div class="row-column" style="margin: 0;">
+    <div style="float: left; width: 100%;">
+        <div class="row-column" style="margin-right: 2px">
             <div>Приоритет</div>
             <div style="clear: both;"></div>
             <div><input readonly id="edDemandPrior" type="text"/></div>
         </div>
-        <div class="row-column" style="margin-right: 2px;">
+        <div class="row-column">
             <div>Контактное лицо</div>
             <div style="clear: both;"></div>
-            <div><input readonly id="edContacts" type="text"/></div>
+            <!--<div><input readonly id="edContacts" type="text"/></div>-->
+            <div><textarea readonly id="edContacts"><?php echo $model->Contacts; ?></textarea></div>
         </div>
-        <div class="row-column">
-            <div>Причина несвоевр. закрытия заявки</div>
-            <div style="clear: both;"></div>
-            <div><input readonly id="edCloseReason" type="text"/></div>
-        </div>
+        
     </div>
     <div style="clear: both;"></div>
-    <div style="float: left; width: 100%; height: 96px">
+    <div style="float: left; width: 100%; height: 92px">
         <div class="row-column">
             <div class="row-column">
                 <div>Предельная дата</div>
@@ -947,6 +945,11 @@
                 <div style="clear: both;"></div>
                 <div><div id='edDateExec'></div></div>
             </div>
+        </div>
+        <div class="row-column">
+            <div>Причина несвоевр.</div><div> закрытия заявки:</div>
+            <div style="clear: both;"></div>
+            <div><input readonly id="edCloseReason" type="text"/></div>
         </div>
         <div id="SpecConditionWrapper" class="row-column">
             <div>Особые условия</div>
