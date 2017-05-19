@@ -51,7 +51,7 @@
             LphName: <?php echo json_encode($model->LphName); ?>,
         };
 //        console.log(Demand.LphName);
-        
+        var DataExecutorReports;
         // Инициализация источников данных
         var DataEmployees = new $.jqx.dataAdapter(Sources.SourceListEmployees);
         var CurrentUser = <?php echo json_encode(Yii::app()->user->Employee_id); ?>;
@@ -99,14 +99,42 @@
                 case 0:
                     var CurrentRowDataER;
                     
-                    var DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceExecutorReports, {}), {
+                    var datetostr
+                    
+                    DataExecutorReports = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceExecutorReports, {}), {
                         formatData: function (data) {
                             $.extend(data, {
                                 Filters: ["ex.Demand_id = " + Demand.Demand_id],
                             });
                             return data;
                         },
+                        loadComplete: function(records) {
+                            var records = DataExecutorReports.records;
+                            var length = records.length;
+                            
+                            var html = "<table border='1'><tbody><tr><th align='left'>Дата сообщения</th><th align='left'>Администрирующий</th><th align='left'>План. дата вып.</th><th align='right'>Дата вып.</th><th align='left'>Действие</th><th align='left'>Исполнители</th><th align='left'>№ Заявки</th></tr>";
+                            for (var i = 0; i < length; i++) {
+                                var record = records[i];
+                                
+                                html += "<tr>";
+                                html += "<td>" + Aliton.DateTimeToStr(record.date) +  "</td>";
+                                html += "<td>" + record.EmployeeName + "</td>";
+                                html += "<td>" + Aliton.DateTimeToStr(record.plandateexec, 'dd.mm.yyyy') + "</td>";
+                                html += "<td>" + Aliton.DateTimeToStr(record.dateexec, 'dd.mm.yyyy') + "</td>";
+                                html += "<td>" + record.report + "</td>";
+                                html += "<td>" + record.othername + "</td>";
+                                html += "<td>" + record.demand_id + "</td>";
+                                html += "</tr>";
+                            }
+                            html += "</tbody></table>";
+                            $("#AdminGrid").html(html);
+                            $("#AdminGrid").scrollTop(0);
+                        },
                     });
+                    
+                    DataExecutorReports.dataBind();
+                    
+                    
                     $("#ProgressGrid").on('rowselect', function (event) {
                         CurrentRowDataER = $('#ProgressGrid').jqxGrid('getrowdata', event.args.rowindex);
                     });
@@ -163,47 +191,47 @@
 //                        }
                     });
                     
-                    $("#ProgressGrid").jqxGrid(
-                        $.extend(true, {}, GridDefaultSettings, {
-                            height: 'calc(100% - 36px)',
-                            width: '100%',
-                            sortable: false,
-                            autoheight: false,
-                            autorowheight: true,
-                            virtualmode: false,
-                            pageable: true,
-                            showfilterrow: false,
-                            filterable: false,
-                            autoshowfiltericon: true,
-                            source: DataExecutorReports,
-                            enablebrowserselection: true,
-                            enablehover: true,
-//                            cellhover: function (cellhtmlElement, x, y) {
-//                                var cell = $('#ProgressGrid').jqxGrid('getcellatposition', x, y);
-//                                if (cell.column == 'report') {
-//                                    if (cell.value != '' && cell.value != null) {
-//                                        $("#ProgressGrid").jqxTooltip({ content: cell.value });
-//                                        $("#ProgressGrid").jqxTooltip('open', x + 15, y + 15);
-//                                    }
-//                                    else
-//                                        $("#ProgressGrid").jqxTooltip('close');
-//                                }
-//                                else {
-//                                    $("#ProgressGrid").jqxTooltip('close');
-//                                }
-//                                    
-//                            },
-                            columns:
-                            [
-                                { text: 'Дата сообщения', datafield: 'date', width: 160, cellsformat: 'dd.MM.yyyy HH:mm ddd'},
-                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 160 },
-                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 130, cellsformat: 'dd.MM.yyyy ddd' },
-                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 130, cellsformat: 'dd.MM.yyyy HH:mm ddd' },
-                                { text: 'Действие', filtertype: 'range', datafield: 'report', width: 370 },
-                                { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 150 },
-                                { text: '№ Заявки', datafield: 'demand_id', width: 80},
-                            ]
-                    }));
+//                    $("#ProgressGrid").jqxGrid(
+//                        $.extend(true, {}, GridDefaultSettings, {
+//                            height: 'calc(100% - 36px)',
+//                            width: '100%',
+//                            sortable: false,
+//                            autoheight: false,
+//                            autorowheight: true,
+//                            virtualmode: false,
+//                            pageable: true,
+//                            showfilterrow: false,
+//                            filterable: false,
+//                            autoshowfiltericon: true,
+//                            source: DataExecutorReports,
+//                            enablebrowserselection: true,
+//                            enablehover: true,
+////                            cellhover: function (cellhtmlElement, x, y) {
+////                                var cell = $('#ProgressGrid').jqxGrid('getcellatposition', x, y);
+////                                if (cell.column == 'report') {
+////                                    if (cell.value != '' && cell.value != null) {
+////                                        $("#ProgressGrid").jqxTooltip({ content: cell.value });
+////                                        $("#ProgressGrid").jqxTooltip('open', x + 15, y + 15);
+////                                    }
+////                                    else
+////                                        $("#ProgressGrid").jqxTooltip('close');
+////                                }
+////                                else {
+////                                    $("#ProgressGrid").jqxTooltip('close');
+////                                }
+////                                    
+////                            },
+//                            columns:
+//                            [
+//                                { text: 'Дата сообщения', datafield: 'date', width: 160, cellsformat: 'dd.MM.yyyy HH:mm ddd'},
+//                                { text: 'Администрирующий', datafield: 'EmployeeName', width: 160 },
+//                                { text: 'План. дата вып.', /* filtertype: 'range' ,*/ datafield: 'plandateexec', width: 130, cellsformat: 'dd.MM.yyyy ddd' },
+//                                { text: 'Дата вып.', filtertype: 'range', datafield: 'dateexec', width: 130, cellsformat: 'dd.MM.yyyy HH:mm ddd' },
+//                                { text: 'Действие', filtertype: 'range', datafield: 'report', width: 370 },
+//                                { text: 'Исполнители', filtertype: 'range', datafield: 'othername', width: 150 },
+//                                { text: '№ Заявки', datafield: 'demand_id', width: 80},
+//                            ]
+//                    }));
                     $("#edComment").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 'calc(100% - 6px)', minLength: 1}));
                     $("#edPlanDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { value: null, width: '120px', dropDownVerticalAlignment: "top"}));
                     $("#btnSend").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -716,7 +744,8 @@
         
         function Comment() {
             if (Aliton.NewComment(Demand.Demand_id, $("#edComment").jqxInput('val'), $("#edPlanDateExec").jqxDateTimeInput('val'))) {
-                $("#ProgressGrid").jqxGrid('updatebounddata');
+//                $("#ProgressGrid").jqxGrid('updatebounddata');
+                DataExecutorReports.dataBind();
                 $("#edComment").jqxInput('val', null);
                 $("#edPlanDateExec").jqxDateTimeInput('val', null);
             }
@@ -1013,7 +1042,40 @@
         </ul>
         <div style="overflow: hidden;">
             <div style="padding: 10px; height: calc(100% - 20px)">
-                <div id="ProgressGrid"></div>
+                <!--<div id="ProgressGrid"></div>-->
+                <style type="text/css">
+                    #AdminGrid {
+                        border: 1px solid #666666;
+                    }
+                    table {
+                        font-family: verdana,arial,sans-serif;
+                        font-size: 11px;
+                        color: #000;
+                        border-width: 1px;
+                        border-color: #666666;
+                        border-collapse: collapse;
+                        font-style: normal;
+                        text-shadow: none;
+                        
+                    }
+                        table th {
+                            border-width: 1px;
+                            padding: 8px;
+                            border-style: solid;
+                            border-color: #666666;
+                            background-color: #dedede;
+                        }
+                        table td {
+                            border-width: 1px;
+                            padding: 8px;
+                            border-style: solid;
+                            border-color: #666666;
+                            background-color: #ffffff;
+                            
+                        }
+                        
+                </style>
+                <div id="AdminGrid" style="width: 100%; height: calc(100% - 36px); overflow: auto;"></div>
                 <div style="clear: both;"></div>
                 <div style="height: 30px; margin-top: 5px;">
                     <div style="float: left; width: calc(100% - 640px)"><input id="edComment" type="text"/></div>

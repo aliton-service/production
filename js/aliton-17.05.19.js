@@ -405,3 +405,29 @@ Aliton.GridExportToCsv = function(FileName, Array, Columns) {
 };
 
 
+Aliton.DateTimeToStr = function(Date, Format) {
+    var Str = '';
+    if (Format == undefined) Format = 'dd.mm.yyyy hh:mm';
+    if (Date == null) return '';
+    var Day = Date.getDate();
+    var Month = Date.getMonth() + 1;
+    var Year = Date.getFullYear();
+    var Hours = Date.getHours();
+    var Minutes = Date.getMinutes();
+    if (Day < 10)
+        Day = '0' + Day;
+    if (Month < 10)
+        Month = '0' + Month;
+    if (Hours < 10)
+        Hours = '0' + Hours;
+    if (Minutes < 10)
+        Minutes = '0' + Minutes;
+    
+    if (Format == 'dd.mm.yyyy hh:mm') 
+        Str = Day + '.' + Month + '.' + Year + ' ' + Hours + ':' + Minutes;
+    if (Format == 'dd.mm.yyyy') 
+        Str = Day + '.' + Month + '.' + Year;
+    
+    return Str;
+};
+
