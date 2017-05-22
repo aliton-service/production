@@ -301,8 +301,9 @@
             Aliton.ViewClient(Demand.ObjectGr_id);
         });
         
-        if (StateInsert)
+        if (StateInsert && Demand.DType_id == '') 
             $("#cmbDemandType").jqxComboBox('selectIndex', 0);
+        
     });
 </script>    
 
