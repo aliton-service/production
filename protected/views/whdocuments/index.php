@@ -587,9 +587,9 @@
                             autoloadstate: false,
                             ready: function() {
                                 var State = $('#Grid4').jqxGrid('getstate');
-                                var Columns = GridState.LoadGridSettings('#Grid4', 'TrebGrid4');
-                                $.extend(true, State.columns, Columns);
-                                $('#Grid4').jqxGrid('loadstate', State);    
+                                var Columns = GridState.LoadGridSettings('Grid4', 'TrebGrid4');
+//                                $.extend(true, State.columns, Columns);
+//                                $('#Grid4').jqxGrid('loadstate', State);    
                             },
                             columns:
                                 [
