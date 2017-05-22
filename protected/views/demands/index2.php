@@ -179,9 +179,10 @@
                 ready: function(){
                     var State = $('#DemandsGrid').jqxGrid('getstate');
                     var Columns = GridState.LoadGridSettings('DemandsGrid', 'DemandsIndex_DemandsGrid');
-                    $.extend(true, State.columns, Columns);
-                    $('#DemandsGrid').jqxGrid('loadstate', State);    
+//                    $.extend(true, State.columns, Columns);
+//                    $('#DemandsGrid').jqxGrid('loadstate', State);    
                     //$('#DemandsGrid').jqxGrid({source: DemandsAdapter});
+                    
                 },
                 pagesizeoptions: ['10', '200', '500', '1000'],
                 pagesize: 200,
@@ -189,7 +190,7 @@
                 columns:
                     [
                         {text: '#', sortable: false, filterable: false, editable: false,
-                            groupable: false, draggable: false, resizable: false,
+                            groupable: false, draggable: true, resizable: false,
                             datafield: '', columntype: 'number', width: 40,
                             cellsrenderer: function (row, column, value) {
                                 return "<div style='margin:4px;'>" + (value + 1) + "</div>";
@@ -262,6 +263,8 @@
 //                    $(this).attr('id', 'myElemPager');
 //                
 //            });
+
+        
     });
     
     

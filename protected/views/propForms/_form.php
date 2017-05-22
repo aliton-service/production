@@ -1,5 +1,9 @@
 <script type="text/javascript">
+    var Prop = {
+        SelectObject = []
+    };
     $(document).ready(function () {
+        
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Create') echo 'true'; else echo 'false'; ?>;
         var Organization = {
             Form_id: <?php echo json_encode($model->Form_id); ?>,
@@ -226,7 +230,29 @@
         $("#edTelephoneEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "", width: 350} ));
         
         $('#btnSaveOrganization').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnAttachObjects2').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 150}));
         $('#btnCancelOrganization').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
+        $('#btnAttachObjects2').on('click', function(){
+            $("#EditFormHeaderText").html("Привязать объекты к клиенту: " + Organization.FullName);
+            $('#FindBanksDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 600, position: 'center'}));
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('SalesDepClients/SelectObjects')) ?>,
+                type: 'POST',
+                data: {
+                    Form_id: Organization.Form_id,
+                },
+                async: false,
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    $("#BodyFindBanksDialog").html(Res.html);
+                    $('#FindBanksDialog').jqxWindow('open');
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         
         $('#btnCancelOrganization').on('click', function(){
             if ($('#OrganizationsDialog').length>0)
@@ -463,6 +489,7 @@
 </div>
 <div class="row">
     <div class="row-column"><input type="button" value="Сохранить" id='btnSaveOrganization'/></div>
+    <div class="row-column"><input type="button" value="Привязать объект" id="btnAttachObjects2" /></div>
     <div class="row-column" style="float: right;"><input type="button" value="Отмена" id='btnCancelOrganization'/></div>
 </div>
 <?php $this->endWidget(); ?>

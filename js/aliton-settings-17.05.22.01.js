@@ -293,8 +293,18 @@ var GridState = {};
 
 GridState.LoadGridSettings = function(ID, KEY) {
     var Result;
-    
+    var i = 1;
     var Result = JSON.parse(localStorage.getItem(KEY));
+    
+    for (var key in Result) {
+        if ($('#' + ID).jqxGrid('getcolumn', key) != null) {
+            $('#' + ID).jqxGrid('setcolumnindex', key, i);
+            $('#' + ID).jqxGrid('setcolumnproperty', key, 'width', Result[key]['width']);
+        }
+        i++;
+    }
+    
+    
 //    $.ajax({
 //        url: '/index.php?r=Personalization/JqxLoad',
 //        type: 'POST',
