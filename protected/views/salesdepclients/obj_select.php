@@ -58,15 +58,23 @@
             var Row;
             for (var i = 0; i <= Rows.length-1; i++) {
                 Row = $('#ObjsGrid').jqxGrid('getrowdata', Rows[i]);
-                Attach(Row.ObjectGr_id);
+                if (typeof(Prop) != 'undefined')
+                    Prop.SelectObject[i] = Row.ObjectGr_id;
+                else
+                    Attach(Row.ObjectGr_id);
             }
             $("#ObjsGrid").jqxGrid('updatebounddata');
             $('#ObjsGrid').jqxGrid('clearselection');
         });
         
         $('#btnCloseDialog').on('click', function() {
+            if ($("#FindBanksDialog").length>0) {
+                $("#FindBanksDialog").jqxWindow('close');
+                return;
+            }
             if ($("#EditFormDialog").length>0)
                 $("#EditFormDialog").jqxWindow('close');
+            
         });
     });
 </script>    

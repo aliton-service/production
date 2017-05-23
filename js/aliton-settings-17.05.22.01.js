@@ -292,22 +292,34 @@ GridFilters.AddControlFilter = function(ID_CONTROL, TYPE_CONTROL, ID, FieldName,
 var GridState = {};
 
 GridState.LoadGridSettings = function(ID, KEY) {
-    var Result = [];
-    $.ajax({
-        url: '/index.php?r=Personalization/JqxLoad',
-        type: 'POST',
-        async: false,
-        data: {
-            Key: KEY
-        },
-        success: function(Res){
-            if (Res !== '') {
-                Res = JSON.parse(Res);
-                Res = JSON.parse(Res.Columns);
-                Result = Res;
-            }
+    var Result;
+    var i = 1;
+    var Result = JSON.parse(localStorage.getItem(KEY));
+    
+    for (var key in Result) {
+        if ($('#' + ID).jqxGrid('getcolumn', key) != null) {
+            $('#' + ID).jqxGrid('setcolumnindex', key, i);
+            $('#' + ID).jqxGrid('setcolumnproperty', key, 'width', Result[key]['width']);
         }
-    });
+        i++;
+    }
+    
+    
+//    $.ajax({
+//        url: '/index.php?r=Personalization/JqxLoad',
+//        type: 'POST',
+//        async: false,
+//        data: {
+//            Key: KEY
+//        },
+//        success: function(Res){
+//            if (Res !== '') {
+//                Res = JSON.parse(Res);
+//                Res = JSON.parse(Res.Columns);
+//                Result = Res;
+//            }
+//        }
+//    });
     return Result;
 };
 
@@ -325,15 +337,18 @@ GridState.SaveGridSettings = function(ID, KEY) {
     var State = $('#' + ID).jqxGrid('savestate');
     State = State.columns;
     
-    $.ajax({
-        url: '/index.php?r=Personalization/JqxSave',
-        type: 'POST',
-        data: {
-            Key: KEY,
-            Id: ID,
-            Columns: JSON.stringify(State)
-        }
-    });
+    
+    localStorage.setItem(KEY, JSON.stringify(State));
+    
+//    $.ajax({
+//        url: '/index.php?r=Personalization/JqxSave',
+//        type: 'POST',
+//        data: {
+//            Key: KEY,
+//            Id: ID,
+//            Columns: JSON.stringify(State)
+//        }
+//    });
     
 };
 
