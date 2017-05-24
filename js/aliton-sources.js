@@ -1209,6 +1209,7 @@ Sources.Contacts =
         { name: 'FullName', type: 'string' },
         { name: 'Addr', type: 'string' },
         { name: 'Debt', type: 'float' },
+        { name: 'Priority', type: 'bool' },
     ],
     id: 'cont_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=Contacts',
