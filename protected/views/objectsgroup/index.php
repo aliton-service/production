@@ -127,7 +127,7 @@
             $("#AddInstructing").on('click', function ()
             {
                 if (ObjectGroup != undefined) {
-                    $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 600, height: 370, position: 'center'}));
+                    $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 620, height: 370, position: 'center'}));
                     $.ajax({
                         url: <?php echo json_encode(Yii::app()->createUrl('ValuableInstructions/Create')) ?>,
                         type: 'POST',
@@ -151,7 +151,7 @@
             $("#ChangeObjectsGroup").on('click', function ()
             {
                 if (ObjectGroup != undefined) {
-                    $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 830, height: 730, position: 'center'}));
+                    $('#ObjectsGroupDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 850, height: 730, position: 'center'}));
                     $.ajax({
                         url: <?php echo json_encode(Yii::app()->createUrl('ObjectsGroup/Update')) ?>,
                         type: 'POST',
@@ -374,7 +374,7 @@
 
             $("#EditContactInfo").on('click', function () {
                 if (CurrentRowCInfoData == undefined) return;
-                $('#ObjectsGroupDialog').jqxWindow({width: 600, height: 470, position: 'center'});
+                $('#ObjectsGroupDialog').jqxWindow({width: 620, height: 470, position: 'center'});
                 $.ajax({
                     url: <?php echo json_encode(Yii::app()->createUrl('ContactInfo/Update')) ?>,
                     type: 'POST',
