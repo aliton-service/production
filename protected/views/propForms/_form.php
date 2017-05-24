@@ -1,6 +1,27 @@
 <script type="text/javascript">
     var Prop = {
-        SelectObject = []
+        SelectObject: [],
+        Attach: function(ObjectGr_id, Form_id) {
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('SalesDepClients/AttachObjects')); ?>,
+                type: 'POST',
+                data: {
+                    Params: {
+                        Form_id: Form_id,
+                        ObjectGr_id: ObjectGr_id
+                    }
+                },
+                succes: function(Res) {
+                    Res = JSON.parse(Res);
+                    
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        }
+        
+        
     };
     $(document).ready(function () {
         
@@ -292,6 +313,13 @@
                 success: function(Res) {
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
+                        Organization.Form_id = Res.id;
+                        if (Prop.SelectObject.length > 0) {
+                            for (var i = 0; i <= Prop.SelectObject.length-1; i++) {
+                                Prop.Attach(Prop.SelectObject[i], Organization.Form_id);
+                            }
+                        }
+                        
                         if ($('#OrganizationsDialog').length>0) {
                             Aliton.SelectRowById('Form_id', Res.id, '#OrganizationsGrid', true);
                             $('#OrganizationsDialog').jqxWindow('close');

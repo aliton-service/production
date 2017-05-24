@@ -98,11 +98,29 @@
         $("#edServiceType").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Тариф обслуживания", value: Demand.ServiceType}));
         $("#chbDateMaster").jqxCheckBox({ width: 160, height: 25 });
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '180', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"});
+        $("#cmbExecutor input").focus(function() {
+            this.setSelectionRange(0, this.value.length)
+        });
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypesRecords, width: '300', height: '25px', displayMember: "DemandType", valueMember: "DType_id"});
+        $("#cmbDemandType input").focus(function() {
+            this.setSelectionRange(0, this.value.length)
+        });
         $("#cmbSystemType").jqxComboBox({ disabled: false, source: DataSystemTypesRecords, promptText: "Выберите тип заявки...", width: '300', height: '25px', displayMember: "SystemType", valueMember: "DSystem_id"});
+        $("#cmbSystemType input").focus(function() {
+            this.setSelectionRange(0, this.value.length)
+        });
         $("#cmbEquipType").jqxComboBox({ disabled: false, source: DataEquipTypesRecords, promptText: "Выберите тип системы...", width: '182', height: '25px', displayMember: "EquipType", valueMember: "DEquip_id"});
+        $("#cmbEquipType input").focus(function() {
+            this.setSelectionRange(0, this.value.length)
+        });
         $("#cmbMalfunction").jqxComboBox({ disabled: false, source: DataMalfunctionsRecords, promptText: "Выберите тип оборудования...", width: '280', height: '25px', displayMember: "Malfunction", valueMember: "DMalfunction_id"});
+        $("#cmbMalfunction input").focus(function() {
+            this.setSelectionRange(0, this.value.length)
+        });
         $("#cmbPrior").jqxComboBox({ source: DataPriorsRecords, promptText: "Выберите приоритет...", width: '220', height: '25px', displayMember: "DemandPrior", valueMember: "DPrior_id", autoDropDownHeight: false });
+        $("#cmbPrior input").focus(function() {
+            this.setSelectionRange(0, this.value.length)
+        });
         $("#edDeadline").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.Deadline, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edAgreeDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '150px', value: Demand.AgreeDate, }));
         $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {placeHolder: "Контактное лицо", width: 690}));

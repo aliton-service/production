@@ -56,6 +56,9 @@
         $('#btnAttach').on('click', function() {
             var Rows = $('#ObjsGrid').jqxGrid('getselectedrowindexes');
             var Row;
+            if (typeof(Prop) != 'undefined')
+                Prop.SelectObject = [];
+            
             for (var i = 0; i <= Rows.length-1; i++) {
                 Row = $('#ObjsGrid').jqxGrid('getrowdata', Rows[i]);
                 if (typeof(Prop) != 'undefined')

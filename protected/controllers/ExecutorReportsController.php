@@ -106,6 +106,10 @@ class ExecutorReportsController extends Controller
 	}
 
 	public function actionInsert() {
+            $NewWindow = 0;
+            if (isset($_GET['NewWindow']))
+                $NewWindow = $_GET['NewWindow'];
+            
             $model = new ClientActions();
             
             $LastAction = array(
@@ -242,22 +246,38 @@ class ExecutorReportsController extends Controller
                 
             }
             
-            
-
-            $ObjectResult['html'] = $this->renderPartial('_form', array(
-                'model' => $model,
-                'LastAction' => $LastAction,
-                'ContactInfo' => $ContactInfo,
-                'MarketingSolutions' => $MarketingSolutions,
-                'SystemOffers' => $SystemOffers,
-                'ClientSolutions' => $ClientSolutions,
-            ), true);
-            echo json_encode($ObjectResult);
+            if (isset($_GET['NewWindow'])) {
+                $this->render('_form', array(
+                    'model' => $model,
+                    'LastAction' => $LastAction,
+                    'ContactInfo' => $ContactInfo,
+                    'MarketingSolutions' => $MarketingSolutions,
+                    'SystemOffers' => $SystemOffers,
+                    'ClientSolutions' => $ClientSolutions,
+                    'NewWindow' => $NewWindow,
+                ));
+            }
+            else {
+                $ObjectResult['html'] = $this->renderPartial('_form', array(
+                    'model' => $model,
+                    'LastAction' => $LastAction,
+                    'ContactInfo' => $ContactInfo,
+                    'MarketingSolutions' => $MarketingSolutions,
+                    'SystemOffers' => $SystemOffers,
+                    'ClientSolutions' => $ClientSolutions,
+                    'NewWindow' => $NewWindow,
+                ), true);
+                echo json_encode($ObjectResult);
+            }
         }
         
         
 	public function actionUpdate()
 	{
+            $NewWindow = 0;
+            if (isset($_GET['NewWindow']))
+                $NewWindow = $_GET['NewWindow'];
+            
             $model = new ClientActions();
             
             $Solution_id = '';
@@ -396,16 +416,29 @@ class ExecutorReportsController extends Controller
                     return;
                 } 
             }
-
-            $ObjectResult['html'] = $this->renderPartial('_form', array(
-                'model' => $model,
-                'LastAction' => $LastAction,
-                'ContactInfo' => $ContactInfo,
-                'MarketingSolutions' => $MarketingSolutions,
-                'SystemOffers' => $SystemOffers,
-                'ClientSolutions' => $ClientSolutions,
-            ), true);
-            echo json_encode($ObjectResult);
+            if (isset($_GET['NewWindow'])) {
+                $this->render('_form', array(
+                    'model' => $model,
+                    'LastAction' => $LastAction,
+                    'ContactInfo' => $ContactInfo,
+                    'MarketingSolutions' => $MarketingSolutions,
+                    'SystemOffers' => $SystemOffers,
+                    'ClientSolutions' => $ClientSolutions,
+                    'NewWindow' => $NewWindow,
+                ));
+            }
+            else {
+                $ObjectResult['html'] = $this->renderPartial('_form', array(
+                    'model' => $model,
+                    'LastAction' => $LastAction,
+                    'ContactInfo' => $ContactInfo,
+                    'MarketingSolutions' => $MarketingSolutions,
+                    'SystemOffers' => $SystemOffers,
+                    'ClientSolutions' => $ClientSolutions,
+                    'NewWindow' => $NewWindow,
+                ), true);
+                echo json_encode($ObjectResult);
+            }
 	}
 
 	/**

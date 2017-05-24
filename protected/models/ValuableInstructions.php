@@ -57,10 +57,13 @@ class ValuableInstructions extends MainFormModel
         $this->PrimaryKey = 'Instruction_id';
     }
     
+    
+    
     public function rules()
     {
         return array(
             array('Empl_id, DatePlanExec, Instruction', 'required'),
+            array('Note', 'NoteValidate'),
             array('Instruction_id,
                     Form_id,
                     Demand_id,
@@ -78,6 +81,13 @@ class ValuableInstructions extends MainFormModel
                     DateChange,
                     EmplChange,', 'safe'),
         );
+    }
+    
+    public function NoteValidate($attribute, array $params = array()) {
+        if ($this->DateExec != '' && $this->DateExec != null) {
+            if ($this->Note == '' || $this->Note == null)
+                $this->addError($attribute, 'Нельзя закрыть ЦУ, если не заполнено поле: "Отчет"');
+        }
     }
     
     public function attributeLabels()
