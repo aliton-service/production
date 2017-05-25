@@ -392,46 +392,96 @@
                         if (CurrentRowData == undefined) return;                            
                         $('#EditFormDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
                         
-                        $.ajax({
-                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
-                            type: 'POST',
-                            async: false,
-                            data: {
-                                Form_id: CurrentRowData.Form_id,
-                                Demand_id: 0,
-                            },
-                            success: function(Res) {
-                                Res = JSON.parse(Res);
-                                $("#BodyEditFormDialog").html(Res.html);
-                                $('#EditFormDialog').jqxWindow('open');
-                            },
-                            error: function(Res) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                            }
-                        });
+                        var mapForm = document.createElement("form");
+                        mapForm.target = "_blank";    
+                        mapForm.method = "POST";
+                        mapForm.action = <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert', array('NewWindow' => 1))) ?>;
+
+                        // Create an input
+                        var mapInput = document.createElement("input");
+                        mapInput.type = "text";
+                        mapInput.name = "Form_id";
+                        mapInput.value = CurrentRowData.Form_id;
+                        var mapInput2 = document.createElement("input");
+                        mapInput2.type = "text";
+                        mapInput2.name = "Demand_id";
+                        mapInput2.value = 0;
+
+                        // Add the input to the form
+                        mapForm.appendChild(mapInput);
+                        mapForm.appendChild(mapInput2);
+
+                        // Add the form to dom
+                        document.body.appendChild(mapForm);
+
+                        // Just submit
+                        mapForm.submit();
+                        
+//                        $.ajax({
+//                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert', array('NewWindow' => 1))) ?>,
+//                            type: 'POST',
+//                            async: false,
+//                            data: {
+//                                Form_id: CurrentRowData.Form_id,
+//                                Demand_id: 0,
+//                            },
+//                            success: function(Res) {
+//                                Res = JSON.parse(Res);
+//                                $("#BodyEditFormDialog").html(Res.html);
+//                                $('#EditFormDialog').jqxWindow('open');
+//                            },
+//                            error: function(Res) {
+//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                            }
+//                        });
                     });
                     
                     $('#btnEditAction').on('click', function() {
                         if (CurrentRowData == undefined) return;                            
                         $('#EditFormDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
                         
-                        $.ajax({
-                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update')) ?>,
-                            type: 'POST',
-                            async: false,
-                            data: {
-                                Form_id: CurrentRowData.Form_id,
-                                Exrp_id: CurrentRowDataAction.Exrp_id
-                            },
-                            success: function(Res) {
-                                Res = JSON.parse(Res);
-                                $("#BodyEditFormDialog").html(Res.html);
-                                $('#EditFormDialog').jqxWindow('open');
-                            },
-                            error: function(Res) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                            }
-                        });
+                        var mapForm = document.createElement("form");
+                        mapForm.target = "_blank";    
+                        mapForm.method = "POST";
+                        mapForm.action = <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update', array('NewWindow' => 1))) ?>;
+
+                        // Create an input
+                        var mapInput = document.createElement("input");
+                        mapInput.type = "text";
+                        mapInput.name = "Form_id";
+                        mapInput.value = CurrentRowData.Form_id;
+                        var mapInput2 = document.createElement("input");
+                        mapInput2.type = "text";
+                        mapInput2.name = "Exrp_id";
+                        mapInput2.value = CurrentRowDataAction.Exrp_id;
+
+                        // Add the input to the form
+                        mapForm.appendChild(mapInput);
+                        mapForm.appendChild(mapInput2);
+
+                        // Add the form to dom
+                        document.body.appendChild(mapForm);
+
+                        // Just submit
+                        mapForm.submit();
+                        
+//                        $.ajax({
+//                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update')) ?>,
+//                            type: 'POST',
+//                            async: false,
+//                            data: {
+//                                Form_id: CurrentRowData.Form_id,
+//                                Exrp_id: CurrentRowDataAction.Exrp_id
+//                            },
+//                            success: function(Res) {
+//                                Res = JSON.parse(Res);
+//                                $("#BodyEditFormDialog").html(Res.html);
+//                                $('#EditFormDialog').jqxWindow('open');
+//                            },
+//                            error: function(Res) {
+//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                            }
+//                        });
                     });
                     
                     $("#ActionsGrid").jqxGrid(

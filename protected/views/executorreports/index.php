@@ -42,24 +42,51 @@
         
         $("#ProgGrid").on('rowdoubleclick', function(){
             $('#ActionsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
-            $.ajax({
-                url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update')) ?>,
-                type: 'POST',
-                async: false,
-                data: {
-                    Exrp_id: CurrentRowDataER.Exrp_id,
-                    Form_id: Demand2.Form_id,
-                    Demand_id: Demand2.Demand_id,
-                },
-                success: function(Res) {
-                    Res = JSON.parse(Res);
-                    $("#BodyActionsDialog").html(Res.html);
-                    $('#ActionsDialog').jqxWindow('open');
-                },
-                error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                }
-            });
+            var mapForm = document.createElement("form");
+            mapForm.target = "_blank";    
+            mapForm.method = "POST";
+            mapForm.action = <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update', array('NewWindow' => 1))) ?>;
+
+            // Create an input
+            var mapInput = document.createElement("input");
+            mapInput.type = "text";
+            mapInput.name = "Exrp_id";
+            mapInput.value = CurrentRowDataER.Exrp_id;
+            var mapInput2 = document.createElement("input");
+            mapInput2.type = "text";
+            mapInput2.name = "Form_id";
+            mapInput2.value = Demand2.Form_id;
+            var mapInput3 = document.createElement("input");
+            mapInput3.type = "text";
+            mapInput3.name = "Demand_id";
+            mapInput3.value = Demand2.Demand_id;
+
+            // Add the input to the form
+            mapForm.appendChild(mapInput);
+            mapForm.appendChild(mapInput2);
+            mapForm.appendChild(mapInput3);
+
+            // Add the form to dom
+            document.body.appendChild(mapForm);
+            mapForm.submit();
+//            $.ajax({
+//                url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Update', array('NewWindow' => 1))) ?>,
+//                type: 'POST',
+//                async: false,
+//                data: {
+//                    Exrp_id: CurrentRowDataER.Exrp_id,
+//                    Form_id: Demand2.Form_id,
+//                    Demand_id: Demand2.Demand_id,
+//                },
+//                success: function(Res) {
+//                    Res = JSON.parse(Res);
+//                    $("#BodyActionsDialog").html(Res.html);
+//                    $('#ActionsDialog').jqxWindow('open');
+//                },
+//                error: function(Res) {
+//                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                }
+//            });
         });
 
         $("#ProgGrid").jqxGrid(
@@ -94,6 +121,11 @@
         
         $('#btnCloseProg').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnNewAction').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, height: 30 }));           
+        $("#btnRefreshGrid").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 180, height: 30 }));
+        $("#btnRefreshGrid").on('click', function() {
+            $("#ProgGrid").jqxGrid('updatebounddata');
+        });
+        
         
         $('#btnCloseProg').on('click', function() {
             if ($("#DiaryDialog").length>0)
@@ -104,23 +136,45 @@
         
         $('#btnNewAction').on('click', function() {
             $('#ActionsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
-            $.ajax({
-                url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
-                type: 'POST',
-                async: false,
-                data: {
-                    Form_id: Demand2.Form_id,
-                    Demand_id: Demand2.Demand_id,
-                },
-                success: function(Res) {
-                    Res = JSON.parse(Res);
-                    $("#BodyActionsDialog").html(Res.html);
-                    $('#ActionsDialog').jqxWindow('open');
-                },
-                error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                }
-            });
+            var mapForm = document.createElement("form");
+            mapForm.target = "_blank";    
+            mapForm.method = "POST";
+            mapForm.action = <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert', array('NewWindow' => 1))) ?>;
+
+            // Create an input
+            var mapInput = document.createElement("input");
+            mapInput.type = "text";
+            mapInput.name = "Form_id";
+            mapInput.value = Demand2.Form_id;
+            var mapInput2 = document.createElement("input");
+            mapInput2.type = "text";
+            mapInput2.name = "Demand_id";
+            mapInput2.value = Demand2.Demand_id;
+
+            // Add the input to the form
+            mapForm.appendChild(mapInput);
+            mapForm.appendChild(mapInput2);
+
+            // Add the form to dom
+            document.body.appendChild(mapForm);
+            mapForm.submit();
+//            $.ajax({
+//                url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
+//                type: 'POST',
+//                async: false,
+//                data: {
+//                    Form_id: Demand2.Form_id,
+//                    Demand_id: Demand2.Demand_id,
+//                },
+//                success: function(Res) {
+//                    Res = JSON.parse(Res);
+//                    $("#BodyActionsDialog").html(Res.html);
+//                    $('#ActionsDialog').jqxWindow('open');
+//                },
+//                error: function(Res) {
+//                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                }
+//            });
         });
         
         
@@ -179,6 +233,7 @@
 </div>
 <div class="al-row">
     <div class="al-row-column"><input type="button" id="btnNewAction" value="Добавить запись"/></div>
+    <div class="al-row-column"><input type="button" id="btnRefreshGrid" value="Обновить"/></div>
     <div class="al-row-column" style="float: right;"><input type="button" id="btnCloseProg" value="Закрыть"/></div>
 </div>
 

@@ -1,6 +1,10 @@
+<div id="body-form">
+
 <script>
     $(document).ready(function () {
         var StateInsert = <?php if (Yii::app()->controller->action->id == 'Insert') echo 'true'; else echo 'false'; ?>;
+        var NewWindow = <?php echo json_encode($NewWindow); ?>;
+        
         var LastAction = <?php echo json_encode($LastAction); ?>;
         LastAction.Date = Aliton.DateConvertToJs(LastAction.Date);
         
@@ -113,7 +117,6 @@
         var initWidgets = function(tab) {
             switch (tab) {
                 case 0:
-                    console.log(MarketingSolutions.Offer1Date);
                     $("#edOfferName1").jqxInput($.extend(true, {}, InputDefaultSettings, {width: 230, value: 'Бесплатная модернизация'}));
                     $("#cmbOffer1ResultEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{ source: DataOfferResults, width: 190, height: '25px', displayMember: "ResultName", valueMember: "rslt_id"}));
                     $("#cmbOffer1DateEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, {width: 130, formatString: 'dd.MM.yyyy', value: MarketingSolutions.Offer1Date }));
@@ -545,12 +548,19 @@
                 data: Temp,
                 type: 'POST',
                 success: function(Res) {
+                    if (NewWindow == 1) {
+                        
+                    }
                     var Res = JSON.parse(Res);
                     if (Res.result == 1) {
+                        
+                            
+                    
+                        
                         if ($('#CostCalculationsDialog').length>0) {
                             Aliton.SelectRowById('Exrp_id', Res.id, '#ProgressGrid', true);
                             $('#CostCalculationsDialog').jqxWindow('close');
-                            
+                            return;
                         }
                         
                         if ($('#ActionsDialog').length>0) {
@@ -561,11 +571,12 @@
                                     Aliton.SelectRowById('Exrp_id', Res.id, '#ProgGrid', true);
                                 $('#ActionsDialog').jqxWindow('close');
                             }
-                            
+                            return;
                         }
                         
                         if ($('#DiaryDialog').length>0) {
                             $('#DiaryDialog').jqxWindow('close');
+                            return;
                         }
                         
                         if ($('#EditFormDialog').length>0) {
@@ -573,17 +584,31 @@
                                 RC.Action_id = Res.id;
                             $('#edFiltering').click();
                             $('#EditFormDialog').jqxWindow('close');
+                            return;
                         }
+                        
+                        window.close();
                     }
                     else {
-                        if ($('#ActionsDialog').length>0) 
+                        
+                        if ($('#ActionsDialog').length>0) {
                             $('#BodyActionsDialog').html(Res.html);
-                        if ($('#EditFormDialog').length>0) 
+                            return;
+                        }
+                        if ($('#EditFormDialog').length>0) {
                             $('#BodyEditFormDialog').html(Res.html);
-                        if ($('#CostCalculationsDialog').length>0) 
+                            return;
+                        }
+                        if ($('#CostCalculationsDialog').length>0) {
                             $('#BodyCostCalculationsDialog').html(Res.html);
-                        if ($('#DiaryDialog').length>0) 
+                            return
+                        }
+                        if ($('#DiaryDialog').length>0) {
                             $('#BodyDiaryDialog').html(Res.html);
+                            return;
+                        }
+                        
+                        $("#body-form").html(Res.html);
                     };
                 },
                 error: function(Res) {
@@ -595,6 +620,8 @@
         
     });
 </script>
+
+
 
 <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -999,3 +1026,4 @@
 </div>
 
 <?php $this->endWidget(); ?>
+</div>

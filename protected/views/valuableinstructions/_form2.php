@@ -301,7 +301,7 @@
     <div style="clear: both"></div>
 </div>    
 <div class="al-row">
-    <div>Комментарии к выпол. ЦУ</div>
+    <div>Отчет</div>
     <div><textarea name="ValuableInstructions[Note]" id="edValuableNoteEdit"></textarea></div>
     <?php echo $form->error($model, 'Note'); ?>
     <div style="clear: both"></div>
