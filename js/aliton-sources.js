@@ -2192,6 +2192,7 @@ Sources.SourceControlContacts =
         { name: 'cntp_name',  type: 'string' },
         { name: 'debt',  type: 'float' },
         { name: 'last_cont',  type: 'date' },
+        { name: 'ContactPriority',  type: 'bool' },
     ],
     id: 'id',
     url: '/index.php?r=AjaxData/DataJQX&ModelName=ControlContacts',

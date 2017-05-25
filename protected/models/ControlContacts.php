@@ -28,6 +28,7 @@ class ControlContacts extends MainFormModel
     public $contact;
     public $empl_id;
     public $Employee_id;
+    public $ContactPriority;
     
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -59,8 +60,10 @@ class ControlContacts extends MainFormModel
                     ci.contact next_contact,
                     ci2.contact contact,
                     og.debt,
+                    --Case when og.debt is not null then og.debt else 0 end debt,
                     r.ResultName rslt_name,
-                    cnt.date as last_cont
+                    cnt.date as last_cont,
+                    cnt.ContactPriority
                 ";
         $From = "\nFrom ObjectsGroup og 
                         left join Organizations_v org on (org.Form_id = og.PropForm_id)
@@ -110,7 +113,8 @@ class ControlContacts extends MainFormModel
                     next_cntp_id,
                     next_cntp_name,
                     next_contact,
-                    Debt', 'safe'),
+                    Debt,
+                    ContactPriority', 'safe'),
         );
     }
     

@@ -56,9 +56,9 @@
         $("#Telephone").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250}));
         $("#time_length").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 90, symbol: "", min: 0,  spinButtons: true, decimalDigits: 0, digits: 3 }));
         $("#note2").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 760 }));
-        $("#next_date2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true, value: null, height: '25', width: '180' }));
-        $("#nextContactTypes").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactTypes.records, displayMember: "ContactName", valueMember: "Contact_id", width:300 }));
-        $("#nextContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "contact", valueMember: "Info_id", width:600, autoDropDownHeight: true }));
+        $("#next_date2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true, value: null, height: '25', width: '180', dropDownVerticalAlignment: 'top' }));
+        $("#nextContactTypes").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactTypes.records, displayMember: "ContactName", valueMember: "Contact_id", width: 300, dropDownVerticalAlignment: 'top' }));
+        $("#nextContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "contact", valueMember: "Info_id", width: 600, autoDropDownHeight: true, dropDownVerticalAlignment: 'top' }));
         $("#ContactPriority").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 200 }));
 
 //            console.log(Contact.date);
@@ -136,7 +136,7 @@
 
 
 <div class="row" style="padding: 10px; width: 740px; border: 1px solid #ddd;">
-    <div class="row-column" style="margin: 0 0 15px 0; width: 100%;">Следующий контакт</div>
+    <div class="row-column" style="margin: 0 0 10px 0; width: 100%;">Следующий контакт</div>
     <div class="row-column">Дата и время: <div id='next_date2' name="Contacts[next_date]"></div><?php echo $form->error($model, 'next_date'); ?></div>
     <div class="row-column">Тип: <div id='nextContactTypes' name="Contacts[next_cntp_id]"></div><?php echo $form->error($model, 'next_cntp_id'); ?></div>
     <div class="row-column" style="margin-top: 10px;">Контактное лицо: <div id='nextContactInfo' name="Contacts[next_info_id]"></div><?php echo $form->error($model, 'next_info_id'); ?></div>

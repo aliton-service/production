@@ -21,6 +21,24 @@
             $("#ControlContactsGrid").jqxGrid('selectrow', 0);
         });
         
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+            var Temp = $('#ControlContactsGrid').jqxGrid('getrowdata', row);
+            var column = $("#ControlContactsGrid").jqxGrid('getcolumn', columnfield);
+            if (column.cellsformat != '') {
+                if ($.jqx.dataFormat) {
+                    if ($.jqx.dataFormat.isDate(value)) {
+                        value = $.jqx.dataFormat.formatdate(value, column.cellsformat);
+                    }   
+                    else if ($.jqx.dataFormat.isNumber(value)) {
+                        value = $.jqx.dataFormat.formatnumber(value, column.cellsformat);
+                    }
+                }
+            }
+            console.log(Temp);
+            if ((Temp["ContactPriority"] == 1)) 
+                return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+        };
+
         $("#ControlContactsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -30,14 +48,14 @@
                 width: 'calc(100% - 2px)',
                 height: 'calc(100% - 2px)',
                 columns: [
-                    { text: 'Запланированная дата', datafield: 'next_date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 170 },
-                    { text: 'Тип контакта', datafield: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 140 },
-                    { text: 'Контактное лицо', datafield: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
-                    { text: 'Организация', datafield: 'FullName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 220 },
+                    { text: 'Запланированная дата', datafield: 'next_date', filtertype: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 170, cellsrenderer: cellsrenderer },
+                    { text: 'Тип контакта', datafield: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 140, cellsrenderer: cellsrenderer },
+                    { text: 'Контактное лицо', datafield: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200, cellsrenderer: cellsrenderer },
+                    { text: 'Организация', datafield: 'FullName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 220, cellsrenderer: cellsrenderer },
                     { text: 'Form_id', datafield: 'Form_id', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 30, hidden: true },
-                    { text: 'Адрес', datafield: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200 },
-                    { text: 'Долг', datafield: 'debt', filtercondition: 'STARTS_WITH', width: 80, cellsformat: 'f2' },
-                    { text: 'Исполнитель', datafield: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150},
+                    { text: 'Адрес', datafield: 'Addr', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 200, cellsrenderer: cellsrenderer },
+                    { text: 'Долг', datafield: 'debt', filtercondition: 'STARTS_WITH', width: 80, cellsformat: 'f2', cellsrenderer: cellsrenderer },
+                    { text: 'Исполнитель', datafield: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 150, cellsrenderer: cellsrenderer},
                 ]
             })
         );
@@ -169,6 +187,14 @@
 
 <?php $this->setPageTitle('Контроль контактов'); ?>
 
+<style>
+
+    .backlight_pink {
+        color: #E000E0;
+    }
+
+</style>
+            
 <div class="al-row" style="height: calc(100% - 208px)">
     <div id="ControlContactsGrid" class="jqxGridAliton"></div>
 </div>
