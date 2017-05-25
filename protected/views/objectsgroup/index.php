@@ -1706,7 +1706,7 @@
                     }
                 }
                 console.log(Temp);
-                if ((Temp["Priority"] == 1)) 
+                if ((Temp["ContactPriority"] == 1)) 
                     return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
             };
 
@@ -1731,7 +1731,8 @@
                         { text: 'Дата', columngroup: 'Next', dataField: 'next_date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
                         { text: 'Тип', columngroup: 'Next', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100, cellsrenderer: cellsrenderer },
                         { text: 'Контактное лицо', columngroup: 'Next', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300, cellsrenderer: cellsrenderer },
-                        { text: 'Priority', columngroup: 'Next', dataField: 'Priority', filtercondition: 'STARTS_WITH', width: 300, hidden: true },
+//                        { text: 'ContactPriority', columngroup: 'Next', dataField: 'ContactPriority', filtercondition: 'STARTS_WITH', width: 300, hidden: true },
+                        { text: 'ContactPriority', columngroup: 'Next', dataField: 'ContactPriority', columntype: 'checkbox', filtercondition: 'STARTS_WITH', width: 50 },
                     ],
                     columngroups: [
                         { text: '', align: 'center', name: 'Current' },

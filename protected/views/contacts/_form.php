@@ -21,7 +21,7 @@
             next_date: Aliton.DateConvertToJs('<?php echo $model->next_date; ?>'),
             next_cntp_id: '<?php echo $model->next_cntp_id; ?>',
             next_info_id: '<?php echo $model->next_info_id; ?>',
-            Priority: <?php echo json_encode($model->Priority); ?>,
+            ContactPriority: <?php echo json_encode($model->ContactPriority); ?>,
         };
 
         var DataContactKinds = new $.jqx.dataAdapter(Sources.SourceContactKinds);
@@ -59,7 +59,7 @@
         $("#next_date2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { formatString: 'dd.MM.yyyy HH:mm', showTimeButton: true, value: null, height: '25', width: '180' }));
         $("#nextContactTypes").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactTypes.records, displayMember: "ContactName", valueMember: "Contact_id", width:300 }));
         $("#nextContactInfo").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataContactInfo, displayMember: "contact", valueMember: "Info_id", width:600, autoDropDownHeight: true }));
-        $("#Priority").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 200 }));
+        $("#ContactPriority").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 200 }));
 
 //            console.log(Contact.date);
         if (Contact.Kind != '') $("#ContactKinds").jqxComboBox('val', Contact.Kind);
@@ -79,7 +79,7 @@
         if (Contact.next_date != '') $("#next_date2").jqxDateTimeInput('val', Contact.next_date);
         if (Contact.next_cntp_id != '') $("#nextContactTypes").jqxComboBox('val', Contact.next_cntp_id);
         if (Contact.next_info_id != '') $("#nextContactInfo").jqxComboBox('val', Contact.next_info_id);
-        if (Contact.Priority != '') $("#Priority").jqxCheckBox({checked: Boolean(Number(Contact.Priority))});
+        if (Contact.ContactPriority != '') $("#ContactPriority").jqxCheckBox({checked: Boolean(Number(Contact.ContactPriority))});
     });
 </script> 
 <?php
@@ -119,7 +119,7 @@
     <div class="row-column">Результат: <div id='Results' name="Contacts[rslt_id]" value="4"></div></div>
     <div class="row-column">Сумма согласованной оплаты: <br><div id="PaySum" name="Contacts[PaySum]" type="text"></div></div>
     <div class="row-column" style="margin-top: 20px;">
-        <div id='Priority' name="Contacts[Priority]" >Приоритетный контакт</div><?php echo $form->error($model, 'Priority'); ?>
+        <div id='ContactPriority' name="Contacts[ContactPriority]" >Приоритетный контакт</div><?php echo $form->error($model, 'ContactPriority'); ?>
     </div>
 </div>
 
