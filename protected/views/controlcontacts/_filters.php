@@ -40,8 +40,8 @@
         $("#edDebtEndFilter").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', disabled: false, value: Filters.DebtEnd }));
         $("#edExecutorFilter").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); 
         $("#edExecutorFilter").val(Filters.Executor);
-        $("#edDateStart").jqxDateTimeInput({ width: '180px', height: '25px', formatString: 'dd.MM.yyyy', value: Filters.DateStart, readonly: false}); 
-        $("#edDateEnd").jqxDateTimeInput({ width: '180px', height: '25px', formatString: 'dd.MM.yyyy', value: Filters.DateEnd, readonly: false}); 
+        $("#edDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', height: '25px', formatString: 'dd.MM.yyyy', value: Filters.DateStart, readonly: false }));
+        $("#edDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '180px', height: '25px', formatString: 'dd.MM.yyyy', value: Filters.DateEnd, readonly: false }));
         
         $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
@@ -64,15 +64,15 @@
                 AddressFilterGroup.addfilter(1, FilterAddress);
             }
 //            console.log($("#edDebtStartFilter").val());
-            var DebtFilterGroup = new $.jqx.filter();
-            if ($("#edDebtStartFilter").val() === 0) {
-                var FilterDebtStart0 = DebtFilterGroup.createfilter('stringfilter', $("#edDebtStartFilter").val(), 'NULL');
-                DebtFilterGroup.addfilter(1, FilterDebtStart0);
-            }
-            var FilterDebtStart = DebtFilterGroup.createfilter('numericfilter', $("#edDebtStartFilter").val(), 'GREATER_THAN_OR_EQUAL');
-            DebtFilterGroup.addfilter(1, FilterDebtStart);
-            var FilterDebtEnd = DebtFilterGroup.createfilter('numericfilter', $("#edDebtEndFilter").val(), 'LESS_THAN_OR_EQUAL');
-            DebtFilterGroup.addfilter(1, FilterDebtEnd);
+//            var DebtFilterGroup = new $.jqx.filter();
+//            if ($("#edDebtStartFilter").val() === 0) {
+//                var FilterDebtStart0 = DebtFilterGroup.createfilter('stringfilter', $("#edDebtStartFilter").val(), 'NULL');
+//                DebtFilterGroup.addfilter(1, FilterDebtStart0);
+//            }
+//            var FilterDebtStart = DebtFilterGroup.createfilter('numericfilter', $("#edDebtStartFilter").val(), 'GREATER_THAN_OR_EQUAL');
+//            DebtFilterGroup.addfilter(1, FilterDebtStart);
+//            var FilterDebtEnd = DebtFilterGroup.createfilter('numericfilter', $("#edDebtEndFilter").val(), 'LESS_THAN_OR_EQUAL');
+//            DebtFilterGroup.addfilter(1, FilterDebtEnd);
             
             var ExecutorFilterGroup = new $.jqx.filter();
             if ($("#edExecutorFilter").val() != '') {
@@ -99,8 +99,8 @@
             $('#ControlContactsGrid').jqxGrid('removefilter', 'Addr', false);
             if ($("#edAddressFilter").val() != '') $("#ControlContactsGrid").jqxGrid('addfilter', 'Addr', AddressFilterGroup);
             
-            $('#ControlContactsGrid').jqxGrid('removefilter', 'debt', false);
-            $("#ControlContactsGrid").jqxGrid('addfilter', 'debt', DebtFilterGroup);
+//            $('#ControlContactsGrid').jqxGrid('removefilter', 'debt', false);
+//            $("#ControlContactsGrid").jqxGrid('addfilter', 'debt', DebtFilterGroup);
             
             $('#ControlContactsGrid').jqxGrid('removefilter', 'next_date', false);
             if ($("#edDateStart").val() != '' || $("#edDateEnd").val() != '') $("#ControlContactsGrid").jqxGrid('addfilter', 'next_date', DateFilterGroup);
