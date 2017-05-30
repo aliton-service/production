@@ -5050,6 +5050,7 @@ Sources.DemandsListSource =
         { name: 'EquipType', type: 'string'},
         { name: 'Malfunction', type: 'string'},
         { name: 'DemandPrior', type: 'string'},
+        { name: 'DemandPrior_id', type: 'int'},
         { name: 'MasterName', type: 'string'},
         { name: 'PlanDateExec', type: 'date'},
         { name: 'ExecutorsName', type: 'string'},

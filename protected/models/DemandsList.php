@@ -15,6 +15,7 @@ class DemandsList extends MainFormModel {
     public $EquipType;
     public $Malfunction;
     public $DemandPrior;
+    public $DemandPrior_id;
     public $MasterName;
     public $PlanDateExec;
     public $ExecutorsName;
@@ -57,6 +58,7 @@ class DemandsList extends MainFormModel {
                         d.EquipType,
                         d.Malfunction,
                         d.DemandPrior,
+                        d.DemandPrior_id,
                         d.MasterName,
                         d.PlanDateExec,
                         d.ExecutorsName,
@@ -156,6 +158,7 @@ class DemandsList extends MainFormModel {
                             EquipType,
                             Malfunction,
                             DemandPrior,
+                            DemandPrior_id,
                             MasterName,
                             PlanDateExec,
                             ExecutorsName,
