@@ -360,7 +360,7 @@
     </div>
     <div class="row-column">
         <div>Желаемая дата</div>
-        <div><div id="edEditBestDate" name="DeliveryDemands[bestdate]"></div></div>
+        <div><div id="edEditBestDate" name="DeliveryDemands[bestdate]"></div><?php echo $form->error($model, 'bestdate'); ?></div>
     </div>
     <div class="row-column">
         <div>Обещанная дата</div>

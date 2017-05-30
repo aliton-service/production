@@ -211,6 +211,7 @@ class MonitoringDemandsController extends Controller
                 
                 $sp->CheckParam = true;
                 $sp->Execute();
+                echo 1;
             }
         }
     }
