@@ -46,6 +46,11 @@ class InspectionActEquipsController extends Controller
                 'html' => '',
             );
         
+        if (isset($_POST['ObjectGr_id'])) {
+            $Objects = new AddressList();
+            $Objects = $Objects->Find(array('o.ObjectGr_id' => $_POST['ObjectGr_id']));
+        }
+            
         if (isset($_POST['Inspection_id']))
             $model->Inspection_id = $_POST['Inspection_id'];
         
@@ -62,6 +67,7 @@ class InspectionActEquipsController extends Controller
         
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
+            'Objects' => $Objects,
         ), true);
         echo json_encode($ObjectResult);
     }
@@ -75,6 +81,12 @@ class InspectionActEquipsController extends Controller
                 'id' => 0,
                 'html' => '',
             );
+        
+        if (isset($_POST['ObjectGr_id'])) {
+            $Objects = new AddressList();
+            $Objects = $Objects->Find(array('o.ObjectGr_id' => $_POST['ObjectGr_id']));
+        }
+        
         if (isset($_POST['ActEquip_id']))
             $model->getModelPk($_POST['ActEquip_id']);
 
@@ -92,6 +104,7 @@ class InspectionActEquipsController extends Controller
 
         $ObjectResult['html'] = $this->renderPartial('_form', array(
             'model' => $model,
+            'Objects' => $Objects,
         ), true);
         echo json_encode($ObjectResult);
     }
