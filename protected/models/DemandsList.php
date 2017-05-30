@@ -4,6 +4,7 @@
 class DemandsList extends MainFormModel {
     public $Demand_id;
     public $Object_id;
+    public $ObjectGr_id;
     public $Address;
     public $UCreateName;
     public $DateReg;
@@ -47,6 +48,7 @@ class DemandsList extends MainFormModel {
         $Select ="\nSelect
                         d.Demand_id,
                         d.Object_id,
+                        d.ObjectGr_id,
                         d.Address,
                         d.UCreateName,
                         d.DateReg,
