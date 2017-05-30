@@ -30,7 +30,8 @@ class EquipsListAll extends MainFormModel
         
         $From = "\nFrom Equips e
                     left join UnitMeasurement um on (e.UnitMeasurement_Id = um.UnitMeasurement_Id)
-                    left join Categories c on (e.ctgr_id = c.ctgr_id)";
+                    left join Categories c on (e.ctgr_id = c.ctgr_id)
+                    left join EqipGroups eg on (e.group_id = eg.group_id)";
 
         $Where = "\nWhere e.DelDate is null";
         $Order = "\nOrder by e.EquipName";

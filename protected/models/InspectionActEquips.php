@@ -9,6 +9,8 @@ class InspectionActEquips extends MainFormModel
     public $Quant;
     public $UmName;
     public $Characteristics;
+    public $Object_id;
+    public $Doorway;
     public $DateCreate;
     public $EmplCreate;
     public $DateChange;
@@ -27,6 +29,8 @@ class InspectionActEquips extends MainFormModel
                         a.Equip_id,
                         e.EquipName,
                         a.Quant,
+                        a.Object_id,
+                        o.Doorway,
                         u.NameUnitMeasurement as UmName,
                         (SELECT CASE WHEN MIN(c.CharacteristicName) IS NULL THEN '()' ELSE '(' + MIN(c.CharacteristicName) + ', ...)' END AS Expr1
                                FROM            dbo.InspActEquipCharacteristics AS c
@@ -36,7 +40,8 @@ class InspectionActEquips extends MainFormModel
                         a.DateChange,
                         a.EmplChange";
         $From = "\nFrom InspectionActEquips a left join Equips e on (a.Equip_id = e.Equip_id)
-                        left join UnitMeasurement u on (e.UnitMeasurement_Id = u.UnitMeasurement_Id)";
+                        left join UnitMeasurement u on (e.UnitMeasurement_Id = u.UnitMeasurement_Id)
+                        left join Objects o on (a.Object_id = o.Object_id)";
         $Where = "\nWhere a.DelDate is Null";
         $this->Query->setSelect($Select);
         $this->Query->setFrom($From);
@@ -49,7 +54,7 @@ class InspectionActEquips extends MainFormModel
     public function rules()
     {
         return array(
-            array('Inspection_id, Equip_id, Quant', 'required'),
+            array('Inspection_id, Equip_id, Quant, Object_id', 'required'),
             array('ActEquip_id,
                     Inspection_id,
                     Equip_id,
@@ -67,6 +72,7 @@ class InspectionActEquips extends MainFormModel
     {
         return array(
             'ActEquip_id' => '',
+            'Object_id' => '',
             'Inspection_id' => '',
             'Equip_id' => '',
             'EquipName' => '',

@@ -29,13 +29,15 @@ class AddressList extends MainFormModel
         $this->SP_UPDATE_NAME = 'UPDATE_Objects';
         $this->SP_DELETE_NAME = 'DELETE_Objects';
         
-        $Select  =  "\nSelect 
+        $Select  =  "\nSelect
+                        
                         o.Object_id,
                         o.ObjectGr_id,
                         o.Address_id,
                         a.Addr + CASE WHEN o.Doorway IS NULL THEN '' ELSE ', п. ' + o.Doorway END AS Addr,
                         a.Street_id,
-                        a.House";
+                        a.House,
+                        o.Doorway";
         $From =     "\nFrom dbo.Objects AS o inner join dbo.ObjectsGroup AS og ON o.ObjectGr_id = og.ObjectGr_id 
                         left join dbo.Addresses_v AS a ON og.Address_id = a.Address_id ";
         $Where =    "\nWhere (o.DelDate IS NULL)

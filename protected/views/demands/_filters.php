@@ -14,7 +14,7 @@
             House: <?php echo json_encode($filterDefaultValues['House'])?>,
         };
 
-        var DemandsAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.DemandsSource, {
+        var DemandsAdapter = new $.jqx.dataAdapter($.extend(true, {}, Sources.DemandsListSource, {
             filter: function () {
                 $("#DemandsGrid").jqxGrid('updatebounddata', 'filter');
             },
@@ -33,14 +33,14 @@
             type: 'POST',
             async: false,
             data: {
-                Models: ['ListEmployees', 'DTypes', 'Streets', 'Territory']
+                Models: ['ListEmployees', 'DTypes',/* 'Streets',*/ 'Territory']
             },
             success: function(Res) {
                 Res = JSON.parse(Res);
                 DataEmployees = Res[0].Data;
                 DataDemandTypes = Res[1].Data;
-                DataStreets = Res[2].Data;
-                DataTerritory = Res[3].Data;
+//                DataStreets = Res[2].Data;
+                DataTerritory = Res[2].Data;
             }
         });
        
@@ -53,8 +53,9 @@
         $("#cmbDemandType").jqxComboBox({ source: DataDemandTypes, width: '200', height: '25px', displayMember: "DemandType", valueMember: "DemandType_id"}); // Фильтр тип заявки
         $("#cmbExecutor").jqxComboBox({ source: DataEmployees, width: '200', height: '25px', displayMember: "ShortName", valueMember: "Employee_id"}); // Фильтр исполнитель
         $("#edAddr").jqxInput({height: 25, width: 200, minLength: 1}); // Фильтр по адресу
+        $("#cmbStreet").jqxInput({height: 25, width: 200, minLength: 1}); // Фильтр по адресу
         $("#cmbTerrit").jqxComboBox({ source: DataTerritory, width: '200', height: '25px', displayMember: "Territ_Name", valueMember: "Territ_Id", autoDropDownHeight: true, dropDownVerticalAlignment: 'top' }); // Фильтр участок
-        $("#cmbStreet").jqxComboBox({ source: DataStreets, width: '200', height: '25px', displayMember: "StreetName", valueMember: "Street_id", dropDownVerticalAlignment: 'top' }); // Фильтр улицы
+//        $("#cmbStreet").jqxComboBox({ source: DataStreets, width: '200', height: '25px', displayMember: "StreetName", valueMember: "Street_id", dropDownVerticalAlignment: 'top' }); // Фильтр улицы
         $("#edHouse").jqxInput({height: 25, width: 60, minLength: 1, value: Filters.House}); // Фильтр ДОМ
         
         $("#edDate").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '140px', formatString: 'dd.MM.yyyy', value: Filters.DateReg })); // Фильтр дата регистрации
@@ -83,7 +84,7 @@
             $("#cmbExecutor").jqxComboBox('clearSelection');
             $('#edAddr').jqxInput('val', '');
             $("#cmbTerrit").jqxComboBox('clearSelection');
-            $("#cmbStreet").jqxComboBox('clearSelection');
+            $("#cmbStreet").jqxInput('val', '');
             $('#edHouse').jqxInput('val', '');
             
             $('#edDate').jqxDateTimeInput('val', null);
@@ -106,8 +107,8 @@
         if (Filters.Executor != null) $("#cmbExecutor").val(Filters.Executor);
         
         
-        if (Filters.Street_id != null) $("#cmbStreet").val(Filters.Street_id);
-        $("#cmbStreet").jqxComboBox({valueMember: "StreetName"});
+//        if (Filters.Street_id != null) $("#cmbStreet").val(Filters.Street_id);
+//        $("#cmbStreet").jqxComboBox({valueMember: "StreetName"});
         
         var Find = function(){
             var MasterFilterGroup = new $.jqx.filter();
@@ -163,6 +164,10 @@
                 var FilterAddress = AddressFilterGroup.createfilter('stringfilter', $("#edAddr").val(), 'CONTAINS');
                 AddressFilterGroup.addfilter(1, FilterAddress);
             }
+            if ($("#cmbStreet").val() != '') {
+                var FilterStreets = AddressFilterGroup.createfilter('stringfilter', $("#cmbStreet").val(), 'STARTS_WITH');
+                AddressFilterGroup.addfilter(1, FilterStreets);
+            }
             
             var TerritFilterGroup = new $.jqx.filter();
             if ($("#cmbTerrit").val() != '') {
@@ -171,8 +176,12 @@
             }
             
             var StreetFilterGroup = new $.jqx.filter();
-            if ($("#cmbStreet").val() != '') {
-                var FilterStreet = StreetFilterGroup.createfilter('stringfilter', $("#cmbStreet").val(), 'STARTS_WITH');
+//            if ($("#cmbStreet").val() != '') {
+//                var FilterStreet = StreetFilterGroup.createfilter('stringfilter', $("#cmbStreet").val(), 'STARTS_WITH');
+//                StreetFilterGroup.addfilter(1, FilterStreet);
+//            }
+            if (Filters.Street_id != null) {
+                var FilterStreet = StreetFilterGroup.createfilter('numericfilter', Filters.Street_id, 'EQUAL');
                 StreetFilterGroup.addfilter(1, FilterStreet);
             }
             
@@ -230,13 +239,14 @@
             if ($("#cmbExecutor").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'ExecutorsName', ExecutorFilterGroup);
             
             $('#DemandsGrid').jqxGrid('removefilter', 'Address', false);
-            if ($("#edAddr").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'Address', AddressFilterGroup);
+            if ($("#edAddr").val() != '' || $("#cmbStreet").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'Address', AddressFilterGroup);
             
             $('#DemandsGrid').jqxGrid('removefilter', 'Territ_id', false);
             if ($("#cmbTerrit").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'Territ_id', TerritFilterGroup);
             
             $('#DemandsGrid').jqxGrid('removefilter', 'Street_id', false);
-            if ($("#cmbStreet").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'Street_id', StreetFilterGroup);
+//            if ($("#cmbStreet").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'Street_id', StreetFilterGroup);
+            if (Filters.Street_id != '') $("#DemandsGrid").jqxGrid('addfilter', 'Street_id', StreetFilterGroup);
             
             $('#DemandsGrid').jqxGrid('removefilter', 'House', false);
             if ($("#edHouse").val() != '') $("#DemandsGrid").jqxGrid('addfilter', 'House', HouseFilterGroup);
@@ -279,7 +289,7 @@
     <div>Участок: </div>
     <div><div id='cmbTerrit'></div></div>
     <div>Улица: </div>
-    <div><div id='cmbStreet'></div></div>
+    <div><input id="cmbStreet" type="text" /></div>
     <div>Дом: </div>
     <div><input name="Demands[Demand_id]" id="edHouse" type="text" value="<?php echo $filterDefaultValues['House'];?>"/></div>
     <div>Период с: </div>

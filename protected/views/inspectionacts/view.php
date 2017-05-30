@@ -4,6 +4,7 @@
     $(document).ready(function () {
         InspAct = {
             Inspection_id: <?php echo json_encode($model->Inspection_id); ?>,
+            ObjectGr_id: <?php echo json_encode($model->ObjectGr_id); ?>,
             Demand_id: <?php echo json_encode($model->Demand_id); ?>,
             Date: Aliton.DateConvertToJs('<?php echo $model->Date; ?>'),
             Addr: <?php echo json_encode($model->Addr); ?>,
@@ -360,6 +361,7 @@
                             virtualmode: true,
                             columns:
                                 [
+                                    { text: 'Подъезд', datafield: 'Doorway', width: 100},
                                     { text: 'Наименование', datafield: 'EquipName', width: 350},
                                     { text: 'Ед. изм.', datafield: 'UmName', width: 60},
                                     { text: 'Кол-во', datafield: 'Quant', width: 110, cellsformat: 'f2'},
@@ -377,13 +379,14 @@
                     $("#btnAddEquips").on('click', function(){
                         if ($("#btnAddEquips").jqxButton('disabled')) return;
                         if (InspAct.Inspection_id !== null) {
-                            $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 145, width: 500, position: 'center' }));
+                            $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 345, width: 500, position: 'center' }));
                             $.ajax({
                                 url: <?php echo json_encode(Yii::app()->createUrl('InspectionActEquips/Create')) ?>,
                                 type: 'POST',
                                 async: false,
                                 data: {
-                                    Inspection_id: InspAct.Inspection_id
+                                    Inspection_id: InspAct.Inspection_id,
+                                    ObjectGr_id: InspAct.ObjectGr_id,
                                 },
                                 success: function(Res) {
                                     Res = JSON.parse(Res);
@@ -400,13 +403,14 @@
                     $("#btnEditEquips").on('click', function(){
                         if ($("#btnEditEquips").jqxButton('disabled')) return;
                         if (CurrentRowEquips !== undefined) {
-                            $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 145, width: 500, position: 'center' }));
+                            $('#InspectionActDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, { height: 345, width: 500, position: 'center' }));
                             $.ajax({
                                 url: <?php echo json_encode(Yii::app()->createUrl('InspectionActEquips/Update')) ?>,
                                 type: 'POST',
                                 async: false,
                                 data: {
-                                    ActEquip_id: CurrentRowEquips.ActEquip_id
+                                    ActEquip_id: CurrentRowEquips.ActEquip_id,
+                                    ObjectGr_id: InspAct.ObjectGr_id
                                 },
                                 success: function(Res) {
                                     Res = JSON.parse(Res);
