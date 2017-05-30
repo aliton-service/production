@@ -967,7 +967,7 @@ return array_merge(
                 'ManagerDeliveryComments',
                 'MSWHDocuments',
                 'AdminSerialNumbers',
-                'ManagerDocmAchsDetails',
+                'AdminDocmAchsDetails',
                 'ManagerMonitoringDemands',
                 'ManagerEvents',
                 'WhActsView',
