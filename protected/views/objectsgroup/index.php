@@ -1692,6 +1692,24 @@
                 },
             });
 
+            var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+                var Temp = $('#ContactsGrid').jqxGrid('getrowdata', row);
+                var column = $("#ContactsGrid").jqxGrid('getcolumn', columnfield);
+                if (column.cellsformat != '') {
+                    if ($.jqx.dataFormat) {
+                        if ($.jqx.dataFormat.isDate(value)) {
+                            value = $.jqx.dataFormat.formatdate(value, column.cellsformat);
+                        }   
+                        else if ($.jqx.dataFormat.isNumber(value)) {
+                            value = $.jqx.dataFormat.formatnumber(value, column.cellsformat);
+                        }
+                    }
+                }
+//                console.log(Temp);
+                if ((Temp["ContactPriority"] == 1)) 
+                    return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+            };
+
             $("#ContactsGrid").jqxGrid(
                 $.extend(true, {}, GridDefaultSettings, {
                     pagesizeoptions: ['10', '200', '500', '1000'],
@@ -1702,17 +1720,18 @@
                     height: '99.5%',
                     source: ContactsDataAdapter,
                     columns: [
-                        { text: 'Отдел', columngroup: 'Current', dataField: 'GroupContact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
-                        { text: 'Тема', columngroup: 'Current', dataField: 'Kind_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 230 },
-                        { text: 'Источник', columngroup: 'Current', dataField: 'sourceInfo_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90 },
-                        { text: 'Дата', columngroup: 'Current', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
-                        { text: 'Тип', columngroup: 'Current', dataField: 'cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
-                        { text: 'Контактное лицо', columngroup: 'Current', dataField: 'contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
-                        { text: 'Сотрудник', columngroup: 'Current', dataField: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
-                        { text: 'Создал', columngroup: 'Current', dataField: 'UserCreateName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
-                        { text: 'Дата', columngroup: 'Next', dataField: 'next_date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
-                        { text: 'Тип', columngroup: 'Next', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
-                        { text: 'Контактное лицо', columngroup: 'Next', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
+                        { text: 'Отдел', columngroup: 'Current', dataField: 'GroupContact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70, cellsrenderer: cellsrenderer },
+                        { text: 'Тема', columngroup: 'Current', dataField: 'Kind_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 230, cellsrenderer: cellsrenderer },
+                        { text: 'Источник', columngroup: 'Current', dataField: 'sourceInfo_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90, cellsrenderer: cellsrenderer },
+                        { text: 'Дата', columngroup: 'Current', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                        { text: 'Тип', columngroup: 'Current', dataField: 'cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                        { text: 'Контактное лицо', columngroup: 'Current', dataField: 'contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300, cellsrenderer: cellsrenderer },
+                        { text: 'Сотрудник', columngroup: 'Current', dataField: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                        { text: 'Создал', columngroup: 'Current', dataField: 'UserCreateName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                        { text: 'Дата', columngroup: 'Next', dataField: 'next_date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                        { text: 'Тип', columngroup: 'Next', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100, cellsrenderer: cellsrenderer },
+                        { text: 'Контактное лицо', columngroup: 'Next', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300, cellsrenderer: cellsrenderer },
+//                        { text: 'ContactPriority', columngroup: 'Next', dataField: 'ContactPriority', filtercondition: 'STARTS_WITH', width: 300, hidden: true },
                     ],
                     columngroups: [
                         { text: '', align: 'center', name: 'Current' },
@@ -3059,56 +3078,59 @@ $this->breadcrumbs=array(
     </div>
 
     <div id='content5' style="overflow: hidden; margin: 5px; height: calc(100% - 2px);">
-            <div style="width: 100%; height: 100%">
-                <style>
-                    #ContactsGrid .jqx-fill-state-pressed {
-                        background-color: #A7D2BB !important;
-                        color: black;
-                    }
+        <div style="width: 100%; height: 100%">
+            <style>
+                #ContactsGrid .jqx-fill-state-pressed {
+                    background-color: #A7D2BB !important;
+                    color: black;
+                }
+                
+                .backlight_pink {
+                    color: #E000E0;
+                }
 
-                </style>
+            </style>
 
-                <div class="row" style="height: calc(100% - 270px); margin: 0px;">
-                    <div id="ContactsGrid" class="jqxGridAliton"></div>
+            <div class="row" style="height: calc(100% - 270px); margin: 0px;">
+                <div id="ContactsGrid" class="jqxGridAliton"></div>
+            </div>
+            <div class="row" style="margin: 0;">
+                <div class="row-column">
+                    <div class="row">Содержание: <textarea readonly id="textField"></textarea></div>
+                    <div class="row">Примечание: <textarea readonly id="note"></textarea></div>
+                </div>   
+
+                <div class="row-column">
+                    <div class="row">Причина долга: <br><input readonly id="drsn_name" type="text"></div>
+                    <div class="row">Результат: <br><input readonly id="rslt_name" type="text"></div>
+                    <div class="row">Дата согласованной оплаты: <div id='pay_date'></div></div>
                 </div>
-                <div class="row" style="margin: 0; height: 202px;">
-                    <div class="row-column">
-                        <div class="row">Содержание: <textarea readonly id="textField"></textarea></div>
-                        <div class="row">Примечание: <textarea readonly id="note"></textarea></div>
-                    </div>   
+            </div>
 
-                    <div class="row-column">
-                        <div class="row">Причина долга: <br><input readonly id="drsn_name" type="text"></div>
-                        <div class="row">Результат: <br><input readonly id="rslt_name" type="text"></div>
-                        <div class="row">Дата согласованной оплаты: <div id='pay_date'></div></div>
-                    </div>
+            <div class="row">
+                <div class="row-column"><input type="button" value="Создать" id='NewContact' /></div>
+                <div class="row-column"><input type="button" value="Изменить" id='EditContact' /></div>
+                <div class="row-column"><input type="button" value="Обновить" id='btnReload' /></div>
+                <div class="row-column"><input type="button" value="Удалить" id='DelContact' /></div>
+            </div>
+
+
+            <div id="EditContactDialog">
+                <div id="DialogContactHeader">
+                    <span id="HeaderContactText">Вставка\Редактирование записи</span>
                 </div>
-
-                <div class="row">
-                    <div class="row-column"><input type="button" value="Создать" id='NewContact' /></div>
-                    <div class="row-column"><input type="button" value="Изменить" id='EditContact' /></div>
-                    <div class="row-column"><input type="button" value="Обновить" id='btnReload' /></div>
-                    <div class="row-column"><input type="button" value="Удалить" id='DelContact' /></div>
-                </div>
-
-
-                <div id="EditContactDialog">
-                    <div id="DialogContactHeader">
-                        <span id="HeaderContactText">Вставка\Редактирование записи</span>
-                    </div>
-                    <div id="DialogContactContent" style="overflow-x: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" >
-                        <div style="" id="BodyContactDialog"></div>
-                        <div id="BottomContactDialog">
-                            <div class="row">
-                                <div class="row-column"><input type="button" value="Сохранить" id='btnContactOk' /></div>
-                                <div class="row-column"><input type="button" value="Недозвон" id='btnNotReach' /></div>
-                                <div class="row-column"><input type="button" value="Карточка клиента" id='btnClientInfo' /></div>
-                                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnContactCancel' /></div>
-                            </div>
+                <div id="DialogContactContent" style="overflow-x: hidden; padding: 20px 30px 10px; background-color: #F2F2F2;" >
+                    <div style="" id="BodyContactDialog"></div>
+                    <div id="BottomContactDialog">
+                        <div class="row">
+                            <div class="row-column"><input type="button" value="Сохранить" id='btnContactOk' /></div>
+                            <div class="row-column"><input type="button" value="Недозвон" id='btnNotReach' /></div>
+                            <div class="row-column"><input type="button" value="Карточка клиента" id='btnClientInfo' /></div>
+                            <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnContactCancel' /></div>
                         </div>
                     </div>
                 </div>
-    
+            </div>
         </div>
     </div>
 

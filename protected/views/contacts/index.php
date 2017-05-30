@@ -21,7 +21,25 @@
                 return data;
             },
         });
-            
+        
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+            var Temp = $('#ContactsGrid').jqxGrid('getrowdata', row);
+            var column = $("#ContactsGrid").jqxGrid('getcolumn', columnfield);
+            if (column.cellsformat != '') {
+                if ($.jqx.dataFormat) {
+                    if ($.jqx.dataFormat.isDate(value)) {
+                        value = $.jqx.dataFormat.formatdate(value, column.cellsformat);
+                    }   
+                    else if ($.jqx.dataFormat.isNumber(value)) {
+                        value = $.jqx.dataFormat.formatnumber(value, column.cellsformat);
+                    }
+                }
+            }
+            console.log(Temp);
+            if ((Temp["ContactPriority"] == 1)) 
+                return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+        };
+        
         $("#ContactsGrid").jqxGrid(
             $.extend(true, {}, GridDefaultSettings, {
                 pagesizeoptions: ['10', '200', '500', '1000'],
@@ -32,17 +50,18 @@
                 height: '99.5%',
                 source: ContactsDataAdapter,
                 columns: [
-                    { text: 'Отдел', columngroup: 'Current', dataField: 'GroupContact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70 },
-                    { text: 'Тема', columngroup: 'Current', dataField: 'Kind_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 230 },
-                    { text: 'Источник', columngroup: 'Current', dataField: 'sourceInfo_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90 },
-                    { text: 'Дата', columngroup: 'Current', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
-                    { text: 'Тип', columngroup: 'Current', dataField: 'cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
-                    { text: 'Контактное лицо', columngroup: 'Current', dataField: 'contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
-                    { text: 'Сотрудник', columngroup: 'Current', dataField: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
-                    { text: 'Создал', columngroup: 'Current', dataField: 'UserCreateName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130 },
-                    { text: 'Дата', columngroup: 'Next', dataField: 'next_date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130 },
-                    { text: 'Тип', columngroup: 'Next', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100 },
-                    { text: 'Контактное лицо', columngroup: 'Next', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300 },
+                    { text: 'Отдел', columngroup: 'Current', dataField: 'GroupContact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 70, cellsrenderer: cellsrenderer },
+                    { text: 'Тема', columngroup: 'Current', dataField: 'Kind_Name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 230, cellsrenderer: cellsrenderer },
+                    { text: 'Источник', columngroup: 'Current', dataField: 'sourceInfo_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 90, cellsrenderer: cellsrenderer },
+                    { text: 'Дата', columngroup: 'Current', dataField: 'date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                    { text: 'Тип', columngroup: 'Current', dataField: 'cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                    { text: 'Контактное лицо', columngroup: 'Current', dataField: 'contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300, cellsrenderer: cellsrenderer },
+                    { text: 'Сотрудник', columngroup: 'Current', dataField: 'empl_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                    { text: 'Создал', columngroup: 'Current', dataField: 'UserCreateName', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                    { text: 'Дата', columngroup: 'Next', dataField: 'next_date', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 130, cellsrenderer: cellsrenderer },
+                    { text: 'Тип', columngroup: 'Next', dataField: 'next_cntp_name', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 100, cellsrenderer: cellsrenderer },
+                    { text: 'Контактное лицо', columngroup: 'Next', dataField: 'next_contact', columntype: 'textbox', filtercondition: 'STARTS_WITH', width: 300, cellsrenderer: cellsrenderer },
+                    { text: 'ContactPriority', columngroup: 'Next', dataField: 'ContactPriority', filtercondition: 'STARTS_WITH', width: 300, hidden: true },
                 ],
                 columngroups: [
                     { text: '', align: 'center', name: 'Current' },
@@ -223,13 +242,17 @@
         background-color: #A7D2BB !important;
         color: black;
     }
+    
+    .backlight_pink {
+        color: #E000E0;
+    }
      
 </style>
 
 <div class="row" style="height: calc(100% - 270px); margin: 0px;">
     <div id="ContactsGrid" class="jqxGridAliton"></div>
 </div>
-<div class="row" style="margin: 0; height: 202px;">
+<div class="row" style="margin: 0;">
     <div class="row-column">
         <div class="row">Содержание: <textarea readonly id="textField"></textarea></div>
         <div class="row">Примечание: <textarea readonly id="note"></textarea></div>

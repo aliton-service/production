@@ -36,6 +36,7 @@ class Contacts extends MainFormModel
     public $GroupContact;
     public $EmplChange;
     public $EmplCreate;
+    public $ContactPriority;
 
 
    /**
@@ -88,8 +89,8 @@ class Contacts extends MainFormModel
                     c.PaySum,
                     c.time_length,
                     c.EmplChange,
-                    c.EmplCreate
-                    ";
+                    c.EmplCreate,
+                    c.ContactPriority";
         $from = "\nFrom Contacts c 
                     left join ContactTypes ct on (c.cntp_id = ct.contact_id)
                     left join ContactInfo_v ci on (c.info_id = ci.info_id)
@@ -165,6 +166,7 @@ class Contacts extends MainFormModel
                 . 'PaySum, '
                 . 'time_length, '
                 . 'EmplCreate, '
+                . 'ContactPriority,'
                 . 'EmplChange', 'safe'),
         );
     }
@@ -207,7 +209,8 @@ class Contacts extends MainFormModel
             'base_name' => 'base_name',
             'PaySum' => 'Сумма согласованной оплаты',
             'time_length' => 'Времязатратность',
-            'EmplDel' => 'EmplDel'
+            'EmplDel' => 'EmplDel',
+            'ContactPriority' => 'ContactPriority'
         );
     }
 
