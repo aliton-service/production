@@ -134,24 +134,6 @@
                 }
             }
             
-            
-            
-//            var e = $("#pagerDemandsGrid").children();
-            
-//            console.log(e);
-            
-//            if ($("#myElemPager").length>0) {
-//                var PageInfo =  $("#DemandsGrid").jqxGrid("getpaginginformation");
-//                var datainformation = $('#DemandsGrid').jqxGrid('getdatainformation');
-//                var rowscount = datainformation.rowscount;
-//                //var Str = PageInfo.pagenum ;
-//                //var I = Str.indexOf('-');
-//                //console.log(Str);
-//                $("#myElemPager").html("Запись: " + (event.args.rowindex+1) + " из " + rowscount);
-//            }
-//            
-            
-            
         });
 
         $("#DemandsGrid").on('bindingcomplete', function(){

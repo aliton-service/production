@@ -4,10 +4,6 @@
         /* Текущая выбранная строка данных */
         var CurrentRowData;
         
-        
-        
-        
-        
         var initWidgets = function(tab) {
             switch(tab) {
                 case 0:
@@ -19,6 +15,9 @@
                         CurrentRowData = $('#MonitoringDemandsGrid').jqxGrid('getrowdata', event.args.rowindex);
                         if (CurrentRowData != undefined) {
                             $("#Description").jqxTextArea('val', CurrentRowData.Note);
+                            $('#btnCancelAcceptance').jqxButton({disabled: !(CurrentRowData.UserAccept2 !== null)});
+                            $('#btnAcceptEmployeeName').jqxButton({disabled: !(CurrentRowData.UserAccept2 === null)});
+//                            console.log($('#btnCancelAcceptance').jqxButton('disabled'));
                         }
                     });
                     
@@ -37,7 +36,7 @@
                             }
                         if ((Temp["DemandPrior"] == "Срочная")) 
                             return '<span class="backlight_pink" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
-                    }
+                    };
                     
                     $("#MonitoringDemandsGrid").jqxGrid(
                         $.extend(true, {}, GridDefaultSettings, {
@@ -114,29 +113,6 @@
         $("#btnCancelAcceptance").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160 }));
         $("#Description").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: 'calc(100% - 2px)', height: 55 }));
         
-        
-        
-        
-        
-        
-        
-                    
-        
-        
-        
-         // Привязка фильтров к гриду
-//        GridFilters.AddControlFilter('UserCreate', 'jqxComboBox', 'MonitoringDemandsGrid', 'e.Employee_id', 'numericfilter', 0, 'EQUAL', true);
-//        GridFilters.AddControlFilter('notAcceptedDemands', 'jqxCheckBox', 'MonitoringDemandsGrid', 'DateAccept', 'datefilter', 0, 'NULL', true);
-//        GridFilters.AddControlFilter('unfulfilledDemands', 'jqxCheckBox', 'MonitoringDemandsGrid', 'DateExec', 'datefilter', 0, 'NULL', true);
-//        GridFilters.AddControlFilter('Number', 'jqxNumberInput', 'MonitoringDemandsGrid', 'mndm_id', 'numericfilter', 0, 'EQUAL', true);
-//        GridFilters.AddControlFilter('Date', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 0, 'DATE_EQUAL', true);
-//        GridFilters.AddControlFilter('Prior', 'jqxComboBox', 'MonitoringDemandsGrid', 'Prior', 'numericfilter', 0, 'EQUAL', true);
-//        GridFilters.AddControlFilter('BeginDate', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 0, 'DATE_GREATER_THAN_OR_EQUAL', true);
-//        GridFilters.AddControlFilter('EndDate', 'jqxDateTimeInput', 'MonitoringDemandsGrid', 'Date', 'datefilter', 0, 'DATE_LESS_THAN_OR_EQUAL', true);
-        
-
-        
-        
         $("#btnAcceptEmployeeName").on('click', function () {                
             $.ajax({
                 url: "<?php echo Yii::app()->createUrl('MonitoringDemands/Accept');?>",
@@ -144,7 +120,7 @@
                 async: false,
                 data: { mndm_id: CurrentRowData.mndm_id },
                 success: function(Res) {
-                    $('#btnAcceptEmployeeName').jqxButton({disabled: true });
+                    $('#btnAcceptEmployeeName').jqxButton({disabled: false });
                     $('#btnCancelAcceptance').jqxButton({disabled: false });
                     $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
                     $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
@@ -160,8 +136,6 @@
                 data: { mndm_id: CurrentRowData.mndm_id },
                 success: function(Res) {
 //                    console.log(Res);
-                    $('#btnAcceptEmployeeName').jqxButton({disabled: false });
-                    $('#btnCancelAcceptance').jqxButton({disabled: true });
                     $("#MonitoringDemandsGrid").jqxGrid('updatebounddata');
                     $("#MonitoringDemandsGrid").jqxGrid('selectrow', 0);
                 }

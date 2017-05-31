@@ -125,7 +125,7 @@ class DeliveryDemands extends MainFormModel
     public function rules()
     {
         return array(
-                array('prty_id, dltp_id, deadline', 'required'),
+                array('prty_id, dltp_id, deadline, bestdate', 'required'),
                 array('dldm_id,
                         Addr,
                         date,
@@ -178,7 +178,7 @@ class DeliveryDemands extends MainFormModel
                     'dltp_id' => 'Вид',
                     'mstr_id' => 'Mstr',
                     'prty_id' => 'Приоритет',
-                    'bestdate' => 'Bestdate',
+                    'bestdate' => 'Желаемая дата',
                     'deadline' => 'Deadline',
                     'plandate' => 'Plandate',
                     'text' => 'Text',

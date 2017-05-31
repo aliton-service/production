@@ -107,7 +107,7 @@
             $('#btnInfo').click();
         });
         
-        $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '480px', width: '800'}));
+        $('#EditDeliveryDemandDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '510px', width: '830'}));
         
         LoadEditForm = function(Url, Data, Type) {
             $.ajax({
