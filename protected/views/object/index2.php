@@ -75,7 +75,7 @@
                 autoloadstate: true,
                 //source: DemDataAdapter,
                 ready: function() {
-                    var State = $('#ObjectsGrid').jqxGrid('getstate');
+//                    var State = $('#ObjectsGrid').jqxGrid('getstate');
                     var Columns = GridState.LoadGridSettings('ObjectsGrid', 'ObjectIndex_ObjectsGrid');
 //                    $.extend(true, State.columns, Columns);
 //                    $('#ObjectsGrid').jqxGrid('loadstate', State);    
