@@ -1529,6 +1529,7 @@ return array_merge(
                 'AdminContractsDetails_v',
                 'UserContractEquips',
                 'AdminContractPriceHistory',
+                'Storeman',
             ),
         ),
         
