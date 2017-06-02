@@ -963,7 +963,7 @@ return array_merge(
                 'ManagerExecuteReports',
                 'UserRepairs',
                 'ManagerRepairComments',
-                'UserDeliveryDemands',
+                'ManagerDeliveryDemands',
                 'ManagerDeliveryComments',
                 'MSWHDocuments',
                 'AdminSerialNumbers',
