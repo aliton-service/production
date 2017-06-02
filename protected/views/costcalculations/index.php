@@ -829,7 +829,7 @@
                                 return Result;
                             }
                             
-                            if ((!Marj20 && !NotWorks)) {
+                            if ((!Marj20 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6)) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 20%';
 //                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
@@ -853,7 +853,7 @@
                                 return Result;
                             }
                             
-                            if ((!Marj30 && !NotWorks) ) {
+                            if (!Marj30 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 30%';
                                 return Result;
@@ -885,7 +885,7 @@
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 15%';
                                 return Result;
                             }
-                            if (!Marj20 && !NotWorks) {
+                            if (!Marj20 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 20%';
                                 return Result;
@@ -917,7 +917,7 @@
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%';
                                 return Result;
                             }
-                            if (!Marj30 && !NotWorks) {
+                            if (!Marj30 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 30%';
                                 return Result;
@@ -929,7 +929,7 @@
                             }
                             
                         } else {
-                            if (!Marj && !NotWorks) {
+                            if (!Marj && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
                                 return Result;
