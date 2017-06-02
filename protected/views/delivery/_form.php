@@ -249,6 +249,37 @@
         $('#btnDeliveryDemCancel').on('click', function(){
             $('#' + DeliveryDemands.DialogId).jqxWindow('close');
         });
+        
+        var datesCompare = function(bestDate, deadline) {
+            if (deadline !== null && bestDate != null) {
+                var bestDateDate = bestDate.getDate();
+                var bestDateMonth = bestDate.getMonth();
+                var deadlineDate = deadline.getDate();
+                var deadlineMonth = deadline.getMonth();
+                console.log(bestDateDate);
+                console.log(deadlineDate);
+                console.log(bestDateDate === deadlineDate && bestDateMonth === deadlineMonth);
+                if (bestDateDate === deadlineDate && bestDateMonth === deadlineMonth) {
+                    $("#errorBestDate").html('совпадает с предельной датой');
+                } else {
+                    $("#errorBestDate").html('');
+                }
+            } else {
+                $("#errorBestDate").html('');
+            }
+        };
+            
+        $('#edEditBestDate').on('change', function (event) { 
+            var bestDate = event.args.date;
+            var deadline = $('#edEditDeadline').jqxDateTimeInput('val', 'date');
+            datesCompare(bestDate, deadline);
+        });
+        
+        $('#edEditDeadline').on('change', function (event) { 
+            var deadline = event.args.date;
+            var bestDate = $('#edEditBestDate').jqxDateTimeInput('val', 'date');
+            datesCompare(bestDate, deadline);
+        });
 
         $('#btnDeliveryDemOk').on('click', function(){
             var Url = <?php echo json_encode(Yii::app()->createUrl('Delivery/Update')); ?>;
@@ -361,6 +392,7 @@
     <div class="row-column">
         <div>Желаемая дата</div>
         <div><div id="edEditBestDate" name="DeliveryDemands[bestdate]"></div><?php echo $form->error($model, 'bestdate'); ?></div>
+        <span id="errorBestDate" style="color: orange;"></span>
     </div>
     <div class="row-column">
         <div>Обещанная дата</div>
