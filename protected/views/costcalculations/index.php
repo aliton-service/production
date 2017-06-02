@@ -828,6 +828,11 @@
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
                                 return Result;
                             }
+                            if (CostCalculations.ccwt_id == 7 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
                             
                             if ((!Marj20 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6)) {
                                 Result.Permission = false;
@@ -842,6 +847,11 @@
                             }
                         }
                         else if (PM) {
+                            if (CostCalculations.ccwt_id == 7 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
                             if (CostCalculations.ccwt_id == 5 && !Marj && !NotWorks) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
@@ -870,6 +880,11 @@
                             }
                         }
                         else if (RSC) {
+                            if (CostCalculations.ccwt_id == 7 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
                             if (CostCalculations.ccwt_id == 5 && !Marj && !NotWorks) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
@@ -902,6 +917,11 @@
                             }
                         }
                         else if (Chief) {
+                            if (CostCalculations.ccwt_id == 7 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
                             if (CostCalculations.ccwt_id == 5 && !Marj && !NotWorks) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
@@ -929,7 +949,7 @@
                             }
                             
                         } else {
-                            if (!Marj && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6) {
+                            if (!Marj && !NotWorks) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
                                 return Result;
