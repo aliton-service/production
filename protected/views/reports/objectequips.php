@@ -26,6 +26,9 @@
 <?php
     $this->ReportName = $ReportName;
 ?>
+
+<div id="panel_controls">
+
 <?php
     if (!$Ajax) {
         $this->beginWidget('CActiveForm', array(
@@ -34,7 +37,8 @@
                 'class'=>'form-inline'
             ),
         ));
-?>        
+?>      
+    
         <div class="row">
             <div class="row-column" style="width: 130px">Мастер:</div>
             <div class="row-column"><div id="edMaster" name="Parameters[prmMaster]"></div></div>
@@ -66,11 +70,11 @@
             <div class="row-column"><div id="edSupplier" name="Parameters[prmSupplier]"></div></div>
         </div>
         <div style="clear: both; margin-top: 10px;"></div>
-        
+    
 <?php        
         $this->endWidget();
     }
-    
+    echo '</div>';
     echo '<div id="res_cont">' . $ResultHtml . '</div>';
 ?>
 
