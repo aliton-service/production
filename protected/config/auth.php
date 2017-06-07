@@ -1312,6 +1312,8 @@ return array_merge(
                 'ManagerInspActOptions',
                 'ManagerValuableInstructions',
                 'AdminClientSounds',
+                'ManagerEquips',
+                'ManagerEqipGroups',
             ),
         ),
         
