@@ -96,6 +96,8 @@
             $("#FullName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 300 }));
             $("#LphName").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 180 }));
             $("#Address").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 250 }));
+            $("#btnYandex").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 40, imgPosition: 'center', imgSrc: "/images/yandex-icon.png"}));
+            
             $("#Apartment").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
             $("#Floor").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 50 }));
             $("#year_construction").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 80 }));
@@ -115,6 +117,10 @@
             $("#ChangeObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             $("#ViewDemandsObjectsGroup").jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 200}));
             $("#AddInstructing").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            
+            $("#btnYandex").on('click', function() {
+                window.open('https://yandex.ru/maps/?mode=search&text=' + $("#Address").val());
+            });
             
             $("#ViewDemandsObjectsGroup").on('click', function () {
                 var Data = {
@@ -2650,6 +2656,7 @@ $this->breadcrumbs=array(
             <div class="al-row">
                 <div class="al-row-column" style="width: 60px">Адрес:</div>
                 <div class="al-row-column"><input readonly type="text" id="Address"></div>
+                <div class="al-row-column"><input type="button" id="btnYandex"/></div>
                 <div class="al-row-column">Квартир:</div>
                 <div class="al-row-column"><input readonly type="text" id="Apartment"></div>
                 <div class="al-row-column">Кол-во этажей:</div>
