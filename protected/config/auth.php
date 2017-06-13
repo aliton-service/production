@@ -1045,7 +1045,7 @@ return array_merge(
                 'ManagerEventOffers',
                 'ManagerOfferDemands',
                 'ManagerEquips',
-                'ManagerEqipGroups',
+                'AdminEqipGroups',
                 'ViewDocs',
                 'ManagerInspectionActs',
                 'ManagerInspectionActEquips',
