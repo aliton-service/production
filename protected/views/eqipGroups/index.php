@@ -160,8 +160,8 @@
                 Item = $('#EqipGroupsTree').jqxTree('getSelectedItem');
                 ParentElem = Item.parentElement;
                 Parent = $('#EqipGroupsTree').jqxTree('getItem', ParentElem);
-                console.log('Item.value ' + Item.value);
-                console.log('Parent.value ' + Parent.value);
+//                console.log('Item.value ' + Item.value);
+//                console.log('Parent.value ' + Parent.value);
                 if (Parent == null)
                     Parent = {
                         value: null
