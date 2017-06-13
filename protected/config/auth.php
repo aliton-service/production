@@ -1419,6 +1419,7 @@ return array_merge(
                 'AdminWHDocuments',
                 'AdminSuppliers',
                 'ManagerWhActs',
+                'AdminEqipGroups',
             ),
         ),
         
