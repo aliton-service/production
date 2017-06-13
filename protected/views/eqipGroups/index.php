@@ -177,7 +177,7 @@
         });
 </script>
 
-<?php $this->setPageTitle('Структура организации'); ?>
+<?php $this->setPageTitle('Структурное дерево оборудования'); ?>
 
 <div class="al-row">
     <div id="EqipGroupsTree"></div>

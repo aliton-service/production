@@ -171,7 +171,7 @@ class EqipGroupsController extends Controller
 
 	public function actionIndex()
 	{
-            $this->title = 'Просмотр структуры организации';
+            $this->title = 'Структурное дерево оборудования';
             $this->render('index');
 	}
 
