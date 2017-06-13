@@ -21,7 +21,7 @@ class EqipGroups extends MainFormModel
     public $PrimaryKey = 'group_id';
 
     public $SP_INSERT_NAME = 'INSERT_EqipGroups2';
-    public $SP_UPDATE_NAME = 'UPDATE_EqipGroups';
+    public $SP_UPDATE_NAME = 'UPDATE_EqipGroups2';
     public $SP_DELETE_NAME = 'DELETE_EqipGroups';
 
 
