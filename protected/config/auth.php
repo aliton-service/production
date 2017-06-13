@@ -963,7 +963,7 @@ return array_merge(
                 'ManagerExecuteReports',
                 'UserRepairs',
                 'ManagerRepairComments',
-                'UserDeliveryDemands',
+                'ManagerDeliveryDemands',
                 'ManagerDeliveryComments',
                 'MSWHDocuments',
                 'AdminSerialNumbers',
@@ -1312,6 +1312,8 @@ return array_merge(
                 'ManagerInspActOptions',
                 'ManagerValuableInstructions',
                 'AdminClientSounds',
+                'ManagerEquips',
+                'ManagerEqipGroups',
             ),
         ),
         
@@ -1338,6 +1340,7 @@ return array_merge(
                 'ManagerInspActOptions',
                 'ManagerValuableInstructions',
                 'AdminClientSounds',
+                'ManagerEquips',
             ),
         ),
         
@@ -1529,6 +1532,7 @@ return array_merge(
                 'AdminContractsDetails_v',
                 'UserContractEquips',
                 'AdminContractPriceHistory',
+                'Storeman',
             ),
         ),
         

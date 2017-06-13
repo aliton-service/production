@@ -75,7 +75,7 @@
         $("#edCountPorchGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#edFloorGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
         $("#edYearConstructionGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 100 }));
-        $("#edClientGroupGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataClientGroup, width: 160, displayMember: "edClientGroupGrEdit", valueMember: "clgr_id" }));
+        $("#edClientGroupGrEdit").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataClientGroup, width: 160, displayMember: "ClientGroup", valueMember: "clgr_id" }));
         $("#edDoorwayListGrEdit").jqxInput($.extend(true, {}, InputDefaultSettings, { width: 130 }));
         $("#edAreaSizeGrEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: '120px', height: '25px', inputMode: 'simple'}));
         $("#edJournalGrEdit").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '110px', formatString: 'dd.MM.yyyy' }));

@@ -818,7 +818,23 @@
                     
                     if (Type == 0) {// КП
                         if (ROPR) {
-                            if (!Marj20 && !NotWorks) {
+                            if (CostCalculations.ccwt_id == 5 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            if (CostCalculations.ccwt_id == 6 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            if (CostCalculations.ccwt_id == 7 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            
+                            if ((!Marj20 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6 && CostCalculations.ccwt_id != 7)) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 20%';
 //                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_AGREED_COSTCALC'], 'Маржинальная прибыль должна быть больше 20%');
@@ -831,7 +847,23 @@
                             }
                         }
                         else if (PM) {
-                            if (!Marj30 && !NotWorks) {
+                            if (CostCalculations.ccwt_id == 7 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            if (CostCalculations.ccwt_id == 5 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            if (CostCalculations.ccwt_id == 6 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            
+                            if (!Marj30 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6 && CostCalculations.ccwt_id != 7) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 30%';
                                 return Result;
@@ -848,12 +880,27 @@
                             }
                         }
                         else if (RSC) {
+                            if (CostCalculations.ccwt_id == 7 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            if (CostCalculations.ccwt_id == 5 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            if (CostCalculations.ccwt_id == 6 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
                             if (!Marj15 && CostCalculations.ccwt_id == 7) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 15%';
                                 return Result;
                             }
-                            if (!Marj20 && !NotWorks) {
+                            if (!Marj20 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6 && CostCalculations.ccwt_id != 7) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 20%';
                                 return Result;
@@ -870,12 +917,27 @@
                             }
                         }
                         else if (Chief) {
+                            if (CostCalculations.ccwt_id == 7 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            if (CostCalculations.ccwt_id == 5 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
+                            if (CostCalculations.ccwt_id == 6 && !Marj && !NotWorks) {
+                                Result.Permission = false;
+                                Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
+                                return Result;
+                            }
                             if (Discount15 && !Marj20) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 20%, а скидка не привышать 15%';
                                 return Result;
                             }
-                            if (!Marj30 && !NotWorks) {
+                            if (!Marj30 && !NotWorks && CostCalculations.ccwt_id != 5 && CostCalculations.ccwt_id != 6 && CostCalculations.ccwt_id != 7) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше 30%';
                                 return Result;
@@ -887,7 +949,6 @@
                             }
                             
                         } else {
-                            
                             if (!Marj && !NotWorks) {
                                 Result.Permission = false;
                                 Result.Messasge = 'Маржинальная прибыль должна быть больше ' + parseFloat(CostCalculations.ccwt_proc) + '%';
@@ -906,7 +967,9 @@
                             return Result;
                         }
                         if (ROPR) {
-                            if (CostCalculations.ccwt_id == 7) {
+                            if (CostCalculations.ccwt_id == 8) {
+                                return Result;
+                            } else if (CostCalculations.ccwt_id == 7) {
                                 if (CostCalcDetails.isContract == 0) {
                                     Result.Permission = false;
                                     Result.Messasge = 'Требуется выставить счет или счет-заказ';
@@ -948,7 +1011,9 @@
                             }
                         }
                         else if (RSC) {
-                            if (CostCalculations.ccwt_id == 7) {
+                            if (CostCalculations.ccwt_id == 8) {
+                                return Result;
+                            } else if (CostCalculations.ccwt_id == 7) {
                                 if (CostCalcDetails.isContract == 0) {
                                     Result.Permission = false;
                                     Result.Messasge = 'Требуется выставить счет или счет-заказ';

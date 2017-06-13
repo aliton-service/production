@@ -21,7 +21,7 @@
             $("#month_end").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, { source: DataMonths, displayMember: "Month_name", valueMember: "Month_id", width: 120, autoDropDownHeight: true }));
             $("#year_start").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
             $("#year_end").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, { width: 80, symbolPosition: 'right', min: 0, decimalDigits: 0, spinButtons: true }));
-            $("#note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '99%', height: 100 }));
+            $("#ph_note").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, { width: '99%', height: 100 }));
             
             $("#BtnOkDialogPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
             $("#BtnCancelDialogPaymentHistory").jqxButton($.extend(true, {}, ButtonDefaultSettings));
@@ -90,7 +90,7 @@
                 $("#year_end").jqxNumberInput('val', currentYear);
             }
             
-            if (PaymentHistoryForm.note != '') $("#note").jqxTextArea('val', PaymentHistoryForm.note);
+            if (PaymentHistoryForm.note != '') $("#ph_note").jqxTextArea('val', PaymentHistoryForm.note);
         });
 </script> 
 
@@ -121,7 +121,7 @@
     </div>
 </div>
 <div class="row" style="width: 100%;">
-    <div class="row-column" style="width: 100%;">Примечание: <textarea type="text" id="note" name="PaymentHistory[note]"></textarea></div>
+    <div class="row-column" style="width: 100%;">Примечание: <textarea type="text" id="ph_note" name="PaymentHistory[note]"></textarea></div>
 </div>
 <div class="al-row">
     <div class="row-column"><input type="button" value="Сохранить" id='BtnOkDialogPaymentHistory' /></div>

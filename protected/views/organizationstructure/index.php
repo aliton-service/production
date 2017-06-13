@@ -133,7 +133,6 @@
                         Res = JSON.parse(Res);
                         if (Res.result == 1) {
                             $('#EditDialog').jqxWindow('close');
-                            console.log(Res);
                             CurrentStructure_id = Res.id;
                             $("#btnRefresh").click();
                         } else {
