@@ -16,4 +16,8 @@
 
 
 
-    
+<?php
+//    echo Yii::app()->user->getRole();
+//    $auth = require(Yii::app()->basePath.'/config/auth.php');
+//    print_r($auth);
+?>
