@@ -1,276 +1,208 @@
-
-<br>
-<?php
-/* @var $this EqipGroupsController */
-/* @var $model EqipGroups */
-$this->title = 'Структурное дерево оборудования';
-$this->setPageTitle('Структурное дерево оборудования');
-$this->breadcrumbs=array(
-	'Справочники'=>array('/reference/index'),
-	'Eqip Groups'=>array('index'),
-	
-);
-?>
-<div id="equips-tree">
-	<?php
-$this->widget('CTreeView', array(
-	'collapsed'=>true,
-	'control'=>'treecontrol',
-	'animated'=>'fast',
-	'cssFile'=>'css/treeview/treeview.css',
-	'htmlOptions'=>array(
-
-	                'class'=>'treeview-red'),
-    'data'=>Tree::getTree('EqipGroups',1, array(
-    	'id'=>'group_id',
-    	'parent'=>'parent_group_id',
-    	'name'=>'group_name',
-		'notDel'=>'DelDate Is Null',
-    	))
-
-));
-	?>
-	</div><br>
-<div class="btn-group">
-<?php
-
-$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-	'id' => 'create',
-	'Height' => 30,
-	'Text' => 'Создать',
-	'Type' => 'none',
-	'OnAfterClick' => 'createEqipGroup()'
-));
-
-$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-	'id' => 'update',
-	'Height' => 30,
-	'Text' => 'Изменить',
-	'Type' => 'none',
-	'OnAfterClick' => 'updateEqipGroup()'
-));
-
-$this->widget('application.extensions.alitonwidgets.button.albutton', array(
-	'id' => 'delete',
-	'Height' => 30,
-	'Text' => 'Удалить',
-	'Type' => 'none',
-	'OnAfterClick' => "deleteEqipGroup()"
-));
-
-?>
-</div>
-<form id="eqip-edit" class="hidden">
-	<input type="text" id="name-eqiptree">
-	<input type="submit" value="ok">
-</form>
-<style>
-	.treeview li span.text.selected {
-		background-color: #006e00;
-		color:#fff;
-	}
-	.treeview li.selected ul {
-		background-color: none;
-		color:#000;
-	}
-	#equips-tree {
-		height: 500px;overflow: auto;border: 1px solid #000;
-		margin: 15px 25px 15px 5px;
-		width: 400px;
-	}
-</style>
-<script>
-	var eqip_gr = 1
-	var action_save = ''
-	$('#equips-tree li span.text').on('click', function(){
-		$('#equips-tree li span.text').removeClass('selected')
-		eqip_gr = $(this).parent().attr('data-id')
-		$(this).addClass('selected')
-		return false
-	})
-
-	function deleteEqipGroup() {
-		if(eqip_gr == 1) {
-			alert('Выберите категорию')
-			return false
-		}
-		aliton.form.delete('eqipGroups/delete', eqip_gr, function(){
-
-			window.location.reload()
-		})
-	}
-
-	function createEqipGroup() {
-		action_save = 'create'
-		$('#eqip-edit').load('/?r=eqipGroups/create')
-		$('#eqip-edit').dialog()
-	}
-
-	function updateEqipGroup() {
-		action_save = 'update'
-		$('#eqip-edit').load('/?r=eqipGroups/update&id='+eqip_gr)
-//		$('#name-eqiptree').val($('#equips-tree li span.text.selected').text())
-		$('#eqip-edit').dialog()
-	}
-
-	 function saveEqipGr(){
-		var data = {
-			EqipGroups: {
-				group_name: $('#eqip-groups-form input[name="EqipGroups[group_name]"]').val()
-			}
-		}
-		 var update_query = ''
-		if(action_save === 'create') data.EqipGroups.parent_group_id = eqip_gr
-		else if(action_save === 'update') {
-			data.EqipGroups.group_id = eqip_gr
-			update_query = '&id='+eqip_gr
-		}
-console.log(data)
-		$.ajax({
-			url: '/?r=eqipGroups/'+action_save+update_query,
-			type: 'post',
-			data: data,
-			dataType: 'json',
-			success: function (r) {
-				if(r.status !== 'ok') {
-					// error
-				}
-				alert('success')
-				window.location.reload()
-			},
-			error: function (r) {
-				if(r.status == 200) {
-					$('#eqip-edit').html($(r.responseText))
-				} else {
-					alert('Произошла непридвиденная ошибка, повторите попытку позже')
-				}
-			}
-		})
-	}
-
-
+<script type="text/javascript">
+        var Currentgroup_id = 0;
+        $(document).ready(function () {
+            var DataEqipGroups = new $.jqx.dataAdapter(Sources.SourceEquipGroups);
+            var Mode;
+            LoadData = function(Adapter) {
+                Adapter.dataBind();
+                return Adapter.getRecordsHierarchy('group_id', 'parent_group_id', 'items', [{name: 'group_id', map: 'value'}, { name: 'group_name', map: 'label'}, { name: 'full_group_name', map: 'full_group_name' }]);
+            }
+            
+            var records = LoadData(DataEqipGroups);
+            $('#EqipGroupsTree').jqxTree($.extend({}, TreeDefaultSettings, { source: records, height: 'calc(100% - 50px)', width: '90%'}));
+            $('#EqipGroupsTree').jqxTree('expandAll');
+            $('#EqipGroupsTree').on('select',function (event) {
+                var args = event.args;
+                var item = $('#EqipGroupsTree').jqxTree('getItem', args.element);
+                Currentgroup_id = item.value;
+            });
+            
+            
+            $("#btnAdd").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $("#btnDel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            $('#EditDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {height: '150px'}));
+            $("#btnRefresh").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            
+            var selectItem = function () {
+                var items = $('#EqipGroupsTree').jqxTree('getItems');
+//                $("#EqipGroupsTree").jqxTree('expandItem', items[0]);
+                $('#EqipGroupsTree').jqxTree('selectItem', items[0]);
+            };
+            selectItem();
+            
+            $("#btnRefresh").on('click', function() {
+                $('#EqipGroupsTree').jqxTree({source: LoadData(DataEqipGroups)});
+                if (Currentgroup_id != 0) {
+                    var Items = $('#EqipGroupsTree').jqxTree('getItems');
+                    for (var i = 0; i < Items.length; i++) {
+                        if (Items[i].value == Currentgroup_id) {
+                            $('#EqipGroupsTree').jqxTree('expandItem', Items[i].element);
+                            $('#EqipGroupsTree').jqxTree('ensureVisible', Items[i].element);
+                            $('#EqipGroupsTree').jqxTree('selectItem', Items[i].element);
+                            break;
+                        }
+                    }
+                }
+            });
+            
+            $("#btnAdd").on('click', function () {
+                var item = $('#EqipGroupsTree').jqxTree('getSelectedItem');
+                Mode = 'Insert';
+                var parent_group_id = null;
+                if (item != null) {
+                    parent_group_id = item.value;
+                }
+                
+                LoadForm(0, parent_group_id);
+                
+                $('#EditDialog').jqxWindow('open');
+            });
+            
+            $("#btnEdit").on('click', function () {
+                var item = $('#EqipGroupsTree').jqxTree('getSelectedItem');
+                var group_id = null;
+                if (item != null) {
+                    Mode = 'Edit';
+                    group_id = item.value;
+                    LoadForm(group_id, -1);
+                    $('#EditDialog').jqxWindow('open');
+                }
+            });
+            
+            $("#btnDel").on('click', function () {
+                var item = $('#EqipGroupsTree').jqxTree('getSelectedItem');
+                var group_id = null;
+                if (item != null) {
+                    group_id = item.value;
+                    $.ajax({
+                        url: "<?php echo Yii::app()->createUrl('EqipGroups/Delete');?>",
+                        type: 'POST',
+                        async: false,
+                        data: {group_id: group_id},
+                        success: function() {
+                            $('#EqipGroupsTree').jqxTree({source: LoadData(DataEqipGroups)});
+                            selectItem();
+                        }
+                    });
+                }
+            });
+            
+            LoadForm = function(group_id, parent_group_id) {
+                if (group_id == undefined)
+                    group_id = 0;
+                if (parent_group_id == undefined)
+                    parent_group_id = null;
+                $.ajax({
+                    url: "<?php echo Yii::app()->createUrl('EqipGroups/EditForm');?>",
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        group_id: group_id,
+                        parent_group_id: parent_group_id
+                    },
+                    success: function(Res) {
+                        $('#BodyDialog').html(Res);
+                    }
+                });
+            }
+            
+            $('#EditDialog').on('open', function (event) { 
+            });
+            
+            $('#EditDialog').jqxWindow({initContent: function() {
+                $("#btnOk").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+                $("#btnCancel").jqxButton($.extend(true, {}, ButtonDefaultSettings));
+            }});
+            
+            $("#btnCancel").on('click', function () {
+                $('#EditDialog').jqxWindow('close');
+            });
+            
+            SendForm = function(Mode, Form) {
+                var Url;
+                if (Mode == 'Insert')
+                    Url = "<?php echo Yii::app()->createUrl('EqipGroups/Create');?>";
+                if (Mode == 'Edit')
+                    Url = "<?php echo Yii::app()->createUrl('EqipGroups/Update');?>";
+                if (Mode == 'Drag')
+                    Url = "<?php echo Yii::app()->createUrl('EqipGroups/DragAndDrop');?>";
+                
+                var Data;
+                if (Form == undefined)
+                    Data = $('#EqipGroups').serialize();
+                else Data = Form;
+                
+                $.ajax({
+                    url: Url,
+                    type: 'POST',
+                    async: false,
+                    data: Data,
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        if (Res.result == 1) {
+                            $('#EditDialog').jqxWindow('close');
+                            Currentgroup_id = Res.id;
+                            $("#btnRefresh").click();
+                        } else {
+                            $('#BodyDialog').html(Res.html);
+                        }
+                            
+                    }
+                });
+            }
+            
+            $("#btnOk").on('click', function () {
+                SendForm(Mode);
+            });
+            
+            $("#EqipGroupsTree").on('dragEnd', function (event) {
+                Item = $('#EqipGroupsTree').jqxTree('getSelectedItem');
+                ParentElem = Item.parentElement;
+                Parent = $('#EqipGroupsTree').jqxTree('getItem', ParentElem);
+                console.log('Item.value ' + Item.value);
+                console.log('Parent.value ' + Parent.value);
+                if (Parent == null)
+                    Parent = {
+                        value: null
+                    };
+                SendForm('Drag', {
+                    EqipGroups: {
+                        group_id: Item.value,
+                        parent_group_id: Parent.value
+                    }
+                });
+            });
+            
+        });
 </script>
-<?php
 
-//$this->menu=array(
-//	array('label'=>'Создать EqipGroups', 'url'=>array('create')),
-//	array('label'=>'Редактировать EqipGroups', 'url'=>array('#'), 'itemOptions'=>array('data-action'=>'update')),
-//	array('label'=>'Удалить EqipGroups', 'url'=>array('#'), 'itemOptions'=>array('data-action'=>'delete')),
-//);
-//
-//Yii::app()->clientScript->registerScript('search', "
-//$('.search-button').click(function(){
-//	$('.search-form').toggle();
-//	return false;
-//});
-//$('.search-form form').submit(function(){
-//	$('#eqip-groups-grid').yiiGridView('update', {
-//		data: $(this).serialize()
-//	});
-//	return false;
-//});
-//");
-//?>
-<!---->
-<!--<h1>Редактирование Eqip Groups</h1>-->
-<!---->
-<!---->
-<!---->
-<!---->
-<!---->
-<!--<div class="search-form" style="display:none">-->
-<?php //$this->renderPartial('_search',array(
-//	'model'=>$model,
-//)); ?>
-<!--</div><!-- search-form -->
-<!---->
-<?php //
-//// $this->widget('zii.widgets.grid.CGridView', array(
-//// 	'id'=>'eqip-groups-grid',
-//// 	'dataProvider'=>$model->search(),
-//// 	'cssFile'=>'css/reference/gridview/styles.css',
-//// 	'pager'=>array('cssFile'=>'css/reference/gridview/pager.css', ),
-//// 	'filter'=>$model,
-//// 	'columns'=>array(
-//// 		// 'group_id',
-//// 		'parent_group_id' ,
-//// 		'code',
-//// 		'group_name',
-//// 		'full_group_name',
-//// 		// 'Lock',
-//// 		/*
-//// 		'EmplLock',
-//// 		'DateLock',
-//// 		'EmplCreate',
-//// 		'DateCreate',
-//// 		'EmplChange',
-//// 		'DateChange',
-//// 		'EmplDel',
-//// 		'DelDate',
-//// 		*/
-//// 		array(
-//// 			'class'=>'CButtonColumn',
-//// 		),
-//// 	),
-//// ));
-//
-//
-//$this->widget('CTreeView', array(
-//	'collapsed'=>true,
-//	'control'=>'treecontrol',
-//	'animated'=>'fast',
-//	'cssFile'=>'css/treeview/treeview.css',
-//	'htmlOptions'=>array(
-//
-//	                'class'=>'treeview-red'),
-//    'data'=>Tree::getTree('EqipGroups',1, array(
-//    	'id'=>'group_id',
-//    	'parent'=>'parent_group_id',
-//    	'name'=>'group_name',
-//    	))
-//
-//));
-//
-//
-//
-//// Tree::getTree('EqipGroups','sdfd',1);
-//
-//?>
-<!---->
-<!--<script type="text/javascript">-->
-<!--	$('body').on('click','.items tbody tr', function(){-->
-<!--		-->
-<!--		var link = $(this).find('td.button-column a.update').attr('href');-->
-<!--		$('li[data-action=update] a').attr('href', link);-->
-<!---->
-<!--		link = $(this).find('td.button-column a.delete').attr('href');-->
-<!--		$('li[data-action=delete] a').attr('href', link);-->
-<!---->
-<!--	});-->
-<!---->
-<!--	$('body').on('click','li[data-action=delete] a',function(){-->
-<!--		$.ajax({-->
-<!--			type: 'post',-->
-<!--			url: $(this).attr('href'),-->
-<!--			data: 'EqipGroups=EqipGroups',-->
-<!--			success: function() {-->
-<!---->
-<!--			}-->
-<!--		})-->
-<!--	})-->
-<!---->
-<!---->
-<!---->
-<!--	$("body").on("click",".treeview li",function(){-->
-<!--		$(".treeview li").removeClass("selected")-->
-<!--		$(this).addClass("selected")-->
-<!--		$('li[data-action=update] a').attr('href', '/index.php?r=eqipGroups/update&id='+$(this).attr('data-id'));-->
-<!--		return false-->
-<!--	})-->
-<!--	-->
-<!---->
-<!--</script>-->
+<?php $this->setPageTitle('Структура организации'); ?>
 
+<div class="al-row">
+    <div id="EqipGroupsTree"></div>
+</div>
+<div class="al-row">
+    <div class="row-column"><input type="button" value="Добавить" id='btnAdd' /></div>
+    <div class="row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
+    <div class="row-column"><input type="button" value="Обновить" id='btnRefresh' /></div>
+    <div class="row-column"><input type="button" value="Удалить" id='btnDel' /></div>
+    <div style="clear: both"></div>
+</div>
+<div id="EditDialog">
+    <div id="DialogHeader">
+        <span id="HeaderText">Вставка\Редактирование записи</span>
+    </div>
+    <div style="overflow: hidden;" id="DialogContent">
+        <div style="overflow: auto;" id="BodyDialog"></div>
+        <div id="BottomDialog">
+            <div class="row">
+                <div class="row-column"><input type="button" value="Сохранить" id='btnOk' /></div>
+                <div style="float: right;" class="row-column"><input type="button" value="Отменить" id='btnCancel' /></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
