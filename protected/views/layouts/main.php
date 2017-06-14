@@ -285,6 +285,19 @@
 
                             array('label'=>'Авторизация', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                             array('label'=>'Отчеты', 'url'=>'#', 'items' => array(
+                                array('label'=>'Автоматизация', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('AutomationReportAll'), 'items'=>array(
+                                    array('label' => 'Модернизации (Выбор параметров)', 
+                                            'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Сметы/Модернизации', 'Render' => 0)),
+                                            'visible'=>Yii::app()->user->checkAccess('AutomationReport1'),
+                                        ),
+                                    array('label' => 'Чужие и удаленные заявки СЦ', 
+                                        'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Заявки/Чужие и удаленные заявки СЦ', 'Render' => 0)),
+                                        'visible'=>Yii::app()->user->checkAccess('AutomationReport2')
+                                    ),
+                                    
+                                    ),
+                                    
+                                ),
                                 array('label'=>'Задачи', 'url'=>'#', 'visible'=>Yii::app()->user->checkAccess('TasksReportAll'), 'items'=>array(
                                     array('label' => 'Отчет по задачам', 
                                             'url' => Yii::app()->createUrl('Reports/ReportOpen', array('ReportName' => '/Задачи/Отчет по задачам', 'Render' => 0)),

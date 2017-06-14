@@ -636,6 +636,10 @@ return array_merge(
                 
                 'CalcReportAll',
                 'CalcReport1',
+                
+                'AutomationReportAll',
+                'AutomationReport1',
+                'AutomationReport2',
                 ),
         ),
         

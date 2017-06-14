@@ -498,6 +498,28 @@
             'bizRule' => null,
             'data' => null,
         ),
+        
+        /* Автоматизация */
+        'AutomationReportAll' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Автоматизация',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'AutomationReport1' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Автоматизация',
+            'bizRule' => null,
+            'data' => null,
+        ),
+        
+        'AutomationReport2' => array(
+            'type' => CAuthItem::TYPE_OPERATION,
+            'description' => 'Автоматизация',
+            'bizRule' => null,
+            'data' => null,
+        ),
     );
 ?>
 
