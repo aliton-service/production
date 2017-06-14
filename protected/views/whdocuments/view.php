@@ -18,6 +18,7 @@
             InDate: Aliton.DateConvertToJs('<?php echo $model->in_date; ?>'),
             Deadline: Aliton.DateConvertToJs('<?php echo $model->deadline; ?>'),
             ReceiptDate: Aliton.DateConvertToJs('<?php echo $model->ReceiptDate; ?>'),
+            DatePrchs: Aliton.DateConvertToJs('<?php echo $model->date_prchs; ?>'),
             Address: <?php echo json_encode($model->Address); ?>,
             Storage: <?php echo json_encode($model->storage); ?>,
             Strg_id: <?php echo json_encode($model->strg_id); ?>,
@@ -86,6 +87,7 @@
                     WHDocuments.BestDate = Aliton.DateConvertToJs(Res.best_date);
                     WHDocuments.PromiseDate = Aliton.DateConvertToJs(Res.date_promise);
                     WHDocuments.control = Res.control;
+                    WHDocuments.DatePrchs = Aliton.DateConvertToJs(Res.date_prchs);
                     SetValueControls(parseInt(WHDocuments.Dctp_id));
                     $("#btnRefreshDetails").click();
                     SetStateButtons();
@@ -533,7 +535,7 @@
                     $('#btnEdit').jqxButton({disabled: (WHDocuments.Achs_id !== null && (Admin == false))});
                     $('#btnAction').jqxButton({disabled: (WHDocuments.Achs_id !== null)});
                     $("#edStoreman").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
-                    $("#btnPurchase").jqxButton({disabled: false});
+                    $("#btnPurchase").jqxButton({disabled: (WHDocuments.DatePrchs !== null)});
                     $("#btnPrint").jqxButton({disabled: false});
                     $("#btnPrintClient").jqxButton({disabled: true});
                     $("#edMaster").jqxComboBox({disabled: (WHDocuments.Achs_id !== null)});
