@@ -74,6 +74,9 @@ class ContractMasterHistoryController extends Controller
         if (isset($_POST['ContrS_id'])) 
             $model->ContrS_id = $_POST['ContrS_id'];
 
+        if (isset($_POST['ContrSDateEnd']))
+            $model->WorkDateEnd = $_POST['ContrSDateEnd'];
+        
         if(isset($_POST['ContractMasterHistory']))
         {
             $model->attributes = $_POST['ContractMasterHistory'];

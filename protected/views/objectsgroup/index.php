@@ -1644,7 +1644,8 @@
                                 type: 'POST',
                                 async: false,
                                 data: {
-                                    ContrS_id: CurrentRowDataContractsS.ContrS_id
+                                    ContrS_id: CurrentRowDataContractsS.ContrS_id,
+                                    ContrSDateEnd: CurrentRowDataContractsS.ContrSDateEnd
                                 },
                                 success: function(Res) {
                                     $('#BodyDialogContractMasterHistory').html(Res);
