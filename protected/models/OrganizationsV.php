@@ -119,6 +119,7 @@ class OrganizationsV extends MainFormModel
                 $Forms = $Forms->Find(array(), array(
                     'p.Form_id <> \'' . $this->Form_id . '\'',
                     'p.FormName = \'' . $this->FormName . '\'',
+                    'p.fown_id = ' . $this->fown_id,
                 ));
             else
                 $Forms = $Forms->Find(array(), array(
@@ -139,6 +140,7 @@ class OrganizationsV extends MainFormModel
                 $Forms = $Forms->Find(array(), array(
                     'p.Form_id <> \'' . $this->Form_id . '\'',
                     'p.inn = \'' . $this->inn . '\'',
+                    
                 ));
             else
                 $Forms = $Forms->Find(array(), array(
