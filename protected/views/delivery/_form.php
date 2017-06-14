@@ -256,9 +256,6 @@
                 var bestDateMonth = bestDate.getMonth();
                 var deadlineDate = deadline.getDate();
                 var deadlineMonth = deadline.getMonth();
-                console.log(bestDateDate);
-                console.log(deadlineDate);
-                console.log(bestDateDate === deadlineDate && bestDateMonth === deadlineMonth);
                 if (bestDateDate === deadlineDate && bestDateMonth === deadlineMonth) {
                     $("#errorBestDate").html('совпадает с предельной датой');
                 } else {

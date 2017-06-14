@@ -4162,16 +4162,23 @@ Sources.SourceEquipGroups =
         {name: 'group_name', type: 'string'},
         {name: 'full_group_name', type: 'string'}
     ],
-    id: 'id',
+    id: 'group_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=EqipGroups',
     root: 'Rows',
     cache: false,
     async: false,
     pagenum: 0,
     pagesize: 200,
+    
+    hierarchy:
+    {
+        keyDataField: { name: 'group_id' },
+        parentDataField: { name: 'parent_group_id' }
+    },
+    
     beforeprocessing: function (data) {
         this.totalrecords = data[0].TotalRows;
-    }
+    },
 };
 
 Sources.SourceEquips =
