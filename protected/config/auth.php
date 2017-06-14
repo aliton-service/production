@@ -783,6 +783,9 @@ return array_merge(
                 'ObjectReport3',
                 'ObjectReport4',
                 'ObjectReport5',
+                
+                'WHActsAll',
+                'WHActs3Report',
             ),
         ),
         
