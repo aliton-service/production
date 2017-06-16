@@ -16,9 +16,9 @@ class MainController extends CController
 	 * for more details on how to specify this property.
 	 */
     public $breadcrumbs=array();
-        
-    public function beforeAction($action) {
-        parent::beforeAction($action);
-        return true;
-    }
+
+
+    
+    
+
 }

@@ -28,6 +28,6 @@ class Controller extends MainController
 		$this->disableProfilers();
 		Yii::app()->request->sendFile(basename($file),file_get_contents($file));
 	}
-
-
+        
+    
 }

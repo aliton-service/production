@@ -97,6 +97,8 @@
                 $('#edExportPDF').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160}));
                 $('#edSiteInex').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160}));
                 $('#edPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160}));
+                $('#edExportWORD').jqxButton($.extend(true, {}, ButtonDefaultSettings, {width: 160}));
+                
                 $('#edPrint').on('click', function() {
                     window.print();
                 });
@@ -170,6 +172,24 @@
                     
                 });
                 
+                $('#edExportWORD').on('click', function() {
+                    var Data = null;
+                    var Params = {};
+                    var Str = '';
+                    var FileName = '';
+                    Params = <?php if (isset($_GET['Parameters'])) echo json_encode($_GET['Parameters']); else echo json_encode(''); ?>;
+                    FileName = <?php if (isset($_GET['FileName'])) echo json_encode('&FileName=' . $_GET['FileName']); else echo json_encode('') ?>;
+                    if ($('#Parameters').length>0)
+                        Data = $('#Parameters').serialize();
+                    
+                    for (var key in Params) {
+                        Str += '&Parameters[' + key + ']=' + Params[key];
+                    }
+                    
+                    location.href = <?php echo json_encode(Yii::app()->createUrl('Reports/ReportExportWORD')); ?> + '&ReportName=' + ReportName + '&' + Data + Str + FileName;
+                    
+                });
+                
                 $('#edSiteInex').on('click', function() {
                     location.href = <?php echo json_encode(Yii::app()->createUrl('Site/Index')); ?>;
                 });
@@ -190,6 +210,9 @@
                 </div>
                 <div style="float: left; margin-left: 6px;">
                     <input type="button" id='edExportPDF' value='Экспорт PDF'/>
+                </div>
+                <div style="float: left; margin-left: 6px;">
+                    <input type="button" id='edExportWORD' value='Экспорт WORD'/>
                 </div>
                 <div style="float: left; margin-left: 6px;">
                     <input type="button" id='edSiteInex' value='На главную'/>

@@ -3,10 +3,11 @@
 class SiteController extends Controller
 {
     public $title = '';
+    
 	/**
 	 * Declares class-based actions.
 	 */
-   
+         
 	public function actions()
 	{
 		return array(
@@ -33,6 +34,8 @@ class SiteController extends Controller
         
 	public function actionIndex()
 	{
+            
+            
             /* В зависимости от роли, открываем по умолчанию */
             $RoleName = Yii::app()->user->getRole('Yii');
             
@@ -96,6 +99,8 @@ class SiteController extends Controller
 
 	public function actionError()
 	{
+            echo "!!!!!!!!!!!-!!!!!!!!!!";
+            
 		if($error=Yii::app()->errorHandler->error)
 		{
 			if(Yii::app()->request->isAjaxRequest)

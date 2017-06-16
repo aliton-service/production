@@ -668,10 +668,17 @@
         <div style="clear: both"></div>
     </div>
 </div>
+<style>
+    #cmbStageEdit input, #cmbStatusOPEdit input, #cmbActionOperationEdit input,
+    #cmbActionResultEdit input, #edNextDateEdit input,
+    #cmbResponsibleEdit input {
+        background-color: #FBB659 !important;
+    }
+</style>
 <div class="al-row">
     <div class="al-row-column">
         <div style="text-align: center">Этап*</div>
-        <div><div id="cmbStageEdit" name="ClientActions[ActionStage_id]"></div><?php echo $form->error($model, 'ActionStage_id'); ?></div>
+        <div><div style="" id="cmbStageEdit" name="ClientActions[ActionStage_id]"></div><?php echo $form->error($model, 'ActionStage_id'); ?></div>
     </div>
     <div class="al-row-column">
         <div style="text-align: center">Тип контакта*</div>

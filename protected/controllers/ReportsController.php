@@ -350,5 +350,34 @@ class ReportsController extends Controller
                 $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, '.pdf');
         }
     }
+    
+    public function actionReportExportWORD($ReportName = '') {
+        if ($ReportName != '') {
+            
+            require_once 'SSRSReport.php';
+            
+            define("REPORT", $ReportName);
+            $Settings = parse_ini_file("/protected/config/app.config", 1);
+
+            $RS = new SSRSReport(new Credentials($Settings["UID"], $Settings["PASWD"]),$Settings["SERVICE_URL"]);
+            $ExecutionInfo = $RS->LoadReport2(REPORT, NULL);
+            $RS->SetExecutionParameters2($this->SetParameters());
+            
+            $renderAsPDF = new RenderAsWord();
+            
+            $ResultPDF = $RS->Render2($renderAsPDF,
+                                 PageCountModeEnum::$Estimate,
+                                 $Extension,
+                                 $MimeType,
+                                 $Encoding,
+                                 $Warnings,
+                                 $StreamIds);
+            
+            if (isset($_GET['FileName']))
+                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultPDF, '.doc');
+            else
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, '.doc');
+        }
+    }
 }
 

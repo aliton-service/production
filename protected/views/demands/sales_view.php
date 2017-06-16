@@ -43,15 +43,144 @@
         $("#edSubSegment").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 180, minLength: 1, value: Demand.SegmentName}));
         $("#edDateExec").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 130, value: Demand.DateExec, readonly: true, showCalendarButton: false, allowKeyboardDelete: false}));
         $("#edContacts").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 514, minLength: 1, value: Demand.Contacts}));
-        $("#btnCall").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 40 }));
-        $("#btnMail").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 40 }));
-        $("#btnPresentation").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 40 }));
-        $("#btnKP").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 40 }));
-        $("#btnArchive").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 246, height: 40 }));
+        $("#btnCall").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120}));
+        $("#btnMail").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120}));
+        $("#btnPresentation").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120 }));
+        $("#btnKP").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120}));
+        $("#btnArchive").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 246}));
         $("#edInformation").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {height: '30px', width: '500px', minLength: 1}));
         $("#edSourceInfo").jqxTextArea($.extend(true, {}, TextAreaDefaultSettings, {height: '30px', width: '200px', minLength: 1}));
         $("#btnEdit").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: !(Demand.DateExec == null), imgSrc: '/images/4.png', imgPosition: "left" }));
         $("#btnClient").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $("#btnContOP").jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120}));
+        
+        $("#btnContOP").on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Objectsgroup/Index', array('ObjectGr_id' => $model->ObjectGr_id, '#' => 4))); ?>);
+        });
+        
+        // Потенциал
+        var init_potincial = function () {
+            var Potential_id;
+            var Form_id;
+
+
+            var SetPotentialValue = function(Obj) {
+                Potential_id = Obj.Potential_id;
+                Form_id = Obj.Form_id;
+                if (Form_id == null)
+                    Form_id = Demand.PropForm_id;
+
+                $("#edPotEditDate1").val(Obj.Date1);
+                $("#edPotEditDate2").val(Obj.Date2);
+                $("#edPotEditDate3").val(Obj.Date3);
+                $("#edPotEditDate4").val(Obj.Date4);
+                $("#edPotEditDate5").val(Obj.Date5);
+                $("#edPotEditInitiative").val(Obj.Initiative_id);
+                $("#edPotEditService").val(Obj.Service_id);
+                $("#edPotEditNegative").val(Obj.Negative_id);
+                $("#edPotEditCompetitive").val(Obj.Competitive_id);
+                $("#edPotEditSystem1").val(Obj.System1);
+                $("#edPotEditSystem2").val(Obj.System2);
+                $("#edPotEditSystem3").val(Obj.System3);
+                $("#edPotEditSystem4").val(Obj.System4);
+                $("#edPotEditSystem5").val(Obj.System5);
+                $("#edPotEditOffer1").val(Obj.Offer1);
+                $("#edPotEditOffer2").val(Obj.Offer2);
+                $("#edPotEditOffer3").val(Obj.Offer3);
+                $("#edPotEditOffer4").val(Obj.Offer4);
+                $("#edPotEditOffer5").val(Obj.Offer5);
+            };
+            var PotentialRefresh = function() {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Demands/GetPotential')) ?>,
+                    type: 'POST',
+                    data: {
+                        Form_id: Demand.PropForm_id
+                    },
+                    success: function(Res) {
+                        Res = JSON.parse(Res);
+                        Res.Date1 = Aliton.DateConvertToJs(Res.Date1);
+                        Res.Date2 = Aliton.DateConvertToJs(Res.Date2);
+                        Res.Date3 = Aliton.DateConvertToJs(Res.Date3);
+                        Res.Date4 = Aliton.DateConvertToJs(Res.Date4);
+                        Res.Date5 = Aliton.DateConvertToJs(Res.Date5);
+
+
+                        SetPotentialValue(Res);
+                    }
+                });
+            };
+
+
+
+            $("#edPotEditDate1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+            $("#edPotEditDate2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+            $("#edPotEditDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+            $("#edPotEditDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+            $("#edPotEditInitiative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Компания'}, {id: 1, name: 'Клиент'}], width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
+            var ResolveReasonsData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceResolveReasons, {}));
+            $("#edPotEditService").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: ResolveReasonsData, width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ResolveReason", valueMember: "Rvrs_id"}));
+            $("#edPotEditDate5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
+            $("#edPotEditCompetitive").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Да'}, {id: 1, name: 'Нет'}, {id: 2, name: 'Не знаю'}], width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
+            var NegativesData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceNegatives, {}));
+            $("#edPotEditNegative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{source: NegativesData, width: '150', height: '25px', displayMember: "NegativeName", dropDownVerticalAlignment: 'top', valueMember: "Ngtv_id"}));
+            $("#edPotEditSystem1").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditSystem2").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditSystem3").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditSystem4").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditSystem5").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditOffer1").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditOffer2").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditOffer3").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditOffer4").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+            $("#edPotEditOffer5").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
+
+            $('#edPotEditSave').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '156px'}));
+
+            $('#edPotEditSave').on('click', function() {
+                $.ajax({
+                    url: <?php echo json_encode(Yii::app()->createUrl('Demands/SavePotential')) ?>,
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        ClientPotentials: {
+                            Potential_id: Potential_id,
+                            Form_id: Form_id,
+                            Date1: $("#edPotEditDate1").val(),
+                            Date2: $("#edPotEditDate2").val(),
+                            Date3: $("#edPotEditDate3").val(),
+                            Date4: $("#edPotEditDate4").val(),
+                            Date5: $("#edPotEditDate5").val(),
+                            Initiative_id: $("#edPotEditInitiative").val(),
+                            Service_id: $("#edPotEditService").val(),
+                            Competitive_id: $("#edPotEditCompetitive").val(),
+                            Negative_id: $("#edPotEditNegative").val(),
+                            System1: $("#edPotEditSystem1").val(),
+                            System2: $("#edPotEditSystem2").val(),
+                            System3: $("#edPotEditSystem3").val(),
+                            System4: $("#edPotEditSystem4").val(),
+                            System5: $("#edPotEditSystem5").val(),
+                            Offer1: $("#edPotEditOffer1").val(),
+                            Offer2: $("#edPotEditOffer2").val(),
+                            Offer3: $("#edPotEditOffer3").val(),
+                            Offer4: $("#edPotEditOffer4").val(),
+                            Offer5: $("#edPotEditOffer5").val()
+
+                        }
+                    },
+                    success: function(Res) {
+                        Aliton.ShowErrorMessage('Запись произведена', 'Изменения успешно сохранены');
+                        PotentialRefresh();
+                    },
+                    error: function(Res) {
+                        Aliton.ShowErrorMessage('Ошибка', Res.responseText);
+                    }
+                });
+            });
+            PotentialRefresh();
+        };
+        
+        init_potincial();
         
         var TypeInt = 0;
         $("#SoundsDialog").jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 800, height: 450, initContent: function() {
@@ -372,25 +501,90 @@
                     
                     
                     $('#btnAddActn').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+                    $('#btnMudak1').jqxButton($.extend(true, {}, ButtonDefaultSettings, { height: 30 }));
+                    $('#btnMudak2').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
+                    
+                    $('#btnMudak1').on('click', function() {
+                        Comment('Недозвон', null);
+                    });
+                    
+                    $('#btnMudak2').on('click', function() {
+                        var mapForm = document.createElement("form");
+                        mapForm.target = "_blank";    
+                        mapForm.method = "POST";
+                        mapForm.action = <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert', array('NewWindow' => 1))) ?>;
+
+                        // Create an input
+                        var mapInput = document.createElement("input");
+                        mapInput.type = "text";
+                        mapInput.name = "Form_id";
+                        mapInput.value = Demand.PropForm_id;
+                        var mapInput2 = document.createElement("input");
+                        mapInput2.type = "text";
+                        mapInput2.name = "Demand_id";
+                        mapInput2.value = Demand.Demand_id;
+                        var mapInput3 = document.createElement("input");
+                        mapInput3.type = "text";
+                        mapInput3.name = "ContactType_id";
+                        mapInput3.value = 23;
+
+                        // Add the input to the form
+                        mapForm.appendChild(mapInput);
+                        mapForm.appendChild(mapInput2);
+                        mapForm.appendChild(mapInput3);
+
+                        // Add the form to dom
+                        document.body.appendChild(mapForm);
+
+                        // Just submit
+                        mapForm.submit();
+                    });
+                    
                     $('#btnAddActn').on('click', function() {
-                        $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
-                        $.ajax({
-                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?>,
-                            type: 'POST',
-                            async: false,
-                            data: {
-                                Form_id: Demand.PropForm_id,
-                                Demand_id: Demand.Demand_id,
-                            },
-                            success: function(Res) {
-                                Res = JSON.parse(Res);
-                                $("#BodyCostCalculationsDialog").html(Res.html);
-                                $('#CostCalculationsDialog').jqxWindow('open');
-                            },
-                            error: function(Res) {
-                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                            }
-                        });
+                        var mapForm = document.createElement("form");
+                        mapForm.target = "_blank";    
+                        mapForm.method = "POST";
+                        mapForm.action = <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert', array('NewWindow' => 1))) ?>;
+
+                        // Create an input
+                        var mapInput = document.createElement("input");
+                        mapInput.type = "text";
+                        mapInput.name = "Form_id";
+                        mapInput.value = Demand.PropForm_id;
+                        var mapInput2 = document.createElement("input");
+                        mapInput2.type = "text";
+                        mapInput2.name = "Demand_id";
+                        mapInput2.value = Demand.Demand_id;
+
+                        // Add the input to the form
+                        mapForm.appendChild(mapInput);
+                        mapForm.appendChild(mapInput2);
+
+                        // Add the form to dom
+                        document.body.appendChild(mapForm);
+
+                        // Just submit
+                        mapForm.submit();
+                        
+//                        $('#CostCalculationsDialog').jqxWindow($.extend(true, {}, DialogDefaultSettings, {width: 900, height: 724, position: 'center'}));
+//                        $.ajax({
+//                            url: <?php echo json_encode(Yii::app()->createUrl('ExecutorReports/Insert')) ?> + '&NewWindow=1',
+//                            type: 'POST',
+//                            async: false,
+//                            data: {
+//                                Form_id: Demand.PropForm_id,
+//                                Demand_id: Demand.Demand_id
+//                                
+//                            },
+//                            success: function(Res) {
+//                                Res = JSON.parse(Res);
+//                                $("#BodyCostCalculationsDialog").html(Res.html);
+//                                $('#CostCalculationsDialog').jqxWindow('open');
+//                            },
+//                            error: function(Res) {
+//                                Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                            }
+//                        });
                     });
         
                     $('#btnProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -786,124 +980,7 @@
                         });
                     break;
                     case 4:
-                        var Potential_id;
-                        var Form_id;
                         
-                        
-                        var SetPotentialValue = function(Obj) {
-                            Potential_id = Obj.Potential_id;
-                            Form_id = Obj.Form_id;
-                            if (Form_id == null)
-                                Form_id = Demand.PropForm_id;
-                            
-                            $("#edPotEditDate1").val(Obj.Date1);
-                            $("#edPotEditDate2").val(Obj.Date2);
-                            $("#edPotEditDate3").val(Obj.Date3);
-                            $("#edPotEditDate4").val(Obj.Date4);
-                            $("#edPotEditDate5").val(Obj.Date5);
-                            $("#edPotEditInitiative").val(Obj.Initiative_id);
-                            $("#edPotEditService").val(Obj.Service_id);
-                            $("#edPotEditNegative").val(Obj.Negative_id);
-                            $("#edPotEditCompetitive").val(Obj.Competitive_id);
-                            $("#edPotEditSystem1").val(Obj.System1);
-                            $("#edPotEditSystem2").val(Obj.System2);
-                            $("#edPotEditSystem3").val(Obj.System3);
-                            $("#edPotEditSystem4").val(Obj.System4);
-                            $("#edPotEditSystem5").val(Obj.System5);
-                            $("#edPotEditOffer1").val(Obj.Offer1);
-                            $("#edPotEditOffer2").val(Obj.Offer2);
-                            $("#edPotEditOffer3").val(Obj.Offer3);
-                            $("#edPotEditOffer4").val(Obj.Offer4);
-                            $("#edPotEditOffer5").val(Obj.Offer5);
-                        };
-                        var PotentialRefresh = function() {
-                            $.ajax({
-                                url: <?php echo json_encode(Yii::app()->createUrl('Demands/GetPotential')) ?>,
-                                type: 'POST',
-                                data: {
-                                    Form_id: Demand.PropForm_id
-                                },
-                                success: function(Res) {
-                                    Res = JSON.parse(Res);
-                                    Res.Date1 = Aliton.DateConvertToJs(Res.Date1);
-                                    Res.Date2 = Aliton.DateConvertToJs(Res.Date2);
-                                    Res.Date3 = Aliton.DateConvertToJs(Res.Date3);
-                                    Res.Date4 = Aliton.DateConvertToJs(Res.Date4);
-                                    Res.Date5 = Aliton.DateConvertToJs(Res.Date5);
-                                    
-                                    
-                                    SetPotentialValue(Res);
-                                }
-                            });
-                        };
-                        
-                        
-                    
-                        $("#edPotEditDate1").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
-                        $("#edPotEditDate2").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
-                        $("#edPotEditDate3").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
-                        $("#edPotEditDate4").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
-                        $("#edPotEditInitiative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Компания'}, {id: 1, name: 'Клиент'}], width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
-                        var ResolveReasonsData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceResolveReasons, {}));
-                        $("#edPotEditService").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: ResolveReasonsData, width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "ResolveReason", valueMember: "Rvrs_id"}));
-                        $("#edPotEditDate5").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: 140, value: null}));
-                        $("#edPotEditCompetitive").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings, {source: [{id: 0, name: 'Да'}, {id: 1, name: 'Нет'}, {id: 2, name: 'Не знаю'}], width: '250', height: '25px', dropDownVerticalAlignment: 'top', displayMember: "name", valueMember: "id"}));
-                        var NegativesData = new $.jqx.dataAdapter($.extend(true, {}, Sources.SourceNegatives, {}));
-                        $("#edPotEditNegative").jqxComboBox($.extend(true, {}, ComboBoxDefaultSettings,{source: NegativesData, width: '150', height: '25px', displayMember: "NegativeName", dropDownVerticalAlignment: 'top', valueMember: "Ngtv_id"}));
-                        $("#edPotEditSystem1").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditSystem2").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditSystem3").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditSystem4").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditSystem5").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditOffer1").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditOffer2").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditOffer3").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditOffer4").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        $("#edPotEditOffer5").jqxInput($.extend(true, {}, InputDefaultSettings, {height: 25, width: 160, minLength: 1}));
-                        
-                        $('#edPotEditSave').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: '156px'}));
-                        
-                        $('#edPotEditSave').on('click', function() {
-                            $.ajax({
-                                url: <?php echo json_encode(Yii::app()->createUrl('Demands/SavePotential')) ?>,
-                                type: 'POST',
-                                async: false,
-                                data: {
-                                    ClientPotentials: {
-                                        Potential_id: Potential_id,
-                                        Form_id: Form_id,
-                                        Date1: $("#edPotEditDate1").val(),
-                                        Date2: $("#edPotEditDate2").val(),
-                                        Date3: $("#edPotEditDate3").val(),
-                                        Date4: $("#edPotEditDate4").val(),
-                                        Date5: $("#edPotEditDate5").val(),
-                                        Initiative_id: $("#edPotEditInitiative").val(),
-                                        Service_id: $("#edPotEditService").val(),
-                                        Competitive_id: $("#edPotEditCompetitive").val(),
-                                        Negative_id: $("#edPotEditNegative").val(),
-                                        System1: $("#edPotEditSystem1").val(),
-                                        System2: $("#edPotEditSystem2").val(),
-                                        System3: $("#edPotEditSystem3").val(),
-                                        System4: $("#edPotEditSystem4").val(),
-                                        System5: $("#edPotEditSystem5").val(),
-                                        Offer1: $("#edPotEditOffer1").val(),
-                                        Offer2: $("#edPotEditOffer2").val(),
-                                        Offer3: $("#edPotEditOffer3").val(),
-                                        Offer4: $("#edPotEditOffer4").val(),
-                                        Offer5: $("#edPotEditOffer5").val()
-                                        
-                                    }
-                                },
-                                success: function(Res) {
-                                    Aliton.ShowErrorMessage('Запись произведена', 'Изменения успешно сохранены');
-                                    PotentialRefresh();
-                                },
-                                error: function(Res) {
-                                    Aliton.ShowErrorMessage('Ошибка', Res.responseText);
-                                }
-                            });
-                        });
-                        PotentialRefresh();
                     break;
             }
         };
@@ -975,11 +1052,9 @@
             Aliton.ViewClient(Demand.ObjectGr_id, Demand.Demand_id);
         });
         
-        function Comment() {
-            if (Aliton.NewComment(Demand.Demand_id, $("#edComment").jqxInput('val'), $("#edPlanDateExec").jqxDateTimeInput('val'))) {
+        function Comment(message, dateplan) {
+            if (Aliton.NewComment(Demand.Demand_id, message, dateplan)) {
                 $("#ProgressGrid").jqxGrid('updatebounddata');
-                $("#edComment").jqxInput('val', null);
-                $("#edPlanDateExec").jqxDateTimeInput('val', null);
             }
         }
         
@@ -1063,30 +1138,13 @@
             <div><input readonly id="edContacts" type="text"/></div>
         </div>
     </div>
-    <div class="al-row-column">
-        <a style="display: none" id="MailTo" href="mailto:manish@simplygraphix.com?subject=Feedback for webdevelopersnotes.com&body=The Tips and Tricks section is great"></a>
-        <div style="margin-top: 23px;">
-            
-            <div class="al-row-column"><input type="button" id="btnCall" value="Звонок"/></div>
-            <div class="al-row-column"><input type="button" id="btnMail" value="Письмо"/></div>
-            <div style="clear: both;"></div>
-        </div>
-        <div>
-            <div class="al-row-column"><input type="button" id="btnPresentation" value="Презентация"/></div>
-            <div class="al-row-column"><input type="button" id="btnKP" value="КП"/></div>
-            <div style="clear: both;"></div>
-        </div>
-        <div>
-            <div class="al-row-column"><input type="button" id="btnArchive" value="Архив звукозаписей"/></div>
-            <div style="clear: both;"></div>
-        </div>
-    </div>
+    
 
 </div>
 <div style="clear: both;"></div>
 <div class="al-row" style="padding: 0px">
     <div class="al-row-column">
-        <div>Информация</div>
+        <div>Запрос клиента</div>
         <div><textarea id="edInformation"></textarea></div>
     </div>
     <div class="al-row-column">
@@ -1097,11 +1155,131 @@
     
 <div style="clear: both"></div>
 <div style="float: left; width: 100%; height: 32px">
+    <a style="display: none" id="MailTo" href="mailto:manish@simplygraphix.com?subject=Feedback for webdevelopersnotes.com&body=The Tips and Tricks section is great"></a>
     <div class="row-column"><input type="button" value="Изменить" id='btnEdit' /></div>
     <div class="row-column"><input type="button" value="Карточка" id='btnClient' /></div>
+    <div class="row-column"><input type="button" id="btnCall" value="Звонок"/></div>
+    <div class="row-column"><input type="button" id="btnMail" value="Письмо"/></div>
+    <div class="row-column"><input type="button" id="btnPresentation" value="Презентация"/></div>
+    <div class="row-column"><input type="button" id="btnKP" value="КП"/></div>
+    <div class="row-column"><input type="button" id="btnArchive" value="Архив звукозаписей"/></div>
+    <div class="row-column"><input type="button" id="btnContOP" value="Контакты ОП"/></div>
 </div>    
 <div style="clear: both;"></div>
-<div class="al-row" style="height: calc(100% - 334px)">
+<div class="al-row"> 
+    <!--Маркетинговый блок-->
+    <div style="height:200px">
+        <div class="al-row-column">
+            <div class="al-row">
+                <div class="al-row-column">
+                    <div>Согл. дата модер.</div>
+                    <div><div id="edPotEditDate1"></div></div>
+                </div>
+                <div class="al-row-column">
+                    <div>Согл. дата РВР.</div>
+                    <div><div id="edPotEditDate2"></div></div>
+                </div>
+                <div class="al-row-column">
+                    <div>Согл. дата диагностики.</div>
+                    <div><div id="edPotEditDate3"></div></div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column">
+                    <div>Факт. дата обсл.</div>
+                    <div><div id="edPotEditDate4"></div></div>
+                </div>
+                <div class="al-row-column">
+                    <div>Инициатива</div>
+                    <div><div id="edPotEditInitiative"></div></div>
+                </div>
+                <div class="al-row-column">
+                    <div>От чего зависит заключение договра</div>
+                    <div><div id="edPotEditService"></div></div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="al-row">
+                <div class="al-row-column">
+                    <div>Согл. дата подготовки</div>
+                    <div><div id="edPotEditDate5"></div></div>
+                </div>
+                <div class="al-row-column">
+                    <div>Конкурентоспособность</div>
+                    <div><div id="edPotEditCompetitive"></div></div>
+                </div>
+                <div class="al-row-column">
+                    <div>Возражения клиента</div>
+                    <div><div id="edPotEditNegative"></div></div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <div class="al-row-column">
+            <div>Потенциал</div>
+            <div>
+                <div class="al-row-column" style="width: 80">АППЗ</div>
+                <div class="al-row-column"><input type="text" id="edPotEditSystem1" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div>
+                <div class="al-row-column" style="width: 80">СВН</div>
+                <div class="al-row-column"><input type="text" id="edPotEditSystem2" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div>
+                <div class="al-row-column" style="width: 80">ПЗУ</div>
+                <div class="al-row-column"><input type="text" id="edPotEditSystem3" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div>
+                <div class="al-row-column" style="width: 80">ОДС</div>
+                <div class="al-row-column"><input type="text" id="edPotEditSystem4" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div>
+                <div class="al-row-column" style="width: 80">ВЕНТ</div>
+                <div class="al-row-column"><input type="text" id="edPotEditSystem5" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        <div class="al-row-column">
+            <div>Предложения конкурентов</div>
+            <div>
+                <div class="al-row-column" style="width: 80">АППЗ</div>
+                <div class="al-row-column"><input type="text" id="edPotEditOffer1" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div>
+                <div class="al-row-column" style="width: 80">СВН</div>
+                <div class="al-row-column"><input type="text" id="edPotEditOffer2" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div>
+                <div class="al-row-column" style="width: 80">ПЗУ</div>
+                <div class="al-row-column"><input type="text" id="edPotEditOffer3" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div>
+                <div class="al-row-column" style="width: 80">ОДС</div>
+                <div class="al-row-column"><input type="text" id="edPotEditOffer4" /></div>
+                <div style="clear: both"></div>
+            </div>
+            <div>
+                <div class="al-row-column" style="width: 80">ВЕНТ</div>
+                <div class="al-row-column"><input type="text" id="edPotEditOffer5" /></div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div class="al-row">
+            <input type="button" id="edPotEditSave" value="Сохранить"/>
+        </div>
+    </div>
+</div>
+<div class="al-row" style="height: calc(100% - 534px)">
     <div id='Tabs'>
         <ul>
             <li style="margin-left: 20px;">
@@ -1139,6 +1317,8 @@
                     
                         <div style="float: left;"><input type='button' value='Ход работы' id='btnProgress' /></div>
                         <div style="float: left; margin-left: 6px;"><input type='button' value='Добавить запись' id='btnAddActn' /></div>
+                        <div style="float: left; margin-left: 6px;"><input type='button' value='Недозвон' id='btnMudak1' /></div>
+                        <div style="float: left; margin-left: 6px;"><input type='button' value='Внутреннее действие' id='btnMudak2' /></div>
 <!--                        <div style="float: left; margin-left: 6px;">План. дата вып.</div>
                         <div style="float: left; margin-left: 6px;"><div id='edPlanDateExec'></div></div>
                         <div style="float: left; margin-left: 6px;"><input type="button" value="Написать" id='btnSend' /></div>
@@ -1272,116 +1452,7 @@
             
         </div>
         <div style="overflow: hidden;">
-            <div style="padding: 10px; height: calc(100% - 20px)">
-                <div class="al-row-column">
-                    <div class="al-row">
-                        <div class="al-row-column">
-                            <div>Согл. дата модер.</div>
-                            <div><div id="edPotEditDate1"></div></div>
-                        </div>
-                        <div class="al-row-column">
-                            <div>Согл. дата РВР.</div>
-                            <div><div id="edPotEditDate2"></div></div>
-                        </div>
-                        <div class="al-row-column">
-                            <div>Согл. дата диагностики.</div>
-                            <div><div id="edPotEditDate3"></div></div>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div class="al-row">
-                        <div class="al-row-column">
-                            <div>Факт. дата обсл.</div>
-                            <div><div id="edPotEditDate4"></div></div>
-                        </div>
-                        <div class="al-row-column">
-                            <div>Инициатива</div>
-                            <div><div id="edPotEditInitiative"></div></div>
-                        </div>
-                        <div class="al-row-column">
-                            <div>От чего зависит заключение договра</div>
-                            <div><div id="edPotEditService"></div></div>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div class="al-row">
-                        <div class="al-row-column">
-                            <div>Согл. дата подготовки</div>
-                            <div><div id="edPotEditDate5"></div></div>
-                        </div>
-                        <div class="al-row-column">
-                            <div>Конкурентоспособность</div>
-                            <div><div id="edPotEditCompetitive"></div></div>
-                        </div>
-                        <div class="al-row-column">
-                            <div>Возражения клиента</div>
-                            <div><div id="edPotEditNegative"></div></div>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                </div>
-                <div class="al-row-column">
-                    <div>Потенциал</div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">АППЗ</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditSystem1" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">СВН</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditSystem2" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">ПЗУ</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditSystem3" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">ОДС</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditSystem4" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">ВЕНТ</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditSystem5" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div style="clear: both"></div>
-                </div>
-                <div class="al-row-column">
-                    <div>Предложения конкурентов</div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">АППЗ</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditOffer1" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">СВН</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditOffer2" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">ПЗУ</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditOffer3" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">ОДС</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditOffer4" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                    <div>
-                        <div class="al-row-column" style="width: 80">ВЕНТ</div>
-                        <div class="al-row-column"><input type="text" id="edPotEditOffer5" /></div>
-                        <div style="clear: both"></div>
-                    </div>
-                </div>
-                <div style="clear: both"></div>
-                <div class="al-row">
-                    <input type="button" id="edPotEditSave" value="Сохранить"/>
-                </div>
-            </div>
+            
             
         </div>
     </div>

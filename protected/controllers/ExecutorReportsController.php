@@ -128,6 +128,12 @@ class ExecutorReportsController extends Controller
                 $model->Demand_id = $_POST['Demand_id'];
             }
             
+            if (isset($_POST['ContactType_id'])) {
+                $model->ContactType_id = $_POST['ContactType_id'];
+            }
+            
+            
+            
             $Form_id = 0;
             if (isset($_POST['Form_id']))
                 $Form_id = $_POST['Form_id'];

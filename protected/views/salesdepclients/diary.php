@@ -143,20 +143,26 @@
                                           return "<div style='margin:4px;'>" + (value + 1) + "</div>";
                                         }
                                     },
-                                    { text: 'Дата план. действия', filtertype: 'date', datafield: 'NextDate', width: 110, cellsformat: 'dd.MM.yyyy'},
-                                    { text: 'Наименование', datafield: 'FullName', width: 250, cellsrenderer: cellsrenderer},
-                                    { text: 'Ответственный', datafield: 'ResponsibleName', width: 150, cellsrenderer: cellsrenderer},
-                                    { text: 'Сегмент', datafield: 'SegmentName', width: 150, cellsrenderer: cellsrenderer},
-                                    { text: 'ПОДСегмент', datafield: 'SubSegmentName', width: 150, cellsrenderer: cellsrenderer},
-                                    { text: 'Адрес', datafield: 'Address', width: 250, cellsrenderer: cellsrenderer},
                                     { text: 'Заявка', datafield: 'Demand_id', width: 100, cellsrenderer: cellsrenderer},
-                                    { text: 'Тип', datafield: 'ContactName', width: 150, cellsrenderer: cellsrenderer},
+                                    { text: 'Тип заявки', datafield: 'DemandType', width: 200, cellsrenderer: cellsrenderer},
+                                    { text: 'Стутас ОП', datafield: 'StatusOP', width: 100, cellsrenderer: cellsrenderer},
+                                    { text: 'Наименование', datafield: 'FullName', width: 250, cellsrenderer: cellsrenderer},
+                                    { text: 'Адрес', datafield: 'Address', width: 250, cellsrenderer: cellsrenderer},
                                     { text: 'Этап', datafield: 'StageName', width: 100, cellsrenderer: cellsrenderer},
                                     { text: 'Продолжительность этапа', datafield: 'DIFF_STR', width: 200, cellsrenderer: cellsrenderer},
-                                    { text: 'Дата посл. контакта', filtertype: 'date', datafield: 'LastDateContact', width: 110, cellsformat: 'dd.MM.yyyy'},
-                                    { text: 'Стутас ОП', datafield: 'StatusOP', width: 100, cellsrenderer: cellsrenderer},
                                     { text: 'Запланированное действие', datafield: 'NextAction', width: 200},
-                                    { text: 'Тип заявки', datafield: 'DemandType', width: 200, cellsrenderer: cellsrenderer},
+                                    { text: 'Ответственный', datafield: 'ResponsibleName', width: 150, cellsrenderer: cellsrenderer},
+                                    { text: 'Дата посл. контакта', filtertype: 'date', datafield: 'LastDateContact', width: 110, cellsformat: 'dd.MM.yyyy'},
+                                    { text: 'Дата план. действия', filtertype: 'date', datafield: 'NextDate', width: 110, cellsformat: 'dd.MM.yyyy'},
+                                    { text: 'Сегмент', datafield: 'SegmentName', width: 150, cellsrenderer: cellsrenderer},
+                                    { text: 'ПОДСегмент', datafield: 'SubSegmentName', width: 150, cellsrenderer: cellsrenderer},
+                                    { text: 'Тип', datafield: 'ContactName', width: 150, cellsrenderer: cellsrenderer},
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                 ]
                     }));
                     $('#btnProgress').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));

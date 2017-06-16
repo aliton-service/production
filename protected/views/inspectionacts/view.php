@@ -147,11 +147,21 @@
         $('#btnPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnROMTO').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
         $('#btnRGI').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
+        $('#btnSpec').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        
         
         $("#chbROMTO").jqxCheckBox('checked', (InspAct.DateAgreeROMTO != null));
         $("#chbRGI").jqxCheckBox('checked', (InspAct.DateAgreeRGI != null));
         $('#edResultEngineer').jqxTextArea('val', InspAct.ResultEngineer);
         $('#edResultHead').jqxTextArea('val', InspAct.ResultHead);
+        
+        $('#btnSpec').on('click', function() {
+            window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
+                            'ReportName' => '/Акт обследования/Спецификация',
+                            'Ajax' => false,
+                            'Render' => true,
+                        ))); ?> + '&Parameters[Inspection_id]=' + InspAct.Inspection_id + '&FileName=Акт_обследования_' + InspAct.SystemTypeName + '_Спецификация');
+        });
         
         $('#btnPrint').on('click', function() {
             window.open(<?php echo json_encode(Yii::app()->createUrl('Reports/ReportOpen', array(
@@ -1022,6 +1032,7 @@
     <div class="al-row-column"><div id='chbROMTO' >Согласовано РОМТО</div></div>
     <div class="al-row-column"><div id='chbRGI' >Согласовано РГИ</div></div>
     <div class="al-row-column" style="float: right">
+        <div class="al-row-column"><input type="button" id='btnSpec' value='Спецификация'/></div>
         <div class="al-row-column"><input type="button" id='btnPrint' value='Печать'/></div>
         <div class="al-row-column"><input type="button" id='btnROMTO' value='Согласовано РОМТО'/></div>
         <div class="al-row-column"><input type="button" id='btnRGI' value='Согласовано РГИ'/></div>

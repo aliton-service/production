@@ -1,4 +1,4 @@
-<script type="text/javascript">
+Ход<script type="text/javascript">
     var OpenCostCalc = true;
     $(document).ready(function () {
         var CurrentRowData;
