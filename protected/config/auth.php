@@ -709,6 +709,9 @@ return array_merge(
                 'DemandsReport10',
                 'DemandsReport11',
                 'DemandsReport12',
+                'AutomationReportAll',
+                'AutomationReport1',
+                'AutomationReport2',
                 
                 'CalcReportAll',
                 'CalcReport1',
