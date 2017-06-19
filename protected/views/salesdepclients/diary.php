@@ -115,10 +115,10 @@
                         var Temp = $('#ActionsGrid').jqxGrid('getrowdata', row);
                         if (Temp['OverDay'] == 1) //'')
                             return '<span class="backlight_red" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
-                        if (Temp['StatusOP'] == 'Горячий') //'')
-                            return '<span class="backlight_1" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
-                        if (Temp['StatusOP'] == 'Теплый') //'')
-                            return '<span class="backlight_2" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+//                        if (Temp['StatusOP'] == 'Горячий') //'')
+//                            return '<span class="backlight_1" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
+//                        if (Temp['StatusOP'] == 'Теплый') //'')
+//                            return '<span class="backlight_2" style="margin: 4px; float: ' + columnproperties.cellsalign + ';">' + value + '</span>';
                         
                     };
                     

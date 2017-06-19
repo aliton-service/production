@@ -34,6 +34,7 @@
             DateAgreeROMTO: Aliton.DateConvertToJs('<?php echo $model->DateAgreeROMTO; ?>'),
             DateAgreeRGI: Aliton.DateConvertToJs('<?php echo $model->DateAgreeRGI; ?>'),
             ActEquip_id: 0,
+            AgreeShortName: <?php echo json_encode($model->AgreeShortName); ?>
         };
 
         var SetValueControls = function() {
@@ -63,7 +64,7 @@
             $("#edResultEngineer").val(InspAct.ResultEngineer);
             $("#edResultHead").val(InspAct.ResultHead);
             $("#chbROMTO").jqxCheckBox('checked', (InspAct.DateAgreeROMTO != null))
-            $("#chbRGI").jqxCheckBox('checked', (InspAct.DateAgreeRGI != null))
+//            $("#chbRGI").jqxCheckBox('checked', (InspAct.DateAgreeRGI != null))
             
             
         };
@@ -104,6 +105,7 @@
                     InspAct.ResultEngineer = Res.ResultEngineer;
                     InspAct.DateAgreeROMTO = Aliton.DateConvertToJs(Res.DateAgreeROMTO);
                     InspAct.DateAgreeRGI = Aliton.DateConvertToJs(Res.DateAgreeRGI);
+                    InspAct.AgreeShortName = Aliton.AgreeShortName;
                     
                     SetValueControls();
 //                    $("#btnRefreshDetails").click();
@@ -143,15 +145,17 @@
         
         $('#btnEdit').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $("#chbROMTO").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 160, height: 25, locked :true }));
-        $("#chbRGI").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 160, height: 25, locked :true }));
+        $("#edAgreeShortName").jqxInput({height: 25, width: 200, minLength: 1, value: InspAct.AgreeShortName});
+        
+//        $("#chbRGI").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 160, height: 25, locked :true }));
         $('#btnPrint').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         $('#btnROMTO').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
-        $('#btnRGI').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
+//        $('#btnRGI').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
         $('#btnSpec').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         
         
         $("#chbROMTO").jqxCheckBox('checked', (InspAct.DateAgreeROMTO != null));
-        $("#chbRGI").jqxCheckBox('checked', (InspAct.DateAgreeRGI != null));
+//        $("#chbRGI").jqxCheckBox('checked', (InspAct.DateAgreeRGI != null));
         $('#edResultEngineer').jqxTextArea('val', InspAct.ResultEngineer);
         $('#edResultHead').jqxTextArea('val', InspAct.ResultHead);
         
@@ -196,31 +200,31 @@
                 }
             });
         });
-        $('#btnRGI').on('click', function() {
-            $.ajax({
-                url: <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Agreed')) ?>,
-                type: 'POST',
-                async: false,
-                data: {
-                    InspectionActs: {
-                        Inspection_id: InspAct.Inspection_id,
-                        Type: 1,
-                    },
-                },
-                success: function(Res) {
-                    Res = JSON.parse(Res);
-                    if (Res.result == 1) {
-                        InspAct.Refresh();
-                    }
-                    else
-                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.html);
-                        
-                },
-                error: function(Res) {
-                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
-                }
-            });
-        });
+//        $('#btnRGI').on('click', function() {
+//            $.ajax({
+//                url: <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Agreed')) ?>,
+//                type: 'POST',
+//                async: false,
+//                data: {
+//                    InspectionActs: {
+//                        Inspection_id: InspAct.Inspection_id,
+//                        Type: 1,
+//                    },
+//                },
+//                success: function(Res) {
+//                    Res = JSON.parse(Res);
+//                    if (Res.result == 1) {
+//                        InspAct.Refresh();
+//                    }
+//                    else
+//                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.html);
+//                        
+//                },
+//                error: function(Res) {
+//                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+//                }
+//            });
+//        });
         
         $("#btnEdit").on('click', function(){
             if ($("#btnEdit").jqxButton('disabled')) return;
@@ -1029,13 +1033,13 @@
 </div>
 <div class="al-row">
     <div class="al-row-column"><input type="button" id='btnEdit' value='Изменить'/></div>
-    <div class="al-row-column"><div id='chbROMTO' >Согласовано РОМТО</div></div>
-    <div class="al-row-column"><div id='chbRGI' >Согласовано РГИ</div></div>
+    <div class="al-row-column"><div id='chbROMTO' >Согласовано руководителем</div></div>
+    <div class="al-row-column"><input id='edAgreeShortName' /></div>
     <div class="al-row-column" style="float: right">
         <div class="al-row-column"><input type="button" id='btnSpec' value='Спецификация'/></div>
         <div class="al-row-column"><input type="button" id='btnPrint' value='Печать'/></div>
-        <div class="al-row-column"><input type="button" id='btnROMTO' value='Согласовано РОМТО'/></div>
-        <div class="al-row-column"><input type="button" id='btnRGI' value='Согласовано РГИ'/></div>
+        <div class="al-row-column"><input type="button" id='btnROMTO' value='Согласовано руководителем'/></div>
+        <!--<div class="al-row-column"><input type="button" id='btnRGI' value='Согласовано РГИ'/></div>-->
     </div>
     <div style="clear: both"></div>
 </div>

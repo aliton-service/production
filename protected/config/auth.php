@@ -431,6 +431,9 @@ return array_merge(
                 'AdministartorDispatchers',
                 'AdminSystemComplexitys',
                 'AdminSystemStatements',
+                'AutomationReportAll',
+                'AutomationReport1',
+                'AutomationReport2',
             ),
         ),
         

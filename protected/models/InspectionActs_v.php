@@ -44,6 +44,7 @@ class InspectionActs_v extends MainFormModel
     public $DateCreate;
     public $EmplChange;
     public $DateChange;
+    public $AgreeShortName;
             
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -90,7 +91,8 @@ class InspectionActs_v extends MainFormModel
                         i.ResultEngineer,
                         i.ResultHead,
                         i.DateAgreeROMTO,
-                        i.DateAgreeRGI";
+                        i.DateAgreeRGI,
+                        i.AgreeShortName";
         $From = "\nFrom InspectionActs_v i";
         
         $this->Query->setSelect($Select);
@@ -141,7 +143,8 @@ class InspectionActs_v extends MainFormModel
                     ResultEngineer,
                     ResultHead,
                     DateAgreeROMTO,
-                    DateAgreeRGI,', 'safe'),
+                    DateAgreeRGI,
+                    AgreeShortName', 'safe'),
         );
     }
     
@@ -186,6 +189,7 @@ class InspectionActs_v extends MainFormModel
             'ResultHead' => '',
             'DateAgreeROMTO' => '',
             'DateAgreeRGI' => '',
+            'AgreeShortName' => '',
         );
     }
 }

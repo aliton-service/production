@@ -19,7 +19,7 @@ class CostCalculationsController extends Controller
     {
         return array(
                 array('allow',
-                'actions'=>array('index', 'view', 'GetModel', 'GetDetails', 'Paste', 'SendAgreed'),
+                'actions'=>array('index', 'view', 'GetModel', 'GetDetails', 'Paste', 'SendAgreed', 'isready'),
                 'roles'=>array('ViewCostCalculations'),
             ),
             array('allow', 
@@ -68,6 +68,24 @@ class CostCalculationsController extends Controller
                 'users'=>array('*'),
             ),
         );
+    }
+    
+    public function actionIsReady() {
+        $ObjectResult = array(
+            'result' => 0,
+            'id' => 0,
+            'html' => '',
+        );
+        
+        if (isset($_POST['Calc_id'])) {
+            $command = Yii::app()->db->createCommand();
+            $command->text = 'update costcalculations set is_ready = ~isnull(is_ready) where calc_id = ' . 
+            
+            $ObjectResult['result'] = 1;
+            $ObjectResult['id'] = $Res['Calc_id'];
+        }
+        
+        return json_encode($ObjectResult);
     }
     
     public function actionGetModel()
