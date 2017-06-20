@@ -316,9 +316,9 @@ class ReportsController extends Controller
             
                         
             if (isset($_GET['FileName']))
-                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultExcel, '.xls');
+                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultExcel, 'xls');
             else
-                $this->UpLoadFile($this->SetValidName($ReportName), $ResultExcel, '.xls');
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultExcel, 'xls');
             
         }
     }
@@ -345,9 +345,9 @@ class ReportsController extends Controller
                                  $StreamIds);
             
             if (isset($_GET['FileName']))
-                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultPDF, '.pdf');
+                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultPDF, 'pdf');
             else
-                $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, '.pdf');
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, 'pdf');
         }
     }
     
@@ -374,9 +374,9 @@ class ReportsController extends Controller
                                  $StreamIds);
             
             if (isset($_GET['FileName']))
-                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultPDF, '.doc');
+                $this->UpLoadFile($this->SetValidName($_GET['FileName']), $ResultPDF, 'doc');
             else
-                $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, '.doc');
+                $this->UpLoadFile($this->SetValidName($ReportName), $ResultPDF, 'doc');
         }
     }
 }
