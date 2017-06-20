@@ -79,13 +79,14 @@ class CostCalculationsController extends Controller
         
         if (isset($_POST['Calc_id'])) {
             $command = Yii::app()->db->createCommand();
-            $command->text = 'update costcalculations set is_ready = ~isnull(is_ready) where calc_id = ' . 
+            $command->text = 'update costcalculations set is_ready = ~isnull(is_ready, 0) where calc_id = ' . $_POST['Calc_id'];
+            $command->execute();
             
             $ObjectResult['result'] = 1;
-            $ObjectResult['id'] = $Res['Calc_id'];
+            $ObjectResult['id'] = $_POST['Calc_id'];
         }
         
-        return json_encode($ObjectResult);
+        echo json_encode($ObjectResult);
     }
     
     public function actionGetModel()

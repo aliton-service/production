@@ -311,7 +311,9 @@
                     { text: 'Группа', datafield: 'group_name', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 70, hidden: true },
                     { text: 'Вариант', datafield: 'number', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 70, hidden: true, cellclassname: CellClass },
                     { text: 'Номер', datafield: 'calc_id', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 70, cellclassname: CellClass},
+                    
                     { text: 'Тип', datafield: 'CostCalcType', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 220, cellclassname: CellClass},
+                    { text: 'Сумма', datafield: 'Sum_High_Full', columngroup: 'Group1', width: 120},
                     { text: 'Дата', dataField: 'date', columngroup: 'Group1', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140, cellclassname: CellClass},
                     { text: 'Дата готовности', dataField: 'date_ready', columngroup: 'Group1', columntype: 'date', cellsformat: 'dd.MM.yyyy HH:mm', filtercondition: 'STARTS_WITH', width: 140, cellclassname: CellClass},
                     { text: 'Создал', datafield: 'EmployeeName', columngroup: 'Group1', filtercondition: 'CONTAINS', width: 100, cellclassname: CellClass },

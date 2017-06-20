@@ -389,6 +389,12 @@
     )); 
 ?>
 
+<style>
+    #edFormNameEdit, #edFownEdit input {
+        background-color: #FBB659 !important;
+    }
+</style>
+
 <input type="hidden" name="Organizations[Form_id]" value="<?php echo $model->Form_id; ?>"/>
 <div class="al-row">
     <div class="al-row-column" style="width: 150px">Наименование:</div>

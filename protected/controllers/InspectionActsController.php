@@ -16,7 +16,7 @@ class InspectionActsController extends Controller
     {
         return array(
             array('allow',
-                    'actions'=>array('index', 'view', 'getmodel', 'Agreed', 'Paste'),
+                    'actions'=>array('index', 'view', 'getmodel', 'Agreed', 'Paste', 'Transfer'),
                     'roles'=>array('ViewInspectionActs'),
             ),
             array('allow', 
@@ -208,6 +208,29 @@ class InspectionActsController extends Controller
             
             $ObjectResult['result'] = 1;
             $ObjectResult['id'] = $Res['Out_Inspection_id'];
+            echo json_encode($ObjectResult);
+            return;
+        }
+
+        echo json_encode($ObjectResult);
+    }
+    
+    public function actionTransfer() {
+        $ObjectResult = array(
+                'result' => 0,
+                'id' => 0,
+                'html' => '',
+            );
+        
+        if (isset($_POST['Inspection_id'])) {
+            $sp = new StoredProc();
+            $sp->ProcedureName = 'TRANSFER_EQUIPS';
+            $sp->ParametersRefresh();
+            $sp->Parameters[0]['Value'] = $_POST['Inspection_id'];
+            $sp->CheckParam = true;
+            $Res = $sp->Execute();
+            
+            $ObjectResult['result'] = 1;
             echo json_encode($ObjectResult);
             return;
         }

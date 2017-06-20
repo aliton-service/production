@@ -152,7 +152,30 @@
         $('#btnROMTO').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
 //        $('#btnRGI').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 160, height: 30 }));
         $('#btnSpec').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
+        $('#btnTransfer').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 220, height: 30 }));
+        $('#btnTransfer').on('click', function(){
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('InspectionActs/Transfer')) ?>,
+                type: 'POST',
+                async: false,
+                data: {
+                    Inspection_id: InspAct.Inspection_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    if (Res.result != 1) 
+                        Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.html);
+                        
+                },
+                error: function(Res) {
+                    Aliton.ShowErrorMessage(Aliton.Message['ERROR_LOAD_PAGE'], Res.responseText);
+                }
+            });
+        });
         
+        var initTrabsfer = function() {
+            
+        };
         
         $("#chbROMTO").jqxCheckBox('checked', (InspAct.DateAgreeROMTO != null));
 //        $("#chbRGI").jqxCheckBox('checked', (InspAct.DateAgreeRGI != null));
@@ -1036,6 +1059,7 @@
     <div class="al-row-column"><div id='chbROMTO' >Согласовано руководителем</div></div>
     <div class="al-row-column"><input id='edAgreeShortName' /></div>
     <div class="al-row-column" style="float: right">
+        <div class="al-row-column"><input type="button" id='btnTransfer' value='Перенос в карточку'/></div>
         <div class="al-row-column"><input type="button" id='btnSpec' value='Спецификация'/></div>
         <div class="al-row-column"><input type="button" id='btnPrint' value='Печать'/></div>
         <div class="al-row-column"><input type="button" id='btnROMTO' value='Согласовано руководителем'/></div>
@@ -1135,3 +1159,4 @@
         <div style="" id="BodyInspectionActDialog"></div>
     </div>
 </div>
+

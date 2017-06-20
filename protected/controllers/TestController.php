@@ -7,6 +7,11 @@ class TestController extends MainController {
     public function actionIndex() {
         $this->render('index');
     }
+    
+    public function actionTest2() {
+        $this->layout = '//layouts/jqx-column';
+        $this->render('test2');
+    }
 }
 
 

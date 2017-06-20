@@ -11,6 +11,7 @@ class InspectionActEquips extends MainFormModel
     public $Characteristics;
     public $Object_id;
     public $Doorway;
+    public $OtherEquip;
     public $DateCreate;
     public $EmplCreate;
     public $DateChange;
@@ -27,7 +28,7 @@ class InspectionActEquips extends MainFormModel
                         a.ActEquip_id,
                         a.Inspection_id,
                         a.Equip_id,
-                        e.EquipName,
+                        case when a.Equip_id is null then a.OtherEquip else e.EquipName end EquipName,
                         a.Quant,
                         a.Object_id,
                         o.Doorway,
@@ -38,7 +39,8 @@ class InspectionActEquips extends MainFormModel
                         a.DateCreate,
                         a.EmplCreate,
                         a.DateChange,
-                        a.EmplChange";
+                        a.EmplChange,
+                        a.OtherEquip";
         $From = "\nFrom InspectionActEquips a left join Equips e on (a.Equip_id = e.Equip_id)
                         left join UnitMeasurement u on (e.UnitMeasurement_Id = u.UnitMeasurement_Id)
                         left join Objects o on (a.Object_id = o.Object_id)";
@@ -54,13 +56,14 @@ class InspectionActEquips extends MainFormModel
     public function rules()
     {
         return array(
-            array('Inspection_id, Equip_id, Quant, Object_id', 'required'),
+            array('Inspection_id, Quant, Object_id', 'required'),
             array('ActEquip_id,
                     Inspection_id,
                     Equip_id,
                     EquipName,
                     Quant,
                     UmName,
+                    OtherEquip,
                     DateCreate,
                     EmplCreate,
                     DateChange,
@@ -82,6 +85,7 @@ class InspectionActEquips extends MainFormModel
             'EmplCreate' => '',
             'DateChange' => '',
             'EmplChange' => '',
+            'OtherEquip' => 'OtherEquip',
         );
     }
 }

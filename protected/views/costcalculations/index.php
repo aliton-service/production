@@ -44,7 +44,8 @@
             ccwt_proc: <?php echo json_encode($model->ccwt_proc); ?>,
             ccwt_id: <?php echo json_encode($model->ccwt_id); ?>,
             koef_indirect: <?php echo json_encode($model->koef_indirect); ?>,
-            GarantMail: Boolean(Number(<?php echo json_encode($model->GarantMail); ?>))
+            GarantMail: Boolean(Number(<?php echo json_encode($model->GarantMail); ?>)),
+            isready: Boolean(Number(<?php echo json_encode($model->is_ready); ?>))
         };
 
         var Administrator = <?php echo json_encode(Yii::app()->user->checkAccess('Administrator')); ?>;
@@ -79,6 +80,14 @@
             if (CostCalculations.note != null) $("#note").jqxTextArea('val', CostCalculations.note);
             if (CostCalculations.EmplAgreed != null) $("#EmplAgreed").jqxInput('val', CostCalculations.EmplAgreed);
             $("#chbGarantMail").jqxCheckBox({checked: CostCalculations.GarantMail});
+            if (CostCalculations.isready) {
+                $("#is_ready").html('<b>Готово<b>');
+                $("#btnCalcReady").val('Снять готовность');
+            }
+            else {
+                $("#is_ready").html('<b>В процессе</b>');
+                $("#btnCalcReady").val('Готово');
+            }
         };
         
         CostCalculations.Refresh = function() {
@@ -109,6 +118,7 @@
                     CostCalculations.count_type0 = parseInt(Res.count_type0);
                     CostCalculations.count_type1 = parseInt(Res.count_type1);
                     CostCalculations.GarantMail = Boolean(Number(parseInt(Res.GarantMail)));
+                    CostCalculations.isready = Boolean(Number(parseInt(Res.is_ready)));
                     SetValueControls();
                     SetStateButtons();
                     $('#RefreshCostCalcEquips').click();
@@ -237,7 +247,20 @@
         
         $('#btnCalcReady').jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
         $("#btnCalcReady").on('click', function() {
-            
+            $.ajax({
+                url: <?php echo json_encode(Yii::app()->createUrl('costcalculations/isready')); ?>,
+                type: 'POST',
+                data: {
+                    Calc_id: CostCalculations.calc_id
+                },
+                success: function(Res) {
+                    Res = JSON.parse(Res);
+                    CostCalculations.Refresh();
+                },
+                error: function() {
+                    Aliton.ShowErrorMessage('Произошла ошибка', Res.responseText);
+                }
+            });
         });
         
         $('#btnVDemand').jqxButton($.extend(true, {}, ButtonDefaultSettings, {}));
@@ -1890,7 +1913,12 @@
 
 <?php $this->setPageTitle($model->CostCalcType); ?>
 
-<?php echo $model->group_name; ?>
+<?php
+    if ($model->is_ready) 
+        echo '<div id="is_ready"><b> Готово</b></div>';
+    else 
+        echo '<div id="is_ready"><b>В Процессе</b></div>';
+?>
 
 <?php
     $this->breadcrumbs=array(
@@ -1979,7 +2007,7 @@
         <div style="padding: 2px"><input type="button" value="Счет-заказ" id='btnAddDocContract3'/></div>
     </div>
     <div class="row-column" style="margin: 0 0px 0 5px"><input type="button" value="Заявка" id='btnVDemand'/></div>
-    <div class="row-column" style="margin: 0 0px 0 5px"><input type="button" value="Готово" id='btnCalcReady'/></div>
+    <div class="row-column" style="margin: 0 0px 0 5px"><input type="button" value="<?php if($model->is_ready) echo 'Снять готовность'; else echo 'Готово'; ?>" id='btnCalcReady'/></div>
     <div>
         <div class="row-column" style="float: right; margin: 0 0 0 5px;"><input type="button" value="Печатать" id='btnPrint2CostCalculations'/></div>
         <div class="row-column" style="float: right;"><input type="button" value="Для заказчика" id='btnPrint1CostCalculations'/></div>

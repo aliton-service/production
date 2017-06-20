@@ -6,6 +6,8 @@
             Inspection_id: <?php echo json_encode($model->Inspection_id); ?>,
             Equip_id: <?php echo json_encode($model->Equip_id); ?>,
             Quant: <?php echo json_encode($model->Quant); ?>,
+            OtherEquip: <?php echo json_encode($model->OtherEquip); ?>,
+            Object_id: <?php echo json_encode($model->Object_id); ?>
         };
 
         var ObjectList = <?php echo json_encode($Objects); ?>
@@ -32,7 +34,6 @@
 //        });
 //        
         $("#edEquipEdit").on('bindingComplete', function(event){
-            console.log('!!!');
             if (InspectionActEquips.Equip_id != '') $("#edEquipEdit").jqxComboBox('val', InspectionActEquips.Equip_id);
             $("#btnSaveInspectionActEquips").jqxButton({disabled: false});
         });
@@ -78,7 +79,10 @@
             
         $("#edEquipEdit").jqxComboBox($.extend(true, {}, { /* source: DataEquips,*/ width: '300', height: '25px', displayMember: "EquipName", valueMember: "Equip_id" /*, renderer: EquipRenderer */}));
         $("#edObjectEdit").jqxComboBox($.extend(true, {}, { source: ObjectList, width: '300', height: '25px', displayMember: "Doorway", valueMember: "Object_id" /*, renderer: EquipRenderer */}));
+        $("#edObjectEdit").val(InspectionActEquips.Object_id);
         $("#edUmNameEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '50px'}));
+        $("#edOtherEquipEdit").jqxInput($.extend(true, {}, InputDefaultSettings, {width: '320px'}));
+        
         $("#edQuantEdit").jqxNumberInput($.extend(true, {}, NumberInputDefaultSettings, {width: '80px', decimalDigits: 0}));
         $('#btnSaveInspectionActEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30, disabled: true }));
         $('#btnCancelInspectionActEquips').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
@@ -121,6 +125,7 @@
         
         
         if (InspectionActEquips.Quant != null) $("#edQuantEdit").jqxNumberInput('val', InspectionActEquips.Quant);
+        if (InspectionActEquips.OtherEquip != null) $("#edOtherEquipEdit").jqxInput('val', InspectionActEquips.OtherEquip);
     });
 </script>        
 
@@ -157,7 +162,10 @@
         </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="row-column">Доп. наименование:</div>
+    <div class="row-column"><input type="text" id="edOtherEquipEdit" name="InspectionActEquips[OtherEquip]" /></div>
+</div>
 <div class="row">
     
     <div class="row-column">

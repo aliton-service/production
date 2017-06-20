@@ -3105,6 +3105,7 @@ Sources.SourceObjectsGroupCostCalculations =
         {name: 'Demand_id', type: 'int'},
         {name: 'date_ready', type: 'date'},
         {name: 'Executor', type: 'int'},
+        {name: 'Sum_High_Full', type: 'float'}
     ],
     id: 'calc_id',
     url: '/index.php?r=AjaxData/DataJQXSimple&ModelName=ObjectsGroupCostCalculations',

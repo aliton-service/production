@@ -87,7 +87,7 @@
         $("#cmbFilterSegment").jqxComboBox({ source: DataClientGroups, width: 'calc(100% - 2px)', height: '25px', displayMember: "ClientGroup", valueMember: "clgr_id"}); // Фильтр тип заявки
         $("#cmbFilterSubSegment").jqxComboBox({ source: DataClientGroups, width: 'calc(100% - 2px)', height: '25px', displayMember: "ClientGroup", valueMember: "clgr_id"}); // Фильтр тип заявки
         $("#cmbFilterDateStart").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '140px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
-        $("#cmbFilterDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '140px', formatString: 'dd.MM.yyyy', value: null, dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
+        $("#cmbFilterDateEnd").jqxDateTimeInput($.extend(true, {}, DateTimeDefaultSettings, { width: '140px', formatString: 'dd.MM.yyyy', dropDownVerticalAlignment: 'top' })); // Фильтр дата рег
         
         $('#edFiltering').jqxButton($.extend(true, {}, ButtonDefaultSettings, { width: 120, height: 30 }));
         

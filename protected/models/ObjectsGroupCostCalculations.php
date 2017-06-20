@@ -22,6 +22,7 @@ class ObjectsGroupCostCalculations extends MainFormModel
     public $Demand_id = null;
     public $date_ready = null;
     public $Executor = null;
+    public $Sum_High_Full;
 
     function __construct($scenario = '') {
         parent::__construct($scenario);
@@ -52,7 +53,8 @@ class ObjectsGroupCostCalculations extends MainFormModel
                         c.date_annul,
                         c.Demand_id,
                         c.date_ready,
-                        c.empl_id as Executor";
+                        c.empl_id as Executor,
+                        (ISNULL(c.sum_works_high, 0) + ISNULL(c.sum_equips_high, 0) + ISNULL(c.sum_materials_high, 0)) * (1 - c.discount / 100) AS Sum_High_Full";
         $From = "\nFrom CostCalcGroups ccg inner join CostCalculations c on (c.cgrp_id = ccg.cgrp_id)
                         left join Employees e on (c.Empl_id = e.Employee_id)
                         left join Contacts_v cnt on (c.cont_id = cnt.cont_id)";
@@ -86,7 +88,7 @@ class ObjectsGroupCostCalculations extends MainFormModel
 //			array('date, strg_id', 'required'),
                     array('calc_id, cgrp_id, number', 'numerical', 'integerOnly'=>true),
                     array('calc_id, cgrp_id, number, group_name, CostGroupName, date, type, CostCalcType, count_type0, count_type1, EmployeeName, cnt_date, '
-                        . 'cntp_name, FIO, Note, date_annul, Demand_id, date_ready, Executor', 'safe'),
+                        . 'cntp_name, FIO, Note, date_annul, Demand_id, date_ready, Executor, Sum_High_Full', 'safe'),
             );
     }
 
@@ -116,6 +118,7 @@ class ObjectsGroupCostCalculations extends MainFormModel
             'Demand_id' => 'Demand_id',
             'date_ready' => 'date_ready',
             'Executor' => 'Executor',
+            'Sum_High_Full' => 'Sum_High_Full',
         );
     }
 
