@@ -982,6 +982,7 @@ return array_merge(
                 'AdminSerialNumbers',
                 'AdminDocmAchsDetails',
                 'ManagerMonitoringDemands',
+                'AdminMonitoringDemandDetails',
                 'ManagerEvents',
                 'WhActsView',
                 'ManagerControlContacts',
