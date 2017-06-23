@@ -1,15 +1,4 @@
 
-<script>
-    $(document).ready(function(){
-        
-        
-       
-        $("#chbTest1").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 160, height: 25 }));
-//        $("#rbTest2").jqxRadioButton({ width: 250, height: 25, checked: true});
-        $("#edTest3").jqxInput($.extend(true, {}, CheckBoxDefaultSettings, {width: '150px'}));
-        $('#jqxTabs').jqxTabs({ width: '90%', height: 200, position: 'top'});
-    });
-</script>
 
 <div style="display: flex">
     <div>1</div>
@@ -39,5 +28,16 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+        
+        
+       
+        $("#chbTest1").jqxCheckBox($.extend(true, {}, CheckBoxDefaultSettings, { width: 160, height: 25 }));
+//        $("#rbTest2").jqxRadioButton({ width: 250, height: 25, checked: true});
+        $("#edTest3").jqxInput($.extend(true, {}, CheckBoxDefaultSettings, {width: '150px'}));
+        $('#jqxTabs').jqxTabs({ width: '90%', height: 200, position: 'top'});
+    });
+</script>
 
 123123
