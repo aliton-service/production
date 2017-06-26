@@ -88,16 +88,16 @@ return array(
                         'authTimeout' => 60*60*2,
 		),
                 
-            
+                /*
                 'ldap' => array(
                         'class' => 'LdapComponent',
                         'baseDn' => 'dc=aliton,dc=net', //example.org
                         'accountSuffix' => '@aliton.net',
                         'domainControllers' => array('aliton.net'),
-                        'adminUsername' => 'rpy',
-                        'adminPassword' => 'd13f15ff'
+                        'adminUsername' => '',
+                        'adminPassword' => ''
                 ),
-            
+                */
 		// uncomment the following to enable URLs in path-format
 		
 //		'urlManager'=>array(

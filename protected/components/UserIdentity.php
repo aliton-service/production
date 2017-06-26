@@ -15,12 +15,13 @@ class UserIdentity extends CUserIdentity
         
         public function authenticate()
 	{
-		$ldap = Yii::app()->ldap;
-                
+		/*
+                $ldap = Yii::app()->ldap;
                 $result = $ldap->authenticate($this->username, $this->password);
                 
                 $ldapUserInfo = $ldap->user()->infoCollection($this->username, array("mail", "displayname"));
-                               
+                    */
+                $result = true;
                                 
                 if (!$result)
                 {
